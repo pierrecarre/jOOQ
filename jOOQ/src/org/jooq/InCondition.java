@@ -31,25 +31,17 @@
 
 package org.jooq;
 
+import java.util.Set;
+
 /**
- * A join statement used to join tables to a SelectQuery
+ * A condition comparing a field with a set of values
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
-
+public interface InCondition<T> extends FieldCondition<T> {
+	
 	/**
-	 * @return The type of join
+	 * @return The set of values to compare the field with
 	 */
-	JoinType getType();
-
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	Set<T> getValues();
 }

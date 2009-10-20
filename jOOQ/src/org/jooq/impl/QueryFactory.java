@@ -29,27 +29,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.jooq.CombinedCondition;
+import org.jooq.Condition;
+import org.jooq.Operator;
 
 /**
- * A join statement used to join tables to a SelectQuery
+ * A factory providing implementations to the org.jooq interfaces
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public final class QueryFactory {
+	
+	public static CombinedCondition createCombinedCondition(Condition... conditions) {
+		return createCombinedCondition(Operator.AND, conditions);
+	}
 
-	/**
-	 * @return The type of join
-	 */
-	JoinType getType();
+	public static CombinedCondition createCombinedCondition(Collection<Condition> conditions) {
+		return createCombinedCondition(Operator.AND, conditions);
+	}
 
+	public static CombinedCondition createCombinedCondition(Operator operator, Condition... conditions) {
+		return createCombinedCondition(operator, Arrays.asList(conditions));
+	}
+	
+	public static CombinedCondition createCombinedCondition(Operator operator, Collection<Condition> conditions) {
+		return new CombinedConditionImpl(operator, conditions);
+	}
+	
 	/**
-	 * @return The joined table
+	 * No instances
 	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	private QueryFactory() {
+	}
 }

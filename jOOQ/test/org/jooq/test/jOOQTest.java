@@ -29,27 +29,53 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.test;
+
+import static org.jooq.test.ConditionStub.CONDITION;
+import junit.framework.TestCase;
+
+import org.jooq.CombinedCondition;
+import org.jooq.impl.QueryFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * A join statement used to join tables to a SelectQuery
+ * A test suite for basic jOOQ functionality
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public class jOOQTest {
 
-	/**
-	 * @return The type of join
-	 */
-	JoinType getType();
+	@Before
+	public void setUp() throws Exception {
+	}
 
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
+	@After
+	public void tearDown() throws Exception {
+	}
 
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	@Test
+	public final void testEmptyCombinedCondition() throws Exception {
+		CombinedCondition c = QueryFactory.createCombinedCondition();
+		TestCase.assertEquals("1 = 1", c.toSQL());
+	}
+
+	@Test
+	public final void testSingleCombinedCondition() throws Exception {
+		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION);
+		TestCase.assertEquals(CONDITION.toSQL(true), c.toSQL(true));
+		TestCase.assertEquals(CONDITION.toSQL(false), c.toSQL(false));
+	}
+
+	@Test
+	public final void testMultipleCombinedCondition() throws Exception {
+		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION, CONDITION);
+		TestCase.assertEquals(
+				"(" + CONDITION.toSQL(true) + " and " + CONDITION.toSQL(true) + ")", 
+				c.toSQL(true));
+		TestCase.assertEquals(
+				"(" + CONDITION.toSQL(false) + " and " + CONDITION.toSQL(false) + ")", 
+				c.toSQL(false));
+	}
 }

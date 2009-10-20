@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, jooq.org
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

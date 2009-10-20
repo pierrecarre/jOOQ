@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, jooq.org
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ import java.sql.PreparedStatement;
 
 import org.jooq.QueryPart;
 
-abstract class AbstractQueryPart implements QueryPart {
+public abstract class AbstractQueryPart implements QueryPart {
 
 	private static final long serialVersionUID = 2078114876079493107L;
 
@@ -54,7 +54,10 @@ abstract class AbstractQueryPart implements QueryPart {
 		return toSQL(false);
 	}
 
-	protected abstract int bind (PreparedStatement stmt);
+	protected final int bind (PreparedStatement stmt) {
+		return bind(stmt, 1);
+	}
+	
 	protected abstract int bind (PreparedStatement stmt, int initialIndex);
 
 	@Override

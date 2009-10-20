@@ -31,25 +31,21 @@
 
 package org.jooq;
 
+import java.util.List;
+
 /**
- * A join statement used to join tables to a SelectQuery
+ * A condition combining other conditions using an Operator
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
-
+public interface CombinedCondition extends Condition {
 	/**
-	 * @return The type of join
+	 * @return The combine operator
 	 */
-	JoinType getType();
-
+	Operator getOperator();
+	
 	/**
-	 * @return The joined table
+	 * @return The combined conditions
 	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	List<Condition> getConditions();
 }

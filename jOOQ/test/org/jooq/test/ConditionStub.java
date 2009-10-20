@@ -29,27 +29,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.test;
+
+import java.sql.PreparedStatement;
+
+import org.jooq.Condition;
+import org.jooq.impl.AbstractQueryPart;
 
 /**
- * A join statement used to join tables to a SelectQuery
- * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public class ConditionStub extends AbstractQueryPart implements Condition {
 
-	/**
-	 * @return The type of join
-	 */
-	JoinType getType();
+	public static final ConditionStub CONDITION = new ConditionStub();
+	public static final String SQL = "ConditionStub";
+	
+	private static final long serialVersionUID = -7685868599891970294L;
 
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		return SQL + " inlined = " + inlineParameters;
+	}
 
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
+	private ConditionStub() {}
 }

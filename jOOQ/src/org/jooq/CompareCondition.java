@@ -32,24 +32,18 @@
 package org.jooq;
 
 /**
- * A join statement used to join tables to a SelectQuery
+ * A condition comparing a field with a single value
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public interface CompareCondition<T> extends FieldCondition<T> {
+	/**
+	 * @return The compare operator to compare the field with
+	 */
+	Comparator getComparator();
 
 	/**
-	 * @return The type of join
+	 * @return The value to compare the field with
 	 */
-	JoinType getType();
-
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	T getValue();
 }

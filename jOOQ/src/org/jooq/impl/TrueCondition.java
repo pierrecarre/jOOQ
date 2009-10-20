@@ -29,27 +29,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
+
+import java.sql.PreparedStatement;
+
+import org.jooq.Condition;
 
 /**
- * A join statement used to join tables to a SelectQuery
- * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public class TrueCondition extends AbstractQueryPart implements Condition {
 
-	/**
-	 * @return The type of join
-	 */
-	JoinType getType();
+	private static final long serialVersionUID = 775364624704563687L;
+	public static final TrueCondition TRUE_CONDITION = new TrueCondition();
+	
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	@Override
+	public final String toSQL(boolean inlineParameters) {
+		return "1 = 1";
+	}
+	
+	private TrueCondition() {}
 }

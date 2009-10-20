@@ -29,27 +29,73 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
+
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.jooq.CombinedCondition;
+import org.jooq.Condition;
+import org.jooq.Operator;
 
 /**
- * A join statement used to join tables to a SelectQuery
- * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+class CombinedConditionImpl extends AbstractQueryPart implements
+		CombinedCondition {
 
-	/**
-	 * @return The type of join
-	 */
-	JoinType getType();
+	private static final long serialVersionUID = -7373293246207052549L;
 
-	/**
-	 * @return The joined table
-	 */
-	Table getTable();
+	private final Operator operator;
+	private final List<Condition> conditions;
 
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	public CombinedConditionImpl(Operator operator,
+			Collection<Condition> conditions) {
+		this.operator = operator;
+		this.conditions = new ArrayList<Condition>(conditions);
+	}
+
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public List<Condition> getConditions() {
+		return conditions;
+	}
+
+	@Override
+	public Operator getOperator() {
+		return operator;
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		if (conditions.isEmpty()) {
+			return TRUE_CONDITION.toSQL(inlineParameters);
+		}
+		
+		if (conditions.size() == 1) {
+			return conditions.get(0).toSQL(inlineParameters);
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		String operator = " " + getOperator().name().toLowerCase() + " ";
+		String separator = "";
+		
+		sb.append("(");
+		for (Condition condition : getConditions()) {
+			sb.append(separator);
+			sb.append(condition.toSQL(inlineParameters));
+			separator = operator;
+		}
+		sb.append(")");
+		
+		return sb.toString();
+	}
 }

@@ -32,24 +32,19 @@
 package org.jooq;
 
 /**
- * A join statement used to join tables to a SelectQuery
+ * A condition comparing a field with an interval
  * 
  * @author Lukas Eder
  */
-public interface Join extends QueryPart {
+public interface BetweenCondition<T> extends FieldCondition<T> {
 
 	/**
-	 * @return The type of join
+	 * @return The lower bound of the interval
 	 */
-	JoinType getType();
+	T getMinValue();
 
 	/**
-	 * @return The joined table
+	 * @return The upper bound of the interval
 	 */
-	Table getTable();
-
-	/**
-	 * @return The join condition
-	 */
-	Condition getCondition();
+	T getMaxValue();
 }
