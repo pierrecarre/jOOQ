@@ -37,6 +37,8 @@ import java.util.LinkedHashSet;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
+import org.jooq.Comparator;
+import org.jooq.CompareCondition;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.InCondition;
@@ -48,7 +50,7 @@ import org.jooq.Operator;
  * @author Lukas Eder
  */
 public final class QueryFactory {
-	
+
 	public static CombinedCondition createCombinedCondition(Condition... conditions) {
 		return createCombinedCondition(Operator.AND, conditions);
 	}
@@ -60,23 +62,31 @@ public final class QueryFactory {
 	public static CombinedCondition createCombinedCondition(Operator operator, Condition... conditions) {
 		return createCombinedCondition(operator, Arrays.asList(conditions));
 	}
-	
+
 	public static CombinedCondition createCombinedCondition(Operator operator, Collection<Condition> conditions) {
 		return new CombinedConditionImpl(operator, conditions);
 	}
-	
+
 	public static <T> BetweenCondition<T> createBetweenCondition(Field<T> field, T minValue, T maxValue) {
 		return new BetweenConditionImpl<T>(field, minValue, maxValue);
 	}
-	
+
 	public static <T> InCondition<T> createInCondition(Field<T> field, T... values) {
 		return createInCondition(field, Arrays.asList(values));
 	}
-	
+
 	public static <T> InCondition<T> createInCondition(Field<T> field, Collection<T> values) {
 		return new InConditionImpl<T>(field, new LinkedHashSet<T>(values));
 	}
-	
+
+	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value) {
+		return createCompareCondition(field, value, Comparator.EQUALS);
+	}
+
+	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
+		return new CompareConditionImpl<T>(field, value, comparator);
+	}
+
 	/**
 	 * No instances
 	 */

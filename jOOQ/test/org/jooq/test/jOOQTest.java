@@ -37,6 +37,8 @@ import static org.jooq.test.Fields.FIELD_ID;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
+import org.jooq.Comparator;
+import org.jooq.CompareCondition;
 import org.jooq.InCondition;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
@@ -90,5 +92,23 @@ public class jOOQTest {
 		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID, 1, 10);
 		assertEquals("ID in (1, 10)", c.toSQL(true));
 		assertEquals("ID in (?, ?)", c.toSQL(false));
+	}
+	
+	@Test
+	public final void testCompareCondition() throws Exception {
+		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID, 10);
+		assertEquals("ID = 10", c.toSQL(true));
+		assertEquals("ID = ?", c.toSQL(false));
+	}
+	
+	@Test
+	public final void testIsNullCondition() throws Exception {
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID, null);
+		assertEquals("ID is null", c1.toSQL(true));
+		assertEquals("ID is null", c1.toSQL(false));
+		
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID, null, Comparator.NOT_EQUALS);
+		assertEquals("ID is not null", c2.toSQL(true));
+		assertEquals("ID is not null", c2.toSQL(false));
 	}
 }

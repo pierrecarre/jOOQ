@@ -37,5 +37,21 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum Comparator {
-	EQUALS, NOT_EQUALS, LESS, LESS_OR_EQUAL, MORE, MORE_OR_EQUAL, LIKE;
+	EQUALS("="), 
+	NOT_EQUALS("<>"), 
+	LESS("<"), 
+	LESS_OR_EQUAL("<="), 
+	GREATER(">"), 
+	GREATER_OR_EQUAL(">="), 
+	LIKE("LIKE");
+
+	private final String sql;
+
+	private Comparator(String sql) {
+		this.sql = sql;
+	}
+
+	public String toSQL() {
+		return sql;
+	}
 }
