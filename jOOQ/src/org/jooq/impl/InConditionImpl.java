@@ -31,55 +31,57 @@
 
 package org.jooq.impl;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.sql.PreparedStatement;
+import java.util.Set;
 
-import org.jooq.BetweenCondition;
-import org.jooq.CombinedCondition;
-import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.InCondition;
-import org.jooq.Operator;
 
 /**
- * A factory providing implementations to the org.jooq interfaces
- * 
  * @author Lukas Eder
  */
-public final class QueryFactory {
-	
-	public static CombinedCondition createCombinedCondition(Condition... conditions) {
-		return createCombinedCondition(Operator.AND, conditions);
+public class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
+
+	private static final long serialVersionUID = -1653924248576930761L;
+	private final Field<T> field;
+	private final Set<T> values;
+
+	public InConditionImpl(Field<T> field, Set<T> values) {
+		this.field = field;
+		this.values = values;
 	}
 
-	public static CombinedCondition createCombinedCondition(Collection<Condition> conditions) {
-		return createCombinedCondition(Operator.AND, conditions);
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
-	public static CombinedCondition createCombinedCondition(Operator operator, Condition... conditions) {
-		return createCombinedCondition(operator, Arrays.asList(conditions));
+	@Override
+	public Set<T> getValues() {
+		return values;
 	}
-	
-	public static CombinedCondition createCombinedCondition(Operator operator, Collection<Condition> conditions) {
-		return new CombinedConditionImpl(operator, conditions);
+
+	@Override
+	public Field<T> getField() {
+		return field;
 	}
-	
-	public static <T> BetweenCondition<T> createBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		return new BetweenConditionImpl<T>(field, minValue, maxValue);
-	}
-	
-	public static <T> InCondition<T> createInCondition(Field<T> field, T... values) {
-		return createInCondition(field, Arrays.asList(values));
-	}
-	
-	public static <T> InCondition<T> createInCondition(Field<T> field, Collection<T> values) {
-		return new InConditionImpl<T>(field, new LinkedHashSet<T>(values));
-	}
-	
-	/**
-	 * No instances
-	 */
-	private QueryFactory() {
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(getField().toSQL(inlineParameters));
+		sb.append(" in (");
+		
+		String separator = "";
+		for (T value : getValues()) {
+			sb.append(separator);
+			sb.append(ToSQLHelper.toSQL(value, inlineParameters, getField()));
+			separator = ", ";
+		}
+		
+		sb.append(")");
+		
+		return sb.toString();
 	}
 }

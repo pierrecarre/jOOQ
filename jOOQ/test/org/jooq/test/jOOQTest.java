@@ -37,6 +37,7 @@ import static org.jooq.test.Fields.FIELD_ID;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
+import org.jooq.InCondition;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -82,5 +83,12 @@ public class jOOQTest {
 		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID, 1, 10);
 		assertEquals("ID between 1 and 10", c.toSQL(true));
 		assertEquals("ID between ? and ?", c.toSQL(false));
+	}
+	
+	@Test
+	public final void testInCondition() throws Exception {
+		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID, 1, 10);
+		assertEquals("ID in (1, 10)", c.toSQL(true));
+		assertEquals("ID in (?, ?)", c.toSQL(false));
 	}
 }
