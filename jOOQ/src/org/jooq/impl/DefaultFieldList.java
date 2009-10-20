@@ -40,7 +40,7 @@ import org.jooq.FieldList;
 /**
  * @author Lukas Eder
  */
-public class DefaultFieldList extends AbstractList<Field<?>> implements FieldList {
+class DefaultFieldList extends AbstractList<Field<?>> implements FieldList {
 
 	private static final long serialVersionUID = 6767488169659244494L;
 	private final List<Field<?>> fields;

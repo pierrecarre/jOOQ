@@ -57,7 +57,13 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 			throw new IllegalArgumentException("The argument 'operator' must not be null");
 		if (conditions == null)
 			throw new IllegalArgumentException("The argument 'conditions' must not be null");
-
+		for (Condition condition : conditions) {
+			if (condition == null) {
+				throw new IllegalArgumentException("The argument 'conditions' must contain null");
+			}
+		}
+		
+		
 		this.operator = operator;
 		this.conditions = new ArrayList<Condition>(conditions);
 	}

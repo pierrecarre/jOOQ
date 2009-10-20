@@ -43,6 +43,7 @@ import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
+import org.jooq.UpdateQuery;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -123,14 +124,45 @@ public class jOOQTest {
 	
 	@Test
 	public final void testInsertQuery() throws Exception {
-		InsertQuery q1 = QueryFactory.createInsertQuery(TABLE);
+		InsertQuery q = QueryFactory.createInsertQuery(TABLE);
 
-		q1.addValue(FIELD_ID, 10);
-		assertEquals("insert into TABLE (ID) values (10)", q1.toSQL(true));
-		assertEquals("insert into TABLE (ID) values (?)", q1.toSQL(false));
+		q.addValue(FIELD_ID, 10);
+		assertEquals("insert into TABLE (ID) values (10)", q.toSQL(true));
+		assertEquals("insert into TABLE (ID) values (?)", q.toSQL(false));
 		
-		q1.addValue(FIELD_NAME, "ABC");
-		assertEquals("insert into TABLE (ID, NAME) values (10, 'ABC')", q1.toSQL(true));
-		assertEquals("insert into TABLE (ID, NAME) values (?, ?)", q1.toSQL(false));
+		q.addValue(FIELD_NAME, "ABC");
+		assertEquals("insert into TABLE (ID, NAME) values (10, 'ABC')", q.toSQL(true));
+		assertEquals("insert into TABLE (ID, NAME) values (?, ?)", q.toSQL(false));
+	}
+	
+	@Test(expected = IllegalStateException.class)  
+	public final void testEmptyUpdateQuery() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE);
+		q.toSQL();
+	}
+
+	@Test
+	public final void testUpdateQuery() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE);
+		
+		q.addValue(FIELD_ID, 10);
+		assertEquals("update TABLE set ID = 10", q.toSQL(true));
+		assertEquals("update TABLE set ID = ?", q.toSQL(false));
+		
+		q.addValue(FIELD_NAME, "ABC");
+		assertEquals("update TABLE set ID = 10, NAME = 'ABC'", q.toSQL(true));
+		assertEquals("update TABLE set ID = ?, NAME = ?", q.toSQL(false));
+		
+		q.addConditions(CONDITION);
+		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where ConditionStub inlined = true", q.toSQL(true));
+		assertEquals("update TABLE set ID = ?, NAME = ? where ConditionStub inlined = false", q.toSQL(false));
+		
+		q.addConditions(CONDITION);
+		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where (ConditionStub inlined = true and ConditionStub inlined = true)", q.toSQL(true));
+		assertEquals("update TABLE set ID = ?, NAME = ? where (ConditionStub inlined = false and ConditionStub inlined = false)", q.toSQL(false));
+		
+		q.addConditions(CONDITION, CONDITION);
+		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where ((ConditionStub inlined = true and ConditionStub inlined = true) and (ConditionStub inlined = true and ConditionStub inlined = true))", q.toSQL(true));
+		assertEquals("update TABLE set ID = ?, NAME = ? where ((ConditionStub inlined = false and ConditionStub inlined = false) and (ConditionStub inlined = false and ConditionStub inlined = false))", q.toSQL(false));
 	}
 }

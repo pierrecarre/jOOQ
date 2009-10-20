@@ -39,7 +39,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-public class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondition<T> {
+class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondition<T> {
 
 	private static final long serialVersionUID = -4666251100802237878L;
 

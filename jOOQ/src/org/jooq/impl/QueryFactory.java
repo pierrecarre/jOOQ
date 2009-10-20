@@ -45,6 +45,7 @@ import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Operator;
 import org.jooq.Table;
+import org.jooq.UpdateQuery;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -91,6 +92,10 @@ public final class QueryFactory {
 
 	public static InsertQuery createInsertQuery(Table into) {
 		return new InsertQueryImpl(into);
+	}
+
+	public static UpdateQuery createUpdateQuery(Table table) {
+		return new UpdateQueryImpl(table);
 	}
 
 	/**

@@ -31,6 +31,7 @@
 
 package org.jooq;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -39,19 +40,49 @@ import java.util.Map;
  * @author Lukas Eder
  */
 public interface UpdateQuery extends Query {
-	
+
 	/**
 	 * @return The table that is being updated by the query
 	 */
 	Table getTable();
-	
+
 	/**
 	 * @return A mapping of fields and values that are updated by the query
 	 */
 	Map<Field<?>, ?> getValues();
-	
+
 	/**
 	 * @return A condition used for updating in the query
 	 */
 	Condition getWhere();
+
+	/**
+	 * Add a value to the insert statement
+	 * 
+	 * @param <T>
+	 *            The value type
+	 * @param field
+	 *            The field
+	 * @param value
+	 *            The value
+	 */
+	<T> void addValue(Field<T> field, T value);
+
+	/**
+	 * Adds new conditions to the update query, connecting it to existing
+	 * conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	void addConditions(Condition... conditions);
+
+	/**
+	 * Adds new conditions to the update query, connecting it to existing
+	 * conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	void addConditions(Collection<Condition> conditions);
 }

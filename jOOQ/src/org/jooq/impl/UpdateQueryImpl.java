@@ -31,26 +31,32 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+
 import java.sql.PreparedStatement;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.InsertQuery;
 import org.jooq.Table;
+import org.jooq.UpdateQuery;
 
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
+class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
 
-	private static final long serialVersionUID = 4466005417945353842L;
-	private final Table into;
+	private static final long serialVersionUID = -660460731970074719L;
+	private final Table table;
 	private final Map<Field<?>, Object> values;
+	private Condition condition;
 	
-	public InsertQueryImpl(Table into) {
-		this.into = into;
+	public UpdateQueryImpl(Table table) {
+		this.table = table;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
 
@@ -60,8 +66,8 @@ class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
 	}
 
 	@Override
-	public Table getInto() {
-		return into;
+	public Table getTable() {
+		return table;
 	}
 
 	@Override
@@ -79,6 +85,39 @@ class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
 	}
 
 	@Override
+	public Condition getWhere() {
+		if (condition == null) {
+			return TRUE_CONDITION;
+		}
+		
+		return condition;
+	}
+	
+	@Override
+	public void addConditions(Condition... conditions) {
+		addConditions(Arrays.asList(conditions));
+	}
+	
+	@Override
+	public void addConditions(Collection<Condition> conditions) {
+		if (!conditions.isEmpty()) {
+			Condition c;
+			
+			if (conditions.size() == 1) {
+				c = conditions.iterator().next();
+			} else {
+				c = QueryFactory.createCombinedCondition(conditions);
+			}
+			
+			if (getWhere() == TRUE_CONDITION) {
+				condition = c;
+			} else {
+				condition = QueryFactory.createCombinedCondition(getWhere(), c);
+			}
+		}
+	}
+
+	@Override
 	public String toSQL(boolean inlineParameters) {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
@@ -86,29 +125,26 @@ class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("insert into ");
-		sb.append(getInto().toSQL(inlineParameters));
-		sb.append(" (");
+		sb.append("update ");
+		sb.append(getTable().toSQL(inlineParameters));
+		sb.append(" set ");
 		
-		String separator1 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			sb.append(separator1);
-			sb.append(field.toSQL(inlineParameters));
-			separator1 = ", ";
-		}
-		
-		sb.append(") values (");
-		
-		String separator2 = "";
+		String separator = "";
 		for (Field<?> field : getValues0().keySet()) {
 			Object value = getValues0().get(field);
 			
-			sb.append(separator2);
+			sb.append(separator);
+			sb.append(field.toSQL(inlineParameters));
+			sb.append(" = ");
 			sb.append(ToSQLHelper.toSQL(value, inlineParameters, field));
-			separator2 = ", ";
+			separator = ", ";
 		}
-		sb.append(")");
 		
+		if (getWhere() != TRUE_CONDITION) {
+			sb.append(" where ");
+			sb.append(getWhere().toSQL(inlineParameters));
+		}
+				
 		return sb.toString();
 	}
 }
