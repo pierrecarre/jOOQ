@@ -45,16 +45,19 @@ import org.jooq.Operator;
 /**
  * @author Lukas Eder
  */
-class CombinedConditionImpl extends AbstractQueryPart implements
-		CombinedCondition {
+class CombinedConditionImpl extends AbstractQueryPart implements CombinedCondition {
 
 	private static final long serialVersionUID = -7373293246207052549L;
 
 	private final Operator operator;
 	private final List<Condition> conditions;
 
-	public CombinedConditionImpl(Operator operator,
-			Collection<Condition> conditions) {
+	public CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
+		if (operator == null)
+			throw new IllegalArgumentException("The argument 'operator' must not be null");
+		if (conditions == null)
+			throw new IllegalArgumentException("The argument 'conditions' must not be null");
+
 		this.operator = operator;
 		this.conditions = new ArrayList<Condition>(conditions);
 	}
@@ -76,18 +79,18 @@ class CombinedConditionImpl extends AbstractQueryPart implements
 
 	@Override
 	public String toSQL(boolean inlineParameters) {
-		if (conditions.isEmpty()) {
+		if (getConditions().isEmpty()) {
 			return TRUE_CONDITION.toSQL(inlineParameters);
 		}
-		
-		if (conditions.size() == 1) {
+
+		if (getConditions().size() == 1) {
 			return conditions.get(0).toSQL(inlineParameters);
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
 		String operator = " " + getOperator().name().toLowerCase() + " ";
 		String separator = "";
-		
+
 		sb.append("(");
 		for (Condition condition : getConditions()) {
 			sb.append(separator);
@@ -95,7 +98,7 @@ class CombinedConditionImpl extends AbstractQueryPart implements
 			separator = operator;
 		}
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 }

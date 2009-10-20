@@ -29,58 +29,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.test;
+package org.jooq.impl;
 
-import static junit.framework.Assert.assertEquals;
-import static org.jooq.test.ConditionStub.CONDITION;
-import static org.jooq.test.Fields.FIELD_ID;
-
-import org.jooq.BetweenCondition;
-import org.jooq.CombinedCondition;
-import org.jooq.impl.QueryFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.jooq.Field;
 
 /**
- * A test suite for basic jOOQ functionality
- * 
  * @author Lukas Eder
  */
-public class jOOQTest {
+final class ToSQLHelper {
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public final void testEmptyCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition();
-		assertEquals("1 = 1", c.toSQL());
-	}
-
-	@Test
-	public final void testSingleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION);
-		assertEquals(CONDITION.toSQL(true), c.toSQL(true));
-		assertEquals(CONDITION.toSQL(false), c.toSQL(false));
-	}
-
-	@Test
-	public final void testMultipleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION, CONDITION);
-		assertEquals("(" + CONDITION.toSQL(true) + " and " + CONDITION.toSQL(true) + ")", c.toSQL(true));
-		assertEquals("(" + CONDITION.toSQL(false) + " and " + CONDITION.toSQL(false) + ")", c.toSQL(false));
+	public static String toSQL(Object value, boolean inlineParameters) {
+		return toSQL0(value, inlineParameters, value.getClass());
 	}
 	
-	@Test
-	public final void testBetweenCondition() throws Exception {
-		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID, 1, 10);
-		assertEquals("ID between 1 and 10", c.toSQL(true));
-		assertEquals("ID between ? and ?", c.toSQL(false));
+	public static <T> String toSQL(T value, boolean inlineParameters, Field<T> field) {
+		return toSQL0(value, inlineParameters, field.getType());
 	}
+	
+	public static <T> String toSQL(T value, boolean inlineParameters, Class<T> clazz) {
+		return toSQL0(value, inlineParameters, clazz);
+	}
+	
+	private static String toSQL0(Object value, boolean inlineParameters, Class<?> clazz) {
+		if (inlineParameters) {
+			if (clazz == String.class) {
+				return "'" + value.toString().replace("'", "''") + "'";
+			}
+			else if (clazz == Integer.class) {
+				return value.toString();
+			}
+			
+			throw new UnsupportedOperationException("Class " + clazz + " is not supported");
+		}
+		
+		return "?";
+	}
+	
+	private ToSQLHelper() {}
 }

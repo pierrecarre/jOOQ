@@ -31,56 +31,15 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
-import static org.jooq.test.ConditionStub.CONDITION;
-import static org.jooq.test.Fields.FIELD_ID;
-
-import org.jooq.BetweenCondition;
-import org.jooq.CombinedCondition;
-import org.jooq.impl.QueryFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.jooq.Field;
+import org.jooq.impl.FieldImpl;
 
 /**
- * A test suite for basic jOOQ functionality
- * 
  * @author Lukas Eder
  */
-public class jOOQTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public final void testEmptyCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition();
-		assertEquals("1 = 1", c.toSQL());
-	}
-
-	@Test
-	public final void testSingleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION);
-		assertEquals(CONDITION.toSQL(true), c.toSQL(true));
-		assertEquals(CONDITION.toSQL(false), c.toSQL(false));
-	}
-
-	@Test
-	public final void testMultipleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION, CONDITION);
-		assertEquals("(" + CONDITION.toSQL(true) + " and " + CONDITION.toSQL(true) + ")", c.toSQL(true));
-		assertEquals("(" + CONDITION.toSQL(false) + " and " + CONDITION.toSQL(false) + ")", c.toSQL(false));
-	}
+public final class Fields {
+	public static final Field<Integer> FIELD_ID = new FieldImpl<Integer>("ID", Integer.class);
+	public static final Field<String> FIELD_NAME = new FieldImpl<String>("NAME", String.class);
 	
-	@Test
-	public final void testBetweenCondition() throws Exception {
-		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID, 1, 10);
-		assertEquals("ID between 1 and 10", c.toSQL(true));
-		assertEquals("ID between ? and ?", c.toSQL(false));
-	}
+	private Fields() {}
 }

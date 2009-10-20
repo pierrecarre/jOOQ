@@ -34,8 +34,10 @@ package org.jooq.impl;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Condition;
+import org.jooq.Field;
 import org.jooq.Operator;
 
 /**
@@ -59,6 +61,10 @@ public final class QueryFactory {
 	
 	public static CombinedCondition createCombinedCondition(Operator operator, Collection<Condition> conditions) {
 		return new CombinedConditionImpl(operator, conditions);
+	}
+	
+	public static <T> BetweenCondition<T> createBetweenCondition(Field<T> field, T minValue, T maxValue) {
+		return new BetweenConditionImpl<T>(field, minValue, maxValue);
 	}
 	
 	/**

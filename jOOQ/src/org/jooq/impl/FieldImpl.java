@@ -29,58 +29,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.test;
+package org.jooq.impl;
 
-import static junit.framework.Assert.assertEquals;
-import static org.jooq.test.ConditionStub.CONDITION;
-import static org.jooq.test.Fields.FIELD_ID;
+import java.sql.PreparedStatement;
 
-import org.jooq.BetweenCondition;
-import org.jooq.CombinedCondition;
-import org.jooq.impl.QueryFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.jooq.Field;
 
 /**
- * A test suite for basic jOOQ functionality
- * 
  * @author Lukas Eder
  */
-public class jOOQTest {
+public class FieldImpl<T> extends AbstractQueryPart implements Field<T> {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+	private static final long serialVersionUID = 5589200289715501493L;
+	private final String name;
+	private final Class<T> type;
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public final void testEmptyCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition();
-		assertEquals("1 = 1", c.toSQL());
-	}
-
-	@Test
-	public final void testSingleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION);
-		assertEquals(CONDITION.toSQL(true), c.toSQL(true));
-		assertEquals(CONDITION.toSQL(false), c.toSQL(false));
-	}
-
-	@Test
-	public final void testMultipleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION, CONDITION);
-		assertEquals("(" + CONDITION.toSQL(true) + " and " + CONDITION.toSQL(true) + ")", c.toSQL(true));
-		assertEquals("(" + CONDITION.toSQL(false) + " and " + CONDITION.toSQL(false) + ")", c.toSQL(false));
+	public FieldImpl(String name, Class<T> type) {
+		this.name = name;
+		this.type = type;
 	}
 	
-	@Test
-	public final void testBetweenCondition() throws Exception {
-		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID, 1, 10);
-		assertEquals("ID between 1 and 10", c.toSQL(true));
-		assertEquals("ID between ? and ?", c.toSQL(false));
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public Class<T> getType() {
+		return type;
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		return getName();
 	}
 }
