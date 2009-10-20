@@ -31,21 +31,18 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * An operator used for combining conditions
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+public enum Operator {
+	/**
+	 * The and operator
+	 */
+	AND,
+	/**
+	 * The or operator
+	 */
+	OR;
 }

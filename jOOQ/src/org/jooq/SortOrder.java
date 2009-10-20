@@ -31,21 +31,21 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * The sorting order used in OrderByFieldLists
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public enum SortOrder {
 
-	String toSQL();
+	/**
+	 * Ascending sort order
+	 */
+	ASC,
 
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
+	/**
+	 * Descending sort order
+	 */
+	DESC;
 
 }

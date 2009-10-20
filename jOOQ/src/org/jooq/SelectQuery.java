@@ -31,21 +31,42 @@
 
 package org.jooq;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
- * Base functionality declaration for all query objects
+ * A query for data selection
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+public interface SelectQuery extends Query {
+	
+	/**
+	 * @return The list of select fields
+	 */
+	FieldList getSelect();
+	
+	/**
+	 * @return The list of tables from which selection is made
+	 */
+	List<Table> getFrom();
+	
+	/**
+	 * @return The list of join statements
+	 */
+	List<Join> getJoin();
+	
+	/**
+	 * @return A condition by which selection is made
+	 */
+	Condition getWhere();
+	
+	/**
+	 * @return A list of grouping fields
+	 */
+	FieldList getGroupBy();
+	
+	/**
+	 * @return A list of ordering fields, and their corresponding sort order
+	 */
+	OrderByFieldList getOrderBy();
 }

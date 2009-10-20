@@ -31,21 +31,25 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * A join statement used to join tables to a SelectQuery
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface Join extends QueryPart {
 
-	String toSQL();
+	/**
+	 * @return The type of join
+	 */
+	JoinType getType();
 
-	String toSQL(boolean inlineParameters);
+	/**
+	 * @return The joined table
+	 */
+	Table getTable();
 
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+	/**
+	 * @return The join condition
+	 */
+	Condition getCondition();
 }

@@ -31,21 +31,32 @@
 
 package org.jooq;
 
-import java.io.Serializable;
+import java.util.Collection;
 
 /**
- * Base functionality declaration for all query objects
+ * A field list used for fields in a query's order by clause
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface OrderByFieldList extends FieldList {
 
-	String toSQL();
+	/**
+	 * Adds a field to the field list, specifying the corresponding sort order
+	 * 
+	 * @param field
+	 *            The sort field
+	 * @param order
+	 *            The sort order
+	 */
+	void add(Field<?> field, SortOrder order);
 
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+	/**
+	 * Adds fields to the field list, specifying the corresponding sort orders
+	 * 
+	 * @param fields
+	 *            The sort fields
+	 * @param orders
+	 *            The sort orders
+	 */
+	void add(Collection<Field<?>> fields, Collection<SortOrder> orders);
 }

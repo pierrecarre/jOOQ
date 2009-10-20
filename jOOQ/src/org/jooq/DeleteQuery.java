@@ -31,21 +31,19 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * A query used for deletion of data
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface DeleteQuery extends Query {
+	/**
+	 * @return The table to delete data from
+	 */
+	Table getFrom();
 
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+	/**
+	 * @return The deletion condition
+	 */
+	Condition getWhere();
 }

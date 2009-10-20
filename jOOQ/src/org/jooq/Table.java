@@ -31,21 +31,19 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * A table to be used in queries
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface Table extends QueryPart {
+	/**
+	 * @return The list of fields contained in the table
+	 */
+	FieldList getFields();
 
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+	/**
+	 * @return The table's name
+	 */
+	String getName();
 }

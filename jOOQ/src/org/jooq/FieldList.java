@@ -31,21 +31,13 @@
 
 package org.jooq;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
- * Base functionality declaration for all query objects
+ * A typed list of fields
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
+public interface FieldList extends List<Field<?>>, QueryPart {
 
 }

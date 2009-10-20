@@ -31,21 +31,11 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * The type of join
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+public enum JoinType {
+	JOIN, LEFT_JOIN, LEFT_OUTER_JOIN, RIGHT_JOIN, RIGHT_OUTER_JOIN, NATURAL_JOIN;
 }

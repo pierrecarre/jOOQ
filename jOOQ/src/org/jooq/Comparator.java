@@ -31,21 +31,11 @@
 
 package org.jooq;
 
-import java.io.Serializable;
-
 /**
- * Base functionality declaration for all query objects
+ * A comparator to be used in conditions
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+public enum Comparator {
+	EQUALS, NOT_EQUALS, LESS, LESS_OR_EQUAL, MORE, MORE_OR_EQUAL, LIKE;
 }

@@ -31,21 +31,22 @@
 
 package org.jooq;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * Base functionality declaration for all query objects
+ * A query for data insertion
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
+public interface InsertQuery extends Query {
 
-	String toSQL();
+	/**
+	 * @return The table that the data is inserted into
+	 */
+	Table getInto();
 
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+	/**
+	 * @return A mapping of fields and values that are inserted by the query
+	 */
+	Map<Field<?>, ?> getValues();
 }

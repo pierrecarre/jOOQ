@@ -29,23 +29,50 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
-import java.io.Serializable;
+import java.sql.PreparedStatement;
 
-/**
- * Base functionality declaration for all query objects
- * 
- * @author Lukas Eder
- */
-public interface QueryPart extends Serializable {
+import org.jooq.QueryPart;
 
-	String toSQL();
+abstract class AbstractQueryPart implements QueryPart {
 
-	String toSQL(boolean inlineParameters);
+	private static final long serialVersionUID = 2078114876079493107L;
 
-	String toHQL();
+	@Override
+	public final String toHQL() {
+		return toHQL(false);
+	}
 
-	String toHQL(boolean inlineParameters);
+	@Override
+	public final String toHQL(boolean inlineParameters) {
+		throw new UnsupportedOperationException("HQL Generation not supported yet");
+	}
 
+	@Override
+	public final String toSQL() {
+		return toSQL(false);
+	}
+
+	protected abstract int bind (PreparedStatement stmt);
+	protected abstract int bind (PreparedStatement stmt, int initialIndex);
+
+	@Override
+	public boolean equals(Object that) {
+		if (that instanceof QueryPart) {
+			return toSQL(true).equals(((QueryPart) that).toSQL(true));
+		}
+		
+		return false;
+	}
+
+	@Override
+	public final int hashCode() {
+		return toSQL(true).hashCode();
+	}
+
+	@Override
+	public final String toString() {
+		return toSQL(true);
+	}
 }

@@ -31,21 +31,27 @@
 
 package org.jooq;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * Base functionality declaration for all query objects
+ * A query for data updating
  * 
  * @author Lukas Eder
  */
-public interface QueryPart extends Serializable {
-
-	String toSQL();
-
-	String toSQL(boolean inlineParameters);
-
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
+public interface UpdateQuery extends Query {
+	
+	/**
+	 * @return The table that is being updated by the query
+	 */
+	Table getTable();
+	
+	/**
+	 * @return A mapping of fields and values that are updated by the query
+	 */
+	Map<Field<?>, ?> getValues();
+	
+	/**
+	 * @return A condition used for updating in the query
+	 */
+	Condition getWhere();
 }
