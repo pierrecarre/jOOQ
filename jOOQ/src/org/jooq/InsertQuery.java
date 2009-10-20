@@ -46,7 +46,16 @@ public interface InsertQuery extends Query {
 	Table getInto();
 
 	/**
-	 * @return A mapping of fields and values that are inserted by the query
+	 * @return An unmodifiable mapping of fields and values that are inserted by the query
 	 */
 	Map<Field<?>, ?> getValues();
+	
+	/**
+	 * Add a value to the insert statement
+	 * 
+	 * @param <T> The value type
+	 * @param field The field
+	 * @param value The value
+	 */
+	<T> void addValue(Field<T> field, T value);
 }

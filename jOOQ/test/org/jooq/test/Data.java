@@ -29,37 +29,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq.test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.impl.FieldImpl;
+import org.jooq.impl.TableImpl;
 
 /**
  * @author Lukas Eder
  */
-final class ToSQLHelper {
+public final class Data {
+	public static final Field<Integer> FIELD_ID = new FieldImpl<Integer>("ID", Integer.class);
+	public static final Field<String> FIELD_NAME = new FieldImpl<String>("NAME", String.class);
 
-	public static String toSQL(Object value, boolean inlineParameters) {
-		return toSQL(value, inlineParameters, value.getClass());
-	}
+	@SuppressWarnings("unchecked")
+	public static final List<Field<?>> FIELDS = (List) Arrays.asList(FIELD_ID, FIELD_NAME);
 	
-	public static String toSQL(Object value, boolean inlineParameters, Field<?> field) {
-		return toSQL(value, inlineParameters, field.getType());
-	}
+	public static final Table TABLE = new TableImpl("TABLE", FIELDS);
 	
-	public static String toSQL(Object value, boolean inlineParameters, Class<?> clazz) {
-		if (inlineParameters) {
-			if (clazz == String.class) {
-				return "'" + value.toString().replace("'", "''") + "'";
-			}
-			else if (clazz == Integer.class) {
-				return value.toString();
-			}
-			
-			throw new UnsupportedOperationException("Class " + clazz + " is not supported");
-		}
-		
-		return "?";
-	}
-	
-	private ToSQLHelper() {}
+	private Data() {}
 }

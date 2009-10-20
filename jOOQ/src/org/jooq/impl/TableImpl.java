@@ -31,35 +31,50 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.util.List;
+
 import org.jooq.Field;
+import org.jooq.FieldList;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-final class ToSQLHelper {
+public class TableImpl extends AbstractQueryPart implements Table {
 
-	public static String toSQL(Object value, boolean inlineParameters) {
-		return toSQL(value, inlineParameters, value.getClass());
+	private static final long serialVersionUID = 261033315221985068L;
+	private final String name;
+	private final FieldList fields;
+	
+	
+	public TableImpl(String name, List<Field<?>> list) {
+		this(name, new DefaultFieldList(list));
 	}
 	
-	public static String toSQL(Object value, boolean inlineParameters, Field<?> field) {
-		return toSQL(value, inlineParameters, field.getType());
+	public TableImpl(String name, FieldList fields) {
+		this.name = name;
+		this.fields = fields;
 	}
 	
-	public static String toSQL(Object value, boolean inlineParameters, Class<?> clazz) {
-		if (inlineParameters) {
-			if (clazz == String.class) {
-				return "'" + value.toString().replace("'", "''") + "'";
-			}
-			else if (clazz == Integer.class) {
-				return value.toString();
-			}
-			
-			throw new UnsupportedOperationException("Class " + clazz + " is not supported");
-		}
-		
-		return "?";
+	@Override
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
-	
-	private ToSQLHelper() {}
+
+	@Override
+	public FieldList getFields() {
+		return fields;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		return getName();
+	}
+
 }

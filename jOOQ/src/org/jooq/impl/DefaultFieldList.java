@@ -29,17 +29,53 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.test;
+package org.jooq.impl;
+
+import java.util.AbstractList;
+import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.impl.FieldImpl;
+import org.jooq.FieldList;
 
 /**
  * @author Lukas Eder
  */
-public final class Fields {
-	public static final Field<Integer> FIELD_ID = new FieldImpl<Integer>("ID", Integer.class);
-	public static final Field<String> FIELD_NAME = new FieldImpl<String>("NAME", String.class);
-	
-	private Fields() {}
+public class DefaultFieldList extends AbstractList<Field<?>> implements FieldList {
+
+	private static final long serialVersionUID = 6767488169659244494L;
+	private final List<Field<?>> fields;
+
+	public DefaultFieldList(List<Field<?>> fields) {
+		this.fields = fields;
+	}
+
+	@Override
+	public Field<?> get(int index) {
+		return fields.get(index);
+	}
+
+	@Override
+	public int size() {
+		return fields.size();
+	}
+
+	@Override
+	public final String toHQL() {
+		return toHQL(false);
+	}
+
+	@Override
+	public String toHQL(boolean inlineParameters) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public final String toSQL() {
+		return toSQL(false);
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 }

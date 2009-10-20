@@ -33,13 +33,16 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.ConditionStub.CONDITION;
-import static org.jooq.test.Fields.FIELD_ID;
+import static org.jooq.test.Data.FIELD_ID;
+import static org.jooq.test.Data.FIELD_NAME;
+import static org.jooq.test.Data.TABLE;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.InCondition;
+import org.jooq.InsertQuery;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -110,5 +113,24 @@ public class jOOQTest {
 		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID, null, Comparator.NOT_EQUALS);
 		assertEquals("ID is not null", c2.toSQL(true));
 		assertEquals("ID is not null", c2.toSQL(false));
+	}
+	
+	@Test(expected = IllegalStateException.class)  
+	public final void testEmptyInsertQuery() throws Exception {
+		InsertQuery q = QueryFactory.createInsertQuery(TABLE);
+		q.toSQL();
+	}
+	
+	@Test
+	public final void testInsertQuery() throws Exception {
+		InsertQuery q1 = QueryFactory.createInsertQuery(TABLE);
+
+		q1.addValue(FIELD_ID, 10);
+		assertEquals("insert into TABLE (ID) values (10)", q1.toSQL(true));
+		assertEquals("insert into TABLE (ID) values (?)", q1.toSQL(false));
+		
+		q1.addValue(FIELD_NAME, "ABC");
+		assertEquals("insert into TABLE (ID, NAME) values (10, 'ABC')", q1.toSQL(true));
+		assertEquals("insert into TABLE (ID, NAME) values (?, ?)", q1.toSQL(false));
 	}
 }

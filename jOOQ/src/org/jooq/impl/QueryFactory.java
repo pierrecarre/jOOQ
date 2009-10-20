@@ -42,7 +42,9 @@ import org.jooq.CompareCondition;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.InCondition;
+import org.jooq.InsertQuery;
 import org.jooq.Operator;
+import org.jooq.Table;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -85,6 +87,10 @@ public final class QueryFactory {
 
 	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
 		return new CompareConditionImpl<T>(field, value, comparator);
+	}
+
+	public static InsertQuery createInsertQuery(Table into) {
+		return new InsertQueryImpl(into);
 	}
 
 	/**
