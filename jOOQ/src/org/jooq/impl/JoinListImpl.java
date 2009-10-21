@@ -39,7 +39,7 @@ import org.jooq.JoinList;
 /**
  * @author Lukas Eder
  */
-public class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
+class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
 
 	private static final long serialVersionUID = -8180029905491753071L;
 

@@ -32,7 +32,6 @@
 package org.jooq;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * A query for data selection

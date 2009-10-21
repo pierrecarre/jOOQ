@@ -39,7 +39,7 @@ import org.jooq.FieldList;
 /**
  * @author Lukas Eder
  */
-public class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList {
+class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList {
 
 	private static final long serialVersionUID = -6911012275707591576L;
 

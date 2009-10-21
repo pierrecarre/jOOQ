@@ -38,7 +38,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-public class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCondition<T> {
+class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCondition<T> {
 
 	private static final long serialVersionUID = -747240442279619486L;
 	

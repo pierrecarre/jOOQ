@@ -45,7 +45,7 @@ import org.jooq.SortOrder;
 /**
  * @author Lukas Eder
  */
-public class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
+class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 
 	private static final long serialVersionUID = -1825164005148183725L;
 	

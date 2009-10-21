@@ -41,7 +41,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-public class JoinImpl extends AbstractQueryPart implements Join {
+class JoinImpl extends AbstractQueryPart implements Join {
 
 	private static final long serialVersionUID = 2275930365728978050L;
 	

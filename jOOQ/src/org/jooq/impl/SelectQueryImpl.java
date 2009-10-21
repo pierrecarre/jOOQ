@@ -53,7 +53,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-public class SelectQueryImpl extends AbstractQueryPart implements SelectQuery {
+class SelectQueryImpl extends AbstractQueryPart implements SelectQuery {
 
 	private static final long serialVersionUID = -4128783317946627405L;
 	
