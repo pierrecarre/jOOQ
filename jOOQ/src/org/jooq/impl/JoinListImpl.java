@@ -29,32 +29,30 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.test;
+package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.util.List;
 
-import org.jooq.Condition;
-import org.jooq.impl.AbstractQueryPart;
+import org.jooq.Join;
+import org.jooq.JoinList;
 
 /**
  * @author Lukas Eder
  */
-public class ConditionStub extends AbstractQueryPart implements Condition {
+public class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
 
-	public static final ConditionStub CONDITION = new ConditionStub();
-	public static final String SQL = "ConditionStub";
-	
-	private static final long serialVersionUID = -7685868599891970294L;
+	private static final long serialVersionUID = -8180029905491753071L;
 
-	@Override
-	public String toSQL(boolean inlineParameters) {
-		return SQL + " inlined = " + inlineParameters;
+	public JoinListImpl() {
+		super();
+	}
+
+	public JoinListImpl(List<Join> wrappedList) {
+		super(wrappedList);
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	protected String getListSeparator() {
+		return "";
 	}
-	
-	private ConditionStub() {}
 }

@@ -58,5 +58,5 @@ public interface OrderByFieldList extends FieldList {
 	 * @param orders
 	 *            The sort orders
 	 */
-	void add(Collection<Field<?>> fields, Collection<SortOrder> orders);
+	void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders);
 }

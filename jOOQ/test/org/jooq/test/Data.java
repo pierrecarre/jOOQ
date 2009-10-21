@@ -43,13 +43,24 @@ import org.jooq.impl.TableImpl;
  * @author Lukas Eder
  */
 public final class Data {
-	public static final Field<Integer> FIELD_ID = new FieldImpl<Integer>("ID", Integer.class);
-	public static final Field<String> FIELD_NAME = new FieldImpl<String>("NAME", String.class);
+	public static final Field<Integer> FIELD_ID1 = new FieldImpl<Integer>("ID1", Integer.class);
+	public static final Field<Integer> FIELD_ID2 = new FieldImpl<Integer>("ID2", Integer.class);
+	public static final Field<Integer> FIELD_ID3 = new FieldImpl<Integer>("ID3", Integer.class);
+
+	public static final Field<String> FIELD_NAME1 = new FieldImpl<String>("NAME1", String.class);
+	public static final Field<String> FIELD_NAME2 = new FieldImpl<String>("NAME2", String.class);
+	public static final Field<String> FIELD_NAME3 = new FieldImpl<String>("NAME3", String.class);
 
 	@SuppressWarnings("unchecked")
-	public static final List<Field<?>> FIELDS = (List) Arrays.asList(FIELD_ID, FIELD_NAME);
+	public static final List<Field<?>> FIELDS1 = (List) Arrays.asList(FIELD_ID1, FIELD_NAME1);
+	@SuppressWarnings("unchecked")
+	public static final List<Field<?>> FIELDS2 = (List) Arrays.asList(FIELD_ID2, FIELD_NAME2);
+	@SuppressWarnings("unchecked")
+	public static final List<Field<?>> FIELDS3 = (List) Arrays.asList(FIELD_ID3, FIELD_NAME3);
 	
-	public static final Table TABLE = new TableImpl("TABLE", FIELDS);
+	public static final Table TABLE1 = new TableImpl("TABLE1", FIELDS1);
+	public static final Table TABLE2 = new TableImpl("TABLE2", FIELDS2);
+	public static final Table TABLE3 = new TableImpl("TABLE3", FIELDS3);
 	
 	private Data() {}
 }

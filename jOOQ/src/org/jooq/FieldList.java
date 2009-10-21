@@ -31,13 +31,12 @@
 
 package org.jooq;
 
-import java.util.List;
 
 /**
  * A typed list of fields
  * 
  * @author Lukas Eder
  */
-public interface FieldList extends List<Field<?>>, QueryPart {
+public interface FieldList extends QueryPartList<Field<?>> {
 
 }

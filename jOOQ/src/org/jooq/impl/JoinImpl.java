@@ -32,49 +32,62 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
-import java.util.List;
 
-import org.jooq.Field;
-import org.jooq.FieldList;
+import org.jooq.Join;
+import org.jooq.JoinCondition;
+import org.jooq.JoinType;
 import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
+public class JoinImpl extends AbstractQueryPart implements Join {
 
-	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
-	private final FieldList fields;
+	private static final long serialVersionUID = 2275930365728978050L;
 	
-	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
+	private final Table table;
+	private final JoinCondition<?> condition;
+	private final JoinType type;
+
+	public JoinImpl(Table table, JoinCondition<?> condition, JoinType type) {
+		this.table = table;
+		this.condition = condition;
+		this.type = type;
 	}
-	
-	public TableImpl(String name, FieldList fields) {
-		this.name = name;
-		this.fields = fields;
-	}
-	
+
 	@Override
 	protected int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	@Override
-	public final FieldList getFields() {
-		return fields;
+	public JoinCondition<?> getCondition() {
+		return condition;
 	}
 
 	@Override
-	public final String getName() {
-		return name;
+	public Table getTable() {
+		return table;
 	}
 
 	@Override
-	public final String toSQL(boolean inlineParameters) {
-		return getName();
+	public JoinType getType() {
+		return type;
 	}
 
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(getType().toSQL());
+		sb.append(" ");
+		sb.append(getTable().toSQL(inlineParameters));
+		
+		if (getCondition() != null) {
+			sb.append(" on ");
+			sb.append(getCondition().toSQL(inlineParameters));
+		}
+		
+		return sb.toString();
+	}
 }

@@ -31,50 +31,87 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Table;
+import org.jooq.QueryPart;
+import org.jooq.QueryPartList;
 
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
+public abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPartList<T> {
 
-	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
-	private final FieldList fields;
-	
-	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
+	private static final long serialVersionUID = -2936922742534009564L;
+	private final List<T> wrappedList;
+
+	public AbstractQueryPartList() {
+		this(new ArrayList<T>());
 	}
 	
-	public TableImpl(String name, FieldList fields) {
-		this.name = name;
-		this.fields = fields;
+	public AbstractQueryPartList(List<T> wrappedList) {
+		this.wrappedList = wrappedList;
 	}
 	
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public final T get(int index) {
+		return wrappedList.get(index);
 	}
 
 	@Override
-	public final FieldList getFields() {
-		return fields;
+	public final int size() {
+		return wrappedList.size();
 	}
 
 	@Override
-	public final String getName() {
-		return name;
+	public void add(int index, T element) {
+		wrappedList.add(index, element);
+	}
+
+	@Override
+	public final String toHQL() {
+		return toHQL(false);
+	}
+
+	@Override
+	public final String toSQL() {
+		return toSQL(false);
 	}
 
 	@Override
 	public final String toSQL(boolean inlineParameters) {
-		return getName();
+		if (isEmpty()) {
+			return toSQLEmptyList();
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		String separator = "";
+		for (T queryPart : this) {
+			sb.append(separator);
+			sb.append(toSQL(queryPart, inlineParameters));
+			
+			separator = getListSeparator() + " ";
+		}
+		
+		return sb.toString();
 	}
 
+	protected String toSQL(T queryPart, boolean inlineParameters) {
+		return queryPart.toSQL(inlineParameters);
+	}
+
+	protected String toSQLEmptyList() {
+		throw new IllegalStateException("This list does not support generating SQL from empty lists : " + getClass());
+	}
+
+	protected String getListSeparator() {
+		return ",";
+	}
+	
+	@Override
+	public String toHQL(boolean inlineParameters) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 }

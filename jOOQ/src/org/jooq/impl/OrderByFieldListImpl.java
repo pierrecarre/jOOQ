@@ -31,50 +31,78 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Table;
+import org.jooq.OrderByFieldList;
+import org.jooq.SortOrder;
 
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
+public class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 
-	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
-	private final FieldList fields;
+	private static final long serialVersionUID = -1825164005148183725L;
 	
+	private final Map<Field<?>, SortOrder> ordering;
 	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
+	public OrderByFieldListImpl() {
+		this(new ArrayList<Field<?>>());
+	}
+
+	public OrderByFieldListImpl(List<Field<?>> wrappedList) {
+		super(wrappedList);
+		
+		this.ordering = new HashMap<Field<?>, SortOrder>();
+	}
+
+	public Map<Field<?>, SortOrder> getOrdering() {
+		return ordering;
 	}
 	
-	public TableImpl(String name, FieldList fields) {
-		this.name = name;
-		this.fields = fields;
+	public SortOrder getOrdering(Field<?> field) {
+		return getOrdering().get(field);
 	}
 	
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public void add(Field<?> field, SortOrder order) {
+		add(field);
+		
+		if (order != null) {
+			getOrdering().put(field, order);
+		}
 	}
 
 	@Override
-	public final FieldList getFields() {
-		return fields;
+	public void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders) {
+		if (fields.size() != orders.size()) {
+			throw new IllegalArgumentException("The argument 'fields' and the argument 'orders' must be of equal length");
+		}
+		
+		Iterator<Field<?>> it1 = fields.iterator();
+		Iterator<SortOrder> it2 = orders.iterator();
+		
+		while (it1.hasNext() && it2.hasNext()) {
+			add(it1.next(), it2.next());
+		}
 	}
 
 	@Override
-	public final String getName() {
-		return name;
+	protected String toSQL(Field<?> field, boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(super.toSQL(field, inlineParameters));
+		
+		if (getOrdering(field) != null) {
+			sb.append(" ");
+			sb.append(getOrdering(field).toSQL());
+		}
+		
+		return sb.toString();
 	}
-
-	@Override
-	public final String toSQL(boolean inlineParameters) {
-		return getName();
-	}
-
 }

@@ -29,52 +29,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Table;
+package org.jooq;
 
 /**
+ * A typed list of tables
+ * 
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
-
-	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
-	private final FieldList fields;
-	
-	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
-	}
-	
-	public TableImpl(String name, FieldList fields) {
-		this.name = name;
-		this.fields = fields;
-	}
-	
-	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	public final FieldList getFields() {
-		return fields;
-	}
-
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
-	public final String toSQL(boolean inlineParameters) {
-		return getName();
-	}
+public interface TableList extends QueryPartList<Table> {
 
 }

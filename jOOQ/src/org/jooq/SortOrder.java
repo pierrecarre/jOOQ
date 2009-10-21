@@ -41,11 +41,20 @@ public enum SortOrder {
 	/**
 	 * Ascending sort order
 	 */
-	ASC,
+	ASC("asc"),
 
 	/**
 	 * Descending sort order
 	 */
-	DESC;
+	DESC("desc");
 
+	private final String sql;
+	
+	private SortOrder(String sql) {
+		this.sql = sql;
+	}
+	
+	public String toSQL() {
+		return sql;
+	}
 }

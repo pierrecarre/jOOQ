@@ -32,10 +32,16 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.test.ConditionStub.CONDITION;
-import static org.jooq.test.Data.FIELD_ID;
-import static org.jooq.test.Data.FIELD_NAME;
-import static org.jooq.test.Data.TABLE;
+import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+import static org.jooq.test.Data.FIELD_ID1;
+import static org.jooq.test.Data.FIELD_ID2;
+import static org.jooq.test.Data.FIELD_ID3;
+import static org.jooq.test.Data.FIELD_NAME1;
+import static org.jooq.test.Data.TABLE1;
+import static org.jooq.test.Data.TABLE2;
+import static org.jooq.test.Data.TABLE3;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
@@ -44,6 +50,10 @@ import org.jooq.CompareCondition;
 import org.jooq.DeleteQuery;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
+import org.jooq.Join;
+import org.jooq.JoinCondition;
+import org.jooq.SelectQuery;
+import org.jooq.SortOrder;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
@@ -73,118 +83,211 @@ public class jOOQTest {
 
 	@Test
 	public final void testSingleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION);
-		assertEquals(CONDITION.toSQL(true), c.toSQL(true));
-		assertEquals(CONDITION.toSQL(false), c.toSQL(false));
+		CombinedCondition c = QueryFactory.createCombinedCondition(TRUE_CONDITION);
+		assertEquals(TRUE_CONDITION.toSQL(true), c.toSQL(true));
+		assertEquals(TRUE_CONDITION.toSQL(false), c.toSQL(false));
 	}
 
 	@Test
 	public final void testMultipleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(CONDITION, CONDITION);
-		assertEquals("(" + CONDITION.toSQL(true) + " and " + CONDITION.toSQL(true) + ")", c.toSQL(true));
-		assertEquals("(" + CONDITION.toSQL(false) + " and " + CONDITION.toSQL(false) + ")", c.toSQL(false));
+		CombinedCondition c = QueryFactory.createCombinedCondition(TRUE_CONDITION, TRUE_CONDITION);
+		assertEquals("(1 = 1 and 1 = 1)", c.toSQL(true));
+		assertEquals("(1 = 1 and 1 = 1)", c.toSQL(false));
 	}
 	
 	@Test
 	public final void testBetweenCondition() throws Exception {
-		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID, 1, 10);
-		assertEquals("ID between 1 and 10", c.toSQL(true));
-		assertEquals("ID between ? and ?", c.toSQL(false));
+		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID1, 1, 10);
+		assertEquals("ID1 between 1 and 10", c.toSQL(true));
+		assertEquals("ID1 between ? and ?", c.toSQL(false));
 	}
 	
 	@Test
 	public final void testInCondition() throws Exception {
-		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID, 1, 10);
-		assertEquals("ID in (1, 10)", c.toSQL(true));
-		assertEquals("ID in (?, ?)", c.toSQL(false));
+		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID1, 1, 10);
+		assertEquals("ID1 in (1, 10)", c.toSQL(true));
+		assertEquals("ID1 in (?, ?)", c.toSQL(false));
 	}
 	
 	@Test
 	public final void testCompareCondition() throws Exception {
-		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID, 10);
-		assertEquals("ID = 10", c.toSQL(true));
-		assertEquals("ID = ?", c.toSQL(false));
+		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		assertEquals("ID1 = 10", c.toSQL(true));
+		assertEquals("ID1 = ?", c.toSQL(false));
 	}
 	
 	@Test
 	public final void testIsNullCondition() throws Exception {
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID, null);
-		assertEquals("ID is null", c1.toSQL(true));
-		assertEquals("ID is null", c1.toSQL(false));
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, null);
+		assertEquals("ID1 is null", c1.toSQL(true));
+		assertEquals("ID1 is null", c1.toSQL(false));
 		
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID, null, Comparator.NOT_EQUALS);
-		assertEquals("ID is not null", c2.toSQL(true));
-		assertEquals("ID is not null", c2.toSQL(false));
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, null, Comparator.NOT_EQUALS);
+		assertEquals("ID1 is not null", c2.toSQL(true));
+		assertEquals("ID1 is not null", c2.toSQL(false));
 	}
 	
 	@Test(expected = IllegalStateException.class)  
 	public final void testEmptyInsertQuery() throws Exception {
-		InsertQuery q = QueryFactory.createInsertQuery(TABLE);
+		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
 		q.toSQL();
 	}
 	
 	@Test
 	public final void testInsertQuery() throws Exception {
-		InsertQuery q = QueryFactory.createInsertQuery(TABLE);
+		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
 
-		q.addValue(FIELD_ID, 10);
-		assertEquals("insert into TABLE (ID) values (10)", q.toSQL(true));
-		assertEquals("insert into TABLE (ID) values (?)", q.toSQL(false));
+		q.addValue(FIELD_ID1, 10);
+		assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQL(true));
+		assertEquals("insert into TABLE1 (ID1) values (?)", q.toSQL(false));
 		
-		q.addValue(FIELD_NAME, "ABC");
-		assertEquals("insert into TABLE (ID, NAME) values (10, 'ABC')", q.toSQL(true));
-		assertEquals("insert into TABLE (ID, NAME) values (?, ?)", q.toSQL(false));
+		q.addValue(FIELD_NAME1, "ABC");
+		assertEquals("insert into TABLE1 (ID1, NAME1) values (10, 'ABC')", q.toSQL(true));
+		assertEquals("insert into TABLE1 (ID1, NAME1) values (?, ?)", q.toSQL(false));
 	}
 	
 	@Test(expected = IllegalStateException.class)  
 	public final void testEmptyUpdateQuery() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE);
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
 		q.toSQL();
 	}
 
 	@Test
 	public final void testUpdateQuery() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE);
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
 		
-		q.addValue(FIELD_ID, 10);
-		assertEquals("update TABLE set ID = 10", q.toSQL(true));
-		assertEquals("update TABLE set ID = ?", q.toSQL(false));
+		q.addValue(FIELD_ID1, 10);
+		assertEquals("update TABLE1 set ID1 = 10", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?", q.toSQL(false));
 		
-		q.addValue(FIELD_NAME, "ABC");
-		assertEquals("update TABLE set ID = 10, NAME = 'ABC'", q.toSQL(true));
-		assertEquals("update TABLE set ID = ?, NAME = ?", q.toSQL(false));
+		q.addValue(FIELD_NAME1, "ABC");
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC'", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ?", q.toSQL(false));
 		
-		q.addConditions(CONDITION);
-		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where ConditionStub inlined = true", q.toSQL(true));
-		assertEquals("update TABLE set ID = ?, NAME = ? where ConditionStub inlined = false", q.toSQL(false));
+		q.addConditions(FALSE_CONDITION);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where 1 = 0", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where 1 = 0", q.toSQL(false));
 		
-		q.addConditions(CONDITION);
-		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where (ConditionStub inlined = true and ConditionStub inlined = true)", q.toSQL(true));
-		assertEquals("update TABLE set ID = ?, NAME = ? where (ConditionStub inlined = false and ConditionStub inlined = false)", q.toSQL(false));
+		q.addConditions(TRUE_CONDITION);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where (1 = 0 and 1 = 1)", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where (1 = 0 and 1 = 1)", q.toSQL(false));
 		
-		q.addConditions(CONDITION, CONDITION);
-		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where ((ConditionStub inlined = true and ConditionStub inlined = true) and (ConditionStub inlined = true and ConditionStub inlined = true))", q.toSQL(true));
-		assertEquals("update TABLE set ID = ?, NAME = ? where ((ConditionStub inlined = false and ConditionStub inlined = false) and (ConditionStub inlined = false and ConditionStub inlined = false))", q.toSQL(false));
+		q.addConditions(TRUE_CONDITION, TRUE_CONDITION);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(false));
 	}
 	
 	@Test
 	public final void testDeleteQuery() throws Exception {
-		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE);
+		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
 		
-		assertEquals("delete from TABLE", q.toSQL(true));
-		assertEquals("delete from TABLE", q.toSQL(false));
+		assertEquals("delete from TABLE1", q.toSQL(true));
+		assertEquals("delete from TABLE1", q.toSQL(false));
 		
-		q.addConditions(CONDITION);
-		assertEquals("delete from TABLE where ConditionStub inlined = true", q.toSQL(true));
-		assertEquals("delete from TABLE where ConditionStub inlined = false", q.toSQL(false));
+		q.addConditions(FALSE_CONDITION);
+		assertEquals("delete from TABLE1 where 1 = 0", q.toSQL(true));
+		assertEquals("delete from TABLE1 where 1 = 0", q.toSQL(false));
 		
-		q.addConditions(CONDITION);
-		assertEquals("delete from TABLE where (ConditionStub inlined = true and ConditionStub inlined = true)", q.toSQL(true));
-		assertEquals("delete from TABLE where (ConditionStub inlined = false and ConditionStub inlined = false)", q.toSQL(false));
+		q.addConditions(TRUE_CONDITION);
+		assertEquals("delete from TABLE1 where (1 = 0 and 1 = 1)", q.toSQL(true));
+		assertEquals("delete from TABLE1 where (1 = 0 and 1 = 1)", q.toSQL(false));
 		
-		q.addConditions(CONDITION, CONDITION);
-		assertEquals("delete from TABLE where ((ConditionStub inlined = true and ConditionStub inlined = true) and (ConditionStub inlined = true and ConditionStub inlined = true))", q.toSQL(true));
-		assertEquals("delete from TABLE where ((ConditionStub inlined = false and ConditionStub inlined = false) and (ConditionStub inlined = false and ConditionStub inlined = false))", q.toSQL(false));
+		q.addConditions(TRUE_CONDITION, TRUE_CONDITION);
+		assertEquals("delete from TABLE1 where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(true));
+		assertEquals("delete from TABLE1 where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(false));
 	}
 	
+	@Test
+	public final void testConditionalSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery();
+		
+		assertEquals("select * from dual", q.toSQL(true));
+		assertEquals("select * from dual", q.toSQL(false));
+
+		q.addConditions(FALSE_CONDITION);
+		assertEquals("select * from dual where 1 = 0", q.toSQL(true));
+		assertEquals("select * from dual where 1 = 0", q.toSQL(false));
+		
+		q.addConditions(TRUE_CONDITION);
+		assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQL(true));
+		assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQL(false));
+		
+		q.addConditions(TRUE_CONDITION, TRUE_CONDITION);
+		assertEquals("select * from dual where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(true));
+		assertEquals("select * from dual where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testProductSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery();
+		
+		q.addFrom(TABLE1);
+		q.addFrom(TABLE2, TABLE3);
+		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQL(true));
+		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testJoinSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		
+		q.addJoin(TABLE2);
+		assertEquals("select * from TABLE1 join TABLE2", q.toSQL(true));
+		assertEquals("select * from TABLE1 join TABLE2", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testJoinOnConditionSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		JoinCondition<Integer> c = QueryFactory.createJoinCondition(FIELD_ID1, FIELD_ID2);
+		
+		q.addJoin(TABLE2, c);
+		assertEquals("select * from TABLE1 join TABLE2 on ID1 = ID2", q.toSQL(true));
+		assertEquals("select * from TABLE1 join TABLE2 on ID1 = ID2", q.toSQL(false));
+		
+		q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
+		assertEquals("select * from TABLE1 join TABLE2 on ID1 = ID2 join TABLE3 on ID2 = ID3", q.toSQL(true));
+		assertEquals("select * from TABLE1 join TABLE2 on ID1 = ID2 join TABLE3 on ID2 = ID3", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testJoinTypeSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		Join j = QueryFactory.createJoin(TABLE2, FIELD_ID1, FIELD_ID2, LEFT_OUTER_JOIN);
+		
+		q.addJoin(j);
+		assertEquals("select * from TABLE1 left outer join TABLE2 on ID1 = ID2", q.toSQL(true));
+		assertEquals("select * from TABLE1 left outer join TABLE2 on ID1 = ID2", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testGroupSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		
+		q.addGroupBy(FIELD_ID1);
+		assertEquals("select * from TABLE1 group by ID1", q.toSQL(true));
+		assertEquals("select * from TABLE1 group by ID1", q.toSQL(false));
+
+		q.addGroupBy(FIELD_ID2, FIELD_ID3);
+		assertEquals("select * from TABLE1 group by ID1, ID2, ID3", q.toSQL(true));
+		assertEquals("select * from TABLE1 group by ID1, ID2, ID3", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testOrderSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		
+		q.addOrderBy(FIELD_ID1);
+		assertEquals("select * from TABLE1 order by ID1", q.toSQL(true));
+		assertEquals("select * from TABLE1 order by ID1", q.toSQL(false));
+
+		q.addOrderBy(FIELD_ID2, SortOrder.DESC);
+		assertEquals("select * from TABLE1 order by ID1, ID2 desc", q.toSQL(true));
+		assertEquals("select * from TABLE1 order by ID1, ID2 desc", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testCompleteSelectQuery() throws Exception {
+		
+	}
 }

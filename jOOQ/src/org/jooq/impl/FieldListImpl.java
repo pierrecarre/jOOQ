@@ -31,7 +31,6 @@
 
 package org.jooq.impl;
 
-import java.util.AbstractList;
 import java.util.List;
 
 import org.jooq.Field;
@@ -40,42 +39,15 @@ import org.jooq.FieldList;
 /**
  * @author Lukas Eder
  */
-class DefaultFieldList extends AbstractList<Field<?>> implements FieldList {
+public class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList {
 
-	private static final long serialVersionUID = 6767488169659244494L;
-	private final List<Field<?>> fields;
+	private static final long serialVersionUID = -6911012275707591576L;
 
-	public DefaultFieldList(List<Field<?>> fields) {
-		this.fields = fields;
+	public FieldListImpl() {
+		super();
 	}
 
-	@Override
-	public Field<?> get(int index) {
-		return fields.get(index);
-	}
-
-	@Override
-	public int size() {
-		return fields.size();
-	}
-
-	@Override
-	public final String toHQL() {
-		return toHQL(false);
-	}
-
-	@Override
-	public String toHQL(boolean inlineParameters) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	public final String toSQL() {
-		return toSQL(false);
-	}
-
-	@Override
-	public String toSQL(boolean inlineParameters) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public FieldListImpl(List<Field<?>> wrappedList) {
+		super(wrappedList);
 	}
 }

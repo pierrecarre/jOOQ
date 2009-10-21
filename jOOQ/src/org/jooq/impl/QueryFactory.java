@@ -44,7 +44,11 @@ import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
+import org.jooq.Join;
+import org.jooq.JoinCondition;
+import org.jooq.JoinType;
 import org.jooq.Operator;
+import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 
@@ -90,6 +94,10 @@ public final class QueryFactory {
 	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
 		return new CompareConditionImpl<T>(field, value, comparator);
 	}
+	
+	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2) {
+		return new JoinConditionImpl<T>(field1, field2);
+	}
 
 	public static InsertQuery createInsertQuery(Table into) {
 		return new InsertQueryImpl(into);
@@ -102,7 +110,35 @@ public final class QueryFactory {
 	public static DeleteQuery createDeleteQuery(Table table) {
 		return new DeleteQueryImpl(table);
 	}
+	
+	public static SelectQuery createSelectQuery() {
+		return createSelectQuery(null);
+	}
+	
+	public static SelectQuery createSelectQuery(Table table) {
+		return new SelectQueryImpl(table);
+	}
 
+	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2) {
+		return createJoin(table, field1, field2, JoinType.JOIN);
+	}
+	
+	public static Join createJoin(Table table, JoinCondition<?> condition) {
+		return createJoin(table, condition, JoinType.JOIN);
+	}
+	
+	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2, JoinType type) {
+		return createJoin(table, createJoinCondition(field1, field2), type);
+	}
+	
+	public static Join createJoin(Table table, JoinCondition<?> condition, JoinType type) {
+		return new JoinImpl(table, condition, type);
+	}
+
+	public static <T> Join createJoin(Table table) {
+		return createJoin(table, null, JoinType.JOIN);
+	}
+	
 	/**
 	 * No instances
 	 */

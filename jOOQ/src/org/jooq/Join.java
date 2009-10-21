@@ -39,7 +39,7 @@ package org.jooq;
 public interface Join extends QueryPart {
 
 	/**
-	 * @return The type of join
+	 * @return The type of join. If null, natural join is used
 	 */
 	JoinType getType();
 
@@ -49,7 +49,7 @@ public interface Join extends QueryPart {
 	Table getTable();
 
 	/**
-	 * @return The join condition
+	 * @return The join condition. If null, natural join is used
 	 */
-	Condition getCondition();
+	JoinCondition<?> getCondition();
 }

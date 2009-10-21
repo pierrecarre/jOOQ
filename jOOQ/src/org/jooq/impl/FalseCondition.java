@@ -41,7 +41,7 @@ import org.jooq.Condition;
 public class FalseCondition extends AbstractQueryPart implements Condition {
 
 	private static final long serialVersionUID = -3972466479081463547L;
-	public static final FalseCondition INSTANCE = new FalseCondition();
+	public static final FalseCondition FALSE_CONDITION = new FalseCondition();
 	
 	@Override
 	protected int bind(PreparedStatement stmt, int initialIndex) {

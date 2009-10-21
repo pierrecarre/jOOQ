@@ -31,50 +31,30 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
+
 import java.util.List;
 
-import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.Table;
+import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
+class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
 
-	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
-	private final FieldList fields;
-	
-	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
+	private static final long serialVersionUID = -8545559185481762229L;
+
+	public TableListImpl() {
+		super();
 	}
-	
-	public TableImpl(String name, FieldList fields) {
-		this.name = name;
-		this.fields = fields;
-	}
-	
-	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+
+	public TableListImpl(List<Table> wrappedList) {
+		super(wrappedList);
 	}
 
 	@Override
-	public final FieldList getFields() {
-		return fields;
+	protected String toSQLEmptyList() {
+		return EMPTY_TABLE.toSQL();
 	}
-
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
-	public final String toSQL(boolean inlineParameters) {
-		return getName();
-	}
-
 }
