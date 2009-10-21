@@ -29,58 +29,71 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+
+import java.sql.PreparedStatement;
 import java.util.Collection;
-import java.util.List;
+
+import org.jooq.Condition;
+import org.jooq.ConditionProvider;
+import org.jooq.DeleteQuery;
+import org.jooq.Table;
 
 /**
- * A query for data selection
- * 
  * @author Lukas Eder
  */
-public interface SelectQuery extends Query, ConditionProvider {
-	
-	/**
-	 * @return The list of select fields
-	 */
-	FieldList getSelect();
-	
-	/**
-	 * @return The list of tables from which selection is made
-	 */
-	List<Table> getFrom();
-	
-	/**
-	 * @return The list of join statements
-	 */
-	List<Join> getJoin();
-	
-	/**
-	 * @return A list of grouping fields
-	 */
-	FieldList getGroupBy();
-	
-	/**
-	 * @return A list of ordering fields, and their corresponding sort order
-	 */
-	OrderByFieldList getOrderBy();
+class DeleteQueryImpl extends AbstractQueryPart implements DeleteQuery {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	Condition getWhere();
+	private static final long serialVersionUID = -1943687511774150929L;
+	
+	private final Table table;
+	private final ConditionProvider condition;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Condition... conditions);
+	public DeleteQueryImpl(Table table) {
+		this.table = table;
+		this.condition = new ConditionProviderImpl();
+	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	void addConditions(Collection<Condition> conditions);
+	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public Table getFrom() {
+		return table;
+	}
+
+	@Override
+	public Condition getWhere() {
+		return condition.getWhere();
+	}
+
+	@Override
+	public void addConditions(Collection<Condition> conditions) {
+		condition.addConditions(conditions);
+	}
+
+	@Override
+	public void addConditions(Condition... conditions) {
+		condition.addConditions(conditions);
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("delete from ");
+		sb.append(getFrom().toSQL(inlineParameters));
+
+		if (getWhere() != TRUE_CONDITION) {
+			sb.append(" where ");
+			sb.append(getWhere().toSQL(inlineParameters));
+		}
+				
+		return sb.toString();
+	}
+
 }

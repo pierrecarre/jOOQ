@@ -34,13 +34,13 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.jooq.Condition;
+import org.jooq.ConditionProvider;
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
@@ -53,11 +53,12 @@ class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
 	private static final long serialVersionUID = -660460731970074719L;
 	private final Table table;
 	private final Map<Field<?>, Object> values;
-	private Condition condition;
+	private final ConditionProvider condition;
 	
 	public UpdateQueryImpl(Table table) {
 		this.table = table;
 		this.values = new LinkedHashMap<Field<?>, Object>();
+		this.condition = new ConditionProviderImpl();
 	}
 
 	@Override
@@ -68,6 +69,21 @@ class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
 	@Override
 	public Table getTable() {
 		return table;
+	}
+	
+	@Override
+	public void addConditions(Collection<Condition> conditions) {
+		condition.addConditions(conditions);
+	}
+
+	@Override
+	public void addConditions(Condition... conditions) {
+		condition.addConditions(conditions);
+	}
+
+	@Override
+	public Condition getWhere() {
+		return condition.getWhere();
 	}
 
 	@Override
@@ -82,39 +98,6 @@ class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
 	@Override
 	public <T> void addValue(Field<T> field, T value) {
 		getValues0().put(field, value);
-	}
-
-	@Override
-	public Condition getWhere() {
-		if (condition == null) {
-			return TRUE_CONDITION;
-		}
-		
-		return condition;
-	}
-	
-	@Override
-	public void addConditions(Condition... conditions) {
-		addConditions(Arrays.asList(conditions));
-	}
-	
-	@Override
-	public void addConditions(Collection<Condition> conditions) {
-		if (!conditions.isEmpty()) {
-			Condition c;
-			
-			if (conditions.size() == 1) {
-				c = conditions.iterator().next();
-			} else {
-				c = QueryFactory.createCombinedCondition(conditions);
-			}
-			
-			if (getWhere() == TRUE_CONDITION) {
-				condition = c;
-			} else {
-				condition = QueryFactory.createCombinedCondition(getWhere(), c);
-			}
-		}
 	}
 
 	@Override

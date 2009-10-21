@@ -41,6 +41,7 @@ import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
+import org.jooq.DeleteQuery;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.UpdateQuery;
@@ -165,4 +166,25 @@ public class jOOQTest {
 		assertEquals("update TABLE set ID = 10, NAME = 'ABC' where ((ConditionStub inlined = true and ConditionStub inlined = true) and (ConditionStub inlined = true and ConditionStub inlined = true))", q.toSQL(true));
 		assertEquals("update TABLE set ID = ?, NAME = ? where ((ConditionStub inlined = false and ConditionStub inlined = false) and (ConditionStub inlined = false and ConditionStub inlined = false))", q.toSQL(false));
 	}
+	
+	@Test
+	public final void testDeleteQuery() throws Exception {
+		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE);
+		
+		assertEquals("delete from TABLE", q.toSQL(true));
+		assertEquals("delete from TABLE", q.toSQL(false));
+		
+		q.addConditions(CONDITION);
+		assertEquals("delete from TABLE where ConditionStub inlined = true", q.toSQL(true));
+		assertEquals("delete from TABLE where ConditionStub inlined = false", q.toSQL(false));
+		
+		q.addConditions(CONDITION);
+		assertEquals("delete from TABLE where (ConditionStub inlined = true and ConditionStub inlined = true)", q.toSQL(true));
+		assertEquals("delete from TABLE where (ConditionStub inlined = false and ConditionStub inlined = false)", q.toSQL(false));
+		
+		q.addConditions(CONDITION, CONDITION);
+		assertEquals("delete from TABLE where ((ConditionStub inlined = true and ConditionStub inlined = true) and (ConditionStub inlined = true and ConditionStub inlined = true))", q.toSQL(true));
+		assertEquals("delete from TABLE where ((ConditionStub inlined = false and ConditionStub inlined = false) and (ConditionStub inlined = false and ConditionStub inlined = false))", q.toSQL(false));
+	}
+	
 }

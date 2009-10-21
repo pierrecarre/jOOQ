@@ -39,7 +39,7 @@ import java.util.Map;
  * 
  * @author Lukas Eder
  */
-public interface UpdateQuery extends Query {
+public interface UpdateQuery extends Query, ConditionProvider {
 
 	/**
 	 * @return The table that is being updated by the query
@@ -50,11 +50,6 @@ public interface UpdateQuery extends Query {
 	 * @return A mapping of fields and values that are updated by the query
 	 */
 	Map<Field<?>, ?> getValues();
-
-	/**
-	 * @return A condition used for updating in the query
-	 */
-	Condition getWhere();
 
 	/**
 	 * Add a value to the insert statement
@@ -69,20 +64,20 @@ public interface UpdateQuery extends Query {
 	<T> void addValue(Field<T> field, T value);
 
 	/**
-	 * Adds new conditions to the update query, connecting it to existing
-	 * conditions with the and operator.
-	 * 
-	 * @param conditions
-	 *            The condition
+	 * {@inheritDoc}
 	 */
+	@Override
+	Condition getWhere();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	void addConditions(Condition... conditions);
 
 	/**
-	 * Adds new conditions to the update query, connecting it to existing
-	 * conditions with the and operator.
-	 * 
-	 * @param conditions
-	 *            The condition
+	 * {@inheritDoc}
 	 */
+	@Override
 	void addConditions(Collection<Condition> conditions);
 }

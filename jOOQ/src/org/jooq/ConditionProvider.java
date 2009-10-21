@@ -32,55 +32,32 @@
 package org.jooq;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
- * A query for data selection
- * 
  * @author Lukas Eder
  */
-public interface SelectQuery extends Query, ConditionProvider {
+public interface ConditionProvider {
 	
 	/**
-	 * @return The list of select fields
+	 * @return The condition
 	 */
-	FieldList getSelect();
-	
-	/**
-	 * @return The list of tables from which selection is made
-	 */
-	List<Table> getFrom();
-	
-	/**
-	 * @return The list of join statements
-	 */
-	List<Join> getJoin();
-	
-	/**
-	 * @return A list of grouping fields
-	 */
-	FieldList getGroupBy();
-	
-	/**
-	 * @return A list of ordering fields, and their corresponding sort order
-	 */
-	OrderByFieldList getOrderBy();
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	Condition getWhere();
 
 	/**
-	 * {@inheritDoc}
+	 * Adds new conditions to the update query, connecting it to existing
+	 * conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
 	 */
-	@Override
 	void addConditions(Condition... conditions);
 
 	/**
-	 * {@inheritDoc}
+	 * Adds new conditions to the update query, connecting it to existing
+	 * conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
 	 */
-	@Override
 	void addConditions(Collection<Condition> conditions);
 }

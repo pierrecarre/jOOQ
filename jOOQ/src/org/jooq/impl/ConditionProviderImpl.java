@@ -29,58 +29,53 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+
+import org.jooq.Condition;
+import org.jooq.ConditionProvider;
 
 /**
- * A query for data selection
- * 
  * @author Lukas Eder
  */
-public interface SelectQuery extends Query, ConditionProvider {
-	
-	/**
-	 * @return The list of select fields
-	 */
-	FieldList getSelect();
-	
-	/**
-	 * @return The list of tables from which selection is made
-	 */
-	List<Table> getFrom();
-	
-	/**
-	 * @return The list of join statements
-	 */
-	List<Join> getJoin();
-	
-	/**
-	 * @return A list of grouping fields
-	 */
-	FieldList getGroupBy();
-	
-	/**
-	 * @return A list of ordering fields, and their corresponding sort order
-	 */
-	OrderByFieldList getOrderBy();
+class ConditionProviderImpl implements ConditionProvider {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	Condition getWhere();
+	private Condition condition;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	void addConditions(Condition... conditions);
-
-	/**
-	 * {@inheritDoc}
-	 */
+	public Condition getWhere() {
+		if (condition == null) {
+			return TRUE_CONDITION;
+		}
+		
+		return condition;
+	}
+	
 	@Override
-	void addConditions(Collection<Condition> conditions);
+	public void addConditions(Condition... conditions) {
+		addConditions(Arrays.asList(conditions));
+	}
+	
+	@Override
+	public void addConditions(Collection<Condition> conditions) {
+		if (!conditions.isEmpty()) {
+			Condition c;
+			
+			if (conditions.size() == 1) {
+				c = conditions.iterator().next();
+			} else {
+				c = QueryFactory.createCombinedCondition(conditions);
+			}
+			
+			if (getWhere() == TRUE_CONDITION) {
+				condition = c;
+			} else {
+				condition = QueryFactory.createCombinedCondition(getWhere(), c);
+			}
+		}
+	}
 }

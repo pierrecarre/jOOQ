@@ -31,19 +31,34 @@
 
 package org.jooq;
 
+import java.util.Collection;
+
 /**
  * A query used for deletion of data
  * 
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query {
+public interface DeleteQuery extends Query, ConditionProvider {
 	/**
 	 * @return The table to delete data from
 	 */
 	Table getFrom();
 
 	/**
-	 * @return The deletion condition
+	 * {@inheritDoc}
 	 */
+	@Override
 	Condition getWhere();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	void addConditions(Condition... conditions);
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	void addConditions(Collection<Condition> conditions);
 }

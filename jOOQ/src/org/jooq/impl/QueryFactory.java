@@ -40,6 +40,7 @@ import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Condition;
+import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
@@ -96,6 +97,10 @@ public final class QueryFactory {
 
 	public static UpdateQuery createUpdateQuery(Table table) {
 		return new UpdateQueryImpl(table);
+	}
+
+	public static DeleteQuery createDeleteQuery(Table table) {
+		return new DeleteQueryImpl(table);
 	}
 
 	/**
