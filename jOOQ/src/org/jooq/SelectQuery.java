@@ -72,6 +72,20 @@ public interface SelectQuery extends Query, ConditionProvider {
 	Condition getWhere();
 
 	/**
+	 * Add a list of select fields
+	 * 
+	 * @param fields
+	 */
+	void addSelect(Field<?>... fields);
+	
+	/**
+	 * Add a list of select fields
+	 * 
+	 * @param fields
+	 */
+	void addSelect(Collection<Field<?>> fields);
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override

@@ -288,6 +288,14 @@ public class jOOQTest {
 	
 	@Test
 	public final void testCompleteSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		q.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
+		q.addSelect(FIELD_ID1, FIELD_ID2);
+		q.addGroupBy(FIELD_ID1, FIELD_ID2);
+		q.addOrderBy(FIELD_ID1, SortOrder.ASC);
+		q.addOrderBy(FIELD_ID2, SortOrder.DESC);
 		
+		assertEquals("select ID1, ID2 from TABLE1 join TABLE2 on ID1 = ID2 group by ID1, ID2 order by ID1 asc, ID2 desc", q.toSQL(true));
+		assertEquals("select ID1, ID2 from TABLE1 join TABLE2 on ID1 = ID2 group by ID1, ID2 order by ID1 asc, ID2 desc", q.toSQL(false));
 	}
 }

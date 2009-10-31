@@ -81,6 +81,16 @@ class SelectQueryImpl extends AbstractQueryPart implements SelectQuery {
 	protected int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
+	
+	@Override
+	public void addSelect(Collection<Field<?>> fields) {
+		getSelect().addAll(fields);
+	}
+
+	@Override
+	public final void addSelect(Field<?>... fields) {
+		addSelect(Arrays.asList(fields));
+	}
 
 	@Override
 	public final void addConditions(Condition... conditions) {
