@@ -48,6 +48,7 @@ import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.DeleteQuery;
+import org.jooq.Function;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
@@ -55,6 +56,7 @@ import org.jooq.JoinCondition;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.UpdateQuery;
+import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -125,6 +127,61 @@ public class jOOQTest {
 		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, null, Comparator.NOT_EQUALS);
 		assertEquals("ID1 is not null", c2.toSQL(true));
 		assertEquals("ID1 is not null", c2.toSQL(false));
+	}
+	
+	public final void testNullFunction() {
+		Function<?> f = Functions.NULL();
+		assertEquals("null", f.toSQL(true));
+		assertEquals("null", f.toSQL(false));
+	}
+	
+	public final void testConstantFunction() {
+		Function<Integer> f1 = Functions.constant(Integer.valueOf(1));
+		assertEquals(Integer.class, f1.getType());
+		assertEquals("1", f1.toSQL(true));
+		assertEquals("1", f1.toSQL(false));
+		
+		Function<String> f2 = Functions.constant("test");
+		assertEquals(String.class, f2.getType());
+		assertEquals("test", f2.toSQL(true));
+		assertEquals("test", f2.toSQL(false));
+	}
+	
+	public final void testArithmeticFunctions() {
+		Function<Integer> sum = Functions.sum(FIELD_ID1);
+		assertEquals(Integer.class, sum.getType());
+		assertEquals("sum(ID1)", sum.toSQL(true));
+		assertEquals("sum(ID1)", sum.toSQL(false));
+
+		Function<Double> avg = Functions.avg(FIELD_ID1);
+		assertEquals(Double.class, avg.getType());
+		assertEquals("avg(ID1)", avg.toSQL(true));
+		assertEquals("avg(ID1)", avg.toSQL(false));
+
+		Function<Integer> min = Functions.min(FIELD_ID1);
+		assertEquals(Integer.class, min.getType());
+		assertEquals("min(ID1)", min.toSQL(true));
+		assertEquals("min(ID1)", min.toSQL(false));
+		
+		Function<Integer> max = Functions.max(FIELD_ID1);
+		assertEquals(Integer.class, max.getType());
+		assertEquals("max(ID1)", max.toSQL(true));
+		assertEquals("max(ID1)", max.toSQL(false));
+		
+		Function<Integer> count1 = Functions.count();
+		assertEquals(Integer.class, count1.getType());
+		assertEquals("count(*)", count1.toSQL(true));
+		assertEquals("count(*)", count1.toSQL(false));
+		
+		Function<Integer> count2 = Functions.count(FIELD_ID1);
+		assertEquals(Integer.class, count2.getType());
+		assertEquals("count(ID1)", count2.toSQL(true));
+		assertEquals("count(ID1)", count2.toSQL(false));
+		
+		Function<Integer> count3 = Functions.countDistinct(FIELD_ID1);
+		assertEquals(Integer.class, count3.getType());
+		assertEquals("count(distinct ID1)", count3.toSQL(true));
+		assertEquals("count(distinct ID1)", count3.toSQL(false));
 	}
 	
 	@Test(expected = IllegalStateException.class)  
