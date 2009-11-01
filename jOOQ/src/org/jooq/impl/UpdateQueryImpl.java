@@ -62,7 +62,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	

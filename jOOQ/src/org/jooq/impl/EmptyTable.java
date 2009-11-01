@@ -43,7 +43,7 @@ public class EmptyTable extends TableImpl {
 	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
 	
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

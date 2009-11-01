@@ -32,6 +32,8 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * Base functionality declaration for all query objects
@@ -41,7 +43,9 @@ import java.io.Serializable;
 public interface QueryPart extends Serializable {
 
 	String toSQL();
-
 	String toSQL(boolean inlineParameters);
+	
+	int bind (PreparedStatement stmt) throws SQLException;
+	int bind (PreparedStatement stmt, int initialIndex) throws SQLException;
 
 }

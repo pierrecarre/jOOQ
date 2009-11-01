@@ -44,7 +44,7 @@ public class FalseCondition extends AbstractQueryPart implements Condition {
 	public static final FalseCondition FALSE_CONDITION = new FalseCondition();
 	
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

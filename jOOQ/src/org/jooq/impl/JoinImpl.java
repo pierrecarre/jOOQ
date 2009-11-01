@@ -56,7 +56,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

@@ -44,7 +44,7 @@ public class TrueCondition extends AbstractQueryPart implements Condition {
 	public static final TrueCondition TRUE_CONDITION = new TrueCondition();
 	
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Set;
 
 import org.jooq.Field;
@@ -52,8 +53,14 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+
+		for (T value : values) {
+			bind(stmt, result++, field, value);
+		}
+		
+		return result;
 	}
 
 	@Override

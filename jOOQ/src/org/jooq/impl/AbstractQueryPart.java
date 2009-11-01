@@ -31,11 +31,19 @@
 
 package org.jooq.impl;
 
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 
+import org.jooq.Field;
 import org.jooq.QueryPart;
 
-abstract class AbstractQueryPart implements QueryPart {
+public abstract class AbstractQueryPart implements QueryPart {
 
 	private static final long serialVersionUID = 2078114876079493107L;
 
@@ -44,18 +52,71 @@ abstract class AbstractQueryPart implements QueryPart {
 		return toSQL(false);
 	}
 
-	protected final int bind (PreparedStatement stmt) {
+	public final int bind(PreparedStatement stmt) throws SQLException {
 		return bind(stmt, 1);
 	}
-	
-	protected abstract int bind (PreparedStatement stmt, int initialIndex);
+
+	protected final <T> void bind(PreparedStatement stmt, int index, Field<T> field, T value) throws SQLException {
+		bind(stmt, index, field.getType(), value);
+	}
+
+	protected final <T> void bind (PreparedStatement stmt, int index, Class<T> type, T value) throws SQLException {
+		if (type == Blob.class) {
+			stmt.setBlob(index, (Blob) value);
+		}
+		else if (type == Boolean.class) {
+			stmt.setBoolean(index, (Boolean) value);
+		}
+		else if (type == BigDecimal.class) {
+			stmt.setBigDecimal(index, (BigDecimal) value);
+		}
+		else if (type == Byte.class) {
+			stmt.setByte(index, (Byte) value);
+		}
+		else if (type == byte[].class) {
+			stmt.setBytes(index, (byte[]) value);
+		}
+		else if (type == Clob.class) {
+			stmt.setClob(index, (Clob) value);
+		}
+		else if (type == Date.class) {
+			stmt.setDate(index, (Date) value);
+		}
+		else if (type == Double.class) {
+			stmt.setDouble(index, (Double) value);
+		}
+		else if (type == Float.class) {
+			stmt.setFloat(index, (Float) value);
+		}
+		else if (type == Integer.class) {
+			stmt.setInt(index, (Integer) value);
+		}
+		else if (type == Long.class) {
+			stmt.setLong(index, (Long) value);
+		}
+		else if (type == Short.class) {
+			stmt.setShort(index, (Short) value);
+		}
+		else if (type == String.class) {
+			stmt.setString(index, (String) value);
+		}
+		else if (type == Time.class) {
+			stmt.setTime(index, (Time) value);
+		}
+		else if (type == Timestamp.class) {
+			stmt.setTimestamp(index, (Timestamp) value);
+		}
+		else {
+			stmt.setObject(index, value);
+		}
+	}
 
 	@Override
 	public boolean equals(Object that) {
 		if (that instanceof QueryPart) {
 			return toSQL(true).equals(((QueryPart) that).toSQL(true));
 		}
-		
+
 		return false;
 	}
 

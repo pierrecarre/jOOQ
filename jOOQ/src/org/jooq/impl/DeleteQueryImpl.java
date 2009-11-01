@@ -57,7 +57,7 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

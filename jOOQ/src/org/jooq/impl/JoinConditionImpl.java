@@ -51,7 +51,7 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCon
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

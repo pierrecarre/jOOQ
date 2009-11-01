@@ -34,6 +34,7 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -69,8 +70,14 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		for (Condition condition : getConditions()) {
+			result = condition.bind(stmt, result);
+		}
+		
+		return result;
 	}
 
 	@Override

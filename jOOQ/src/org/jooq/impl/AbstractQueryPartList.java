@@ -31,6 +31,8 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +97,16 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 
 	protected String toSQL(T queryPart, boolean inlineParameters) {
 		return queryPart.toSQL(inlineParameters);
+	}
+	
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
+	@Override
+	public final int bind(PreparedStatement stmt) throws SQLException {
+		return bind(stmt, 1);
 	}
 
 	protected String toSQLEmptyList() {

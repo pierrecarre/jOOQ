@@ -55,7 +55,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	

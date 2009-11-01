@@ -43,6 +43,10 @@ import static org.jooq.test.Data.TABLE1;
 import static org.jooq.test.Data.TABLE2;
 import static org.jooq.test.Data.TABLE3;
 
+import java.sql.PreparedStatement;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
@@ -69,18 +73,28 @@ import org.junit.Test;
  */
 public class jOOQTest {
 
+	private Mockery context;
+	private PreparedStatement statement;
+	
 	@Before
 	public void setUp() throws Exception {
+		context = new Mockery();
+		statement = context.mock(PreparedStatement.class);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		statement = null;
+		context = null;
 	}
 
 	@Test
 	public final void testEmptyCombinedCondition() throws Exception {
 		CombinedCondition c = QueryFactory.createCombinedCondition();
 		assertEquals("1 = 1", c.toSQL());
+
+		int i = c.bind(statement);
+		assertEquals(1, i);
 	}
 
 	@Test
@@ -109,6 +123,16 @@ public class jOOQTest {
 		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID1, 1, 10);
 		assertEquals("ID1 in (1, 10)", c.toSQL(true));
 		assertEquals("ID1 in (?, ?)", c.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+			oneOf(statement).setInt(2, 10);
+		}});
+		
+		int i = c.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test
