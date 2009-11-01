@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.jooq.BetweenCondition;
 import org.jooq.Field;
@@ -61,8 +62,13 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		bind(stmt, result++, getField(), getMinValue());
+		bind(stmt, result++, getField(), getMaxValue());
+		
+		return result;
 	}
 
 	@Override

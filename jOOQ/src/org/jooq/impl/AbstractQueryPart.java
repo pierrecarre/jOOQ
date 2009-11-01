@@ -56,11 +56,11 @@ public abstract class AbstractQueryPart implements QueryPart {
 		return bind(stmt, 1);
 	}
 
-	protected final <T> void bind(PreparedStatement stmt, int index, Field<T> field, T value) throws SQLException {
+	protected final void bind(PreparedStatement stmt, int index, Field<?> field, Object value) throws SQLException {
 		bind(stmt, index, field.getType(), value);
 	}
 
-	protected final <T> void bind (PreparedStatement stmt, int index, Class<T> type, T value) throws SQLException {
+	protected final void bind (PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
 		if (type == Blob.class) {
 			stmt.setBlob(index, (Blob) value);
 		}

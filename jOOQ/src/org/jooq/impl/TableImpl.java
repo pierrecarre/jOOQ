@@ -59,7 +59,7 @@ public class TableImpl extends AbstractQueryPart implements Table {
 	
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		return initialIndex;
 	}
 
 	@Override

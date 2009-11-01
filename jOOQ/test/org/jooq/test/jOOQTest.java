@@ -102,13 +102,29 @@ public class jOOQTest {
 		CombinedCondition c = QueryFactory.createCombinedCondition(TRUE_CONDITION);
 		assertEquals(TRUE_CONDITION.toSQL(true), c.toSQL(true));
 		assertEquals(TRUE_CONDITION.toSQL(false), c.toSQL(false));
+
+		int i = c.bind(statement);
+		assertEquals(1, i);
 	}
 
 	@Test
 	public final void testMultipleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(TRUE_CONDITION, TRUE_CONDITION);
-		assertEquals("(1 = 1 and 1 = 1)", c.toSQL(true));
-		assertEquals("(1 = 1 and 1 = 1)", c.toSQL(false));
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID2, 20);
+
+		CombinedCondition c = QueryFactory.createCombinedCondition(c1, c2);
+		assertEquals("(ID1 = 10 and ID2 = 20)", c.toSQL(true));
+		assertEquals("(ID1 = ? and ID2 = ?)", c.toSQL(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setInt(2, 20);
+		}});
+		
+		int i = c.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test
@@ -116,6 +132,16 @@ public class jOOQTest {
 		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID1, 1, 10);
 		assertEquals("ID1 between 1 and 10", c.toSQL(true));
 		assertEquals("ID1 between ? and ?", c.toSQL(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+			oneOf(statement).setInt(2, 10);
+		}});
+		
+		int i = c.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test
@@ -140,6 +166,15 @@ public class jOOQTest {
 		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID1, 10);
 		assertEquals("ID1 = 10", c.toSQL(true));
 		assertEquals("ID1 = ?", c.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+		}});
+		
+		int i = c.bind(statement);
+		assertEquals(2, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test
@@ -151,15 +186,24 @@ public class jOOQTest {
 		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, null, Comparator.NOT_EQUALS);
 		assertEquals("ID1 is not null", c2.toSQL(true));
 		assertEquals("ID1 is not null", c2.toSQL(false));
+
+		int i = c1.bind(statement);
+		assertEquals(1, i);
+
+		int j = c2.bind(statement);
+		assertEquals(1, j);
 	}
 	
-	public final void testNullFunction() {
+	public final void testNullFunction() throws Exception {
 		Function<?> f = Functions.NULL();
 		assertEquals("null", f.toSQL(true));
 		assertEquals("null", f.toSQL(false));
+
+		int i = f.bind(statement);
+		assertEquals(1, i);
 	}
 	
-	public final void testConstantFunction() {
+	public final void testConstantFunction() throws Exception {
 		Function<Integer> f1 = Functions.constant(Integer.valueOf(1));
 		assertEquals(Integer.class, f1.getType());
 		assertEquals("1", f1.toSQL(true));
@@ -169,43 +213,56 @@ public class jOOQTest {
 		assertEquals(String.class, f2.getType());
 		assertEquals("test", f2.toSQL(true));
 		assertEquals("test", f2.toSQL(false));
+
+		int i = f1.bind(statement);
+		assertEquals(1, i);
+
+		int j = f2.bind(statement);
+		assertEquals(1, j);
 	}
 	
-	public final void testArithmeticFunctions() {
+	public final void testArithmeticFunctions() throws Exception {
 		Function<Integer> sum = Functions.sum(FIELD_ID1);
 		assertEquals(Integer.class, sum.getType());
 		assertEquals("sum(ID1)", sum.toSQL(true));
 		assertEquals("sum(ID1)", sum.toSQL(false));
+		assertEquals(1, sum.bind(statement));
 
 		Function<Double> avg = Functions.avg(FIELD_ID1);
 		assertEquals(Double.class, avg.getType());
 		assertEquals("avg(ID1)", avg.toSQL(true));
 		assertEquals("avg(ID1)", avg.toSQL(false));
+		assertEquals(1, avg.bind(statement));
 
 		Function<Integer> min = Functions.min(FIELD_ID1);
 		assertEquals(Integer.class, min.getType());
 		assertEquals("min(ID1)", min.toSQL(true));
 		assertEquals("min(ID1)", min.toSQL(false));
-		
+		assertEquals(1, min.bind(statement));
+
 		Function<Integer> max = Functions.max(FIELD_ID1);
 		assertEquals(Integer.class, max.getType());
 		assertEquals("max(ID1)", max.toSQL(true));
 		assertEquals("max(ID1)", max.toSQL(false));
-		
+		assertEquals(1, max.bind(statement));
+
 		Function<Integer> count1 = Functions.count();
 		assertEquals(Integer.class, count1.getType());
 		assertEquals("count(*)", count1.toSQL(true));
 		assertEquals("count(*)", count1.toSQL(false));
-		
+		assertEquals(1, count1.bind(statement));
+
 		Function<Integer> count2 = Functions.count(FIELD_ID1);
 		assertEquals(Integer.class, count2.getType());
 		assertEquals("count(ID1)", count2.toSQL(true));
 		assertEquals("count(ID1)", count2.toSQL(false));
-		
+		assertEquals(1, count2.bind(statement));
+
 		Function<Integer> count3 = Functions.countDistinct(FIELD_ID1);
 		assertEquals(Integer.class, count3.getType());
 		assertEquals("count(distinct ID1)", count3.toSQL(true));
 		assertEquals("count(distinct ID1)", count3.toSQL(false));
+		assertEquals(1, count3.bind(statement));
 	}
 	
 	@Test(expected = IllegalStateException.class)  
@@ -215,16 +272,41 @@ public class jOOQTest {
 	}
 	
 	@Test
-	public final void testInsertQuery() throws Exception {
+	public final void testInsertQuery1() throws Exception {
 		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQL(true));
 		assertEquals("insert into TABLE1 (ID1) values (?)", q.toSQL(false));
 		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(2, i);
+		
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testInsertQuery2() throws Exception {
+		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
+
+		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
 		assertEquals("insert into TABLE1 (ID1, NAME1) values (10, 'ABC')", q.toSQL(true));
 		assertEquals("insert into TABLE1 (ID1, NAME1) values (?, ?)", q.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setString(2, "ABC");
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test(expected = IllegalStateException.class)  
@@ -234,28 +316,119 @@ public class jOOQTest {
 	}
 
 	@Test
-	public final void testUpdateQuery() throws Exception {
+	public final void testUpdateQuery1() throws Exception {
 		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
 		
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("update TABLE1 set ID1 = 10", q.toSQL(true));
 		assertEquals("update TABLE1 set ID1 = ?", q.toSQL(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+		}});
 		
+		int i = q.bind(statement);
+		assertEquals(2, i);
+		
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testUpdateQuery2() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		
+		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
 		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC'", q.toSQL(true));
 		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ?", q.toSQL(false));
 		
-		q.addConditions(FALSE_CONDITION);
-		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where 1 = 0", q.toSQL(true));
-		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where 1 = 0", q.toSQL(false));
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setString(2, "ABC");
+		}});
 		
-		q.addConditions(TRUE_CONDITION);
-		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where (1 = 0 and 1 = 1)", q.toSQL(true));
-		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where (1 = 0 and 1 = 1)", q.toSQL(false));
+		int i = q.bind(statement);
+		assertEquals(3, i);
 		
-		q.addConditions(TRUE_CONDITION, TRUE_CONDITION);
-		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(true));
-		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(false));
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testUpdateQuery3() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		
+		q.addValue(FIELD_ID1, 10);
+		q.addValue(FIELD_NAME1, "ABC");
+		q.addConditions(c);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where ID1 = 10", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where ID1 = ?", q.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setString(2, "ABC");
+			oneOf(statement).setInt(3, 10);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(4, i);
+		
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testUpdateQuery4() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		
+		q.addValue(FIELD_ID1, 10);
+		q.addValue(FIELD_NAME1, "ABC");
+		q.addConditions(c1);
+		q.addConditions(c2);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where (ID1 = 10 and ID1 = 20)", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where (ID1 = ? and ID1 = ?)", q.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setString(2, "ABC");
+			oneOf(statement).setInt(3, 10);
+			oneOf(statement).setInt(4, 20);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(5, i);
+		
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testUpdateQuery5() throws Exception {
+		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		
+		q.addValue(FIELD_ID1, 10);
+		q.addValue(FIELD_NAME1, "ABC");
+		q.addConditions(c1);
+		q.addConditions(c2);
+		q.addConditions(c2, c1);
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where ((ID1 = 10 and ID1 = 20) and (ID1 = 20 and ID1 = 10))", q.toSQL(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where ((ID1 = ? and ID1 = ?) and (ID1 = ? and ID1 = ?))", q.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setString(2, "ABC");
+			oneOf(statement).setInt(3, 10);
+			oneOf(statement).setInt(4, 20);
+			oneOf(statement).setInt(5, 20);
+			oneOf(statement).setInt(6, 10);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(7, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test

@@ -35,6 +35,7 @@ import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.NOT_EQUALS;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
@@ -62,8 +63,13 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		if (getValue() != null) {
+			bind(stmt, initialIndex, getField(), getValue());
+			return initialIndex + 1;
+		} else {
+			return initialIndex;
+		}
 	}
 
 	@Override

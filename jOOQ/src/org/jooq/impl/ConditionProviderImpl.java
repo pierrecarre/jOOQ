@@ -33,6 +33,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -42,7 +44,9 @@ import org.jooq.ConditionProvider;
 /**
  * @author Lukas Eder
  */
-class ConditionProviderImpl implements ConditionProvider {
+class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider {
+
+	private static final long serialVersionUID = 6073328960551062973L;
 
 	private Condition condition;
 
@@ -77,5 +81,15 @@ class ConditionProviderImpl implements ConditionProvider {
 				condition = QueryFactory.createCombinedCondition(getWhere(), c);
 			}
 		}
+	}
+
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return getWhere().bind(stmt, initialIndex);
+	}
+
+	@Override
+	public String toSQL(boolean inlineParameters) {
+		return getWhere().toSQL(inlineParameters);
 	}
 }

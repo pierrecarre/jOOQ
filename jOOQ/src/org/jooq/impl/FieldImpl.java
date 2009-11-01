@@ -51,7 +51,7 @@ public class FieldImpl<T> extends AbstractQueryPart implements Field<T> {
 	
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		return initialIndex;
 	}
 
 	@Override

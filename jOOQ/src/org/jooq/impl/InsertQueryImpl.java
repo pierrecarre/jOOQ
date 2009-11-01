@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -55,8 +56,16 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		result = getInto().bind(stmt, result);
+		for (Field<?> field : getValues0().keySet()) {
+			result = field.bind(stmt, result);
+			bind(stmt, result++, field, getValues0().get(field));
+		}
+		
+		return result;
 	}
 	
 	@Override

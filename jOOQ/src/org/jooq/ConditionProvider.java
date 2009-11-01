@@ -36,7 +36,7 @@ import java.util.Collection;
 /**
  * @author Lukas Eder
  */
-public interface ConditionProvider {
+public interface ConditionProvider extends QueryPart {
 	
 	/**
 	 * @return The condition
