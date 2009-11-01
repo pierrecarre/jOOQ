@@ -31,6 +31,13 @@
 
 package org.jooq.impl;
 
+import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 import org.jooq.Field;
 
 /**
@@ -46,16 +53,58 @@ final class ToSQLHelper {
 		return toSQL(value, inlineParameters, field.getType());
 	}
 	
-	public static String toSQL(Object value, boolean inlineParameters, Class<?> clazz) {
+	public static String toSQL(Object value, boolean inlineParameters, Class<?> type) {
 		if (inlineParameters) {
-			if (clazz == String.class) {
-				return "'" + value.toString().replace("'", "''") + "'";
+			if (type == Blob.class) {
+				// Not supported
 			}
-			else if (clazz == Integer.class) {
+			else if (type == Boolean.class) {
 				return value.toString();
 			}
-			
-			throw new UnsupportedOperationException("Class " + clazz + " is not supported");
+			else if (type == BigDecimal.class) {
+				return value.toString();
+			}
+			else if (type == Byte.class) {
+				return value.toString();
+			}
+			else if (type == byte[].class) {
+				// Not supported
+			}
+			else if (type == Clob.class) {
+				// Not supported
+			}
+			else if (type == Date.class) {
+				// Not supported
+			}
+			else if (type == Double.class) {
+				return value.toString();
+			}
+			else if (type == Float.class) {
+				return value.toString();
+			}
+			else if (type == Integer.class) {
+				return value.toString();
+			}
+			else if (type == Long.class) {
+				return value.toString();
+			}
+			else if (type == Short.class) {
+				return value.toString();
+			}
+			else if (type == String.class) {
+				return "'" + value.toString().replace("'", "''") + "'";
+			}
+			else if (type == Time.class) {
+				// Not supported
+			}
+			else if (type == Timestamp.class) {
+				// Not supported
+			}
+			else {
+				// Not supported
+			}
+
+			throw new UnsupportedOperationException("Class " + type + " is not supported");
 		}
 		
 		return "?";

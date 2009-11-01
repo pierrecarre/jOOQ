@@ -34,6 +34,7 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -78,8 +79,17 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		result = getSelect().bind(stmt, result);
+		result = getFrom().bind(stmt, result);
+		result = getJoin().bind(stmt, result);
+		result = getWhere().bind(stmt, result);
+		result = getGroupBy().bind(stmt, result);
+		result = getOrderBy().bind(stmt, result);
+		
+		return result;
 	}
 	
 	@Override

@@ -44,7 +44,7 @@ public class EmptyTable extends TableImpl {
 	
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		return initialIndex;
 	}
 
 	@SuppressWarnings("unchecked")

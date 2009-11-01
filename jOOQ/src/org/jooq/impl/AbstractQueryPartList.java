@@ -101,7 +101,13 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		throw new UnsupportedOperationException("Not yet implemented");
+		int result = initialIndex;
+		
+		for (T queryPart : this) {
+			result = queryPart.bind(stmt, result);
+		}
+		
+		return result;
 	}
 
 	@Override

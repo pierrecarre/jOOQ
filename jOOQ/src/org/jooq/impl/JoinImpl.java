@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.jooq.Join;
 import org.jooq.JoinCondition;
@@ -56,8 +57,15 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+
+		result = getTable().bind(stmt, result);
+		if (getCondition() != null) {
+			result = getCondition().bind(stmt, result);
+		}
+			
+		return result;
 	}
 
 	@Override

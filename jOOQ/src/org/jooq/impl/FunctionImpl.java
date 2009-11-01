@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,8 +99,14 @@ class FunctionImpl<T> extends AbstractQueryPart implements Function<T> {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		for (Field<?> field : getFields()) {
+			result = field.bind(stmt, result);
+		}
+		
+		return result;
 	}
 
 	protected final List<Field<?>> getFields() {
