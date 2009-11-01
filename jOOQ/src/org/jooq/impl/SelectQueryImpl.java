@@ -53,7 +53,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl extends AbstractQueryPart implements SelectQuery {
+class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 
 	private static final long serialVersionUID = -4128783317946627405L;
 	
@@ -82,6 +82,11 @@ class SelectQueryImpl extends AbstractQueryPart implements SelectQuery {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
+	@Override
+	protected int execute(PreparedStatement statement) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+
 	@Override
 	public void addSelect(Collection<Field<?>> fields) {
 		getSelect().addAll(fields);

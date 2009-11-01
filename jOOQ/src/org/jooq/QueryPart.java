@@ -44,8 +44,4 @@ public interface QueryPart extends Serializable {
 
 	String toSQL(boolean inlineParameters);
 
-	String toHQL();
-
-	String toHQL(boolean inlineParameters);
-
 }

@@ -70,11 +70,6 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	}
 
 	@Override
-	public final String toHQL() {
-		return toHQL(false);
-	}
-
-	@Override
 	public final String toSQL() {
 		return toSQL(false);
 	}
@@ -108,10 +103,5 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 
 	protected String getListSeparator() {
 		return ",";
-	}
-	
-	@Override
-	public String toHQL(boolean inlineParameters) {
-		throw new UnsupportedOperationException("Not yet implemented");
 	}
 }

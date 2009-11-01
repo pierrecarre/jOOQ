@@ -31,11 +31,17 @@
 
 package org.jooq;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 /**
  * Any query
  * 
  * @author Lukas Eder
  */
 public interface Query extends QueryPart {
-	
+	int execute(DataSource source) throws SQLException;
+	int execute(Connection connection) throws SQLException;
 }

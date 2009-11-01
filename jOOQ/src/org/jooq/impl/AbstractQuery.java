@@ -31,74 +31,38 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
-
+import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Collection;
+import java.sql.SQLException;
 
-import org.jooq.Condition;
-import org.jooq.ConditionProvider;
-import org.jooq.DeleteQuery;
-import org.jooq.Table;
+import javax.sql.DataSource;
+
+import org.jooq.Query;
 
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
+abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
-	private static final long serialVersionUID = -1943687511774150929L;
-	
-	private final Table table;
-	private final ConditionProvider condition;
+	private static final long serialVersionUID = -8046199737354507547L;
 
-	public DeleteQueryImpl(Table table) {
-		this.table = table;
-		this.condition = new ConditionProviderImpl();
+	@Override
+	public final int execute(DataSource source) throws SQLException {
+		return execute(source.getConnection());
 	}
 
 	@Override
-	protected int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	protected int execute(PreparedStatement statement) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
-	public Table getFrom() {
-		return table;
-	}
-
-	@Override
-	public Condition getWhere() {
-		return condition.getWhere();
-	}
-
-	@Override
-	public void addConditions(Collection<Condition> conditions) {
-		condition.addConditions(conditions);
-	}
-
-	@Override
-	public void addConditions(Condition... conditions) {
-		condition.addConditions(conditions);
-	}
-
-	@Override
-	public String toSQL(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+	public final int execute(Connection connection) throws SQLException {
+		PreparedStatement statement = null;
 		
-		sb.append("delete from ");
-		sb.append(getFrom().toSQL(inlineParameters));
-
-		if (getWhere() != TRUE_CONDITION) {
-			sb.append(" where ");
-			sb.append(getWhere().toSQL(inlineParameters));
+		try {
+			statement = connection.prepareStatement(toSQL());
+			bind(statement);
+			return execute(statement);
+		} finally {
+			statement.close();
 		}
-				
-		return sb.toString();
 	}
 
+	protected abstract int execute(PreparedStatement statement);
 }

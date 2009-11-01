@@ -48,7 +48,7 @@ import org.jooq.UpdateQuery;
 /**
  * @author Lukas Eder
  */
-class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
+class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 
 	private static final long serialVersionUID = -660460731970074719L;
 	private final Table table;
@@ -63,6 +63,11 @@ class UpdateQueryImpl extends AbstractQueryPart implements UpdateQuery {
 
 	@Override
 	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
+	@Override
+	protected int execute(PreparedStatement statement) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

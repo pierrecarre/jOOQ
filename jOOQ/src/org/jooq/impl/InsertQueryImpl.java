@@ -43,7 +43,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
+class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 
 	private static final long serialVersionUID = 4466005417945353842L;
 	private final Table into;
@@ -56,6 +56,11 @@ class InsertQueryImpl extends AbstractQueryPart implements InsertQuery {
 
 	@Override
 	protected int bind(PreparedStatement stmt, int initialIndex) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
+	@Override
+	protected int execute(PreparedStatement statement) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 

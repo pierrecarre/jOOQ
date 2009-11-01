@@ -35,19 +35,9 @@ import java.sql.PreparedStatement;
 
 import org.jooq.QueryPart;
 
-public abstract class AbstractQueryPart implements QueryPart {
+abstract class AbstractQueryPart implements QueryPart {
 
 	private static final long serialVersionUID = 2078114876079493107L;
-
-	@Override
-	public final String toHQL() {
-		return toHQL(false);
-	}
-
-	@Override
-	public final String toHQL(boolean inlineParameters) {
-		throw new UnsupportedOperationException("HQL Generation not supported yet");
-	}
 
 	@Override
 	public final String toSQL() {
