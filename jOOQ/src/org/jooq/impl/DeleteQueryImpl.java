@@ -34,6 +34,7 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import org.jooq.Condition;
@@ -57,8 +58,13 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		result = getFrom().bind(stmt, result);
+		result = getWhere().bind(stmt, result);
+		
+		return result;
 	}
 
 	@Override

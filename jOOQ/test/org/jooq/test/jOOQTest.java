@@ -432,23 +432,67 @@ public class jOOQTest {
 	}
 	
 	@Test
-	public final void testDeleteQuery() throws Exception {
+	public final void testDeleteQuery1() throws Exception {
 		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
 		
 		assertEquals("delete from TABLE1", q.toSQL(true));
 		assertEquals("delete from TABLE1", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testDeleteQuery2() throws Exception {
+		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
 		
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("delete from TABLE1 where 1 = 0", q.toSQL(true));
 		assertEquals("delete from TABLE1 where 1 = 0", q.toSQL(false));
+	}
+	
+	@Test
+	public final void testDeleteQuery3() throws Exception {
+		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
 		
-		q.addConditions(TRUE_CONDITION);
-		assertEquals("delete from TABLE1 where (1 = 0 and 1 = 1)", q.toSQL(true));
-		assertEquals("delete from TABLE1 where (1 = 0 and 1 = 1)", q.toSQL(false));
+		q.addConditions(c1);
+		q.addConditions(c2);
+		assertEquals("delete from TABLE1 where (ID1 = 10 and ID1 = 20)", q.toSQL(true));
+		assertEquals("delete from TABLE1 where (ID1 = ? and ID1 = ?)", q.toSQL(false));
 		
-		q.addConditions(TRUE_CONDITION, TRUE_CONDITION);
-		assertEquals("delete from TABLE1 where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(true));
-		assertEquals("delete from TABLE1 where ((1 = 0 and 1 = 1) and (1 = 1 and 1 = 1))", q.toSQL(false));
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setInt(2, 20);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
+	}
+	
+	@Test
+	public final void testDeleteQuery4() throws Exception {
+		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		
+		q.addConditions(c1);
+		q.addConditions(c2);
+		q.addConditions(c2, c1);
+		assertEquals("delete from TABLE1 where ((ID1 = 10 and ID1 = 20) and (ID1 = 20 and ID1 = 10))", q.toSQL(true));
+		assertEquals("delete from TABLE1 where ((ID1 = ? and ID1 = ?) and (ID1 = ? and ID1 = ?))", q.toSQL(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setInt(2, 20);
+			oneOf(statement).setInt(3, 20);
+			oneOf(statement).setInt(4, 10);
+		}});
+		
+		int i = q.bind(statement);
+		assertEquals(5, i);
+		
+		context.assertIsSatisfied();
 	}
 	
 	@Test
