@@ -34,9 +34,12 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 
+import org.apache.commons.io.FileUtils;
 import org.jooq.Field;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
@@ -57,6 +60,21 @@ public class jOOQMySQLTest {
 	public void setUp() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection ("jdbc:mysql://localhost/test", "root", "");
+
+		Statement stmt = null;
+		File file = new File(getClass().getResource("/org/jooq/test/mysql/create.sql").toURI());
+		String allSQL = FileUtils.readFileToString(file);
+		
+		for (String sql : allSQL.split(";")) {
+			try {
+			stmt = connection.createStatement();
+			stmt.executeUpdate(sql);
+			} finally {
+				if (stmt != null) {
+					stmt.close();
+				}
+			}
+		}
 	}
 
 	@After
