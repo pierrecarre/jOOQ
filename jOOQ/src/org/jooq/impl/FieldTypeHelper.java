@@ -33,12 +33,14 @@ package org.jooq.impl;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Types;
 
 import org.jooq.Field;
 
@@ -168,5 +170,116 @@ final class FieldTypeHelper {
 		}
 	}
 	
+	public static <T> T getFromStatement(CallableStatement statement, Field<T> field) throws SQLException {
+		return getFromStatement(statement, field.getType(), field.getName());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getFromStatement(CallableStatement statement, Class<T> type, String fieldName) throws SQLException {
+		if (type == Blob.class) {
+			return (T) statement.getBlob(fieldName);
+		}
+		else if (type == Boolean.class) {
+			return (T) Boolean.valueOf(statement.getBoolean(fieldName));
+		}
+		else if (type == BigDecimal.class) {
+			return (T) statement.getBigDecimal(fieldName);
+		}
+		else if (type == Byte.class) {
+			return (T) Byte.valueOf(statement.getByte(fieldName));
+		}
+		else if (type == byte[].class) {
+			return (T) statement.getBytes(fieldName);
+		}
+		else if (type == Clob.class) {
+			return (T) statement.getClob(fieldName);
+		}
+		else if (type == Date.class) {
+			return (T) statement.getDate(fieldName);
+		}
+		else if (type == Double.class) {
+			return (T) Double.valueOf(statement.getDouble(fieldName));
+		}
+		else if (type == Float.class) {
+			return (T) Float.valueOf(statement.getFloat(fieldName));
+		}
+		else if (type == Integer.class) {
+			return (T) Integer.valueOf(statement.getInt(fieldName));
+		}
+		else if (type == Long.class) {
+			return (T) Long.valueOf(statement.getLong(fieldName));
+		}
+		else if (type == Short.class) {
+			return (T) Short.valueOf(statement.getShort(fieldName));
+		}
+		else if (type == String.class) {
+			return (T) statement.getString(fieldName);
+		}
+		else if (type == Time.class) {
+			return (T) statement.getTime(fieldName);
+		}
+		else if (type == Timestamp.class) {
+			return (T) statement.getTimestamp(fieldName);
+		}
+		else {
+			return (T) statement.getObject(fieldName);
+		}
+	}
+
+	public static int getSQLType(Field<?> field) {
+		return getSQLType(field.getType());
+	}
+	
+	public static int getSQLType(Class<?> type) {
+		if (type == Blob.class) {
+			return Types.BLOB;
+		}
+		else if (type == Boolean.class) {
+			return Types.BOOLEAN;
+		}
+		else if (type == BigDecimal.class) {
+			return Types.DECIMAL;
+		}
+		else if (type == Byte.class) {
+			return Types.TINYINT;
+		}
+		else if (type == byte[].class) {
+			return Types.BLOB;
+		}
+		else if (type == Clob.class) {
+			return Types.CLOB;
+		}
+		else if (type == Date.class) {
+			return Types.DATE;
+		}
+		else if (type == Double.class) {
+			return Types.DOUBLE;
+		}
+		else if (type == Float.class) {
+			return Types.FLOAT;
+		}
+		else if (type == Integer.class) {
+			return Types.INTEGER;
+		}
+		else if (type == Long.class) {
+			return Types.BIGINT;
+		}
+		else if (type == Short.class) {
+			return Types.SMALLINT;
+		}
+		else if (type == String.class) {
+			return Types.VARCHAR;
+		}
+		else if (type == Time.class) {
+			return Types.TIME;
+		}
+		else if (type == Timestamp.class) {
+			return Types.TIMESTAMP;
+		}
+		else {
+			return Types.OTHER;
+		}
+	}
+
 	private FieldTypeHelper() {}
 }

@@ -32,7 +32,7 @@
 package org.jooq.util.mysql;
 
 import org.jooq.util.AbstractColumnDefinition;
-import org.jooq.util.TableDefinition;
+import org.jooq.util.Definition;
 
 
 /**
@@ -40,10 +40,8 @@ import org.jooq.util.TableDefinition;
  */
 public class MySQLColumnDefinition extends AbstractColumnDefinition {
 
-	public MySQLColumnDefinition(TableDefinition table, String name, int position, Class<?> type,
+	public MySQLColumnDefinition(Definition schemaProvider, String name, int position, Class<?> type,
 			String comment) {
-		super (table, name, position, type, comment);
+		super (schemaProvider, name, position, type, comment);
 	}
-
-
 }

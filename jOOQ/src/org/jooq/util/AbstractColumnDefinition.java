@@ -37,14 +37,14 @@ package org.jooq.util;
  */
 public abstract class AbstractColumnDefinition implements ColumnDefinition {
 
-	private final TableDefinition table;
+	private final Definition schemaProvider;
 	private final String name;
 	private final int position;
 	private final Class<?> type;
 	private final String comment;
 
-	public AbstractColumnDefinition(TableDefinition table, String name, int position, Class<?> type, String comment) {
-		this.table = table;
+	public AbstractColumnDefinition(Definition schemaProvider, String name, int position, Class<?> type, String comment) {
+		this.schemaProvider = schemaProvider;
 		this.name = name;
 		this.position = position;
 		this.type = type;
@@ -59,6 +59,11 @@ public abstract class AbstractColumnDefinition implements ColumnDefinition {
 	@Override
 	public final String getName() {
 		return name;
+	}
+
+	@Override
+	public final String getSchema() {
+		return schemaProvider.getSchema();
 	}
 
 	@Override

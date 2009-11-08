@@ -41,7 +41,8 @@ import java.util.List;
 public interface Database {
 
 	List<TableDefinition> getTables() throws SQLException;
-
+	List<ProcedureDefinition> getProcedures() throws SQLException;
+	
 	void setConnection(Connection connection);
 	Connection getConnection();
 	

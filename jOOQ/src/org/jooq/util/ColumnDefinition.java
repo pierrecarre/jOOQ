@@ -34,10 +34,9 @@ package org.jooq.util;
 /**
  * @author Lukas Eder
  */
-public interface ColumnDefinition {
+public interface ColumnDefinition extends Definition {
 	
 	int getPosition();
-	String getName();
 	Class<?> getType();
-	String getComment();
+
 }

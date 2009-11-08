@@ -33,10 +33,15 @@ package org.jooq.util.mysql;
 
 import static org.jooq.impl.QueryFactory.createCompareCondition;
 import static org.jooq.impl.QueryFactory.createSelectQuery;
-import static org.jooq.util.mysql.information_schema.Tables.TABLES;
-import static org.jooq.util.mysql.information_schema.Tables.TABLE_COMMENT;
-import static org.jooq.util.mysql.information_schema.Tables.TABLE_NAME;
-import static org.jooq.util.mysql.information_schema.Tables.TABLE_SCHEMA;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_COMMENT;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_SCHEMA;
+import static org.jooq.util.mysql.mysql.tables.Proc.COMMENT;
+import static org.jooq.util.mysql.mysql.tables.Proc.DB;
+import static org.jooq.util.mysql.mysql.tables.Proc.NAME;
+import static org.jooq.util.mysql.mysql.tables.Proc.PARAM_LIST;
+import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +50,7 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
 
 /**
@@ -69,6 +75,29 @@ public class MySQLDatabase extends AbstractDatabase {
 			
 			MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
 			result.add(table);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<ProcedureDefinition> getProcedures() throws SQLException {
+		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+		
+		SelectQuery q = createSelectQuery(PROC);
+		q.addSelect(NAME);
+		q.addSelect(PARAM_LIST);
+		q.addSelect(COMMENT);
+		q.addConditions(createCompareCondition(DB, getSchema()));
+		q.execute(getConnection());
+		
+		for (Record record : q.getResult()) {
+			String name = record.getValue(NAME);
+			String comment = record.getValue(COMMENT);
+			String params = new String(record.getValue(PARAM_LIST));
+			
+			MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
+			result.add(procedure);
 		}
 		
 		return result;

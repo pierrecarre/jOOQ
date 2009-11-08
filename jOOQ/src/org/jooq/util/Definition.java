@@ -31,66 +31,12 @@
 
 package org.jooq.util;
 
-import java.io.PrintWriter;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
  * @author Lukas Eder
  */
-public class GenerationWriter {
+public interface Definition {
 
-	private static final String IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
-	
-	private final PrintWriter writer;
-	private final StringBuilder sb;
-	private final Set<String> imported;
-
-	public GenerationWriter(PrintWriter writer) {
-		this.writer = writer;
-		this.sb = new StringBuilder();
-		this.imported = new TreeSet<String>();
-	}
-	
-	public void printImportPlaceholder() {
-		println(IMPORT_STATEMENT);
-	}
-
-	public void printImport(Class<?> clazz) {
-		if (clazz.getName().startsWith("java.lang")) {
-			return;
-		}
-		
-		if (clazz.isArray()) {
-			return;
-		}
-		
-		imported.add(clazz.getName());
-	}
-
-	public void print(String string) {
-		sb.append(string);
-	}
-	
-	public void println(String string) {
-		sb.append(string + "\n");
-	}
-	
-	public void println() {
-		sb.append("\n");
-	}
-	
-	public void close() {
-		String string = sb.toString();
-		
-		StringBuilder imports = new StringBuilder();
-		for (String clazz : imported) {
-			imports.append("import " + clazz + ";\n");
-		}
-		
-		string = string.replaceAll(IMPORT_STATEMENT, imports.toString());
-		
-		writer.append(string);
-		writer.close();
-	}
+	String getSchema();
+	String getName();
+	String getComment();
 }

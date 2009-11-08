@@ -31,66 +31,41 @@
 
 package org.jooq.util;
 
-import java.io.PrintWriter;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
+ * The parameter type of a stored procedure
+ * 
  * @author Lukas Eder
  */
-public class GenerationWriter {
+public enum InOutDefinition {
 
-	private static final String IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
+	/**
+	 * An in parameter. Default if the in/out keyword is absent.
+	 */
+	IN,
 	
-	private final PrintWriter writer;
-	private final StringBuilder sb;
-	private final Set<String> imported;
-
-	public GenerationWriter(PrintWriter writer) {
-		this.writer = writer;
-		this.sb = new StringBuilder();
-		this.imported = new TreeSet<String>();
-	}
+	/**
+	 * An out parameter
+	 */
+	OUT,
 	
-	public void printImportPlaceholder() {
-		println(IMPORT_STATEMENT);
-	}
-
-	public void printImport(Class<?> clazz) {
-		if (clazz.getName().startsWith("java.lang")) {
-			return;
+	/**
+	 * An in/out parameter
+	 */
+	INOUT;
+	
+	/**
+	 * Convert a string into the corresponding {@link InOutDefinition} value.
+	 * 
+	 * @param string IN, OUT, INOUT or <code>null</code>
+	 * @return The in/out value
+	 */
+	public static final InOutDefinition getFromString(String string) {
+		if (string == null) {
+			return IN;
 		}
 		
-		if (clazz.isArray()) {
-			return;
+		else {
+			return InOutDefinition.valueOf(string.toUpperCase());
 		}
-		
-		imported.add(clazz.getName());
-	}
-
-	public void print(String string) {
-		sb.append(string);
-	}
-	
-	public void println(String string) {
-		sb.append(string + "\n");
-	}
-	
-	public void println() {
-		sb.append("\n");
-	}
-	
-	public void close() {
-		String string = sb.toString();
-		
-		StringBuilder imports = new StringBuilder();
-		for (String clazz : imported) {
-			imports.append("import " + clazz + ";\n");
-		}
-		
-		string = string.replaceAll(IMPORT_STATEMENT, imports.toString());
-		
-		writer.append(string);
-		writer.close();
 	}
 }

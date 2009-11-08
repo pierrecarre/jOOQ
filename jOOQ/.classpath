@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="test-lib/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="test-lib/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="test-lib/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="test-lib/mysql-connector-java-5.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="test-lib/mysql-connector-java-5.1.10-bin.jar" sourcepath="/jOOQ-sources/mysql-connector-java-5.1.10.zip"/>
 	<classpathentry kind="lib" path="test-lib/commons-io-1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>

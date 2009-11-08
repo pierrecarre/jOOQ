@@ -37,11 +37,8 @@ import java.util.List;
 /**
  * @author Lukas Eder
  */
-public interface TableDefinition {
+public interface TableDefinition extends Definition {
 	
 	List<ColumnDefinition> getColumns() throws SQLException;
-	
-	String getSchema();
-	String getName();
-	String getComment();
+
 }

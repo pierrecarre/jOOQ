@@ -33,13 +33,13 @@ package org.jooq.util.mysql;
 
 import static org.jooq.impl.QueryFactory.createCompareCondition;
 import static org.jooq.impl.QueryFactory.createSelectQuery;
-import static org.jooq.util.mysql.information_schema.Columns.COLUMNS;
-import static org.jooq.util.mysql.information_schema.Columns.COLUMN_COMMENT;
-import static org.jooq.util.mysql.information_schema.Columns.COLUMN_NAME;
-import static org.jooq.util.mysql.information_schema.Columns.DATA_TYPE;
-import static org.jooq.util.mysql.information_schema.Columns.ORDINAL_POSITION;
-import static org.jooq.util.mysql.information_schema.Columns.TABLE_NAME;
-import static org.jooq.util.mysql.information_schema.Columns.TABLE_SCHEMA;
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_COMMENT;
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_NAME;
+import static org.jooq.util.mysql.information_schema.tables.Columns.DATA_TYPE;
+import static org.jooq.util.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
+import static org.jooq.util.mysql.information_schema.tables.Columns.TABLE_NAME;
+import static org.jooq.util.mysql.information_schema.tables.Columns.TABLE_SCHEMA;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
