@@ -29,13 +29,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util.mysql;
+
+import org.jooq.util.AbstractColumnDefinition;
+import org.jooq.util.TableDefinition;
+
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
-	
+public class MySQLColumnDefinition extends AbstractColumnDefinition {
+
+	public MySQLColumnDefinition(TableDefinition table, String name, int position, Class<?> type,
+			String comment) {
+		super (table, name, position, type, comment);
+	}
+
+
 }

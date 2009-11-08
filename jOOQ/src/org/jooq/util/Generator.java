@@ -29,13 +29,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
- * A typed list of tables
+ * The Generator provides a basic interface for java code generation
  * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
-	
+public interface Generator {
+
+	void generate(Database database) throws SQLException, IOException;
+
+	void setTargetPackage(String packageName);
+
+	void setTargetDirectory(String directory);
+
 }

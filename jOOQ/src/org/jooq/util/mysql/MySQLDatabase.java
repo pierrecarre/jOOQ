@@ -29,13 +29,48 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util.mysql;
+
+import static org.jooq.impl.QueryFactory.createCompareCondition;
+import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.util.mysql.metadata.Tables.TABLES;
+import static org.jooq.util.mysql.metadata.Tables.TABLE_COMMENT;
+import static org.jooq.util.mysql.metadata.Tables.TABLE_NAME;
+import static org.jooq.util.mysql.metadata.Tables.TABLE_SCHEMA;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jooq.Record;
+import org.jooq.SelectQuery;
+import org.jooq.util.AbstractDatabase;
+import org.jooq.util.TableDefinition;
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
-	
+public class MySQLDatabase extends AbstractDatabase {
+
+	@Override
+	public List<TableDefinition> getTables() throws SQLException {
+		List<TableDefinition> result = new ArrayList<TableDefinition>();
+		
+		SelectQuery q = createSelectQuery(TABLES);
+		q.addSelect(TABLE_NAME);
+		q.addSelect(TABLE_COMMENT);
+		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchema()));
+		q.addOrderBy(TABLE_NAME);
+		q.execute(getConnection());
+
+		for (Record record : q.getResult()) {
+			String name = record.getValue(TABLE_NAME);
+			String comment = record.getValue(TABLE_COMMENT);
+			
+			MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
+			result.add(table);
+		}
+		
+		return result;
+	}
 }

@@ -29,13 +29,42 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util;
+
+import java.sql.Connection;
+
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
-	
+public abstract class AbstractTableDefinition implements TableDefinition {
+
+	private final Database database;
+	private final String name;
+	private final String comment;
+
+	public AbstractTableDefinition(Database database, String name, String comment) {
+		this.database = database;
+		this.name = name;
+		this.comment = comment;
+	}
+
+	protected final Connection getConnection() {
+		return database.getConnection();
+	}
+
+	@Override
+	public final String getSchema() {
+		return database.getSchema();
+	}
+
+	@Override
+	public final String getName() {
+		return name;
+	}
+
+	@Override
+	public final String getComment() {
+		return comment;
+	}
 }

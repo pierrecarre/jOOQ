@@ -131,7 +131,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	public final void addSelect(Field<?>... fields) {
 		addSelect(Arrays.asList(fields));
 	}
-
+	
 	@Override
 	public final void addConditions(Condition... conditions) {
 		condition.addConditions(conditions);

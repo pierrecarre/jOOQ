@@ -29,13 +29,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
+public interface TableDefinition {
 	
+	List<ColumnDefinition> getColumns() throws SQLException;
+	
+	String getSchema();
+	String getName();
+	String getComment();
 }

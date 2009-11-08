@@ -29,13 +29,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util;
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
+public interface ColumnDefinition {
 	
+	int getPosition();
+	String getName();
+	Class<?> getType();
+	String getComment();
 }

@@ -29,13 +29,62 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.util.mysql;
+
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
- * A typed list of tables
- * 
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
+public enum MySQLDataType {
+
+	BIT(Boolean.class),
+	BOOL(Boolean.class),
+	BOOLEAN(Boolean.class),
 	
+	TINYINT(Byte.class),
+	SMALLINT(Short.class),
+	MEDIUMINT(Integer.class),
+	INT(Integer.class),
+	INTEGER(Integer.class),
+	BIGINT(Integer.class),
+	
+	FLOAT(Float.class),
+	DOUBLE(Double.class),
+	DEC(BigDecimal.class),
+	DECIMAL(BigDecimal.class),
+	
+	CHAR(String.class),
+	VARCHAR(String.class),
+	TEXT(String.class),
+	MEDIUMTEXT(String.class),
+	LONGTEXT(String.class),
+	ENUM(String.class),
+	SET(String.class),
+	
+	BINARY(byte[].class),
+	VARBINARY(byte[].class),
+	TINYBLOB(byte[].class),
+	BLOB(byte[].class),
+	MEDIUMBLOB(byte[].class),
+	LONGBLOB(byte[].class),
+	
+	DATE(Date.class),
+	TIME(Time.class),
+	DATETIME(Timestamp.class),
+	TIMESTAMP(Timestamp.class),
+	YEAR(Date.class);
+	
+	private final Class<?> type;
+
+	private MySQLDataType(Class<?> type) {
+		this.type = type;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
 }
