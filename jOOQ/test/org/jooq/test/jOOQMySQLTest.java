@@ -35,16 +35,19 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 import java.io.File;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
 import org.apache.commons.io.FileUtils;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
+import org.jooq.util.mysql.information_schema.Routines;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +68,7 @@ public class jOOQMySQLTest {
 		File file = new File(getClass().getResource("/org/jooq/test/mysql/create.sql").toURI());
 		String allSQL = FileUtils.readFileToString(file);
 		
-		for (String sql : allSQL.split(";")) {
+		for (String sql : allSQL.split("/")) {
 			try {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
@@ -114,5 +117,21 @@ public class jOOQMySQLTest {
 		assertEquals((Integer) 1, result.getRecords().get(0).getValue(f1));
 		assertEquals((Double) 2d, result.getRecords().get(0).getValue(f2));
 		assertEquals("test", result.getRecords().get(0).getValue(f3));
+	}
+	
+	@Test
+	public final void testProcedure() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(Routines.ROUTINES);
+		q.addSelect(Routines.ROUTINES.getFields());
+		q.execute(connection);
+		for (Record record : q.getResult()) {
+			System.out.println(record);
+		}
+		
+		CallableStatement call = connection.prepareCall("call p_author_exists(?, ?)");
+		call.setString("author_name", "Paulo");
+		call.registerOutParameter("result", java.sql.Types.BOOLEAN);
+		call.execute();
+		System.out.println(call.getBoolean("result"));
 	}
 }

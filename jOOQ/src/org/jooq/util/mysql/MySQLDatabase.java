@@ -33,10 +33,10 @@ package org.jooq.util.mysql;
 
 import static org.jooq.impl.QueryFactory.createCompareCondition;
 import static org.jooq.impl.QueryFactory.createSelectQuery;
-import static org.jooq.util.mysql.metadata.Tables.TABLES;
-import static org.jooq.util.mysql.metadata.Tables.TABLE_COMMENT;
-import static org.jooq.util.mysql.metadata.Tables.TABLE_NAME;
-import static org.jooq.util.mysql.metadata.Tables.TABLE_SCHEMA;
+import static org.jooq.util.mysql.information_schema.Tables.TABLES;
+import static org.jooq.util.mysql.information_schema.Tables.TABLE_COMMENT;
+import static org.jooq.util.mysql.information_schema.Tables.TABLE_NAME;
+import static org.jooq.util.mysql.information_schema.Tables.TABLE_SCHEMA;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
