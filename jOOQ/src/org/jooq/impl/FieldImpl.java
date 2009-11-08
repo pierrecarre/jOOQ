@@ -50,17 +50,17 @@ public class FieldImpl<T> extends AbstractQueryPart implements Field<T> {
 	}
 	
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
+	public final int bind(PreparedStatement stmt, int initialIndex) {
 		return initialIndex;
 	}
 
 	@Override
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
 	@Override
-	public Class<T> getType() {
+	public final Class<T> getType() {
 		return type;
 	}
 

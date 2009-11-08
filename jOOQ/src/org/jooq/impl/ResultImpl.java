@@ -31,22 +31,50 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import org.jooq.FieldList;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
  */
-public class EmptyTable extends TableImpl {
+class ResultImpl implements Result {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
+	private final SelectQuery query;
+	private final List<Record> records;
+	
+	public ResultImpl(SelectQuery query) {
+		this.query = query;
+		this.records = new ArrayList<Record>();
+	}
 	
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
+	public FieldList getFields() {
+		return query.getSelect();
 	}
 
-	private EmptyTable() {
-		super("dual");
+	@Override
+	public int getNumberOfRecords() {
+		return records.size();
+	}
+
+	@Override
+	public List<Record> getRecords() {
+		return Collections.unmodifiableList(records);
+	}
+
+	@Override
+	public Iterator<Record> iterator() {
+		return records.iterator();
+	}
+	
+	void addRecord(Record record) {
+		records.add(record);
 	}
 }

@@ -92,9 +92,9 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 
 		sb.append(getField().toSQL(inlineParameters));
 		sb.append(" between ");
-		sb.append(ToSQLHelper.toSQL(getMinValue(), inlineParameters, getField()));
+		sb.append(FieldTypeHelper.toSQL(getMinValue(), inlineParameters, getField()));
 		sb.append(" and ");
-		sb.append(ToSQLHelper.toSQL(getMaxValue(), inlineParameters, getField()));
+		sb.append(FieldTypeHelper.toSQL(getMaxValue(), inlineParameters, getField()));
 
 		return sb.toString();
 	}

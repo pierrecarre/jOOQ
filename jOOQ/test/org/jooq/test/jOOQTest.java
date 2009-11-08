@@ -52,6 +52,7 @@ import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.DeleteQuery;
+import org.jooq.Field;
 import org.jooq.Function;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
@@ -194,8 +195,9 @@ public class jOOQTest {
 		assertEquals(1, j);
 	}
 	
+	@Test
 	public final void testNullFunction() throws Exception {
-		Function<?> f = Functions.NULL();
+		Field<?> f = Functions.NULL();
 		assertEquals("null", f.toSQL(true));
 		assertEquals("null", f.toSQL(false));
 
@@ -203,16 +205,17 @@ public class jOOQTest {
 		assertEquals(1, i);
 	}
 	
+	@Test
 	public final void testConstantFunction() throws Exception {
-		Function<Integer> f1 = Functions.constant(Integer.valueOf(1));
+		Field<Integer> f1 = Functions.constant(Integer.valueOf(1));
 		assertEquals(Integer.class, f1.getType());
-		assertEquals("1", f1.toSQL(true));
-		assertEquals("1", f1.toSQL(false));
+		assertEquals("'1'", f1.toSQL(true));
+		assertEquals("'1'", f1.toSQL(false));
 		
-		Function<String> f2 = Functions.constant("test");
+		Field<String> f2 = Functions.constant("test");
 		assertEquals(String.class, f2.getType());
-		assertEquals("test", f2.toSQL(true));
-		assertEquals("test", f2.toSQL(false));
+		assertEquals("'test'", f2.toSQL(true));
+		assertEquals("'test'", f2.toSQL(false));
 
 		int i = f1.bind(statement);
 		assertEquals(1, i);
@@ -221,6 +224,7 @@ public class jOOQTest {
 		assertEquals(1, j);
 	}
 	
+	@Test
 	public final void testArithmeticFunctions() throws Exception {
 		Function<Integer> sum = Functions.sum(FIELD_ID1);
 		assertEquals(Integer.class, sum.getType());

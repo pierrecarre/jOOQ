@@ -34,6 +34,7 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,6 +47,7 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinList;
 import org.jooq.OrderByFieldList;
+import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -64,6 +66,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	private final ConditionProvider condition;
 	private final FieldList groupBy;
 	private final OrderByFieldList orderBy;
+	private ResultImpl result;
 
 	public SelectQueryImpl(Table from) {
 		this.select = new SelectFieldListImpl();
@@ -93,8 +96,30 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 	
 	@Override
-	protected int execute(PreparedStatement statement) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	protected int execute(PreparedStatement statement) throws SQLException {
+		ResultSet rs = null;
+		
+		try {
+			rs = statement.executeQuery();
+			result = new ResultImpl(this);
+			
+			while (rs.next()) {
+				RecordImpl record = new RecordImpl(result);
+				
+				for (Field<?> field : getSelect()) {
+					Object value = FieldTypeHelper.getFromResultSet(rs, field);
+					record.addValue(field, value);
+				}
+				
+				result.addRecord(record);
+			}
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+		}
+		
+		return result.getNumberOfRecords();
 	}
 
 	@Override
@@ -228,6 +253,11 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		}
 				
 		return sb.toString();
+	}
+
+	@Override
+	public Result getResult() {
+		return result;
 	}
 
 }

@@ -67,17 +67,16 @@ public final class Functions {
 		return new CountFunctionImpl(field, true);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T> Function<T> constant(T value) {
+	public static <T> Field<T> constant(T value) {
 		if (value == null) {
 			throw new IllegalArgumentException("Argument 'value' must not be null");
 		}
 		
-		return new FunctionImpl<T>(value.toString(), (Class<T>) value.getClass());
+		return new ConstantFieldImpl<T>(value);
 	}
 	
-	public static Function<?> NULL() {
-		return new FunctionImpl<Object>("null", Object.class);
+	public static Field<?> NULL() {
+		return new FieldImpl<Object>("null", Object.class);
 	}
 
 	private Functions() {

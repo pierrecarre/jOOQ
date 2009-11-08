@@ -34,6 +34,8 @@ package org.jooq;
 import java.util.Collection;
 
 /**
+ * A common interface for all objects holding conditions (e.g. queries)
+ * 
  * @author Lukas Eder
  */
 public interface ConditionProvider extends QueryPart {

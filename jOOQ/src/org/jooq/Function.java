@@ -32,6 +32,8 @@
 package org.jooq;
 
 /**
+ * A function behaving like a field
+ * 
  * @author Lukas Eder
  */
 public interface Function<T> extends Field<T> {

@@ -31,22 +31,48 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jooq.Field;
+import org.jooq.FieldList;
+import org.jooq.Record;
+import org.jooq.Result;
 
 /**
  * @author Lukas Eder
  */
-public class EmptyTable extends TableImpl {
+class RecordImpl implements Record {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
+	private final Result result;
+	private final Map<Field<?>, Object> values;
+
+	public RecordImpl(Result result) {
+		this.result = result;
+		this.values = new HashMap<Field<?>, Object>();
+	}
 	
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
+	public FieldList getFields() {
+		return result.getFields();
 	}
 
-	private EmptyTable() {
-		super("dual");
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
+		if (!values.containsKey(field)) {
+			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
+		}
+		
+		return (T) values.get(field);
+	}
+
+	<T> void addValue(Field<?> field, Object value) {
+		values.put(field, value);
+	}
+
+	@Override
+	public String toString() {
+		return "RecordImpl [values=" + values + "]";
 	}
 }

@@ -64,5 +64,5 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 		}
 	}
 
-	protected abstract int execute(PreparedStatement statement);
+	protected abstract int execute(PreparedStatement statement) throws SQLException;
 }

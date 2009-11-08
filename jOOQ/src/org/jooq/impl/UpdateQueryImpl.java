@@ -135,7 +135,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 			sb.append(separator);
 			sb.append(field.toSQL(inlineParameters));
 			sb.append(" = ");
-			sb.append(ToSQLHelper.toSQL(value, inlineParameters, field));
+			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator = ", ";
 		}
 		

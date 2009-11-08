@@ -31,22 +31,27 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import org.jooq.Table;
+import org.jooq.TableField;
 
 /**
  * @author Lukas Eder
  */
-public class EmptyTable extends TableImpl {
+public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
+	private static final long serialVersionUID = -2211214195583539735L;
+
+	private final Table table;
 	
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
+	public TableFieldImpl(String name, Class<T> type, Table table) {
+		super(name, type);
+		
+		this.table = table;
+		this.table.getFields().add(this);
 	}
 
-	private EmptyTable() {
-		super("dual");
+	@Override
+	public Table getTable() {
+		return table;
 	}
 }

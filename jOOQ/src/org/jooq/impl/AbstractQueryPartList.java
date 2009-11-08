@@ -46,14 +46,16 @@ import org.jooq.QueryPartList;
 abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPartList<T> {
 
 	private static final long serialVersionUID = -2936922742534009564L;
-	private final List<T> wrappedList;
+	private final List<T> wrappedList = new ArrayList<T>();
 
 	public AbstractQueryPartList() {
-		this(new ArrayList<T>());
+		this(null);
 	}
 	
 	public AbstractQueryPartList(List<T> wrappedList) {
-		this.wrappedList = wrappedList;
+		if (wrappedList != null) {
+			addAll(wrappedList);
+		}
 	}
 	
 	@Override

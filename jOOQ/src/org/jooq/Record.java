@@ -29,24 +29,31 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
+package org.jooq;
 
 /**
+ * A wrapper for database result records returned by
+ * <code>{@link SelectQuery}</code>
+ * 
  * @author Lukas Eder
+ * @see SelectQuery#getResult()
  */
-public class EmptyTable extends TableImpl {
+public interface Record {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
-	
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
+	/**
+	 * @return The fields contained in the result table
+	 */
+	FieldList getFields();
 
-	private EmptyTable() {
-		super("dual");
-	}
+	/**
+	 * @param <T>
+	 *            The generic field parameter
+	 * @param field
+	 *            The field
+	 * @return The value of a field contained in this record
+	 * @throws IllegalArgumentException
+	 *             If the argument field is not contained in
+	 *             {@link #getFields()}
+	 */
+	<T> T getValue(Field<T> field) throws IllegalArgumentException;
 }

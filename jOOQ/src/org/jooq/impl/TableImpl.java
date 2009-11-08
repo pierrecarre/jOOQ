@@ -32,9 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
-import java.util.List;
 
-import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Table;
 
@@ -48,13 +46,9 @@ public class TableImpl extends AbstractQueryPart implements Table {
 	private final FieldList fields;
 	
 	
-	public TableImpl(String name, List<Field<?>> list) {
-		this(name, new FieldListImpl(list));
-	}
-	
-	public TableImpl(String name, FieldList fields) {
+	public TableImpl(String name) {
 		this.name = name;
-		this.fields = fields;
+		this.fields = new FieldListImpl();
 	}
 	
 	@Override

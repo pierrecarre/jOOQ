@@ -29,24 +29,30 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq;
 
-import java.sql.PreparedStatement;
+import java.util.List;
 
 /**
+ * A wrapper for database results returned by <code>{@link SelectQuery}</code>
+ * 
  * @author Lukas Eder
+ * @see SelectQuery#getResult()
  */
-public class EmptyTable extends TableImpl {
+public interface Result extends Iterable<Record> {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
+	/**
+	 * @return The fields contained in the result table
+	 */
+	FieldList getFields();
+
+	/**
+	 * @return The resulting records
+	 */
+	List<Record> getRecords();
 	
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
-
-	private EmptyTable() {
-		super("dual");
-	}
+	/**
+	 * @return The number of resulting records
+	 */
+	int getNumberOfRecords();
 }

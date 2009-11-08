@@ -83,7 +83,7 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 		String separator = "";
 		for (T value : getValues()) {
 			sb.append(separator);
-			sb.append(ToSQLHelper.toSQL(value, inlineParameters, getField()));
+			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, getField()));
 			separator = ", ";
 		}
 		

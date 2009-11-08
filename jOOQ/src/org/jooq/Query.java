@@ -42,6 +42,42 @@ import javax.sql.DataSource;
  * @author Lukas Eder
  */
 public interface Query extends QueryPart {
+
+	/**
+	 * Execute the query
+	 * 
+	 * @param source
+	 *            The data source to be used for query execution. This will be
+	 *            used to retrieve a connection, and then call
+	 *            {@link #execute(Connection)}
+	 * @return A result value, depending on the concrete implementation of
+	 *         {@link Query}:
+	 *         <ul>
+	 *         <li> {@link SelectQuery} : the number of resulting records</li>
+	 *         <li> {@link UpdateQuery} : the number of updated records</li>
+	 *         <li> {@link InsertQuery} : the number of inserted records</li>
+	 *         <li> {@link DeleteQuery} : the number of deleted records</li>
+	 *         </ul>
+	 * @throws SQLException
+	 * @see {@link #execute(Connection)}
+	 */
 	int execute(DataSource source) throws SQLException;
+
+	/**
+	 * Execute the query
+	 * 
+	 * @param connection
+	 *            The connection to be used for query execution.
+	 * @return A result value, depending on the concrete implementation of
+	 *         {@link Query}:
+	 *         <ul>
+	 *         <li> {@link SelectQuery} : the number of resulting records</li>
+	 *         <li> {@link UpdateQuery} : the number of updated records</li>
+	 *         <li> {@link InsertQuery} : the number of inserted records</li>
+	 *         <li> {@link DeleteQuery} : the number of deleted records</li>
+	 *         </ul>
+	 * @throws SQLException
+	 * @see {@link #execute(Connection)}
+	 */
 	int execute(Connection connection) throws SQLException;
 }

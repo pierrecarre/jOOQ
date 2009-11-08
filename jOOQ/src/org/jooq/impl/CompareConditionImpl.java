@@ -96,7 +96,7 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 		if (getValue() != null) {
 			sb.append(getComparator().toSQL());
 			sb.append(" ");
-			sb.append(ToSQLHelper.toSQL(getValue(), inlineParameters, getField()));
+			sb.append(FieldTypeHelper.toSQL(getValue(), inlineParameters, getField()));
 		} else {
 			switch (getComparator()) {
 			case EQUALS:

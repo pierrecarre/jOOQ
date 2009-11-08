@@ -118,7 +118,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 			Object value = getValues0().get(field);
 			
 			sb.append(separator2);
-			sb.append(ToSQLHelper.toSQL(value, inlineParameters, field));
+			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator2 = ", ";
 		}
 		sb.append(")");

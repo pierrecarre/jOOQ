@@ -35,6 +35,8 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -43,7 +45,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class ToSQLHelper {
+final class FieldTypeHelper {
 
 	public static String toSQL(Object value, boolean inlineParameters) {
 		return toSQL(value, inlineParameters, value.getClass());
@@ -110,5 +112,61 @@ final class ToSQLHelper {
 		return "?";
 	}
 	
-	private ToSQLHelper() {}
+	public static <T> T getFromResultSet(ResultSet rs, Field<T> field) throws SQLException {
+		return getFromResultSet(rs, field.getType(), field.getName());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getFromResultSet(ResultSet rs, Class<T> type, String fieldName) throws SQLException {
+		if (type == Blob.class) {
+			return (T) rs.getBlob(fieldName);
+		}
+		else if (type == Boolean.class) {
+			return (T) Boolean.valueOf(rs.getBoolean(fieldName));
+		}
+		else if (type == BigDecimal.class) {
+			return (T) rs.getBigDecimal(fieldName);
+		}
+		else if (type == Byte.class) {
+			return (T) Byte.valueOf(rs.getByte(fieldName));
+		}
+		else if (type == byte[].class) {
+			return (T) rs.getBytes(fieldName);
+		}
+		else if (type == Clob.class) {
+			return (T) rs.getClob(fieldName);
+		}
+		else if (type == Date.class) {
+			return (T) rs.getDate(fieldName);
+		}
+		else if (type == Double.class) {
+			return (T) Double.valueOf(rs.getDouble(fieldName));
+		}
+		else if (type == Float.class) {
+			return (T) Float.valueOf(rs.getFloat(fieldName));
+		}
+		else if (type == Integer.class) {
+			return (T) Integer.valueOf(rs.getInt(fieldName));
+		}
+		else if (type == Long.class) {
+			return (T) Long.valueOf(rs.getLong(fieldName));
+		}
+		else if (type == Short.class) {
+			return (T) Short.valueOf(rs.getShort(fieldName));
+		}
+		else if (type == String.class) {
+			return (T) rs.getString(fieldName);
+		}
+		else if (type == Time.class) {
+			return (T) rs.getTime(fieldName);
+		}
+		else if (type == Timestamp.class) {
+			return (T) rs.getTimestamp(fieldName);
+		}
+		else {
+			return (T) rs.getObject(fieldName);
+		}
+	}
+	
+	private FieldTypeHelper() {}
 }

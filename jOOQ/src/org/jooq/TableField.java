@@ -29,24 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
+package org.jooq;
 
 /**
+ * A field contained in a table
+ * 
  * @author Lukas Eder
  */
-public class EmptyTable extends TableImpl {
+public interface TableField<T> extends Field<T> {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
-	
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
-
-	private EmptyTable() {
-		super("dual");
-	}
+	/**
+	 * @return The table this field is contained in
+	 */
+	Table getTable();
 }
