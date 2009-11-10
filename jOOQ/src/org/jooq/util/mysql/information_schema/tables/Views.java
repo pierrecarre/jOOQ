@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Views extends TableImpl {
 
-	private static final long serialVersionUID = -919807661916472915L;
+	private static final long serialVersionUID = -1091582072218800393L;
 
 	/**
 	 * The singleton instance of VIEWS
@@ -23,52 +23,52 @@ public class Views extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, VIEWS);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, VIEWS);
+	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, VIEWS);
+	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> VIEW_DEFINITION = new TableFieldImpl<String>("VIEW_DEFINITION", String.class, VIEWS);
+	public static final TableField<String> VIEW_DEFINITION = new TableFieldImpl<String>("VIEW_DEFINITION", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHECK_OPTION = new TableFieldImpl<String>("CHECK_OPTION", String.class, VIEWS);
+	public static final TableField<String> CHECK_OPTION = new TableFieldImpl<String>("CHECK_OPTION", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_UPDATABLE = new TableFieldImpl<String>("IS_UPDATABLE", String.class, VIEWS);
+	public static final TableField<String> IS_UPDATABLE = new TableFieldImpl<String>("IS_UPDATABLE", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, VIEWS);
+	public static final TableField<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SECURITY_TYPE = new TableFieldImpl<String>("SECURITY_TYPE", String.class, VIEWS);
+	public static final TableField<String> SECURITY_TYPE = new TableFieldImpl<String>("SECURITY_TYPE", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, VIEWS);
+	public static final TableField<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, VIEWS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, VIEWS);
+	public static final TableField<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, VIEWS);
 
 	/**
 	 * No further instances allowed

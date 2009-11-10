@@ -33,16 +33,15 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.ProcedureParameter;
+import org.jooq.impl.Parameter;
+
 
 /**
  * @author Lukas Eder
  */
-public interface StoredProcedure extends Query {
+public interface StoredProcedure extends StoredObject {
 
-	String getName();
-	
-	List<ProcedureParameter<?>> getInParameters();
-	List<ProcedureParameter<?>> getOutParameters();
-	List<ProcedureParameter<?>> getAllParameters();
+	List<Parameter<?>> getOutParameters();
+
+	List<Parameter<?>> getAllParameters();
 }

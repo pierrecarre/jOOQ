@@ -52,6 +52,15 @@ public interface Result extends Iterable<Record> {
 	List<Record> getRecords();
 	
 	/**
+	 * Returns a record at a given index
+	 * 
+	 * @param index The record's index
+	 * @return The Record
+	 * @throws IndexOutOfBoundsException
+	 */
+	Record getRecord(int index) throws IndexOutOfBoundsException;
+	
+	/**
 	 * @return The number of resulting records
 	 */
 	int getNumberOfRecords();

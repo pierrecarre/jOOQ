@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TimeZone extends TableImpl {
 
-	private static final long serialVersionUID = 4122007681958954200L;
+	private static final long serialVersionUID = -5151870490459140877L;
 
 	/**
 	 * The singleton instance of time_zone
@@ -25,12 +25,12 @@ public class TimeZone extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE);
+	public static final TableField<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> USE_LEAP_SECONDS = new TableFieldImpl<String>("Use_leap_seconds", String.class, TIME_ZONE);
+	public static final TableField<String> USE_LEAP_SECONDS = new TableFieldImpl<String>("Use_leap_seconds", String.class, TIME_ZONE);
 
 	/**
 	 * No further instances allowed

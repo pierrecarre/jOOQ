@@ -34,23 +34,16 @@ package org.jooq.util.mysql;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.InOutDefinition;
+import org.jooq.util.ProcedureDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLProcedureDefinition extends AbstractProcedureDefinition {
-
-	private static final String INOUT = "(?:(IN|OUT|INOUT)\\s+?)?";
-	private static final String PARAM_NAME = "(?:(\\S+?)\\s+?)";
-	private static final String PARAM_TYPE = "([^\\s\\(]+)(?:\\(.*?\\))?";
-	private static final String PARAMETER = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";
-	
-	private static final Pattern PATTERN = Pattern.compile(PARAMETER);
+public class MySQLProcedureDefinition extends AbstractProcedureDefinition implements ProcedureDefinition {
 
 	private List<ColumnDefinition> inParameters;
 	private List<ColumnDefinition> outParameters;
@@ -72,7 +65,7 @@ public class MySQLProcedureDefinition extends AbstractProcedureDefinition {
 			String param = split[i];
 			
 			param = param.trim();
-			Matcher matcher = PATTERN.matcher(param);
+			Matcher matcher = PARAMETER_PATTERN.matcher(param);
 			while (matcher.find()) {
 				String inOut = matcher.group(2);
 				String paramName = matcher.group(3);

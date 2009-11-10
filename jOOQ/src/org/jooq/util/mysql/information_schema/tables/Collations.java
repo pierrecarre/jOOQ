@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Collations extends TableImpl {
 
-	private static final long serialVersionUID = -4527834274269630778L;
+	private static final long serialVersionUID = 8318692544503200780L;
 
 	/**
 	 * The singleton instance of COLLATIONS
@@ -23,32 +23,32 @@ public class Collations extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION_NAME = new TableFieldImpl<String>("COLLATION_NAME", String.class, COLLATIONS);
+	public static final TableField<String> COLLATION_NAME = new TableFieldImpl<String>("COLLATION_NAME", String.class, COLLATIONS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_NAME = new TableFieldImpl<String>("CHARACTER_SET_NAME", String.class, COLLATIONS);
+	public static final TableField<String> CHARACTER_SET_NAME = new TableFieldImpl<String>("CHARACTER_SET_NAME", String.class, COLLATIONS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, COLLATIONS);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, COLLATIONS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_DEFAULT = new TableFieldImpl<String>("IS_DEFAULT", String.class, COLLATIONS);
+	public static final TableField<String> IS_DEFAULT = new TableFieldImpl<String>("IS_DEFAULT", String.class, COLLATIONS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_COMPILED = new TableFieldImpl<String>("IS_COMPILED", String.class, COLLATIONS);
+	public static final TableField<String> IS_COMPILED = new TableFieldImpl<String>("IS_COMPILED", String.class, COLLATIONS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SORTLEN = new TableFieldImpl<Integer>("SORTLEN", Integer.class, COLLATIONS);
+	public static final TableField<Integer> SORTLEN = new TableFieldImpl<Integer>("SORTLEN", Integer.class, COLLATIONS);
 
 	/**
 	 * No further instances allowed

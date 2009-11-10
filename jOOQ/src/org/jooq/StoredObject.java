@@ -29,28 +29,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
+package org.jooq;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
+
+import org.jooq.impl.Parameter;
 
 /**
  * @author Lukas Eder
  */
-public interface Database {
+public interface StoredObject extends Query {
 
-	List<TableDefinition> getTables() throws SQLException;
-	List<ProcedureDefinition> getProcedures() throws SQLException;
-	List<FunctionDefinition> getFunctions() throws SQLException;
+	String getName();
 	
-	void setConnection(Connection connection);
-	Connection getConnection();
-	
-	void setSchema(String schema);
-	String getSchema();
-	
-	void setIncludes(String[] includes);
+	List<Parameter<?>> getInParameters();
 
-	void setExcludes(String[] excludes);
 }

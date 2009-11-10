@@ -37,8 +37,9 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Random;
 
-import org.jooq.Field;
-import org.jooq.impl.ProcedureParameter;
+import org.jooq.TableField;
+import org.jooq.impl.Parameter;
+import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -55,6 +56,9 @@ public class DefaultGenerator implements Generator {
 	public void generate(Database database) throws SQLException, IOException {
 		File targetPackageDir = new File(targetDirectory + File.separator + targetPackageName.replace('.', File.separatorChar));
 		
+		// ----------------------------------------------------------------------
+		// Generating tables
+		// ----------------------------------------------------------------------
 		File targetTablePackageDir = new File(targetPackageDir, "tables");
 		System.out.println("Generating classes in " + targetPackageDir.getCanonicalPath());
 		
@@ -84,22 +88,7 @@ public class DefaultGenerator implements Generator {
 			out.println("\tpublic static final " + targetClassName + " " + targetTableNameUC + " = new " + targetClassName + "();");
 			
 			for (ColumnDefinition column : table.getColumns()) {
-				Class<?> columnClass = column.getType();
-				String columnType = columnClass.getSimpleName();
-				String columnName = column.getName();
-				String columnNameUC = columnName.toUpperCase();
-				String columnDisambiguationSuffix = columnNameUC.equals(targetTableNameUC) ? "_" : "";
-				String columnComment = column.getComment();
-				
-				printFieldJavaDoc(out, columnDisambiguationSuffix, columnComment);
-				out.println("\tpublic static final Field<" + columnType + "> " + 
-						columnNameUC + columnDisambiguationSuffix + 
-						" = new TableFieldImpl<" + columnType + ">(\"" 
-						+ columnName + "\", " + 
-						columnType + ".class, " + targetTableNameUC + ");");
-				out.printImport(Field.class);
-				out.printImport(TableFieldImpl.class);
-				out.printImport(columnClass);
+				printColumn(out, column, targetTableNameUC);
 			}
 			
 			out.println();
@@ -113,6 +102,9 @@ public class DefaultGenerator implements Generator {
 		}
 		
 		
+		// ----------------------------------------------------------------------
+		// Generating stored procedures
+		// ----------------------------------------------------------------------
 		File targetProcedurePackageDir = new File(targetPackageDir, "procedures");
 		
 		System.out.println("Generating classes in " + targetProcedurePackageDir.getCanonicalPath());
@@ -137,20 +129,7 @@ public class DefaultGenerator implements Generator {
 			
 			
 			for (ColumnDefinition parameter : procedure.getAllParameters()) {
-				Class<?> parameterClass = parameter.getType();
-				String parameterType = parameterClass.getSimpleName();
-				String parameterName = parameter.getName();
-				String parameterNameUC = parameterName.toUpperCase();
-				
-				printFieldJavaDoc(out, "", "");
-				
-				out.println("\tpublic static final ProcedureParameter<" + parameterType + "> " + 
-						parameterNameUC + 
-						" = new ProcedureParameter<" + parameterType + ">(\"" 
-						+ parameterName + "\", " + 
-						parameterType + ".class);");
-				out.printImport(ProcedureParameter.class);
-				out.printImport(parameterClass);
+				printParameter(out, parameter);
 			}
 			
 			out.println();
@@ -203,6 +182,105 @@ public class DefaultGenerator implements Generator {
 			out.println("}");
 			out.close();
 		}
+		
+		
+		// ----------------------------------------------------------------------
+		// Generating stored functions
+		// ----------------------------------------------------------------------
+		File targetFunctionPackageDir = new File(targetPackageDir, "functions");
+		
+		System.out.println("Generating classes in " + targetFunctionPackageDir.getCanonicalPath());
+		for (FunctionDefinition function : database.getFunctions()) {
+			targetFunctionPackageDir.mkdirs();
+
+			String targetFunctionName = function.getName();
+			String targetClassName = getJavaClassName(targetFunctionName);
+			String targetFileName = targetClassName + ".java";
+			String targetComment = function.getComment();
+			
+			ColumnDefinition returnValue = function.getReturnValue();
+			Class<?> returnValueClass = returnValue.getType();
+			String returnValueType = returnValueClass.getSimpleName();
+			
+			System.out.println("Generating function " + targetFunctionName + " into " + targetFileName);
+
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetFunctionPackageDir, targetFileName)));
+			printHeader(out, targetPackageName + ".functions");
+			printClassJavadoc(out, targetComment);
+
+			out.println("public class " + targetClassName + " extends StoredFunctionImpl<" + returnValueType + "> {");
+			printSerial(out);
+			out.printImport(StoredFunctionImpl.class);
+			out.println();
+			
+			
+			for (ColumnDefinition parameter : function.getInParameters()) {
+				printParameter(out, parameter);
+			}
+			
+			out.println();
+			printNoFurtherInstancesAllowedJavadoc(out);
+			out.println("\tpublic " + targetClassName + "() {");
+			out.println("\t\tsuper(\"" + targetFunctionName + "\", " + returnValueType + ".class);");
+			out.println();
+			
+			for (ColumnDefinition parameter : function.getInParameters()) {
+				String parameterNameUC = parameter.getName().toUpperCase();
+
+				out.print("\t\t");
+				out.println("addInParameter(" + parameterNameUC + ");");
+			}
+			
+			out.println("\t}");
+			
+			for (ColumnDefinition parameter : function.getInParameters()) {
+				Class<?> parameterClass = parameter.getType();
+				String parameterType = parameterClass.getSimpleName();
+				String parameterNameUC = parameter.getName().toUpperCase();
+
+				out.println();
+				out.println("\tpublic void set" + getJavaClassName(parameterNameUC) + "(" + parameterType + " value) {");
+				out.println("\t\tsetValue(" + parameterNameUC + ", value);");
+				out.println("\t}");
+			}
+			
+			
+			out.println("}");
+			out.close();
+		}
+	}
+
+	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) {
+		printColumnDefinition(out, column, targetTableNameUC, TableField.class, TableFieldImpl.class);
+	}
+
+	private void printParameter(GenerationWriter out, ColumnDefinition parameter) {
+		printColumnDefinition(out, parameter, null, Parameter.class, Parameter.class);
+	}
+	
+	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, String targetObjectNameUC, Class<?> declaredMemberClass, Class<?> concreteMemberClass) {
+		String concreteMemberType = concreteMemberClass.getSimpleName();
+		String declaredMemberType = declaredMemberClass.getSimpleName();
+
+		Class<?> columnClass = column.getType();
+		String columnType = columnClass.getSimpleName();
+		String columnName = column.getName();
+		String columnNameUC = columnName.toUpperCase();
+		String columnDisambiguationSuffix = columnNameUC.equals(targetObjectNameUC) ? "_" : "";
+		String columnComment = column.getComment();
+
+		printFieldJavaDoc(out, columnDisambiguationSuffix, columnComment);
+
+		out.println("\tpublic static final " + declaredMemberType + "<" + columnType + "> " + 
+				columnNameUC + columnDisambiguationSuffix +
+				" = new " + concreteMemberType + "<" + columnType + ">(\"" 
+				+ columnName + "\", " + 
+				columnType + ".class" +
+				(targetObjectNameUC != null ? ", " + targetObjectNameUC : "") +
+				");");
+		out.printImport(declaredMemberClass);
+		out.printImport(concreteMemberClass);
+		out.printImport(columnClass);
 	}
 
 	private void printSerial(GenerationWriter out) {
@@ -220,7 +298,7 @@ public class DefaultGenerator implements Generator {
 			out.println("\t * An uncommented item");
 		}
 
-		if (disambiguationSuffix.length() > 0) {
+		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
 			out.println("\t * ");
 			out.println("\t * This item has the same name as its container. That is why an underline character was appended to the Java field name");
 		}

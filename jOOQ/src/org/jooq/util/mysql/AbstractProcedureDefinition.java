@@ -31,13 +31,23 @@
 
 package org.jooq.util.mysql;
 
+import java.util.regex.Pattern;
+
 import org.jooq.util.Database;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.Definition;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractProcedureDefinition implements ProcedureDefinition {
+public abstract class AbstractProcedureDefinition implements Definition {
+	
+	private static final String INOUT = "(?:(IN|OUT|INOUT)\\s+?)?";
+	private static final String PARAM_NAME = "(?:(\\S+?)\\s+?)";
+	private static final String PARAM_TYPE = "([^\\s\\(]+)(?:\\(.*?\\))?";
+
+	protected static final String PARAMETER = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";
+	protected static final Pattern PARAMETER_PATTERN = Pattern.compile(PARAMETER);
+	protected static final Pattern TYPE_PATTERN = Pattern.compile(PARAM_TYPE);
 	
 	private final Database database;
 	private final String name;

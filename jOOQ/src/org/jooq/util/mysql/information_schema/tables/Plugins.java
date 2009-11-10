@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Plugins extends TableImpl {
 
-	private static final long serialVersionUID = 2537953706709382825L;
+	private static final long serialVersionUID = 5750893463575937186L;
 
 	/**
 	 * The singleton instance of PLUGINS
@@ -23,52 +23,52 @@ public class Plugins extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_NAME = new TableFieldImpl<String>("PLUGIN_NAME", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_NAME = new TableFieldImpl<String>("PLUGIN_NAME", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_VERSION = new TableFieldImpl<String>("PLUGIN_VERSION", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_VERSION = new TableFieldImpl<String>("PLUGIN_VERSION", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_STATUS = new TableFieldImpl<String>("PLUGIN_STATUS", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_STATUS = new TableFieldImpl<String>("PLUGIN_STATUS", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_TYPE = new TableFieldImpl<String>("PLUGIN_TYPE", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_TYPE = new TableFieldImpl<String>("PLUGIN_TYPE", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_TYPE_VERSION = new TableFieldImpl<String>("PLUGIN_TYPE_VERSION", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_TYPE_VERSION = new TableFieldImpl<String>("PLUGIN_TYPE_VERSION", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_LIBRARY = new TableFieldImpl<String>("PLUGIN_LIBRARY", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_LIBRARY = new TableFieldImpl<String>("PLUGIN_LIBRARY", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_LIBRARY_VERSION = new TableFieldImpl<String>("PLUGIN_LIBRARY_VERSION", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_LIBRARY_VERSION = new TableFieldImpl<String>("PLUGIN_LIBRARY_VERSION", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_AUTHOR = new TableFieldImpl<String>("PLUGIN_AUTHOR", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_AUTHOR = new TableFieldImpl<String>("PLUGIN_AUTHOR", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_DESCRIPTION = new TableFieldImpl<String>("PLUGIN_DESCRIPTION", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_DESCRIPTION = new TableFieldImpl<String>("PLUGIN_DESCRIPTION", String.class, PLUGINS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PLUGIN_LICENSE = new TableFieldImpl<String>("PLUGIN_LICENSE", String.class, PLUGINS);
+	public static final TableField<String> PLUGIN_LICENSE = new TableFieldImpl<String>("PLUGIN_LICENSE", String.class, PLUGINS);
 
 	/**
 	 * No further instances allowed

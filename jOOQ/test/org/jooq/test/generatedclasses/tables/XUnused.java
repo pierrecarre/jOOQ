@@ -3,7 +3,7 @@
  */
 package org.jooq.test.generatedclasses.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class XUnused extends TableImpl {
 
-	private static final long serialVersionUID = 439771509480778917L;
+	private static final long serialVersionUID = -3234260034003595876L;
 
 	/**
 	 * The singleton instance of x_unused
@@ -25,7 +25,7 @@ public class XUnused extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
 
 	/**
 	 * No further instances allowed

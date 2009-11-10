@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class CharacterSets extends TableImpl {
 
-	private static final long serialVersionUID = -7560079408783683097L;
+	private static final long serialVersionUID = 7878347424009653266L;
 
 	/**
 	 * The singleton instance of CHARACTER_SETS
@@ -23,22 +23,22 @@ public class CharacterSets extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_NAME = new TableFieldImpl<String>("CHARACTER_SET_NAME", String.class, CHARACTER_SETS);
+	public static final TableField<String> CHARACTER_SET_NAME = new TableFieldImpl<String>("CHARACTER_SET_NAME", String.class, CHARACTER_SETS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFAULT_COLLATE_NAME = new TableFieldImpl<String>("DEFAULT_COLLATE_NAME", String.class, CHARACTER_SETS);
+	public static final TableField<String> DEFAULT_COLLATE_NAME = new TableFieldImpl<String>("DEFAULT_COLLATE_NAME", String.class, CHARACTER_SETS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DESCRIPTION = new TableFieldImpl<String>("DESCRIPTION", String.class, CHARACTER_SETS);
+	public static final TableField<String> DESCRIPTION = new TableFieldImpl<String>("DESCRIPTION", String.class, CHARACTER_SETS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> MAXLEN = new TableFieldImpl<Integer>("MAXLEN", Integer.class, CHARACTER_SETS);
+	public static final TableField<Integer> MAXLEN = new TableFieldImpl<Integer>("MAXLEN", Integer.class, CHARACTER_SETS);
 
 	/**
 	 * No further instances allowed

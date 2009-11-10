@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Schemata extends TableImpl {
 
-	private static final long serialVersionUID = 6011456680261205584L;
+	private static final long serialVersionUID = 8110283868771221877L;
 
 	/**
 	 * The singleton instance of SCHEMATA
@@ -23,27 +23,27 @@ public class Schemata extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CATALOG_NAME = new TableFieldImpl<String>("CATALOG_NAME", String.class, SCHEMATA);
+	public static final TableField<String> CATALOG_NAME = new TableFieldImpl<String>("CATALOG_NAME", String.class, SCHEMATA);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SCHEMA_NAME = new TableFieldImpl<String>("SCHEMA_NAME", String.class, SCHEMATA);
+	public static final TableField<String> SCHEMA_NAME = new TableFieldImpl<String>("SCHEMA_NAME", String.class, SCHEMATA);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFAULT_CHARACTER_SET_NAME = new TableFieldImpl<String>("DEFAULT_CHARACTER_SET_NAME", String.class, SCHEMATA);
+	public static final TableField<String> DEFAULT_CHARACTER_SET_NAME = new TableFieldImpl<String>("DEFAULT_CHARACTER_SET_NAME", String.class, SCHEMATA);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFAULT_COLLATION_NAME = new TableFieldImpl<String>("DEFAULT_COLLATION_NAME", String.class, SCHEMATA);
+	public static final TableField<String> DEFAULT_COLLATION_NAME = new TableFieldImpl<String>("DEFAULT_COLLATION_NAME", String.class, SCHEMATA);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_PATH = new TableFieldImpl<String>("SQL_PATH", String.class, SCHEMATA);
+	public static final TableField<String> SQL_PATH = new TableFieldImpl<String>("SQL_PATH", String.class, SCHEMATA);
 
 	/**
 	 * No further instances allowed

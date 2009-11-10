@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class GlobalVariables extends TableImpl {
 
-	private static final long serialVersionUID = -5820769532448180184L;
+	private static final long serialVersionUID = 3733932269195020546L;
 
 	/**
 	 * The singleton instance of GLOBAL_VARIABLES
@@ -23,12 +23,12 @@ public class GlobalVariables extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> VARIABLE_NAME = new TableFieldImpl<String>("VARIABLE_NAME", String.class, GLOBAL_VARIABLES);
+	public static final TableField<String> VARIABLE_NAME = new TableFieldImpl<String>("VARIABLE_NAME", String.class, GLOBAL_VARIABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> VARIABLE_VALUE = new TableFieldImpl<String>("VARIABLE_VALUE", String.class, GLOBAL_VARIABLES);
+	public static final TableField<String> VARIABLE_VALUE = new TableFieldImpl<String>("VARIABLE_VALUE", String.class, GLOBAL_VARIABLES);
 
 	/**
 	 * No further instances allowed

@@ -42,14 +42,18 @@ import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.NAME;
 import static org.jooq.util.mysql.mysql.tables.Proc.PARAM_LIST;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
+import static org.jooq.util.mysql.mysql.tables.Proc.RETURNS;
+import static org.jooq.util.mysql.mysql.tables.Proc.TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
 
@@ -84,14 +88,7 @@ public class MySQLDatabase extends AbstractDatabase {
 	public List<ProcedureDefinition> getProcedures() throws SQLException {
 		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
 		
-		SelectQuery q = createSelectQuery(PROC);
-		q.addSelect(NAME);
-		q.addSelect(PARAM_LIST);
-		q.addSelect(COMMENT);
-		q.addConditions(createCompareCondition(DB, getSchema()));
-		q.execute(getConnection());
-		
-		for (Record record : q.getResult()) {
+		for (Record record : executeProcedureQuery("PROCEDURE")) {
 			String name = record.getValue(NAME);
 			String comment = record.getValue(COMMENT);
 			String params = new String(record.getValue(PARAM_LIST));
@@ -101,5 +98,35 @@ public class MySQLDatabase extends AbstractDatabase {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<FunctionDefinition> getFunctions() throws SQLException {
+		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+		
+		for (Record record : executeProcedureQuery("FUNCTION")) {
+			String name = record.getValue(NAME);
+			String comment = record.getValue(COMMENT);
+			String params = new String(record.getValue(PARAM_LIST));
+			String returnValue = new String(record.getValue(RETURNS));
+			
+			MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
+			result.add(function);
+		}
+		
+		return result;
+	}
+	
+	private Result executeProcedureQuery(String type) throws SQLException {
+		SelectQuery q = createSelectQuery(PROC);
+		q.addSelect(NAME);
+		q.addSelect(PARAM_LIST);
+		q.addSelect(COMMENT);
+		q.addSelect(RETURNS);
+		q.addConditions(createCompareCondition(DB, getSchema()));
+		q.addConditions(createCompareCondition(TYPE, type));
+		q.execute(getConnection());
+
+		return q.getResult();
 	}
 }

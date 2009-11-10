@@ -29,18 +29,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq.util;
 
+import java.util.List;
 
 /**
  * @author Lukas Eder
  */
-public class ProcedureParameter<T> extends FieldImpl<T> {
+public interface FunctionDefinition extends Definition {
 
-	private static final long serialVersionUID = -5277225593751085577L;
-
-	public ProcedureParameter(String name, Class<T> type) {
-		super(name, type);
-	}
-
+	List<ColumnDefinition> getInParameters();
+	ColumnDefinition getReturnValue();
+	
 }

@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -16,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class GeneralLog extends TableImpl {
 
-	private static final long serialVersionUID = 8995156439285645943L;
+	private static final long serialVersionUID = 8788375157701753531L;
 
 	/**
 	 * The singleton instance of general_log
@@ -26,32 +26,32 @@ public class GeneralLog extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> EVENT_TIME = new TableFieldImpl<Timestamp>("event_time", Timestamp.class, GENERAL_LOG);
+	public static final TableField<Timestamp> EVENT_TIME = new TableFieldImpl<Timestamp>("event_time", Timestamp.class, GENERAL_LOG);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> USER_HOST = new TableFieldImpl<String>("user_host", String.class, GENERAL_LOG);
+	public static final TableField<String> USER_HOST = new TableFieldImpl<String>("user_host", String.class, GENERAL_LOG);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> THREAD_ID = new TableFieldImpl<Integer>("thread_id", Integer.class, GENERAL_LOG);
+	public static final TableField<Integer> THREAD_ID = new TableFieldImpl<Integer>("thread_id", Integer.class, GENERAL_LOG);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SERVER_ID = new TableFieldImpl<Integer>("server_id", Integer.class, GENERAL_LOG);
+	public static final TableField<Integer> SERVER_ID = new TableFieldImpl<Integer>("server_id", Integer.class, GENERAL_LOG);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COMMAND_TYPE = new TableFieldImpl<String>("command_type", String.class, GENERAL_LOG);
+	public static final TableField<String> COMMAND_TYPE = new TableFieldImpl<String>("command_type", String.class, GENERAL_LOG);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ARGUMENT = new TableFieldImpl<String>("argument", String.class, GENERAL_LOG);
+	public static final TableField<String> ARGUMENT = new TableFieldImpl<String>("argument", String.class, GENERAL_LOG);
 
 	/**
 	 * No further instances allowed

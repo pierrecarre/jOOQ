@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -14,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Events extends TableImpl {
 
-	private static final long serialVersionUID = -3585811493155273745L;
+	private static final long serialVersionUID = -3550378525964370959L;
 
 	/**
 	 * The singleton instance of EVENTS
@@ -24,122 +24,122 @@ public class Events extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_CATALOG = new TableFieldImpl<String>("EVENT_CATALOG", String.class, EVENTS);
+	public static final TableField<String> EVENT_CATALOG = new TableFieldImpl<String>("EVENT_CATALOG", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_SCHEMA = new TableFieldImpl<String>("EVENT_SCHEMA", String.class, EVENTS);
+	public static final TableField<String> EVENT_SCHEMA = new TableFieldImpl<String>("EVENT_SCHEMA", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_NAME = new TableFieldImpl<String>("EVENT_NAME", String.class, EVENTS);
+	public static final TableField<String> EVENT_NAME = new TableFieldImpl<String>("EVENT_NAME", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, EVENTS);
+	public static final TableField<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TIME_ZONE = new TableFieldImpl<String>("TIME_ZONE", String.class, EVENTS);
+	public static final TableField<String> TIME_ZONE = new TableFieldImpl<String>("TIME_ZONE", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_BODY = new TableFieldImpl<String>("EVENT_BODY", String.class, EVENTS);
+	public static final TableField<String> EVENT_BODY = new TableFieldImpl<String>("EVENT_BODY", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_DEFINITION = new TableFieldImpl<String>("EVENT_DEFINITION", String.class, EVENTS);
+	public static final TableField<String> EVENT_DEFINITION = new TableFieldImpl<String>("EVENT_DEFINITION", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_TYPE = new TableFieldImpl<String>("EVENT_TYPE", String.class, EVENTS);
+	public static final TableField<String> EVENT_TYPE = new TableFieldImpl<String>("EVENT_TYPE", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> EXECUTE_AT = new TableFieldImpl<Timestamp>("EXECUTE_AT", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> EXECUTE_AT = new TableFieldImpl<Timestamp>("EXECUTE_AT", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INTERVAL_VALUE = new TableFieldImpl<String>("INTERVAL_VALUE", String.class, EVENTS);
+	public static final TableField<String> INTERVAL_VALUE = new TableFieldImpl<String>("INTERVAL_VALUE", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INTERVAL_FIELD = new TableFieldImpl<String>("INTERVAL_FIELD", String.class, EVENTS);
+	public static final TableField<String> INTERVAL_FIELD = new TableFieldImpl<String>("INTERVAL_FIELD", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_MODE = new TableFieldImpl<String>("SQL_MODE", String.class, EVENTS);
+	public static final TableField<String> SQL_MODE = new TableFieldImpl<String>("SQL_MODE", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> STARTS = new TableFieldImpl<Timestamp>("STARTS", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> STARTS = new TableFieldImpl<Timestamp>("STARTS", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> ENDS = new TableFieldImpl<Timestamp>("ENDS", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> ENDS = new TableFieldImpl<Timestamp>("ENDS", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> STATUS = new TableFieldImpl<String>("STATUS", String.class, EVENTS);
+	public static final TableField<String> STATUS = new TableFieldImpl<String>("STATUS", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ON_COMPLETION = new TableFieldImpl<String>("ON_COMPLETION", String.class, EVENTS);
+	public static final TableField<String> ON_COMPLETION = new TableFieldImpl<String>("ON_COMPLETION", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> CREATED = new TableFieldImpl<Timestamp>("CREATED", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> CREATED = new TableFieldImpl<Timestamp>("CREATED", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> LAST_ALTERED = new TableFieldImpl<Timestamp>("LAST_ALTERED", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> LAST_ALTERED = new TableFieldImpl<Timestamp>("LAST_ALTERED", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> LAST_EXECUTED = new TableFieldImpl<Timestamp>("LAST_EXECUTED", Timestamp.class, EVENTS);
+	public static final TableField<Timestamp> LAST_EXECUTED = new TableFieldImpl<Timestamp>("LAST_EXECUTED", Timestamp.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EVENT_COMMENT = new TableFieldImpl<String>("EVENT_COMMENT", String.class, EVENTS);
+	public static final TableField<String> EVENT_COMMENT = new TableFieldImpl<String>("EVENT_COMMENT", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> ORIGINATOR = new TableFieldImpl<Integer>("ORIGINATOR", Integer.class, EVENTS);
+	public static final TableField<Integer> ORIGINATOR = new TableFieldImpl<Integer>("ORIGINATOR", Integer.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, EVENTS);
+	public static final TableField<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, EVENTS);
+	public static final TableField<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, EVENTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DATABASE_COLLATION = new TableFieldImpl<String>("DATABASE_COLLATION", String.class, EVENTS);
+	public static final TableField<String> DATABASE_COLLATION = new TableFieldImpl<String>("DATABASE_COLLATION", String.class, EVENTS);
 
 	/**
 	 * No further instances allowed

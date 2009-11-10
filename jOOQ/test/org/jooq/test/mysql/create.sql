@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS x_unused;
 /
 DROP PROCEDURE IF EXISTS p_author_exists;
 /
+DROP FUNCTION IF EXISTS f_author_exists;
+/
 
 CREATE TABLE t_author (
 	ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'The author ID',
@@ -58,5 +60,16 @@ BEGIN
     FROM t_author 
    WHERE first_name LIKE author_name 
       OR last_name LIKE author_name;
+END
+/
+
+CREATE FUNCTION f_author_exists (author_name VARCHAR(50))
+  RETURNS BOOL
+  COMMENT 'Check existence of an author'
+BEGIN
+  RETURN (SELECT COUNT(*) > 0
+    FROM t_author 
+   WHERE first_name LIKE author_name 
+      OR last_name LIKE author_name);
 END
 /

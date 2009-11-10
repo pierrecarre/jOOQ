@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Host extends TableImpl {
 
-	private static final long serialVersionUID = 1565597980632422466L;
+	private static final long serialVersionUID = -6285676138727939093L;
 
 	/**
 	 * The singleton instance of host
@@ -27,102 +27,102 @@ public class Host extends TableImpl {
 	 * 
 	 * This item has the same name as its container. That is why an underline character was appended to the Java field name
 	 */
-	public static final Field<String> HOST_ = new TableFieldImpl<String>("Host", String.class, HOST);
+	public static final TableField<String> HOST_ = new TableFieldImpl<String>("Host", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB = new TableFieldImpl<String>("Db", String.class, HOST);
+	public static final TableField<String> DB = new TableFieldImpl<String>("Db", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SELECT_PRIV = new TableFieldImpl<String>("Select_priv", String.class, HOST);
+	public static final TableField<String> SELECT_PRIV = new TableFieldImpl<String>("Select_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INSERT_PRIV = new TableFieldImpl<String>("Insert_priv", String.class, HOST);
+	public static final TableField<String> INSERT_PRIV = new TableFieldImpl<String>("Insert_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> UPDATE_PRIV = new TableFieldImpl<String>("Update_priv", String.class, HOST);
+	public static final TableField<String> UPDATE_PRIV = new TableFieldImpl<String>("Update_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DELETE_PRIV = new TableFieldImpl<String>("Delete_priv", String.class, HOST);
+	public static final TableField<String> DELETE_PRIV = new TableFieldImpl<String>("Delete_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CREATE_PRIV = new TableFieldImpl<String>("Create_priv", String.class, HOST);
+	public static final TableField<String> CREATE_PRIV = new TableFieldImpl<String>("Create_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DROP_PRIV = new TableFieldImpl<String>("Drop_priv", String.class, HOST);
+	public static final TableField<String> DROP_PRIV = new TableFieldImpl<String>("Drop_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> GRANT_PRIV = new TableFieldImpl<String>("Grant_priv", String.class, HOST);
+	public static final TableField<String> GRANT_PRIV = new TableFieldImpl<String>("Grant_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> REFERENCES_PRIV = new TableFieldImpl<String>("References_priv", String.class, HOST);
+	public static final TableField<String> REFERENCES_PRIV = new TableFieldImpl<String>("References_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INDEX_PRIV = new TableFieldImpl<String>("Index_priv", String.class, HOST);
+	public static final TableField<String> INDEX_PRIV = new TableFieldImpl<String>("Index_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ALTER_PRIV = new TableFieldImpl<String>("Alter_priv", String.class, HOST);
+	public static final TableField<String> ALTER_PRIV = new TableFieldImpl<String>("Alter_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CREATE_TMP_TABLE_PRIV = new TableFieldImpl<String>("Create_tmp_table_priv", String.class, HOST);
+	public static final TableField<String> CREATE_TMP_TABLE_PRIV = new TableFieldImpl<String>("Create_tmp_table_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> LOCK_TABLES_PRIV = new TableFieldImpl<String>("Lock_tables_priv", String.class, HOST);
+	public static final TableField<String> LOCK_TABLES_PRIV = new TableFieldImpl<String>("Lock_tables_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CREATE_VIEW_PRIV = new TableFieldImpl<String>("Create_view_priv", String.class, HOST);
+	public static final TableField<String> CREATE_VIEW_PRIV = new TableFieldImpl<String>("Create_view_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SHOW_VIEW_PRIV = new TableFieldImpl<String>("Show_view_priv", String.class, HOST);
+	public static final TableField<String> SHOW_VIEW_PRIV = new TableFieldImpl<String>("Show_view_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CREATE_ROUTINE_PRIV = new TableFieldImpl<String>("Create_routine_priv", String.class, HOST);
+	public static final TableField<String> CREATE_ROUTINE_PRIV = new TableFieldImpl<String>("Create_routine_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ALTER_ROUTINE_PRIV = new TableFieldImpl<String>("Alter_routine_priv", String.class, HOST);
+	public static final TableField<String> ALTER_ROUTINE_PRIV = new TableFieldImpl<String>("Alter_routine_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EXECUTE_PRIV = new TableFieldImpl<String>("Execute_priv", String.class, HOST);
+	public static final TableField<String> EXECUTE_PRIV = new TableFieldImpl<String>("Execute_priv", String.class, HOST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TRIGGER_PRIV = new TableFieldImpl<String>("Trigger_priv", String.class, HOST);
+	public static final TableField<String> TRIGGER_PRIV = new TableFieldImpl<String>("Trigger_priv", String.class, HOST);
 
 	/**
 	 * No further instances allowed

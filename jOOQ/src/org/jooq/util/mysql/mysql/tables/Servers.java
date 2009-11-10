@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Servers extends TableImpl {
 
-	private static final long serialVersionUID = 6627734209747450799L;
+	private static final long serialVersionUID = -8751650595513005118L;
 
 	/**
 	 * The singleton instance of servers
@@ -25,47 +25,47 @@ public class Servers extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SERVER_NAME = new TableFieldImpl<String>("Server_name", String.class, SERVERS);
+	public static final TableField<String> SERVER_NAME = new TableFieldImpl<String>("Server_name", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> HOST = new TableFieldImpl<String>("Host", String.class, SERVERS);
+	public static final TableField<String> HOST = new TableFieldImpl<String>("Host", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB = new TableFieldImpl<String>("Db", String.class, SERVERS);
+	public static final TableField<String> DB = new TableFieldImpl<String>("Db", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> USERNAME = new TableFieldImpl<String>("Username", String.class, SERVERS);
+	public static final TableField<String> USERNAME = new TableFieldImpl<String>("Username", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PASSWORD = new TableFieldImpl<String>("Password", String.class, SERVERS);
+	public static final TableField<String> PASSWORD = new TableFieldImpl<String>("Password", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> PORT = new TableFieldImpl<Integer>("Port", Integer.class, SERVERS);
+	public static final TableField<Integer> PORT = new TableFieldImpl<Integer>("Port", Integer.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SOCKET = new TableFieldImpl<String>("Socket", String.class, SERVERS);
+	public static final TableField<String> SOCKET = new TableFieldImpl<String>("Socket", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> WRAPPER = new TableFieldImpl<String>("Wrapper", String.class, SERVERS);
+	public static final TableField<String> WRAPPER = new TableFieldImpl<String>("Wrapper", String.class, SERVERS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> OWNER = new TableFieldImpl<String>("Owner", String.class, SERVERS);
+	public static final TableField<String> OWNER = new TableFieldImpl<String>("Owner", String.class, SERVERS);
 
 	/**
 	 * No further instances allowed

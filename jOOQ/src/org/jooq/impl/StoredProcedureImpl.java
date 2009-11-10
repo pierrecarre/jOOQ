@@ -33,14 +33,11 @@ package org.jooq.impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.jooq.Field;
 import org.jooq.StoredProcedure;
@@ -48,31 +45,21 @@ import org.jooq.StoredProcedure;
 /**
  * @author Lukas Eder
  */
-public class StoredProcedureImpl extends AbstractQueryPart implements StoredProcedure {
+public class StoredProcedureImpl extends AbstractStoredObject implements StoredProcedure {
 
 	private static final long serialVersionUID = -8046199737354507547L;
 
-	private final String name;
-	private final List<ProcedureParameter<?>> allParameters;
-	private final List<ProcedureParameter<?>> inParameters;
-	private final List<ProcedureParameter<?>> outParameters;
-	private final Map<Field<?>, Object> inValues;
+	private final List<Parameter<?>> allParameters;
+	private final List<Parameter<?>> outParameters;
 
 	private Map<Field<?>, Object> results;
 	
 	public StoredProcedureImpl(String name) {
-		this.name = name;
-		this.allParameters = new ArrayList<ProcedureParameter<?>>();
-		this.inParameters = new ArrayList<ProcedureParameter<?>>();
-		this.outParameters = new ArrayList<ProcedureParameter<?>>();
-		this.inValues = new HashMap<Field<?>, Object>();
+		super(name);
+		this.allParameters = new ArrayList<Parameter<?>>();
+		this.outParameters = new ArrayList<Parameter<?>>();
 	}
 	
-	@Override
-	public final int execute(DataSource source) throws SQLException {
-		return execute(source.getConnection());
-	}
-
 	@Override
 	public final int execute(Connection connection) throws SQLException {
 		CallableStatement statement = null;
@@ -100,84 +87,44 @@ public class StoredProcedureImpl extends AbstractQueryPart implements StoredProc
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
-		
-		for (ProcedureParameter<?> parameter : allParameters) {
-			bind(stmt, result++, parameter, inValues.get(parameter));
-		}
-		
-		return result;
+	protected String toSQLPrefix() {
+		return "call";
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("call ");
-		sb.append(getName());
-		sb.append("(");
-		
-		String separator = "";
-		for (ProcedureParameter<?> parameter : allParameters) {
-			sb.append(separator);
-			
-			if (inlineParameters && inValues.containsKey(parameter)) {
-				FieldTypeHelper.toSQL(inValues.get(parameter), inlineParameters, parameter);
-			} else {
-				sb.append("?");
-			}
-
-			separator = ", ";
-		}
-		
-		sb.append(")");
-		
-		return sb.toString();
-	}
-
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
-	public final List<ProcedureParameter<?>> getInParameters() {
-		return inParameters;
-	}
-
-	@Override
-	public final List<ProcedureParameter<?>> getOutParameters() {
+	public final List<Parameter<?>> getOutParameters() {
 		return outParameters;
 	}
 	
 	@Override
-	public final List<ProcedureParameter<?>> getAllParameters() {
+	public final List<Parameter<?>> getAllParameters() {
 		return allParameters;
 	}
 
-	protected void addInOutParameter(ProcedureParameter<?> parameter) {
-		inParameters.add(parameter);
+	protected void addInOutParameter(Parameter<?> parameter) {
+		super.addInParameter(parameter);
 		outParameters.add(parameter);
 		allParameters.add(parameter);
 	}
 
-	protected void addInParameter(ProcedureParameter<?> parameter) {
-		inParameters.add(parameter);
+	@Override
+	protected void addInParameter(Parameter<?> parameter) {
+		super.addInParameter(parameter);
 		allParameters.add(parameter);
 	}
 	
-	protected void addOutParameter(ProcedureParameter<?> parameter) {
+	protected void addOutParameter(Parameter<?> parameter) {
 		outParameters.add(parameter);
 		allParameters.add(parameter);
 	}
 	
-	protected <T> void setValue(ProcedureParameter<T> parameter, T value) {
-		inValues.put(parameter, value);
-	}
-	
 	@SuppressWarnings("unchecked")
-	protected <T> T getValue(ProcedureParameter<T> parameter) {
+	protected <T> T getValue(Parameter<T> parameter) {
 		return (T) results.get(parameter);
+	}
+
+	@Override
+	protected List<Parameter<?>> getBindingParameters() {
+		return allParameters;
 	}
 }

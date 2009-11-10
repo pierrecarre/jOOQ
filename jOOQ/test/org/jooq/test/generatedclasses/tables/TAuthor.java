@@ -4,7 +4,7 @@
 package org.jooq.test.generatedclasses.tables;
 
 import java.sql.Date;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -16,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TAuthor extends TableImpl {
 
-	private static final long serialVersionUID = -179753944860147173L;
+	private static final long serialVersionUID = -6694790979310019835L;
 
 	/**
 	 * The singleton instance of t_author
@@ -26,22 +26,22 @@ public class TAuthor extends TableImpl {
 	/**
 	 * The author ID
 	 */
-	public static final Field<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 
 	/**
 	 * The author's first name
 	 */
-	public static final Field<String> FIRST_NAME = new TableFieldImpl<String>("FIRST_NAME", String.class, T_AUTHOR);
+	public static final TableField<String> FIRST_NAME = new TableFieldImpl<String>("FIRST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's last name
 	 */
-	public static final Field<String> LAST_NAME = new TableFieldImpl<String>("LAST_NAME", String.class, T_AUTHOR);
+	public static final TableField<String> LAST_NAME = new TableFieldImpl<String>("LAST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's date of birth
 	 */
-	public static final Field<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed

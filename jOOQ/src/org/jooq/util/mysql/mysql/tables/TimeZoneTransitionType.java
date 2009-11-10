@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TimeZoneTransitionType extends TableImpl {
 
-	private static final long serialVersionUID = 4861066458501412759L;
+	private static final long serialVersionUID = -7798906386041647701L;
 
 	/**
 	 * The singleton instance of time_zone_transition_type
@@ -25,27 +25,27 @@ public class TimeZoneTransitionType extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE_TRANSITION_TYPE);
+	public static final TableField<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE_TRANSITION_TYPE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TRANSITION_TYPE_ID = new TableFieldImpl<Integer>("Transition_type_id", Integer.class, TIME_ZONE_TRANSITION_TYPE);
+	public static final TableField<Integer> TRANSITION_TYPE_ID = new TableFieldImpl<Integer>("Transition_type_id", Integer.class, TIME_ZONE_TRANSITION_TYPE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> OFFSET = new TableFieldImpl<Integer>("Offset", Integer.class, TIME_ZONE_TRANSITION_TYPE);
+	public static final TableField<Integer> OFFSET = new TableFieldImpl<Integer>("Offset", Integer.class, TIME_ZONE_TRANSITION_TYPE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Byte> IS_DST = new TableFieldImpl<Byte>("Is_DST", Byte.class, TIME_ZONE_TRANSITION_TYPE);
+	public static final TableField<Byte> IS_DST = new TableFieldImpl<Byte>("Is_DST", Byte.class, TIME_ZONE_TRANSITION_TYPE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ABBREVIATION = new TableFieldImpl<String>("Abbreviation", String.class, TIME_ZONE_TRANSITION_TYPE);
+	public static final TableField<String> ABBREVIATION = new TableFieldImpl<String>("Abbreviation", String.class, TIME_ZONE_TRANSITION_TYPE);
 
 	/**
 	 * No further instances allowed

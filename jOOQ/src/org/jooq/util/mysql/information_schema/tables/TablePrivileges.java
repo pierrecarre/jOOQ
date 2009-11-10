@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TablePrivileges extends TableImpl {
 
-	private static final long serialVersionUID = -7659296333454134556L;
+	private static final long serialVersionUID = -7003486114322200467L;
 
 	/**
 	 * The singleton instance of TABLE_PRIVILEGES
@@ -23,32 +23,32 @@ public class TablePrivileges extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, TABLE_PRIVILEGES);
+	public static final TableField<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, TABLE_PRIVILEGES);
 
 	/**
 	 * No further instances allowed

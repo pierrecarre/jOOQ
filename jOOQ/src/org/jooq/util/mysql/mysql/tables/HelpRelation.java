@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class HelpRelation extends TableImpl {
 
-	private static final long serialVersionUID = 8486017723122164152L;
+	private static final long serialVersionUID = -2450239400450771176L;
 
 	/**
 	 * The singleton instance of help_relation
@@ -25,12 +25,12 @@ public class HelpRelation extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> HELP_TOPIC_ID = new TableFieldImpl<Integer>("help_topic_id", Integer.class, HELP_RELATION);
+	public static final TableField<Integer> HELP_TOPIC_ID = new TableFieldImpl<Integer>("help_topic_id", Integer.class, HELP_RELATION);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> HELP_KEYWORD_ID = new TableFieldImpl<Integer>("help_keyword_id", Integer.class, HELP_RELATION);
+	public static final TableField<Integer> HELP_KEYWORD_ID = new TableFieldImpl<Integer>("help_keyword_id", Integer.class, HELP_RELATION);
 
 	/**
 	 * No further instances allowed

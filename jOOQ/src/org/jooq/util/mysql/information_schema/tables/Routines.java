@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -14,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Routines extends TableImpl {
 
-	private static final long serialVersionUID = 6242377099251271317L;
+	private static final long serialVersionUID = -7213282599440481718L;
 
 	/**
 	 * The singleton instance of ROUTINES
@@ -24,117 +24,117 @@ public class Routines extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SPECIFIC_NAME = new TableFieldImpl<String>("SPECIFIC_NAME", String.class, ROUTINES);
+	public static final TableField<String> SPECIFIC_NAME = new TableFieldImpl<String>("SPECIFIC_NAME", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_CATALOG = new TableFieldImpl<String>("ROUTINE_CATALOG", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_CATALOG = new TableFieldImpl<String>("ROUTINE_CATALOG", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_SCHEMA = new TableFieldImpl<String>("ROUTINE_SCHEMA", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_SCHEMA = new TableFieldImpl<String>("ROUTINE_SCHEMA", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_NAME = new TableFieldImpl<String>("ROUTINE_NAME", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_NAME = new TableFieldImpl<String>("ROUTINE_NAME", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_TYPE = new TableFieldImpl<String>("ROUTINE_TYPE", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_TYPE = new TableFieldImpl<String>("ROUTINE_TYPE", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DTD_IDENTIFIER = new TableFieldImpl<String>("DTD_IDENTIFIER", String.class, ROUTINES);
+	public static final TableField<String> DTD_IDENTIFIER = new TableFieldImpl<String>("DTD_IDENTIFIER", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_BODY = new TableFieldImpl<String>("ROUTINE_BODY", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_BODY = new TableFieldImpl<String>("ROUTINE_BODY", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_DEFINITION = new TableFieldImpl<String>("ROUTINE_DEFINITION", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_DEFINITION = new TableFieldImpl<String>("ROUTINE_DEFINITION", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EXTERNAL_NAME = new TableFieldImpl<String>("EXTERNAL_NAME", String.class, ROUTINES);
+	public static final TableField<String> EXTERNAL_NAME = new TableFieldImpl<String>("EXTERNAL_NAME", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EXTERNAL_LANGUAGE = new TableFieldImpl<String>("EXTERNAL_LANGUAGE", String.class, ROUTINES);
+	public static final TableField<String> EXTERNAL_LANGUAGE = new TableFieldImpl<String>("EXTERNAL_LANGUAGE", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PARAMETER_STYLE = new TableFieldImpl<String>("PARAMETER_STYLE", String.class, ROUTINES);
+	public static final TableField<String> PARAMETER_STYLE = new TableFieldImpl<String>("PARAMETER_STYLE", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_DETERMINISTIC = new TableFieldImpl<String>("IS_DETERMINISTIC", String.class, ROUTINES);
+	public static final TableField<String> IS_DETERMINISTIC = new TableFieldImpl<String>("IS_DETERMINISTIC", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_DATA_ACCESS = new TableFieldImpl<String>("SQL_DATA_ACCESS", String.class, ROUTINES);
+	public static final TableField<String> SQL_DATA_ACCESS = new TableFieldImpl<String>("SQL_DATA_ACCESS", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_PATH = new TableFieldImpl<String>("SQL_PATH", String.class, ROUTINES);
+	public static final TableField<String> SQL_PATH = new TableFieldImpl<String>("SQL_PATH", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SECURITY_TYPE = new TableFieldImpl<String>("SECURITY_TYPE", String.class, ROUTINES);
+	public static final TableField<String> SECURITY_TYPE = new TableFieldImpl<String>("SECURITY_TYPE", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> CREATED = new TableFieldImpl<Timestamp>("CREATED", Timestamp.class, ROUTINES);
+	public static final TableField<Timestamp> CREATED = new TableFieldImpl<Timestamp>("CREATED", Timestamp.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> LAST_ALTERED = new TableFieldImpl<Timestamp>("LAST_ALTERED", Timestamp.class, ROUTINES);
+	public static final TableField<Timestamp> LAST_ALTERED = new TableFieldImpl<Timestamp>("LAST_ALTERED", Timestamp.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_MODE = new TableFieldImpl<String>("SQL_MODE", String.class, ROUTINES);
+	public static final TableField<String> SQL_MODE = new TableFieldImpl<String>("SQL_MODE", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROUTINE_COMMENT = new TableFieldImpl<String>("ROUTINE_COMMENT", String.class, ROUTINES);
+	public static final TableField<String> ROUTINE_COMMENT = new TableFieldImpl<String>("ROUTINE_COMMENT", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, ROUTINES);
+	public static final TableField<String> DEFINER = new TableFieldImpl<String>("DEFINER", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, ROUTINES);
+	public static final TableField<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("CHARACTER_SET_CLIENT", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, ROUTINES);
+	public static final TableField<String> COLLATION_CONNECTION = new TableFieldImpl<String>("COLLATION_CONNECTION", String.class, ROUTINES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DATABASE_COLLATION = new TableFieldImpl<String>("DATABASE_COLLATION", String.class, ROUTINES);
+	public static final TableField<String> DATABASE_COLLATION = new TableFieldImpl<String>("DATABASE_COLLATION", String.class, ROUTINES);
 
 	/**
 	 * No further instances allowed

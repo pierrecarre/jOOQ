@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -14,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Tables extends TableImpl {
 
-	private static final long serialVersionUID = -2027302324221457419L;
+	private static final long serialVersionUID = 7292974675387018174L;
 
 	/**
 	 * The singleton instance of TABLES
@@ -24,107 +24,107 @@ public class Tables extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, TABLES);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, TABLES);
+	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, TABLES);
+	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_TYPE = new TableFieldImpl<String>("TABLE_TYPE", String.class, TABLES);
+	public static final TableField<String> TABLE_TYPE = new TableFieldImpl<String>("TABLE_TYPE", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ENGINE = new TableFieldImpl<String>("ENGINE", String.class, TABLES);
+	public static final TableField<String> ENGINE = new TableFieldImpl<String>("ENGINE", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> VERSION = new TableFieldImpl<Integer>("VERSION", Integer.class, TABLES);
+	public static final TableField<Integer> VERSION = new TableFieldImpl<Integer>("VERSION", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> ROW_FORMAT = new TableFieldImpl<String>("ROW_FORMAT", String.class, TABLES);
+	public static final TableField<String> ROW_FORMAT = new TableFieldImpl<String>("ROW_FORMAT", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TABLE_ROWS = new TableFieldImpl<Integer>("TABLE_ROWS", Integer.class, TABLES);
+	public static final TableField<Integer> TABLE_ROWS = new TableFieldImpl<Integer>("TABLE_ROWS", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> AVG_ROW_LENGTH = new TableFieldImpl<Integer>("AVG_ROW_LENGTH", Integer.class, TABLES);
+	public static final TableField<Integer> AVG_ROW_LENGTH = new TableFieldImpl<Integer>("AVG_ROW_LENGTH", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> DATA_LENGTH = new TableFieldImpl<Integer>("DATA_LENGTH", Integer.class, TABLES);
+	public static final TableField<Integer> DATA_LENGTH = new TableFieldImpl<Integer>("DATA_LENGTH", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> MAX_DATA_LENGTH = new TableFieldImpl<Integer>("MAX_DATA_LENGTH", Integer.class, TABLES);
+	public static final TableField<Integer> MAX_DATA_LENGTH = new TableFieldImpl<Integer>("MAX_DATA_LENGTH", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> INDEX_LENGTH = new TableFieldImpl<Integer>("INDEX_LENGTH", Integer.class, TABLES);
+	public static final TableField<Integer> INDEX_LENGTH = new TableFieldImpl<Integer>("INDEX_LENGTH", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> DATA_FREE = new TableFieldImpl<Integer>("DATA_FREE", Integer.class, TABLES);
+	public static final TableField<Integer> DATA_FREE = new TableFieldImpl<Integer>("DATA_FREE", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> AUTO_INCREMENT = new TableFieldImpl<Integer>("AUTO_INCREMENT", Integer.class, TABLES);
+	public static final TableField<Integer> AUTO_INCREMENT = new TableFieldImpl<Integer>("AUTO_INCREMENT", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> CREATE_TIME = new TableFieldImpl<Timestamp>("CREATE_TIME", Timestamp.class, TABLES);
+	public static final TableField<Timestamp> CREATE_TIME = new TableFieldImpl<Timestamp>("CREATE_TIME", Timestamp.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> UPDATE_TIME = new TableFieldImpl<Timestamp>("UPDATE_TIME", Timestamp.class, TABLES);
+	public static final TableField<Timestamp> UPDATE_TIME = new TableFieldImpl<Timestamp>("UPDATE_TIME", Timestamp.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> CHECK_TIME = new TableFieldImpl<Timestamp>("CHECK_TIME", Timestamp.class, TABLES);
+	public static final TableField<Timestamp> CHECK_TIME = new TableFieldImpl<Timestamp>("CHECK_TIME", Timestamp.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_COLLATION = new TableFieldImpl<String>("TABLE_COLLATION", String.class, TABLES);
+	public static final TableField<String> TABLE_COLLATION = new TableFieldImpl<String>("TABLE_COLLATION", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> CHECKSUM = new TableFieldImpl<Integer>("CHECKSUM", Integer.class, TABLES);
+	public static final TableField<Integer> CHECKSUM = new TableFieldImpl<Integer>("CHECKSUM", Integer.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CREATE_OPTIONS = new TableFieldImpl<String>("CREATE_OPTIONS", String.class, TABLES);
+	public static final TableField<String> CREATE_OPTIONS = new TableFieldImpl<String>("CREATE_OPTIONS", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_COMMENT = new TableFieldImpl<String>("TABLE_COMMENT", String.class, TABLES);
+	public static final TableField<String> TABLE_COMMENT = new TableFieldImpl<String>("TABLE_COMMENT", String.class, TABLES);
 
 	/**
 	 * No further instances allowed

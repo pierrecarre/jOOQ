@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -16,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TablesPriv extends TableImpl {
 
-	private static final long serialVersionUID = 1314142748668396357L;
+	private static final long serialVersionUID = 5749152561094793303L;
 
 	/**
 	 * The singleton instance of tables_priv
@@ -26,42 +26,42 @@ public class TablesPriv extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> HOST = new TableFieldImpl<String>("Host", String.class, TABLES_PRIV);
+	public static final TableField<String> HOST = new TableFieldImpl<String>("Host", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB = new TableFieldImpl<String>("Db", String.class, TABLES_PRIV);
+	public static final TableField<String> DB = new TableFieldImpl<String>("Db", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> USER = new TableFieldImpl<String>("User", String.class, TABLES_PRIV);
+	public static final TableField<String> USER = new TableFieldImpl<String>("User", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_NAME = new TableFieldImpl<String>("Table_name", String.class, TABLES_PRIV);
+	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("Table_name", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> GRANTOR = new TableFieldImpl<String>("Grantor", String.class, TABLES_PRIV);
+	public static final TableField<String> GRANTOR = new TableFieldImpl<String>("Grantor", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> TIMESTAMP = new TableFieldImpl<Timestamp>("Timestamp", Timestamp.class, TABLES_PRIV);
+	public static final TableField<Timestamp> TIMESTAMP = new TableFieldImpl<Timestamp>("Timestamp", Timestamp.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_PRIV = new TableFieldImpl<String>("Table_priv", String.class, TABLES_PRIV);
+	public static final TableField<String> TABLE_PRIV = new TableFieldImpl<String>("Table_priv", String.class, TABLES_PRIV);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLUMN_PRIV = new TableFieldImpl<String>("Column_priv", String.class, TABLES_PRIV);
+	public static final TableField<String> COLUMN_PRIV = new TableFieldImpl<String>("Column_priv", String.class, TABLES_PRIV);
 
 	/**
 	 * No further instances allowed

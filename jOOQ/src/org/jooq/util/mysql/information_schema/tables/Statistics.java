@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Statistics extends TableImpl {
 
-	private static final long serialVersionUID = 3095106695456971305L;
+	private static final long serialVersionUID = -3353617220720924512L;
 
 	/**
 	 * The singleton instance of STATISTICS
@@ -23,77 +23,77 @@ public class Statistics extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, STATISTICS);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, STATISTICS);
+	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, STATISTICS);
+	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> NON_UNIQUE = new TableFieldImpl<Integer>("NON_UNIQUE", Integer.class, STATISTICS);
+	public static final TableField<Integer> NON_UNIQUE = new TableFieldImpl<Integer>("NON_UNIQUE", Integer.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INDEX_SCHEMA = new TableFieldImpl<String>("INDEX_SCHEMA", String.class, STATISTICS);
+	public static final TableField<String> INDEX_SCHEMA = new TableFieldImpl<String>("INDEX_SCHEMA", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INDEX_NAME = new TableFieldImpl<String>("INDEX_NAME", String.class, STATISTICS);
+	public static final TableField<String> INDEX_NAME = new TableFieldImpl<String>("INDEX_NAME", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SEQ_IN_INDEX = new TableFieldImpl<Integer>("SEQ_IN_INDEX", Integer.class, STATISTICS);
+	public static final TableField<Integer> SEQ_IN_INDEX = new TableFieldImpl<Integer>("SEQ_IN_INDEX", Integer.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLUMN_NAME = new TableFieldImpl<String>("COLUMN_NAME", String.class, STATISTICS);
+	public static final TableField<String> COLUMN_NAME = new TableFieldImpl<String>("COLUMN_NAME", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION = new TableFieldImpl<String>("COLLATION", String.class, STATISTICS);
+	public static final TableField<String> COLLATION = new TableFieldImpl<String>("COLLATION", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> CARDINALITY = new TableFieldImpl<Integer>("CARDINALITY", Integer.class, STATISTICS);
+	public static final TableField<Integer> CARDINALITY = new TableFieldImpl<Integer>("CARDINALITY", Integer.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SUB_PART = new TableFieldImpl<Integer>("SUB_PART", Integer.class, STATISTICS);
+	public static final TableField<Integer> SUB_PART = new TableFieldImpl<Integer>("SUB_PART", Integer.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PACKED = new TableFieldImpl<String>("PACKED", String.class, STATISTICS);
+	public static final TableField<String> PACKED = new TableFieldImpl<String>("PACKED", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NULLABLE = new TableFieldImpl<String>("NULLABLE", String.class, STATISTICS);
+	public static final TableField<String> NULLABLE = new TableFieldImpl<String>("NULLABLE", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INDEX_TYPE = new TableFieldImpl<String>("INDEX_TYPE", String.class, STATISTICS);
+	public static final TableField<String> INDEX_TYPE = new TableFieldImpl<String>("INDEX_TYPE", String.class, STATISTICS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COMMENT = new TableFieldImpl<String>("COMMENT", String.class, STATISTICS);
+	public static final TableField<String> COMMENT = new TableFieldImpl<String>("COMMENT", String.class, STATISTICS);
 
 	/**
 	 * No further instances allowed

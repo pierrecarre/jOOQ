@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.math.BigDecimal;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -14,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Profiling extends TableImpl {
 
-	private static final long serialVersionUID = -7183263520243534493L;
+	private static final long serialVersionUID = -5796115972432599243L;
 
 	/**
 	 * The singleton instance of PROFILING
@@ -24,92 +24,92 @@ public class Profiling extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> QUERY_ID = new TableFieldImpl<Integer>("QUERY_ID", Integer.class, PROFILING);
+	public static final TableField<Integer> QUERY_ID = new TableFieldImpl<Integer>("QUERY_ID", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SEQ = new TableFieldImpl<Integer>("SEQ", Integer.class, PROFILING);
+	public static final TableField<Integer> SEQ = new TableFieldImpl<Integer>("SEQ", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> STATE = new TableFieldImpl<String>("STATE", String.class, PROFILING);
+	public static final TableField<String> STATE = new TableFieldImpl<String>("STATE", String.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<BigDecimal> DURATION = new TableFieldImpl<BigDecimal>("DURATION", BigDecimal.class, PROFILING);
+	public static final TableField<BigDecimal> DURATION = new TableFieldImpl<BigDecimal>("DURATION", BigDecimal.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<BigDecimal> CPU_USER = new TableFieldImpl<BigDecimal>("CPU_USER", BigDecimal.class, PROFILING);
+	public static final TableField<BigDecimal> CPU_USER = new TableFieldImpl<BigDecimal>("CPU_USER", BigDecimal.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<BigDecimal> CPU_SYSTEM = new TableFieldImpl<BigDecimal>("CPU_SYSTEM", BigDecimal.class, PROFILING);
+	public static final TableField<BigDecimal> CPU_SYSTEM = new TableFieldImpl<BigDecimal>("CPU_SYSTEM", BigDecimal.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> CONTEXT_VOLUNTARY = new TableFieldImpl<Integer>("CONTEXT_VOLUNTARY", Integer.class, PROFILING);
+	public static final TableField<Integer> CONTEXT_VOLUNTARY = new TableFieldImpl<Integer>("CONTEXT_VOLUNTARY", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> CONTEXT_INVOLUNTARY = new TableFieldImpl<Integer>("CONTEXT_INVOLUNTARY", Integer.class, PROFILING);
+	public static final TableField<Integer> CONTEXT_INVOLUNTARY = new TableFieldImpl<Integer>("CONTEXT_INVOLUNTARY", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> BLOCK_OPS_IN = new TableFieldImpl<Integer>("BLOCK_OPS_IN", Integer.class, PROFILING);
+	public static final TableField<Integer> BLOCK_OPS_IN = new TableFieldImpl<Integer>("BLOCK_OPS_IN", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> BLOCK_OPS_OUT = new TableFieldImpl<Integer>("BLOCK_OPS_OUT", Integer.class, PROFILING);
+	public static final TableField<Integer> BLOCK_OPS_OUT = new TableFieldImpl<Integer>("BLOCK_OPS_OUT", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> MESSAGES_SENT = new TableFieldImpl<Integer>("MESSAGES_SENT", Integer.class, PROFILING);
+	public static final TableField<Integer> MESSAGES_SENT = new TableFieldImpl<Integer>("MESSAGES_SENT", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> MESSAGES_RECEIVED = new TableFieldImpl<Integer>("MESSAGES_RECEIVED", Integer.class, PROFILING);
+	public static final TableField<Integer> MESSAGES_RECEIVED = new TableFieldImpl<Integer>("MESSAGES_RECEIVED", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> PAGE_FAULTS_MAJOR = new TableFieldImpl<Integer>("PAGE_FAULTS_MAJOR", Integer.class, PROFILING);
+	public static final TableField<Integer> PAGE_FAULTS_MAJOR = new TableFieldImpl<Integer>("PAGE_FAULTS_MAJOR", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> PAGE_FAULTS_MINOR = new TableFieldImpl<Integer>("PAGE_FAULTS_MINOR", Integer.class, PROFILING);
+	public static final TableField<Integer> PAGE_FAULTS_MINOR = new TableFieldImpl<Integer>("PAGE_FAULTS_MINOR", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SWAPS = new TableFieldImpl<Integer>("SWAPS", Integer.class, PROFILING);
+	public static final TableField<Integer> SWAPS = new TableFieldImpl<Integer>("SWAPS", Integer.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SOURCE_FUNCTION = new TableFieldImpl<String>("SOURCE_FUNCTION", String.class, PROFILING);
+	public static final TableField<String> SOURCE_FUNCTION = new TableFieldImpl<String>("SOURCE_FUNCTION", String.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SOURCE_FILE = new TableFieldImpl<String>("SOURCE_FILE", String.class, PROFILING);
+	public static final TableField<String> SOURCE_FILE = new TableFieldImpl<String>("SOURCE_FILE", String.class, PROFILING);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SOURCE_LINE = new TableFieldImpl<Integer>("SOURCE_LINE", Integer.class, PROFILING);
+	public static final TableField<Integer> SOURCE_LINE = new TableFieldImpl<Integer>("SOURCE_LINE", Integer.class, PROFILING);
 
 	/**
 	 * No further instances allowed

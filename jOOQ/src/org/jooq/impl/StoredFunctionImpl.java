@@ -29,28 +29,86 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
+package org.jooq.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.jooq.Function;
+import org.jooq.StoredFunction;
 
 /**
  * @author Lukas Eder
  */
-public interface Database {
+public class StoredFunctionImpl<T> extends AbstractStoredObject implements StoredFunction<T> {
 
-	List<TableDefinition> getTables() throws SQLException;
-	List<ProcedureDefinition> getProcedures() throws SQLException;
-	List<FunctionDefinition> getFunctions() throws SQLException;
-	
-	void setConnection(Connection connection);
-	Connection getConnection();
-	
-	void setSchema(String schema);
-	String getSchema();
-	
-	void setIncludes(String[] includes);
+	private static final long serialVersionUID = -2938795269169609664L;
 
-	void setExcludes(String[] excludes);
+	private T result;
+	private Function<T> function;
+	private final Class<T> type;
+	
+	public StoredFunctionImpl(String name, Class<T> type) {
+		super(name);
+		
+		this.type = type;
+	}
+
+	@Override
+	public final T getReturnValue() {
+		return result;
+	}
+	
+	@Override
+	public Function<T> getFunction() {
+		if (function == null) {
+			function = new FunctionImpl<T>(getName(), type, getInParameters().toArray(new Parameter[0]));
+		}
+		
+		return function;
+	}
+
+	@Override
+	protected String toSQLPrefix() {
+		return "select";
+	}
+	
+	@Override
+	protected String toSQLPostFix() {
+		return getName() + " from dual";
+	}
+
+	@Override
+	public int execute(Connection connection) throws SQLException {
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		
+		try {
+			statement = connection.prepareStatement(toSQL());
+			bind(statement);
+			
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				result = FieldTypeHelper.getFromResultSet(rs, getFunction());
+			}
+
+			return 0;
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			
+			if (statement != null) {
+				statement.close();
+			}
+		}
+	}
+	
+	@Override
+	protected List<Parameter<?>> getBindingParameters() {
+		return getInParameters();
+	}
 }

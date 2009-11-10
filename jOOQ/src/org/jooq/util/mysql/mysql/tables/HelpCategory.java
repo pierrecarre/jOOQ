@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class HelpCategory extends TableImpl {
 
-	private static final long serialVersionUID = -1175130309096257827L;
+	private static final long serialVersionUID = -2927845494712398601L;
 
 	/**
 	 * The singleton instance of help_category
@@ -25,22 +25,22 @@ public class HelpCategory extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Short> HELP_CATEGORY_ID = new TableFieldImpl<Short>("help_category_id", Short.class, HELP_CATEGORY);
+	public static final TableField<Short> HELP_CATEGORY_ID = new TableFieldImpl<Short>("help_category_id", Short.class, HELP_CATEGORY);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NAME = new TableFieldImpl<String>("name", String.class, HELP_CATEGORY);
+	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, HELP_CATEGORY);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Short> PARENT_CATEGORY_ID = new TableFieldImpl<Short>("parent_category_id", Short.class, HELP_CATEGORY);
+	public static final TableField<Short> PARENT_CATEGORY_ID = new TableFieldImpl<Short>("parent_category_id", Short.class, HELP_CATEGORY);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> URL = new TableFieldImpl<String>("url", String.class, HELP_CATEGORY);
+	public static final TableField<String> URL = new TableFieldImpl<String>("url", String.class, HELP_CATEGORY);
 
 	/**
 	 * No further instances allowed

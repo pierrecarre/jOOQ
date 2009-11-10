@@ -70,6 +70,11 @@ class ResultImpl implements Result {
 	}
 
 	@Override
+	public Record getRecord(int index) throws IndexOutOfBoundsException {
+		return records.get(index);
+	}
+
+	@Override
 	public Iterator<Record> iterator() {
 		return records.iterator();
 	}

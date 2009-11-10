@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class NdbBinlogIndex extends TableImpl {
 
-	private static final long serialVersionUID = -4264143532459719950L;
+	private static final long serialVersionUID = -3038744260960872691L;
 
 	/**
 	 * The singleton instance of ndb_binlog_index
@@ -23,37 +23,37 @@ public class NdbBinlogIndex extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> POSITION = new TableFieldImpl<Integer>("Position", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> POSITION = new TableFieldImpl<Integer>("Position", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> FILE = new TableFieldImpl<String>("File", String.class, NDB_BINLOG_INDEX);
+	public static final TableField<String> FILE = new TableFieldImpl<String>("File", String.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> EPOCH = new TableFieldImpl<Integer>("epoch", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> EPOCH = new TableFieldImpl<Integer>("epoch", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> INSERTS = new TableFieldImpl<Integer>("inserts", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> INSERTS = new TableFieldImpl<Integer>("inserts", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> UPDATES = new TableFieldImpl<Integer>("updates", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> UPDATES = new TableFieldImpl<Integer>("updates", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> DELETES = new TableFieldImpl<Integer>("deletes", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> DELETES = new TableFieldImpl<Integer>("deletes", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> SCHEMAOPS = new TableFieldImpl<Integer>("schemaops", Integer.class, NDB_BINLOG_INDEX);
+	public static final TableField<Integer> SCHEMAOPS = new TableFieldImpl<Integer>("schemaops", Integer.class, NDB_BINLOG_INDEX);
 
 	/**
 	 * No further instances allowed

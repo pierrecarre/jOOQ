@@ -3,7 +3,7 @@
  */
 package org.jooq.test.generatedclasses.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class VLibrary extends TableImpl {
 
-	private static final long serialVersionUID = -368246928293743998L;
+	private static final long serialVersionUID = 5243846578910669859L;
 
 	/**
 	 * The singleton instance of v_library
@@ -25,12 +25,12 @@ public class VLibrary extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> AUTHOR = new TableFieldImpl<String>("AUTHOR", String.class, V_LIBRARY);
+	public static final TableField<String> AUTHOR = new TableFieldImpl<String>("AUTHOR", String.class, V_LIBRARY);
 
 	/**
 	 * The book's title
 	 */
-	public static final Field<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, V_LIBRARY);
+	public static final TableField<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, V_LIBRARY);
 
 	/**
 	 * No further instances allowed

@@ -4,7 +4,7 @@
 package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Timestamp;
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -16,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Proc extends TableImpl {
 
-	private static final long serialVersionUID = 1286863090919951951L;
+	private static final long serialVersionUID = 5290228817811502776L;
 
 	/**
 	 * The singleton instance of proc
@@ -26,102 +26,102 @@ public class Proc extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB = new TableFieldImpl<String>("db", String.class, PROC);
+	public static final TableField<String> DB = new TableFieldImpl<String>("db", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NAME = new TableFieldImpl<String>("name", String.class, PROC);
+	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TYPE = new TableFieldImpl<String>("type", String.class, PROC);
+	public static final TableField<String> TYPE = new TableFieldImpl<String>("type", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SPECIFIC_NAME = new TableFieldImpl<String>("specific_name", String.class, PROC);
+	public static final TableField<String> SPECIFIC_NAME = new TableFieldImpl<String>("specific_name", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> LANGUAGE = new TableFieldImpl<String>("language", String.class, PROC);
+	public static final TableField<String> LANGUAGE = new TableFieldImpl<String>("language", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_DATA_ACCESS = new TableFieldImpl<String>("sql_data_access", String.class, PROC);
+	public static final TableField<String> SQL_DATA_ACCESS = new TableFieldImpl<String>("sql_data_access", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_DETERMINISTIC = new TableFieldImpl<String>("is_deterministic", String.class, PROC);
+	public static final TableField<String> IS_DETERMINISTIC = new TableFieldImpl<String>("is_deterministic", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SECURITY_TYPE = new TableFieldImpl<String>("security_type", String.class, PROC);
+	public static final TableField<String> SECURITY_TYPE = new TableFieldImpl<String>("security_type", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<byte[]> PARAM_LIST = new TableFieldImpl<byte[]>("param_list", byte[].class, PROC);
+	public static final TableField<byte[]> PARAM_LIST = new TableFieldImpl<byte[]>("param_list", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<byte[]> RETURNS = new TableFieldImpl<byte[]>("returns", byte[].class, PROC);
+	public static final TableField<byte[]> RETURNS = new TableFieldImpl<byte[]>("returns", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<byte[]> BODY = new TableFieldImpl<byte[]>("body", byte[].class, PROC);
+	public static final TableField<byte[]> BODY = new TableFieldImpl<byte[]>("body", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DEFINER = new TableFieldImpl<String>("definer", String.class, PROC);
+	public static final TableField<String> DEFINER = new TableFieldImpl<String>("definer", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> CREATED = new TableFieldImpl<Timestamp>("created", Timestamp.class, PROC);
+	public static final TableField<Timestamp> CREATED = new TableFieldImpl<Timestamp>("created", Timestamp.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Timestamp> MODIFIED = new TableFieldImpl<Timestamp>("modified", Timestamp.class, PROC);
+	public static final TableField<Timestamp> MODIFIED = new TableFieldImpl<Timestamp>("modified", Timestamp.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> SQL_MODE = new TableFieldImpl<String>("sql_mode", String.class, PROC);
+	public static final TableField<String> SQL_MODE = new TableFieldImpl<String>("sql_mode", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COMMENT = new TableFieldImpl<String>("comment", String.class, PROC);
+	public static final TableField<String> COMMENT = new TableFieldImpl<String>("comment", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("character_set_client", String.class, PROC);
+	public static final TableField<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("character_set_client", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COLLATION_CONNECTION = new TableFieldImpl<String>("collation_connection", String.class, PROC);
+	public static final TableField<String> COLLATION_CONNECTION = new TableFieldImpl<String>("collation_connection", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB_COLLATION = new TableFieldImpl<String>("db_collation", String.class, PROC);
+	public static final TableField<String> DB_COLLATION = new TableFieldImpl<String>("db_collation", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<byte[]> BODY_UTF8 = new TableFieldImpl<byte[]>("body_utf8", byte[].class, PROC);
+	public static final TableField<byte[]> BODY_UTF8 = new TableFieldImpl<byte[]>("body_utf8", byte[].class, PROC);
 
 	/**
 	 * No further instances allowed

@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Plugin extends TableImpl {
 
-	private static final long serialVersionUID = -6378420483259890098L;
+	private static final long serialVersionUID = 2323620076468969603L;
 
 	/**
 	 * The singleton instance of plugin
@@ -25,12 +25,12 @@ public class Plugin extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NAME = new TableFieldImpl<String>("name", String.class, PLUGIN);
+	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, PLUGIN);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DL = new TableFieldImpl<String>("dl", String.class, PLUGIN);
+	public static final TableField<String> DL = new TableFieldImpl<String>("dl", String.class, PLUGIN);
 
 	/**
 	 * No further instances allowed

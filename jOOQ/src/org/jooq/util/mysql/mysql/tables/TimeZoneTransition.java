@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TimeZoneTransition extends TableImpl {
 
-	private static final long serialVersionUID = -3609783575536065142L;
+	private static final long serialVersionUID = 6239979154133588826L;
 
 	/**
 	 * The singleton instance of time_zone_transition
@@ -25,17 +25,17 @@ public class TimeZoneTransition extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE_TRANSITION);
+	public static final TableField<Integer> TIME_ZONE_ID = new TableFieldImpl<Integer>("Time_zone_id", Integer.class, TIME_ZONE_TRANSITION);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TRANSITION_TIME = new TableFieldImpl<Integer>("Transition_time", Integer.class, TIME_ZONE_TRANSITION);
+	public static final TableField<Integer> TRANSITION_TIME = new TableFieldImpl<Integer>("Transition_time", Integer.class, TIME_ZONE_TRANSITION);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TRANSITION_TYPE_ID = new TableFieldImpl<Integer>("Transition_type_id", Integer.class, TIME_ZONE_TRANSITION);
+	public static final TableField<Integer> TRANSITION_TYPE_ID = new TableFieldImpl<Integer>("Transition_type_id", Integer.class, TIME_ZONE_TRANSITION);
 
 	/**
 	 * No further instances allowed

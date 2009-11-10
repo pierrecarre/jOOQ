@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class HelpTopic extends TableImpl {
 
-	private static final long serialVersionUID = 7358670839363324234L;
+	private static final long serialVersionUID = 6611291305945546221L;
 
 	/**
 	 * The singleton instance of help_topic
@@ -25,32 +25,32 @@ public class HelpTopic extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> HELP_TOPIC_ID = new TableFieldImpl<Integer>("help_topic_id", Integer.class, HELP_TOPIC);
+	public static final TableField<Integer> HELP_TOPIC_ID = new TableFieldImpl<Integer>("help_topic_id", Integer.class, HELP_TOPIC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NAME = new TableFieldImpl<String>("name", String.class, HELP_TOPIC);
+	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, HELP_TOPIC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Short> HELP_CATEGORY_ID = new TableFieldImpl<Short>("help_category_id", Short.class, HELP_TOPIC);
+	public static final TableField<Short> HELP_CATEGORY_ID = new TableFieldImpl<Short>("help_category_id", Short.class, HELP_TOPIC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DESCRIPTION = new TableFieldImpl<String>("description", String.class, HELP_TOPIC);
+	public static final TableField<String> DESCRIPTION = new TableFieldImpl<String>("description", String.class, HELP_TOPIC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> EXAMPLE = new TableFieldImpl<String>("example", String.class, HELP_TOPIC);
+	public static final TableField<String> EXAMPLE = new TableFieldImpl<String>("example", String.class, HELP_TOPIC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> URL = new TableFieldImpl<String>("url", String.class, HELP_TOPIC);
+	public static final TableField<String> URL = new TableFieldImpl<String>("url", String.class, HELP_TOPIC);
 
 	/**
 	 * No further instances allowed

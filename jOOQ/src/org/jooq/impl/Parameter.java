@@ -29,28 +29,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
+package org.jooq.impl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
 /**
  * @author Lukas Eder
  */
-public interface Database {
+public class Parameter<T> extends FieldImpl<T> {
 
-	List<TableDefinition> getTables() throws SQLException;
-	List<ProcedureDefinition> getProcedures() throws SQLException;
-	List<FunctionDefinition> getFunctions() throws SQLException;
-	
-	void setConnection(Connection connection);
-	Connection getConnection();
-	
-	void setSchema(String schema);
-	String getSchema();
-	
-	void setIncludes(String[] includes);
+	private static final long serialVersionUID = -5277225593751085577L;
 
-	void setExcludes(String[] excludes);
+	public Parameter(String name, Class<T> type) {
+		super(name, type);
+	}
+
 }

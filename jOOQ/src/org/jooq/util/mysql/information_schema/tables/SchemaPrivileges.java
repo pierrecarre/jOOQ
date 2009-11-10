@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class SchemaPrivileges extends TableImpl {
 
-	private static final long serialVersionUID = -9001970565712847835L;
+	private static final long serialVersionUID = -4484483532651440648L;
 
 	/**
 	 * The singleton instance of SCHEMA_PRIVILEGES
@@ -23,27 +23,27 @@ public class SchemaPrivileges extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, SCHEMA_PRIVILEGES);
+	public static final TableField<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, SCHEMA_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, SCHEMA_PRIVILEGES);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, SCHEMA_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, SCHEMA_PRIVILEGES);
+	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("TABLE_SCHEMA", String.class, SCHEMA_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, SCHEMA_PRIVILEGES);
+	public static final TableField<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, SCHEMA_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, SCHEMA_PRIVILEGES);
+	public static final TableField<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, SCHEMA_PRIVILEGES);
 
 	/**
 	 * No further instances allowed

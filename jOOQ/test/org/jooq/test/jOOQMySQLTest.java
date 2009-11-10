@@ -46,6 +46,7 @@ import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
+import org.jooq.test.generatedclasses.functions.FAuthorExists;
 import org.jooq.test.generatedclasses.procedures.PAuthorExists;
 import org.junit.After;
 import org.junit.Before;
@@ -129,5 +130,44 @@ public class jOOQMySQLTest {
 		procedure.setAuthorName("Shakespeare");
 		procedure.execute(connection);
 		assertFalse(procedure.getResult());
+	}
+	
+	@Test
+	public final void testFunction1() throws Exception {
+		FAuthorExists function1 = new FAuthorExists();
+		function1.setAuthorName("Paulo");
+		function1.execute(connection);
+		assertEquals(1, (int) function1.getReturnValue());
+		
+		FAuthorExists function2 = new FAuthorExists();
+		function2.setAuthorName("Shakespeare");
+		function2.execute(connection);
+		assertEquals(0, (int) function2.getReturnValue());
+	}
+	
+	@Test
+	public final void testFunction2() throws Exception {
+		// TODO
+		// StoredFunctions cannot be integrated with Functions yet, because
+		// Functions expect fields as parameters, whereas StoredFunctions expect
+		// constant values
+		
+		
+//		FAuthorExists function1 = new FAuthorExists();
+//		function1.setAuthorName("Paulo");
+//		Function<Byte> f1 = function1.getFunction();
+//		
+//		FAuthorExists function2 = new FAuthorExists();
+//		function2.setAuthorName("Shakespeare");
+//		Function<Byte> f2 = function2.getFunction();
+//		
+//		SelectQuery q = QueryFactory.createSelectQuery();
+//		q.addSelect(f1, f2);
+//		q.execute(connection);
+//		Result result = q.getResult();
+//		
+//		assertEquals(1, result.getNumberOfRecords());
+//		assertEquals(1, (int) result.getRecord(0).getValue(f1));
+//		assertEquals(0, (int) result.getRecord(0).getValue(f2));
 	}
 }

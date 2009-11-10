@@ -3,7 +3,7 @@
  */
 package org.jooq.test.generatedclasses.procedures;
 
-import org.jooq.impl.ProcedureParameter;
+import org.jooq.impl.Parameter;
 import org.jooq.impl.StoredProcedureImpl;
 
 
@@ -14,18 +14,18 @@ import org.jooq.impl.StoredProcedureImpl;
  */
 public class PAuthorExists extends StoredProcedureImpl {
 
-	private static final long serialVersionUID = 4909078543199362318L;
+	private static final long serialVersionUID = 488514063514399478L;
 
 
 	/**
 	 * An uncommented item
 	 */
-	public static final ProcedureParameter<String> AUTHOR_NAME = new ProcedureParameter<String>("author_name", String.class);
+	public static final Parameter<String> AUTHOR_NAME = new Parameter<String>("author_name", String.class);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final ProcedureParameter<Boolean> RESULT = new ProcedureParameter<Boolean>("result", Boolean.class);
+	public static final Parameter<Boolean> RESULT = new Parameter<Boolean>("result", Boolean.class);
 
 	/**
 	 * No further instances allowed

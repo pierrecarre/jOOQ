@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class SessionStatus extends TableImpl {
 
-	private static final long serialVersionUID = -3379348517553180132L;
+	private static final long serialVersionUID = 6784795241393931544L;
 
 	/**
 	 * The singleton instance of SESSION_STATUS
@@ -23,12 +23,12 @@ public class SessionStatus extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> VARIABLE_NAME = new TableFieldImpl<String>("VARIABLE_NAME", String.class, SESSION_STATUS);
+	public static final TableField<String> VARIABLE_NAME = new TableFieldImpl<String>("VARIABLE_NAME", String.class, SESSION_STATUS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> VARIABLE_VALUE = new TableFieldImpl<String>("VARIABLE_VALUE", String.class, SESSION_STATUS);
+	public static final TableField<String> VARIABLE_VALUE = new TableFieldImpl<String>("VARIABLE_VALUE", String.class, SESSION_STATUS);
 
 	/**
 	 * No further instances allowed

@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Processlist extends TableImpl {
 
-	private static final long serialVersionUID = 7165883805157198762L;
+	private static final long serialVersionUID = 6397764040671812160L;
 
 	/**
 	 * The singleton instance of PROCESSLIST
@@ -23,42 +23,42 @@ public class Processlist extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, PROCESSLIST);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> USER = new TableFieldImpl<String>("USER", String.class, PROCESSLIST);
+	public static final TableField<String> USER = new TableFieldImpl<String>("USER", String.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> HOST = new TableFieldImpl<String>("HOST", String.class, PROCESSLIST);
+	public static final TableField<String> HOST = new TableFieldImpl<String>("HOST", String.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DB = new TableFieldImpl<String>("DB", String.class, PROCESSLIST);
+	public static final TableField<String> DB = new TableFieldImpl<String>("DB", String.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> COMMAND = new TableFieldImpl<String>("COMMAND", String.class, PROCESSLIST);
+	public static final TableField<String> COMMAND = new TableFieldImpl<String>("COMMAND", String.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Integer> TIME = new TableFieldImpl<Integer>("TIME", Integer.class, PROCESSLIST);
+	public static final TableField<Integer> TIME = new TableFieldImpl<Integer>("TIME", Integer.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> STATE = new TableFieldImpl<String>("STATE", String.class, PROCESSLIST);
+	public static final TableField<String> STATE = new TableFieldImpl<String>("STATE", String.class, PROCESSLIST);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> INFO = new TableFieldImpl<String>("INFO", String.class, PROCESSLIST);
+	public static final TableField<String> INFO = new TableFieldImpl<String>("INFO", String.class, PROCESSLIST);
 
 	/**
 	 * No further instances allowed

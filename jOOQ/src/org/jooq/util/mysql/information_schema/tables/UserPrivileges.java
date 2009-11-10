@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -13,7 +13,7 @@ import org.jooq.impl.TableImpl;
  */
 public class UserPrivileges extends TableImpl {
 
-	private static final long serialVersionUID = -1392058168635273016L;
+	private static final long serialVersionUID = 1655717287441371717L;
 
 	/**
 	 * The singleton instance of USER_PRIVILEGES
@@ -23,22 +23,22 @@ public class UserPrivileges extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, USER_PRIVILEGES);
+	public static final TableField<String> GRANTEE = new TableFieldImpl<String>("GRANTEE", String.class, USER_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, USER_PRIVILEGES);
+	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("TABLE_CATALOG", String.class, USER_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, USER_PRIVILEGES);
+	public static final TableField<String> PRIVILEGE_TYPE = new TableFieldImpl<String>("PRIVILEGE_TYPE", String.class, USER_PRIVILEGES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, USER_PRIVILEGES);
+	public static final TableField<String> IS_GRANTABLE = new TableFieldImpl<String>("IS_GRANTABLE", String.class, USER_PRIVILEGES);
 
 	/**
 	 * No further instances allowed

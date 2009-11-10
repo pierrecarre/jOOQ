@@ -3,7 +3,7 @@
  */
 package org.jooq.test.generatedclasses.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TBook extends TableImpl {
 
-	private static final long serialVersionUID = 8419453667069711413L;
+	private static final long serialVersionUID = -2773741932369003722L;
 
 	/**
 	 * The singleton instance of t_book
@@ -25,17 +25,17 @@ public class TBook extends TableImpl {
 	/**
 	 * The book ID
 	 */
-	public static final Field<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 */
-	public static final Field<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
+	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 
 	/**
 	 * The book's title
 	 */
-	public static final Field<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, T_BOOK);
+	public static final TableField<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, T_BOOK);
 
 	/**
 	 * No further instances allowed

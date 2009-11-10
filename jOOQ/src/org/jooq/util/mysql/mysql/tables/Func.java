@@ -3,7 +3,7 @@
  */
 package org.jooq.util.mysql.mysql.tables;
 
-import org.jooq.Field;
+import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
@@ -15,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Func extends TableImpl {
 
-	private static final long serialVersionUID = 6496754491850189246L;
+	private static final long serialVersionUID = -4517484339688952670L;
 
 	/**
 	 * The singleton instance of func
@@ -25,22 +25,22 @@ public class Func extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> NAME = new TableFieldImpl<String>("name", String.class, FUNC);
+	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, FUNC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<Byte> RET = new TableFieldImpl<Byte>("ret", Byte.class, FUNC);
+	public static final TableField<Byte> RET = new TableFieldImpl<Byte>("ret", Byte.class, FUNC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> DL = new TableFieldImpl<String>("dl", String.class, FUNC);
+	public static final TableField<String> DL = new TableFieldImpl<String>("dl", String.class, FUNC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Field<String> TYPE = new TableFieldImpl<String>("type", String.class, FUNC);
+	public static final TableField<String> TYPE = new TableFieldImpl<String>("type", String.class, FUNC);
 
 	/**
 	 * No further instances allowed
