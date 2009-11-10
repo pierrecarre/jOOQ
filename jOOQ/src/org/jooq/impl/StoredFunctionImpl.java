@@ -65,7 +65,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 	@Override
 	public Function<T> getFunction() {
 		if (function == null) {
-			function = new FunctionImpl<T>(getName(), type, getInParameters().toArray(new Parameter[0]));
+			function = new FunctionImpl<T>(getName(), type, getParameters().toArray(new Parameter[0]));
 		}
 		
 		return function;
@@ -108,7 +108,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 	}
 	
 	@Override
-	protected List<Parameter<?>> getBindingParameters() {
+	public List<Parameter<?>> getParameters() {
 		return getInParameters();
 	}
 }

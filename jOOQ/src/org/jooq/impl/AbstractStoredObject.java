@@ -69,7 +69,7 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
 		
-		for (Parameter<?> parameter : getBindingParameters()) {
+		for (Parameter<?> parameter : getParameters()) {
 			bind(stmt, result++, parameter, inValues.get(parameter));
 		}
 		
@@ -86,7 +86,7 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 		sb.append("(");
 		
 		String separator = "";
-		for (Parameter<?> parameter : getBindingParameters()) {
+		for (Parameter<?> parameter : getParameters()) {
 			sb.append(separator);
 			
 			if (inlineParameters && getInValues().containsKey(parameter)) {
@@ -116,8 +116,6 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 		return null;
 	}
 
-	protected abstract List<Parameter<?>> getBindingParameters();
-	
 	protected final Map<Field<?>, Object> getInValues() {
 		return inValues;
 	}
@@ -126,7 +124,6 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 		inValues.put(parameter, value);
 	}
 	
-	@Override
 	public final List<Parameter<?>> getInParameters() {
 		return inParameters;
 	}

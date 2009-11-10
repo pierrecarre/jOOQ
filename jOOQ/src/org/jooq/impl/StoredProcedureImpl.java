@@ -97,7 +97,7 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 	}
 	
 	@Override
-	public final List<Parameter<?>> getAllParameters() {
+	public final List<Parameter<?>> getParameters() {
 		return allParameters;
 	}
 
@@ -121,10 +121,5 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 	@SuppressWarnings("unchecked")
 	protected <T> T getValue(Parameter<T> parameter) {
 		return (T) results.get(parameter);
-	}
-
-	@Override
-	protected List<Parameter<?>> getBindingParameters() {
-		return allParameters;
 	}
 }

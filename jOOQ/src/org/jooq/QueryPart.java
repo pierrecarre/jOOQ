@@ -42,10 +42,46 @@ import java.sql.SQLException;
  */
 public interface QueryPart extends Serializable {
 
+	/**
+	 * Transform this object into SQL. This always results in calling {@link
+	 * #toSQL(false)}
+	 * 
+	 * @return SQL representation of this QueryPart
+	 * @see {@link #toSQL(boolean)}
+	 */
 	String toSQL();
+
+	/**
+	 * Transform this object into SQL.
+	 * 
+	 * @param inlineParameters
+	 *            if set to true, all parameters are inlined, not replaced by
+	 *            "?"
+	 * @return SQL representation of this QueryPart
+	 */
 	String toSQL(boolean inlineParameters);
-	
-	int bind (PreparedStatement stmt) throws SQLException;
-	int bind (PreparedStatement stmt, int initialIndex) throws SQLException;
+
+	/**
+	 * Bind all parameters of this QueryPart to a PreparedStatement. This always
+	 * results in calling {@link #bind(stmt, 1)}
+	 * 
+	 * @param stmt
+	 *            The statement to bind values to
+	 * @return The index of the next binding variable
+	 * @throws SQLException
+	 * @see {@link {@link #bind(PreparedStatement, int)}
+	 */
+	int bind(PreparedStatement stmt) throws SQLException;
+
+	/**
+	 * Bind all parameters of this QueryPart to a PreparedStatement.
+	 * 
+	 * @param stmt
+	 *            The statement to bind values to
+	 * @param initialIndex The index of the next binding variable
+	 * @return The index of the next binding variable
+	 * @throws SQLException
+	 */
+	int bind(PreparedStatement stmt, int initialIndex) throws SQLException;
 
 }

@@ -34,6 +34,9 @@ package org.jooq;
 import java.util.List;
 
 /**
+ * A common interface for lists composed of query parts. These lists are
+ * decorated with QueryPart behaviour themselves.
+ * 
  * @author Lukas Eder
  */
 public interface QueryPartList<T extends QueryPart> extends List<T>, QueryPart {

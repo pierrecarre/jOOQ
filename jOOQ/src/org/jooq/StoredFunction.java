@@ -31,13 +31,20 @@
 
 package org.jooq;
 
-
-
 /**
+ * A stored function
+ * 
  * @author Lukas Eder
  */
 public interface StoredFunction<T> extends StoredObject {
 
+	/**
+	 * @return The function's return value
+	 */
 	T getReturnValue();
+
+	/**
+	 * @return The stored function represented as a {@link Field}
+	 */
 	Function<T> getFunction();
 }

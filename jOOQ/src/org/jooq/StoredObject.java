@@ -36,12 +36,23 @@ import java.util.List;
 import org.jooq.impl.Parameter;
 
 /**
+ * A common interface for stored procedures and stored functions.
+ * 
+ * These objects behave like queries, i.e. they can be executed on a connection.
+ * The concrete behaviour is specific to the concrete interface
+ * 
  * @author Lukas Eder
  */
 public interface StoredObject extends Query {
 
+	/**
+	 * @return The name of the stored procedure or function
+	 */
 	String getName();
-	
-	List<Parameter<?>> getInParameters();
+
+	/**
+	 * @return A list of parameters passed to the stored object as argument
+	 */
+	List<Parameter<?>> getParameters();
 
 }
