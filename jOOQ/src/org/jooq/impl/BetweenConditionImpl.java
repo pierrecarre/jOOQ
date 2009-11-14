@@ -87,10 +87,10 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getField().toSQL(inlineParameters));
+		sb.append(getField().toSQLReference(inlineParameters));
 		sb.append(" between ");
 		sb.append(FieldTypeHelper.toSQL(getMinValue(), inlineParameters, getField()));
 		sb.append(" and ");

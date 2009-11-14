@@ -31,30 +31,56 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import java.util.List;
-
-import org.jooq.Table;
-import org.jooq.TableList;
+import org.jooq.AliasProvider;
 
 /**
  * @author Lukas Eder
  */
-class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
+abstract class AbstractAliasQueryPart<T extends AliasProvider<T>> 
+	extends AbstractNamedQueryPart 
+	implements AliasProvider<T> {
 
-	private static final long serialVersionUID = -8545559185481762229L;
+	private static final long serialVersionUID = -2456848365524191614L;
+	private final T aliasProvider;
+	private final String alias;
 
-	public TableListImpl() {
-		super();
+	public AbstractAliasQueryPart(T aliasProvider, String alias) {
+		super(aliasProvider.getName());
+		
+		this.aliasProvider = aliasProvider;
+		this.alias = alias;
 	}
 
-	public TableListImpl(List<Table> wrappedList) {
-		super(wrappedList);
+	protected final T getAliasProvider() {
+		return aliasProvider;
+	}
+	
+	@Override
+	public final String toSQLReference(boolean inlineParameters) {
+		return alias;
+	}
+	
+	@Override
+	public final String toSQLDeclaration(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
+		sb.append(" ");
+		sb.append(alias);
+		
+		return sb.toString();
+	}
+	
+	@Override
+	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return aliasProvider.bind(stmt, initialIndex);
 	}
 
 	@Override
-	protected String toSQLEmptyList() {
-		return EMPTY_TABLE.toSQLReference();
+	public final T alias(String alias) {
+		return aliasProvider.alias(alias);
 	}
 }

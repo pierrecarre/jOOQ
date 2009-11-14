@@ -54,4 +54,15 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 	public Table getTable() {
 		return table;
 	}
+
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(table.toSQLReference(inlineParameters));
+		sb.append(".");
+		sb.append(super.toSQLReference(inlineParameters));
+		
+		return sb.toString();
+	}
 }

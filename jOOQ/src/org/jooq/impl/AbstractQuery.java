@@ -56,7 +56,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 		PreparedStatement statement = null;
 		
 		try {
-			statement = connection.prepareStatement(toSQL());
+			statement = connection.prepareStatement(toSQLReference());
 			bind(statement);
 			return execute(statement);
 		} finally {

@@ -49,7 +49,7 @@ public class TrueCondition extends AbstractQueryPart implements Condition {
 	}
 
 	@Override
-	public final String toSQL(boolean inlineParameters) {
+	public final String toSQLReference(boolean inlineParameters) {
 		return "1 = 1";
 	}
 	

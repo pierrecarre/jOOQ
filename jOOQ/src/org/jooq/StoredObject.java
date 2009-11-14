@@ -43,7 +43,7 @@ import org.jooq.impl.Parameter;
  * 
  * @author Lukas Eder
  */
-public interface StoredObject extends Query {
+public interface StoredObject extends Query, NamedQueryPart {
 
 	/**
 	 * @return The name of the stored procedure or function

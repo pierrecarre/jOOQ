@@ -88,10 +88,10 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(getField().toSQL(inlineParameters));
+		sb.append(getField().toSQLReference(inlineParameters));
 		sb.append(" ");
 		if (getValue() != null) {
 			sb.append(getComparator().toSQL());

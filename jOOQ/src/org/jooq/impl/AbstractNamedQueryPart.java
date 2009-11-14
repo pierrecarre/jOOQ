@@ -31,30 +31,31 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
-
-import java.util.List;
-
-import org.jooq.Table;
-import org.jooq.TableList;
+import org.jooq.NamedQueryPart;
 
 /**
  * @author Lukas Eder
  */
-class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
+abstract class AbstractNamedQueryPart extends AbstractQueryPart implements NamedQueryPart {
 
-	private static final long serialVersionUID = -8545559185481762229L;
+	private static final long serialVersionUID = -4496974591205380167L;
+	private final String name;
 
-	public TableListImpl() {
-		super();
+	public AbstractNamedQueryPart(String name) {
+		this.name = name;
 	}
-
-	public TableListImpl(List<Table> wrappedList) {
-		super(wrappedList);
+	
+	@Override
+	public final String getName() {
+		return name;
 	}
 
 	@Override
-	protected String toSQLEmptyList() {
-		return EMPTY_TABLE.toSQLReference();
+	public final int compareTo(NamedQueryPart that) {
+		if (that == null) {
+			return 1;
+		}
+		
+		return getName().compareToIgnoreCase(that.getName());
 	}
 }

@@ -29,32 +29,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
-
-import java.util.List;
-
-import org.jooq.Table;
-import org.jooq.TableList;
+package org.jooq;
 
 /**
+ * A common interface for query parts that have a name.
+ * 
+ * All {@link NamedQueryPart}s are have a lexicographic case-independent natural
+ * order.
+ * 
  * @author Lukas Eder
  */
-class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
+public interface NamedQueryPart extends QueryPart, Comparable<NamedQueryPart> {
 
-	private static final long serialVersionUID = -8545559185481762229L;
-
-	public TableListImpl() {
-		super();
-	}
-
-	public TableListImpl(List<Table> wrappedList) {
-		super(wrappedList);
-	}
-
-	@Override
-	protected String toSQLEmptyList() {
-		return EMPTY_TABLE.toSQLReference();
-	}
+	/**
+	 * @return The name of this query part
+	 */
+	String getName();
 }

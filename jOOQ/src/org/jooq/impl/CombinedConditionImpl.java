@@ -91,13 +91,13 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		if (getConditions().isEmpty()) {
-			return TRUE_CONDITION.toSQL(inlineParameters);
+			return TRUE_CONDITION.toSQLReference(inlineParameters);
 		}
 
 		if (getConditions().size() == 1) {
-			return conditions.get(0).toSQL(inlineParameters);
+			return conditions.get(0).toSQLReference(inlineParameters);
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -107,7 +107,7 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 		sb.append("(");
 		for (Condition condition : getConditions()) {
 			sb.append(separator);
-			sb.append(condition.toSQL(inlineParameters));
+			sb.append(condition.toSQLReference(inlineParameters));
 			separator = operator;
 		}
 		sb.append(")");

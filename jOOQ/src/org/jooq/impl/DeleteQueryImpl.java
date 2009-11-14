@@ -93,15 +93,15 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("delete from ");
-		sb.append(getFrom().toSQL(inlineParameters));
+		sb.append(getFrom().toSQLReference(inlineParameters));
 
 		if (getWhere() != TRUE_CONDITION) {
 			sb.append(" where ");
-			sb.append(getWhere().toSQL(inlineParameters));
+			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
 				
 		return sb.toString();

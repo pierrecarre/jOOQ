@@ -67,7 +67,7 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 		try {
 			results = new HashMap<Field<?>, Object>();
 			
-			statement = connection.prepareCall(toSQL());
+			statement = connection.prepareCall(toSQLReference());
 			bind(statement);
 			
 			for (Field<?> field : getOutParameters()) {

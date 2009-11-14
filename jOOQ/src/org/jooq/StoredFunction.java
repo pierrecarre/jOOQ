@@ -46,5 +46,5 @@ public interface StoredFunction<T> extends StoredObject {
 	/**
 	 * @return The stored function represented as a {@link Field}
 	 */
-	Function<T> getFunction();
+	Field<T> getFunction();
 }

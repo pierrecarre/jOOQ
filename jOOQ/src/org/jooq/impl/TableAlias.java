@@ -31,30 +31,22 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
-
-import java.util.List;
-
+import org.jooq.FieldList;
 import org.jooq.Table;
-import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
  */
-class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
+class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 
-	private static final long serialVersionUID = -8545559185481762229L;
+	private static final long serialVersionUID = -8417114874567698325L;
 
-	public TableListImpl() {
-		super();
-	}
-
-	public TableListImpl(List<Table> wrappedList) {
-		super(wrappedList);
+	public TableAlias(Table table, String alias) {
+		super(table, alias);
 	}
 
 	@Override
-	protected String toSQLEmptyList() {
-		return EMPTY_TABLE.toSQLReference();
+	public FieldList getFields() {
+		return getAliasProvider().getFields();
 	}
 }

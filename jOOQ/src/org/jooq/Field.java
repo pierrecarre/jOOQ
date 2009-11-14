@@ -36,7 +36,7 @@ package org.jooq;
  * 
  * @author Lukas Eder
  */
-public interface Field<T> extends QueryPart {
+public interface Field<T> extends NamedQueryPart, AliasProvider<Field<T>> {
 	/**
 	 * @return The name of the field
 	 */
@@ -46,4 +46,12 @@ public interface Field<T> extends QueryPart {
 	 * @return The type of the field
 	 */
 	Class<T> getType();
+
+	/**
+	 * Create an alias for this field
+	 * 
+	 * @param alias The alias name
+	 * @return The field alias
+	 */
+	Field<T> alias(String alias);
 }

@@ -89,7 +89,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
-		return getWhere().toSQL(inlineParameters);
+	public String toSQLReference(boolean inlineParameters) {
+		return getWhere().toSQLReference(inlineParameters);
 	}
 }

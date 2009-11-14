@@ -34,6 +34,10 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.test.generatedclasses.tables.TAuthor.LAST_NAME;
+import static org.jooq.test.generatedclasses.tables.TAuthor.T_AUTHOR;
+import static org.jooq.test.generatedclasses.tables.TBook.T_BOOK;
+import static org.jooq.test.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 import java.io.File;
 import java.sql.Connection;
@@ -48,6 +52,9 @@ import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
 import org.jooq.test.generatedclasses.functions.FAuthorExists;
 import org.jooq.test.generatedclasses.procedures.PAuthorExists;
+import org.jooq.test.generatedclasses.tables.TAuthor;
+import org.jooq.test.generatedclasses.tables.TBook;
+import org.jooq.test.generatedclasses.tables.VLibrary;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +67,7 @@ public class jOOQMySQLTest {
 	private Connection connection;
 
 	@Before
-	public void setUp() throws Exception {
+	public void startTesting() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection ("jdbc:mysql://localhost/test", "root", "");
 
@@ -70,8 +77,8 @@ public class jOOQMySQLTest {
 		
 		for (String sql : allSQL.split("/")) {
 			try {
-			stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
+				stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
 			} finally {
 				if (stmt != null) {
 					stmt.close();
@@ -81,7 +88,7 @@ public class jOOQMySQLTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void endTesting() throws Exception {
 		if (connection != null) {
 			connection.close();
 			connection = null;
@@ -89,7 +96,7 @@ public class jOOQMySQLTest {
 	}
 	
 	@Test
-	public final void testSelectQuery() throws Exception {
+	public final void testSelectSimpleQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery();
 		Field<Integer> f1 = Functions.constant(1);
 		Field<Double> f2 = Functions.constant(2d);
@@ -117,6 +124,52 @@ public class jOOQMySQLTest {
 		assertEquals((Integer) 1, result.getRecords().get(0).getValue(f1));
 		assertEquals((Double) 2d, result.getRecords().get(0).getValue(f2));
 		assertEquals("test", result.getRecords().get(0).getValue(f3));
+	}
+	
+	@Test
+	public final void testSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(T_AUTHOR);
+		q.addSelect(T_AUTHOR.getFields());
+		q.addOrderBy(LAST_NAME);
+		
+		int rows = q.execute(connection);
+		Result result = q.getResult();
+		
+		assertEquals(2, rows);
+		assertEquals(2, result.getNumberOfRecords());
+		assertEquals("Coelho", result.getRecord(0).getValue(LAST_NAME));
+		assertEquals("Orwell", result.getRecord(1).getValue(LAST_NAME));
+	}
+
+	@Test
+	public final void testJoinQuery() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(V_LIBRARY);
+		q1.addOrderBy(VLibrary.TITLE);
+		
+		SelectQuery q2 = QueryFactory.createSelectQuery(T_AUTHOR);
+		q2.addJoin(T_BOOK, TBook.AUTHOR_ID, TAuthor.ID);
+		q2.addOrderBy(TBook.TITLE);
+		
+		int rows1 = q1.execute(connection);
+		int rows2 = q2.execute(connection);
+		
+		assertEquals(4, rows1);
+		assertEquals(4, rows2);
+		
+		Result result1 = q1.getResult();
+		Result result2 = q2.getResult();
+		
+		assertEquals("1984", result1.getRecord(0).getValue(VLibrary.TITLE));
+		assertEquals("1984", result2.getRecord(0).getValue(TBook.TITLE));
+
+		assertEquals("Animal Farm", result1.getRecord(1).getValue(VLibrary.TITLE));
+		assertEquals("Animal Farm", result2.getRecord(1).getValue(TBook.TITLE));
+
+		assertEquals("Brida", result1.getRecord(2).getValue(VLibrary.TITLE));
+		assertEquals("Brida", result2.getRecord(2).getValue(TBook.TITLE));
+
+		assertEquals("O Alquimista", result1.getRecord(3).getValue(VLibrary.TITLE));
+		assertEquals("O Alquimista", result2.getRecord(3).getValue(TBook.TITLE));
 	}
 	
 	@Test

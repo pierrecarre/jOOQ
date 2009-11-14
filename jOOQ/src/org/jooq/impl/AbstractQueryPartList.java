@@ -74,12 +74,26 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	}
 
 	@Override
-	public final String toSQL() {
-		return toSQL(false);
+	public final String toSQLReference() {
+		return toSQLReference(false);
+	}
+	
+	@Override
+	public final String toSQLReference(boolean inlineParameters) {
+		return toSQL(inlineParameters, false);
 	}
 
 	@Override
-	public final String toSQL(boolean inlineParameters) {
+	public final String toSQLDeclaration() {
+		return toSQLDeclaration(false);
+	}
+
+	@Override
+	public final String toSQLDeclaration(boolean inlineParameters) {
+		return toSQL(inlineParameters, true);
+	}
+
+	private final String toSQL(boolean inlineParameters, boolean renderAsDeclaration) {
 		if (isEmpty()) {
 			return toSQLEmptyList();
 		}
@@ -89,16 +103,25 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 		String separator = "";
 		for (T queryPart : this) {
 			sb.append(separator);
-			sb.append(toSQL(queryPart, inlineParameters));
+			
+			if (renderAsDeclaration) {
+				sb.append(toSQLDeclaration(queryPart, inlineParameters));
+			} else {
+				sb.append(toSQLReference(queryPart, inlineParameters));
+			}
 			
 			separator = getListSeparator() + " ";
 		}
 		
 		return sb.toString();
 	}
-
-	protected String toSQL(T queryPart, boolean inlineParameters) {
-		return queryPart.toSQL(inlineParameters);
+	
+	protected String toSQLReference(T queryPart, boolean inlineParameters) {
+		return queryPart.toSQLReference(inlineParameters);
+	}
+	
+	protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
+		return queryPart.toSQLDeclaration(inlineParameters);
 	}
 	
 	@Override

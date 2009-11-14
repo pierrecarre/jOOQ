@@ -37,7 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.Function;
+import org.jooq.Field;
 import org.jooq.StoredFunction;
 
 /**
@@ -48,7 +48,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 	private static final long serialVersionUID = -2938795269169609664L;
 
 	private T result;
-	private Function<T> function;
+	private Field<T> function;
 	private final Class<T> type;
 	
 	public StoredFunctionImpl(String name, Class<T> type) {
@@ -63,7 +63,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 	}
 	
 	@Override
-	public Function<T> getFunction() {
+	public Field<T> getFunction() {
 		if (function == null) {
 			function = new FunctionImpl<T>(getName(), type, getParameters().toArray(new Parameter[0]));
 		}
@@ -87,7 +87,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 		ResultSet rs = null;
 		
 		try {
-			statement = connection.prepareStatement(toSQL());
+			statement = connection.prepareStatement(toSQLReference());
 			bind(statement);
 			
 			rs = statement.executeQuery();

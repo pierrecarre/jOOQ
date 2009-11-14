@@ -117,7 +117,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
 		}
@@ -125,7 +125,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("update ");
-		sb.append(getTable().toSQL(inlineParameters));
+		sb.append(getTable().toSQLReference(inlineParameters));
 		sb.append(" set ");
 		
 		String separator = "";
@@ -133,7 +133,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 			Object value = getValues0().get(field);
 			
 			sb.append(separator);
-			sb.append(field.toSQL(inlineParameters));
+			sb.append(field.toSQLReference(inlineParameters));
 			sb.append(" = ");
 			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator = ", ";
@@ -141,7 +141,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		
 		if (getWhere() != TRUE_CONDITION) {
 			sb.append(" where ");
-			sb.append(getWhere().toSQL(inlineParameters));
+			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
 				
 		return sb.toString();

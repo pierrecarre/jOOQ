@@ -84,16 +84,16 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(getType().toSQL());
 		sb.append(" ");
-		sb.append(getTable().toSQL(inlineParameters));
+		sb.append(getTable().toSQLReference(inlineParameters));
 		
 		if (getCondition() != null) {
 			sb.append(" on ");
-			sb.append(getCondition().toSQL(inlineParameters));
+			sb.append(getCondition().toSQLReference(inlineParameters));
 		}
 		
 		return sb.toString();

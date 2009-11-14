@@ -46,16 +46,16 @@ import org.jooq.StoredObject;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractStoredObject extends AbstractQueryPart implements StoredObject {
+abstract class AbstractStoredObject extends AbstractNamedQueryPart implements StoredObject {
 
 	private static final long serialVersionUID = 5478305057107861491L;
 	
-	private final String name;
 	private final List<Parameter<?>> inParameters;
 	private final Map<Field<?>, Object> inValues;
 
 	public AbstractStoredObject(String name) {
-		this.name = name;
+		super(name);
+
 		this.inParameters = new ArrayList<Parameter<?>>();
 		this.inValues = new HashMap<Field<?>, Object>();
 	}
@@ -77,7 +77,7 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 	}
 	
 	@Override
-	public final String toSQL(boolean inlineParameters) {
+	public final String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(toSQLPrefix());
@@ -130,10 +130,5 @@ abstract class AbstractStoredObject extends AbstractQueryPart implements StoredO
 
 	protected void addInParameter(Parameter<?> parameter) {
 		inParameters.add(parameter);
-	}
-
-	@Override
-	public final String getName() {
-		return name;
 	}
 }

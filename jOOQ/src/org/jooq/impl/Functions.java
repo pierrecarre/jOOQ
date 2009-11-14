@@ -32,38 +32,37 @@
 package org.jooq.impl;
 
 import org.jooq.Field;
-import org.jooq.Function;
 
 /**
  * @author Lukas Eder
  */
 public final class Functions {
 
-	public static <T extends Number> Function<T> sum(Field<T> field) {
+	public static <T extends Number> Field<T> sum(Field<T> field) {
 		return new FunctionImpl<T>("sum", field.getType(), field);
 	}
 
-	public static <T extends Number> Function<Double> avg(Field<T> field) {
+	public static <T extends Number> Field<Double> avg(Field<T> field) {
 		return new FunctionImpl<Double>("avg", Double.class, field);
 	}
 
-	public static <T> Function<T> min(Field<T> field) {
+	public static <T> Field<T> min(Field<T> field) {
 		return new FunctionImpl<T>("min", field.getType(), field);
 	}
 
-	public static <T> Function<T> max(Field<T> field) {
+	public static <T> Field<T> max(Field<T> field) {
 		return new FunctionImpl<T>("max", field.getType(), field);
 	}
 
-	public static <T> Function<Integer> count() {
+	public static <T> Field<Integer> count() {
 		return new CountFunctionImpl();
 	}
 
-	public static Function<Integer> count(Field<?> field) {
+	public static Field<Integer> count(Field<?> field) {
 		return new CountFunctionImpl(field, false);
 	}
 
-	public static Function<Integer> countDistinct(Field<?> field) {
+	public static Field<Integer> countDistinct(Field<?> field) {
 		return new CountFunctionImpl(field, true);
 	}
 

@@ -85,7 +85,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
 		
-		result = getSelect().bind(stmt, result);
+		result = getSelect0().bind(stmt, result);
 		result = getFrom().bind(stmt, result);
 		result = getJoin().bind(stmt, result);
 		result = getWhere().bind(stmt, result);
@@ -124,7 +124,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 
 	@Override
 	public void addSelect(Collection<Field<?>> fields) {
-		getSelect().addAll(fields);
+		getSelect0().addAll(fields);
 	}
 
 	@Override
@@ -212,9 +212,31 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		addOrderBy(field, null);
 	}
 
+	private FieldList getSelect0() {
+		return select;
+	}
+	
 	@Override
 	public FieldList getSelect() {
-		return select;
+		if (getSelect0().isEmpty()) {
+			FieldList result = new SelectFieldListImpl();
+			
+			for (Table table : getFrom()) {
+				for (Field<?> field : table.getFields()) {
+					result.add(field);
+				}
+			}
+			
+			for (Join join : getJoin()) {
+				for (Field<?> field : join.getTable().getFields()) {
+					result.add(field);
+				}
+			}
+			
+			return result;
+		}
+		
+		return getSelect0();
 	}
 
 	@Override
@@ -223,33 +245,33 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("select ");
-		sb.append(getSelect().toSQL(inlineParameters));
+		sb.append(getSelect0().toSQLDeclaration(inlineParameters));
 		
 		sb.append(" from ");
-		sb.append(getFrom().toSQL(inlineParameters));
+		sb.append(getFrom().toSQLDeclaration(inlineParameters));
 		
 		if (!getJoin().isEmpty()) {
 			sb.append(" ");
-			sb.append(getJoin().toSQL(inlineParameters));
+			sb.append(getJoin().toSQLDeclaration(inlineParameters));
 		}
 		
 		if (getWhere() != TRUE_CONDITION) {
 			sb.append(" where ");
-			sb.append(getWhere().toSQL(inlineParameters));
+			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
 		
 		if (!getGroupBy().isEmpty()) {
 			sb.append(" group by ");
-			sb.append(getGroupBy().toSQL(inlineParameters));
+			sb.append(getGroupBy().toSQLReference(inlineParameters));
 		}
 		
 		if (!getOrderBy().isEmpty()) {
 			sb.append(" order by ");
-			sb.append(getOrderBy().toSQL(inlineParameters));
+			sb.append(getOrderBy().toSQLReference(inlineParameters));
 		}
 				
 		return sb.toString();

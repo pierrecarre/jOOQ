@@ -36,7 +36,7 @@ package org.jooq;
  * 
  * @author Lukas Eder
  */
-public interface Table extends QueryPart {
+public interface Table extends NamedQueryPart, AliasProvider<Table> {
 	/**
 	 * @return The list of fields contained in the table
 	 */
@@ -46,4 +46,12 @@ public interface Table extends QueryPart {
 	 * @return The table's name
 	 */
 	String getName();
+	
+	/**
+	 * Create an alias for this table
+	 * 
+	 * @param alias The alias name
+	 * @return The table alias
+	 */
+	Table alias(String alias);
 }

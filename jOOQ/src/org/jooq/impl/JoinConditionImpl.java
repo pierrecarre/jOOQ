@@ -72,12 +72,12 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCon
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(getField1().toSQL(inlineParameters));
+		sb.append(getField1().toSQLReference(inlineParameters));
 		sb.append(" = ");
-		sb.append(getField2().toSQL(inlineParameters));
+		sb.append(getField2().toSQLReference(inlineParameters));
 		
 		return sb.toString();
 	}

@@ -39,10 +39,9 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractQueryPart implements Table {
+public class TableImpl extends AbstractNamedQueryPart implements Table {
 
 	private static final long serialVersionUID = 261033315221985068L;
-	private final String name;
 	private final String schema;
 	private final FieldList fields;
 	
@@ -52,7 +51,8 @@ public class TableImpl extends AbstractQueryPart implements Table {
 	}
 	
 	public TableImpl(String name, String schema) {
-		this.name = name;
+		super(name);
+
 		this.schema = schema;
 		this.fields = new FieldListImpl();
 	}
@@ -67,21 +67,21 @@ public class TableImpl extends AbstractQueryPart implements Table {
 		return fields;
 	}
 
-	@Override
-	public final String getName() {
-		return name;
-	}
-	
 	protected String getSchema() {
 		return schema;
 	}
 
 	@Override
-	public final String toSQL(boolean inlineParameters) {
+	public final String toSQLReference(boolean inlineParameters) {
 		if (getSchema() != null) {
 			return getSchema() + "." + getName();
 		}
+		
 		return getName();
 	}
 
+	@Override
+	public Table alias(String alias) {
+		return new TableAlias(this, alias);
+	}
 }

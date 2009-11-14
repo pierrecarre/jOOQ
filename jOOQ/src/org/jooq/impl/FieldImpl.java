@@ -38,14 +38,14 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-public class FieldImpl<T> extends AbstractQueryPart implements Field<T> {
+public class FieldImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 
 	private static final long serialVersionUID = 5589200289715501493L;
-	private final String name;
 	private final Class<T> type;
 
 	public FieldImpl(String name, Class<T> type) {
-		this.name = name;
+		super(name);
+
 		this.type = type;
 	}
 	
@@ -55,17 +55,17 @@ public class FieldImpl<T> extends AbstractQueryPart implements Field<T> {
 	}
 
 	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
 	public final Class<T> getType() {
 		return type;
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		return getName();
+	}
+
+	@Override
+	public Field<T> alias(String alias) {
+		return new FieldAlias<T>(this, alias);
 	}
 }

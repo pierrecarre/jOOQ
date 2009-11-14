@@ -37,28 +37,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.Function;
 
 /**
  * @author Lukas Eder
  */
-class FunctionImpl<T> extends AbstractQueryPart implements Function<T> {
+class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 
 	private static final long serialVersionUID = 347252741712134044L;
 
-	private final String name;
 	private final Class<T> type;
 	private final List<Field<?>> fields;
 
 	public FunctionImpl(String name, Class<T> type, Field<?>... fields) {
-		this.name = name;
+		super (name);
+
 		this.type = type;
 		this.fields = Arrays.asList(fields);
-	}
-
-	@Override
-	public final String getName() {
-		return name;
 	}
 
 	@Override
@@ -67,10 +61,10 @@ class FunctionImpl<T> extends AbstractQueryPart implements Function<T> {
 	}
 
 	@Override
-	public final String toSQL(boolean inlineParameters) {
+	public final String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(name);
+		sb.append(getName());
 		sb.append("(");
 
 		String separator = "";
@@ -91,7 +85,7 @@ class FunctionImpl<T> extends AbstractQueryPart implements Function<T> {
 	}
 
 	protected String toSQLField(Field<?> field, boolean inlineParameters) {
-		return field.toSQL(inlineParameters);
+		return field.toSQLReference(inlineParameters);
 	}
 
 	protected String toSQLEmptyFields(boolean inlineParameters) {
@@ -111,5 +105,10 @@ class FunctionImpl<T> extends AbstractQueryPart implements Function<T> {
 
 	protected final List<Field<?>> getFields() {
 		return fields;
+	}
+
+	@Override
+	public Field<T> alias(String alias) {
+		return new FieldAlias<T>(this, alias);
 	}
 }

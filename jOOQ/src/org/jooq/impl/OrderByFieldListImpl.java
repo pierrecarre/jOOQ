@@ -93,10 +93,10 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 	}
 
 	@Override
-	protected String toSQL(Field<?> field, boolean inlineParameters) {
+	protected String toSQLReference(Field<?> field, boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(super.toSQL(field, inlineParameters));
+		sb.append(super.toSQLReference(field, inlineParameters));
 		
 		if (getOrdering(field) != null) {
 			sb.append(" ");

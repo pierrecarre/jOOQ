@@ -93,7 +93,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
 		}
@@ -101,13 +101,13 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("insert into ");
-		sb.append(getInto().toSQL(inlineParameters));
+		sb.append(getInto().toSQLReference(inlineParameters));
 		sb.append(" (");
 		
 		String separator1 = "";
 		for (Field<?> field : getValues0().keySet()) {
 			sb.append(separator1);
-			sb.append(field.toSQL(inlineParameters));
+			sb.append(field.toSQLReference(inlineParameters));
 			separator1 = ", ";
 		}
 		

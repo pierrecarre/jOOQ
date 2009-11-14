@@ -43,23 +43,46 @@ import java.sql.SQLException;
 public interface QueryPart extends Serializable {
 
 	/**
-	 * Transform this object into SQL. This always results in calling {@link
-	 * #toSQL(false)}
+	 * Transform this object into SQL, such that it can be used as a reference.
+	 * This always results in calling {@link #toSQLReference(false)}
 	 * 
 	 * @return SQL representation of this QueryPart
-	 * @see {@link #toSQL(boolean)}
+	 * @see {@link #toSQLReference(boolean)}
 	 */
-	String toSQL();
+	String toSQLReference();
 
 	/**
-	 * Transform this object into SQL.
+	 * Transform this object into SQL, such that it can be used as a reference.
 	 * 
 	 * @param inlineParameters
 	 *            if set to true, all parameters are inlined, not replaced by
 	 *            "?"
 	 * @return SQL representation of this QueryPart
 	 */
-	String toSQL(boolean inlineParameters);
+	String toSQLReference(boolean inlineParameters);
+
+	/**
+	 * Transform this object into SQL, such that it can be used as a
+	 * declaration. Usually, this is the same as calling
+	 * {@link #toSQLReference()}. This always results in calling {@link
+	 * #toSQLDeclaration(false)}
+	 * 
+	 * @return SQL representation of this QueryPart
+	 * @see {@link #toSQLReference(boolean)}
+	 */
+	String toSQLDeclaration();
+
+	/**
+	 * Transform this object into SQL, such that it can be used as a
+	 * declaration. Usually, this is the same as calling
+	 * {@link #toSQLReference(boolean)}
+	 * 
+	 * @param inlineParameters
+	 *            if set to true, all parameters are inlined, not replaced by
+	 *            "?"
+	 * @return SQL representation of this QueryPart
+	 */
+	String toSQLDeclaration(boolean inlineParameters);
 
 	/**
 	 * Bind all parameters of this QueryPart to a PreparedStatement. This always
@@ -78,7 +101,8 @@ public interface QueryPart extends Serializable {
 	 * 
 	 * @param stmt
 	 *            The statement to bind values to
-	 * @param initialIndex The index of the next binding variable
+	 * @param initialIndex
+	 *            The index of the next binding variable
 	 * @return The index of the next binding variable
 	 * @throws SQLException
 	 */

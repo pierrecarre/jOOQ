@@ -43,13 +43,27 @@ import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 
-public abstract class AbstractQueryPart implements QueryPart {
+abstract class AbstractQueryPart implements QueryPart {
 
 	private static final long serialVersionUID = 2078114876079493107L;
 
 	@Override
-	public final String toSQL() {
-		return toSQL(false);
+	public final String toSQLReference() {
+		return toSQLReference(false);
+	}
+
+	@Override
+	public final String toSQLDeclaration() {
+		return toSQLDeclaration(false);
+	}
+
+	/**
+	 * The default implementation is the same as that of
+	 * {@link #toSQLReference(boolean)}. Subclasses may override this method.
+	 */
+	@Override
+	public String toSQLDeclaration(boolean inlineParameters) {
+		return toSQLReference(inlineParameters);
 	}
 
 	public final int bind(PreparedStatement stmt) throws SQLException {
@@ -60,58 +74,43 @@ public abstract class AbstractQueryPart implements QueryPart {
 		bind(stmt, index, field.getType(), value);
 	}
 
-	protected final void bind (PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
+	protected final void bind(PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
 		if (value == null) {
 			stmt.setNull(index, FieldTypeHelper.getSQLType(type));
 			return;
 		}
-		
+
 		if (type == Blob.class) {
 			stmt.setBlob(index, (Blob) value);
-		}
-		else if (type == Boolean.class) {
+		} else if (type == Boolean.class) {
 			stmt.setBoolean(index, (Boolean) value);
-		}
-		else if (type == BigDecimal.class) {
+		} else if (type == BigDecimal.class) {
 			stmt.setBigDecimal(index, (BigDecimal) value);
-		}
-		else if (type == Byte.class) {
+		} else if (type == Byte.class) {
 			stmt.setByte(index, (Byte) value);
-		}
-		else if (type == byte[].class) {
+		} else if (type == byte[].class) {
 			stmt.setBytes(index, (byte[]) value);
-		}
-		else if (type == Clob.class) {
+		} else if (type == Clob.class) {
 			stmt.setClob(index, (Clob) value);
-		}
-		else if (type == Date.class) {
+		} else if (type == Date.class) {
 			stmt.setDate(index, (Date) value);
-		}
-		else if (type == Double.class) {
+		} else if (type == Double.class) {
 			stmt.setDouble(index, (Double) value);
-		}
-		else if (type == Float.class) {
+		} else if (type == Float.class) {
 			stmt.setFloat(index, (Float) value);
-		}
-		else if (type == Integer.class) {
+		} else if (type == Integer.class) {
 			stmt.setInt(index, (Integer) value);
-		}
-		else if (type == Long.class) {
+		} else if (type == Long.class) {
 			stmt.setLong(index, (Long) value);
-		}
-		else if (type == Short.class) {
+		} else if (type == Short.class) {
 			stmt.setShort(index, (Short) value);
-		}
-		else if (type == String.class) {
+		} else if (type == String.class) {
 			stmt.setString(index, (String) value);
-		}
-		else if (type == Time.class) {
+		} else if (type == Time.class) {
 			stmt.setTime(index, (Time) value);
-		}
-		else if (type == Timestamp.class) {
+		} else if (type == Timestamp.class) {
 			stmt.setTimestamp(index, (Timestamp) value);
-		}
-		else {
+		} else {
 			stmt.setObject(index, value);
 		}
 	}
@@ -119,7 +118,7 @@ public abstract class AbstractQueryPart implements QueryPart {
 	@Override
 	public boolean equals(Object that) {
 		if (that instanceof QueryPart) {
-			return toSQL(true).equals(((QueryPart) that).toSQL(true));
+			return toSQLReference(true).equals(((QueryPart) that).toSQLReference(true));
 		}
 
 		return false;
@@ -127,11 +126,11 @@ public abstract class AbstractQueryPart implements QueryPart {
 
 	@Override
 	public final int hashCode() {
-		return toSQL(true).hashCode();
+		return toSQLReference(true).hashCode();
 	}
 
 	@Override
 	public final String toString() {
-		return toSQL(true);
+		return toSQLReference(true);
 	}
 }

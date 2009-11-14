@@ -82,4 +82,24 @@ class ResultImpl implements Result {
 	void addRecord(Record record) {
 		records.add(record);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("ResultImpl [query=" + query + "]\n");
+		sb.append("Records:\n");
+		
+		int i = 0;
+		for (; i < 10 && i < getNumberOfRecords(); i++) {
+			sb.append(getRecord(i));
+			sb.append("\n");
+		}
+		
+		if (i == 10) {
+			sb.append("[...]");
+		}
+		
+		return sb.toString();
+	}
 }

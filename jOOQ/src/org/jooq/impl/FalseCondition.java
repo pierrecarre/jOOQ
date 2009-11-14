@@ -49,7 +49,7 @@ public class FalseCondition extends AbstractQueryPart implements Condition {
 	}
 
 	@Override
-	public String toSQL(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		return "1 = 0";
 	}
 
