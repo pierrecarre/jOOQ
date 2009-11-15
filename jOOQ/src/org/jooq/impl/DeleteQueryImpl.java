@@ -37,8 +37,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
+import org.jooq.Field;
 import org.jooq.Table;
 
 /**
@@ -87,6 +89,31 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	@Override
 	public void addConditions(Condition... conditions) {
 		condition.addConditions(conditions);
+	}
+
+	@Override
+	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+		condition.addBetweenCondition(field, minValue, maxValue);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+		condition.addCompareCondition(field, value, comparator);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value) {
+		condition.addCompareCondition(field, value);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, Collection<T> values) {
+		condition.addInCondition(field, values);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, T... values) {
+		condition.addInCondition(field, values);
 	}
 
 	@Override

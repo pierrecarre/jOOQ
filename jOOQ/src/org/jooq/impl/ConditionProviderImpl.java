@@ -38,8 +38,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
+import org.jooq.Field;
 
 /**
  * @author Lukas Eder
@@ -80,6 +82,31 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 				condition = QueryFactory.createCombinedCondition(getWhere(), c);
 			}
 		}
+	}
+	
+	@Override
+	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+		addConditions(QueryFactory.createBetweenCondition(field, minValue, maxValue));
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+		addConditions(QueryFactory.createCompareCondition(field, value, comparator));
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value) {
+		addConditions(QueryFactory.createCompareCondition(field, value));
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, Collection<T> values) {
+		addConditions(QueryFactory.createInCondition(field, values));
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, T... values) {
+		addConditions(QueryFactory.createInCondition(field, values));
 	}
 
 	@Override

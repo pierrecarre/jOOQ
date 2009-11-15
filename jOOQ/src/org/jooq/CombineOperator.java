@@ -29,76 +29,50 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
+package org.jooq;
 
 /**
+ * A combine operator is used to combine result sets of two
+ * {@link ResultProviderQuery} queries.
+ * 
  * @author Lukas Eder
  */
-class ResultImpl implements Result {
+public enum CombineOperator {
 
-	private final AbstractResultProviderQuery query;
-	private final List<Record> records;
-	
-	ResultImpl(AbstractResultProviderQuery query) {
-		this.query = query;
-		this.records = new ArrayList<Record>();
-	}
-	
-	@Override
-	public FieldList getFields() {
-		return query.getSelect();
-	}
+	/**
+	 * Unite the two {@link ResultProviderQuery}'s disallowing duplicate records
+	 */
+	UNION("union"),
 
-	@Override
-	public int getNumberOfRecords() {
-		return records.size();
-	}
+	/**
+	 * Unite the two {@link ResultProviderQuery}'s allowing duplicate records
+	 */
+	UNION_ALL("union all"),
 
-	@Override
-	public List<Record> getRecords() {
-		return Collections.unmodifiableList(records);
-	}
+	/**
+	 * Remove all records encountered in the second {@link ResultProviderQuery}
+	 * from the first {@link ResultProviderQuery}
+	 */
+	EXCEPT("except"),
 
-	@Override
-	public Record getRecord(int index) throws IndexOutOfBoundsException {
-		return records.get(index);
-	}
+	/**
+	 * Retain all records encountered in both {@link ResultProviderQuery}'s
+	 */
+	INTERSECT("intersect");
 
-	@Override
-	public Iterator<Record> iterator() {
-		return records.iterator();
-	}
-	
-	void addRecord(Record record) {
-		records.add(record);
+	private final String sql;
+
+	private CombineOperator(String sql) {
+		this.sql = sql;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("ResultImpl [query=" + query + "]\n");
-		sb.append("Records:\n");
-		
-		int i = 0;
-		for (; i < 10 && i < getNumberOfRecords(); i++) {
-			sb.append(getRecord(i));
-			sb.append("\n");
+	public String toSQL() {
+		if (this == EXCEPT) {
+			if (Configuration.getInstance().getDialect() == SQLDialect.ORACLE) {
+				return "minus";
+			}
 		}
-		
-		if (i == 10) {
-			sb.append("[...]");
-		}
-		
-		return sb.toString();
+
+		return sql;
 	}
 }

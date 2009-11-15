@@ -57,6 +57,7 @@ import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
 import org.jooq.JoinCondition;
+import org.jooq.ResultProviderQuery;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.UpdateQuery;
@@ -735,5 +736,29 @@ public class jOOQTest {
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
+	}
+	
+	@Test
+	public final void testCombinedSelectQuery() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE1);
+		
+		q1.addCompareCondition(FIELD_ID1, 1);
+		q2.addCompareCondition(FIELD_ID1, 2);
+		
+		ResultProviderQuery combine = q1.combine(q2);
+		
+		assertEquals("(select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)", combine.toSQLReference(true));
+		assertEquals("(select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)", combine.toSQLReference(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+			oneOf(statement).setInt(2, 2);
+		}});
+		
+		int i = combine.bind(statement);
+		assertEquals(3, i);
+		
+		context.assertIsSatisfied();
 	}
 }

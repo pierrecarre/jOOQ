@@ -31,74 +31,56 @@
 
 package org.jooq.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import org.jooq.CombineOperator;
 import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.ResultProviderQuery;
 
 /**
  * @author Lukas Eder
  */
-class ResultImpl implements Result {
+class ResultProviderQueryImpl extends AbstractResultProviderQuery {
 
-	private final AbstractResultProviderQuery query;
-	private final List<Record> records;
-	
-	ResultImpl(AbstractResultProviderQuery query) {
-		this.query = query;
-		this.records = new ArrayList<Record>();
-	}
-	
-	@Override
-	public FieldList getFields() {
-		return query.getSelect();
-	}
+	private static final long serialVersionUID = 3431079100479366798L;
+	private final AbstractResultProviderQuery left;
+	private final ResultProviderQuery right;
+	private final CombineOperator operator;
 
-	@Override
-	public int getNumberOfRecords() {
-		return records.size();
-	}
-
-	@Override
-	public List<Record> getRecords() {
-		return Collections.unmodifiableList(records);
-	}
-
-	@Override
-	public Record getRecord(int index) throws IndexOutOfBoundsException {
-		return records.get(index);
-	}
-
-	@Override
-	public Iterator<Record> iterator() {
-		return records.iterator();
+	ResultProviderQueryImpl(AbstractResultProviderQuery left, ResultProviderQuery right, CombineOperator operator) {
+		this.left = left;
+		this.right = right;
+		this.operator = operator;
 	}
 	
-	void addRecord(Record record) {
-		records.add(record);
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+		
+		result = left.bind(stmt, result);
+		result = right.bind(stmt, result);
+		
+		return result;
 	}
 
 	@Override
-	public String toString() {
+	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("ResultImpl [query=" + query + "]\n");
-		sb.append("Records:\n");
-		
-		int i = 0;
-		for (; i < 10 && i < getNumberOfRecords(); i++) {
-			sb.append(getRecord(i));
-			sb.append("\n");
-		}
-		
-		if (i == 10) {
-			sb.append("[...]");
-		}
+		sb.append("(");
+		sb.append(left.toSQLReference(inlineParameters));
+		sb.append(") ");
+		sb.append(operator.toSQL());
+		sb.append(" (");
+		sb.append(right.toSQLReference(inlineParameters));
+		sb.append(")");
 		
 		return sb.toString();
+	}
+
+	@Override
+	protected FieldList getSelect() {
+		return left.getSelect();
 	}
 }

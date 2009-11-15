@@ -33,13 +33,15 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.impl.QueryFactory;
+
 /**
  * A common interface for all objects holding conditions (e.g. queries)
  * 
  * @author Lukas Eder
  */
 public interface ConditionProvider extends QueryPart {
-	
+
 	/**
 	 * Adds new conditions to the update query, connecting it to existing
 	 * conditions with the and operator.
@@ -57,4 +59,34 @@ public interface ConditionProvider extends QueryPart {
 	 *            The condition
 	 */
 	void addConditions(Collection<Condition> conditions);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createCompareCondition(Field, Object)}
+	 */
+	<T> void addCompareCondition(Field<T> field, T value);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createCompareCondition(Field, Object, Comparator))}
+	 */
+	<T> void addCompareCondition(Field<T> field, T value, Comparator comparator);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createInCondition(Field, Collection)}
+	 */
+	<T> void addInCondition(Field<T> field, Collection<T> values);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createInCondition(Field, Object...)}
+	 */
+	<T> void addInCondition(Field<T> field, T... values);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createBetweenCondition(Field, Object, Object)}
+	 */
+	<T> void addBetweenCondition(Field<T> field, T minValue, T maxValue);
 }

@@ -34,11 +34,11 @@ package org.jooq.impl;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.FieldList;
@@ -46,7 +46,6 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinList;
 import org.jooq.OrderByFieldList;
-import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -55,7 +54,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl extends AbstractQuery implements SelectQuery {
+class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery {
 
 	private static final long serialVersionUID = -4128783317946627405L;
 	
@@ -65,7 +64,6 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
 	private final OrderByFieldList orderBy;
-	private ResultImpl result;
 
 	SelectQueryImpl(Table from) {
 		this.select = new SelectFieldListImpl();
@@ -95,33 +93,6 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 	
 	@Override
-	protected int execute(PreparedStatement statement) throws SQLException {
-		ResultSet rs = null;
-		
-		try {
-			rs = statement.executeQuery();
-			result = new ResultImpl(this);
-			
-			while (rs.next()) {
-				RecordImpl record = new RecordImpl(result);
-				
-				for (Field<?> field : getSelect()) {
-					Object value = FieldTypeHelper.getFromResultSet(rs, field);
-					record.addValue(field, value);
-				}
-				
-				result.addRecord(record);
-			}
-		} finally {
-			if (rs != null) {
-				rs.close();
-			}
-		}
-		
-		return result.getNumberOfRecords();
-	}
-
-	@Override
 	public void addSelect(Collection<Field<?>> fields) {
 		getSelect0().addAll(fields);
 	}
@@ -139,6 +110,31 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	@Override
 	public final void addConditions(Collection<Condition> conditions) {
 		condition.addConditions(conditions);
+	}
+
+	@Override
+	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+		condition.addBetweenCondition(field, minValue, maxValue);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+		condition.addCompareCondition(field, value, comparator);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value) {
+		condition.addCompareCondition(field, value);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, Collection<T> values) {
+		condition.addInCondition(field, values);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, T... values) {
+		condition.addInCondition(field, values);
 	}
 
 	TableList getFrom() {
@@ -211,7 +207,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		return select;
 	}
 	
-	FieldList getSelect() {
+	protected FieldList getSelect() {
 		if (getSelect0().isEmpty()) {
 			FieldList result = new SelectFieldListImpl();
 			
@@ -269,10 +265,4 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 				
 		return sb.toString();
 	}
-
-	@Override
-	public Result getResult() {
-		return result;
-	}
-
 }

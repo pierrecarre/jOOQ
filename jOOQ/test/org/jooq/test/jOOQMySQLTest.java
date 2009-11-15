@@ -37,6 +37,8 @@ import static junit.framework.Assert.assertTrue;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.test.generatedclasses.tables.TAuthor.LAST_NAME;
 import static org.jooq.test.generatedclasses.tables.TAuthor.T_AUTHOR;
+import static org.jooq.test.generatedclasses.tables.TBook.AUTHOR_ID;
+import static org.jooq.test.generatedclasses.tables.TBook.TITLE;
 import static org.jooq.test.generatedclasses.tables.TBook.T_BOOK;
 import static org.jooq.test.generatedclasses.tables.VLibrary.AUTHOR;
 import static org.jooq.test.generatedclasses.tables.VLibrary.V_LIBRARY;
@@ -55,6 +57,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Functions;
@@ -150,6 +153,20 @@ public class jOOQMySQLTest {
 		assertEquals(2, result.getNumberOfRecords());
 		assertEquals("Coelho", result.getRecord(0).getValue(LAST_NAME));
 		assertEquals("Orwell", result.getRecord(1).getValue(LAST_NAME));
+	}
+	
+	@Test
+	public final void testCombinedSelectQuery() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(T_BOOK);
+		SelectQuery q2 = QueryFactory.createSelectQuery(T_BOOK);
+		
+		q1.addCompareCondition(AUTHOR_ID, 1);
+		q2.addCompareCondition(TITLE, "Brida");
+		
+		ResultProviderQuery combine = q1.combine(q2);
+
+		int rows = combine.execute(connection);
+		assertEquals(3, rows);
 	}
 
 	@Test

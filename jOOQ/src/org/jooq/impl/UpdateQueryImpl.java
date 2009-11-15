@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Table;
@@ -93,6 +94,31 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	@Override
 	public void addConditions(Condition... conditions) {
 		condition.addConditions(conditions);
+	}
+
+	@Override
+	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+		condition.addBetweenCondition(field, minValue, maxValue);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+		condition.addCompareCondition(field, value, comparator);
+	}
+
+	@Override
+	public <T> void addCompareCondition(Field<T> field, T value) {
+		condition.addCompareCondition(field, value);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, Collection<T> values) {
+		condition.addInCondition(field, values);
+	}
+
+	@Override
+	public <T> void addInCondition(Field<T> field, T... values) {
+		condition.addInCondition(field, values);
 	}
 
 	final Condition getWhere() {
