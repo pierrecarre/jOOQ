@@ -58,10 +58,6 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 		this.fields = new FieldListImpl();
 	}
 	
-	public TableImpl(String name, String schema) {
-		this(name, new SchemaImpl(schema));
-	}
-	
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
 		return initialIndex;
