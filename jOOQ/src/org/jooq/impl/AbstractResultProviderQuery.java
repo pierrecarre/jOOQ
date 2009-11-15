@@ -96,8 +96,7 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	}
 
 	@Override
-	public Table alias(String alias) {
-		ResultProviderQueryAsTable table = new ResultProviderQueryAsTable(this, alias);
-		return new ResultProviderQueryAlias(table, alias);
+	public Table asTable() {
+		return new ResultProviderQueryAsTable(this);
 	}
 }

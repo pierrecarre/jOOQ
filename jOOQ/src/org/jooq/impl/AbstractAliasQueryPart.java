@@ -44,12 +44,14 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 	implements AliasProvider<T> {
 
 	private static final long serialVersionUID = -2456848365524191614L;
+	private final boolean aliasProviderNeedsBrackets;
 	private final T aliasProvider;
 	private final String alias;
 
-	AbstractAliasQueryPart(T aliasProvider, String alias) {
+	AbstractAliasQueryPart(T aliasProvider, String alias, boolean aliasProviderNeedsBrackets) {
 		super(alias);
 		
+		this.aliasProviderNeedsBrackets = aliasProviderNeedsBrackets;
 		this.aliasProvider = aliasProvider;
 		this.alias = alias;
 	}
@@ -67,11 +69,11 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 	public final String toSQLDeclaration(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 
-		if (aliasProviderNeedsBrackets()) {
+		if (aliasProviderNeedsBrackets) {
 			sb.append("(");
 		}
 		sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
-		if (aliasProviderNeedsBrackets()) {
+		if (aliasProviderNeedsBrackets) {
 			sb.append(")");
 		}
 		
@@ -81,14 +83,6 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 		return sb.toString();
 	}
 	
-	/**
-	 * @return Whether the alias provider needs to be rendered in parentheses.
-	 *         Subclasses may override this method
-	 */
-	protected boolean aliasProviderNeedsBrackets() {
-		return false;
-	}
-
 	@Override
 	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		return aliasProvider.bind(stmt, initialIndex);

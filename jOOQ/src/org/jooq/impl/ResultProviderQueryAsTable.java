@@ -45,15 +45,15 @@ class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table
 	private static final long serialVersionUID = 6272398035926615668L;
 	private final AbstractResultProviderQuery query;
 
-	ResultProviderQueryAsTable(AbstractResultProviderQuery query, String alias) {
-		super(alias);
+	ResultProviderQueryAsTable(AbstractResultProviderQuery query) {
+		super("");
 		
 		this.query = query;
 	}
 	
 	@Override
 	public Table alias(String alias) {
-		return query.alias(alias);
+		return new TableAlias(this, alias, true);
 	}
 
 	@Override

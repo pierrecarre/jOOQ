@@ -42,7 +42,11 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 	private static final long serialVersionUID = -8417114874567698325L;
 
 	TableAlias(Table table, String alias) {
-		super(table, alias);
+		this(table, alias, false);
+	}
+
+	TableAlias(Table table, String alias, boolean needs) {
+		super(table, alias, needs);
 	}
 
 	@Override
