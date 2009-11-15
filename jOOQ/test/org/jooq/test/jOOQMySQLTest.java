@@ -34,9 +34,11 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SortOrder.ASC;
 import static org.jooq.test.generatedclasses.tables.TAuthor.LAST_NAME;
 import static org.jooq.test.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.generatedclasses.tables.TBook.T_BOOK;
+import static org.jooq.test.generatedclasses.tables.VLibrary.AUTHOR;
 import static org.jooq.test.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 import java.io.File;
@@ -281,5 +283,23 @@ public class jOOQMySQLTest {
 		assertEquals((Integer) 3, record.getValue(charLength));
 		assertEquals((Integer) 24, record.getValue(bitLength));
 		assertEquals((Integer) 3, record.getValue(octetLength)); 
+	}
+	
+	@Test
+	public final void testFunction5() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(V_LIBRARY);
+		
+		Field<String> o = Functions.constant("o");
+		Field<Integer> position = Functions.position(o, AUTHOR).alias("p");
+		q.addSelect(AUTHOR);
+		q.addSelect(position);
+		q.addOrderBy(AUTHOR, ASC);
+		
+		q.execute(connection);
+		Record r1 = q.getResult().getRecord(1); // George Orwell
+		Record r2 = q.getResult().getRecord(2); // Paulo Coelho
+		
+		assertEquals((Integer) 3, r1.getValue(position));
+		assertEquals((Integer) 5, r2.getValue(position));
 	}
 }

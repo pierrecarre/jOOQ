@@ -52,6 +52,10 @@ public final class Functions {
 	public static <T extends Number> Field<Double> avg(Field<T> field) {
 		return new FunctionImpl<Double>("avg", Double.class, field);
 	}
+	
+	public static <T extends Number> Field<T> abs(Field<T> field) {
+		return new FunctionImpl<T>("abs", field.getType(), field);
+	}
 
 	public static <T> Field<T> min(Field<T> field) {
 		return new FunctionImpl<T>("min", field.getType(), field);
@@ -81,6 +85,70 @@ public final class Functions {
 		return new FunctionImpl<String>("lower", field.getType(), field);
 	}
 	
+	public static Field<String> trim(Field<String> field) {
+		return new FunctionImpl<String>("trim", field.getType(), field);
+	}
+
+	public static Field<String> rtrim(Field<String> field) {
+		return new FunctionImpl<String>("rtrim", field.getType(), field);
+	}
+	
+	public static Field<String> ltrim(Field<String> field) {
+		return new FunctionImpl<String>("ltrim", field.getType(), field);
+	}
+	
+	public static Field<String> rpad(Field<String> field, int length) {
+		return new FunctionImpl<String>("rpad", String.class, field, constant(length));
+	}
+	
+	public static Field<String> rpad(Field<String> field, int length, char c) {
+		return new FunctionImpl<String>("rpad", String.class, field, constant(length), constant(c));
+	}
+
+	public static Field<String> lpad(Field<String> field, int length) {
+		return new FunctionImpl<String>("lpad", String.class, field, constant(length));
+	}
+	
+	public static Field<String> lpad(Field<String> field, int length, char c) {
+		return new FunctionImpl<String>("lpad", String.class, field, constant(length), constant(c));
+	}
+
+	public static Field<Integer> ascii(Field<String> field) {
+		return new FunctionImpl<Integer>("ascii", Integer.class, field);
+	}
+	
+	public static Field<String> concatenate(Field<String>... fields) {
+		switch (Configuration.getInstance().getDialect()) {
+		case MYSQL:
+			return new FunctionImpl<String>("concat", String.class, fields);
+		}
+		
+		return new FunctionImpl<String>("concatenate", String.class, fields);
+	}
+	
+	public static Field<String> substring(Field<String> field, int startingPosition) {
+		return substring(field, startingPosition, -1);
+	}
+	
+	public static Field<String> substring(Field<String> field, int startingPosition, int length) throws SQLDialectNotSupportedException {
+		Field<Integer> startingPositionConstant = constant(startingPosition);
+		Field<Integer> lengthConstant = constant(length);
+		
+		String functionName = "substring";
+		
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			functionName = "substr";
+			break;
+		}
+
+		if (length == -1) {
+			return new FunctionImpl<String>(functionName, String.class, field, startingPositionConstant);
+		} else {
+			return new FunctionImpl<String>(functionName, String.class, field, startingPositionConstant, lengthConstant);
+		}
+	}
+
 	public static Field<Date> currentDate() throws SQLDialectNotSupportedException {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE:
@@ -129,18 +197,33 @@ public final class Functions {
 		return new FunctionImpl<Integer>("octet_length", Integer.class, field);
 	}
 	
-	public static Field<Integer> extract(Field<?> field, DatePart datePart) {
+	public static Field<Integer> extract(Field<?> field, DatePart datePart) throws SQLDialectNotSupportedException {
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL: // No break
 		case POSTGRES:
 			return new ExtractFunctionImpl(field, datePart);
 		case ORACLE:
-			throw new UnsupportedOperationException("TODO: Implement TO_CHAR for Oracle");
+			throw new SQLDialectNotSupportedException("TODO: Implement TO_CHAR for Oracle");
 		case MSSQL:
-			throw new UnsupportedOperationException("TODO: Implement CONVERT for MSSQL");
+			throw new SQLDialectNotSupportedException("TODO: Implement CONVERT for MSSQL");
 			
 		default:
-			throw new UnsupportedOperationException("extract not supported");
+			throw new SQLDialectNotSupportedException("extract not supported");
+		}
+	}
+	
+	public static Field<Integer> position(Field<String> search, Field<String> in) {
+		switch (Configuration.getInstance().getDialect()) {
+		case MYSQL: // No break
+		case POSTGRES:
+			return new PositionFunctionImpl(search, in);
+		case ORACLE:
+			return new FunctionImpl<Integer>("instr", Integer.class, in, search);
+		case MSSQL:
+			return new FunctionImpl<Integer>("charindex", Integer.class, search, in);
+
+		default:
+			throw new SQLDialectNotSupportedException("position not supported");
 		}
 	}
 	

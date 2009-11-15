@@ -31,29 +31,28 @@
 
 package org.jooq.impl;
 
-import org.jooq.DatePart;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-class ExtractFunctionImpl extends FunctionImpl<Integer> {
+class PositionFunctionImpl extends FunctionImpl<Integer> {
 
-	private static final long serialVersionUID = 3748640920856031034L;
-	private final DatePart datePart;
+	private static final long serialVersionUID = 3544690069533526544L;
+	private final Field<String> search;
 
-	ExtractFunctionImpl(Field<?> field, DatePart datePart) {
-		super("extract", Integer.class, field);
+	public PositionFunctionImpl(Field<String> search, Field<String> in) {
+		super("position", Integer.class, in);
 		
-		this.datePart = datePart;
+		this.search = search;
 	}
 
 	@Override
 	protected String toSQLField(Field<?> field, boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(datePart.toSQL());
-		sb.append(" from ");
+		sb.append(super.toSQLField(search, inlineParameters));
+		sb.append(" in ");
 		sb.append(super.toSQLField(field, inlineParameters));
 		
 		return sb.toString();
