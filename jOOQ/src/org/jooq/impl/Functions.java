@@ -56,6 +56,10 @@ public final class Functions {
 	public static <T extends Number> Field<T> abs(Field<T> field) {
 		return new FunctionImpl<T>("abs", field.getType(), field);
 	}
+	
+	public static <T extends Number> Field<T> round(Field<T> field) {
+		return new FunctionImpl<T>("round", field.getType(), field);
+	}
 
 	public static <T> Field<T> min(Field<T> field) {
 		return new FunctionImpl<T>("min", field.getType(), field);
