@@ -290,7 +290,7 @@ public class jOOQMySQLTest {
 		SelectQuery q = QueryFactory.createSelectQuery(V_LIBRARY);
 		
 		Field<String> o = Functions.constant("o");
-		Field<Integer> position = Functions.position(o, AUTHOR).alias("p");
+		Field<Integer> position = Functions.position(AUTHOR, o).alias("p");
 		q.addSelect(AUTHOR);
 		q.addSelect(position);
 		q.addOrderBy(AUTHOR, ASC);

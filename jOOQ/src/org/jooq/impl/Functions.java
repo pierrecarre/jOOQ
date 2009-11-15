@@ -97,33 +97,65 @@ public final class Functions {
 		return new FunctionImpl<String>("ltrim", field.getType(), field);
 	}
 	
+	public static Field<String> rpad(Field<String> field, Field<Integer> length) {
+		return new StringFunction("rpad", field, length);
+	}
+	
 	public static Field<String> rpad(Field<String> field, int length) {
-		return new FunctionImpl<String>("rpad", String.class, field, constant(length));
+		return rpad(field, constant(length));
+	}
+	
+	public static Field<String> rpad(Field<String> field, Field<Integer> length, Field<String> c) {
+		return new StringFunction("rpad", field, length, c);
 	}
 	
 	public static Field<String> rpad(Field<String> field, int length, char c) {
-		return new FunctionImpl<String>("rpad", String.class, field, constant(length), constant(c));
+		return rpad(field, constant(length), constant("" + c));
 	}
 
+	public static Field<String> lpad(Field<String> field, Field<Integer> length) {
+		return new StringFunction("lpad", field, length);
+	}
+	
 	public static Field<String> lpad(Field<String> field, int length) {
-		return new FunctionImpl<String>("lpad", String.class, field, constant(length));
+		return lpad(field, constant(length));
+	}
+	
+	public static Field<String> lpad(Field<String> field, Field<Integer> length, Field<String> c) {
+		return new StringFunction("lpad", field, length, c);
 	}
 	
 	public static Field<String> lpad(Field<String> field, int length, char c) {
-		return new FunctionImpl<String>("lpad", String.class, field, constant(length), constant(c));
+		return lpad(field, constant(length), constant("" + c));
+	}
+	
+	public static Field<String> replace(Field<String> in, Field<String> search) {
+		return new StringFunction("replace", in, search);
+	}
+
+	public static Field<String> replace(Field<String> in, String search) {
+		return replace(in, constant(search));
+	}
+
+	public static Field<String> replace(Field<String> in, Field<String> search, Field<String> replace) {
+		return new StringFunction("replace", in, search, replace);
+	}
+
+	public static Field<String> replace(Field<String> in, String search, String replace) {
+		return replace(in, constant(search), constant(replace));
 	}
 
 	public static Field<Integer> ascii(Field<String> field) {
-		return new FunctionImpl<Integer>("ascii", Integer.class, field);
+		return new IntegerFunction("ascii", field);
 	}
 	
 	public static Field<String> concatenate(Field<String>... fields) {
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL:
-			return new FunctionImpl<String>("concat", String.class, fields);
+			return new StringFunction("concat", fields);
 		}
 		
-		return new FunctionImpl<String>("concatenate", String.class, fields);
+		return new StringFunction("concatenate", fields);
 	}
 	
 	public static Field<String> substring(Field<String> field, int startingPosition) {
@@ -143,9 +175,9 @@ public final class Functions {
 		}
 
 		if (length == -1) {
-			return new FunctionImpl<String>(functionName, String.class, field, startingPositionConstant);
+			return new StringFunction(functionName, field, startingPositionConstant);
 		} else {
-			return new FunctionImpl<String>(functionName, String.class, field, startingPositionConstant, lengthConstant);
+			return new StringFunction(functionName, field, startingPositionConstant, lengthConstant);
 		}
 	}
 
@@ -179,22 +211,22 @@ public final class Functions {
 	public static Field<String> currentUser() {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE:
-			return new FunctionImpl<String>("user", String.class);
+			return new StringFunction("user");
 		}
 
-		return new FunctionImpl<String>("current_user", String.class);
+		return new StringFunction("current_user");
 	}
 	
 	public static Field<Integer> charLength(Field<?> field) {
-		return new FunctionImpl<Integer>("char_length", Integer.class, field);
+		return new IntegerFunction("char_length", field);
 	}
 	
 	public static Field<Integer> bitLength(Field<?> field) {
-		return new FunctionImpl<Integer>("bit_length", Integer.class, field);
+		return new IntegerFunction("bit_length", field);
 	}
 	
 	public static Field<Integer> octetLength(Field<?> field) {
-		return new FunctionImpl<Integer>("octet_length", Integer.class, field);
+		return new IntegerFunction("octet_length", field);
 	}
 	
 	public static Field<Integer> extract(Field<?> field, DatePart datePart) throws SQLDialectNotSupportedException {
@@ -212,15 +244,19 @@ public final class Functions {
 		}
 	}
 	
-	public static Field<Integer> position(Field<String> search, Field<String> in) {
+	public static Field<Integer> position(Field<String> in, String search) throws SQLDialectNotSupportedException {
+		return position(in, constant(search));
+	}
+	
+	public static Field<Integer> position(Field<String> in, Field<String> search) throws SQLDialectNotSupportedException {
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL: // No break
 		case POSTGRES:
 			return new PositionFunctionImpl(search, in);
 		case ORACLE:
-			return new FunctionImpl<Integer>("instr", Integer.class, in, search);
+			return new IntegerFunction("instr", in, search);
 		case MSSQL:
-			return new FunctionImpl<Integer>("charindex", Integer.class, search, in);
+			return new IntegerFunction("charindex", search, in);
 
 		default:
 			throw new SQLDialectNotSupportedException("position not supported");

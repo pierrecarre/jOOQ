@@ -36,25 +36,11 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class PositionFunctionImpl extends IntegerFunction {
+class IntegerFunction extends FunctionImpl<Integer> {
 
-	private static final long serialVersionUID = 3544690069533526544L;
-	private final Field<String> search;
+	private static final long serialVersionUID = -3122391719303988827L;
 
-	public PositionFunctionImpl(Field<String> search, Field<String> in) {
-		super("position", in);
-		
-		this.search = search;
-	}
-
-	@Override
-	protected String toSQLField(Field<?> field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(super.toSQLField(search, inlineParameters));
-		sb.append(" in ");
-		sb.append(super.toSQLField(field, inlineParameters));
-		
-		return sb.toString();
+	IntegerFunction(String name, Field<?>... fields) {
+		super(name, Integer.class, fields);
 	}
 }
