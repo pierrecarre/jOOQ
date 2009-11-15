@@ -40,6 +40,7 @@ import java.util.List;
  */
 public interface Database {
 
+	SchemaDefinition getSchema() throws SQLException;
 	List<TableDefinition> getTables() throws SQLException;
 	List<ProcedureDefinition> getProcedures() throws SQLException;
 	List<FunctionDefinition> getFunctions() throws SQLException;
@@ -47,8 +48,8 @@ public interface Database {
 	void setConnection(Connection connection);
 	Connection getConnection();
 	
-	void setSchema(String schema);
-	String getSchema();
+	void setSchemaName(String schema);
+	String getSchemaName();
 	
 	void setIncludes(String[] includes);
 

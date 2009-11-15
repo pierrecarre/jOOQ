@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class KeyColumnUsage extends TableImpl {
 
-	private static final long serialVersionUID = -2968784996206438015L;
+	private static final long serialVersionUID = -1175906275670965038L;
 
 	/**
 	 * The singleton instance of KEY_COLUMN_USAGE
@@ -84,6 +85,6 @@ public class KeyColumnUsage extends TableImpl {
 	 * No further instances allowed
 	 */
 	private KeyColumnUsage() {
-		super("KEY_COLUMN_USAGE", "information_schema");
+		super("KEY_COLUMN_USAGE", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

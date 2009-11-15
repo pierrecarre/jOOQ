@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Engines extends TableImpl {
 
-	private static final long serialVersionUID = 2830280635587059994L;
+	private static final long serialVersionUID = -342058199132163353L;
 
 	/**
 	 * The singleton instance of ENGINES
@@ -54,6 +55,6 @@ public class Engines extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Engines() {
-		super("ENGINES", "information_schema");
+		super("ENGINES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

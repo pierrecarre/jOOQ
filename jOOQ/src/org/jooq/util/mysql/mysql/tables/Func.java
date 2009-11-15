@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Func extends TableImpl {
 
-	private static final long serialVersionUID = -4517484339688952670L;
+	private static final long serialVersionUID = 2502772787902686687L;
 
 	/**
 	 * The singleton instance of func
@@ -46,6 +47,6 @@ public class Func extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Func() {
-		super("func", "mysql");
+		super("func", Mysql.MYSQL);
 	}
 }

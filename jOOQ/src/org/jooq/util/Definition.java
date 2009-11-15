@@ -36,7 +36,33 @@ package org.jooq.util;
  */
 public interface Definition {
 
+	/**
+	 * @return The schema of this object
+	 */
 	String getSchema();
+
+	/**
+	 * @return The name of this object
+	 */
 	String getName();
+
+	/**
+	 * @return The name of this object in upper case letters
+	 */
+	String getNameUC();
+
+	/**
+	 * @return The comment of this object
+	 */
 	String getComment();
+	
+	/**
+	 * @return The Java class name representing this object
+	 */
+	String getJavaClassName();
+	
+	/**
+	 * @return The Java class file name representing this object
+	 */
+	String getFileName();
 }

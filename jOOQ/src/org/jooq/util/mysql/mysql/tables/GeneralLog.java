@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.impl.TableImpl;
  */
 public class GeneralLog extends TableImpl {
 
-	private static final long serialVersionUID = 8788375157701753531L;
+	private static final long serialVersionUID = 3488179440194763607L;
 
 	/**
 	 * The singleton instance of general_log
@@ -57,6 +58,6 @@ public class GeneralLog extends TableImpl {
 	 * No further instances allowed
 	 */
 	private GeneralLog() {
-		super("general_log", "mysql");
+		super("general_log", Mysql.MYSQL);
 	}
 }

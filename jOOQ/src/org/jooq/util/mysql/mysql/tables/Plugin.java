@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Plugin extends TableImpl {
 
-	private static final long serialVersionUID = 2323620076468969603L;
+	private static final long serialVersionUID = -4255074889600924118L;
 
 	/**
 	 * The singleton instance of plugin
@@ -36,6 +37,6 @@ public class Plugin extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Plugin() {
-		super("plugin", "mysql");
+		super("plugin", Mysql.MYSQL);
 	}
 }

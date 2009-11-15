@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class CharacterSets extends TableImpl {
 
-	private static final long serialVersionUID = 7878347424009653266L;
+	private static final long serialVersionUID = -7580072422137352461L;
 
 	/**
 	 * The singleton instance of CHARACTER_SETS
@@ -44,6 +45,6 @@ public class CharacterSets extends TableImpl {
 	 * No further instances allowed
 	 */
 	private CharacterSets() {
-		super("CHARACTER_SETS", "information_schema");
+		super("CHARACTER_SETS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

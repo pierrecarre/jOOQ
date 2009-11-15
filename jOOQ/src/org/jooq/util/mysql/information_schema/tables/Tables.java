@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Tables extends TableImpl {
 
-	private static final long serialVersionUID = 7292974675387018174L;
+	private static final long serialVersionUID = 6705196536607630267L;
 
 	/**
 	 * The singleton instance of TABLES
@@ -130,6 +131,6 @@ public class Tables extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Tables() {
-		super("TABLES", "information_schema");
+		super("TABLES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

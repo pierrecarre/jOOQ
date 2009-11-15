@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Servers extends TableImpl {
 
-	private static final long serialVersionUID = -8751650595513005118L;
+	private static final long serialVersionUID = -2075558342263605450L;
 
 	/**
 	 * The singleton instance of servers
@@ -71,6 +72,6 @@ public class Servers extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Servers() {
-		super("servers", "mysql");
+		super("servers", Mysql.MYSQL);
 	}
 }

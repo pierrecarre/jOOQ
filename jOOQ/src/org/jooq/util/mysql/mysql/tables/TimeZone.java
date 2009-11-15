@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TimeZone extends TableImpl {
 
-	private static final long serialVersionUID = -5151870490459140877L;
+	private static final long serialVersionUID = -5836994152554566222L;
 
 	/**
 	 * The singleton instance of time_zone
@@ -36,6 +37,6 @@ public class TimeZone extends TableImpl {
 	 * No further instances allowed
 	 */
 	private TimeZone() {
-		super("time_zone", "mysql");
+		super("time_zone", Mysql.MYSQL);
 	}
 }

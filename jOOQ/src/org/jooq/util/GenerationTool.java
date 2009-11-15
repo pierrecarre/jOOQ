@@ -103,7 +103,7 @@ public class GenerationTool {
 			Database database = databaseClass.newInstance();
 			
 			database.setConnection(connection);
-			database.setSchema(properties.getProperty("jdbc.Schema"));
+			database.setSchemaName(properties.getProperty("jdbc.Schema"));
 			database.setIncludes(properties.getProperty("generator.database.includes").split(","));
 			database.setExcludes(properties.getProperty("generator.database.excludes").split(","));
 			

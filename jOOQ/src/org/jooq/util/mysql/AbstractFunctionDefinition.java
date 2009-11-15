@@ -29,16 +29,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
+package org.jooq.util.mysql;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.jooq.util.ColumnDefinition;
+import org.jooq.util.Database;
+import org.jooq.util.FunctionDefinition;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
+public abstract class AbstractFunctionDefinition extends AbstractProcedureDefinition implements FunctionDefinition {
 
-	public AbstractTableDefinition(Database database, String name, String comment) {
+	private final List<ColumnDefinition> inParameters;
+	
+	public AbstractFunctionDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
+		
+		inParameters = new ArrayList<ColumnDefinition>();
+	}
+
+	@Override
+	public String getReturnType() {
+		return getReturnValue().getType();
+	}
+
+	@Override
+	public abstract ColumnDefinition getReturnValue();
+
+	@Override
+	public final List<ColumnDefinition> getInParameters() {
+		return inParameters;
 	}
 }

@@ -29,16 +29,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
-
-
+package org.jooq;
 
 /**
+ * An entity representing a database schema
+ * 
  * @author Lukas Eder
  */
-public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
+public interface Schema extends NamedQueryPart {
 
-	public AbstractTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
-	}
 }

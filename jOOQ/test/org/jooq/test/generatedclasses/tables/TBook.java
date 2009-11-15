@@ -6,6 +6,7 @@ package org.jooq.test.generatedclasses.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.generatedclasses.Test;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TBook extends TableImpl {
 
-	private static final long serialVersionUID = -2773741932369003722L;
+	private static final long serialVersionUID = -3372618386710265033L;
 
 	/**
 	 * The singleton instance of t_book
@@ -41,6 +42,6 @@ public class TBook extends TableImpl {
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("t_book", "test");
+		super("t_book", Test.TEST);
 	}
 }

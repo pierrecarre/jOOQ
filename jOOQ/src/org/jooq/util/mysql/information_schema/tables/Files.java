@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Files extends TableImpl {
 
-	private static final long serialVersionUID = 1370042848732815640L;
+	private static final long serialVersionUID = -6953971630045645118L;
 
 	/**
 	 * The singleton instance of FILES
@@ -215,6 +216,6 @@ public class Files extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Files() {
-		super("FILES", "information_schema");
+		super("FILES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

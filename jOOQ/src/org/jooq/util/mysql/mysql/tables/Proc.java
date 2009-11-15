@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Proc extends TableImpl {
 
-	private static final long serialVersionUID = 5290228817811502776L;
+	private static final long serialVersionUID = 3342815446958425696L;
 
 	/**
 	 * The singleton instance of proc
@@ -127,6 +128,6 @@ public class Proc extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Proc() {
-		super("proc", "mysql");
+		super("proc", Mysql.MYSQL);
 	}
 }

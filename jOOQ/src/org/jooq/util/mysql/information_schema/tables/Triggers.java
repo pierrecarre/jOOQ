@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Triggers extends TableImpl {
 
-	private static final long serialVersionUID = -7577588327535761273L;
+	private static final long serialVersionUID = -695726189787350313L;
 
 	/**
 	 * The singleton instance of TRIGGERS
@@ -135,6 +136,6 @@ public class Triggers extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Triggers() {
-		super("TRIGGERS", "information_schema");
+		super("TRIGGERS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

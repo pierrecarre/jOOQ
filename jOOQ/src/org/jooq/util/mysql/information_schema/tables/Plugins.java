@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Plugins extends TableImpl {
 
-	private static final long serialVersionUID = 5750893463575937186L;
+	private static final long serialVersionUID = -3760993423035095844L;
 
 	/**
 	 * The singleton instance of PLUGINS
@@ -74,6 +75,6 @@ public class Plugins extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Plugins() {
-		super("PLUGINS", "information_schema");
+		super("PLUGINS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class GlobalVariables extends TableImpl {
 
-	private static final long serialVersionUID = 3733932269195020546L;
+	private static final long serialVersionUID = 4580196145562853264L;
 
 	/**
 	 * The singleton instance of GLOBAL_VARIABLES
@@ -34,6 +35,6 @@ public class GlobalVariables extends TableImpl {
 	 * No further instances allowed
 	 */
 	private GlobalVariables() {
-		super("GLOBAL_VARIABLES", "information_schema");
+		super("GLOBAL_VARIABLES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

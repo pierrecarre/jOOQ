@@ -7,6 +7,7 @@ import java.sql.Date;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.generatedclasses.Test;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TAuthor extends TableImpl {
 
-	private static final long serialVersionUID = -6694790979310019835L;
+	private static final long serialVersionUID = 2168434470139090109L;
 
 	/**
 	 * The singleton instance of t_author
@@ -47,6 +48,6 @@ public class TAuthor extends TableImpl {
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("t_author", "test");
+		super("t_author", Test.TEST);
 	}
 }

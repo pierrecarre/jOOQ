@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Profiling extends TableImpl {
 
-	private static final long serialVersionUID = -5796115972432599243L;
+	private static final long serialVersionUID = 4569432722342672605L;
 
 	/**
 	 * The singleton instance of PROFILING
@@ -115,6 +116,6 @@ public class Profiling extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Profiling() {
-		super("PROFILING", "information_schema");
+		super("PROFILING", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

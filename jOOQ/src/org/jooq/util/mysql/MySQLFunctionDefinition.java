@@ -31,8 +31,6 @@
 
 package org.jooq.util.mysql;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 import org.jooq.util.ColumnDefinition;
@@ -42,9 +40,8 @@ import org.jooq.util.FunctionDefinition;
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractProcedureDefinition implements FunctionDefinition {
+public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
 
-	private List<ColumnDefinition> inParameters;
 	private ColumnDefinition returnValue;
 	
 	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
@@ -54,8 +51,6 @@ public class MySQLFunctionDefinition extends AbstractProcedureDefinition impleme
 	}
 
 	private void init(String params, String returnValue) {
-		inParameters = new ArrayList<ColumnDefinition>();
-		
 		String[] split = params.split(",");
 		for (int i = 0; i < split.length; i++) {
 			String param = split[i];
@@ -63,7 +58,7 @@ public class MySQLFunctionDefinition extends AbstractProcedureDefinition impleme
 			param = param.trim();
 			Matcher matcher = PARAMETER_PATTERN.matcher(param);
 			while (matcher.find()) {
-				inParameters.add(createColumn(matcher, 3, i + 1));
+				getInParameters().add(createColumn(matcher, 3, i + 1));
 			}
 		}
 		
@@ -78,12 +73,7 @@ public class MySQLFunctionDefinition extends AbstractProcedureDefinition impleme
 		String paramType = matcher.group(group + 1);
 		
 		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(this, paramName, columnIndex, type, null);
-	}
-
-	@Override
-	public List<ColumnDefinition> getInParameters() {
-		return inParameters;
+		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
 	}
 
 	@Override

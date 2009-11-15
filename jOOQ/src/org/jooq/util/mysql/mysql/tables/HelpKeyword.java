@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class HelpKeyword extends TableImpl {
 
-	private static final long serialVersionUID = -2362750245520456126L;
+	private static final long serialVersionUID = -5637501498101737793L;
 
 	/**
 	 * The singleton instance of help_keyword
@@ -36,6 +37,6 @@ public class HelpKeyword extends TableImpl {
 	 * No further instances allowed
 	 */
 	private HelpKeyword() {
-		super("help_keyword", "mysql");
+		super("help_keyword", Mysql.MYSQL);
 	}
 }

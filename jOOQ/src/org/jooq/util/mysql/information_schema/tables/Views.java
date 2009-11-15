@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Views extends TableImpl {
 
-	private static final long serialVersionUID = -1091582072218800393L;
+	private static final long serialVersionUID = 3258845443124816440L;
 
 	/**
 	 * The singleton instance of VIEWS
@@ -74,6 +75,6 @@ public class Views extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Views() {
-		super("VIEWS", "information_schema");
+		super("VIEWS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

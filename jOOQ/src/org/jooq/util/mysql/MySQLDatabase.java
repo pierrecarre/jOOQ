@@ -69,7 +69,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		SelectQuery q = createSelectQuery(TABLES);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(TABLE_COMMENT);
-		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchema()));
+		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 
@@ -123,7 +123,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		q.addSelect(PARAM_LIST);
 		q.addSelect(COMMENT);
 		q.addSelect(RETURNS);
-		q.addConditions(createCompareCondition(DB, getSchema()));
+		q.addConditions(createCompareCondition(DB, getSchemaName()));
 		q.addConditions(createCompareCondition(TYPE, type));
 		q.execute(getConnection());
 

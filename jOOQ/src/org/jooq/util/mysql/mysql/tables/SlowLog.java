@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -17,7 +18,7 @@ import org.jooq.impl.TableImpl;
  */
 public class SlowLog extends TableImpl {
 
-	private static final long serialVersionUID = -6649763234457231372L;
+	private static final long serialVersionUID = -1088129049777240643L;
 
 	/**
 	 * The singleton instance of slow_log
@@ -83,6 +84,6 @@ public class SlowLog extends TableImpl {
 	 * No further instances allowed
 	 */
 	private SlowLog() {
-		super("slow_log", "mysql");
+		super("slow_log", Mysql.MYSQL);
 	}
 }

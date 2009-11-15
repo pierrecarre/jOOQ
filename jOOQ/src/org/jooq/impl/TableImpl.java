@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 
 import org.jooq.FieldList;
+import org.jooq.Schema;
 import org.jooq.Table;
 
 /**
@@ -42,19 +43,23 @@ import org.jooq.Table;
 public class TableImpl extends AbstractNamedQueryPart implements Table {
 
 	private static final long serialVersionUID = 261033315221985068L;
-	private final String schema;
+	private final Schema schema;
 	private final FieldList fields;
 	
 	
 	public TableImpl(String name) {
-		this(name, null);
+		this(name, (Schema) null);
 	}
 	
-	public TableImpl(String name, String schema) {
+	public TableImpl(String name, Schema schema) {
 		super(name);
 
 		this.schema = schema;
 		this.fields = new FieldListImpl();
+	}
+	
+	public TableImpl(String name, String schema) {
+		this(name, new SchemaImpl(schema));
 	}
 	
 	@Override
@@ -67,14 +72,14 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 		return fields;
 	}
 
-	protected String getSchema() {
+	protected Schema getSchema() {
 		return schema;
 	}
 
 	@Override
 	public final String toSQLReference(boolean inlineParameters) {
 		if (getSchema() != null) {
-			return getSchema() + "." + getName();
+			return getSchema().getName() + "." + getName();
 		}
 		
 		return getName();

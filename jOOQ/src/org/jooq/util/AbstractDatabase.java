@@ -32,6 +32,7 @@
 package org.jooq.util;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 
 /**
@@ -53,13 +54,18 @@ public abstract class AbstractDatabase implements Database {
 	}
 	
 	@Override
-	public final void setSchema(String schema) {
+	public final void setSchemaName(String schema) {
 		this.schema = schema;
 	}
 	
 	@Override
-	public final String getSchema() {
+	public final String getSchemaName() {
 		return schema;
+	}
+	
+	@Override
+	public SchemaDefinition getSchema() throws SQLException {
+		return new SchemaDefinition(this, getSchemaName(), null);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Partitions extends TableImpl {
 
-	private static final long serialVersionUID = 6963380313708674607L;
+	private static final long serialVersionUID = -9110038408046597413L;
 
 	/**
 	 * The singleton instance of PARTITIONS
@@ -150,6 +151,6 @@ public class Partitions extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Partitions() {
-		super("PARTITIONS", "information_schema");
+		super("PARTITIONS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

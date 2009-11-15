@@ -57,15 +57,19 @@ public class GenerationWriter {
 	}
 
 	public void printImport(Class<?> clazz) {
-		if (clazz.getName().startsWith("java.lang")) {
-			return;
-		}
-		
 		if (clazz.isArray()) {
 			return;
 		}
+
+		printImport(clazz.getName());
+	}
+
+	public void printImport(String name) {
+		if (name.startsWith("java.lang")) {
+			return;
+		}
 		
-		imported.add(clazz.getName());
+		imported.add(name);
 	}
 
 	public void print(String string) {

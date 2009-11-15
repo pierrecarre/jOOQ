@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Event extends TableImpl {
 
-	private static final long serialVersionUID = 1877858086938671489L;
+	private static final long serialVersionUID = -8747912289230353186L;
 
 	/**
 	 * The singleton instance of event
@@ -137,6 +138,6 @@ public class Event extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Event() {
-		super("event", "mysql");
+		super("event", Mysql.MYSQL);
 	}
 }

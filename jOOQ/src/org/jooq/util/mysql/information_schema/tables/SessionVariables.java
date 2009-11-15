@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class SessionVariables extends TableImpl {
 
-	private static final long serialVersionUID = 2151820053229197183L;
+	private static final long serialVersionUID = 4176363765393538779L;
 
 	/**
 	 * The singleton instance of SESSION_VARIABLES
@@ -34,6 +35,6 @@ public class SessionVariables extends TableImpl {
 	 * No further instances allowed
 	 */
 	private SessionVariables() {
-		super("SESSION_VARIABLES", "information_schema");
+		super("SESSION_VARIABLES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

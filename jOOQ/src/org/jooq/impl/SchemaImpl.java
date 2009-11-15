@@ -29,16 +29,31 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util;
+package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import org.jooq.Schema;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
+public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
 
-	public AbstractTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+	private static final long serialVersionUID = -8101463810207566546L;
+
+	public SchemaImpl(String name) {
+		super(name);
+	}
+
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return initialIndex;
+	}
+
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		return getName();
 	}
 }

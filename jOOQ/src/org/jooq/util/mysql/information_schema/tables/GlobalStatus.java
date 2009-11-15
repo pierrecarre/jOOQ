@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class GlobalStatus extends TableImpl {
 
-	private static final long serialVersionUID = 5326934097008771415L;
+	private static final long serialVersionUID = 6998957128136912766L;
 
 	/**
 	 * The singleton instance of GLOBAL_STATUS
@@ -34,6 +35,6 @@ public class GlobalStatus extends TableImpl {
 	 * No further instances allowed
 	 */
 	private GlobalStatus() {
-		super("GLOBAL_STATUS", "information_schema");
+		super("GLOBAL_STATUS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

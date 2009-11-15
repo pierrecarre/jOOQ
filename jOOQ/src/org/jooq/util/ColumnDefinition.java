@@ -36,7 +36,18 @@ package org.jooq.util;
  */
 public interface ColumnDefinition extends Definition {
 	
+	/**
+	 * @return The column position in the table
+	 */
 	int getPosition();
-	Class<?> getType();
-
+	
+	/**
+	 * @return The column type
+	 */
+	Class<?> getTypeClass();
+	
+	/**
+	 * @return The column simple Java type
+	 */
+	String getType();
 }

@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class ReferentialConstraints extends TableImpl {
 
-	private static final long serialVersionUID = 4548433193711077571L;
+	private static final long serialVersionUID = 6954693956045210597L;
 
 	/**
 	 * The singleton instance of REFERENTIAL_CONSTRAINTS
@@ -79,6 +80,6 @@ public class ReferentialConstraints extends TableImpl {
 	 * No further instances allowed
 	 */
 	private ReferentialConstraints() {
-		super("REFERENTIAL_CONSTRAINTS", "information_schema");
+		super("REFERENTIAL_CONSTRAINTS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

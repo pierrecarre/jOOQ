@@ -38,7 +38,18 @@ import java.util.List;
  */
 public interface FunctionDefinition extends Definition {
 
+	/**
+	 * @return A list of parameter column definitions
+	 */
 	List<ColumnDefinition> getInParameters();
+	
+	/**
+	 * @return The return value column definition
+	 */
 	ColumnDefinition getReturnValue();
 	
+	/**
+	 * @return The return value simple Java type
+	 */
+	String getReturnType();
 }

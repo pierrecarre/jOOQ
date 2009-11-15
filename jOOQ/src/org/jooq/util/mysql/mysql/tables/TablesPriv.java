@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TablesPriv extends TableImpl {
 
-	private static final long serialVersionUID = 5749152561094793303L;
+	private static final long serialVersionUID = -8929007369296473219L;
 
 	/**
 	 * The singleton instance of tables_priv
@@ -67,6 +68,6 @@ public class TablesPriv extends TableImpl {
 	 * No further instances allowed
 	 */
 	private TablesPriv() {
-		super("tables_priv", "mysql");
+		super("tables_priv", Mysql.MYSQL);
 	}
 }

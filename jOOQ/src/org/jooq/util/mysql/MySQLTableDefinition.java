@@ -82,7 +82,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			String comment = record.getValue(COLUMN_COMMENT);
 			
 			Class<?> type = MySQLDataType.valueOf(dataType.toUpperCase()).getType();
-			MySQLColumnDefinition column = new MySQLColumnDefinition(this, name, position, type, comment);
+			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), name, position, type, comment);
 			result.add(column);
 		}
 		

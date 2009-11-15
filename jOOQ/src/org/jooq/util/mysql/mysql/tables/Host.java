@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Host extends TableImpl {
 
-	private static final long serialVersionUID = -6285676138727939093L;
+	private static final long serialVersionUID = 6233749567181393654L;
 
 	/**
 	 * The singleton instance of host
@@ -128,6 +129,6 @@ public class Host extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Host() {
-		super("host", "mysql");
+		super("host", Mysql.MYSQL);
 	}
 }

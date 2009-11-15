@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Collations extends TableImpl {
 
-	private static final long serialVersionUID = 8318692544503200780L;
+	private static final long serialVersionUID = -6871811779801988269L;
 
 	/**
 	 * The singleton instance of COLLATIONS
@@ -54,6 +55,6 @@ public class Collations extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Collations() {
-		super("COLLATIONS", "information_schema");
+		super("COLLATIONS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

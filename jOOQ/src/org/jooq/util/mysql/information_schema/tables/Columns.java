@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Columns extends TableImpl {
 
-	private static final long serialVersionUID = -1260520909808139479L;
+	private static final long serialVersionUID = -5908883320521357861L;
 
 	/**
 	 * The singleton instance of COLUMNS
@@ -119,6 +120,6 @@ public class Columns extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Columns() {
-		super("COLUMNS", "information_schema");
+		super("COLUMNS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class SchemaPrivileges extends TableImpl {
 
-	private static final long serialVersionUID = -4484483532651440648L;
+	private static final long serialVersionUID = 4607598160386334288L;
 
 	/**
 	 * The singleton instance of SCHEMA_PRIVILEGES
@@ -49,6 +50,6 @@ public class SchemaPrivileges extends TableImpl {
 	 * No further instances allowed
 	 */
 	private SchemaPrivileges() {
-		super("SCHEMA_PRIVILEGES", "information_schema");
+		super("SCHEMA_PRIVILEGES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

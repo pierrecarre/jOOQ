@@ -31,14 +31,13 @@
 
 package org.jooq.util;
 
-
-
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
+public class SchemaDefinition extends AbstractDefinition {
 
-	public AbstractTableDefinition(Database database, String name, String comment) {
+	public SchemaDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}
+
 }

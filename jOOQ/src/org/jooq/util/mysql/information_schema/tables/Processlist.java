@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Processlist extends TableImpl {
 
-	private static final long serialVersionUID = 6397764040671812160L;
+	private static final long serialVersionUID = 5240927793392215826L;
 
 	/**
 	 * The singleton instance of PROCESSLIST
@@ -64,6 +65,6 @@ public class Processlist extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Processlist() {
-		super("PROCESSLIST", "information_schema");
+		super("PROCESSLIST", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

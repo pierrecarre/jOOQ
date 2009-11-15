@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class TableConstraints extends TableImpl {
 
-	private static final long serialVersionUID = 1332348251983332077L;
+	private static final long serialVersionUID = 3496419122513268683L;
 
 	/**
 	 * The singleton instance of TABLE_CONSTRAINTS
@@ -54,6 +55,6 @@ public class TableConstraints extends TableImpl {
 	 * No further instances allowed
 	 */
 	private TableConstraints() {
-		super("TABLE_CONSTRAINTS", "information_schema");
+		super("TABLE_CONSTRAINTS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

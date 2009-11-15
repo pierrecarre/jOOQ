@@ -31,14 +31,64 @@
 
 package org.jooq.util;
 
-
+import java.sql.Connection;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
+public abstract class AbstractDefinition implements Definition {
 
-	public AbstractTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+	private final Database database;
+	private final String name;
+	private final String comment;
+
+	public AbstractDefinition(Database database, String name, String comment) {
+		this.database = database;
+		this.name = name;
+		this.comment = comment;
+	}
+
+	@Override
+	public final String getSchema() {
+		return database.getSchemaName();
+	}
+
+	@Override
+	public final String getName() {
+		return name;
+	}
+
+	@Override
+	public String getNameUC() {
+		return name.toUpperCase();
+	}
+
+	@Override
+	public final String getComment() {
+		return comment;
+	}
+	
+	@Override
+	public String getJavaClassName() {
+		StringBuilder result = new StringBuilder();
+		
+		for (String word : getName().split("_")) {
+			result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
+		}
+		
+		return result.toString();
+	}
+
+	@Override
+	public String getFileName() {
+		return getJavaClassName() + ".java";
+	}
+
+	protected final Database getDatabase() {
+		return database;
+	}
+	
+	protected final Connection getConnection() {
+		return database.getConnection();
 	}
 }

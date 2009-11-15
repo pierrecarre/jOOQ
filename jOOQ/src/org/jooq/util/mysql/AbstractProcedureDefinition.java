@@ -33,13 +33,13 @@ package org.jooq.util.mysql;
 
 import java.util.regex.Pattern;
 
+import org.jooq.util.AbstractDefinition;
 import org.jooq.util.Database;
-import org.jooq.util.Definition;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractProcedureDefinition implements Definition {
+public abstract class AbstractProcedureDefinition extends AbstractDefinition {
 	
 	private static final String INOUT = "(?:(IN|OUT|INOUT)\\s+?)?";
 	private static final String PARAM_NAME = "(?:(\\S+?)\\s+?)";
@@ -49,28 +49,7 @@ public abstract class AbstractProcedureDefinition implements Definition {
 	protected static final Pattern PARAMETER_PATTERN = Pattern.compile(PARAMETER);
 	protected static final Pattern TYPE_PATTERN = Pattern.compile(PARAM_TYPE);
 	
-	private final Database database;
-	private final String name;
-	private final String comment;
-
 	public AbstractProcedureDefinition(Database database, String name, String comment) {
-		this.database = database;
-		this.name = name;
-		this.comment = comment;
-	}
-
-	@Override
-	public final String getComment() {
-		return comment;
-	}
-
-	@Override
-	public final String getName() {
-		return name;
-	}
-
-	@Override
-	public final String getSchema() {
-		return database.getSchema();
+		super(database, name, comment);
 	}
 }

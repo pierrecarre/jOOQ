@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class NdbBinlogIndex extends TableImpl {
 
-	private static final long serialVersionUID = -3038744260960872691L;
+	private static final long serialVersionUID = -1149875840073851154L;
 
 	/**
 	 * The singleton instance of ndb_binlog_index
@@ -59,6 +60,6 @@ public class NdbBinlogIndex extends TableImpl {
 	 * No further instances allowed
 	 */
 	private NdbBinlogIndex() {
-		super("ndb_binlog_index", "mysql");
+		super("ndb_binlog_index", Mysql.MYSQL);
 	}
 }

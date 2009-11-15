@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class CollationCharacterSetApplicability extends TableImpl {
 
-	private static final long serialVersionUID = 8170711601798725203L;
+	private static final long serialVersionUID = 471747587621012402L;
 
 	/**
 	 * The singleton instance of COLLATION_CHARACTER_SET_APPLICABILITY
@@ -34,6 +35,6 @@ public class CollationCharacterSetApplicability extends TableImpl {
 	 * No further instances allowed
 	 */
 	private CollationCharacterSetApplicability() {
-		super("COLLATION_CHARACTER_SET_APPLICABILITY", "information_schema");
+		super("COLLATION_CHARACTER_SET_APPLICABILITY", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

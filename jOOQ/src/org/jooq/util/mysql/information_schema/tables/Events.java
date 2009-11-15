@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Events extends TableImpl {
 
-	private static final long serialVersionUID = -3550378525964370959L;
+	private static final long serialVersionUID = -1500889288211041855L;
 
 	/**
 	 * The singleton instance of EVENTS
@@ -145,6 +146,6 @@ public class Events extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Events() {
-		super("EVENTS", "information_schema");
+		super("EVENTS", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

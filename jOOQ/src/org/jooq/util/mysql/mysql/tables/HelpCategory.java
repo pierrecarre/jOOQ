@@ -6,6 +6,7 @@ package org.jooq.util.mysql.mysql.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.mysql.Mysql;
 
 
 /**
@@ -15,7 +16,7 @@ import org.jooq.impl.TableImpl;
  */
 public class HelpCategory extends TableImpl {
 
-	private static final long serialVersionUID = -2927845494712398601L;
+	private static final long serialVersionUID = -5237169850636577219L;
 
 	/**
 	 * The singleton instance of help_category
@@ -46,6 +47,6 @@ public class HelpCategory extends TableImpl {
 	 * No further instances allowed
 	 */
 	private HelpCategory() {
-		super("help_category", "mysql");
+		super("help_category", Mysql.MYSQL);
 	}
 }

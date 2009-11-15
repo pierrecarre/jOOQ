@@ -6,6 +6,7 @@ package org.jooq.util.mysql.information_schema.tables;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -13,7 +14,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Schemata extends TableImpl {
 
-	private static final long serialVersionUID = 8110283868771221877L;
+	private static final long serialVersionUID = 4251395237821520589L;
 
 	/**
 	 * The singleton instance of SCHEMATA
@@ -49,6 +50,6 @@ public class Schemata extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Schemata() {
-		super("SCHEMATA", "information_schema");
+		super("SCHEMATA", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

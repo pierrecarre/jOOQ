@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.util.mysql.information_schema.InformationSchema;
 
 
 /**
@@ -14,7 +15,7 @@ import org.jooq.impl.TableImpl;
  */
 public class Routines extends TableImpl {
 
-	private static final long serialVersionUID = -7213282599440481718L;
+	private static final long serialVersionUID = -3200238530270145057L;
 
 	/**
 	 * The singleton instance of ROUTINES
@@ -140,6 +141,6 @@ public class Routines extends TableImpl {
 	 * No further instances allowed
 	 */
 	private Routines() {
-		super("ROUTINES", "information_schema");
+		super("ROUTINES", InformationSchema.INFORMATION_SCHEMA);
 	}
 }

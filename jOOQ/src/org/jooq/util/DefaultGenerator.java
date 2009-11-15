@@ -39,6 +39,7 @@ import java.util.Random;
 
 import org.jooq.TableField;
 import org.jooq.impl.Parameter;
+import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
 import org.jooq.impl.TableFieldImpl;
@@ -57,45 +58,72 @@ public class DefaultGenerator implements Generator {
 		File targetPackageDir = new File(targetDirectory + File.separator + targetPackageName.replace('.', File.separatorChar));
 		
 		// ----------------------------------------------------------------------
+		// Generating schemas
+		// ----------------------------------------------------------------------
+		System.out.println("Generating classes in " + targetPackageDir.getCanonicalPath());
+		SchemaDefinition schema = database.getSchema();
+		{
+			targetPackageDir.mkdirs();
+			
+			System.out.println("Generating schema " + schema.getName() + " into " + schema.getFileName());
+
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, schema.getFileName())));
+			printHeader(out, targetPackageName);
+			printClassJavadoc(out, schema);
+
+			out.println("public class " + schema.getJavaClassName() + " extends SchemaImpl {");
+			printSerial(out);
+			out.printImport(SchemaImpl.class);
+			out.println();
+			out.println("\t/**");
+			out.println("\t * The singleton instance of " + schema.getName());
+			out.println("\t */");
+			out.println("\tpublic static final " + schema.getJavaClassName() + " " + schema.getNameUC() + " = new " + schema.getJavaClassName() + "();");
+			
+			out.println();
+			printNoFurtherInstancesAllowedJavadoc(out);
+			out.println("\tprivate " + schema.getJavaClassName() + "() {");
+			out.println("\t\tsuper(\"" + schema.getName() + "\");");
+			out.println("\t}");
+			
+			out.println("}");
+			out.close();
+		}
+		
+		// ----------------------------------------------------------------------
 		// Generating tables
 		// ----------------------------------------------------------------------
 		File targetTablePackageDir = new File(targetPackageDir, "tables");
-		System.out.println("Generating classes in " + targetPackageDir.getCanonicalPath());
+		System.out.println("Generating classes in " + targetTablePackageDir.getCanonicalPath());
 		
 		for (TableDefinition table : database.getTables()) {
 			targetTablePackageDir.mkdirs();
-			
-			String targetSchemaName = table.getSchema();
-			String targetTableName = table.getName();
-			String targetTableNameUC = targetTableName.toUpperCase();
-			String targetClassName = getJavaClassName(targetTableName);
-			String targetFileName = targetClassName + ".java";
-			String targetComment = table.getComment();
-			
-			System.out.println("Generating table " + targetTableName + " into " + targetFileName);
 
-			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTablePackageDir, targetFileName)));
+			System.out.println("Generating table " + table.getName() + " into " + table.getFileName());
+
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTablePackageDir, table.getFileName())));
 			printHeader(out, targetPackageName + ".tables");
-			printClassJavadoc(out, targetComment);
+			printClassJavadoc(out, table);
 			
-			out.println("public class " + targetClassName + " extends TableImpl {");
+			out.println("public class " + table.getJavaClassName() + " extends TableImpl {");
 			printSerial(out);
 			out.printImport(TableImpl.class);
 			out.println();
 			out.println("\t/**");
-			out.println("\t * The singleton instance of " + targetTableName);
+			out.println("\t * The singleton instance of " + table.getName());
 			out.println("\t */");
-			out.println("\tpublic static final " + targetClassName + " " + targetTableNameUC + " = new " + targetClassName + "();");
+			out.println("\tpublic static final " + table.getJavaClassName() + " " + table.getNameUC() + " = new " + table.getJavaClassName() + "();");
 			
 			for (ColumnDefinition column : table.getColumns()) {
-				printColumn(out, column, targetTableNameUC);
+				printColumn(out, column, table.getNameUC());
 			}
 			
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
-			out.println("\tprivate " + targetClassName + "() {");
-			out.println("\t\tsuper(\"" + targetTableName + "\", \"" + targetSchemaName + "\");");
+			out.println("\tprivate " + table.getJavaClassName() + "() {");
+			out.println("\t\tsuper(\"" + table.getName() + "\", " + schema.getJavaClassName() + "." + schema.getNameUC() + ");");
 			out.println("\t}");
+			out.printImport(targetPackageName + "." + schema.getJavaClassName());
 			
 			out.println("}");
 			out.close();
@@ -111,18 +139,13 @@ public class DefaultGenerator implements Generator {
 		for (ProcedureDefinition procedure : database.getProcedures()) {
 			targetProcedurePackageDir.mkdirs();
 
-			String targetProcedureName = procedure.getName();
-			String targetClassName = getJavaClassName(targetProcedureName);
-			String targetFileName = targetClassName + ".java";
-			String targetComment = procedure.getComment();
-			
-			System.out.println("Generating procedure " + targetProcedureName + " into " + targetFileName);
+			System.out.println("Generating procedure " + procedure.getName() + " into " + procedure.getFileName());
 
-			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetProcedurePackageDir, targetFileName)));
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetProcedurePackageDir, procedure.getFileName())));
 			printHeader(out, targetPackageName + ".procedures");
-			printClassJavadoc(out, targetComment);
+			printClassJavadoc(out, procedure);
 
-			out.println("public class " + targetClassName + " extends StoredProcedureImpl {");
+			out.println("public class " + procedure.getJavaClassName() + " extends StoredProcedureImpl {");
 			printSerial(out);
 			out.printImport(StoredProcedureImpl.class);
 			out.println();
@@ -134,8 +157,8 @@ public class DefaultGenerator implements Generator {
 			
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
-			out.println("\tpublic " + targetClassName + "() {");
-			out.println("\t\tsuper(\"" + targetProcedureName + "\");");
+			out.println("\tpublic " + procedure.getJavaClassName() + "() {");
+			out.println("\t\tsuper(\"" + procedure.getName() + "\");");
 			out.println();
 			
 			for (ColumnDefinition parameter : procedure.getAllParameters()) {
@@ -157,24 +180,16 @@ public class DefaultGenerator implements Generator {
 			out.println("\t}");
 			
 			for (ColumnDefinition parameter : procedure.getInParameters()) {
-				Class<?> parameterClass = parameter.getType();
-				String parameterType = parameterClass.getSimpleName();
-				String parameterNameUC = parameter.getName().toUpperCase();
-
 				out.println();
-				out.println("\tpublic void set" + getJavaClassName(parameterNameUC) + "(" + parameterType + " value) {");
-				out.println("\t\tsetValue(" + parameterNameUC + ", value);");
+				out.println("\tpublic void set" + parameter.getJavaClassName() + "(" + parameter.getType() + " value) {");
+				out.println("\t\tsetValue(" + parameter.getNameUC() + ", value);");
 				out.println("\t}");
 			}
 			
 			for (ColumnDefinition parameter : procedure.getOutParameters()) {
-				Class<?> parameterClass = parameter.getType();
-				String parameterType = parameterClass.getSimpleName();
-				String parameterNameUC = parameter.getName().toUpperCase();
-
 				out.println();
-				out.println("\tpublic " + parameterType + " get" + getJavaClassName(parameterNameUC) + "() {");
-				out.println("\t\treturn getValue(" + parameterNameUC + ");");
+				out.println("\tpublic " + parameter.getType() + " get" + parameter.getJavaClassName() + "() {");
+				out.println("\t\treturn getValue(" + parameter.getNameUC() + ");");
 				out.println("\t}");
 			}
 			
@@ -193,22 +208,13 @@ public class DefaultGenerator implements Generator {
 		for (FunctionDefinition function : database.getFunctions()) {
 			targetFunctionPackageDir.mkdirs();
 
-			String targetFunctionName = function.getName();
-			String targetClassName = getJavaClassName(targetFunctionName);
-			String targetFileName = targetClassName + ".java";
-			String targetComment = function.getComment();
-			
-			ColumnDefinition returnValue = function.getReturnValue();
-			Class<?> returnValueClass = returnValue.getType();
-			String returnValueType = returnValueClass.getSimpleName();
-			
-			System.out.println("Generating function " + targetFunctionName + " into " + targetFileName);
+			System.out.println("Generating function " + function.getName() + " into " + function.getFileName());
 
-			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetFunctionPackageDir, targetFileName)));
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetFunctionPackageDir, function.getFileName())));
 			printHeader(out, targetPackageName + ".functions");
-			printClassJavadoc(out, targetComment);
+			printClassJavadoc(out, function);
 
-			out.println("public class " + targetClassName + " extends StoredFunctionImpl<" + returnValueType + "> {");
+			out.println("public class " + function.getJavaClassName() + " extends StoredFunctionImpl<" + function.getReturnType() + "> {");
 			printSerial(out);
 			out.printImport(StoredFunctionImpl.class);
 			out.println();
@@ -220,8 +226,8 @@ public class DefaultGenerator implements Generator {
 			
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
-			out.println("\tpublic " + targetClassName + "() {");
-			out.println("\t\tsuper(\"" + targetFunctionName + "\", " + returnValueType + ".class);");
+			out.println("\tpublic " + function.getJavaClassName() + "() {");
+			out.println("\t\tsuper(\"" + function.getName() + "\", " + function.getReturnType() + ".class);");
 			out.println();
 			
 			for (ColumnDefinition parameter : function.getInParameters()) {
@@ -234,13 +240,9 @@ public class DefaultGenerator implements Generator {
 			out.println("\t}");
 			
 			for (ColumnDefinition parameter : function.getInParameters()) {
-				Class<?> parameterClass = parameter.getType();
-				String parameterType = parameterClass.getSimpleName();
-				String parameterNameUC = parameter.getName().toUpperCase();
-
 				out.println();
-				out.println("\tpublic void set" + getJavaClassName(parameterNameUC) + "(" + parameterType + " value) {");
-				out.println("\t\tsetValue(" + parameterNameUC + ", value);");
+				out.println("\tpublic void set" + parameter.getJavaClassName() + "(" + parameter.getType() + " value) {");
+				out.println("\t\tsetValue(" + parameter.getNameUC() + ", value);");
 				out.println("\t}");
 			}
 			
@@ -262,25 +264,19 @@ public class DefaultGenerator implements Generator {
 		String concreteMemberType = concreteMemberClass.getSimpleName();
 		String declaredMemberType = declaredMemberClass.getSimpleName();
 
-		Class<?> columnClass = column.getType();
-		String columnType = columnClass.getSimpleName();
-		String columnName = column.getName();
-		String columnNameUC = columnName.toUpperCase();
-		String columnDisambiguationSuffix = columnNameUC.equals(targetObjectNameUC) ? "_" : "";
-		String columnComment = column.getComment();
+		String columnDisambiguationSuffix = column.getNameUC().equals(targetObjectNameUC) ? "_" : "";
+		printFieldJavaDoc(out, columnDisambiguationSuffix, column);
 
-		printFieldJavaDoc(out, columnDisambiguationSuffix, columnComment);
-
-		out.println("\tpublic static final " + declaredMemberType + "<" + columnType + "> " + 
-				columnNameUC + columnDisambiguationSuffix +
-				" = new " + concreteMemberType + "<" + columnType + ">(\"" 
-				+ columnName + "\", " + 
-				columnType + ".class" +
+		out.println("\tpublic static final " + declaredMemberType + "<" + column.getType() + "> " + 
+				column.getNameUC() + columnDisambiguationSuffix +
+				" = new " + concreteMemberType + "<" + column.getType() + ">(\"" 
+				+ column.getName() + "\", " + 
+				column.getType() + ".class" +
 				(targetObjectNameUC != null ? ", " + targetObjectNameUC : "") +
 				");");
 		out.printImport(declaredMemberClass);
 		out.printImport(concreteMemberClass);
-		out.printImport(columnClass);
+		out.printImport(column.getTypeClass());
 	}
 
 	private void printSerial(GenerationWriter out) {
@@ -288,9 +284,11 @@ public class DefaultGenerator implements Generator {
 		out.println("\tprivate static final long serialVersionUID = " + new Random().nextLong() + "L;");
 	}
 
-	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, String comment) {
+	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, Definition definition) {
 		out.println();
 		out.println("\t/**");
+		
+		String comment = definition.getComment();
 		
 		if (comment != null && comment.length() > 0) {
 			out.println("\t * " + comment);
@@ -312,9 +310,11 @@ public class DefaultGenerator implements Generator {
 		out.println("\t */");
 	}
 
-	private void printClassJavadoc(GenerationWriter out, String comment) {
+	private void printClassJavadoc(GenerationWriter out, Definition definition) {
 		out.println("/**");
 		out.println(" * This class is generated by jOOQ.");
+		
+		String comment = definition.getComment();
 		
 		if (comment != null && comment.length() > 0) {
 			out.println(" *");
@@ -334,16 +334,6 @@ public class DefaultGenerator implements Generator {
 		out.println();
 	}
 
-	private String getJavaClassName(String tableName) {
-		StringBuilder result = new StringBuilder();
-		
-		for (String word : tableName.split("_")) {
-			result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
-		}
-		
-		return result.toString();
-	}
-	
 	@Override
 	public void setTargetPackage(String packageName) {
 		this.targetPackageName = packageName;
