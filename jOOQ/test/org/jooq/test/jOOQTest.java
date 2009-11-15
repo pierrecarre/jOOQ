@@ -761,4 +761,17 @@ public class jOOQTest {
 		
 		context.assertIsSatisfied();
 	}
+	
+	@Test
+	public final void testInnerSelect1() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(q1.alias("inner_temp_table"));
+		SelectQuery q3 = QueryFactory.createSelectQuery(q2.alias("outer_temp_table"));
+		
+		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(true));
+		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(false));
+		
+		assertEquals("select * from (select * from (select * from TABLE1) inner_temp_table) outer_temp_table", q3.toSQLReference(true));
+		assertEquals("select * from (select * from (select * from TABLE1) inner_temp_table) outer_temp_table", q3.toSQLReference(false));
+	}
 }

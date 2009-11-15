@@ -40,6 +40,7 @@ import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Result;
 import org.jooq.ResultProviderQuery;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -92,5 +93,11 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	@Override
 	public final ResultProviderQuery combine(ResultProviderQuery other, CombineOperator operator) {
 		return new ResultProviderQueryImpl(this, other, operator);
+	}
+
+	@Override
+	public Table alias(String alias) {
+		ResultProviderQueryAsTable table = new ResultProviderQueryAsTable(this, alias);
+		return new ResultProviderQueryAlias(table, alias);
 	}
 }

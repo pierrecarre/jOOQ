@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * @author Lukas Eder
  */
-public interface AliasProvider<T extends AliasProvider<T>> extends NamedQueryPart {
+public interface AliasProvider<T extends AliasProvider<T>> extends QueryPart {
 
 	/**
 	 * Get an aliased QueryPart.

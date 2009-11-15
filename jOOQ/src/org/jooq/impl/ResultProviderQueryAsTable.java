@@ -34,68 +34,40 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.AliasProvider;
+import org.jooq.FieldList;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractAliasQueryPart<T extends AliasProvider<T>> 
-	extends AbstractNamedQueryPart 
-	implements AliasProvider<T> {
+class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table {
 
-	private static final long serialVersionUID = -2456848365524191614L;
-	private final T aliasProvider;
-	private final String alias;
+	private static final long serialVersionUID = 6272398035926615668L;
+	private final AbstractResultProviderQuery query;
 
-	AbstractAliasQueryPart(T aliasProvider, String alias) {
+	ResultProviderQueryAsTable(AbstractResultProviderQuery query, String alias) {
 		super(alias);
 		
-		this.aliasProvider = aliasProvider;
-		this.alias = alias;
-	}
-
-	protected final T getAliasProvider() {
-		return aliasProvider;
+		this.query = query;
 	}
 	
 	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return alias;
-	}
-	
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		if (aliasProviderNeedsBrackets()) {
-			sb.append("(");
-		}
-		sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
-		if (aliasProviderNeedsBrackets()) {
-			sb.append(")");
-		}
-		
-		sb.append(" ");
-		sb.append(alias);
-		
-		return sb.toString();
-	}
-	
-	/**
-	 * @return Whether the alias provider needs to be rendered in parentheses.
-	 *         Subclasses may override this method
-	 */
-	protected boolean aliasProviderNeedsBrackets() {
-		return false;
+	public Table alias(String alias) {
+		return query.alias(alias);
 	}
 
 	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return aliasProvider.bind(stmt, initialIndex);
+	public FieldList getFields() {
+		return query.getSelect();
 	}
 
 	@Override
-	public final T alias(String alias) {
-		return aliasProvider.alias(alias);
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return query.bind(stmt, initialIndex);
+	}
+
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		return query.toSQLReference(inlineParameters);
 	}
 }
