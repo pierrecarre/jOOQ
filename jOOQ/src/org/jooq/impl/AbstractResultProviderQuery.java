@@ -99,4 +99,13 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	public Table asTable() {
 		return new ResultProviderQueryAsTable(this);
 	}
+
+	@Override
+	public Field<?> asField() {
+		if (getSelect().size() != 1) {
+			throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
+		}
+		
+		return new ResultProviderQueryAsField(this, getSelect().get(0).getType());
+	}
 }

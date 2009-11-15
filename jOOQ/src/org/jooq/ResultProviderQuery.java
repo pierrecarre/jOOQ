@@ -76,4 +76,9 @@ public interface ResultProviderQuery extends Query {
 	 * @return This result provider as a Table object
 	 */
 	Table asTable();
+
+	/**
+	 * @return This result provider as a Field<?> object
+	 */
+	Field<?> asField();
 }

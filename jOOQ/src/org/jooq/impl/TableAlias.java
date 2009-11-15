@@ -45,8 +45,8 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 		this(table, alias, false);
 	}
 
-	TableAlias(Table table, String alias, boolean needs) {
-		super(table, alias, needs);
+	TableAlias(Table table, String alias, boolean aliasProviderNeedsBrackets) {
+		super(table, alias, aliasProviderNeedsBrackets);
 	}
 
 	@Override

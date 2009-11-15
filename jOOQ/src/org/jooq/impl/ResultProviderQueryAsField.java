@@ -31,25 +31,45 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-class FieldAlias<T> extends AbstractAliasQueryPart<Field<T>> implements Field<T> {
+class ResultProviderQueryAsField extends AbstractNamedQueryPart implements Field<Object> {
 
-	private static final long serialVersionUID = -85277321749681553L;
+	private static final long serialVersionUID = 3463144434073231750L;
+	private final AbstractResultProviderQuery query;
+	private final Class<?> type;
 
-	FieldAlias(Field<T> field, String alias) {
-		this(field, alias, false);
-	}
-
-	FieldAlias(Field<T> field, String alias, boolean aliasProviderNeedsBrackets) {
-		super(field, alias, aliasProviderNeedsBrackets);
+	ResultProviderQueryAsField(AbstractResultProviderQuery query, Class<?> type) {
+		super("");
+		
+		this.query = query;
+		this.type = type;
 	}
 
 	@Override
-	public Class<T> getType() {
-		return getAliasProvider().getType();
+	public Field<Object> alias(String alias) {
+		return new FieldAlias<Object>(this, alias, true);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Class<Object> getType() {
+		return (Class<Object>) type;
+	}
+
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return query.bind(stmt, initialIndex);
+	}
+
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		return query.toSQLReference(inlineParameters);
 	}
 }
