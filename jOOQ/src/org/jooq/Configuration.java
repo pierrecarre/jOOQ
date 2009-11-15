@@ -29,50 +29,61 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
+package org.jooq;
 
 /**
+ * The configuration
+ * 
  * @author Lukas Eder
  */
-class RecordImpl implements Record {
+public class Configuration {
 
-	private final Result result;
-	private final Map<Field<?>, Object> values;
+	private static final Configuration INSTANCE = new Configuration();
+	private SQLDialect dialect;
 
-	RecordImpl(Result result) {
-		this.result = result;
-		this.values = new LinkedHashMap<Field<?>, Object>();
-	}
-	
-	@Override
-	public FieldList getFields() {
-		return result.getFields();
+	public static Configuration getInstance() {
+		return INSTANCE;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
+	/**
+	 * The used SQL dialect. This can be set externally using JVM flag
+	 * -Dorg.jooq.sql-dialect. If no dialect is provided,
+	 * {@link SQLDialect#SQL99} is used.
+	 * 
+	 * @return The used {@link SQLDialect}
+	 * @see SQLDialect
+	 * @throws SQLDialectNotSupportedException
+	 *             if dialect configured in -Dorg.jooq.sql-dialect is unknown
+	 */
+	public SQLDialect getDialect() throws SQLDialectNotSupportedException {
+		if (dialect == null) {
+			String dialectName = System.getProperty("org.jooq.sql-dialect");
+
+			if (dialectName != null) {
+				try {
+					dialect = SQLDialect.valueOf(dialectName);
+				} catch (IllegalArgumentException ignore) {
+					throw new SQLDialectNotSupportedException("Unknown dialect : " + dialectName);
+				}
+			}
+
+			if (dialect == null) {
+				dialect = SQLDialect.SQL99;
+			}
 		}
-		
-		return (T) values.get(field);
+		return dialect;
 	}
 
-	<T> void addValue(Field<?> field, Object value) {
-		values.put(field, value);
+	/**
+	 * Set a new dialect to the configuration
+	 * 
+	 * @param dialect The new dialect
+	 * @throws SQLDialectNotSupportedException if dialect is not supported
+	 */
+	public void setDialect(SQLDialect dialect) throws SQLDialectNotSupportedException {
+		this.dialect = dialect;
 	}
 
-	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
+	private Configuration() {
 	}
 }

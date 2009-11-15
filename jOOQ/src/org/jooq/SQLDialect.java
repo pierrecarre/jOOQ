@@ -29,50 +29,44 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
+package org.jooq;
 
 /**
+ * This enumeration lists all supported dialects. The dialect used by the
+ * framework can be set in {@link Configuration#setDialect(SQLDialect)} or using
+ * the JVM parameter -Dorg.jooq.sql-dialect
+ * 
  * @author Lukas Eder
  */
-class RecordImpl implements Record {
-
-	private final Result result;
-	private final Map<Field<?>, Object> values;
-
-	RecordImpl(Result result) {
-		this.result = result;
-		this.values = new LinkedHashMap<Field<?>, Object>();
-	}
+public enum SQLDialect {
+	/**
+	 * The standard SQL dialect.
+	 */
+	SQL99,
 	
-	@Override
-	public FieldList getFields() {
-		return result.getFields();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
-		}
-		
-		return (T) values.get(field);
-	}
-
-	<T> void addValue(Field<?> field, Object value) {
-		values.put(field, value);
-	}
-
-	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
-	}
+	/**
+	 * The MySQL dialect
+	 */
+	MYSQL,
+	
+	/**
+	 * The Oracle dialect
+	 */
+	ORACLE,
+	
+	/**
+	 * The Microsoft SQL dialect
+	 */
+	MSSQL,
+	
+	/**
+	 * The PostGres dialect
+	 */
+	POSTGRES,
+	
+	/**
+	 * The Hypersonic SQL dialect
+	 */
+	HSQL;
+	
 }

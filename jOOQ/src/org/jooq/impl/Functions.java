@@ -35,8 +35,10 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -79,19 +81,39 @@ public final class Functions {
 		return new FunctionImpl<String>("lower", field.getType(), field);
 	}
 	
-	public static Field<Date> currentDate() {
+	public static Field<Date> currentDate() throws SQLDialectNotSupportedException {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			throw new SQLDialectNotSupportedException("current_date not supported");
+		}
+		
 		return new FunctionImpl<Date>("current_date", Date.class);
 	}
 	
-	public static Field<Time> currentTime() {
+	public static Field<Time> currentTime() throws SQLDialectNotSupportedException {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			throw new SQLDialectNotSupportedException("current_time not supported");
+		}
+		
 		return new FunctionImpl<Time>("current_time", Time.class);
 	}
 	
-	public static Field<Timestamp> currentDateTime() {
-		return new FunctionImpl<Timestamp>("current_datetime", Timestamp.class);
+	public static Field<Timestamp> currentTimestamp() {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			return new FunctionImpl<Timestamp>("sysdate", Timestamp.class);
+		}
+		
+		return new FunctionImpl<Timestamp>("current_timestamp", Timestamp.class);
 	}
 
 	public static Field<String> currentUser() {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			return new FunctionImpl<String>("user", String.class);
+		}
+
 		return new FunctionImpl<String>("current_user", String.class);
 	}
 	
@@ -108,7 +130,18 @@ public final class Functions {
 	}
 	
 	public static Field<Integer> extract(Field<?> field, DatePart datePart) {
-		throw new UnsupportedOperationException("This is SQL99 standard, but only implemented by MySQL and PostGres");
+		switch (Configuration.getInstance().getDialect()) {
+		case MYSQL: // No break
+		case POSTGRES:
+			return new ExtractFunctionImpl(field, datePart);
+		case ORACLE:
+			throw new UnsupportedOperationException("TODO: Implement TO_CHAR for Oracle");
+		case MSSQL:
+			throw new UnsupportedOperationException("TODO: Implement CONVERT for MSSQL");
+			
+		default:
+			throw new UnsupportedOperationException("extract not supported");
+		}
 	}
 	
 	public static <T> Field<T> constant(T value) {

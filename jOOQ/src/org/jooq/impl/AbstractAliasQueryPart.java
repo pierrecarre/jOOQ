@@ -48,7 +48,7 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 	private final String alias;
 
 	AbstractAliasQueryPart(T aliasProvider, String alias) {
-		super(aliasProvider.getName());
+		super(alias);
 		
 		this.aliasProvider = aliasProvider;
 		this.alias = alias;

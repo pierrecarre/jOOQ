@@ -31,48 +31,32 @@
 
 package org.jooq.impl;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
 
 /**
  * @author Lukas Eder
  */
-class RecordImpl implements Record {
+class ExtractFunctionImpl extends FunctionImpl<Integer> {
 
-	private final Result result;
-	private final Map<Field<?>, Object> values;
+	private static final long serialVersionUID = 3748640920856031034L;
+	private final DatePart datePart;
 
-	RecordImpl(Result result) {
-		this.result = result;
-		this.values = new LinkedHashMap<Field<?>, Object>();
-	}
-	
-	@Override
-	public FieldList getFields() {
-		return result.getFields();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
-		}
+	ExtractFunctionImpl(Field<?> field, DatePart datePart) {
+		super("extract", Integer.class, field);
 		
-		return (T) values.get(field);
+		this.datePart = datePart;
 	}
 
-	<T> void addValue(Field<?> field, Object value) {
-		values.put(field, value);
-	}
 
 	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
+	protected String toSQLField(Field<?> field, boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(datePart.toSQL());
+		sb.append(" from ");
+		sb.append(super.toSQLField(field, inlineParameters));
+		
+		return sb.toString();
 	}
 }

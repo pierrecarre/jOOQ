@@ -41,12 +41,19 @@ import static org.jooq.test.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import org.apache.commons.io.FileUtils;
+import org.jooq.Configuration;
+import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
@@ -67,7 +74,9 @@ public class jOOQMySQLTest {
 	private Connection connection;
 
 	@Before
-	public void startTesting() throws Exception {
+	public void setUp() throws Exception {
+		Configuration.getInstance().setDialect(SQLDialect.MYSQL);
+		
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection ("jdbc:mysql://localhost/test", "root", "");
 
@@ -88,7 +97,7 @@ public class jOOQMySQLTest {
 	}
 
 	@After
-	public void endTesting() throws Exception {
+	public void tearDown() throws Exception {
 		if (connection != null) {
 			connection.close();
 			connection = null;
@@ -222,5 +231,55 @@ public class jOOQMySQLTest {
 //		assertEquals(1, result.getNumberOfRecords());
 //		assertEquals(1, (int) result.getRecord(0).getValue(f1));
 //		assertEquals(0, (int) result.getRecord(0).getValue(f2));
+	}
+	
+	@Test
+	public final void testFunction3() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery();
+		Field<Timestamp> now = Functions.currentTimestamp();
+		Field<Timestamp> ts = now.alias("ts");
+		Field<Date> date = Functions.currentDate().alias("date");
+		Field<Time> time = Functions.currentTime().alias("time");
+		
+		Field<Integer> year = Functions.extract(now, DatePart.YEAR).alias("y");
+		Field<Integer> month = Functions.extract(now, DatePart.MONTH).alias("m");
+		Field<Integer> day = Functions.extract(now, DatePart.DAY).alias("day");
+		Field<Integer> hour = Functions.extract(now, DatePart.HOUR).alias("h");
+		Field<Integer> minute = Functions.extract(now, DatePart.MINUTE).alias("mn");
+		Field<Integer> second = Functions.extract(now, DatePart.SECOND).alias("sec");
+		
+		q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
+		q1.execute(connection);
+		
+		Record record = q1.getResult().getRecord(0);
+		String timestamp = record.getValue(ts).toString();
+		
+		assertEquals(timestamp.split(" ")[0], record.getValue(date).toString());
+		assertEquals(timestamp.split(" ")[1], record.getValue(time).toString() + ".0");
+		
+		assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[0]), record.getValue(year));
+		assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[1]), record.getValue(month));
+		assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[2]), record.getValue(day));
+		assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[0]), record.getValue(hour));
+		assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[1]), record.getValue(minute));
+		assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[2].split("\\.")[0]), record.getValue(second));
+	}
+	
+	@Test
+	public final void testFunction4() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery();
+		Field<String> constant = Functions.constant("abc");
+		Field<Integer> charLength = Functions.charLength(constant).alias("len");
+		Field<Integer> bitLength = Functions.bitLength(constant).alias("bitlen");
+		Field<Integer> octetLength = Functions.octetLength(constant).alias("octetlen");
+		
+		q.addSelect(charLength, bitLength, octetLength);
+		q.execute(connection);
+		
+		Record record = q.getResult().getRecord(0);
+		
+		assertEquals((Integer) 3, record.getValue(charLength));
+		assertEquals((Integer) 24, record.getValue(bitLength));
+		assertEquals((Integer) 3, record.getValue(octetLength)); 
 	}
 }

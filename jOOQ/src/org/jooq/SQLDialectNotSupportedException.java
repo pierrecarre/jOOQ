@@ -29,50 +29,31 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
+package org.jooq;
 
 /**
+ * An exception thrown if an SQL construct is used, which is not supported by
+ * the dialect set in {@link Configuration#getDialect()}
+ * 
  * @author Lukas Eder
  */
-class RecordImpl implements Record {
+public class SQLDialectNotSupportedException extends RuntimeException {
 
-	private final Result result;
-	private final Map<Field<?>, Object> values;
+	private static final long serialVersionUID = 8119718690889460970L;
 
-	RecordImpl(Result result) {
-		this.result = result;
-		this.values = new LinkedHashMap<Field<?>, Object>();
-	}
-	
-	@Override
-	public FieldList getFields() {
-		return result.getFields();
+	public SQLDialectNotSupportedException() {
+		super();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
-		}
-		
-		return (T) values.get(field);
+	public SQLDialectNotSupportedException(String message) {
+		super(message);
 	}
 
-	<T> void addValue(Field<?> field, Object value) {
-		values.put(field, value);
+	public SQLDialectNotSupportedException(Throwable cause) {
+		super(cause);
 	}
 
-	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
+	public SQLDialectNotSupportedException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

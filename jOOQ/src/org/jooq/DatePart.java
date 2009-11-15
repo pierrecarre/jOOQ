@@ -38,34 +38,44 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum DatePart {
-	
+
 	/**
 	 * The year
 	 */
-	YEAR,
-	
+	YEAR("year"),
+
 	/**
 	 * The month
 	 */
-	MONTH,
-	
+	MONTH("month"),
+
 	/**
 	 * The day
 	 */
-	DAY,
-	
+	DAY("day"),
+
 	/**
 	 * The hour
 	 */
-	HOUR,
-	
+	HOUR("hour"),
+
 	/**
 	 * The minute
 	 */
-	MINUTE,
-	
+	MINUTE("minute"),
+
 	/**
 	 * The second
 	 */
-	SECOND;
+	SECOND("second");
+
+	private final String sql;
+
+	private DatePart(String sql) {
+		this.sql = sql;
+	}
+
+	public String toSQL() {
+		return sql;
+	}
 }
