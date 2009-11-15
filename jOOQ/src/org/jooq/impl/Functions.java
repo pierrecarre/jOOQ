@@ -31,6 +31,11 @@
 
 package org.jooq.impl;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
+import org.jooq.DatePart;
 import org.jooq.Field;
 
 /**
@@ -65,7 +70,47 @@ public final class Functions {
 	public static Field<Integer> countDistinct(Field<?> field) {
 		return new CountFunctionImpl(field, true);
 	}
+	
+	public static Field<String> upper(Field<String> field) {
+		return new FunctionImpl<String>("upper", field.getType(), field);
+	}
 
+	public static Field<String> lower(Field<String> field) {
+		return new FunctionImpl<String>("lower", field.getType(), field);
+	}
+	
+	public static Field<Date> currentDate() {
+		return new FunctionImpl<Date>("current_date", Date.class);
+	}
+	
+	public static Field<Time> currentTime() {
+		return new FunctionImpl<Time>("current_time", Time.class);
+	}
+	
+	public static Field<Timestamp> currentDateTime() {
+		return new FunctionImpl<Timestamp>("current_datetime", Timestamp.class);
+	}
+
+	public static Field<String> currentUser() {
+		return new FunctionImpl<String>("current_user", String.class);
+	}
+	
+	public static Field<Integer> charLength(Field<?> field) {
+		return new FunctionImpl<Integer>("char_length", Integer.class, field);
+	}
+	
+	public static Field<Integer> bitLength(Field<?> field) {
+		return new FunctionImpl<Integer>("bit_length", Integer.class, field);
+	}
+	
+	public static Field<Integer> octetLength(Field<?> field) {
+		return new FunctionImpl<Integer>("octet_length", Integer.class, field);
+	}
+	
+	public static Field<Integer> extract(Field<?> field, DatePart datePart) {
+		throw new UnsupportedOperationException("This is SQL99 standard, but only implemented by MySQL and PostGres");
+	}
+	
 	public static <T> Field<T> constant(T value) {
 		if (value == null) {
 			throw new IllegalArgumentException("Argument 'value' must not be null");
