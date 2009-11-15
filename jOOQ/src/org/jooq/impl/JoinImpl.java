@@ -50,7 +50,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	private final JoinCondition<?> condition;
 	private final JoinType type;
 
-	public JoinImpl(Table table, JoinCondition<?> condition, JoinType type) {
+	JoinImpl(Table table, JoinCondition<?> condition, JoinType type) {
 		this.table = table;
 		this.condition = condition;
 		this.type = type;

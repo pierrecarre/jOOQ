@@ -41,7 +41,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.jooq.Condition;
-import org.jooq.ConditionProvider;
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
@@ -54,7 +53,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	private static final long serialVersionUID = -660460731970074719L;
 	private final Table table;
 	private final Map<Field<?>, Object> values;
-	private final ConditionProvider condition;
+	private final ConditionProviderImpl condition;
 	
 	public UpdateQueryImpl(Table table) {
 		this.table = table;
@@ -82,8 +81,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
-	@Override
-	public Table getTable() {
+	Table getTable() {
 		return table;
 	}
 	
@@ -97,8 +95,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		condition.addConditions(conditions);
 	}
 
-	@Override
-	public Condition getWhere() {
+	final Condition getWhere() {
 		return condition.getWhere();
 	}
 

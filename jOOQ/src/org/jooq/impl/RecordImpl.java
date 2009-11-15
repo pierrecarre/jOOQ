@@ -47,7 +47,7 @@ class RecordImpl implements Record {
 	private final Result result;
 	private final Map<Field<?>, Object> values;
 
-	public RecordImpl(Result result) {
+	RecordImpl(Result result) {
 		this.result = result;
 		this.values = new HashMap<Field<?>, Object>();
 	}

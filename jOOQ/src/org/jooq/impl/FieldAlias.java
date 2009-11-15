@@ -40,7 +40,7 @@ class FieldAlias<T> extends AbstractAliasQueryPart<Field<T>> implements Field<T>
 
 	private static final long serialVersionUID = -85277321749681553L;
 
-	public FieldAlias(Field<T> field, String alias) {
+	FieldAlias(Field<T> field, String alias) {
 		super(field, alias);
 	}
 

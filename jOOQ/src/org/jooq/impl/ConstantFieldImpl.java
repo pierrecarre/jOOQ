@@ -41,7 +41,7 @@ public class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
 	private static final long serialVersionUID = 6807729087019209084L;
 
 	@SuppressWarnings("unchecked")
-	public ConstantFieldImpl(T value) {
+	ConstantFieldImpl(T value) {
 		super(value.toString(), (Class<T>) value.getClass());
 	}
 	

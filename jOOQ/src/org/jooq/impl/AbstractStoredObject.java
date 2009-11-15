@@ -53,7 +53,7 @@ abstract class AbstractStoredObject extends AbstractNamedQueryPart implements St
 	private final List<Parameter<?>> inParameters;
 	private final Map<Field<?>, Object> inValues;
 
-	public AbstractStoredObject(String name) {
+	AbstractStoredObject(String name) {
 		super(name);
 
 		this.inParameters = new ArrayList<Parameter<?>>();

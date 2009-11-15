@@ -42,11 +42,6 @@ import java.util.Map;
 public interface UpdateQuery extends Query, ConditionProvider {
 
 	/**
-	 * @return The table that is being updated by the query
-	 */
-	Table getTable();
-
-	/**
 	 * @return A mapping of fields and values that are updated by the query
 	 */
 	Map<Field<?>, ?> getValues();
@@ -62,12 +57,6 @@ public interface UpdateQuery extends Query, ConditionProvider {
 	 *            The value
 	 */
 	<T> void addValue(Field<T> field, T value);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	Condition getWhere();
 
 	/**
 	 * {@inheritDoc}

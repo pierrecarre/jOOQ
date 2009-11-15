@@ -42,13 +42,13 @@ class CountFunctionImpl extends FunctionImpl<Integer> {
 	
 	private final boolean distinct;
 
-	public CountFunctionImpl() {
+	CountFunctionImpl() {
 		super("count", Integer.class);
 		
 		this.distinct = false;
 	}
 	
-	public CountFunctionImpl(Field<?> field, boolean distinct) {
+	CountFunctionImpl(Field<?> field, boolean distinct) {
 		super("count", Integer.class, field);
 		
 		this.distinct = distinct;

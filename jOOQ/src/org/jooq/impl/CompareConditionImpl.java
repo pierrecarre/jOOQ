@@ -52,7 +52,7 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 	private final T value;
 	private final Comparator comparator;
 
-	public CompareConditionImpl(Field<T> field, T value, Comparator comparator) {
+	CompareConditionImpl(Field<T> field, T value, Comparator comparator) {
 		if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {
 			throw new IllegalArgumentException("Cannot compare null with " + comparator);
 		}

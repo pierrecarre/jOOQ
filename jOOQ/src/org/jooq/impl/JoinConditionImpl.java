@@ -46,7 +46,7 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCon
 	private final Field<T> field1;
 	private final Field<T> field2;
 
-	public JoinConditionImpl(Field<T> field1, Field<T> field2) {
+	JoinConditionImpl(Field<T> field1, Field<T> field2) {
 		this.field1 = field1;
 		this.field2 = field2;
 	}

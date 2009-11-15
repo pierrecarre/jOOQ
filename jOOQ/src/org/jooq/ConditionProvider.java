@@ -41,11 +41,6 @@ import java.util.Collection;
 public interface ConditionProvider extends QueryPart {
 	
 	/**
-	 * @return The condition
-	 */
-	Condition getWhere();
-
-	/**
 	 * Adds new conditions to the update query, connecting it to existing
 	 * conditions with the and operator.
 	 * 

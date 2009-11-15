@@ -40,7 +40,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.jooq.Condition;
-import org.jooq.ConditionProvider;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Join;
@@ -63,12 +62,12 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	private final FieldList select;
 	private final TableList from;
 	private final JoinList join;
-	private final ConditionProvider condition;
+	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
 	private final OrderByFieldList orderBy;
 	private ResultImpl result;
 
-	public SelectQueryImpl(Table from) {
+	SelectQueryImpl(Table from) {
 		this.select = new SelectFieldListImpl();
 		this.from = new TableListImpl();
 		this.join = new JoinListImpl();
@@ -142,8 +141,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		condition.addConditions(conditions);
 	}
 
-	@Override
-	public TableList getFrom() {
+	TableList getFrom() {
 		return from;
 	}
 	
@@ -157,8 +155,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		addFrom(Arrays.asList(from));
 	}
 
-	@Override
-	public FieldList getGroupBy() {
+	FieldList getGroupBy() {
 		return groupBy;
 	}
 	
@@ -172,8 +169,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		addGroupBy(Arrays.asList(fields));
 	}
 
-	@Override
-	public JoinList getJoin() {
+	JoinList getJoin() {
 		return join;
 	}
 
@@ -197,8 +193,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		addJoin(QueryFactory.createJoin(table));
 	}
 
-	@Override
-	public OrderByFieldList getOrderBy() {
+	OrderByFieldList getOrderBy() {
 		return orderBy;
 	}
 
@@ -216,8 +211,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		return select;
 	}
 	
-	@Override
-	public FieldList getSelect() {
+	FieldList getSelect() {
 		if (getSelect0().isEmpty()) {
 			FieldList result = new SelectFieldListImpl();
 			
@@ -239,8 +233,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		return getSelect0();
 	}
 
-	@Override
-	public final Condition getWhere() {
+	final Condition getWhere() {
 		return condition.getWhere();
 	}
 

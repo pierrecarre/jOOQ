@@ -53,7 +53,7 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 	private final Operator operator;
 	private final List<Condition> conditions;
 
-	public CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
+	CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
 		if (operator == null)
 			throw new IllegalArgumentException("The argument 'operator' must not be null");
 		if (conditions == null)

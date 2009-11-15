@@ -47,7 +47,7 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 	private final Field<T> field;
 	private final Set<T> values;
 
-	public InConditionImpl(Field<T> field, Set<T> values) {
+	InConditionImpl(Field<T> field, Set<T> values) {
 		this.field = field;
 		this.values = values;
 	}

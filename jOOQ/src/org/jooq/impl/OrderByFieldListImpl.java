@@ -51,21 +51,21 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 	
 	private final Map<Field<?>, SortOrder> ordering;
 	
-	public OrderByFieldListImpl() {
+	OrderByFieldListImpl() {
 		this(new ArrayList<Field<?>>());
 	}
 
-	public OrderByFieldListImpl(List<Field<?>> wrappedList) {
+	OrderByFieldListImpl(List<Field<?>> wrappedList) {
 		super(wrappedList);
 		
 		this.ordering = new HashMap<Field<?>, SortOrder>();
 	}
 
-	public Map<Field<?>, SortOrder> getOrdering() {
+	private Map<Field<?>, SortOrder> getOrdering() {
 		return ordering;
 	}
 	
-	public SortOrder getOrdering(Field<?> field) {
+	private SortOrder getOrdering(Field<?> field) {
 		return getOrdering().get(field);
 	}
 	

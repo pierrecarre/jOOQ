@@ -48,7 +48,7 @@ class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 	private final Class<T> type;
 	private final List<Field<?>> fields;
 
-	public FunctionImpl(String name, Class<T> type, Field<?>... fields) {
+	FunctionImpl(String name, Class<T> type, Field<?>... fields) {
 		super (name);
 
 		this.type = type;

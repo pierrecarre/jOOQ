@@ -41,7 +41,7 @@ abstract class AbstractNamedQueryPart extends AbstractQueryPart implements Named
 	private static final long serialVersionUID = -4496974591205380167L;
 	private final String name;
 
-	public AbstractNamedQueryPart(String name) {
+	AbstractNamedQueryPart(String name) {
 		this.name = name;
 	}
 	

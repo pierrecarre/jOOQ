@@ -38,12 +38,12 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-public class FieldImpl<T> extends AbstractNamedQueryPart implements Field<T> {
+class FieldImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 
 	private static final long serialVersionUID = 5589200289715501493L;
 	private final Class<T> type;
 
-	public FieldImpl(String name, Class<T> type) {
+	FieldImpl(String name, Class<T> type) {
 		super(name);
 
 		this.type = type;

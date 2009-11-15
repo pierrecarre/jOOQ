@@ -38,7 +38,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import org.jooq.Condition;
-import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Table;
 
@@ -50,9 +49,9 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	private static final long serialVersionUID = -1943687511774150929L;
 	
 	private final Table table;
-	private final ConditionProvider condition;
+	private final ConditionProviderImpl condition;
 
-	public DeleteQueryImpl(Table table) {
+	DeleteQueryImpl(Table table) {
 		this.table = table;
 		this.condition = new ConditionProviderImpl();
 	}
@@ -72,13 +71,11 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
-	@Override
-	public Table getFrom() {
+	Table getFrom() {
 		return table;
 	}
 
-	@Override
-	public Condition getWhere() {
+	Condition getWhere() {
 		return condition.getWhere();
 	}
 

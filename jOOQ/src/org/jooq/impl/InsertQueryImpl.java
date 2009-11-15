@@ -50,7 +50,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	private final Table into;
 	private final Map<Field<?>, Object> values;
 	
-	public InsertQueryImpl(Table into) {
+	InsertQueryImpl(Table into) {
 		this.into = into;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}

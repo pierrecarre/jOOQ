@@ -39,17 +39,16 @@ import java.util.List;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
  */
 class ResultImpl implements Result {
 
-	private final SelectQuery query;
+	private final SelectQueryImpl query;
 	private final List<Record> records;
 	
-	public ResultImpl(SelectQuery query) {
+	ResultImpl(SelectQueryImpl query) {
 		this.query = query;
 		this.records = new ArrayList<Record>();
 	}

@@ -41,37 +41,6 @@ import java.util.Collection;
 public interface SelectQuery extends Query, ConditionProvider {
 	
 	/**
-	 * @return The list of select fields
-	 */
-	FieldList getSelect();
-	
-	/**
-	 * @return The list of tables from which selection is made
-	 */
-	TableList getFrom();
-	
-	/**
-	 * @return The list of join statements
-	 */
-	JoinList getJoin();
-	
-	/**
-	 * @return A list of grouping fields
-	 */
-	FieldList getGroupBy();
-	
-	/**
-	 * @return A list of ordering fields, and their corresponding sort order
-	 */
-	OrderByFieldList getOrderBy();
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	Condition getWhere();
-
-	/**
 	 * Add a list of select fields
 	 * 
 	 * @param fields

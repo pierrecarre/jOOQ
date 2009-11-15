@@ -39,16 +39,6 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface DeleteQuery extends Query, ConditionProvider {
-	/**
-	 * @return The table to delete data from
-	 */
-	Table getFrom();
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	Condition getWhere();
 
 	/**
 	 * {@inheritDoc}

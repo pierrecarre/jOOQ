@@ -43,11 +43,11 @@ class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList
 
 	private static final long serialVersionUID = -6911012275707591576L;
 
-	public FieldListImpl() {
+	FieldListImpl() {
 		super();
 	}
 
-	public FieldListImpl(List<Field<?>> wrappedList) {
+	FieldListImpl(List<Field<?>> wrappedList) {
 		super(wrappedList);
 	}
 }

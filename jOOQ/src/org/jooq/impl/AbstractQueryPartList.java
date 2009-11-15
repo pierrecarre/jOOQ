@@ -48,11 +48,11 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	private static final long serialVersionUID = -2936922742534009564L;
 	private final List<T> wrappedList = new ArrayList<T>();
 
-	public AbstractQueryPartList() {
+	AbstractQueryPartList() {
 		this(null);
 	}
 	
-	public AbstractQueryPartList(List<T> wrappedList) {
+	AbstractQueryPartList(List<T> wrappedList) {
 		if (wrappedList != null) {
 			addAll(wrappedList);
 		}

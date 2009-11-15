@@ -48,7 +48,7 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 	private final T minValue;
 	private final T maxValue;
 
-	public BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
+	BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
 		if (field == null)
 			throw new IllegalArgumentException("The argument 'field' must not be null");
 		if (minValue == null)

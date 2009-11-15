@@ -45,11 +45,11 @@ class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
 
 	private static final long serialVersionUID = -8545559185481762229L;
 
-	public TableListImpl() {
+	TableListImpl() {
 		super();
 	}
 
-	public TableListImpl(List<Table> wrappedList) {
+	TableListImpl(List<Table> wrappedList) {
 		super(wrappedList);
 	}
 
