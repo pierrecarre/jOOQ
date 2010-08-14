@@ -85,6 +85,10 @@ public class GenerationTool {
 			}
 		}
 
+		main(properties);
+	}
+
+	public static void main(Properties properties) throws Exception {
 		Class.forName(properties.getProperty("jdbc.Driver"));
 		Connection connection = null;
 		

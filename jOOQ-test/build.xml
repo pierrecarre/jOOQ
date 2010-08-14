@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<project name="test" basedir="." default="generate-test-classes">
+	<property name="dir.workspace" value="${basedir}/.." />
+
+	<taskdef name="generate-classes" classname="org.jooq.util.GenerationTask">
+		<classpath>
+			<fileset dir="${dir.workspace}/jOOQ-release/release/latest">
+				<include name="jOOQ.jar"/>
+				<include name="jOOQ-codegen.jar"/>
+			</fileset>
+			<fileset dir="${dir.workspace}/jOOQ-test/lib">
+				<include name="mysql-connector-java-5.1.10-bin.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<target name="generate-test-classes">
+		<generate-classes 
+			jdbcurl="jdbc:mysql://localhost/test"
+			jdbcschema="test"
+			jdbcuser="root"
+			jdbcpassword=""
+			generatortargetpackage="org.jooq.test.generatedclasses"
+			generatortargetdirectory="${basedir}/src"/>
+	</target>
+</project>
