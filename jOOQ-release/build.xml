@@ -4,6 +4,43 @@
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
 
+	<target name="release" description="Release a new version">
+		<property name="version" value="1.0.1"/>
+		
+		<mkdir dir="${dir.release}/versions" />
+		<mkdir dir="${dir.release}/${version}" />
+		<mkdir dir="${dir.release}/${version}/lib" />
+		<mkdir dir="${dir.release}/${version}/src" />
+		
+		<ant target="build-all" />
+		
+		<copy todir="${dir.release}/${version}/lib">
+			<fileset dir="${dir.release}/latest">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${dir.release}/${version}">
+			<fileset dir="${dir.release}/template">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		
+		<zip destfile="${dir.release}/${version}/src/jOOQ-${version}-src.zip">
+			<fileset dir="${dir.workspace}">
+				<include name="jOOQ/src/**"/>
+				<include name="jOOQ-codegen/src/**"/>
+				<include name="jOOQ-test/src/**"/>
+			</fileset>
+		</zip>
+		
+		<zip destfile="${dir.release}/versions/jOOQ-${version}.zip">
+			<fileset dir="${dir.release}/${version}"/>
+		</zip>
+		
+		<delete dir="${dir.release}/${version}"/>
+	</target>
+	
 	<target name="build-all" description="Build all projects">
 		<ant target="clean-all" />
 		<ant target="build-jOOQ" />
