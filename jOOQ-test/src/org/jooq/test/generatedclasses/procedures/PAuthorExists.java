@@ -14,7 +14,7 @@ import org.jooq.impl.StoredProcedureImpl;
  */
 public class PAuthorExists extends StoredProcedureImpl {
 
-	private static final long serialVersionUID = 3594083453564245027L;
+	private static final long serialVersionUID = 1L;
 
 
 	/**

@@ -16,7 +16,7 @@ import org.jooq.test.generatedclasses.Test;
  */
 public class TBook extends TableImpl {
 
-	private static final long serialVersionUID = -3372618386710265033L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of t_book

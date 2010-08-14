@@ -16,7 +16,7 @@ import org.jooq.test.generatedclasses.Test;
  */
 public class XUnused extends TableImpl {
 
-	private static final long serialVersionUID = 3834358223034983297L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of x_unused

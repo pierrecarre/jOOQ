@@ -16,7 +16,7 @@ import org.jooq.test.generatedclasses.Test;
  */
 public class VLibrary extends TableImpl {
 
-	private static final long serialVersionUID = 7708329889999181794L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of v_library

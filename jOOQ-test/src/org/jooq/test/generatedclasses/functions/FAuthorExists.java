@@ -14,7 +14,7 @@ import org.jooq.impl.StoredFunctionImpl;
  */
 public class FAuthorExists extends StoredFunctionImpl<Byte> {
 
-	private static final long serialVersionUID = 8955032569029833201L;
+	private static final long serialVersionUID = 1L;
 
 
 	/**

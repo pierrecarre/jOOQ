@@ -281,7 +281,7 @@ public class DefaultGenerator implements Generator {
 
 	private void printSerial(GenerationWriter out) {
 		out.println();
-		out.println("\tprivate static final long serialVersionUID = " + new Random().nextLong() + "L;");
+		out.println("\tprivate static final long serialVersionUID = 1L;");
 	}
 
 	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, Definition definition) {

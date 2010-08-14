@@ -11,7 +11,7 @@ import org.jooq.impl.SchemaImpl;
  */
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = -7215022799071146822L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of test
