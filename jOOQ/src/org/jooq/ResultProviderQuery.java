@@ -65,7 +65,7 @@ public interface ResultProviderQuery extends Query {
 	 * Combine this ResultProvider with another one, using the given operator.
 	 * 
 	 * @param other
-	 *            The ResultProvider to combine this one with¬
+	 *            The ResultProvider to combine this one with
 	 * @param operator
 	 *            The combine operator
 	 * @return
