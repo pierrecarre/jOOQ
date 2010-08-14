@@ -118,7 +118,7 @@ public class GenerationTool {
 	}
 
 	private static void error() {
-		System.err.println("Usage : Generator <configuration-file>");
+		System.err.println("Usage : GenerationTool <configuration-file>");
 		System.exit(-1);
 	}
 
