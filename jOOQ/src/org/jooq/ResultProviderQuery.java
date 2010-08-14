@@ -73,12 +73,91 @@ public interface ResultProviderQuery extends Query {
 	ResultProviderQuery combine(ResultProviderQuery other, CombineOperator operator);
 
 	/**
+	 * Use this query as a table
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE
 	 * @return This result provider as a Table object
 	 */
 	Table asTable();
 
 	/**
-	 * @return This result provider as a Field<?> object
+	 * Use this query as a field.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT y.*, (SELECT a FROM x) a FROM y</code>
+	 * 
+	 * @return This result provider as a Field&lt;?&gt; object
 	 */
 	Field<?> asField();
+
+	/**
+	 * Use this query for IN conditions.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE x.field IN (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	<T> SubQueryCondition<T> asInCondition(Field<T> field);
+
+	/**
+	 * Use this query for NOT IN conditions.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE x.field NOT IN (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	<T> SubQueryCondition<T> asNotInCondition(Field<T> field);
+	
+	/**
+	 * Use this query for EQUALS conditions.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE x.field = (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	<T> SubQueryCondition<T> asCompareCondition(Field<T> field);
+	
+	/**
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE x.field [any operator] (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	<T> SubQueryCondition<T> asSubQueryCondition(Field<T> field, SubQueryOperator operator);
+	
+	/**
+	 * Use this query for EXISTS conditions.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE EXISTS (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	ExistsCondition asExistsCondition();
+
+	/**
+	 * Use this query for NOT EXISTS conditions.
+	 * <p>
+	 * This method is useful for things like
+	 * <code>SELECT * FROM x WHERE NOT EXISTS (SELECT ...)</code>
+	 * 
+	 * @param field
+	 *            The field to compare this query's results with
+	 * @return This result provider as a InCondition object
+	 */
+	ExistsCondition asNotExistsCondition();
 }

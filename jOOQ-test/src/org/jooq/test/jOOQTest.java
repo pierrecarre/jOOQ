@@ -33,6 +33,7 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.SubQueryOperator.GREATER_THAN_ANY;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import static org.jooq.test.Data.FIELD_ID1;
@@ -786,5 +787,53 @@ public class jOOQTest {
 		
 		assertEquals("select TABLE2.ID2 outer_id2, (select TABLE1.ID1 inner_id1 from TABLE1) outer_id1 from TABLE2", q2.toSQLReference(true));
 		assertEquals("select TABLE2.ID2 outer_id2, (select TABLE1.ID1 inner_id1 from TABLE1) outer_id1 from TABLE2", q2.toSQLReference(false));
+	}
+	
+	@Test
+	public final void testInnerSelect3() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
+
+		q2.addSelect(FIELD_ID2);
+		q1.addConditions(q2.asInCondition(FIELD_ID1));
+		
+		assertEquals("select * from TABLE1 where TABLE1.ID1 in (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
+		assertEquals("select * from TABLE1 where TABLE1.ID1 in (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
+	}
+	
+	@Test
+	public final void testInnerSelect4() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
+		
+		q2.addSelect(FIELD_ID2);
+		q1.addConditions(q2.asCompareCondition(FIELD_ID1));
+		
+		assertEquals("select * from TABLE1 where TABLE1.ID1 = (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
+		assertEquals("select * from TABLE1 where TABLE1.ID1 = (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
+	}
+	
+	@Test
+	public final void testInnerSelect5() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
+		
+		q2.addSelect(FIELD_ID2);
+		q1.addConditions(q2.asSubQueryCondition(FIELD_ID1, GREATER_THAN_ANY));
+		
+		assertEquals("select * from TABLE1 where TABLE1.ID1 > any (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
+		assertEquals("select * from TABLE1 where TABLE1.ID1 > any (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
+	}
+	
+	@Test
+	public final void testInnerSelect6() throws Exception {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
+		
+		q2.addSelect(FIELD_ID2);
+		q1.addConditions(q2.asExistsCondition());
+		
+		assertEquals("select * from TABLE1 where exists (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
+		assertEquals("select * from TABLE1 where exists (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
 	}
 }

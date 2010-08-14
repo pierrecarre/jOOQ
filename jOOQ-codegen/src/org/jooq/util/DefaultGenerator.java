@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Random;
 
 import org.jooq.TableField;
 import org.jooq.impl.Parameter;
