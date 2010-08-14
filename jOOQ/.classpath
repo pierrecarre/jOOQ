@@ -3,19 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="test-lib/bsh-core-2.0b4.jar"/>
-	<classpathentry kind="lib" path="test-lib/cglib-2.1_3-src.jar"/>
-	<classpathentry kind="lib" path="test-lib/cglib-nodep-2.1_3.jar"/>
-	<classpathentry kind="lib" path="test-lib/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/hamcrest-library-1.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/jmock-2.5.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/jmock-junit3-2.5.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/jmock-junit4-2.5.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/jmock-legacy-2.5.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/jmock-script-2.5.1.jar"/>
-	<classpathentry kind="lib" path="test-lib/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="test-lib/mysql-connector-java-5.1.10-bin.jar" sourcepath="/jOOQ-sources/mysql-connector-java-5.1.10.zip"/>
-	<classpathentry kind="lib" path="test-lib/commons-io-1.4.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
