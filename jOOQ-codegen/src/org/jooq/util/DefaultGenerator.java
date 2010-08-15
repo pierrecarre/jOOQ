@@ -55,6 +55,12 @@ public class DefaultGenerator implements Generator {
 	@Override
 	public void generate(Database database) throws SQLException, IOException {
 		File targetPackageDir = new File(targetDirectory + File.separator + targetPackageName.replace('.', File.separatorChar));
+
+		// ----------------------------------------------------------------------
+		// Initialising
+		// ----------------------------------------------------------------------
+		System.out.println("Emptying " + targetPackageDir.getCanonicalPath());
+		empty(targetPackageDir);
 		
 		// ----------------------------------------------------------------------
 		// Generating schemas
@@ -248,6 +254,28 @@ public class DefaultGenerator implements Generator {
 			
 			out.println("}");
 			out.close();
+		}
+	}
+
+	/**
+	 * If file is a directory, recursively empty its children.
+	 * If file is a file, delete it
+	 */
+	private void empty(File file) {
+		if (file != null) {
+			if (file.isDirectory()) {
+				File[] children = file.listFiles();
+				
+				if (children != null) {
+					for (File child : children) {
+						empty(child);
+					}
+				}
+			} else {
+				if (file.getName().endsWith(".java")) {
+					file.delete();
+				}
+			}
 		}
 	}
 
