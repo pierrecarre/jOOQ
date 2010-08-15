@@ -32,20 +32,23 @@
 package org.jooq.util;
 
 /**
+ * An interface defining a column of a table, or a parameter of a stored
+ * procedure or stored function.
+ * 
  * @author Lukas Eder
  */
 public interface ColumnDefinition extends Definition {
-	
+
 	/**
 	 * @return The column position in the table
 	 */
 	int getPosition();
-	
+
 	/**
 	 * @return The column type
 	 */
 	Class<?> getTypeClass();
-	
+
 	/**
 	 * @return The column simple Java type
 	 */

@@ -45,6 +45,12 @@ import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
 /**
+ * A default implementation for code generation. Replace this code with your own
+ * logic, if you need your database schema represented in a different way.
+ * <p>
+ * Note that you can also extend this class to generate POJO's or other stuff
+ * entirely independent of jOOQ.
+ * 
  * @author Lukas Eder
  */
 public class DefaultGenerator implements Generator {

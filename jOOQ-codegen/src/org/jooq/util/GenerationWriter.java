@@ -36,12 +36,18 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * A wrapper for a {@link PrintWriter}
+ * <p>
+ * This wrapper postpones the actual write to the wrapped {@link PrintWriter}
+ * until all information about the target Java class is available. This way, the
+ * import dependencies can be calculated at the end.
+ * 
  * @author Lukas Eder
  */
 public class GenerationWriter {
 
 	private static final String IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
-	
+
 	private final PrintWriter writer;
 	private final StringBuilder sb;
 	private final Set<String> imported;
@@ -51,7 +57,7 @@ public class GenerationWriter {
 		this.sb = new StringBuilder();
 		this.imported = new TreeSet<String>();
 	}
-	
+
 	public void printImportPlaceholder() {
 		println(IMPORT_STATEMENT);
 	}
@@ -68,32 +74,32 @@ public class GenerationWriter {
 		if (name.startsWith("java.lang")) {
 			return;
 		}
-		
+
 		imported.add(name);
 	}
 
 	public void print(String string) {
 		sb.append(string);
 	}
-	
+
 	public void println(String string) {
 		sb.append(string + "\n");
 	}
-	
+
 	public void println() {
 		sb.append("\n");
 	}
-	
+
 	public void close() {
 		String string = sb.toString();
-		
+
 		StringBuilder imports = new StringBuilder();
 		for (String clazz : imported) {
 			imports.append("import " + clazz + ";\n");
 		}
-		
+
 		string = string.replaceAll(IMPORT_STATEMENT, imports.toString());
-		
+
 		writer.append(string);
 		writer.close();
 	}

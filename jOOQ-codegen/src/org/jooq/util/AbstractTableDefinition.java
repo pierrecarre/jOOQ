@@ -31,9 +31,9 @@
 
 package org.jooq.util;
 
-
-
 /**
+ * A base implementation for table definitions.
+ * 
  * @author Lukas Eder
  */
 public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {

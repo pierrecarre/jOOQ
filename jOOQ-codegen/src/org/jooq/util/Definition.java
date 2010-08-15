@@ -32,6 +32,9 @@
 package org.jooq.util;
 
 /**
+ * A general interface defining any database object, such as tables, views,
+ * stored procedures, etc.
+ * 
  * @author Lukas Eder
  */
 public interface Definition {
@@ -42,12 +45,12 @@ public interface Definition {
 	String getSchema();
 
 	/**
-	 * @return The name of this object
+	 * @return The name of this object, e.g. [my_table]
 	 */
 	String getName();
 
 	/**
-	 * @return The name of this object in upper case letters
+	 * @return The name of this object in upper case letters, e.g. [MY_TABLE]
 	 */
 	String getNameUC();
 
@@ -55,14 +58,14 @@ public interface Definition {
 	 * @return The comment of this object
 	 */
 	String getComment();
-	
+
 	/**
-	 * @return The Java class name representing this object
+	 * @return The Java class name representing this object, e.g. [MyTable]
 	 */
 	String getJavaClassName();
-	
+
 	/**
-	 * @return The Java class file name representing this object
+	 * @return The Java class file name representing this object, e.g. [MyTable.java]
 	 */
 	String getFileName();
 }

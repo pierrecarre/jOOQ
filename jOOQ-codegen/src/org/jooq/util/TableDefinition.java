@@ -35,10 +35,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * The definition of a table or view.
+ * 
  * @author Lukas Eder
  */
 public interface TableDefinition extends Definition {
-	
-	List<ColumnDefinition> getColumns() throws SQLException;
 
+	/**
+	 * All columns in the table or view
+	 */
+	List<ColumnDefinition> getColumns() throws SQLException;
 }

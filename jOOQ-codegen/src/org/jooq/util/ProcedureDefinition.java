@@ -34,13 +34,25 @@ package org.jooq.util;
 import java.util.List;
 
 /**
+ * An interface defining a stored procedure in a database.
+ * 
  * @author Lukas Eder
  */
 public interface ProcedureDefinition extends Definition {
 
+	/**
+	 * @return A list of IN or INOUT parameter column definitions
+	 */
 	List<ColumnDefinition> getInParameters();
+
+	/**
+	 * @return A list of OUT or INOUT parameter column definitions
+	 */
 	List<ColumnDefinition> getOutParameters();
+
+	/**
+	 * @return A list of all IN, OUT, and INOUT parameter column definitions
+	 */
 	List<ColumnDefinition> getAllParameters();
-	
-	
+
 }

@@ -34,6 +34,8 @@ package org.jooq.util;
 import java.sql.Connection;
 
 /**
+ * A base implementation for any type of definition.
+ * 
  * @author Lukas Eder
  */
 public abstract class AbstractDefinition implements Definition {
@@ -59,7 +61,7 @@ public abstract class AbstractDefinition implements Definition {
 	}
 
 	@Override
-	public String getNameUC() {
+	public final String getNameUC() {
 		return name.toUpperCase();
 	}
 
@@ -67,27 +69,27 @@ public abstract class AbstractDefinition implements Definition {
 	public final String getComment() {
 		return comment;
 	}
-	
+
 	@Override
-	public String getJavaClassName() {
+	public final String getJavaClassName() {
 		StringBuilder result = new StringBuilder();
-		
+
 		for (String word : getName().split("_")) {
 			result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
 		}
-		
+
 		return result.toString();
 	}
 
 	@Override
-	public String getFileName() {
+	public final String getFileName() {
 		return getJavaClassName() + ".java";
 	}
 
 	protected final Database getDatabase() {
 		return database;
 	}
-	
+
 	protected final Connection getConnection() {
 		return database.getConnection();
 	}

@@ -36,8 +36,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
+ * A base implementation for all types of databases.
+ * 
  * @author Lukas Eder
  */
 public abstract class AbstractDatabase implements Database {
@@ -56,39 +57,39 @@ public abstract class AbstractDatabase implements Database {
 	public final Connection getConnection() {
 		return connection;
 	}
-	
+
 	@Override
 	public final void setSchemaName(String schema) {
 		this.schema = schema;
 	}
-	
+
 	@Override
 	public final String getSchemaName() {
 		return schema;
 	}
-	
+
 	@Override
-	public SchemaDefinition getSchema() throws SQLException {
+	public final SchemaDefinition getSchema() throws SQLException {
 		return new SchemaDefinition(this, getSchemaName(), null);
 	}
 
 	@Override
-	public void setExcludes(String[] excludes) {
+	public final void setExcludes(String[] excludes) {
 		this.excludes = excludes;
 	}
 
 	@Override
-	public String[] getExcludes() {
+	public final String[] getExcludes() {
 		return excludes;
 	}
 
 	@Override
-	public void setIncludes(String[] includes) {
+	public final void setIncludes(String[] includes) {
 		this.includes = includes;
 	}
 
 	@Override
-	public String[] getIncludes() {
+	public final String[] getIncludes() {
 		return includes;
 	}
 
@@ -106,17 +107,17 @@ public abstract class AbstractDatabase implements Database {
 	public final List<FunctionDefinition> getFunctions() throws SQLException {
 		return filter(getFunctions0());
 	}
-	
+
 	private final <T extends Definition> List<T> filter(List<T> definitions) {
 		List<T> result = new ArrayList<T>();
-		
+
 		definitionsLoop: for (T definition : definitions) {
 			for (String exclude : excludes) {
 				if (definition.getName().matches(exclude)) {
 					continue definitionsLoop;
 				}
 			}
-			
+
 			for (String include : includes) {
 				if (definition.getName().matches(include)) {
 					result.add(definition);
@@ -124,11 +125,25 @@ public abstract class AbstractDatabase implements Database {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 
+	/**
+	 * Retrieve ALL tables from the database. This will be filtered in
+	 * {@link #getTables()}
+	 */
 	protected abstract List<TableDefinition> getTables0() throws SQLException;
+
+	/**
+	 * Retrieve ALL stored procedures from the database. This will be filtered
+	 * in {@link #getProcedures()}
+	 */
 	protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
+
+	/**
+	 * Retrieve ALL stored functions from the database. This will be filtered in
+	 * {@link #getFunctions()}
+	 */
 	protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
 }

@@ -31,8 +31,9 @@
 
 package org.jooq.util;
 
-
 /**
+ * A base implementation for column definitions.
+ * 
  * @author Lukas Eder
  */
 public abstract class AbstractColumnDefinition extends AbstractDefinition implements ColumnDefinition {
@@ -42,7 +43,7 @@ public abstract class AbstractColumnDefinition extends AbstractDefinition implem
 
 	public AbstractColumnDefinition(Database database, String name, int position, Class<?> type, String comment) {
 		super(database, name, comment);
-		
+
 		this.position = position;
 		this.type = type;
 	}
@@ -53,7 +54,7 @@ public abstract class AbstractColumnDefinition extends AbstractDefinition implem
 	}
 
 	@Override
-	public Class<?> getTypeClass() {
+	public final Class<?> getTypeClass() {
 		return type;
 	}
 

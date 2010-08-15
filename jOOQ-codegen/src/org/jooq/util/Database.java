@@ -36,24 +36,75 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * A general database model.
+ * 
  * @author Lukas Eder
  */
 public interface Database {
 
+	/**
+	 * The schema generated from this database
+	 */
 	SchemaDefinition getSchema() throws SQLException;
+
+	/**
+	 * The tables contained in this database (for schema {@link #getSchema()})
+	 */
 	List<TableDefinition> getTables() throws SQLException;
+
+	/**
+	 * The stored procedures contained in this database (for schema
+	 * {@link #getSchema()})
+	 */
 	List<ProcedureDefinition> getProcedures() throws SQLException;
+
+	/**
+	 * The stored functions contained in this database (for schema
+	 * {@link #getSchema()})
+	 */
 	List<FunctionDefinition> getFunctions() throws SQLException;
-	
+
+	/**
+	 * Initialise a connection to this database
+	 */
 	void setConnection(Connection connection);
+
+	/**
+	 * The database connection
+	 */
 	Connection getConnection();
-	
+
+	/**
+	 * Initialise a schema name to this database
+	 */
 	void setSchemaName(String schema);
+
+	/**
+	 * The database schema
+	 */
 	String getSchemaName();
-	
+
+	/**
+	 * Only database objects matching any of these regular expressions will be
+	 * generated.
+	 */
 	void setIncludes(String[] includes);
+
+	/**
+	 * Only database objects matching any of these regular expressions will be
+	 * generated.
+	 */
 	String[] getIncludes();
-	
+
+	/**
+	 * Database objects matching any of these regular expressions will not be
+	 * generated.
+	 */
 	void setExcludes(String[] excludes);
+
+	/**
+	 * Database objects matching any of these regular expressions will not be
+	 * generated.
+	 */
 	String[] getExcludes();
 }

@@ -32,6 +32,8 @@
 package org.jooq.util;
 
 /**
+ * The definition of a database schema
+ * 
  * @author Lukas Eder
  */
 public class SchemaDefinition extends AbstractDefinition {
@@ -39,5 +41,4 @@ public class SchemaDefinition extends AbstractDefinition {
 	public SchemaDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}
-
 }
