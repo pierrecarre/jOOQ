@@ -46,6 +46,7 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinList;
 import org.jooq.OrderByFieldList;
+import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -228,6 +229,11 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		}
 
 		return getSelect0();
+	}
+
+	@Override
+	protected Class<? extends Record> getRecordType() {
+		return getFrom().getRecordType();
 	}
 
 	final Condition getWhere() {

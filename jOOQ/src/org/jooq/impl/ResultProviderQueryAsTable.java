@@ -35,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.FieldList;
+import org.jooq.Record;
 import org.jooq.Table;
 
 /**
@@ -69,5 +70,10 @@ class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		return query.toSQLReference(inlineParameters);
+	}
+
+	@Override
+	public Class<? extends Record> getRecordType() {
+		return RecordImpl.class;
 	}
 }

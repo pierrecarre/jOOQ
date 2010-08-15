@@ -86,7 +86,7 @@ class ResultImpl implements Result {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("ResultImpl [query=" + query + "]\n");
+		sb.append(getClass().getSimpleName() + " [query=" + query + "]\n");
 		sb.append("Records:\n");
 
 		int i = 0;

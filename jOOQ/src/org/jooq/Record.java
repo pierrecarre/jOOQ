@@ -56,4 +56,14 @@ public interface Record {
 	 *             {@link #getFields()}
 	 */
 	<T> T getValue(Field<T> field) throws IllegalArgumentException;
+
+	/**
+	 * @param <T>
+	 *            The generic field parameter
+	 * @param field
+	 *            The field
+	 * @param value
+	 *            The value
+	 */
+	<T> void setValue(Field<T> field, T value);
 }

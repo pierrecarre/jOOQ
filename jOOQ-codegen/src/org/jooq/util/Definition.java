@@ -65,7 +65,17 @@ public interface Definition {
 	String getJavaClassName();
 
 	/**
+	 * @return The Java class name representing this object, e.g. [MyTableSuffix]
+	 */
+	String getJavaClassName(String suffix);
+
+	/**
 	 * @return The Java class file name representing this object, e.g. [MyTable.java]
 	 */
 	String getFileName();
+
+	/**
+	 * @return The Java class file name representing this object, e.g. [MyTableSuffix.java]
+	 */
+	String getFileName(String suffix);
 }

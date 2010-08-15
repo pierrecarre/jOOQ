@@ -42,12 +42,12 @@ import org.jooq.Result;
 /**
  * @author Lukas Eder
  */
-class RecordImpl implements Record {
+public class RecordImpl implements Record {
 
 	private final Result result;
 	private final Map<Field<?>, Object> values;
 
-	RecordImpl(Result result) {
+	protected RecordImpl(Result result) {
 		this.result = result;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
@@ -67,7 +67,8 @@ class RecordImpl implements Record {
 		return (T) values.get(field);
 	}
 
-	<T> void addValue(Field<?> field, Object value) {
+	@Override
+	public <T> void setValue(Field<T> field, T value) {
 		values.put(field, value);
 	}
 

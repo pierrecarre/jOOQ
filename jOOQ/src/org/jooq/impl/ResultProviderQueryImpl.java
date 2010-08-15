@@ -36,6 +36,7 @@ import java.sql.SQLException;
 
 import org.jooq.CombineOperator;
 import org.jooq.FieldList;
+import org.jooq.Record;
 import org.jooq.ResultProviderQuery;
 
 /**
@@ -82,5 +83,10 @@ class ResultProviderQueryImpl extends AbstractResultProviderQuery {
 	@Override
 	protected FieldList getSelect() {
 		return left.getSelect();
+	}
+
+	@Override
+	protected Class<? extends Record> getRecordType() {
+		return left.getRecordType();
 	}
 }

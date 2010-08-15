@@ -31,6 +31,8 @@
 
 package org.jooq;
 
+import org.jooq.impl.RecordImpl;
+
 /**
  * A typed list of tables
  *
@@ -38,4 +40,22 @@ package org.jooq;
  */
 public interface TableList extends QueryPartList<Table> {
 
+	/**
+	 * Returns the common record type of this table list.
+	 * <p>
+	 * <ul>
+	 * <li>
+	 * If there is no table contained in this list, then the default type
+	 * {@link RecordImpl} is returned.</li>
+	 * <li>
+	 * If there is a single table contained in this list, then the table's
+	 * {@link Table#getRecordType()} is returned.</li>
+	 * <li>
+	 * If there are several tables contained in this list, then the behaviour is
+	 * not yet defined. In the future, this may return a combined record type.</li>
+	 * </ul>
+	 *
+	 * @return The common record type of this table list
+	 */
+	Class<? extends Record> getRecordType();
 }

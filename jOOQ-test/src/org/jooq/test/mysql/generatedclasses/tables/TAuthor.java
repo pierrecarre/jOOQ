@@ -4,11 +4,11 @@
 package org.jooq.test.mysql.generatedclasses.tables;
 
 import java.sql.Date;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 
 
 /**
@@ -24,6 +24,19 @@ public class TAuthor extends TableImpl {
 	 * The singleton instance of t_author
 	 */
 	public static final TAuthor T_AUTHOR = new TAuthor();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TAuthorRecord> RECORD_TYPE = TAuthorRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TAuthorRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * The author ID

@@ -35,6 +35,7 @@ import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
 
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableList;
 
@@ -56,5 +57,14 @@ class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
 	@Override
 	protected String toSQLEmptyList() {
 		return EMPTY_TABLE.toSQLReference();
+	}
+
+	@Override
+	public Class<? extends Record> getRecordType() {
+		if (size() == 1) {
+			return get(0).getRecordType();
+		} else {
+			return RecordImpl.class;
+		}
 	}
 }

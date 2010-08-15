@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 
 import org.jooq.FieldList;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -84,5 +85,10 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	@Override
 	public Table alias(String alias) {
 		return new TableAlias(this, alias);
+	}
+
+	@Override
+	public Class<? extends Record> getRecordType() {
+		return RecordImpl.class;
 	}
 }

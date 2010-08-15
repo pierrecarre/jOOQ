@@ -56,4 +56,9 @@ public interface Table extends NamedQueryPart, AliasProvider<Table> {
 	 */
 	@Override
 	Table alias(String alias);
+
+	/**
+	 * @return The record type produced by this table
+	 */
+	Class<? extends Record> getRecordType();
 }

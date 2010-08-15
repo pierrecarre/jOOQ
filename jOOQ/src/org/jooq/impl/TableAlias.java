@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.FieldList;
+import org.jooq.Record;
 import org.jooq.Table;
 
 /**
@@ -52,5 +53,10 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 	@Override
 	public FieldList getFields() {
 		return getAliasProvider().getFields();
+	}
+
+	@Override
+	public Class<? extends Record> getRecordType() {
+		return getAliasProvider().getRecordType();
 	}
 }

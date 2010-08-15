@@ -40,6 +40,7 @@ import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderQuery;
 import org.jooq.SubQueryCondition;
@@ -64,11 +65,22 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 			result = new ResultImpl(this);
 
 			while (rs.next()) {
-				RecordImpl record = new RecordImpl(result);
+				Record record = null;
 
-				for (Field<?> field : getSelect()) {
-					Object value = FieldTypeHelper.getFromResultSet(rs, field);
-					record.addValue(field, value);
+				Class<? extends Record> recordType = getRecordType();
+				try {
+					record = recordType.getConstructor(Result.class).newInstance(result);
+				} catch (Exception e) {
+					record = new RecordImpl(result);
+				}
+
+				for (Field<?> f : getSelect()) {
+
+					@SuppressWarnings("unchecked")
+					Field<Object> field = (Field<Object>) f;
+					Object value = FieldTypeHelper.getFromResultSet(rs, f);
+
+					record.setValue(field, value);
 				}
 
 				result.addRecord(record);
@@ -83,6 +95,7 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	}
 
 	protected abstract FieldList getSelect();
+	protected abstract Class<? extends Record> getRecordType();
 
 	@Override
 	public final Result getResult() {

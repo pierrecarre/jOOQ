@@ -36,8 +36,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import org.jooq.Result;
 import org.jooq.TableField;
 import org.jooq.impl.ParameterImpl;
+import org.jooq.impl.RecordImpl;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
@@ -125,6 +127,21 @@ public class DefaultGenerator implements Generator {
 			out.println("\t */");
 			out.println("\tpublic static final " + table.getJavaClassName() + " " + table.getNameUC() + " = new " + table.getJavaClassName() + "();");
 
+			out.println();
+			out.println("\t/**");
+			out.println("\t * The class holding records for this table");
+			out.println("\t */");
+			out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
+			out.println();
+			out.println("\t/**");
+			out.println("\t * The class holding records for this table");
+			out.println("\t */");
+			printOverride(out);
+			out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
+			out.println("\t\treturn RECORD_TYPE;");
+			out.println("\t}");
+			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
+
 			for (ColumnDefinition column : table.getColumns()) {
 				printColumn(out, column, table.getNameUC());
 			}
@@ -140,6 +157,38 @@ public class DefaultGenerator implements Generator {
 			out.close();
 		}
 
+		// ----------------------------------------------------------------------
+		// Generating table records
+		// ----------------------------------------------------------------------
+		File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
+		System.out.println("Generating classes in " + targetTableRecordPackageDir.getCanonicalPath());
+
+		for (TableDefinition table : database.getTables()) {
+			targetTableRecordPackageDir.mkdirs();
+
+			System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
+
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
+			printHeader(out, targetPackageName + ".tables.records");
+			printClassJavadoc(out, table);
+
+			out.println("public class " + table.getJavaClassName("Record") + " extends RecordImpl {");
+			printSerial(out);
+			out.printImport(RecordImpl.class);
+
+			for (ColumnDefinition column : table.getColumns()) {
+				printGetterAndSetter(out, column, table, targetPackageName + ".tables");
+			}
+
+			out.println();
+			out.println("\tpublic " + table.getJavaClassName("Record") + "(Result result) {");
+			out.println("\t\tsuper(result);");
+			out.println("\t}");
+			out.printImport(Result.class);
+
+			out.println("}");
+			out.close();
+		}
 
 		// ----------------------------------------------------------------------
 		// Generating stored procedures
@@ -263,6 +312,10 @@ public class DefaultGenerator implements Generator {
 		}
 	}
 
+	private void printOverride(GenerationWriter out) {
+		out.println("\t@Override");
+	}
+
 	/**
 	 * If file is a directory, recursively empty its children.
 	 * If file is a file, delete it
@@ -283,6 +336,22 @@ public class DefaultGenerator implements Generator {
 				}
 			}
 		}
+	}
+
+	private void printGetterAndSetter(GenerationWriter out, ColumnDefinition column, TableDefinition table, String tablePackage) {
+		String columnDisambiguationSuffix = column.getNameUC().equals(table.getNameUC()) ? "_" : "";
+
+		printFieldJavaDoc(out, null, column);
+		out.println("\tpublic void set" + column.getJavaClassName() + "(" + column.getType() + " value) {");
+		out.println("\t\tsetValue(" + table.getJavaClassName() + "." + column.getName() + columnDisambiguationSuffix + ", value);");
+		out.println("\t}");
+		printFieldJavaDoc(out, null, column);
+		out.println("\tpublic " + column.getType() + " get" + column.getJavaClassName() + "() {");
+		out.println("\t\treturn getValue(" + table.getJavaClassName() + "." + column.getName() + columnDisambiguationSuffix + ");");
+		out.println("\t}");
+
+		out.printImport(tablePackage + "." + table.getJavaClassName());
+		out.printImport(column.getTypeClass());
 	}
 
 	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) {

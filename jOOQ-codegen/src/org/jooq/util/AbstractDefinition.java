@@ -82,8 +82,18 @@ public abstract class AbstractDefinition implements Definition {
 	}
 
 	@Override
+	public final String getJavaClassName(String suffix) {
+		return getJavaClassName() + suffix;
+	}
+
+	@Override
 	public final String getFileName() {
 		return getJavaClassName() + ".java";
+	}
+
+	@Override
+	public final String getFileName(String suffix) {
+		return getJavaClassName() + suffix + ".java";
 	}
 
 	protected final Database getDatabase() {

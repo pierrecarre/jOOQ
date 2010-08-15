@@ -67,6 +67,7 @@ import org.jooq.test.mysql.generatedclasses.procedures.PAuthorExists;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
+import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -153,6 +154,9 @@ public class jOOQMySQLTest {
 		assertEquals(2, result.getNumberOfRecords());
 		assertEquals("Coelho", result.getRecord(0).getValue(LAST_NAME));
 		assertEquals("Orwell", result.getRecord(1).getValue(LAST_NAME));
+
+		TAuthorRecord record = (TAuthorRecord) result.getRecord(0);
+		assertEquals("Coelho", record.getLastName());
 	}
 
 	@Test
