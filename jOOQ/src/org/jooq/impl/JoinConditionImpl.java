@@ -35,11 +35,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Field;
+import org.jooq.JoinCondition;
 
 /**
  * @author Lukas Eder
  */
-class JoinConditionImpl<T> extends AbstractQueryPart implements org.jooq.JoinCondition<T> {
+class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T> {
 
 	private static final long serialVersionUID = -747240442279619486L;
 	
