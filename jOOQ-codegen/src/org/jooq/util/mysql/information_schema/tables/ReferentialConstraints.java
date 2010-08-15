@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.ReferentialConstraintsRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class ReferentialConstraints extends TableImpl {
 
-	private static final long serialVersionUID = 6954693956045210597L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of REFERENTIAL_CONSTRAINTS
 	 */
 	public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = new ReferentialConstraints();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ReferentialConstraintsRecord> RECORD_TYPE = ReferentialConstraintsRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ReferentialConstraintsRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

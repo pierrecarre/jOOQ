@@ -11,7 +11,7 @@ import org.jooq.impl.SchemaImpl;
  */
 public class Mysql extends SchemaImpl {
 
-	private static final long serialVersionUID = -7262237476187860010L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of mysql

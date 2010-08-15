@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.HelpKeywordRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class HelpKeyword extends TableImpl {
 
-	private static final long serialVersionUID = -5637501498101737793L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of help_keyword
 	 */
 	public static final HelpKeyword HELP_KEYWORD = new HelpKeyword();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<HelpKeywordRecord> RECORD_TYPE = HelpKeywordRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<HelpKeywordRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

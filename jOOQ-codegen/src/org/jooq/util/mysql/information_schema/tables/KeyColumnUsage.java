@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.KeyColumnUsageRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class KeyColumnUsage extends TableImpl {
 
-	private static final long serialVersionUID = -1175906275670965038L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of KEY_COLUMN_USAGE
 	 */
 	public static final KeyColumnUsage KEY_COLUMN_USAGE = new KeyColumnUsage();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<KeyColumnUsageRecord> RECORD_TYPE = KeyColumnUsageRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<KeyColumnUsageRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

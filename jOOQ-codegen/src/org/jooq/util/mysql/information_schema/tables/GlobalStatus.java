@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.GlobalStatusRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class GlobalStatus extends TableImpl {
 
-	private static final long serialVersionUID = 6998957128136912766L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of GLOBAL_STATUS
 	 */
 	public static final GlobalStatus GLOBAL_STATUS = new GlobalStatus();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<GlobalStatusRecord> RECORD_TYPE = GlobalStatusRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<GlobalStatusRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

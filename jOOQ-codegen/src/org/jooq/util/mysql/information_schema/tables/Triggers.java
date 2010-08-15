@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.TriggersRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Triggers extends TableImpl {
 
-	private static final long serialVersionUID = -695726189787350313L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of TRIGGERS
 	 */
 	public static final Triggers TRIGGERS = new Triggers();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TriggersRecord> RECORD_TYPE = TriggersRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TriggersRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

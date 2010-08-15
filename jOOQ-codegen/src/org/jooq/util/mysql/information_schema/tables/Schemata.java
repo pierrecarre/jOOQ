@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.SchemataRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Schemata extends TableImpl {
 
-	private static final long serialVersionUID = 4251395237821520589L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of SCHEMATA
 	 */
 	public static final Schemata SCHEMATA = new Schemata();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<SchemataRecord> RECORD_TYPE = SchemataRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<SchemataRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

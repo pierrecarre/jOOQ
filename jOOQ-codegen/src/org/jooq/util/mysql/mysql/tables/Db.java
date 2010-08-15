@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.DbRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class Db extends TableImpl {
 
-	private static final long serialVersionUID = -4114467738486971466L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of db
 	 */
 	public static final Db DB = new Db();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<DbRecord> RECORD_TYPE = DbRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<DbRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item
@@ -30,7 +44,7 @@ public class Db extends TableImpl {
 
 	/**
 	 * An uncommented item
-	 *
+	 * 
 	 * This item has the same name as its container. That is why an underline character was appended to the Java field name
 	 */
 	public static final TableField<String> DB_ = new TableFieldImpl<String>("Db", String.class, DB);

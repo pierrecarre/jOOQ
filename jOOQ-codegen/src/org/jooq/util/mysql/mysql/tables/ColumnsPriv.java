@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.ColumnsPrivRecord;
 
 
 /**
@@ -18,12 +18,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class ColumnsPriv extends TableImpl {
 
-	private static final long serialVersionUID = -8393943634933893040L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of columns_priv
 	 */
 	public static final ColumnsPriv COLUMNS_PRIV = new ColumnsPriv();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ColumnsPrivRecord> RECORD_TYPE = ColumnsPrivRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ColumnsPrivRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

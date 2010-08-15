@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.SessionStatusRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class SessionStatus extends TableImpl {
 
-	private static final long serialVersionUID = -8275168246701712673L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of SESSION_STATUS
 	 */
 	public static final SessionStatus SESSION_STATUS = new SessionStatus();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<SessionStatusRecord> RECORD_TYPE = SessionStatusRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<SessionStatusRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

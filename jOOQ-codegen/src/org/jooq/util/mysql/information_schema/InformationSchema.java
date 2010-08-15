@@ -11,7 +11,7 @@ import org.jooq.impl.SchemaImpl;
  */
 public class InformationSchema extends SchemaImpl {
 
-	private static final long serialVersionUID = 5453421554479587914L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of information_schema

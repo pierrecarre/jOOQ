@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.ProcesslistRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Processlist extends TableImpl {
 
-	private static final long serialVersionUID = 5240927793392215826L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of PROCESSLIST
 	 */
 	public static final Processlist PROCESSLIST = new Processlist();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ProcesslistRecord> RECORD_TYPE = ProcesslistRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ProcesslistRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

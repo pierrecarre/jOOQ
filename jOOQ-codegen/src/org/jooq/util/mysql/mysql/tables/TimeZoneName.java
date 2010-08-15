@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.TimeZoneNameRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class TimeZoneName extends TableImpl {
 
-	private static final long serialVersionUID = 2083515155343574617L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of time_zone_name
 	 */
 	public static final TimeZoneName TIME_ZONE_NAME = new TimeZoneName();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TimeZoneNameRecord> RECORD_TYPE = TimeZoneNameRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TimeZoneNameRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

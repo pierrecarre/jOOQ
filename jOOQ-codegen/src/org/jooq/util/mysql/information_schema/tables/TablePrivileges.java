@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.TablePrivilegesRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class TablePrivileges extends TableImpl {
 
-	private static final long serialVersionUID = -3292669084314291729L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of TABLE_PRIVILEGES
 	 */
 	public static final TablePrivileges TABLE_PRIVILEGES = new TablePrivileges();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TablePrivilegesRecord> RECORD_TYPE = TablePrivilegesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TablePrivilegesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

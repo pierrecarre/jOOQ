@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.TimeZoneLeapSecondRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class TimeZoneLeapSecond extends TableImpl {
 
-	private static final long serialVersionUID = -2815805651458565043L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of time_zone_leap_second
 	 */
 	public static final TimeZoneLeapSecond TIME_ZONE_LEAP_SECOND = new TimeZoneLeapSecond();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TimeZoneLeapSecondRecord> RECORD_TYPE = TimeZoneLeapSecondRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TimeZoneLeapSecondRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.math.BigDecimal;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.ProfilingRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Profiling extends TableImpl {
 
-	private static final long serialVersionUID = 4569432722342672605L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of PROFILING
 	 */
 	public static final Profiling PROFILING = new Profiling();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ProfilingRecord> RECORD_TYPE = ProfilingRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ProfilingRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.PluginRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class Plugin extends TableImpl {
 
-	private static final long serialVersionUID = -4255074889600924118L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of plugin
 	 */
 	public static final Plugin PLUGIN = new Plugin();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<PluginRecord> RECORD_TYPE = PluginRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<PluginRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

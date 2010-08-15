@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.ServersRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class Servers extends TableImpl {
 
-	private static final long serialVersionUID = -2075558342263605450L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of servers
 	 */
 	public static final Servers SERVERS = new Servers();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ServersRecord> RECORD_TYPE = ServersRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ServersRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

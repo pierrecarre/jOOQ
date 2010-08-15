@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.GlobalVariablesRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class GlobalVariables extends TableImpl {
 
-	private static final long serialVersionUID = 4580196145562853264L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of GLOBAL_VARIABLES
 	 */
 	public static final GlobalVariables GLOBAL_VARIABLES = new GlobalVariables();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<GlobalVariablesRecord> RECORD_TYPE = GlobalVariablesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<GlobalVariablesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.PartitionsRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Partitions extends TableImpl {
 
-	private static final long serialVersionUID = -9110038408046597413L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of PARTITIONS
 	 */
 	public static final Partitions PARTITIONS = new Partitions();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<PartitionsRecord> RECORD_TYPE = PartitionsRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<PartitionsRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

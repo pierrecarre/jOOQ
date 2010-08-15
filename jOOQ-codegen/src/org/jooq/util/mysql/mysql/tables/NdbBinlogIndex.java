@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.NdbBinlogIndexRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class NdbBinlogIndex extends TableImpl {
 
-	private static final long serialVersionUID = -1149875840073851154L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of ndb_binlog_index
 	 */
 	public static final NdbBinlogIndex NDB_BINLOG_INDEX = new NdbBinlogIndex();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<NdbBinlogIndexRecord> RECORD_TYPE = NdbBinlogIndexRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<NdbBinlogIndexRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

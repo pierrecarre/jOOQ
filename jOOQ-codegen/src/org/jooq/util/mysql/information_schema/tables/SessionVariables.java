@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.SessionVariablesRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class SessionVariables extends TableImpl {
 
-	private static final long serialVersionUID = 4176363765393538779L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of SESSION_VARIABLES
 	 */
 	public static final SessionVariables SESSION_VARIABLES = new SessionVariables();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<SessionVariablesRecord> RECORD_TYPE = SessionVariablesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<SessionVariablesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

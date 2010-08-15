@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.EnginesRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Engines extends TableImpl {
 
-	private static final long serialVersionUID = -342058199132163353L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of ENGINES
 	 */
 	public static final Engines ENGINES = new Engines();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<EnginesRecord> RECORD_TYPE = EnginesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<EnginesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

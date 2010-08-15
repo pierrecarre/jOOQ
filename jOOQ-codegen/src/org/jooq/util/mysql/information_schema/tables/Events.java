@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.EventsRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Events extends TableImpl {
 
-	private static final long serialVersionUID = -1500889288211041855L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of EVENTS
 	 */
 	public static final Events EVENTS = new Events();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<EventsRecord> RECORD_TYPE = EventsRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<EventsRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

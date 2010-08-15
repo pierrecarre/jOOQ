@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.FilesRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Files extends TableImpl {
 
-	private static final long serialVersionUID = -6953971630045645118L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of FILES
 	 */
 	public static final Files FILES = new Files();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<FilesRecord> RECORD_TYPE = FilesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<FilesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

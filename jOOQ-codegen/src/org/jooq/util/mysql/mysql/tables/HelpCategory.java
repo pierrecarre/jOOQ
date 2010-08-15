@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.HelpCategoryRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class HelpCategory extends TableImpl {
 
-	private static final long serialVersionUID = -5237169850636577219L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of help_category
 	 */
 	public static final HelpCategory HELP_CATEGORY = new HelpCategory();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<HelpCategoryRecord> RECORD_TYPE = HelpCategoryRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<HelpCategoryRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

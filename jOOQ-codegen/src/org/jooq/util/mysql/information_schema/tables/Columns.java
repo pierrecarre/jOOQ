@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.ColumnsRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Columns extends TableImpl {
 
-	private static final long serialVersionUID = -5908883320521357861L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of COLUMNS
 	 */
 	public static final Columns COLUMNS = new Columns();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<ColumnsRecord> RECORD_TYPE = ColumnsRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<ColumnsRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

@@ -343,11 +343,11 @@ public class DefaultGenerator implements Generator {
 
 		printFieldJavaDoc(out, null, column);
 		out.println("\tpublic void set" + column.getJavaClassName() + "(" + column.getType() + " value) {");
-		out.println("\t\tsetValue(" + table.getJavaClassName() + "." + column.getName() + columnDisambiguationSuffix + ", value);");
+		out.println("\t\tsetValue(" + table.getJavaClassName() + "." + column.getNameUC() + columnDisambiguationSuffix + ", value);");
 		out.println("\t}");
 		printFieldJavaDoc(out, null, column);
 		out.println("\tpublic " + column.getType() + " get" + column.getJavaClassName() + "() {");
-		out.println("\t\treturn getValue(" + table.getJavaClassName() + "." + column.getName() + columnDisambiguationSuffix + ");");
+		out.println("\t\treturn getValue(" + table.getJavaClassName() + "." + column.getNameUC() + columnDisambiguationSuffix + ");");
 		out.println("\t}");
 
 		out.printImport(tablePackage + "." + table.getJavaClassName());

@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.RoutinesRecord;
 
 
 /**
@@ -16,12 +16,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class Routines extends TableImpl {
 
-	private static final long serialVersionUID = -3200238530270145057L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of ROUTINES
 	 */
 	public static final Routines ROUTINES = new Routines();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<RoutinesRecord> RECORD_TYPE = RoutinesRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<RoutinesRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

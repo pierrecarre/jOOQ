@@ -5,11 +5,11 @@ package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.SlowLogRecord;
 
 
 /**
@@ -19,12 +19,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class SlowLog extends TableImpl {
 
-	private static final long serialVersionUID = -1088129049777240643L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of slow_log
 	 */
 	public static final SlowLog SLOW_LOG = new SlowLog();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<SlowLogRecord> RECORD_TYPE = SlowLogRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<SlowLogRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

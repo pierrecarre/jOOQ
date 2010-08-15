@@ -4,11 +4,11 @@
 package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Timestamp;
-
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.GeneralLogRecord;
 
 
 /**
@@ -18,12 +18,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class GeneralLog extends TableImpl {
 
-	private static final long serialVersionUID = 3488179440194763607L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of general_log
 	 */
 	public static final GeneralLog GENERAL_LOG = new GeneralLog();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<GeneralLogRecord> RECORD_TYPE = GeneralLogRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<GeneralLogRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

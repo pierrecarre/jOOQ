@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.CollationCharacterSetApplicabilityRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class CollationCharacterSetApplicability extends TableImpl {
 
-	private static final long serialVersionUID = 471747587621012402L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of COLLATION_CHARACTER_SET_APPLICABILITY
 	 */
 	public static final CollationCharacterSetApplicability COLLATION_CHARACTER_SET_APPLICABILITY = new CollationCharacterSetApplicability();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<CollationCharacterSetApplicabilityRecord> RECORD_TYPE = CollationCharacterSetApplicabilityRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<CollationCharacterSetApplicabilityRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.HelpRelationRecord;
 
 
 /**
@@ -16,12 +17,25 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class HelpRelation extends TableImpl {
 
-	private static final long serialVersionUID = -6299328832415081017L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of help_relation
 	 */
 	public static final HelpRelation HELP_RELATION = new HelpRelation();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<HelpRelationRecord> RECORD_TYPE = HelpRelationRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<HelpRelationRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

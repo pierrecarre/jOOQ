@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
+import org.jooq.util.mysql.information_schema.tables.records.CharacterSetsRecord;
 
 
 /**
@@ -14,12 +15,25 @@ import org.jooq.util.mysql.information_schema.InformationSchema;
  */
 public class CharacterSets extends TableImpl {
 
-	private static final long serialVersionUID = -7580072422137352461L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of CHARACTER_SETS
 	 */
 	public static final CharacterSets CHARACTER_SETS = new CharacterSets();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<CharacterSetsRecord> RECORD_TYPE = CharacterSetsRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<CharacterSetsRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

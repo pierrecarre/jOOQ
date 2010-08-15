@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.tables.records.HostRecord;
 
 
 /**
@@ -16,7 +17,7 @@ import org.jooq.util.mysql.mysql.Mysql;
  */
 public class Host extends TableImpl {
 
-	private static final long serialVersionUID = 6233749567181393654L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of host
@@ -24,8 +25,21 @@ public class Host extends TableImpl {
 	public static final Host HOST = new Host();
 
 	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<HostRecord> RECORD_TYPE = HostRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<HostRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
+
+	/**
 	 * An uncommented item
-	 *
+	 * 
 	 * This item has the same name as its container. That is why an underline character was appended to the Java field name
 	 */
 	public static final TableField<String> HOST_ = new TableFieldImpl<String>("Host", String.class, HOST);
