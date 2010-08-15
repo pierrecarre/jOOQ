@@ -51,7 +51,7 @@ public class GenerationTask extends Task {
 		
 		properties.setProperty("generator", "org.jooq.util.DefaultGenerator");
 		properties.setProperty("generator.database", "org.jooq.util.mysql.MySQLDatabase");
-		properties.setProperty("generator.database.includes", "*");
+		properties.setProperty("generator.database.includes", ".*");
 		properties.setProperty("generator.database.excludes", "");
 		
 		properties.setProperty("generator.target.directory", ".");

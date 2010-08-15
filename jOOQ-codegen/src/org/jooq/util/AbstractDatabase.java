@@ -33,6 +33,8 @@ package org.jooq.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -42,6 +44,8 @@ public abstract class AbstractDatabase implements Database {
 
 	private Connection connection;
 	private String schema;
+	private String[] excludes;
+	private String[] includes;
 
 	@Override
 	public final void setConnection(Connection connection) {
@@ -70,11 +74,61 @@ public abstract class AbstractDatabase implements Database {
 
 	@Override
 	public void setExcludes(String[] excludes) {
-		// TODO
+		this.excludes = excludes;
+	}
+
+	@Override
+	public String[] getExcludes() {
+		return excludes;
 	}
 
 	@Override
 	public void setIncludes(String[] includes) {
-		// TODO
+		this.includes = includes;
 	}
+
+	@Override
+	public String[] getIncludes() {
+		return includes;
+	}
+
+	@Override
+	public final List<TableDefinition> getTables() throws SQLException {
+		return filter(getTables0());
+	}
+
+	@Override
+	public final List<ProcedureDefinition> getProcedures() throws SQLException {
+		return filter(getProcedures0());
+	}
+
+	@Override
+	public final List<FunctionDefinition> getFunctions() throws SQLException {
+		return filter(getFunctions0());
+	}
+	
+	private final <T extends Definition> List<T> filter(List<T> definitions) {
+		List<T> result = new ArrayList<T>();
+		
+		definitionsLoop: for (T definition : definitions) {
+			for (String exclude : excludes) {
+				if (definition.getName().matches(exclude)) {
+					continue definitionsLoop;
+				}
+			}
+			
+			for (String include : includes) {
+				if (definition.getName().matches(include)) {
+					result.add(definition);
+					continue definitionsLoop;
+				}
+			}
+		}
+		
+		return result;
+	}
+
+	protected abstract List<TableDefinition> getTables0() throws SQLException;
+	protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
+	protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
 }

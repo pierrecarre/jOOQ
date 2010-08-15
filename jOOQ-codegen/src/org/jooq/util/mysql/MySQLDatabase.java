@@ -63,7 +63,7 @@ import org.jooq.util.TableDefinition;
 public class MySQLDatabase extends AbstractDatabase {
 
 	@Override
-	public List<TableDefinition> getTables() throws SQLException {
+	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 		
 		SelectQuery q = createSelectQuery(TABLES);
@@ -85,7 +85,7 @@ public class MySQLDatabase extends AbstractDatabase {
 	}
 
 	@Override
-	public List<ProcedureDefinition> getProcedures() throws SQLException {
+	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
 		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
 		
 		for (Record record : executeProcedureQuery("PROCEDURE")) {
@@ -101,7 +101,7 @@ public class MySQLDatabase extends AbstractDatabase {
 	}
 
 	@Override
-	public List<FunctionDefinition> getFunctions() throws SQLException {
+	protected List<FunctionDefinition> getFunctions0() throws SQLException {
 		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
 		
 		for (Record record : executeProcedureQuery("FUNCTION")) {

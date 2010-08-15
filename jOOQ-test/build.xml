@@ -20,6 +20,8 @@
 			jdbcschema="test"
 			jdbcuser="root"
 			jdbcpassword=""
+			generatordatabaseincludes=".*"
+			generatordatabaseexcludes=""
 			generatortargetpackage="org.jooq.test.generatedclasses"
 			generatortargetdirectory="${basedir}/src"/>
 	</target>

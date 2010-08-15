@@ -52,6 +52,8 @@ public interface Database {
 	String getSchemaName();
 	
 	void setIncludes(String[] includes);
-
+	String[] getIncludes();
+	
 	void setExcludes(String[] excludes);
+	String[] getExcludes();
 }
