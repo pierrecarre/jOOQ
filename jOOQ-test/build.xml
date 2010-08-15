@@ -22,7 +22,7 @@
 			jdbcpassword=""
 			generatordatabaseincludes=".*"
 			generatordatabaseexcludes=""
-			generatortargetpackage="org.jooq.test.generatedclasses"
+			generatortargetpackage="org.jooq.test.mysql.generatedclasses"
 			generatortargetdirectory="${basedir}/src"/>
 	</target>
 </project>
