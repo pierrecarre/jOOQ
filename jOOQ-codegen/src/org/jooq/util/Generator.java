@@ -36,7 +36,7 @@ import java.sql.SQLException;
 
 /**
  * The Generator provides a basic interface for java code generation
- * 
+ *
  * @author Lukas Eder
  */
 public interface Generator {

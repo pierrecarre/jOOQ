@@ -40,17 +40,17 @@ import java.util.Properties;
  * The GenerationTool takes care of generating Java code from a database schema. It
  * takes its configuration parameters from a standard Java properties file,
  * using this format:
- * 
+ *
  * <ul>
- * 
+ *
  * <li>jdbcDriver = [the JDBC driver to connect with. Make sure it is on the
  * classpath]</li>
  * <li>jdbcURL = [the JDBC URL to connect with]</li>
  * <li>jdbcUser = [the JDBC user to connect with]</li>
  * <li>jdbcPassword = [the JDBC password to connect with]</li>
- * 
+ *
  * </ul>
- * 
+ *
  * @author Lukas Eder
  */
 public class GenerationTool {
@@ -91,7 +91,7 @@ public class GenerationTool {
 	public static void main(Properties properties) throws Exception {
 		Class.forName(properties.getProperty("jdbc.Driver"));
 		Connection connection = null;
-		
+
 		try {
 			connection = DriverManager.getConnection(
 					properties.getProperty("jdbc.URL"),
@@ -101,16 +101,16 @@ public class GenerationTool {
 			@SuppressWarnings("unchecked")
 			Class<Generator> generatorClass = (Class<Generator>) Class.forName(properties.getProperty("generator"));
 			Generator generator = generatorClass.newInstance();
-			
+
 			@SuppressWarnings("unchecked")
 			Class<Database> databaseClass = (Class<Database>) Class.forName(properties.getProperty("generator.database"));
 			Database database = databaseClass.newInstance();
-			
+
 			database.setConnection(connection);
 			database.setSchemaName(properties.getProperty("jdbc.Schema"));
 			database.setIncludes(properties.getProperty("generator.database.includes").split(","));
 			database.setExcludes(properties.getProperty("generator.database.excludes").split(","));
-			
+
 			generator.setTargetDirectory(properties.getProperty("generator.target.directory"));
 			generator.setTargetPackage(properties.getProperty("generator.target.package"));
 			generator.generate(database);

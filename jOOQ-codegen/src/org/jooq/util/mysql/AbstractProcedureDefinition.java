@@ -40,7 +40,7 @@ import org.jooq.util.Database;
  * @author Lukas Eder
  */
 public abstract class AbstractProcedureDefinition extends AbstractDefinition {
-	
+
 	private static final String INOUT = "(?:(IN|OUT|INOUT)\\s+?)?";
 	private static final String PARAM_NAME = "(?:(\\S+?)\\s+?)";
 	private static final String PARAM_TYPE = "([^\\s\\(]+)(?:\\(.*?\\))?";
@@ -48,7 +48,7 @@ public abstract class AbstractProcedureDefinition extends AbstractDefinition {
 	protected static final String PARAMETER = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";
 	protected static final Pattern PARAMETER_PATTERN = Pattern.compile(PARAMETER);
 	protected static final Pattern TYPE_PATTERN = Pattern.compile(PARAM_TYPE);
-	
+
 	public AbstractProcedureDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,34 +29,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
-import org.jooq.DatePart;
-import org.jooq.Field;
-import org.jooq.NamedQueryPart;
+package org.jooq;
 
 /**
+ * A parameter to a stored procedure or function.
+ *
  * @author Lukas Eder
  */
-class ExtractFunctionImpl extends FunctionImpl<Integer> {
+public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
 
-	private static final long serialVersionUID = 3748640920856031034L;
-	private final DatePart datePart;
-
-	ExtractFunctionImpl(Field<?> field, DatePart datePart) {
-		super("extract", Integer.class, field);
-
-		this.datePart = datePart;
-	}
-
-	@Override
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(datePart.toSQL());
-		sb.append(" from ");
-		sb.append(super.toSQLField(field, inlineParameters));
-
-		return sb.toString();
-	}
 }

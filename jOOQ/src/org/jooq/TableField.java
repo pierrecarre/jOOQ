@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A field contained in a table
- * 
+ *
  * @author Lukas Eder
  */
 public interface TableField<T> extends Field<T> {

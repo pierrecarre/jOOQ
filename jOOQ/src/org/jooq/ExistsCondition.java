@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A condition holding an inner select for the EXISTS condition
- * 
+ *
  * @author Lukas Eder
  */
 public interface ExistsCondition extends Condition {
@@ -42,7 +42,7 @@ public interface ExistsCondition extends Condition {
 	 * @return The operator used in the condition
 	 */
 	ExistsOperator getOperator();
-	
+
 	/**
 	 * @return The inner select used in the condition
 	 */

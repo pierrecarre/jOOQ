@@ -37,27 +37,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.NamedQueryPart;
 
 /**
  * @author Lukas Eder
  */
-class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
+class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
 	private static final long serialVersionUID = 347252741712134044L;
 
-	private final Class<T> type;
-	private final List<Field<?>> fields;
+	private final List<NamedQueryPart> arguments;
 
-	FunctionImpl(String name, Class<T> type, Field<?>... fields) {
-		super (name);
+	FunctionImpl(String name, Class<T> type, NamedQueryPart... arguments) {
+		super (name, type);
 
-		this.type = type;
-		this.fields = Arrays.asList(fields);
-	}
-
-	@Override
-	public final Class<T> getType() {
-		return type;
+		this.arguments = Arrays.asList(arguments);
 	}
 
 	@Override
@@ -68,10 +62,10 @@ class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 		sb.append("(");
 
 		String separator = "";
-		if (fields.isEmpty()) {
+		if (arguments.isEmpty()) {
 			sb.append(toSQLEmptyFields(inlineParameters));
 		} else {
-			for (Field<?> field : fields) {
+			for (NamedQueryPart field : arguments) {
 				sb.append(separator);
 				sb.append(toSQLField(field, inlineParameters));
 
@@ -84,7 +78,7 @@ class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 		return sb.toString();
 	}
 
-	protected String toSQLField(Field<?> field, boolean inlineParameters) {
+	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
 		return field.toSQLReference(inlineParameters);
 	}
 
@@ -95,16 +89,16 @@ class FunctionImpl<T> extends AbstractNamedQueryPart implements Field<T> {
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
-		for (Field<?> field : getFields()) {
+
+		for (NamedQueryPart field : getFields()) {
 			result = field.bind(stmt, result);
 		}
-		
+
 		return result;
 	}
 
-	protected final List<Field<?>> getFields() {
-		return fields;
+	protected final List<NamedQueryPart> getFields() {
+		return arguments;
 	}
 
 	@Override

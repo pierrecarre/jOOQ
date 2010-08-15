@@ -63,9 +63,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 	@Override
 	public List<ColumnDefinition> getColumns() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
-		
+
 		SelectQuery q = createSelectQuery(COLUMNS);
-		
+
 		q.addSelect(COLUMN_NAME);
 		q.addSelect(ORDINAL_POSITION);
 		q.addSelect(DATA_TYPE);
@@ -73,19 +73,19 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchema()));
 		q.addConditions(createCompareCondition(TABLE_NAME, getName()));
 		q.addOrderBy(ORDINAL_POSITION);
-		
+
 		q.execute(getConnection());
 		for (Record record : q.getResult()) {
 			String name = record.getValue(COLUMN_NAME);
 			int position = record.getValue(ORDINAL_POSITION);
 			String dataType = record.getValue(DATA_TYPE);
 			String comment = record.getValue(COLUMN_COMMENT);
-			
+
 			Class<?> type = MySQLDataType.valueOf(dataType.toUpperCase()).getType();
 			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), name, position, type, comment);
 			result.add(column);
 		}
-		
+
 		return result;
 	}
 }

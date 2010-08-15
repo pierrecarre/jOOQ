@@ -25,7 +25,7 @@ public class Host extends TableImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * This item has the same name as its container. That is why an underline character was appended to the Java field name
 	 */
 	public static final TableField<String> HOST_ = new TableFieldImpl<String>("Host", String.class, HOST);

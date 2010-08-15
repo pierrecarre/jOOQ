@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.Field;
+import org.jooq.NamedQueryPart;
 
 /**
  * @author Lukas Eder
@@ -43,18 +44,18 @@ class PositionFunctionImpl extends IntegerFunction {
 
 	public PositionFunctionImpl(Field<String> search, Field<String> in) {
 		super("position", in);
-		
+
 		this.search = search;
 	}
 
 	@Override
-	protected String toSQLField(Field<?> field, boolean inlineParameters) {
+	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(super.toSQLField(search, inlineParameters));
 		sb.append(" in ");
 		sb.append(super.toSQLField(field, inlineParameters));
-		
+
 		return sb.toString();
 	}
 }

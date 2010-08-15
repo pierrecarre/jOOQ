@@ -40,7 +40,7 @@ public class EmptyTable extends TableImpl {
 
 	private static final long serialVersionUID = -7492790780048090156L;
 	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
-	
+
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
 		return initialIndex;

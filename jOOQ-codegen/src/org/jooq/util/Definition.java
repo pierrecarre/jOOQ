@@ -34,7 +34,7 @@ package org.jooq.util;
 /**
  * A general interface defining any database object, such as tables, views,
  * stored procedures, etc.
- * 
+ *
  * @author Lukas Eder
  */
 public interface Definition {

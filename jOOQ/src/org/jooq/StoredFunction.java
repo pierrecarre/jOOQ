@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A stored function
- * 
+ *
  * @author Lukas Eder
  */
 public interface StoredFunction<T> extends StoredObject {

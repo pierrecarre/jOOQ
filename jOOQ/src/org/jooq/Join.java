@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A join statement used to join tables to a SelectQuery
- * 
+ *
  * @author Lukas Eder
  */
 public interface Join extends QueryPart {

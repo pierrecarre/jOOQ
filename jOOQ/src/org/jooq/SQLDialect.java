@@ -35,7 +35,7 @@ package org.jooq;
  * This enumeration lists all supported dialects. The dialect used by the
  * framework can be set in {@link Configuration#setDialect(SQLDialect)} or using
  * the JVM parameter -Dorg.jooq.sql-dialect
- * 
+ *
  * @author Lukas Eder
  */
 public enum SQLDialect {
@@ -43,30 +43,30 @@ public enum SQLDialect {
 	 * The standard SQL dialect.
 	 */
 	SQL99,
-	
+
 	/**
 	 * The MySQL dialect
 	 */
 	MYSQL,
-	
+
 	/**
 	 * The Oracle dialect
 	 */
 	ORACLE,
-	
+
 	/**
 	 * The Microsoft SQL dialect
 	 */
 	MSSQL,
-	
+
 	/**
 	 * The PostGres dialect
 	 */
 	POSTGRES,
-	
+
 	/**
 	 * The Hypersonic SQL dialect
 	 */
 	HSQL;
-	
+
 }

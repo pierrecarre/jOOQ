@@ -36,7 +36,7 @@ import java.util.Map;
 
 /**
  * A query for data updating
- * 
+ *
  * @author Lukas Eder
  */
 public interface UpdateQuery extends Query, ConditionProvider {
@@ -48,7 +48,7 @@ public interface UpdateQuery extends Query, ConditionProvider {
 
 	/**
 	 * Add a value to the insert statement
-	 * 
+	 *
 	 * @param <T>
 	 *            The value type
 	 * @param field

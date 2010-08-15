@@ -37,7 +37,7 @@ import java.sql.SQLException;
 
 /**
  * Base functionality declaration for all query objects
- * 
+ *
  * @author Lukas Eder
  */
 public interface QueryPart extends Serializable {
@@ -45,7 +45,7 @@ public interface QueryPart extends Serializable {
 	/**
 	 * Transform this object into SQL, such that it can be used as a reference.
 	 * This always results in calling {@link #toSQLReference(false)}
-	 * 
+	 *
 	 * @return SQL representation of this QueryPart
 	 * @see {@link #toSQLReference(boolean)}
 	 */
@@ -53,7 +53,7 @@ public interface QueryPart extends Serializable {
 
 	/**
 	 * Transform this object into SQL, such that it can be used as a reference.
-	 * 
+	 *
 	 * @param inlineParameters
 	 *            if set to true, all parameters are inlined, not replaced by
 	 *            "?"
@@ -66,7 +66,7 @@ public interface QueryPart extends Serializable {
 	 * declaration. Usually, this is the same as calling
 	 * {@link #toSQLReference()}. This always results in calling {@link
 	 * #toSQLDeclaration(false)}
-	 * 
+	 *
 	 * @return SQL representation of this QueryPart
 	 * @see {@link #toSQLReference(boolean)}
 	 */
@@ -76,7 +76,7 @@ public interface QueryPart extends Serializable {
 	 * Transform this object into SQL, such that it can be used as a
 	 * declaration. Usually, this is the same as calling
 	 * {@link #toSQLReference(boolean)}
-	 * 
+	 *
 	 * @param inlineParameters
 	 *            if set to true, all parameters are inlined, not replaced by
 	 *            "?"
@@ -87,7 +87,7 @@ public interface QueryPart extends Serializable {
 	/**
 	 * Bind all parameters of this QueryPart to a PreparedStatement. This always
 	 * results in calling {@link #bind(stmt, 1)}
-	 * 
+	 *
 	 * @param stmt
 	 *            The statement to bind values to
 	 * @return The index of the next binding variable
@@ -98,7 +98,7 @@ public interface QueryPart extends Serializable {
 
 	/**
 	 * Bind all parameters of this QueryPart to a PreparedStatement.
-	 * 
+	 *
 	 * @param stmt
 	 *            The statement to bind values to
 	 * @param initialIndex

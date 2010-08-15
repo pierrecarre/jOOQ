@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A table to be used in queries
- * 
+ *
  * @author Lukas Eder
  */
 public interface Table extends NamedQueryPart, AliasProvider<Table> {
@@ -45,13 +45,15 @@ public interface Table extends NamedQueryPart, AliasProvider<Table> {
 	/**
 	 * @return The table's name
 	 */
+	@Override
 	String getName();
-	
+
 	/**
 	 * Create an alias for this table
-	 * 
+	 *
 	 * @param alias The alias name
 	 * @return The table alias
 	 */
+	@Override
 	Table alias(String alias);
 }

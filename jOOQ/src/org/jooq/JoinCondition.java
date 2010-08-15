@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A condition for joining two tables
- * 
+ *
  * @author Lukas Eder
  */
 public interface JoinCondition<T> extends Condition {

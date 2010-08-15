@@ -44,10 +44,10 @@ import org.jooq.util.FunctionDefinition;
 public abstract class AbstractFunctionDefinition extends AbstractProcedureDefinition implements FunctionDefinition {
 
 	private final List<ColumnDefinition> inParameters;
-	
+
 	public AbstractFunctionDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
-		
+
 		inParameters = new ArrayList<ColumnDefinition>();
 	}
 

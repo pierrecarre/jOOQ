@@ -33,14 +33,12 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.Parameter;
-
 /**
  * A common interface for stored procedures and stored functions.
- * 
+ *
  * These objects behave like queries, i.e. they can be executed on a connection.
  * The concrete behaviour is specific to the concrete interface
- * 
+ *
  * @author Lukas Eder
  */
 public interface StoredObject extends Query, NamedQueryPart {
@@ -48,6 +46,7 @@ public interface StoredObject extends Query, NamedQueryPart {
 	/**
 	 * @return The name of the stored procedure or function
 	 */
+	@Override
 	String getName();
 
 	/**

@@ -59,7 +59,7 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 		for (T value : values) {
 			bind(stmt, result++, field, value);
 		}
-		
+
 		return result;
 	}
 
@@ -76,19 +76,19 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(getField().toSQLReference(inlineParameters));
 		sb.append(" in (");
-		
+
 		String separator = "";
 		for (T value : getValues()) {
 			sb.append(separator);
 			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, getField()));
 			separator = ", ";
 		}
-		
+
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 }

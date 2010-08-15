@@ -44,19 +44,19 @@ public enum MySQLDataType {
 	BIT(Boolean.class),
 	BOOL(Boolean.class),
 	BOOLEAN(Boolean.class),
-	
+
 	TINYINT(Byte.class),
 	SMALLINT(Short.class),
 	MEDIUMINT(Integer.class),
 	INT(Integer.class),
 	INTEGER(Integer.class),
 	BIGINT(Integer.class),
-	
+
 	FLOAT(Float.class),
 	DOUBLE(Double.class),
 	DEC(BigDecimal.class),
 	DECIMAL(BigDecimal.class),
-	
+
 	CHAR(String.class),
 	VARCHAR(String.class),
 	TEXT(String.class),
@@ -64,20 +64,20 @@ public enum MySQLDataType {
 	LONGTEXT(String.class),
 	ENUM(String.class),
 	SET(String.class),
-	
+
 	BINARY(byte[].class),
 	VARBINARY(byte[].class),
 	TINYBLOB(byte[].class),
 	BLOB(byte[].class),
 	MEDIUMBLOB(byte[].class),
 	LONGBLOB(byte[].class),
-	
+
 	DATE(Date.class),
 	TIME(Time.class),
 	DATETIME(Timestamp.class),
 	TIMESTAMP(Timestamp.class),
 	YEAR(Date.class);
-	
+
 	private final Class<?> type;
 
 	private MySQLDataType(Class<?> type) {

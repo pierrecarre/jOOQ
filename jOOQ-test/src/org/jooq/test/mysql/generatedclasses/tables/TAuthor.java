@@ -4,6 +4,7 @@
 package org.jooq.test.mysql.generatedclasses.tables;
 
 import java.sql.Date;
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;

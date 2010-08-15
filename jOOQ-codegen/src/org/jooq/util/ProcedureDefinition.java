@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * An interface defining a stored procedure in a database.
- * 
+ *
  * @author Lukas Eder
  */
 public interface ProcedureDefinition extends Definition {

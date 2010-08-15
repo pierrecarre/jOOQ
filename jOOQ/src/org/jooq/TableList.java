@@ -33,9 +33,9 @@ package org.jooq;
 
 /**
  * A typed list of tables
- * 
+ *
  * @author Lukas Eder
  */
 public interface TableList extends QueryPartList<Table> {
-	
+
 }

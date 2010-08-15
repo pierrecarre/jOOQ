@@ -5,6 +5,7 @@ package org.jooq.util.mysql.mysql.tables;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;

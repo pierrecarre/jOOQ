@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * The sorting order used in OrderByFieldLists
- * 
+ *
  * @author Lukas Eder
  */
 public enum SortOrder {
@@ -49,11 +49,11 @@ public enum SortOrder {
 	DESC("desc");
 
 	private final String sql;
-	
+
 	private SortOrder(String sql) {
 		this.sql = sql;
 	}
-	
+
 	public String toSQL() {
 		return sql;
 	}

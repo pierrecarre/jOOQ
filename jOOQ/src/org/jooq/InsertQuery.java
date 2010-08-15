@@ -35,7 +35,7 @@ import java.util.Map;
 
 /**
  * A query for data insertion
- * 
+ *
  * @author Lukas Eder
  */
 public interface InsertQuery extends Query {
@@ -49,10 +49,10 @@ public interface InsertQuery extends Query {
 	 * @return An unmodifiable mapping of fields and values that are inserted by the query
 	 */
 	Map<Field<?>, ?> getValues();
-	
+
 	/**
 	 * Add a value to the insert statement
-	 * 
+	 *
 	 * @param <T> The value type
 	 * @param field The field
 	 * @param value The value

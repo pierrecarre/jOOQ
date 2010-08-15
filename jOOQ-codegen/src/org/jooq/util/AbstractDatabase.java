@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * A base implementation for all types of databases.
- * 
+ *
  * @author Lukas Eder
  */
 public abstract class AbstractDatabase implements Database {

@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * This wrapper postpones the actual write to the wrapped {@link PrintWriter}
  * until all information about the target Java class is available. This way, the
  * import dependencies can be calculated at the end.
- * 
+ *
  * @author Lukas Eder
  */
 public class GenerationWriter {

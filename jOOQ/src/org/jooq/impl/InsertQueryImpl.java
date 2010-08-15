@@ -49,7 +49,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	private static final long serialVersionUID = 4466005417945353842L;
 	private final Table into;
 	private final Map<Field<?>, Object> values;
-	
+
 	InsertQueryImpl(Table into) {
 		this.into = into;
 		this.values = new LinkedHashMap<Field<?>, Object>();
@@ -58,16 +58,16 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = getInto().bind(stmt, result);
 		for (Field<?> field : getValues0().keySet()) {
 			result = field.bind(stmt, result);
 			bind(stmt, result++, field, getValues0().get(field));
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	protected int execute(PreparedStatement statement) {
 		throw new UnsupportedOperationException("Not yet implemented");
@@ -82,7 +82,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	public Map<Field<?>, ?> getValues() {
 		return Collections.unmodifiableMap(getValues0());
 	}
-	
+
 	protected Map<Field<?>, Object> getValues0() {
 		return values;
 	}
@@ -97,32 +97,32 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("insert into ");
 		sb.append(getInto().toSQLReference(inlineParameters));
 		sb.append(" (");
-		
+
 		String separator1 = "";
 		for (Field<?> field : getValues0().keySet()) {
 			sb.append(separator1);
 			sb.append(field.toSQLReference(inlineParameters));
 			separator1 = ", ";
 		}
-		
+
 		sb.append(") values (");
-		
+
 		String separator2 = "";
 		for (Field<?> field : getValues0().keySet()) {
 			Object value = getValues0().get(field);
-			
+
 			sb.append(separator2);
 			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator2 = ", ";
 		}
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 }

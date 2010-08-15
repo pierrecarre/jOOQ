@@ -49,7 +49,7 @@ class ResultProviderQueryAsCompareCondition<T> extends AbstractNamedQueryPart im
 
 	ResultProviderQueryAsCompareCondition(AbstractResultProviderQuery query, Field<T> field) {
 		super("");
-		
+
 		this.query = query;
 		this.field = field;
 	}
@@ -62,14 +62,14 @@ class ResultProviderQueryAsCompareCondition<T> extends AbstractNamedQueryPart im
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(field.toSQLReference(inlineParameters));
 		sb.append(" ");
 		sb.append(getComparator().toSQL());
 		sb.append(" (");
 		sb.append(query.toSQLReference(inlineParameters));
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 

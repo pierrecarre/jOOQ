@@ -33,7 +33,7 @@ package org.jooq.util;
 
 /**
  * The definition of a database schema
- * 
+ *
  * @author Lukas Eder
  */
 public class SchemaDefinition extends AbstractDefinition {

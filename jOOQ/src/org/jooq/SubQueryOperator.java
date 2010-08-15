@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * Any operator used in a {@link SubQueryCondition}
- * 
+ *
  * @author Lukas Eder
  */
 public enum SubQueryOperator {
@@ -48,24 +48,24 @@ public enum SubQueryOperator {
 	NOT_EQUALS_ANY("<> any"),
 	NOT_EQUALS_SOME("<> some"),
 	NOT_EQUALS_ALL("<> all"),
-	LESS("<"), 
-	LESS_THAN_ANY("< any"), 
-	LESS_THAN_SOME("< some"), 
-	LESS_THAN_ALL("< all"), 
-	LESS_OR_EQUAL("<="), 
-	LESS_OR_EQUAL_TO_ANY("<= any"), 
-	LESS_OR_EQUAL_TO_SOME("<= some"), 
-	LESS_OR_EQUAL_TO_ALL("<= all"), 
-	GREATER(">"), 
-	GREATER_THAN_ANY("> any"), 
-	GREATER_THAN_SOME("> some"), 
-	GREATER_THAN_ALL("> all"), 
-	GREATER_OR_EQUAL(">="), 
-	GREATER_OR_EQUAL_TO_ANY(">= any"), 
-	GREATER_OR_EQUAL_TO_SOME(">= some"), 
-	GREATER_OR_EQUAL_TO_ALL(">= all"), 
+	LESS("<"),
+	LESS_THAN_ANY("< any"),
+	LESS_THAN_SOME("< some"),
+	LESS_THAN_ALL("< all"),
+	LESS_OR_EQUAL("<="),
+	LESS_OR_EQUAL_TO_ANY("<= any"),
+	LESS_OR_EQUAL_TO_SOME("<= some"),
+	LESS_OR_EQUAL_TO_ALL("<= all"),
+	GREATER(">"),
+	GREATER_THAN_ANY("> any"),
+	GREATER_THAN_SOME("> some"),
+	GREATER_THAN_ALL("> all"),
+	GREATER_OR_EQUAL(">="),
+	GREATER_OR_EQUAL_TO_ANY(">= any"),
+	GREATER_OR_EQUAL_TO_SOME(">= some"),
+	GREATER_OR_EQUAL_TO_ALL(">= all"),
 	;
-	
+
 	private final String sql;
 
 	private SubQueryOperator(String sql) {

@@ -35,7 +35,7 @@ import java.util.Collection;
 
 /**
  * A query used for deletion of data
- * 
+ *
  * @author Lukas Eder
  */
 public interface DeleteQuery extends Query, ConditionProvider {

@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * An exception thrown if an SQL construct is used, which is not supported by
  * the dialect set in {@link Configuration#getDialect()}
- * 
+ *
  * @author Lukas Eder
  */
 public class SQLDialectNotSupportedException extends RuntimeException {

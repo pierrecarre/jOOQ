@@ -42,7 +42,7 @@ public class TrueCondition extends AbstractQueryPart implements Condition {
 
 	private static final long serialVersionUID = 775364624704563687L;
 	public static final TrueCondition TRUE_CONDITION = new TrueCondition();
-	
+
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
 		return initialIndex;
@@ -52,6 +52,6 @@ public class TrueCondition extends AbstractQueryPart implements Condition {
 	public final String toSQLReference(boolean inlineParameters) {
 		return "1 = 1";
 	}
-	
+
 	private TrueCondition() {}
 }

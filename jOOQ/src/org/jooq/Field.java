@@ -33,25 +33,28 @@ package org.jooq;
 
 /**
  * A field used in tables and conditions
- * 
+ *
  * @author Lukas Eder
  */
-public interface Field<T> extends NamedQueryPart, AliasProvider<Field<T>> {
+public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<Field<T>> {
 	/**
 	 * @return The name of the field
 	 */
+	@Override
 	String getName();
 
 	/**
 	 * @return The type of the field
 	 */
+	@Override
 	Class<T> getType();
 
 	/**
 	 * Create an alias for this field
-	 * 
+	 *
 	 * @param alias The alias name
 	 * @return The field alias
 	 */
+	@Override
 	Field<T> alias(String alias);
 }

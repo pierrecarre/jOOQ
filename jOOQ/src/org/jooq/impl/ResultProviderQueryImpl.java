@@ -53,21 +53,21 @@ class ResultProviderQueryImpl extends AbstractResultProviderQuery {
 		this.right = right;
 		this.operator = operator;
 	}
-	
+
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = left.bind(stmt, result);
 		result = right.bind(stmt, result);
-		
+
 		return result;
 	}
 
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("(");
 		sb.append(left.toSQLReference(inlineParameters));
 		sb.append(") ");
@@ -75,7 +75,7 @@ class ResultProviderQueryImpl extends AbstractResultProviderQuery {
 		sb.append(" (");
 		sb.append(right.toSQLReference(inlineParameters));
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 

@@ -54,7 +54,7 @@ import org.jooq.UpdateQuery;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
- * 
+ *
  * @author Lukas Eder
  */
 public final class QueryFactory {
@@ -94,7 +94,7 @@ public final class QueryFactory {
 	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
 		return new CompareConditionImpl<T>(field, value, comparator);
 	}
-	
+
 	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2) {
 		return new JoinConditionImpl<T>(field1, field2);
 	}
@@ -110,11 +110,11 @@ public final class QueryFactory {
 	public static DeleteQuery createDeleteQuery(Table table) {
 		return new DeleteQueryImpl(table);
 	}
-	
+
 	public static SelectQuery createSelectQuery() {
 		return createSelectQuery(null);
 	}
-	
+
 	public static SelectQuery createSelectQuery(Table table) {
 		return new SelectQueryImpl(table);
 	}
@@ -122,15 +122,15 @@ public final class QueryFactory {
 	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2) {
 		return createJoin(table, field1, field2, JoinType.JOIN);
 	}
-	
+
 	public static Join createJoin(Table table, JoinCondition<?> condition) {
 		return createJoin(table, condition, JoinType.JOIN);
 	}
-	
+
 	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2, JoinType type) {
 		return createJoin(table, createJoinCondition(field1, field2), type);
 	}
-	
+
 	public static Join createJoin(Table table, JoinCondition<?> condition, JoinType type) {
 		return new JoinImpl(table, condition, type);
 	}
@@ -138,7 +138,7 @@ public final class QueryFactory {
 	public static <T> Join createJoin(Table table) {
 		return createJoin(table, null, JoinType.JOIN);
 	}
-	
+
 	/**
 	 * No instances
 	 */

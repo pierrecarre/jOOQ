@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Field;
+import org.jooq.Parameter;
 import org.jooq.StoredProcedure;
 
 /**
@@ -52,34 +52,34 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 	private final List<Parameter<?>> allParameters;
 	private final List<Parameter<?>> outParameters;
 
-	private Map<Field<?>, Object> results;
-	
+	private Map<Parameter<?>, Object> results;
+
 	public StoredProcedureImpl(String name) {
 		super(name);
 		this.allParameters = new ArrayList<Parameter<?>>();
 		this.outParameters = new ArrayList<Parameter<?>>();
 	}
-	
+
 	@Override
 	public final int execute(Connection connection) throws SQLException {
 		CallableStatement statement = null;
-		
+
 		try {
-			results = new HashMap<Field<?>, Object>();
-			
+			results = new HashMap<Parameter<?>, Object>();
+
 			statement = connection.prepareCall(toSQLReference());
 			bind(statement);
-			
-			for (Field<?> field : getOutParameters()) {
+
+			for (Parameter<?> field : getOutParameters()) {
 				statement.registerOutParameter(field.getName(), FieldTypeHelper.getSQLType(field));
 			}
-			
+
 			statement.execute();
-			
-			for (Field<?> field : getOutParameters()) {
+
+			for (Parameter<?> field : getOutParameters()) {
 				results.put(field, FieldTypeHelper.getFromStatement(statement, field));
 			}
-			
+
 			return 0;
 		} finally {
 			statement.close();
@@ -95,7 +95,7 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 	public final List<Parameter<?>> getOutParameters() {
 		return outParameters;
 	}
-	
+
 	@Override
 	public final List<Parameter<?>> getParameters() {
 		return allParameters;
@@ -112,12 +112,12 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 		super.addInParameter(parameter);
 		allParameters.add(parameter);
 	}
-	
+
 	protected void addOutParameter(Parameter<?> parameter) {
 		outParameters.add(parameter);
 		allParameters.add(parameter);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected <T> T getValue(Parameter<T> parameter) {
 		return (T) results.get(parameter);

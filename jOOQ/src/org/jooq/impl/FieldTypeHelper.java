@@ -43,6 +43,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 import org.jooq.Field;
+import org.jooq.NamedTypeProviderQueryPart;
 
 /**
  * @author Lukas Eder
@@ -52,11 +53,11 @@ final class FieldTypeHelper {
 	public static String toSQL(Object value, boolean inlineParameters) {
 		return toSQL(value, inlineParameters, value.getClass());
 	}
-	
-	public static String toSQL(Object value, boolean inlineParameters, Field<?> field) {
+
+	public static String toSQL(Object value, boolean inlineParameters, NamedTypeProviderQueryPart<?> field) {
 		return toSQL(value, inlineParameters, field.getType());
 	}
-	
+
 	public static String toSQL(Object value, boolean inlineParameters, Class<?> type) {
 		if (inlineParameters) {
 			if (type == Blob.class) {
@@ -110,14 +111,14 @@ final class FieldTypeHelper {
 
 			throw new UnsupportedOperationException("Class " + type + " is not supported");
 		}
-		
+
 		return "?";
 	}
-	
+
 	public static <T> T getFromResultSet(ResultSet rs, Field<T> field) throws SQLException {
 		return getFromResultSet(rs, field.getType(), field.getName());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static <T> T getFromResultSet(ResultSet rs, Class<T> type, String fieldName) throws SQLException {
 		if (type == Blob.class) {
@@ -169,11 +170,11 @@ final class FieldTypeHelper {
 			return (T) rs.getObject(fieldName);
 		}
 	}
-	
-	public static <T> T getFromStatement(CallableStatement statement, Field<T> field) throws SQLException {
+
+	public static <T> T getFromStatement(CallableStatement statement, NamedTypeProviderQueryPart<T> field) throws SQLException {
 		return getFromStatement(statement, field.getType(), field.getName());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static <T> T getFromStatement(CallableStatement statement, Class<T> type, String fieldName) throws SQLException {
 		if (type == Blob.class) {
@@ -226,10 +227,10 @@ final class FieldTypeHelper {
 		}
 	}
 
-	public static int getSQLType(Field<?> field) {
+	public static int getSQLType(NamedTypeProviderQueryPart<?> field) {
 		return getSQLType(field.getType());
 	}
-	
+
 	public static int getSQLType(Class<?> type) {
 		if (type == Blob.class) {
 			return Types.BLOB;

@@ -38,14 +38,14 @@ public interface AliasProvider<T extends AliasProvider<T>> extends QueryPart {
 
 	/**
 	 * Get an aliased QueryPart.
-	 * 
+	 *
 	 * An aliased QueryPart should render SQL as follows:
 	 * <ul>
 	 * <li>In declarative query sections : [{@link #toSQLReference()}
 	 * &lt;alias&gt;]</li>
 	 * <li>In referencial query sections : [&lt;alias&gt;]</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param alias
 	 *            The alias name
 	 * @return The aliased QueryPart

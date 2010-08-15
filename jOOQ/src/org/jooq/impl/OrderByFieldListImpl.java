@@ -48,31 +48,31 @@ import org.jooq.SortOrder;
 class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 
 	private static final long serialVersionUID = -1825164005148183725L;
-	
+
 	private final Map<Field<?>, SortOrder> ordering;
-	
+
 	OrderByFieldListImpl() {
 		this(new ArrayList<Field<?>>());
 	}
 
 	OrderByFieldListImpl(List<Field<?>> wrappedList) {
 		super(wrappedList);
-		
+
 		this.ordering = new HashMap<Field<?>, SortOrder>();
 	}
 
 	private Map<Field<?>, SortOrder> getOrdering() {
 		return ordering;
 	}
-	
+
 	private SortOrder getOrdering(Field<?> field) {
 		return getOrdering().get(field);
 	}
-	
+
 	@Override
 	public void add(Field<?> field, SortOrder order) {
 		add(field);
-		
+
 		if (order != null) {
 			getOrdering().put(field, order);
 		}
@@ -83,10 +83,10 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 		if (fields.size() != orders.size()) {
 			throw new IllegalArgumentException("The argument 'fields' and the argument 'orders' must be of equal length");
 		}
-		
+
 		Iterator<Field<?>> it1 = fields.iterator();
 		Iterator<SortOrder> it2 = orders.iterator();
-		
+
 		while (it1.hasNext() && it2.hasNext()) {
 			add(it1.next(), it2.next());
 		}
@@ -95,14 +95,14 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 	@Override
 	protected String toSQLReference(Field<?> field, boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(super.toSQLReference(field, inlineParameters));
-		
+
 		if (getOrdering(field) != null) {
 			sb.append(" ");
 			sb.append(getOrdering(field).toSQL());
 		}
-		
+
 		return sb.toString();
 	}
 }

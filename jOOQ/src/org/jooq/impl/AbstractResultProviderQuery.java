@@ -58,19 +58,19 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	@Override
 	protected final int execute(PreparedStatement statement) throws SQLException {
 		ResultSet rs = null;
-		
+
 		try {
 			rs = statement.executeQuery();
 			result = new ResultImpl(this);
-			
+
 			while (rs.next()) {
 				RecordImpl record = new RecordImpl(result);
-				
+
 				for (Field<?> field : getSelect()) {
 					Object value = FieldTypeHelper.getFromResultSet(rs, field);
 					record.addValue(field, value);
 				}
-				
+
 				result.addRecord(record);
 			}
 		} finally {
@@ -78,12 +78,12 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 				rs.close();
 			}
 		}
-		
+
 		return result.getNumberOfRecords();
 	}
 
 	protected abstract FieldList getSelect();
-	
+
 	@Override
 	public final Result getResult() {
 		return result;
@@ -104,15 +104,16 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 		return new ResultProviderQueryAsTable(this);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public final Field<?> asField() {
+	public final <T> Field<T> asField() {
 		if (getSelect().size() != 1) {
 			throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
 		}
-		
-		return new ResultProviderQueryAsField(this, getSelect().get(0).getType());
+
+		return new ResultProviderQueryAsField<T>(this, (Class<T>) getSelect().get(0).getType());
 	}
-	
+
 	@Override
 	public final <T> SubQueryCondition<T> asInCondition(Field<T> field) {
 		return asSubQueryCondition(field, SubQueryOperator.IN);

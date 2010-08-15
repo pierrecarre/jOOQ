@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * An entity representing a database schema
- * 
+ *
  * @author Lukas Eder
  */
 public interface Schema extends NamedQueryPart {

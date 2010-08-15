@@ -34,7 +34,7 @@ package org.jooq;
 
 /**
  * A typed list of fields
- * 
+ *
  * @author Lukas Eder
  */
 public interface FieldList extends QueryPartList<Field<?>> {

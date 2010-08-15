@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A condition comparing a field with an interval
- * 
+ *
  * @author Lukas Eder
  */
 public interface BetweenCondition<T> extends FieldCondition<T> {

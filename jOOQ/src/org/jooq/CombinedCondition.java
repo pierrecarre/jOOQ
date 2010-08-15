@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * A condition combining other conditions using an Operator
- * 
+ *
  * @author Lukas Eder
  */
 public interface CombinedCondition extends Condition {
@@ -43,7 +43,7 @@ public interface CombinedCondition extends Condition {
 	 * @return The combine operator
 	 */
 	Operator getOperator();
-	
+
 	/**
 	 * @return The combined conditions
 	 */

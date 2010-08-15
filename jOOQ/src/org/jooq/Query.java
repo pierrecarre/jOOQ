@@ -38,14 +38,14 @@ import javax.sql.DataSource;
 
 /**
  * Any query
- * 
+ *
  * @author Lukas Eder
  */
 public interface Query extends QueryPart {
 
 	/**
 	 * Execute the query
-	 * 
+	 *
 	 * @param source
 	 *            The data source to be used for query execution. This will be
 	 *            used to retrieve a connection, and then call
@@ -65,7 +65,7 @@ public interface Query extends QueryPart {
 
 	/**
 	 * Execute the query
-	 * 
+	 *
 	 * @param connection
 	 *            The connection to be used for query execution.
 	 * @return A result value, depending on the concrete implementation of

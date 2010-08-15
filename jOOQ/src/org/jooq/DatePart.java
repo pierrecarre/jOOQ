@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * A date part can be used with SQL functions such as extract(). It describes a
  * part of a date / datetime value
- * 
+ *
  * @author Lukas Eder
  */
 public enum DatePart {

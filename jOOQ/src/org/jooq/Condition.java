@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A condition to be used in a query's where part
- * 
+ *
  * @author Lukas Eder
  */
 public interface Condition extends QueryPart {

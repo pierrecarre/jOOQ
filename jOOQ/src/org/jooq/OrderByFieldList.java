@@ -35,14 +35,14 @@ import java.util.Collection;
 
 /**
  * A field list used for fields in a query's order by clause
- * 
+ *
  * @author Lukas Eder
  */
 public interface OrderByFieldList extends FieldList {
 
 	/**
 	 * Adds a field to the field list, specifying the corresponding sort order
-	 * 
+	 *
 	 * @param field
 	 *            The sort field
 	 * @param order
@@ -52,7 +52,7 @@ public interface OrderByFieldList extends FieldList {
 
 	/**
 	 * Adds fields to the field list, specifying the corresponding sort orders
-	 * 
+	 *
 	 * @param fields
 	 *            The sort fields
 	 * @param orders

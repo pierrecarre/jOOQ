@@ -47,10 +47,10 @@ class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table
 
 	ResultProviderQueryAsTable(AbstractResultProviderQuery query) {
 		super("");
-		
+
 		this.query = query;
 	}
-	
+
 	@Override
 	public Table alias(String alias) {
 		return new TableAlias(this, alias, true);

@@ -47,7 +47,7 @@ import org.jooq.Field;
 class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondition<T> {
 
 	private static final long serialVersionUID = -6456616674773879690L;
-	
+
 	private final Field<T> field;
 	private final T value;
 	private final Comparator comparator;
@@ -56,7 +56,7 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 		if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {
 			throw new IllegalArgumentException("Cannot compare null with " + comparator);
 		}
-		
+
 		this.field = field;
 		this.value = value;
 		this.comparator = comparator;
@@ -90,7 +90,7 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(getField().toSQLReference(inlineParameters));
 		sb.append(" ");
 		if (getValue() != null) {
@@ -110,7 +110,7 @@ class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondit
 				throw new IllegalStateException("Cannot compare null with " + getComparator());
 			}
 		}
-		
+
 		return sb.toString();
 	}
 }

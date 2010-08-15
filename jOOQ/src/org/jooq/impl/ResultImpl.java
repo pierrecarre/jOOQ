@@ -47,12 +47,12 @@ class ResultImpl implements Result {
 
 	private final AbstractResultProviderQuery query;
 	private final List<Record> records;
-	
+
 	ResultImpl(AbstractResultProviderQuery query) {
 		this.query = query;
 		this.records = new ArrayList<Record>();
 	}
-	
+
 	@Override
 	public FieldList getFields() {
 		return query.getSelect();
@@ -77,7 +77,7 @@ class ResultImpl implements Result {
 	public Iterator<Record> iterator() {
 		return records.iterator();
 	}
-	
+
 	void addRecord(Record record) {
 		records.add(record);
 	}
@@ -85,20 +85,20 @@ class ResultImpl implements Result {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("ResultImpl [query=" + query + "]\n");
 		sb.append("Records:\n");
-		
+
 		int i = 0;
 		for (; i < 10 && i < getNumberOfRecords(); i++) {
 			sb.append(getRecord(i));
 			sb.append("\n");
 		}
-		
+
 		if (i == 10) {
 			sb.append("[...]");
 		}
-		
+
 		return sb.toString();
 	}
 }

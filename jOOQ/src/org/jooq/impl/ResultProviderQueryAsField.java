@@ -39,28 +39,20 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsField extends AbstractNamedQueryPart implements Field<Object> {
+class ResultProviderQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
 	private static final long serialVersionUID = 3463144434073231750L;
 	private final AbstractResultProviderQuery query;
-	private final Class<?> type;
 
-	ResultProviderQueryAsField(AbstractResultProviderQuery query, Class<?> type) {
-		super("");
-		
+	ResultProviderQueryAsField(AbstractResultProviderQuery query, Class<T> type) {
+		super("", type);
+
 		this.query = query;
-		this.type = type;
 	}
 
 	@Override
-	public Field<Object> alias(String alias) {
-		return new FieldAlias<Object>(this, alias, true);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<Object> getType() {
-		return (Class<Object>) type;
+	public Field<T> alias(String alias) {
+		return new FieldAlias<T>(this, alias, true);
 	}
 
 	@Override

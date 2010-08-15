@@ -56,26 +56,26 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 		if (condition == null) {
 			return TRUE_CONDITION;
 		}
-		
+
 		return condition;
 	}
-	
+
 	@Override
 	public void addConditions(Condition... conditions) {
 		addConditions(Arrays.asList(conditions));
 	}
-	
+
 	@Override
 	public void addConditions(Collection<Condition> conditions) {
 		if (!conditions.isEmpty()) {
 			Condition c;
-			
+
 			if (conditions.size() == 1) {
 				c = conditions.iterator().next();
 			} else {
 				c = QueryFactory.createCombinedCondition(conditions);
 			}
-			
+
 			if (getWhere() == TRUE_CONDITION) {
 				condition = c;
 			} else {
@@ -83,7 +83,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 			}
 		}
 	}
-	
+
 	@Override
 	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
 		addConditions(QueryFactory.createBetweenCondition(field, minValue, maxValue));

@@ -42,10 +42,10 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 	private static final long serialVersionUID = -2211214195583539735L;
 
 	private final Table table;
-	
+
 	public TableFieldImpl(String name, Class<T> type, Table table) {
 		super(name, type);
-		
+
 		this.table = table;
 		this.table.getFields().add(this);
 	}
@@ -58,11 +58,11 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(table.toSQLReference(inlineParameters));
 		sb.append(".");
 		sb.append(super.toSQLReference(inlineParameters));
-		
+
 		return sb.toString();
 	}
 }

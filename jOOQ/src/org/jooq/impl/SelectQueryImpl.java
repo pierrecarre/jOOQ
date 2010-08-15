@@ -57,7 +57,7 @@ import org.jooq.TableList;
 class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery {
 
 	private static final long serialVersionUID = -4128783317946627405L;
-	
+
 	private final FieldList select;
 	private final TableList from;
 	private final JoinList join;
@@ -72,7 +72,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		this.condition = new ConditionProviderImpl();
 		this.groupBy = new FieldListImpl();
 		this.orderBy = new OrderByFieldListImpl();
-		
+
 		if (from != null) {
 			this.from.add(from);
 		}
@@ -81,17 +81,17 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = getSelect0().bind(stmt, result);
 		result = getFrom().bind(stmt, result);
 		result = getJoin().bind(stmt, result);
 		result = getWhere().bind(stmt, result);
 		result = getGroupBy().bind(stmt, result);
 		result = getOrderBy().bind(stmt, result);
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public void addSelect(Collection<Field<?>> fields) {
 		getSelect0().addAll(fields);
@@ -101,7 +101,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	public final void addSelect(Field<?>... fields) {
 		addSelect(Arrays.asList(fields));
 	}
-	
+
 	@Override
 	public final void addConditions(Condition... conditions) {
 		condition.addConditions(conditions);
@@ -140,7 +140,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	TableList getFrom() {
 		return from;
 	}
-	
+
 	@Override
 	public void addFrom(Collection<Table> from) {
 		getFrom().addAll(from);
@@ -154,7 +154,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	FieldList getGroupBy() {
 		return groupBy;
 	}
-	
+
 	@Override
 	public void addGroupBy(Collection<Field<?>> fields) {
 		getGroupBy().addAll(fields);
@@ -206,26 +206,27 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	private FieldList getSelect0() {
 		return select;
 	}
-	
+
+	@Override
 	protected FieldList getSelect() {
 		if (getSelect0().isEmpty()) {
 			FieldList result = new SelectFieldListImpl();
-			
+
 			for (Table table : getFrom()) {
 				for (Field<?> field : table.getFields()) {
 					result.add(field);
 				}
 			}
-			
+
 			for (Join join : getJoin()) {
 				for (Field<?> field : join.getTable().getFields()) {
 					result.add(field);
 				}
 			}
-			
+
 			return result;
 		}
-		
+
 		return getSelect0();
 	}
 
@@ -236,33 +237,33 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("select ");
 		sb.append(getSelect0().toSQLDeclaration(inlineParameters));
-		
+
 		sb.append(" from ");
 		sb.append(getFrom().toSQLDeclaration(inlineParameters));
-		
+
 		if (!getJoin().isEmpty()) {
 			sb.append(" ");
 			sb.append(getJoin().toSQLDeclaration(inlineParameters));
 		}
-		
+
 		if (getWhere() != TRUE_CONDITION) {
 			sb.append(" where ");
 			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
-		
+
 		if (!getGroupBy().isEmpty()) {
 			sb.append(" group by ");
 			sb.append(getGroupBy().toSQLReference(inlineParameters));
 		}
-		
+
 		if (!getOrderBy().isEmpty()) {
 			sb.append(" order by ");
 			sb.append(getOrderBy().toSQLReference(inlineParameters));
 		}
-				
+
 		return sb.toString();
 	}
 }

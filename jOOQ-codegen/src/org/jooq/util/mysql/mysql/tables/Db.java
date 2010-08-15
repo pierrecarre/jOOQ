@@ -30,7 +30,7 @@ public class Db extends TableImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * This item has the same name as its container. That is why an underline character was appended to the Java field name
 	 */
 	public static final TableField<String> DB_ = new TableFieldImpl<String>("Db", String.class, DB);

@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * The configuration
- * 
+ *
  * @author Lukas Eder
  */
 public class Configuration {
@@ -49,7 +49,7 @@ public class Configuration {
 	 * The used SQL dialect. This can be set externally using JVM flag
 	 * -Dorg.jooq.sql-dialect. If no dialect is provided,
 	 * {@link SQLDialect#SQL99} is used.
-	 * 
+	 *
 	 * @return The used {@link SQLDialect}
 	 * @see SQLDialect
 	 * @throws SQLDialectNotSupportedException
@@ -76,7 +76,7 @@ public class Configuration {
 
 	/**
 	 * Set a new dialect to the configuration
-	 * 
+	 *
 	 * @param dialect The new dialect
 	 * @throws SQLDialectNotSupportedException if dialect is not supported
 	 */

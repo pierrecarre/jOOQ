@@ -33,16 +33,16 @@ package org.jooq;
 
 /**
  * A comparator to be used in conditions
- * 
+ *
  * @author Lukas Eder
  */
 public enum Comparator {
-	EQUALS("="), 
-	NOT_EQUALS("<>"), 
-	LESS("<"), 
-	LESS_OR_EQUAL("<="), 
-	GREATER(">"), 
-	GREATER_OR_EQUAL(">="), 
+	EQUALS("="),
+	NOT_EQUALS("<>"),
+	LESS("<"),
+	LESS_OR_EQUAL("<="),
+	GREATER(">"),
+	GREATER_OR_EQUAL(">="),
 	LIKE("LIKE");
 
 	private final String sql;

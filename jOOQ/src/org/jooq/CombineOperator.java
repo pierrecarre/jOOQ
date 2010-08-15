@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * A combine operator is used to combine result sets of two
  * {@link ResultProviderQuery} queries.
- * 
+ *
  * @author Lukas Eder
  */
 public enum CombineOperator {

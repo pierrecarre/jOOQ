@@ -51,13 +51,13 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	AbstractQueryPartList() {
 		this(null);
 	}
-	
+
 	AbstractQueryPartList(List<T> wrappedList) {
 		if (wrappedList != null) {
 			addAll(wrappedList);
 		}
 	}
-	
+
 	@Override
 	public final T get(int index) {
 		return wrappedList.get(index);
@@ -77,7 +77,7 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 	public final String toSQLReference() {
 		return toSQLReference(false);
 	}
-	
+
 	@Override
 	public final String toSQLReference(boolean inlineParameters) {
 		return toSQL(inlineParameters, false);
@@ -97,41 +97,41 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 		if (isEmpty()) {
 			return toSQLEmptyList();
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		String separator = "";
 		for (T queryPart : this) {
 			sb.append(separator);
-			
+
 			if (renderAsDeclaration) {
 				sb.append(toSQLDeclaration(queryPart, inlineParameters));
 			} else {
 				sb.append(toSQLReference(queryPart, inlineParameters));
 			}
-			
+
 			separator = getListSeparator() + " ";
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	protected String toSQLReference(T queryPart, boolean inlineParameters) {
 		return queryPart.toSQLReference(inlineParameters);
 	}
-	
+
 	protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
 		return queryPart.toSQLDeclaration(inlineParameters);
 	}
-	
+
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		for (T queryPart : this) {
 			result = queryPart.bind(stmt, result);
 		}
-		
+
 		return result;
 	}
 

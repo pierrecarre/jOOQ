@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * An interface defining a stored function in a database.
- * 
+ *
  * @author Lukas Eder
  */
 public interface FunctionDefinition extends Definition {

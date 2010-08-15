@@ -33,7 +33,7 @@ package org.jooq.util;
 
 /**
  * The parameter type of a stored procedure
- * 
+ *
  * @author Lukas Eder
  */
 public enum InOutDefinition {
@@ -42,20 +42,20 @@ public enum InOutDefinition {
 	 * An in parameter. Default if the in/out keyword is absent.
 	 */
 	IN,
-	
+
 	/**
 	 * An out parameter
 	 */
 	OUT,
-	
+
 	/**
 	 * An in/out parameter
 	 */
 	INOUT;
-	
+
 	/**
 	 * Convert a string into the corresponding {@link InOutDefinition} value.
-	 * 
+	 *
 	 * @param string IN, OUT, INOUT or <code>null</code>
 	 * @return The in/out value
 	 */
@@ -63,7 +63,7 @@ public enum InOutDefinition {
 		if (string == null) {
 			return IN;
 		}
-		
+
 		else {
 			return InOutDefinition.valueOf(string.toUpperCase());
 		}

@@ -40,7 +40,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.Field;
+import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.QueryPart;
 
 abstract class AbstractQueryPart implements QueryPart {
@@ -66,11 +66,12 @@ abstract class AbstractQueryPart implements QueryPart {
 		return toSQLReference(inlineParameters);
 	}
 
+	@Override
 	public final int bind(PreparedStatement stmt) throws SQLException {
 		return bind(stmt, 1);
 	}
 
-	protected final void bind(PreparedStatement stmt, int index, Field<?> field, Object value) throws SQLException {
+	protected final void bind(PreparedStatement stmt, int index, NamedTypeProviderQueryPart<?> field, Object value) throws SQLException {
 		bind(stmt, index, field.getType(), value);
 	}
 

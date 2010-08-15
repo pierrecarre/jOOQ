@@ -37,7 +37,7 @@ import java.util.List;
 
 /**
  * A general database model.
- * 
+ *
  * @author Lukas Eder
  */
 public interface Database {

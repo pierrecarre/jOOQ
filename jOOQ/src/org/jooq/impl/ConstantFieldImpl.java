@@ -44,7 +44,7 @@ public class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
 	ConstantFieldImpl(T value) {
 		super(value.toString(), (Class<T>) value.getClass());
 	}
-	
+
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		return "'" + super.toSQLReference(inlineParameters) + "'";

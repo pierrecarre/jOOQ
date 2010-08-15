@@ -45,19 +45,19 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	private static final long serialVersionUID = 261033315221985068L;
 	private final Schema schema;
 	private final FieldList fields;
-	
-	
+
+
 	public TableImpl(String name) {
 		this(name, (Schema) null);
 	}
-	
+
 	public TableImpl(String name, Schema schema) {
 		super(name);
 
 		this.schema = schema;
 		this.fields = new FieldListImpl();
 	}
-	
+
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) {
 		return initialIndex;
@@ -77,7 +77,7 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 		if (getSchema() != null) {
 			return getSchema().getName() + "." + getName();
 		}
-		
+
 		return getName();
 	}
 

@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * A wrapper for database result records returned by
  * <code>{@link SelectQuery}</code>
- * 
+ *
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */

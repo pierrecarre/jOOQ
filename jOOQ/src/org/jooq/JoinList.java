@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A typed list of joins
- * 
+ *
  * @author Lukas Eder
  */
 public interface JoinList extends QueryPartList<Join> {

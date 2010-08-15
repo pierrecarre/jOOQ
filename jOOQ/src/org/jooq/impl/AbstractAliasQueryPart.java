@@ -39,8 +39,8 @@ import org.jooq.AliasProvider;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractAliasQueryPart<T extends AliasProvider<T>> 
-	extends AbstractNamedQueryPart 
+abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
+	extends AbstractNamedQueryPart
 	implements AliasProvider<T> {
 
 	private static final long serialVersionUID = -2456848365524191614L;
@@ -50,7 +50,7 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 
 	AbstractAliasQueryPart(T aliasProvider, String alias, boolean aliasProviderNeedsBrackets) {
 		super(alias);
-		
+
 		this.aliasProviderNeedsBrackets = aliasProviderNeedsBrackets;
 		this.aliasProvider = aliasProvider;
 		this.alias = alias;
@@ -59,12 +59,12 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 	protected final T getAliasProvider() {
 		return aliasProvider;
 	}
-	
+
 	@Override
 	public final String toSQLReference(boolean inlineParameters) {
 		return alias;
 	}
-	
+
 	@Override
 	public final String toSQLDeclaration(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
@@ -76,13 +76,13 @@ abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
 		if (aliasProviderNeedsBrackets) {
 			sb.append(")");
 		}
-		
+
 		sb.append(" ");
 		sb.append(alias);
-		
+
 		return sb.toString();
 	}
-	
+
 	@Override
 	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		return aliasProvider.bind(stmt, initialIndex);

@@ -37,7 +37,7 @@ import org.jooq.impl.QueryFactory;
 
 /**
  * A common interface for all objects holding conditions (e.g. queries)
- * 
+ *
  * @author Lukas Eder
  */
 public interface ConditionProvider extends QueryPart {
@@ -45,7 +45,7 @@ public interface ConditionProvider extends QueryPart {
 	/**
 	 * Adds new conditions to the update query, connecting it to existing
 	 * conditions with the and operator.
-	 * 
+	 *
 	 * @param conditions
 	 *            The condition
 	 */
@@ -54,7 +54,7 @@ public interface ConditionProvider extends QueryPart {
 	/**
 	 * Adds new conditions to the update query, connecting it to existing
 	 * conditions with the and operator.
-	 * 
+	 *
 	 * @param conditions
 	 *            The condition
 	 */

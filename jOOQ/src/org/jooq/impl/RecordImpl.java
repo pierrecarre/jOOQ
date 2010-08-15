@@ -51,7 +51,7 @@ class RecordImpl implements Record {
 		this.result = result;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
-	
+
 	@Override
 	public FieldList getFields() {
 		return result.getFields();
@@ -63,7 +63,7 @@ class RecordImpl implements Record {
 		if (!values.containsKey(field)) {
 			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
 		}
-		
+
 		return (T) values.get(field);
 	}
 

@@ -35,25 +35,25 @@ import java.util.Collection;
 
 /**
  * A query for data selection
- * 
+ *
  * @author Lukas Eder
  */
 public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
-	
+
 	/**
 	 * Add a list of select fields
-	 * 
+	 *
 	 * @param fields
 	 */
 	void addSelect(Field<?>... fields);
-	
+
 	/**
 	 * Add a list of select fields
-	 * 
+	 *
 	 * @param fields
 	 */
 	void addSelect(Collection<Field<?>> fields);
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -68,36 +68,36 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
 
 	/**
 	 * Add tables to the table product
-	 * 
+	 *
 	 * @param from The added tables
 	 */
 	void addFrom(Table... from);
-	
+
 	/**
 	 * Add tables to the table product
-	 * 
+	 *
 	 * @param from The added tables
 	 */
 	void addFrom(Collection<Table> from);
 
 	/**
 	 * Joins the existing table product to a new table
-	 * 
+	 *
 	 * @param table The joined table
 	 */
 	void addJoin(Table table);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
-	 * 
+	 *
 	 * @param table The joined table
 	 * @param condition The joining condition
 	 */
 	void addJoin(Table table, JoinCondition<?> condition);
-	
+
 	/**
 	 * Joins the existing table product to a new table joining on two fields
-	 * 
+	 *
 	 * @param <T> The common field type
 	 * @param table The joined table
 	 * @param field1 The left field of the join condition
@@ -107,35 +107,35 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
 
 	/**
 	 * Joins the existing table product to join object
-	 * 
+	 *
 	 * @param join The join object
 	 */
 	void addJoin(Join join);
 
 	/**
 	 * Adds grouping fields
-	 * 
+	 *
 	 * @param fields The grouping fields
 	 */
 	void addGroupBy(Field<?>... fields);
 
 	/**
 	 * Adds grouping fields
-	 * 
+	 *
 	 * @param fields The grouping fields
 	 */
 	void addGroupBy(Collection<Field<?>> fields);
 
 	/**
 	 * Adds an ordering field, ordering by the default sort order
-	 * 
+	 *
 	 * @param field The ordering field
 	 */
 	void addOrderBy(Field<?> field);
 
 	/**
 	 * Adds an ordering field
-	 * 
+	 *
 	 * @param field The ordering field
 	 * @param order The sort order
 	 */

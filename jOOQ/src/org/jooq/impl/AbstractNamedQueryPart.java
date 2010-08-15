@@ -44,7 +44,7 @@ abstract class AbstractNamedQueryPart extends AbstractQueryPart implements Named
 	AbstractNamedQueryPart(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public final String getName() {
 		return name;
@@ -55,7 +55,7 @@ abstract class AbstractNamedQueryPart extends AbstractQueryPart implements Named
 		if (that == null) {
 			return 1;
 		}
-		
+
 		return getName().compareToIgnoreCase(that.getName());
 	}
 }

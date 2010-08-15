@@ -33,7 +33,7 @@ package org.jooq.util;
 
 /**
  * A base implementation for column definitions.
- * 
+ *
  * @author Lukas Eder
  */
 public abstract class AbstractColumnDefinition extends AbstractDefinition implements ColumnDefinition {

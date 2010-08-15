@@ -51,7 +51,7 @@ class ResultProviderQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart i
 
 	ResultProviderQueryAsSubQueryCondition(AbstractResultProviderQuery query, Field<T> field, SubQueryOperator operator) {
 		super("");
-		
+
 		this.query = query;
 		this.field = field;
 		this.operator = operator;
@@ -72,7 +72,7 @@ class ResultProviderQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart i
 		sb.append(" (");
 		sb.append(query.toSQLReference(inlineParameters));
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 

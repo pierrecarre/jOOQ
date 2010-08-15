@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * A condition comparing a field with a single value
- * 
+ *
  * @author Lukas Eder
  */
 public interface CompareCondition<T> extends FieldCondition<T> {

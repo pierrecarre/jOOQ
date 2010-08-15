@@ -33,21 +33,19 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.Parameter;
-
 /**
  * A stored procedure
- * 
+ *
  * @author Lukas Eder
  */
 public interface StoredProcedure extends StoredObject {
 
 	/**
 	 * A list of OUT parameters passed to the stored procedure as argument.
-	 * 
+	 *
 	 * This list contains all parameters that are either OUT or INOUT in their
 	 * respective order of appearance in {@link #getParameters()}.
-	 * 
+	 *
 	 * @return The list of out parameters
 	 * @see {@link #getParameters()}
 	 */
@@ -55,10 +53,10 @@ public interface StoredProcedure extends StoredObject {
 
 	/**
 	 * A list of IN parameters passed to the stored procedure as argument.
-	 * 
+	 *
 	 * This list contains all parameters that are either IN or INOUT in their
 	 * respective order of appearance in {@link #getParameters()}.
-	 * 
+	 *
 	 * @return The list of in parameters
 	 * @see {@link #getParameters()}
 	 */

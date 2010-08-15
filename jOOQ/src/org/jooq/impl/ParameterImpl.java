@@ -31,32 +31,29 @@
 
 package org.jooq.impl;
 
-import org.jooq.DatePart;
-import org.jooq.Field;
-import org.jooq.NamedQueryPart;
+import java.sql.PreparedStatement;
+
+import org.jooq.Parameter;
+
 
 /**
  * @author Lukas Eder
  */
-class ExtractFunctionImpl extends FunctionImpl<Integer> {
+public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
 
-	private static final long serialVersionUID = 3748640920856031034L;
-	private final DatePart datePart;
+	private static final long serialVersionUID = -5277225593751085577L;
 
-	ExtractFunctionImpl(Field<?> field, DatePart datePart) {
-		super("extract", Integer.class, field);
-
-		this.datePart = datePart;
+	public ParameterImpl(String name, Class<T> type) {
+		super(name, type);
 	}
 
 	@Override
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+	public final int bind(PreparedStatement stmt, int initialIndex) {
+		return initialIndex;
+	}
 
-		sb.append(datePart.toSQL());
-		sb.append(" from ");
-		sb.append(super.toSQLField(field, inlineParameters));
-
-		return sb.toString();
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		return getName();
 	}
 }

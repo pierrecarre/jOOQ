@@ -54,7 +54,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 	@Override
 	public final int execute(Connection connection) throws SQLException {
 		PreparedStatement statement = null;
-		
+
 		try {
 			statement = connection.prepareStatement(toSQLReference());
 			bind(statement);

@@ -55,7 +55,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	private final Table table;
 	private final Map<Field<?>, Object> values;
 	private final ConditionProviderImpl condition;
-	
+
 	public UpdateQueryImpl(Table table) {
 		this.table = table;
 		this.values = new LinkedHashMap<Field<?>, Object>();
@@ -65,18 +65,18 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = getTable().bind(stmt, result);
 		for (Field<?> field : getValues0().keySet()) {
 			result = field.bind(stmt, result);
 			bind(stmt, result++, field, getValues0().get(field));
 		}
-		
+
 		result = condition.bind(stmt, result);
-		
+
 		return result;
 	}
-	
+
 	@Override
 	protected int execute(PreparedStatement statement) {
 		throw new UnsupportedOperationException("Not yet implemented");
@@ -85,7 +85,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	Table getTable() {
 		return table;
 	}
-	
+
 	@Override
 	public void addConditions(Collection<Condition> conditions) {
 		condition.addConditions(conditions);
@@ -129,7 +129,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	public Map<Field<?>, ?> getValues() {
 		return Collections.unmodifiableMap(getValues0());
 	}
-	
+
 	protected Map<Field<?>, Object> getValues0() {
 		return values;
 	}
@@ -144,29 +144,29 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("update ");
 		sb.append(getTable().toSQLReference(inlineParameters));
 		sb.append(" set ");
-		
+
 		String separator = "";
 		for (Field<?> field : getValues0().keySet()) {
 			Object value = getValues0().get(field);
-			
+
 			sb.append(separator);
 			sb.append(field.toSQLReference(inlineParameters));
 			sb.append(" = ");
 			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator = ", ";
 		}
-		
+
 		if (getWhere() != TRUE_CONDITION) {
 			sb.append(" where ");
 			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
-				
+
 		return sb.toString();
 	}
 }

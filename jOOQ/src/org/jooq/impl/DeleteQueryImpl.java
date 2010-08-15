@@ -49,7 +49,7 @@ import org.jooq.Table;
 class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 
 	private static final long serialVersionUID = -1943687511774150929L;
-	
+
 	private final Table table;
 	private final ConditionProviderImpl condition;
 
@@ -61,10 +61,10 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = getFrom().bind(stmt, result);
 		result = getWhere().bind(stmt, result);
-		
+
 		return result;
 	}
 
@@ -119,7 +119,7 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("delete from ");
 		sb.append(getFrom().toSQLReference(inlineParameters));
 
@@ -127,7 +127,7 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 			sb.append(" where ");
 			sb.append(getWhere().toSQLReference(inlineParameters));
 		}
-				
+
 		return sb.toString();
 	}
 

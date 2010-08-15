@@ -35,7 +35,7 @@ import java.sql.Connection;
 
 /**
  * A base implementation for any type of definition.
- * 
+ *
  * @author Lukas Eder
  */
 public abstract class AbstractDefinition implements Definition {

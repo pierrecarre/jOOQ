@@ -45,7 +45,7 @@ import org.jooq.Table;
 class JoinImpl extends AbstractQueryPart implements Join {
 
 	private static final long serialVersionUID = 2275930365728978050L;
-	
+
 	private final Table table;
 	private final JoinCondition<?> condition;
 	private final JoinType type;
@@ -64,7 +64,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 		if (getCondition() != null) {
 			result = getCondition().bind(stmt, result);
 		}
-			
+
 		return result;
 	}
 
@@ -86,16 +86,16 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(getType().toSQL());
 		sb.append(" ");
 		sb.append(getTable().toSQLReference(inlineParameters));
-		
+
 		if (getCondition() != null) {
 			sb.append(" on ");
 			sb.append(getCondition().toSQLReference(inlineParameters));
 		}
-		
+
 		return sb.toString();
 	}
 }

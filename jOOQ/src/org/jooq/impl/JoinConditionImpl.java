@@ -43,7 +43,7 @@ import org.jooq.JoinCondition;
 class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T> {
 
 	private static final long serialVersionUID = -747240442279619486L;
-	
+
 	private final Field<T> field1;
 	private final Field<T> field2;
 
@@ -55,10 +55,10 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T>
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		result = getField1().bind(stmt, result);
 		result = getField2().bind(stmt, result);
-		
+
 		return result;
 	}
 
@@ -75,11 +75,11 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T>
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(getField1().toSQLReference(inlineParameters));
 		sb.append(" = ");
 		sb.append(getField2().toSQLReference(inlineParameters));
-		
+
 		return sb.toString();
 	}
 }

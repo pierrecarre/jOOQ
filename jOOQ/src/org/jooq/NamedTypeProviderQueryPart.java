@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,18 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
-
+package org.jooq;
 
 /**
+ * Any object providing a type.
+ *
  * @author Lukas Eder
  */
-public class Parameter<T> extends FieldImpl<T> {
+public interface NamedTypeProviderQueryPart<T> extends NamedQueryPart {
 
-	private static final long serialVersionUID = -5277225593751085577L;
-
-	public Parameter(String name, Class<T> type) {
-		super(name, type);
-	}
-
+	/**
+	 * @return The type of this object
+	 */
+	Class<T> getType();
 }

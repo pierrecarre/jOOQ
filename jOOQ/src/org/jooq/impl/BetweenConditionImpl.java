@@ -64,10 +64,10 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		bind(stmt, result++, getField(), getMinValue());
 		bind(stmt, result++, getField(), getMaxValue());
-		
+
 		return result;
 	}
 

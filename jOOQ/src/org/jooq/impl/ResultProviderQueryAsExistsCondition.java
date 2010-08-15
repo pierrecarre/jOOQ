@@ -49,7 +49,7 @@ class ResultProviderQueryAsExistsCondition extends AbstractNamedQueryPart implem
 
 	public ResultProviderQueryAsExistsCondition(AbstractResultProviderQuery query, ExistsOperator operator) {
 		super("");
-		
+
 		this.query = query;
 		this.operator = operator;
 	}
@@ -62,7 +62,7 @@ class ResultProviderQueryAsExistsCondition extends AbstractNamedQueryPart implem
 		sb.append(" (");
 		sb.append(query.toSQLReference(inlineParameters));
 		sb.append(")");
-		
+
 		return sb.toString();
 	}
 

@@ -3,7 +3,7 @@
  */
 package org.jooq.test.mysql.generatedclasses.procedures;
 
-import org.jooq.impl.Parameter;
+import org.jooq.impl.ParameterImpl;
 import org.jooq.impl.StoredProcedureImpl;
 
 
@@ -20,12 +20,12 @@ public class PAuthorExists extends StoredProcedureImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final Parameter<String> AUTHOR_NAME = new Parameter<String>("author_name", String.class);
+	public static final ParameterImpl<String> AUTHOR_NAME = new ParameterImpl<String>("author_name", String.class);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final Parameter<Boolean> RESULT = new Parameter<Boolean>("result", Boolean.class);
+	public static final ParameterImpl<Boolean> RESULT = new ParameterImpl<Boolean>("result", Boolean.class);
 
 	/**
 	 * No further instances allowed

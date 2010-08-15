@@ -63,8 +63,8 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 				throw new IllegalArgumentException("The argument 'conditions' must contain null");
 			}
 		}
-		
-		
+
+
 		this.operator = operator;
 		this.conditions = new ArrayList<Condition>(conditions);
 	}
@@ -72,11 +72,11 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
-		
+
 		for (Condition condition : getConditions()) {
 			result = condition.bind(stmt, result);
 		}
-		
+
 		return result;
 	}
 

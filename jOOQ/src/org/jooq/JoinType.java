@@ -33,14 +33,14 @@ package org.jooq;
 
 /**
  * The type of join
- * 
+ *
  * @author Lukas Eder
  */
 public enum JoinType {
-	JOIN("join"), 
-	LEFT_JOIN("left join"), 
+	JOIN("join"),
+	LEFT_JOIN("left join"),
 	LEFT_OUTER_JOIN("left outer join"),
-	RIGHT_JOIN("right join"), 
+	RIGHT_JOIN("right join"),
 	RIGHT_OUTER_JOIN("right outer join");
 
 	private final String sql;

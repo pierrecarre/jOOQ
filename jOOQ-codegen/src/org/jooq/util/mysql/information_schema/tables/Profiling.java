@@ -4,6 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 import java.math.BigDecimal;
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;

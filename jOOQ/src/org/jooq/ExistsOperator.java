@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * An operator for the {@link ExistsCondition}
- * 
+ *
  * @author Lukas Eder
  */
 public enum ExistsOperator {

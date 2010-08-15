@@ -43,7 +43,7 @@ public final class Data {
 	public static final Table TABLE1 = new TableImpl("TABLE1");
 	public static final Table TABLE2 = new TableImpl("TABLE2");
 	public static final Table TABLE3 = new TableImpl("TABLE3");
-	
+
 	public static final TableField<Integer> FIELD_ID1 = new TableFieldImpl<Integer>("ID1", Integer.class, TABLE1);
 	public static final TableField<Integer> FIELD_ID2 = new TableFieldImpl<Integer>("ID2", Integer.class, TABLE2);
 	public static final TableField<Integer> FIELD_ID3 = new TableFieldImpl<Integer>("ID3", Integer.class, TABLE3);

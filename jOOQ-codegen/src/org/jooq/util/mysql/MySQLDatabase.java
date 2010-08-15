@@ -65,7 +65,7 @@ public class MySQLDatabase extends AbstractDatabase {
 	@Override
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
-		
+
 		SelectQuery q = createSelectQuery(TABLES);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(TABLE_COMMENT);
@@ -76,47 +76,47 @@ public class MySQLDatabase extends AbstractDatabase {
 		for (Record record : q.getResult()) {
 			String name = record.getValue(TABLE_NAME);
 			String comment = record.getValue(TABLE_COMMENT);
-			
+
 			MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
 			result.add(table);
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
 		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
-		
+
 		for (Record record : executeProcedureQuery("PROCEDURE")) {
 			String name = record.getValue(NAME);
 			String comment = record.getValue(COMMENT);
 			String params = new String(record.getValue(PARAM_LIST));
-			
+
 			MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
 			result.add(procedure);
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	protected List<FunctionDefinition> getFunctions0() throws SQLException {
 		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-		
+
 		for (Record record : executeProcedureQuery("FUNCTION")) {
 			String name = record.getValue(NAME);
 			String comment = record.getValue(COMMENT);
 			String params = new String(record.getValue(PARAM_LIST));
 			String returnValue = new String(record.getValue(RETURNS));
-			
+
 			MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
 			result.add(function);
 		}
-		
+
 		return result;
 	}
-	
+
 	private Result executeProcedureQuery(String type) throws SQLException {
 		SelectQuery q = createSelectQuery(PROC);
 		q.addSelect(NAME);

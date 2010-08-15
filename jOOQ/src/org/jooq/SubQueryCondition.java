@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * Any condition comparing a field with a subquery
- * 
+ *
  * @author Lukas Eder
  */
 public interface SubQueryCondition<T> extends FieldCondition<T> {
@@ -42,7 +42,7 @@ public interface SubQueryCondition<T> extends FieldCondition<T> {
 	 * @return The operator used in the condition
 	 */
 	SubQueryOperator getOperator();
-	
+
 	/**
 	 * @return The inner select used in the condition
 	 */

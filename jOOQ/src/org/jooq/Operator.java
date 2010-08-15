@@ -33,7 +33,7 @@ package org.jooq;
 
 /**
  * An operator used for combining conditions
- * 
+ *
  * @author Lukas Eder
  */
 public enum Operator {

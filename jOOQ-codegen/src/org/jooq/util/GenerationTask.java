@@ -38,70 +38,70 @@ import org.apache.tools.ant.Task;
 
 /**
  * Class generation facility that can be invoked from ant.
- * 
+ *
  * @author Lukas Eder
  */
 public class GenerationTask extends Task {
 
 	private Properties properties = new Properties();
-	
+
 	{
 		// Set default values
 		properties.setProperty("jdbc.Driver", "com.mysql.jdbc.Driver");
-		
+
 		properties.setProperty("generator", "org.jooq.util.DefaultGenerator");
 		properties.setProperty("generator.database", "org.jooq.util.mysql.MySQLDatabase");
 		properties.setProperty("generator.database.includes", ".*");
 		properties.setProperty("generator.database.excludes", "");
-		
+
 		properties.setProperty("generator.target.directory", ".");
 	}
-	
+
 	public void setJdbcdriver(String value) {
 		properties.setProperty("jdbc.Driver", value);
 	}
-	
+
 	public void setJdbcurl(String value) {
 		properties.setProperty("jdbc.URL", value);
 	}
-	
+
 	public void setJdbcschema(String value) {
 		properties.setProperty("jdbc.Schema", value);
 	}
-	
+
 	public void setJdbcuser(String value) {
 		properties.setProperty("jdbc.User", value);
 	}
-	
+
 	public void setJdbcpassword(String value) {
 		properties.setProperty("jdbc.Password", value);
 	}
-	
-	
+
+
 	public void setGenerator(String value) {
 		properties.setProperty("generator", value);
 	}
-	
+
 	public void setGeneratordatabase(String value) {
 		properties.setProperty("generator.databaes", value);
 	}
-	
+
 	public void setGeneratordatabaseincludes(String value) {
 		properties.setProperty("generator.database.includes", value);
 	}
-	
+
 	public void setGeneratordatabaseexcludes(String value) {
 		properties.setProperty("generator.database.excludes", value);
 	}
-	
+
 	public void setGeneratortargetpackage(String value) {
 		properties.setProperty("generator.target.package", value);
 	}
-	
+
 	public void setGeneratortargetdirectory(String value) {
 		properties.setProperty("generator.target.directory", value);
 	}
-	
+
 	@Override
 	public void execute() throws BuildException {
 		try {

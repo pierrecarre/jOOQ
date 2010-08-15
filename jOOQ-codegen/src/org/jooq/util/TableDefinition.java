@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * The definition of a table or view.
- * 
+ *
  * @author Lukas Eder
  */
 public interface TableDefinition extends Definition {
