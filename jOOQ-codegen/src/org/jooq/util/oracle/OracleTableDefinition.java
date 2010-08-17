@@ -31,15 +31,23 @@
 
 package org.jooq.util.oracle;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import static org.jooq.impl.QueryFactory.createCompareCondition;
+import static org.jooq.impl.QueryFactory.createJoinCondition;
+import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.util.oracle.sys.tables.AllColComments.ALL_COL_COMMENTS;
+import static org.jooq.util.oracle.sys.tables.AllTabCols.ALL_TAB_COLS;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
+import org.jooq.SelectQuery;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.Database;
+import org.jooq.util.oracle.sys.tables.AllColComments;
+import org.jooq.util.oracle.sys.tables.AllTabCols;
 
 /**
  * @author Lukas Eder
@@ -54,23 +62,23 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 		
-		PreparedStatement statement = getConnection().prepareStatement(
-            "SELECT col.*, com.comments " +
-            "FROM ALL_TAB_COLS col " +
-            "JOIN ALL_COL_COMMENTS com ON (col.table_name = com.table_name and col.column_name = com.column_name) " +
-            "WHERE col.OWNER = '" + getSchema() + "' " +
-            "AND col.TABLE_NAME = '" + getName() + "' " +
-            "ORDER BY col.COLUMN_ID");
-        
-        ResultSet rs = statement.executeQuery();
-        
-        while (rs.next()) {
-          String name = rs.getString("COLUMN_NAME");
-          int position = rs.getInt("COLUMN_ID");
-          String dataType = rs.getString("DATA_TYPE");
-          int precision = rs.getInt("DATA_PRECISION");
-          int scale = rs.getInt("DATA_SCALE");
-          String comment = rs.getString("COMMENTS");
+		SelectQuery q = createSelectQuery(ALL_TAB_COLS);
+		q.addFrom(ALL_COL_COMMENTS);
+		q.addConditions(
+		    createJoinCondition(AllTabCols.TABLE_NAME, AllColComments.TABLE_NAME),
+		    createJoinCondition(AllTabCols.COLUMN_NAME, AllColComments.COLUMN_NAME),
+		    createCompareCondition(AllTabCols.OWNER, getSchema()),
+		    createCompareCondition(AllTabCols.TABLE_NAME, getName()));
+		q.addOrderBy(AllTabCols.COLUMN_ID);
+		
+		q.execute(getConnection());
+        for (Record record : q.getResult()) {
+          String name = record.getValue(AllTabCols.COLUMN_NAME);
+          int position = record.getValue(AllTabCols.COLUMN_ID).intValue();
+          String dataType = record.getValue(AllTabCols.DATA_TYPE);
+//          int precision = record.getValue(AllTabCols.DATA_PRECISION).intValue();
+//          int scale = record.getValue(AllTabCols.DATA_SCALE).intValue();
+          String comment = record.getValue(AllColComments.COMMENTS);
 
           try {
             Class<?> type = OracleDataType.valueOf(dataType.toUpperCase()).getType();
@@ -81,8 +89,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
             System.out.println("Could not map datatype : " + dataType);
           }
         }
-        rs.close();
-        statement.close();
-		return result;
+
+        return result;
 	}
 }

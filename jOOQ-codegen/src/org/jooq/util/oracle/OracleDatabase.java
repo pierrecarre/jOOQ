@@ -31,12 +31,19 @@
 
 package org.jooq.util.oracle;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import static org.jooq.impl.QueryFactory.createCompareCondition;
+import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.util.oracle.sys.tables.AllTabComments.ALL_TAB_COMMENTS;
+import static org.jooq.util.oracle.sys.tables.AllTabComments.COMMENTS;
+import static org.jooq.util.oracle.sys.tables.AllTabComments.OWNER;
+import static org.jooq.util.oracle.sys.tables.AllTabComments.TABLE_NAME;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
+import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
@@ -51,23 +58,21 @@ public class OracleDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 		
-		PreparedStatement statement = getConnection().prepareStatement(
-		    "SELECT * FROM ALL_TAB_COMMENTS " +
-		    "WHERE OWNER = '" + getSchemaName() + "' " +
-		    "AND TABLE_NAME NOT LIKE '%$%'");
-		
-		ResultSet rs = statement.executeQuery();
-		
-		while (rs.next()) {
-          String name = rs.getString("TABLE_NAME");
-          String comment = rs.getString("COMMENTS");
+		SelectQuery q = createSelectQuery(ALL_TAB_COMMENTS);
+		q.addSelect(TABLE_NAME);
+		q.addSelect(COMMENTS);
+		q.addConditions(createCompareCondition(OWNER, getSchemaName()));
+		q.addOrderBy(TABLE_NAME);
+        q.execute(getConnection());
 
-          OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
-          result.add(table);
-		}
+        for (Record record : q.getResult()) {
+            String name = record.getValue(TABLE_NAME);
+            String comment = record.getValue(COMMENTS);
 
-		rs.close();
-		statement.close();
+            OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
+            result.add(table);
+        }
+
 		return result;
 	}
 

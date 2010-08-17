@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import org.jooq.Result;
 import org.jooq.impl.RecordImpl;
-import org.jooq.util.oracle.sys.tables.AllTabColumns;
+import org.jooq.util.oracle.sys.tables.AllTabCols;
 
 
 /**
@@ -15,7 +15,7 @@ import org.jooq.util.oracle.sys.tables.AllTabColumns;
  *
  * Columns of user's tables, views and clusters
  */
-public class AllTabColumnsRecord extends RecordImpl {
+public class AllTabColsRecord extends RecordImpl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,437 +23,507 @@ public class AllTabColumnsRecord extends RecordImpl {
 	 * An uncommented item
 	 */
 	public void setOwner(String value) {
-		setValue(AllTabColumns.OWNER, value);
+		setValue(AllTabCols.OWNER, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
 	public String getOwner() {
-		return getValue(AllTabColumns.OWNER);
+		return getValue(AllTabCols.OWNER);
 	}
 
 	/**
 	 * Table, view or cluster name
 	 */
 	public void setTableName(String value) {
-		setValue(AllTabColumns.TABLE_NAME, value);
+		setValue(AllTabCols.TABLE_NAME, value);
 	}
 
 	/**
 	 * Table, view or cluster name
 	 */
 	public String getTableName() {
-		return getValue(AllTabColumns.TABLE_NAME);
+		return getValue(AllTabCols.TABLE_NAME);
 	}
 
 	/**
 	 * Column name
 	 */
 	public void setColumnName(String value) {
-		setValue(AllTabColumns.COLUMN_NAME, value);
+		setValue(AllTabCols.COLUMN_NAME, value);
 	}
 
 	/**
 	 * Column name
 	 */
 	public String getColumnName() {
-		return getValue(AllTabColumns.COLUMN_NAME);
+		return getValue(AllTabCols.COLUMN_NAME);
 	}
 
 	/**
 	 * Datatype of the column
 	 */
 	public void setDataType(String value) {
-		setValue(AllTabColumns.DATA_TYPE, value);
+		setValue(AllTabCols.DATA_TYPE, value);
 	}
 
 	/**
 	 * Datatype of the column
 	 */
 	public String getDataType() {
-		return getValue(AllTabColumns.DATA_TYPE);
+		return getValue(AllTabCols.DATA_TYPE);
 	}
 
 	/**
 	 * Datatype modifier of the column
 	 */
 	public void setDataTypeMod(String value) {
-		setValue(AllTabColumns.DATA_TYPE_MOD, value);
+		setValue(AllTabCols.DATA_TYPE_MOD, value);
 	}
 
 	/**
 	 * Datatype modifier of the column
 	 */
 	public String getDataTypeMod() {
-		return getValue(AllTabColumns.DATA_TYPE_MOD);
+		return getValue(AllTabCols.DATA_TYPE_MOD);
 	}
 
 	/**
 	 * Owner of the datatype of the column
 	 */
 	public void setDataTypeOwner(String value) {
-		setValue(AllTabColumns.DATA_TYPE_OWNER, value);
+		setValue(AllTabCols.DATA_TYPE_OWNER, value);
 	}
 
 	/**
 	 * Owner of the datatype of the column
 	 */
 	public String getDataTypeOwner() {
-		return getValue(AllTabColumns.DATA_TYPE_OWNER);
+		return getValue(AllTabCols.DATA_TYPE_OWNER);
 	}
 
 	/**
 	 * Length of the column in bytes
 	 */
 	public void setDataLength(BigDecimal value) {
-		setValue(AllTabColumns.DATA_LENGTH, value);
+		setValue(AllTabCols.DATA_LENGTH, value);
 	}
 
 	/**
 	 * Length of the column in bytes
 	 */
 	public BigDecimal getDataLength() {
-		return getValue(AllTabColumns.DATA_LENGTH);
+		return getValue(AllTabCols.DATA_LENGTH);
 	}
 
 	/**
 	 * Length: decimal digits (NUMBER) or binary digits (FLOAT)
 	 */
 	public void setDataPrecision(BigDecimal value) {
-		setValue(AllTabColumns.DATA_PRECISION, value);
+		setValue(AllTabCols.DATA_PRECISION, value);
 	}
 
 	/**
 	 * Length: decimal digits (NUMBER) or binary digits (FLOAT)
 	 */
 	public BigDecimal getDataPrecision() {
-		return getValue(AllTabColumns.DATA_PRECISION);
+		return getValue(AllTabCols.DATA_PRECISION);
 	}
 
 	/**
 	 * Digits to right of decimal point in a number
 	 */
 	public void setDataScale(BigDecimal value) {
-		setValue(AllTabColumns.DATA_SCALE, value);
+		setValue(AllTabCols.DATA_SCALE, value);
 	}
 
 	/**
 	 * Digits to right of decimal point in a number
 	 */
 	public BigDecimal getDataScale() {
-		return getValue(AllTabColumns.DATA_SCALE);
+		return getValue(AllTabCols.DATA_SCALE);
 	}
 
 	/**
 	 * Does column allow NULL values?
 	 */
 	public void setNullable(String value) {
-		setValue(AllTabColumns.NULLABLE, value);
+		setValue(AllTabCols.NULLABLE, value);
 	}
 
 	/**
 	 * Does column allow NULL values?
 	 */
 	public String getNullable() {
-		return getValue(AllTabColumns.NULLABLE);
+		return getValue(AllTabCols.NULLABLE);
 	}
 
 	/**
 	 * Sequence number of the column as created
 	 */
 	public void setColumnId(BigDecimal value) {
-		setValue(AllTabColumns.COLUMN_ID, value);
+		setValue(AllTabCols.COLUMN_ID, value);
 	}
 
 	/**
 	 * Sequence number of the column as created
 	 */
 	public BigDecimal getColumnId() {
-		return getValue(AllTabColumns.COLUMN_ID);
+		return getValue(AllTabCols.COLUMN_ID);
 	}
 
 	/**
 	 * Length of default value for the column
 	 */
 	public void setDefaultLength(BigDecimal value) {
-		setValue(AllTabColumns.DEFAULT_LENGTH, value);
+		setValue(AllTabCols.DEFAULT_LENGTH, value);
 	}
 
 	/**
 	 * Length of default value for the column
 	 */
 	public BigDecimal getDefaultLength() {
-		return getValue(AllTabColumns.DEFAULT_LENGTH);
+		return getValue(AllTabCols.DEFAULT_LENGTH);
 	}
 
 	/**
 	 * Default value for the column
 	 */
 	public void setDataDefault(String value) {
-		setValue(AllTabColumns.DATA_DEFAULT, value);
+		setValue(AllTabCols.DATA_DEFAULT, value);
 	}
 
 	/**
 	 * Default value for the column
 	 */
 	public String getDataDefault() {
-		return getValue(AllTabColumns.DATA_DEFAULT);
+		return getValue(AllTabCols.DATA_DEFAULT);
 	}
 
 	/**
 	 * The number of distinct values in the column
 	 */
 	public void setNumDistinct(BigDecimal value) {
-		setValue(AllTabColumns.NUM_DISTINCT, value);
+		setValue(AllTabCols.NUM_DISTINCT, value);
 	}
 
 	/**
 	 * The number of distinct values in the column
 	 */
 	public BigDecimal getNumDistinct() {
-		return getValue(AllTabColumns.NUM_DISTINCT);
+		return getValue(AllTabCols.NUM_DISTINCT);
 	}
 
 	/**
 	 * The low value in the column
 	 */
 	public void setLowValue(byte[] value) {
-		setValue(AllTabColumns.LOW_VALUE, value);
+		setValue(AllTabCols.LOW_VALUE, value);
 	}
 
 	/**
 	 * The low value in the column
 	 */
 	public byte[] getLowValue() {
-		return getValue(AllTabColumns.LOW_VALUE);
+		return getValue(AllTabCols.LOW_VALUE);
 	}
 
 	/**
 	 * The high value in the column
 	 */
 	public void setHighValue(byte[] value) {
-		setValue(AllTabColumns.HIGH_VALUE, value);
+		setValue(AllTabCols.HIGH_VALUE, value);
 	}
 
 	/**
 	 * The high value in the column
 	 */
 	public byte[] getHighValue() {
-		return getValue(AllTabColumns.HIGH_VALUE);
+		return getValue(AllTabCols.HIGH_VALUE);
 	}
 
 	/**
 	 * The density of the column
 	 */
 	public void setDensity(BigDecimal value) {
-		setValue(AllTabColumns.DENSITY, value);
+		setValue(AllTabCols.DENSITY, value);
 	}
 
 	/**
 	 * The density of the column
 	 */
 	public BigDecimal getDensity() {
-		return getValue(AllTabColumns.DENSITY);
+		return getValue(AllTabCols.DENSITY);
 	}
 
 	/**
 	 * The number of nulls in the column
 	 */
 	public void setNumNulls(BigDecimal value) {
-		setValue(AllTabColumns.NUM_NULLS, value);
+		setValue(AllTabCols.NUM_NULLS, value);
 	}
 
 	/**
 	 * The number of nulls in the column
 	 */
 	public BigDecimal getNumNulls() {
-		return getValue(AllTabColumns.NUM_NULLS);
+		return getValue(AllTabCols.NUM_NULLS);
 	}
 
 	/**
 	 * The number of buckets in histogram for the column
 	 */
 	public void setNumBuckets(BigDecimal value) {
-		setValue(AllTabColumns.NUM_BUCKETS, value);
+		setValue(AllTabCols.NUM_BUCKETS, value);
 	}
 
 	/**
 	 * The number of buckets in histogram for the column
 	 */
 	public BigDecimal getNumBuckets() {
-		return getValue(AllTabColumns.NUM_BUCKETS);
+		return getValue(AllTabCols.NUM_BUCKETS);
 	}
 
 	/**
 	 * The date of the most recent time this column was analyzed
 	 */
 	public void setLastAnalyzed(Date value) {
-		setValue(AllTabColumns.LAST_ANALYZED, value);
+		setValue(AllTabCols.LAST_ANALYZED, value);
 	}
 
 	/**
 	 * The date of the most recent time this column was analyzed
 	 */
 	public Date getLastAnalyzed() {
-		return getValue(AllTabColumns.LAST_ANALYZED);
+		return getValue(AllTabCols.LAST_ANALYZED);
 	}
 
 	/**
 	 * The sample size used in analyzing this column
 	 */
 	public void setSampleSize(BigDecimal value) {
-		setValue(AllTabColumns.SAMPLE_SIZE, value);
+		setValue(AllTabCols.SAMPLE_SIZE, value);
 	}
 
 	/**
 	 * The sample size used in analyzing this column
 	 */
 	public BigDecimal getSampleSize() {
-		return getValue(AllTabColumns.SAMPLE_SIZE);
+		return getValue(AllTabCols.SAMPLE_SIZE);
 	}
 
 	/**
 	 * Character set name
 	 */
 	public void setCharacterSetName(String value) {
-		setValue(AllTabColumns.CHARACTER_SET_NAME, value);
+		setValue(AllTabCols.CHARACTER_SET_NAME, value);
 	}
 
 	/**
 	 * Character set name
 	 */
 	public String getCharacterSetName() {
-		return getValue(AllTabColumns.CHARACTER_SET_NAME);
+		return getValue(AllTabCols.CHARACTER_SET_NAME);
 	}
 
 	/**
 	 * Declaration length of character type column
 	 */
 	public void setCharColDeclLength(BigDecimal value) {
-		setValue(AllTabColumns.CHAR_COL_DECL_LENGTH, value);
+		setValue(AllTabCols.CHAR_COL_DECL_LENGTH, value);
 	}
 
 	/**
 	 * Declaration length of character type column
 	 */
 	public BigDecimal getCharColDeclLength() {
-		return getValue(AllTabColumns.CHAR_COL_DECL_LENGTH);
+		return getValue(AllTabCols.CHAR_COL_DECL_LENGTH);
 	}
 
 	/**
 	 * Are the statistics calculated without merging underlying partitions?
 	 */
 	public void setGlobalStats(String value) {
-		setValue(AllTabColumns.GLOBAL_STATS, value);
+		setValue(AllTabCols.GLOBAL_STATS, value);
 	}
 
 	/**
 	 * Are the statistics calculated without merging underlying partitions?
 	 */
 	public String getGlobalStats() {
-		return getValue(AllTabColumns.GLOBAL_STATS);
+		return getValue(AllTabCols.GLOBAL_STATS);
 	}
 
 	/**
 	 * Were the statistics entered directly by the user?
 	 */
 	public void setUserStats(String value) {
-		setValue(AllTabColumns.USER_STATS, value);
+		setValue(AllTabCols.USER_STATS, value);
 	}
 
 	/**
 	 * Were the statistics entered directly by the user?
 	 */
 	public String getUserStats() {
-		return getValue(AllTabColumns.USER_STATS);
+		return getValue(AllTabCols.USER_STATS);
 	}
 
 	/**
 	 * The average length of the column in bytes
 	 */
 	public void setAvgColLen(BigDecimal value) {
-		setValue(AllTabColumns.AVG_COL_LEN, value);
+		setValue(AllTabCols.AVG_COL_LEN, value);
 	}
 
 	/**
 	 * The average length of the column in bytes
 	 */
 	public BigDecimal getAvgColLen() {
-		return getValue(AllTabColumns.AVG_COL_LEN);
+		return getValue(AllTabCols.AVG_COL_LEN);
 	}
 
 	/**
 	 * The maximum length of the column in characters
 	 */
 	public void setCharLength(BigDecimal value) {
-		setValue(AllTabColumns.CHAR_LENGTH, value);
+		setValue(AllTabCols.CHAR_LENGTH, value);
 	}
 
 	/**
 	 * The maximum length of the column in characters
 	 */
 	public BigDecimal getCharLength() {
-		return getValue(AllTabColumns.CHAR_LENGTH);
+		return getValue(AllTabCols.CHAR_LENGTH);
 	}
 
 	/**
 	 * C if maximum length is specified in characters, B if in bytes
 	 */
 	public void setCharUsed(String value) {
-		setValue(AllTabColumns.CHAR_USED, value);
+		setValue(AllTabCols.CHAR_USED, value);
 	}
 
 	/**
 	 * C if maximum length is specified in characters, B if in bytes
 	 */
 	public String getCharUsed() {
-		return getValue(AllTabColumns.CHAR_USED);
+		return getValue(AllTabCols.CHAR_USED);
 	}
 
 	/**
 	 * Is column data in 8.0 image format?
 	 */
 	public void setV80FmtImage(String value) {
-		setValue(AllTabColumns.V80_FMT_IMAGE, value);
+		setValue(AllTabCols.V80_FMT_IMAGE, value);
 	}
 
 	/**
 	 * Is column data in 8.0 image format?
 	 */
 	public String getV80FmtImage() {
-		return getValue(AllTabColumns.V80_FMT_IMAGE);
+		return getValue(AllTabCols.V80_FMT_IMAGE);
 	}
 
 	/**
 	 * Has column data been upgraded to the latest type version format?
 	 */
 	public void setDataUpgraded(String value) {
-		setValue(AllTabColumns.DATA_UPGRADED, value);
+		setValue(AllTabCols.DATA_UPGRADED, value);
 	}
 
 	/**
 	 * Has column data been upgraded to the latest type version format?
 	 */
 	public String getDataUpgraded() {
-		return getValue(AllTabColumns.DATA_UPGRADED);
+		return getValue(AllTabCols.DATA_UPGRADED);
+	}
+
+	/**
+	 * Is this a hidden column?
+	 */
+	public void setHiddenColumn(String value) {
+		setValue(AllTabCols.HIDDEN_COLUMN, value);
+	}
+
+	/**
+	 * Is this a hidden column?
+	 */
+	public String getHiddenColumn() {
+		return getValue(AllTabCols.HIDDEN_COLUMN);
+	}
+
+	/**
+	 * Is this a virtual column?
+	 */
+	public void setVirtualColumn(String value) {
+		setValue(AllTabCols.VIRTUAL_COLUMN, value);
+	}
+
+	/**
+	 * Is this a virtual column?
+	 */
+	public String getVirtualColumn() {
+		return getValue(AllTabCols.VIRTUAL_COLUMN);
+	}
+
+	/**
+	 * Sequence number of the column in the segment
+	 */
+	public void setSegmentColumnId(BigDecimal value) {
+		setValue(AllTabCols.SEGMENT_COLUMN_ID, value);
+	}
+
+	/**
+	 * Sequence number of the column in the segment
+	 */
+	public BigDecimal getSegmentColumnId() {
+		return getValue(AllTabCols.SEGMENT_COLUMN_ID);
+	}
+
+	/**
+	 * Internal sequence number of the column
+	 */
+	public void setInternalColumnId(BigDecimal value) {
+		setValue(AllTabCols.INTERNAL_COLUMN_ID, value);
+	}
+
+	/**
+	 * Internal sequence number of the column
+	 */
+	public BigDecimal getInternalColumnId() {
+		return getValue(AllTabCols.INTERNAL_COLUMN_ID);
 	}
 
 	/**
 	 * An uncommented item
 	 */
 	public void setHistogram(String value) {
-		setValue(AllTabColumns.HISTOGRAM, value);
+		setValue(AllTabCols.HISTOGRAM, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
 	public String getHistogram() {
-		return getValue(AllTabColumns.HISTOGRAM);
+		return getValue(AllTabCols.HISTOGRAM);
 	}
 
-	public AllTabColumnsRecord(Result result) {
+	/**
+	 * Qualified column name
+	 */
+	public void setQualifiedColName(String value) {
+		setValue(AllTabCols.QUALIFIED_COL_NAME, value);
+	}
+
+	/**
+	 * Qualified column name
+	 */
+	public String getQualifiedColName() {
+		return getValue(AllTabCols.QUALIFIED_COL_NAME);
+	}
+
+	public AllTabColsRecord(Result result) {
 		super(result);
 	}
 }
