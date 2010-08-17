@@ -80,14 +80,16 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 //          int scale = record.getValue(AllTabCols.DATA_SCALE).intValue();
           String comment = record.getValue(AllColComments.COMMENTS);
 
+          Class<?> type = Object.class;
+          
           try {
-            Class<?> type = OracleDataType.valueOf(dataType.toUpperCase()).getType();
-
-            OracleColumnDefinition table = new OracleColumnDefinition(getDatabase(), name, position, type, comment);
-            result.add(table);
+            type = OracleDataType.valueOf(dataType.toUpperCase().replaceAll("[^\\d\\w]", "")).getType();
           } catch (Exception e) {
-            System.out.println("Could not map datatype : " + dataType);
+            System.out.println("Unsupported datatype : " + dataType);
           }
+
+          OracleColumnDefinition table = new OracleColumnDefinition(getDatabase(), name, position, type, comment);
+          result.add(table);
         }
 
         return result;

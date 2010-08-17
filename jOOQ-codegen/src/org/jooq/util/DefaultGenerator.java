@@ -386,7 +386,7 @@ public class DefaultGenerator implements Generator {
 		out.println("\tprivate static final long serialVersionUID = 1L;");
 	}
 
-	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, Definition definition) {
+	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, ColumnDefinition definition) {
 		out.println();
 		out.println("\t/**");
 
@@ -398,6 +398,11 @@ public class DefaultGenerator implements Generator {
 			out.println("\t * An uncommented item");
 		}
 
+		if (definition.getTypeClass() == Object.class) {
+		    out.println("\t * ");
+		    out.println("\t * The SQL type of this item could not be mapped. Deserialising this field might not work!");
+		}
+		
 		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
 			out.println("\t * ");
 			out.println("\t * This item has the same name as its container. That is why an underline character was appended to the Java field name");

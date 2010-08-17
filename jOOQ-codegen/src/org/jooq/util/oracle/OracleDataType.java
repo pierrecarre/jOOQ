@@ -47,17 +47,19 @@ public enum OracleDataType {
 	VARCHAR(String.class),
 	VARCHAR2(String.class),
 	NVARCHAR(String.class),
+	NVARCHAR2(String.class),
 	LONG(String.class),
 	CLOB(String.class),
 	NCLOB(String.class),
 
 	RAW(byte[].class),
-	LONG_RAW(byte[].class),
+	LONGRAW(byte[].class),
 	BLOB(byte[].class),
 	BFILE(byte[].class),
 
 	DATE(Date.class),
-	TIMESTAMP(Timestamp.class);
+	TIMESTAMP(Timestamp.class),
+	TIMESTAMP6WITHTIMEZONE(Timestamp.class);
 
 	private final Class<?> type;
 	private final int precision;
