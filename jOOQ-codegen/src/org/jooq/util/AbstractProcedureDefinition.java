@@ -29,56 +29,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util;
 
-import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.FunctionDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public abstract class AbstractProcedureDefinition extends AbstractDefinition {
 
-	private ColumnDefinition returnValue;
+	private static final String INOUT = "(?:(IN|OUT|INOUT)\\s+?)?";
+	private static final String PARAM_NAME = "(?:(\\S+?)\\s+?)";
+	private static final String PARAM_TYPE = "([^\\s\\(]+)(?:\\(.*?\\))?";
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
+	protected static final String PARAMETER = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";
+	protected static final Pattern PARAMETER_PATTERN = Pattern.compile(PARAMETER);
+	protected static final Pattern TYPE_PATTERN = Pattern.compile(PARAM_TYPE);
+
+	public AbstractProcedureDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
-
-		init (params, returnValue);
-	}
-
-	private void init(String params, String returnValue) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
-
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createColumn(matcher, 3, i + 1));
-			}
-		}
-
-		Matcher matcher = TYPE_PATTERN.matcher(returnValue);
-		if (matcher.find()) {
-			this.returnValue = createColumn(matcher, 0, -1);
-		}
-	}
-
-	private ColumnDefinition createColumn(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
-		String paramType = matcher.group(group + 1);
-
-		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
-	}
-
-	@Override
-	public ColumnDefinition getReturnValue() {
-		return returnValue;
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="test" basedir="." default="generate-test-classes">
+<project name="test" basedir=".">
 	<property name="dir.workspace" value="${basedir}/.." />
 
 	<taskdef name="generate-classes" classname="org.jooq.util.GenerationTask">
@@ -14,7 +14,7 @@
 		</classpath>
 	</taskdef>
 
-	<target name="generate-test-classes">
+	<target name="generate-mysql-test-schema">
 		<generate-classes 
 			jdbcurl="jdbc:mysql://localhost/test"
 			jdbcschema="test"

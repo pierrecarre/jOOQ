@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import org.jooq.util.AbstractProcedureDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.InOutDefinition;

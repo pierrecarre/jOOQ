@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util.oracle;
 
 import java.util.regex.Matcher;
 
@@ -41,11 +41,11 @@ import org.jooq.util.FunctionDefinition;
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public class OracleFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
 
 	private ColumnDefinition returnValue;
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
+	public OracleFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
 		super(database, name, comment);
 
 		init (params, returnValue);
@@ -73,8 +73,8 @@ public class MySQLFunctionDefinition extends AbstractFunctionDefinition implemen
 		String paramName = matcher.group(group);
 		String paramType = matcher.group(group + 1);
 
-		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
+		Class<?> type = OracleDataType.valueOf(paramType.toUpperCase()).getType();
+		return new OracleColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
 	}
 
 	@Override

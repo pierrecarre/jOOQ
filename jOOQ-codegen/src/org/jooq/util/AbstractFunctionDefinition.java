@@ -29,56 +29,35 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util;
 
-import java.util.regex.Matcher;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.FunctionDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public abstract class AbstractFunctionDefinition extends AbstractProcedureDefinition implements FunctionDefinition {
 
-	private ColumnDefinition returnValue;
+	private final List<ColumnDefinition> inParameters;
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
+	public AbstractFunctionDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 
-		init (params, returnValue);
-	}
-
-	private void init(String params, String returnValue) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
-
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createColumn(matcher, 3, i + 1));
-			}
-		}
-
-		Matcher matcher = TYPE_PATTERN.matcher(returnValue);
-		if (matcher.find()) {
-			this.returnValue = createColumn(matcher, 0, -1);
-		}
-	}
-
-	private ColumnDefinition createColumn(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
-		String paramType = matcher.group(group + 1);
-
-		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
+		inParameters = new ArrayList<ColumnDefinition>();
 	}
 
 	@Override
-	public ColumnDefinition getReturnValue() {
-		return returnValue;
+	public String getReturnType() {
+		return getReturnValue().getType();
+	}
+
+	@Override
+	public abstract ColumnDefinition getReturnValue();
+
+	@Override
+	public final List<ColumnDefinition> getInParameters() {
+		return inParameters;
 	}
 }

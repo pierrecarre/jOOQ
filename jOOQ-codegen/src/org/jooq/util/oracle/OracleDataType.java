@@ -29,56 +29,63 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util.oracle;
 
-import java.util.regex.Matcher;
-
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.FunctionDefinition;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public enum OracleDataType {
 
-	private ColumnDefinition returnValue;
+	NUMBER(BigDecimal.class),
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
-		super(database, name, comment);
+	CHAR(String.class),
+	NCHAR(String.class),
+	VARCHAR(String.class),
+	VARCHAR2(String.class),
+	NVARCHAR(String.class),
+	LONG(String.class),
+	CLOB(String.class),
+	NCLOB(String.class),
 
-		init (params, returnValue);
+	RAW(byte[].class),
+	LONG_RAW(byte[].class),
+	BLOB(byte[].class),
+	BFILE(byte[].class),
+
+	DATE(Date.class),
+	TIMESTAMP(Timestamp.class);
+
+	private final Class<?> type;
+	private final int precision;
+    private final int scale;
+
+    private OracleDataType(Class<?> type) {
+      this(type, 0, 0);
+    }
+
+    private OracleDataType(Class<?> type, int precision) {
+      this(type, precision, 0);
+    }
+
+    private OracleDataType(Class<?> type, int precision, int scale) {
+      this.type = type;
+      this.precision = precision;
+      this.scale = scale;
+    }
+
+	public Class<?> getType() {
+		return type;
 	}
 
-	private void init(String params, String returnValue) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
-
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createColumn(matcher, 3, i + 1));
-			}
-		}
-
-		Matcher matcher = TYPE_PATTERN.matcher(returnValue);
-		if (matcher.find()) {
-			this.returnValue = createColumn(matcher, 0, -1);
-		}
-	}
-
-	private ColumnDefinition createColumn(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
-		String paramType = matcher.group(group + 1);
-
-		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
-	}
-
-	@Override
-	public ColumnDefinition getReturnValue() {
-		return returnValue;
-	}
+    public int getPrecision() {
+      return precision;
+    }
+  
+    public int getScale() {
+      return scale;
+    }
 }

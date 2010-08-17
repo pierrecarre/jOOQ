@@ -29,56 +29,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util.oracle;
 
-import java.util.regex.Matcher;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
+import org.jooq.util.AbstractDatabase;
 import org.jooq.util.FunctionDefinition;
+import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.TableDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public class OracleDatabase extends AbstractDatabase {
 
-	private ColumnDefinition returnValue;
+	@Override
+	protected List<TableDefinition> getTables0() throws SQLException {
+		List<TableDefinition> result = new ArrayList<TableDefinition>();
+		
+		PreparedStatement statement = getConnection().prepareStatement(
+		    "SELECT * FROM ALL_TAB_COMMENTS " +
+		    "WHERE OWNER = '" + getSchemaName() + "' " +
+		    "AND TABLE_NAME NOT LIKE '%$%'");
+		
+		ResultSet rs = statement.executeQuery();
+		
+		while (rs.next()) {
+          String name = rs.getString("TABLE_NAME");
+          String comment = rs.getString("COMMENTS");
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
-		super(database, name, comment);
-
-		init (params, returnValue);
-	}
-
-	private void init(String params, String returnValue) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
-
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createColumn(matcher, 3, i + 1));
-			}
+          OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
+          result.add(table);
 		}
 
-		Matcher matcher = TYPE_PATTERN.matcher(returnValue);
-		if (matcher.find()) {
-			this.returnValue = createColumn(matcher, 0, -1);
-		}
-	}
-
-	private ColumnDefinition createColumn(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
-		String paramType = matcher.group(group + 1);
-
-		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
+		rs.close();
+		statement.close();
+		return result;
 	}
 
 	@Override
-	public ColumnDefinition getReturnValue() {
-		return returnValue;
+	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
+		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+		return result;
+	}
+
+	@Override
+	protected List<FunctionDefinition> getFunctions0() throws SQLException {
+		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+		return result;
 	}
 }
