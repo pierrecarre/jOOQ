@@ -57,21 +57,21 @@ public class OracleDatabase extends AbstractDatabase {
 	@Override
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
-		
+
 		SelectQuery q = createSelectQuery(ALL_TAB_COMMENTS);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(COMMENTS);
 		q.addConditions(createCompareCondition(OWNER, getSchemaName()));
 		q.addOrderBy(TABLE_NAME);
-        q.execute(getConnection());
+		q.execute(getConnection());
 
-        for (Record record : q.getResult()) {
-            String name = record.getValue(TABLE_NAME);
-            String comment = record.getValue(COMMENTS);
+		for (Record record : q.getResult()) {
+			String name = record.getValue(TABLE_NAME);
+			String comment = record.getValue(COMMENTS);
 
-            OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
-            result.add(table);
-        }
+			OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
+			result.add(table);
+		}
 
 		return result;
 	}
