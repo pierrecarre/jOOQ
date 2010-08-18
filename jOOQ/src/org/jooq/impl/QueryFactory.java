@@ -59,6 +59,14 @@ import org.jooq.UpdateQuery;
  */
 public final class QueryFactory {
 
+	public static Condition createPlainSQLCondition(String sql) {
+		return createPlainSQLCondition(sql, new Object[0]);
+	}
+	
+	public static Condition createPlainSQLCondition(String sql, Object... bindings) {
+		return new PlainSQLConditionImpl(sql, bindings);
+	}
+	
 	public static CombinedCondition createCombinedCondition(Condition... conditions) {
 		return createCombinedCondition(Operator.AND, conditions);
 	}

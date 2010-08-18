@@ -52,6 +52,7 @@ import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
+import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InCondition;
@@ -179,6 +180,27 @@ public class jOOQTest {
 		context.assertIsSatisfied();
 	}
 
+	@Test
+	public final void testPlainSQLCondition() throws Exception {
+		Condition c1 = QueryFactory.createPlainSQLCondition("TABLE1.ID = 10");
+		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE1.ID = ? AND TABLE2.ID = ?", 10, 20);
+		
+		assertEquals("TABLE1.ID = 10", c1.toSQLReference(true));
+		assertEquals("TABLE1.ID = 10", c1.toSQLReference(false));
+		assertEquals("TABLE1.ID = '10' AND TABLE2.ID = '20'", c2.toSQLReference(true));
+		assertEquals("TABLE1.ID = ? AND TABLE2.ID = ?", c2.toSQLReference(false));
+		
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 10);
+			oneOf(statement).setInt(2, 20);
+		}});
+
+		int i = c2.bind(statement);
+		assertEquals(3, i);
+
+		context.assertIsSatisfied();
+	}
+	
 	@Test
 	public final void testIsNullCondition() throws Exception {
 		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, null);
