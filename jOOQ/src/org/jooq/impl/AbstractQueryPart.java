@@ -117,7 +117,7 @@ abstract class AbstractQueryPart implements QueryPart {
 	}
 
 	@Override
-	public boolean equals(Object that) {
+	public final boolean equals(Object that) {
 		if (that instanceof QueryPart) {
 			return toSQLReference(true).equals(((QueryPart) that).toSQLReference(true));
 		}
