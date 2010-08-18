@@ -46,6 +46,8 @@ import static org.jooq.test.Data.TABLE3;
 
 import java.sql.PreparedStatement;
 
+import junit.framework.Assert;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jooq.BetweenCondition;
@@ -183,16 +185,21 @@ public class jOOQTest {
 	@Test
 	public final void testPlainSQLCondition() throws Exception {
 		Condition c1 = QueryFactory.createPlainSQLCondition("TABLE1.ID = 10");
-		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE1.ID = ? AND TABLE2.ID = ?", 10, 20);
-		
-		assertEquals("TABLE1.ID = 10", c1.toSQLReference(true));
-		assertEquals("TABLE1.ID = 10", c1.toSQLReference(false));
-		assertEquals("TABLE1.ID = '10' AND TABLE2.ID = '20'", c2.toSQLReference(true));
-		assertEquals("TABLE1.ID = ? AND TABLE2.ID = ?", c2.toSQLReference(false));
-		
+		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
+
+		try {
+			QueryFactory.createPlainSQLCondition("ABC", "ABC");
+			Assert.fail("Binding mismatch");
+		} catch (Exception expected) {}
+
+		assertEquals("(TABLE1.ID = 10)", c1.toSQLReference(true));
+		assertEquals("(TABLE1.ID = 10)", c1.toSQLReference(false));
+		assertEquals("(TABLE1.ID = 10 and TABLE2.ID = '20')", c2.toSQLReference(true));
+		assertEquals("(TABLE1.ID = ? and TABLE2.ID = ?)", c2.toSQLReference(false));
+
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
-			oneOf(statement).setInt(2, 20);
+			oneOf(statement).setString(2, "20");
 		}});
 
 		int i = c2.bind(statement);
@@ -200,7 +207,7 @@ public class jOOQTest {
 
 		context.assertIsSatisfied();
 	}
-	
+
 	@Test
 	public final void testIsNullCondition() throws Exception {
 		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, null);
@@ -654,6 +661,28 @@ public class jOOQTest {
 
 		int i = q.bind(statement);
 		assertEquals(5, i);
+
+		context.assertIsSatisfied();
+	}
+
+	@Test
+	public final void testConditionalSelectQuery5() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery();
+		Condition c1 = QueryFactory.createPlainSQLCondition("TABLE1.ID1 = ?", "10");
+		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
+
+		q.addConditions(c1);
+		q.addConditions(c2);
+		assertEquals("select * from dual where ((TABLE1.ID1 = '10') and (TABLE2.ID2 = 20 or TABLE2.ID2 = 30))", q.toSQLReference(true));
+		assertEquals("select * from dual where ((TABLE1.ID1 = ?) and (TABLE2.ID2 = 20 or TABLE2.ID2 = ?))", q.toSQLReference(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setString(1, "10");
+			oneOf(statement).setInt(2, 30);
+		}});
+
+		int i = q.bind(statement);
+		assertEquals(3, i);
 
 		context.assertIsSatisfied();
 	}

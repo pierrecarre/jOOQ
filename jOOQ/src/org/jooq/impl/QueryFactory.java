@@ -64,7 +64,7 @@ public final class QueryFactory {
 	}
 	
 	public static Condition createPlainSQLCondition(String sql, Object... bindings) {
-		return new PlainSQLConditionImpl(sql, bindings);
+		return new PlainSQLQueryPart(sql, bindings);
 	}
 	
 	public static CombinedCondition createCombinedCondition(Condition... conditions) {

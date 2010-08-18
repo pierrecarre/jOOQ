@@ -35,7 +35,7 @@ import java.sql.SQLException;
 
 import org.jooq.Condition;
 
-class PlainSQLConditionImpl extends AbstractQueryPart implements Condition {
+class PlainSQLQueryPart extends AbstractQueryPart implements Condition {
 
 	/**
 	 * Generated UID
@@ -44,31 +44,40 @@ class PlainSQLConditionImpl extends AbstractQueryPart implements Condition {
 	private final String sql;
 	private final Object[] bindings;
 
-	PlainSQLConditionImpl(String sql, Object[] bindings) {
+	PlainSQLQueryPart(String sql, Object[] bindings) {
 		this.sql = sql;
 		this.bindings = (bindings == null) ? new Object[0] : bindings;
+
+		// This comparison is a bit awkward, and probably not very precise...
+		if (StringUtils.countMatches(sql, "?") != this.bindings.length) {
+			throw new IllegalArgumentException(
+					"The number of bind variables must match the number of bindings. " +
+					"SQL = [" + sql + "], bindings.length = " + bindings.length);
+		}
 	}
 
 	@Override
-	public String toSQLReference(boolean inlineParameters) {
+	public final String toSQLReference(boolean inlineParameters) {
 		String result = sql;
-		
+
 		if (inlineParameters) {
 			for (Object binding : bindings) {
-				result = result.replaceFirst("\\?", "'" + binding.toString() + "'");
+				result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(binding, inlineParameters));
 			}
 		}
-		
-		return result;
+
+		// We have no control over the plain SQL content, hence we MUST put it in
+		// parentheses to ensure correct semantics
+		return "(" + result + ")";
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		for (Object binding : bindings) {
 			Class<?> type = (binding == null) ? Object.class : binding.getClass();
 			bind(stmt, initialIndex++, type, binding);
 		}
-		
+
 		return initialIndex;
 	}
 }
