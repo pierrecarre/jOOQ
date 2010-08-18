@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<project name="jOOQ-release" basedir="." default="build-all">
+	<property name="dir.workspace" value="${basedir}/.." />
+	<property name="dir.target" value="${basedir}/target" />
+	<property name="dir.release" value="${basedir}/release" />
+
+	<target name="release" description="Release a new version">
+		<property name="version" value="1.1.0"/>
+		
+		<mkdir dir="${dir.release}/versions" />
+		<mkdir dir="${dir.release}/${version}" />
+		<mkdir dir="${dir.release}/${version}/lib" />
+		<mkdir dir="${dir.release}/${version}/src" />
+		
+		<ant target="build-all" />
+		
+		<copy todir="${dir.release}/${version}/lib">
+			<fileset dir="${dir.release}/latest">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${dir.release}/${version}">
+			<fileset dir="${dir.release}/template">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		
+		<zip destfile="${dir.release}/${version}/src/jOOQ-${version}-src.zip">
+			<fileset dir="${dir.workspace}">
+				<include name="jOOQ/src/**"/>
+				<include name="jOOQ-codegen/src/**"/>
+				<include name="jOOQ-test/src/**"/>
+			</fileset>
+		</zip>
+		
+		<zip destfile="${dir.release}/versions/jOOQ-${version}.zip">
+			<fileset dir="${dir.release}/${version}"/>
+		</zip>
+		
+		<delete dir="${dir.release}/${version}"/>
+	</target>
+	
+	<target name="build-all" description="Build all projects">
+		<ant target="clean-all" />
+		<ant target="build-jOOQ" />
+		<ant target="build-jOOQ-codegen" />
+	</target>
+
+	<target name="clean-all">
+		<delete dir="${dir.target}" />
+		<mkdir dir="${dir.target}" />
+	</target>
+
+	<target name="build-jOOQ">
+		<build-project project="jOOQ"/>
+	</target>
+
+	<target name="build-jOOQ-codegen">
+		<build-project project="jOOQ-codegen"/>
+	</target>
+
+	<macrodef name="build-project">
+		<attribute name="project" />
+
+		<sequential>
+			<mkdir dir="${dir.target}/@{project}/bin"/>
+			<mkdir dir="${dir.target}/@{project}/jar"/>
+			<mkdir dir="${dir.release}/latest"/>
+
+			<javac 
+				srcdir="${dir.workspace}/@{project}/src"
+				destdir="${dir.target}/@{project}/bin">
+				
+				<classpath>
+					<fileset dir="${dir.release}/latest">
+    					<include name="**/*.jar"/>
+					</fileset>
+					<fileset dir="${dir.workspace}/jOOQ-test/lib">
+						<include name="**/*.jar"/>
+					</fileset>
+				</classpath>
+			</javac>
+			
+			<jar
+				includes="${dir.target}/@{project}/bin"
+				jarfile="${dir.target}/@{project}/jar/@{project}.jar">
+				
+				<fileset dir="${dir.target}/@{project}/bin">
+					<include name="**/*"/>
+				</fileset>					
+			</jar>
+			
+			<copy file="${dir.target}/@{project}/jar/@{project}.jar" todir="${dir.release}/latest" />
+		</sequential>
+	</macrodef>
+</project>

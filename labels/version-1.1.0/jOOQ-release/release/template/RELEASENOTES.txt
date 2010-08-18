@@ -1,0 +1,39 @@
+jOOQ Release notes
+------------------
+For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
+
+Version 1.1.0
+=================================================================
+
+The main new feature is the Oracle support. Wait for 
+Version 1.1.1 for that support to be stabilised, as there are no
+Oracle unit tests running against an Oracle database yet.
+
+Features
+--------
+
+# 2 - Add support for inner / nested selects
+# 3 - Add more function support
+# 4 - Implement filtering functionality for code generation
+# 6 - Add Oracle Support
+# 9 - Create true POJO's (implementing org.jooq.Record) with 
+      getters and setters
+#17 - Make org.jooq.impl.Parameter independent of Field
+
+Bugfixes
+--------
+
+#11 - Code generation does not remove files
+
+Version 1.0.1
+=================================================================
+
+Features
+--------
+
+#5 - Prevent code regeneration, if no changes were made
+#7 - Implement ant task for code generation
+
+Version 1.0.0
+=================================================================
+Initial Release
