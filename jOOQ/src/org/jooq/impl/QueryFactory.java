@@ -62,11 +62,11 @@ public final class QueryFactory {
 	public static Condition createPlainSQLCondition(String sql) {
 		return createPlainSQLCondition(sql, new Object[0]);
 	}
-	
+
 	public static Condition createPlainSQLCondition(String sql, Object... bindings) {
 		return new PlainSQLQueryPart(sql, bindings);
 	}
-	
+
 	public static CombinedCondition createCombinedCondition(Condition... conditions) {
 		return createCombinedCondition(Operator.AND, conditions);
 	}
@@ -101,6 +101,14 @@ public final class QueryFactory {
 
 	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
 		return new CompareConditionImpl<T>(field, value, comparator);
+	}
+
+	public static <T> CompareCondition<T> createNullCondition(Field<T> field) {
+		return createCompareCondition(field, null, Comparator.EQUALS);
+	}
+
+	public static <T> CompareCondition<T> createNotNullCondition(Field<T> field) {
+		return createCompareCondition(field, null, Comparator.NOT_EQUALS);
 	}
 
 	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2) {

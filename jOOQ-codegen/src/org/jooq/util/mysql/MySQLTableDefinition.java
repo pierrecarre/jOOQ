@@ -70,7 +70,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.addSelect(ORDINAL_POSITION);
 		q.addSelect(DATA_TYPE);
 		q.addSelect(COLUMN_COMMENT);
-		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchema()));
+		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addConditions(createCompareCondition(TABLE_NAME, getName()));
 		q.addOrderBy(ORDINAL_POSITION);
 
@@ -82,7 +82,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			String comment = record.getValue(COLUMN_COMMENT);
 
 			Class<?> type = MySQLDataType.valueOf(dataType.toUpperCase()).getType();
-			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), name, position, type, comment);
+			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), getName(), name, position, type, comment);
 			result.add(column);
 		}
 

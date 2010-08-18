@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,57 +28,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.util;
 
-package org.jooq.util.oracle;
-
-import java.util.regex.Matcher;
-
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.FunctionDefinition;
+import java.util.List;
 
 /**
+ * An object holding information about a foreign key relationship.
+ *
  * @author Lukas Eder
  */
-public class OracleFunctionDefinition extends AbstractFunctionDefinition implements FunctionDefinition {
+public interface ForeignKeyDefinition extends Definition {
 
-	private ColumnDefinition returnValue;
+	/**
+	 * @return The list of columns making up the foreign key.
+	 */
+	List<String>  getKeyColumnNames();
 
-	public OracleFunctionDefinition(Database database, String name, String comment, String params, String returnValue) {
-		super(database, name, comment);
+	/**
+	 * @return The name of the referenced table.
+	 */
+	String getReferencedTableName();
 
-		init (params, returnValue);
-	}
-
-	private void init(String params, String returnValue) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
-
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createColumn(matcher, 3, i + 1));
-			}
-		}
-
-		Matcher matcher = TYPE_PATTERN.matcher(returnValue);
-		if (matcher.find()) {
-			this.returnValue = createColumn(matcher, 0, -1);
-		}
-	}
-
-	private ColumnDefinition createColumn(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
-		String paramType = matcher.group(group + 1);
-
-		Class<?> type = OracleDataType.valueOf(paramType.toUpperCase()).getType();
-		return new OracleColumnDefinition(getDatabase(), getName(), paramName, columnIndex, type, null);
-	}
-
-	@Override
-	public ColumnDefinition getReturnValue() {
-		return returnValue;
-	}
+	/**
+	 * @return The list of columns referenced by this foreign key
+	 */
+	List<String> getReferencedColumnNames();
 }

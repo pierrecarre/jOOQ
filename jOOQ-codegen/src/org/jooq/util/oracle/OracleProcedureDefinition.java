@@ -73,7 +73,7 @@ public class OracleProcedureDefinition extends AbstractProcedureDefinition imple
 				String paramType = matcher.group(4);
 
 				Class<?> type = OracleDataType.valueOf(paramType).getType();
-				ColumnDefinition column = new OracleColumnDefinition(getDatabase(), paramName, i + 1, type, null);
+				ColumnDefinition column = new OracleColumnDefinition(getDatabase(), getName(), paramName, i + 1, type, null);
 				allParameters.add(column);
 
 				switch (InOutDefinition.getFromString(inOut)) {

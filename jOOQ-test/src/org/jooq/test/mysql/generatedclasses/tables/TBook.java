@@ -39,11 +39,15 @@ public class TBook extends TableImpl {
 
 	/**
 	 * The book ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 

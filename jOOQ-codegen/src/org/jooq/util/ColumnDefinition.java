@@ -31,6 +31,8 @@
 
 package org.jooq.util;
 
+import java.sql.SQLException;
+
 /**
  * An interface defining a column of a table, or a parameter of a stored
  * procedure or stored function.
@@ -38,6 +40,11 @@ package org.jooq.util;
  * @author Lukas Eder
  */
 public interface ColumnDefinition extends Definition {
+
+	/**
+	 * @return The column's table name
+	 */
+	String getTableName();
 
 	/**
 	 * @return The column position in the table
@@ -53,4 +60,15 @@ public interface ColumnDefinition extends Definition {
 	 * @return The column simple Java type
 	 */
 	String getType();
+
+	/**
+	 * @return Whether this column is part of the primary key
+	 */
+	boolean isPrimaryKey() throws SQLException;
+
+	/**
+	 * @return Information about this column's foreign key relationship.
+	 *         <code>null</code> if this is not a foreign key.
+	 */
+	ForeignKeyDefinition getForeignKey() throws SQLException;
 }

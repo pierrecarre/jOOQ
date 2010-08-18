@@ -112,6 +112,16 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	}
 
 	@Override
+	public void addNullCondition(Field<?> field) {
+		condition.addNullCondition(field);
+	}
+
+	@Override
+	public void addNotNullCondition(Field<?> field) {
+		condition.addNotNullCondition(field);
+	}
+
+	@Override
 	public <T> void addInCondition(Field<T> field, Collection<T> values) {
 		condition.addInCondition(field, values);
 	}

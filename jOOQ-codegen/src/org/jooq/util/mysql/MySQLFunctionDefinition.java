@@ -74,7 +74,7 @@ public class MySQLFunctionDefinition extends AbstractFunctionDefinition implemen
 		String paramType = matcher.group(group + 1);
 
 		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), paramName, columnIndex, type, null);
+		return new MySQLColumnDefinition(getDatabase(), getName(), paramName, columnIndex, type, null);
 	}
 
 	@Override

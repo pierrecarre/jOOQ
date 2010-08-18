@@ -19,6 +19,8 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -26,9 +28,65 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public void setName(String value) {
+		setValue(XUnused.NAME, value);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public String getName() {
+		return getValue(XUnused.NAME);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 */
+	public void setIdRef(Integer value) {
+		setValue(XUnused.ID_REF, value);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 */
+	public Integer getIdRef() {
+		return getValue(XUnused.ID_REF);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 */
+	public void setNameRef(String value) {
+		setValue(XUnused.NAME_REF, value);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 */
+	public String getNameRef() {
+		return getValue(XUnused.NAME_REF);
 	}
 
 	public XUnusedRecord(Result result) {

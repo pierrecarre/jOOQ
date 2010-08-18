@@ -33,6 +33,7 @@ package org.jooq.util.oracle;
 
 import org.jooq.util.AbstractColumnDefinition;
 import org.jooq.util.Database;
+import org.jooq.util.ForeignKeyDefinition;
 
 
 /**
@@ -40,8 +41,18 @@ import org.jooq.util.Database;
  */
 public class OracleColumnDefinition extends AbstractColumnDefinition {
 
-	public OracleColumnDefinition(Database database, String name, int position, Class<?> type,
+	public OracleColumnDefinition(Database database, String table, String name, int position, Class<?> type,
 			String comment) {
-		super (database, name, position, type, comment);
+		super (database, table, name, position, type, comment);
+	}
+
+	@Override
+	protected boolean isPrimaryKey0() {
+		return false;
+	}
+
+	@Override
+	protected ForeignKeyDefinition getForeignKey0() {
+		return null;
 	}
 }

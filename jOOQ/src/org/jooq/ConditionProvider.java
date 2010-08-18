@@ -74,6 +74,18 @@ public interface ConditionProvider extends QueryPart {
 
 	/**
 	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createCompareCondition(Field, null, EQUALS))}
+	 */
+	void addNullCondition(Field<?> field);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
+	 * {@link QueryFactory#createCompareCondition(Field, null, NOT_EQUALS))}
+	 */
+	void addNotNullCondition(Field<?> field);
+
+	/**
+	 * Shortcut for calling {@link #addConditions(Condition)} with argument
 	 * {@link QueryFactory#createInCondition(Field, Collection)}
 	 */
 	<T> void addInCondition(Field<T> field, Collection<T> values);

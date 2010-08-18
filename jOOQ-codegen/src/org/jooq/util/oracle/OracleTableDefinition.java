@@ -67,7 +67,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		q.addConditions(
 				createJoinCondition(AllTabCols.TABLE_NAME, AllColComments.TABLE_NAME),
 				createJoinCondition(AllTabCols.COLUMN_NAME, AllColComments.COLUMN_NAME),
-				createCompareCondition(AllTabCols.OWNER, getSchema()),
+				createCompareCondition(AllTabCols.OWNER, getSchemaName()),
 				createCompareCondition(AllTabCols.TABLE_NAME, getName()));
 		q.addOrderBy(AllTabCols.COLUMN_ID);
 
@@ -89,7 +89,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 				System.out.println("Unsupported datatype : " + dataType);
 			}
 
-			OracleColumnDefinition table = new OracleColumnDefinition(getDatabase(), name, position, type, comment);
+			OracleColumnDefinition table = new OracleColumnDefinition(getDatabase(), getName(), name, position, type, comment);
 			result.add(table);
 		}
 

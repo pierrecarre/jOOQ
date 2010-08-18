@@ -31,6 +31,9 @@
 
 package org.jooq.util;
 
+import java.sql.SQLException;
+
+
 /**
  * A base implementation for column definitions.
  *
@@ -40,10 +43,17 @@ public abstract class AbstractColumnDefinition extends AbstractDefinition implem
 
 	private final int position;
 	private final Class<?> type;
+	private final String table;
 
-	public AbstractColumnDefinition(Database database, String name, int position, Class<?> type, String comment) {
+	private boolean isPrimaryKeyLoaded;
+	private boolean isPrimaryKey;
+	private boolean foreignKeyLoaded;
+	private ForeignKeyDefinition foreignKey;
+
+	public AbstractColumnDefinition(Database database, String table, String name, int position, Class<?> type, String comment) {
 		super(database, name, comment);
 
+		this.table = table;
 		this.position = position;
 		this.type = type;
 	}
@@ -59,7 +69,35 @@ public abstract class AbstractColumnDefinition extends AbstractDefinition implem
 	}
 
 	@Override
+	public final String getTableName() {
+		return table;
+	}
+
+	@Override
 	public final String getType() {
 		return type.getSimpleName();
 	}
+
+	@Override
+	public final boolean isPrimaryKey() throws SQLException {
+		if (!isPrimaryKeyLoaded) {
+			isPrimaryKeyLoaded = true;
+			isPrimaryKey = isPrimaryKey0();
+		}
+
+		return isPrimaryKey;
+	}
+
+	@Override
+	public final ForeignKeyDefinition getForeignKey() throws SQLException {
+		if (!foreignKeyLoaded) {
+			foreignKeyLoaded = true;
+			foreignKey = getForeignKey0();
+		}
+
+		return foreignKey;
+	}
+
+	protected abstract boolean isPrimaryKey0() throws SQLException;
+	protected abstract ForeignKeyDefinition getForeignKey0() throws SQLException;
 }

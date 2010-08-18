@@ -20,6 +20,8 @@ public class TAuthorRecord extends RecordImpl {
 
 	/**
 	 * The author ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -27,6 +29,8 @@ public class TAuthorRecord extends RecordImpl {
 
 	/**
 	 * The author ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);

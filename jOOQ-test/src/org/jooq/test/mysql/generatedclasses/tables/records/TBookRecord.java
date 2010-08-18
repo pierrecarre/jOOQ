@@ -19,6 +19,8 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The book ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -26,6 +28,8 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The book ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);
@@ -33,6 +37,8 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -40,6 +46,8 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);

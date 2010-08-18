@@ -338,7 +338,7 @@ public class DefaultGenerator implements Generator {
 		}
 	}
 
-	private void printGetterAndSetter(GenerationWriter out, ColumnDefinition column, TableDefinition table, String tablePackage) {
+	private void printGetterAndSetter(GenerationWriter out, ColumnDefinition column, TableDefinition table, String tablePackage) throws SQLException {
 		String columnDisambiguationSuffix = column.getNameUC().equals(table.getNameUC()) ? "_" : "";
 
 		printFieldJavaDoc(out, null, column);
@@ -354,15 +354,15 @@ public class DefaultGenerator implements Generator {
 		out.printImport(column.getTypeClass());
 	}
 
-	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) {
+	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) throws SQLException {
 		printColumnDefinition(out, column, targetTableNameUC, TableField.class, TableFieldImpl.class);
 	}
 
-	private void printParameter(GenerationWriter out, ColumnDefinition parameter) {
+	private void printParameter(GenerationWriter out, ColumnDefinition parameter) throws SQLException {
 		printColumnDefinition(out, parameter, null, ParameterImpl.class, ParameterImpl.class);
 	}
 
-	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, String targetObjectNameUC, Class<?> declaredMemberClass, Class<?> concreteMemberClass) {
+	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, String targetObjectNameUC, Class<?> declaredMemberClass, Class<?> concreteMemberClass) throws SQLException {
 		String concreteMemberType = concreteMemberClass.getSimpleName();
 		String declaredMemberType = declaredMemberClass.getSimpleName();
 
@@ -386,11 +386,14 @@ public class DefaultGenerator implements Generator {
 		out.println("\tprivate static final long serialVersionUID = 1L;");
 	}
 
-	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, ColumnDefinition definition) {
+	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, ColumnDefinition column) throws SQLException {
+		boolean isPrimaryKey = column.isPrimaryKey();
+		ForeignKeyDefinition foreignKey = column.getForeignKey();
+
 		out.println();
 		out.println("\t/**");
 
-		String comment = definition.getComment();
+		String comment = column.getComment();
 
 		if (comment != null && comment.length() > 0) {
 			out.println("\t * " + comment);
@@ -398,11 +401,29 @@ public class DefaultGenerator implements Generator {
 			out.println("\t * An uncommented item");
 		}
 
-		if (definition.getTypeClass() == Object.class) {
+		if (column.getTypeClass() == Object.class) {
 		    out.println("\t * ");
 		    out.println("\t * The SQL type of this item could not be mapped. Deserialising this field might not work!");
 		}
-		
+
+		if (isPrimaryKey) {
+		    out.println("\t * ");
+		    out.println("\t * PRIMARY KEY");
+		}
+
+		if (foreignKey != null) {
+		    out.println("\t * ");
+		    out.print("\t * FOREIGN KEY '");
+		    out.print(foreignKey.getName());
+		    out.print("' ");
+		    out.print(foreignKey.getKeyColumnNames().toString());
+		    out.print(" REFERENCES ");
+		    out.print(foreignKey.getReferencedTableName());
+		    out.print(" ");
+		    out.print(foreignKey.getReferencedColumnNames().toString());
+		    out.println();
+		}
+
 		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
 			out.println("\t * ");
 			out.println("\t * This item has the same name as its container. That is why an underline character was appended to the Java field name");

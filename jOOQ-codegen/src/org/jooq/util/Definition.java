@@ -42,7 +42,7 @@ public interface Definition {
 	/**
 	 * @return The schema of this object
 	 */
-	String getSchema();
+	String getSchemaName();
 
 	/**
 	 * @return The name of this object, e.g. [my_table]

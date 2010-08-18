@@ -31,17 +31,82 @@
 
 package org.jooq.util.mysql;
 
+import static org.jooq.impl.QueryFactory.createCompareCondition;
+import static org.jooq.impl.QueryFactory.createNotNullCondition;
+import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+
+import java.sql.SQLException;
+
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SelectQuery;
 import org.jooq.util.AbstractColumnDefinition;
 import org.jooq.util.Database;
-
+import org.jooq.util.DefaultForeignKeyDefinition;
+import org.jooq.util.ForeignKeyDefinition;
+import org.jooq.util.mysql.information_schema.tables.Columns;
+import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 
 /**
  * @author Lukas Eder
  */
 public class MySQLColumnDefinition extends AbstractColumnDefinition {
 
-	public MySQLColumnDefinition(Database database, String name, int position, Class<?> type,
+	public MySQLColumnDefinition(Database database, String table, String name, int position, Class<?> type,
 			String comment) {
-		super (database, name, position, type, comment);
+		super(database, table, name, position, type, comment);
+	}
+
+	@Override
+	protected boolean isPrimaryKey0() throws SQLException {
+		SelectQuery q = createSelectQuery(COLUMNS);
+		q.addCompareCondition(Columns.COLUMN_KEY, "PRI");
+		q.addCompareCondition(Columns.TABLE_SCHEMA, getSchemaName());
+		q.addCompareCondition(Columns.TABLE_NAME, getTableName());
+		q.addCompareCondition(Columns.COLUMN_NAME, getName());
+		q.execute(getConnection());
+
+		return q.getResult().getNumberOfRecords() > 0;
+	}
+
+	@Override
+	protected ForeignKeyDefinition getForeignKey0() throws SQLException {
+		DefaultForeignKeyDefinition definition = null;
+
+		// Find the constraint name (if any) for this column
+		SelectQuery inner = createSelectQuery(KEY_COLUMN_USAGE);
+		inner.addSelect(KeyColumnUsage.CONSTRAINT_NAME);
+		inner.addConditions(
+				createNotNullCondition(KeyColumnUsage.REFERENCED_TABLE_NAME),
+				createCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName()),
+				createCompareCondition(KeyColumnUsage.TABLE_NAME, getTableName()),
+				createCompareCondition(KeyColumnUsage.COLUMN_NAME, getName()));
+
+		// Find all columns participating in the constraint name (if any)
+		SelectQuery q = createSelectQuery(KEY_COLUMN_USAGE);
+		q.addConditions(
+				createNotNullCondition(KeyColumnUsage.REFERENCED_TABLE_NAME),
+				inner.asCompareCondition(KeyColumnUsage.CONSTRAINT_NAME));
+
+		q.execute(getConnection());
+
+		Result result = q.getResult();
+		for (Record record : result) {
+			if (definition == null) {
+				definition = new DefaultForeignKeyDefinition(
+						getDatabase(),
+						record.getValue(KeyColumnUsage.CONSTRAINT_NAME),
+						record.getValue(KeyColumnUsage.REFERENCED_TABLE_NAME));
+			}
+
+			definition.getKeyColumnNames().add(
+					record.getValue(KeyColumnUsage.COLUMN_NAME));
+			definition.getReferencedColumnNames().add(
+					record.getValue(KeyColumnUsage.REFERENCED_COLUMN_NAME));
+		}
+
+		return definition;
 	}
 }

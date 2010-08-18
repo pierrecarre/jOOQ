@@ -220,9 +220,11 @@ public class jOOQTest {
 
 		int i = c1.bind(statement);
 		assertEquals(1, i);
+		assertEquals(c1, QueryFactory.createNullCondition(FIELD_ID1));
 
 		int j = c2.bind(statement);
 		assertEquals(1, j);
+		assertEquals(c2, QueryFactory.createNotNullCondition(FIELD_ID1));
 	}
 
 	@Test
