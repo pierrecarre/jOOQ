@@ -45,6 +45,7 @@ import org.jooq.FieldList;
 import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinList;
+import org.jooq.Limit;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
@@ -62,14 +63,17 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	private final JoinList join;
 	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
-
+	private final LimitImpl limit;
+	
+	
 	SelectQueryImpl(Table from) {
 		this.select = new SelectFieldListImpl();
 		this.from = new TableListImpl();
 		this.join = new JoinListImpl();
 		this.condition = new ConditionProviderImpl();
 		this.groupBy = new FieldListImpl();
-
+		this.limit = new LimitImpl();
+		
 		if (from != null) {
 			this.from.add(from);
 		}
@@ -171,9 +175,24 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	public final void addGroupBy(Field<?>... fields) {
 		addGroupBy(Arrays.asList(fields));
 	}
+	
+	@Override
+	public final void addLimit(int numberOfRows) {
+		addLimit(1, numberOfRows);
+	}
+
+	@Override
+	public void addLimit(int lowerBound, int numberOfRows) {
+		limit.setLowerBound(lowerBound);
+		limit.setNumberOfRows(numberOfRows);
+	}
 
 	JoinList getJoin() {
 		return join;
+	}
+	
+	Limit getLimit() {
+		return limit;
 	}
 
 	@Override
@@ -260,6 +279,11 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		if (!getOrderBy().isEmpty()) {
 			sb.append(" order by ");
 			sb.append(getOrderBy().toSQLReference(inlineParameters));
+		}
+		
+		if (getLimit().isApplicable()) {
+			sb.append(" ");
+			sb.append(getLimit().toSQLReference(inlineParameters));
 		}
 
 		return sb.toString();

@@ -125,4 +125,21 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
 	 * @param fields The grouping fields
 	 */
 	void addGroupBy(Collection<Field<?>> fields);
+	
+	/**
+	 * Limit the results of this select
+	 * <p>
+	 * This is the same as calling {@link #addLimit(int, int)} with lowerBound = 1
+	 * 
+	 * @param numberOfRows The number of rows to return
+	 */
+	void addLimit(int numberOfRows);
+	
+	/**
+	 * Limit the results of this select
+	 * 
+	 * @param lowerBound The lowest rownum starting at 1
+	 * @param numberOfRows The number of rows to return
+	 */
+	void addLimit(int lowerBound, int numberOfRows);
 }
