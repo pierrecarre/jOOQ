@@ -45,10 +45,8 @@ import org.jooq.FieldList;
 import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinList;
-import org.jooq.OrderByFieldList;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
-import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableList;
 
@@ -64,7 +62,6 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	private final JoinList join;
 	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
-	private final OrderByFieldList orderBy;
 
 	SelectQueryImpl(Table from) {
 		this.select = new SelectFieldListImpl();
@@ -72,7 +69,6 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		this.join = new JoinListImpl();
 		this.condition = new ConditionProviderImpl();
 		this.groupBy = new FieldListImpl();
-		this.orderBy = new OrderByFieldListImpl();
 
 		if (from != null) {
 			this.from.add(from);
@@ -198,20 +194,6 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	@Override
 	public final void addJoin(Table table) {
 		addJoin(QueryFactory.createJoin(table));
-	}
-
-	OrderByFieldList getOrderBy() {
-		return orderBy;
-	}
-
-	@Override
-	public void addOrderBy(Field<?> field, SortOrder order) {
-		getOrderBy().add(field, order);
-	}
-
-	@Override
-	public final void addOrderBy(Field<?> field) {
-		addOrderBy(field, null);
 	}
 
 	private FieldList getSelect0() {

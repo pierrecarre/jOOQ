@@ -77,6 +77,11 @@ class ResultProviderQueryImpl extends AbstractResultProviderQuery {
 		sb.append(right.toSQLReference(inlineParameters));
 		sb.append(")");
 
+		if (!getOrderBy().isEmpty()) {
+			sb.append(" order by ");
+			sb.append(getOrderBy().toSQLReference(inlineParameters));
+		}
+		
 		return sb.toString();
 	}
 

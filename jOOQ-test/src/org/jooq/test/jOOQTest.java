@@ -799,11 +799,12 @@ public class jOOQTest {
 
 		q1.addCompareCondition(FIELD_ID1, 1);
 		q2.addCompareCondition(FIELD_ID1, 2);
-
+		
 		ResultProviderQuery combine = q1.combine(q2);
-
-		assertEquals("(select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)", combine.toSQLReference(true));
-		assertEquals("(select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)", combine.toSQLReference(false));
+		combine.addOrderBy(FIELD_ID1);
+		
+		assertEquals("(select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2) order by TABLE1.ID1", combine.toSQLReference(true));
+		assertEquals("(select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?) order by TABLE1.ID1", combine.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);

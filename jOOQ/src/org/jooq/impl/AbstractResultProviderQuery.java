@@ -40,9 +40,11 @@ import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.OrderByFieldList;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderQuery;
+import org.jooq.SortOrder;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 import org.jooq.Table;
@@ -55,7 +57,12 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	private static final long serialVersionUID = 1555503854543561285L;
 
 	private ResultImpl result;
+	private final OrderByFieldList orderBy;
 
+	public AbstractResultProviderQuery() {
+		this.orderBy = new OrderByFieldListImpl();
+	}
+	
 	@Override
 	protected final int execute(PreparedStatement statement) throws SQLException {
 		ResultSet rs = null;
@@ -100,6 +107,20 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 	@Override
 	public final Result getResult() {
 		return result;
+	}
+
+	protected final OrderByFieldList getOrderBy() {
+		return orderBy;
+	}
+
+	@Override
+	public final void addOrderBy(Field<?> field, SortOrder order) {
+		getOrderBy().add(field, order);
+	}
+
+	@Override
+	public final void addOrderBy(Field<?> field) {
+		addOrderBy(field, null);
 	}
 
 	@Override

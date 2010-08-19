@@ -125,19 +125,4 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
 	 * @param fields The grouping fields
 	 */
 	void addGroupBy(Collection<Field<?>> fields);
-
-	/**
-	 * Adds an ordering field, ordering by the default sort order
-	 *
-	 * @param field The ordering field
-	 */
-	void addOrderBy(Field<?> field);
-
-	/**
-	 * Adds an ordering field
-	 *
-	 * @param field The ordering field
-	 * @param order The sort order
-	 */
-	void addOrderBy(Field<?> field, SortOrder order);
 }
