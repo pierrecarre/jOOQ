@@ -31,6 +31,9 @@
 
 package org.jooq.util;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  * A base implementation for table definitions.
  *
@@ -38,7 +41,20 @@ package org.jooq.util;
  */
 public abstract class AbstractTableDefinition extends AbstractDefinition implements TableDefinition {
 
+	private List<ColumnDefinition> columns;
+
 	public AbstractTableDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}
+
+	@Override
+	public final List<ColumnDefinition> getColumns() throws SQLException {
+		if (columns == null) {
+			columns = getColumns0();
+		}
+		
+		return columns;
+	}
+
+	protected abstract List<ColumnDefinition> getColumns0() throws SQLException;
 }

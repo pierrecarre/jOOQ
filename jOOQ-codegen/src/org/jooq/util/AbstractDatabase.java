@@ -47,6 +47,10 @@ public abstract class AbstractDatabase implements Database {
 	private String schema;
 	private String[] excludes;
 	private String[] includes;
+	
+	private List<TableDefinition> tables;
+	private List<ProcedureDefinition> procedures;
+	private List<FunctionDefinition> functions;
 
 	@Override
 	public final void setConnection(Connection connection) {
@@ -95,17 +99,29 @@ public abstract class AbstractDatabase implements Database {
 
 	@Override
 	public final List<TableDefinition> getTables() throws SQLException {
-		return filter(getTables0());
+		if (tables == null) {
+			tables = filter(getTables0());
+		}
+		
+		return tables;
 	}
 
 	@Override
 	public final List<ProcedureDefinition> getProcedures() throws SQLException {
-		return filter(getProcedures0());
+		if (procedures == null) {
+			procedures = filter(getProcedures0());
+		}
+		
+		return procedures;
 	}
 
 	@Override
 	public final List<FunctionDefinition> getFunctions() throws SQLException {
-		return filter(getFunctions0());
+		if (functions == null) {
+			functions = filter(getFunctions0());
+		}
+		
+		return functions;
 	}
 
 	private final <T extends Definition> List<T> filter(List<T> definitions) {

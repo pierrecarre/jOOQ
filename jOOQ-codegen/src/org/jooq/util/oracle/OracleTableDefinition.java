@@ -60,7 +60,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	}
 
 	@Override
-	public List<ColumnDefinition> getColumns() throws SQLException {
+	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		SelectQuery q = createSelectQuery(ALL_TAB_COLS);

@@ -61,7 +61,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 	}
 
 	@Override
-	public List<ColumnDefinition> getColumns() throws SQLException {
+	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		SelectQuery q = createSelectQuery(COLUMNS);
