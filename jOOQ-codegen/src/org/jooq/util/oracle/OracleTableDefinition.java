@@ -37,6 +37,7 @@ import static org.jooq.impl.QueryFactory.createSelectQuery;
 import static org.jooq.util.oracle.sys.tables.AllColComments.ALL_COL_COMMENTS;
 import static org.jooq.util.oracle.sys.tables.AllTabCols.ALL_TAB_COLS;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,15 +77,14 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 			String name = record.getValue(AllTabCols.COLUMN_NAME);
 			int position = record.getValue(AllTabCols.COLUMN_ID).intValue();
 			String dataType = record.getValue(AllTabCols.DATA_TYPE);
-			// int precision =
-			// record.getValue(AllTabCols.DATA_PRECISION).intValue();
-			// int scale = record.getValue(AllTabCols.DATA_SCALE).intValue();
+			int precision = record.getValue(AllTabCols.DATA_PRECISION, BigDecimal.ZERO).intValue();
+			int scale = record.getValue(AllTabCols.DATA_SCALE, BigDecimal.ZERO).intValue();
 			String comment = record.getValue(AllColComments.COMMENTS);
 
 			Class<?> type = Object.class;
 
 			try {
-				type = OracleDataType.valueOf(dataType.toUpperCase().replaceAll("[^\\d\\w]", "")).getType();
+				type = OracleDataType.valueOf(dataType.toUpperCase().replaceAll("[^\\d\\w]", "")).getType(precision, scale);
 			} catch (Exception e) {
 				System.out.println("Unsupported datatype : " + dataType);
 			}

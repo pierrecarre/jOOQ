@@ -32,6 +32,7 @@
 package org.jooq.util.oracle;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -62,32 +63,48 @@ public enum OracleDataType {
 	TIMESTAMP6WITHTIMEZONE(Timestamp.class);
 
 	private final Class<?> type;
-	private final int precision;
-    private final int scale;
 
     private OracleDataType(Class<?> type) {
-      this(type, 0, 0);
-    }
-
-    private OracleDataType(Class<?> type, int precision) {
-      this(type, precision, 0);
-    }
-
-    private OracleDataType(Class<?> type, int precision, int scale) {
       this.type = type;
-      this.precision = precision;
-      this.scale = scale;
     }
 
-	public Class<?> getType() {
-		return type;
+    public Class<?> getType() {
+    	return type;
+    }
+    
+	public Class<?> getType(int precision, int scale) {
+		if (this == NUMBER && precision != 0) {
+
+			// Integer numbers
+			if (scale == 0) {
+				
+				// if (precision == 1) {
+				//     Booleans could have precision == 1, but that's a tough guess
+				// }
+				if (precision < String.valueOf(Byte.MAX_VALUE).length()) {
+					return Byte.class;
+				}
+				if (precision < String.valueOf(Short.MAX_VALUE).length()) {
+					return Short.class;
+				}
+				if (precision < String.valueOf(Integer.MAX_VALUE).length()) {
+					return Integer.class;
+				}
+				if (precision < String.valueOf(Long.MAX_VALUE).length()) {
+					return Long.class;
+				}
+				
+				// Default integer number
+				return BigInteger.class;
+			} 
+			
+			// Real numbers should not be represented as float or double
+			else {
+				return BigDecimal.class;
+			}
+		}
+		
+		// If no precise type could be guessed, take the default
+		return getType();
 	}
-
-    public int getPrecision() {
-      return precision;
-    }
-  
-    public int getScale() {
-      return scale;
-    }
 }

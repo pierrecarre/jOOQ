@@ -68,6 +68,17 @@ public class RecordImpl implements Record {
 	}
 
 	@Override
+	public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
+		T value = getValue(field);
+		
+		if (value == null) {
+			value = defaultValue;
+		}
+		
+		return value;
+	}
+
+	@Override
 	public <T> void setValue(Field<T> field, T value) {
 		values.put(field, value);
 	}
