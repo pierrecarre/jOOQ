@@ -83,7 +83,7 @@ public class GenerationTask extends Task {
 	}
 
 	public void setGeneratordatabase(String value) {
-		properties.setProperty("generator.databaes", value);
+		properties.setProperty("generator.database", value);
 	}
 
 	public void setGeneratordatabaseincludes(String value) {

@@ -98,7 +98,7 @@ public class GenerationWriter {
 			imports.append("import " + clazz + ";\n");
 		}
 
-		string = string.replaceAll(IMPORT_STATEMENT, imports.toString());
+		string = string.replace(IMPORT_STATEMENT, imports.toString());
 
 		writer.append(string);
 		writer.close();

@@ -43,7 +43,8 @@ public enum Comparator {
 	LESS_OR_EQUAL("<="),
 	GREATER(">"),
 	GREATER_OR_EQUAL(">="),
-	LIKE("LIKE");
+	LIKE("like"),
+	NOT_LIKE("not like");
 
 	private final String sql;
 

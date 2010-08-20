@@ -114,6 +114,9 @@ public class GenerationTool {
 			generator.setTargetDirectory(properties.getProperty("generator.target.directory"));
 			generator.setTargetPackage(properties.getProperty("generator.target.package"));
 			generator.generate(database);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		} finally {
 			if (connection != null) {
 				connection.close();

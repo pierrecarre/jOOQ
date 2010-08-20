@@ -9,20 +9,37 @@
 				<include name="jOOQ-codegen.jar"/>
 			</fileset>
 			<fileset dir="${dir.workspace}/jOOQ-test/lib">
+				<include name="ojdbc6.jar"/>
 				<include name="mysql-connector-java-5.1.10-bin.jar"/>
 			</fileset>
 		</classpath>
 	</taskdef>
 
-	<target name="generate-mysql-test-schema">
-		<generate-classes 
-			jdbcurl="jdbc:mysql://localhost/test"
-			jdbcschema="test"
-			jdbcuser="root"
-			jdbcpassword=""
-			generatordatabaseincludes=".*"
-			generatordatabaseexcludes=""
-			generatortargetpackage="org.jooq.test.mysql.generatedclasses"
-			generatortargetdirectory="${basedir}/src"/>
-	</target>
+  <target name="generate-mysql-test-schema">
+    <generate-classes 
+    	jdbcdriver="com.mysql.jdbc.Driver"
+      jdbcurl="jdbc:mysql://localhost/test"
+      jdbcschema="test"
+      jdbcuser="root"
+      jdbcpassword=""
+      generatordatabase="org.jooq.util.mysql.MySQLDatabase"
+      generatordatabaseincludes=".*"
+      generatordatabaseexcludes=""
+      generatortargetpackage="org.jooq.test.mysql.generatedclasses"
+      generatortargetdirectory="${basedir}/src"/>
+  </target>
+
+  <target name="generate-oracle-test-schema">
+    <generate-classes 
+      jdbcdriver="oracle.jdbc.OracleDriver"
+      jdbcurl="jdbc:oracle:thin:@rhea:1521:RD_DEV"
+      jdbcschema="ODS_TEST"
+      jdbcuser="ODS_TEST"
+      jdbcpassword="ODS_TEST"
+      generatordatabase="org.jooq.util.oracle.OracleDatabase"
+      generatordatabaseincludes=".*"
+      generatordatabaseexcludes=""
+      generatortargetpackage="org.jooq.test.oracle.generatedclasses"
+      generatortargetdirectory="${basedir}/src"/>
+  </target>
 </project>

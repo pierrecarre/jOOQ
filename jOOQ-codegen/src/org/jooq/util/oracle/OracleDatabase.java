@@ -31,6 +31,7 @@
 
 package org.jooq.util.oracle;
 
+import static org.jooq.Comparator.NOT_LIKE;
 import static org.jooq.impl.QueryFactory.createCompareCondition;
 import static org.jooq.impl.QueryFactory.createSelectQuery;
 import static org.jooq.util.oracle.sys.tables.AllTabComments.ALL_TAB_COMMENTS;
@@ -61,7 +62,9 @@ public class OracleDatabase extends AbstractDatabase {
 		SelectQuery q = createSelectQuery(ALL_TAB_COMMENTS);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(COMMENTS);
-		q.addConditions(createCompareCondition(OWNER, getSchemaName()));
+		q.addConditions(
+				createCompareCondition(OWNER, getSchemaName()),
+				createCompareCondition(TABLE_NAME, "%$%", NOT_LIKE)); // Exclude weird oracle binary objects
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 
