@@ -36,7 +36,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-public class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
+class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
 
 	private static final long serialVersionUID = 6807729087019209084L;
 

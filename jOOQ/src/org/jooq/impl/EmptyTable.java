@@ -36,7 +36,7 @@ import java.sql.PreparedStatement;
 /**
  * @author Lukas Eder
  */
-public class EmptyTable extends TableImpl {
+class EmptyTable extends TableImpl {
 
 	private static final long serialVersionUID = -7492790780048090156L;
 	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
