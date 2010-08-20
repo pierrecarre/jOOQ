@@ -41,7 +41,7 @@ public class TAuthor extends TableImpl {
 	/**
 	 * The author ID
 	 */
-	public static final TableField<Long> ID = new TableFieldImpl<Long>("ID", Long.class, T_AUTHOR);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 
 	/**
 	 * The author's first name

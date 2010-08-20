@@ -20,28 +20,28 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The book ID
 	 */
-	public void setId(Long value) {
+	public void setId(Integer value) {
 		setValue(TBook.ID, value);
 	}
 
 	/**
 	 * The book ID
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return getValue(TBook.ID);
 	}
 
 	/**
 	 * The author ID in entity 'author'
 	 */
-	public void setAuthorId(Long value) {
+	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
 	}
 
 	/**
 	 * The author ID in entity 'author'
 	 */
-	public Long getAuthorId() {
+	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);
 	}
 

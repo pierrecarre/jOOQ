@@ -20,14 +20,14 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 */
-	public void setId(Long value) {
+	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return getValue(XUnused.ID);
 	}
 
@@ -48,14 +48,14 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 */
-	public void setIdRef(Long value) {
+	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Long getIdRef() {
+	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
 	}
 

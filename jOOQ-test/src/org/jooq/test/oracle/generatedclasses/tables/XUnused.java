@@ -40,7 +40,7 @@ public class XUnused extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Long> ID = new TableFieldImpl<Long>("ID", Long.class, X_UNUSED);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
@@ -50,7 +50,7 @@ public class XUnused extends TableImpl {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Long> ID_REF = new TableFieldImpl<Long>("ID_REF", Long.class, X_UNUSED);
+	public static final TableField<Integer> ID_REF = new TableFieldImpl<Integer>("ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item

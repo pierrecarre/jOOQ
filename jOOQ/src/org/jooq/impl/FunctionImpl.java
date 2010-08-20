@@ -36,6 +36,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
 
@@ -59,7 +60,7 @@ class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements F
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getName());
-		sb.append("(");
+		sb.append(getArgumentListDelimiterStart());
 
 		String separator = "";
 		if (arguments.isEmpty()) {
@@ -73,11 +74,37 @@ class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements F
 			}
 		}
 
-		sb.append(")");
+		sb.append(getArgumentListDelimiterEnd());
 
 		return sb.toString();
 	}
 
+	private String getArgumentListDelimiterStart() {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			
+			// Oracle empty argument lists do not have parentheses ()
+			if (arguments.isEmpty()) {
+				return "";
+			}
+		}
+		
+		return "(";
+	}
+
+	private String getArgumentListDelimiterEnd() {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			
+			// Oracle empty argument lists do not have parentheses ()
+			if (arguments.isEmpty()) {
+				return "";
+			}
+		}
+		
+		return ")";
+	}
+	
 	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
 		return field.toSQLReference(inlineParameters);
 	}

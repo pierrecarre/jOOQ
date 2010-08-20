@@ -21,14 +21,14 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * The author ID
 	 */
-	public void setId(Long value) {
+	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
 	}
 
 	/**
 	 * The author ID
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return getValue(TAuthor.ID);
 	}
 

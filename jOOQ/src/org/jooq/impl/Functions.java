@@ -188,7 +188,7 @@ public final class Functions {
 	public static Field<Date> currentDate() throws SQLDialectNotSupportedException {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE:
-			throw new SQLDialectNotSupportedException("current_date not supported");
+			return new FunctionImpl<Date>("sysdate", Date.class);
 		}
 
 		return new FunctionImpl<Date>("current_date", Date.class);
@@ -197,7 +197,7 @@ public final class Functions {
 	public static Field<Time> currentTime() throws SQLDialectNotSupportedException {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE:
-			throw new SQLDialectNotSupportedException("current_time not supported");
+			return new FunctionImpl<Time>("sysdate", Time.class);
 		}
 
 		return new FunctionImpl<Time>("current_time", Time.class);
@@ -222,14 +222,29 @@ public final class Functions {
 	}
 
 	public static Field<Integer> charLength(Field<?> field) {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			return new IntegerFunction("length", field);
+		}
+		
 		return new IntegerFunction("char_length", field);
 	}
 
 	public static Field<Integer> bitLength(Field<?> field) {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			return new IntegerFunction("8 * lengthb", field);
+		}
+		
 		return new IntegerFunction("bit_length", field);
 	}
 
 	public static Field<Integer> octetLength(Field<?> field) {
+		switch (Configuration.getInstance().getDialect()) {
+		case ORACLE:
+			return new IntegerFunction("lengthb", field);
+		}
+		
 		return new IntegerFunction("octet_length", field);
 	}
 
@@ -239,7 +254,22 @@ public final class Functions {
 		case POSTGRES:
 			return new ExtractFunctionImpl(field, datePart);
 		case ORACLE:
-			throw new SQLDialectNotSupportedException("TODO: Implement TO_CHAR for Oracle");
+			switch (datePart) {
+			case YEAR:
+				return new IntegerFunction("to_char", field, constant("YYYY"));
+			case MONTH:
+				return new IntegerFunction("to_char", field, constant("MM"));
+			case DAY:
+				return new IntegerFunction("to_char", field, constant("DD"));
+			case HOUR:
+				return new IntegerFunction("to_char", field, constant("HH24"));
+			case MINUTE:
+				return new IntegerFunction("to_char", field, constant("MI"));
+			case SECOND:
+				return new IntegerFunction("to_char", field, constant("SS"));
+			default:
+				throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+			}
 		case MSSQL:
 			throw new SQLDialectNotSupportedException("TODO: Implement CONVERT for MSSQL");
 

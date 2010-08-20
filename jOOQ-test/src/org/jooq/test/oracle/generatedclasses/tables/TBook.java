@@ -40,12 +40,12 @@ public class TBook extends TableImpl {
 	/**
 	 * The book ID
 	 */
-	public static final TableField<Long> ID = new TableFieldImpl<Long>("ID", Long.class, T_BOOK);
+	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 */
-	public static final TableField<Long> AUTHOR_ID = new TableFieldImpl<Long>("AUTHOR_ID", Long.class, T_BOOK);
+	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 
 	/**
 	 * The book's title
