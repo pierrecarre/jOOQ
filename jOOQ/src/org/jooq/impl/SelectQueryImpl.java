@@ -63,6 +63,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	private final JoinList join;
 	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
+	private final ConditionProviderImpl having;
 	private final LimitImpl limit;
 	
 	
@@ -72,6 +73,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		this.join = new JoinListImpl();
 		this.condition = new ConditionProviderImpl();
 		this.groupBy = new FieldListImpl();
+		this.having = new ConditionProviderImpl();
 		this.limit = new LimitImpl();
 		
 		if (from != null) {
@@ -88,6 +90,7 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 		result = getJoin().bind(stmt, result);
 		result = getWhere().bind(stmt, result);
 		result = getGroupBy().bind(stmt, result);
+		result = getHaving().bind(stmt, result);
 		result = getOrderBy().bind(stmt, result);
 
 		return result;
@@ -177,6 +180,26 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	}
 	
 	@Override
+	public final <T> void addHaving(Field<T> field, T value) {
+		addHaving(field, value, Comparator.EQUALS);
+	}
+
+	@Override
+	public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
+		addHaving(QueryFactory.createCompareCondition(field, value, comparator));
+	}
+
+	@Override
+	public final void addHaving(Condition... conditions) {
+		addHaving(Arrays.asList(conditions));
+	}
+
+	@Override
+	public void addHaving(Collection<Condition> conditions) {
+		having.addConditions(conditions);
+	}
+
+	@Override
 	public final void addLimit(int numberOfRows) {
 		addLimit(1, numberOfRows);
 	}
@@ -250,6 +273,10 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 	final Condition getWhere() {
 		return condition.getWhere();
 	}
+	
+	final Condition getHaving() {
+		return having.getWhere();
+	}
 
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
@@ -276,6 +303,11 @@ class SelectQueryImpl extends AbstractResultProviderQuery implements SelectQuery
 			sb.append(getGroupBy().toSQLReference(inlineParameters));
 		}
 
+		if (getHaving() != TRUE_CONDITION) {
+			sb.append(" having ");
+			sb.append(getHaving().toSQLDeclaration(inlineParameters));
+		}
+		
 		if (!getOrderBy().isEmpty()) {
 			sb.append(" order by ");
 			sb.append(getOrderBy().toSQLReference(inlineParameters));

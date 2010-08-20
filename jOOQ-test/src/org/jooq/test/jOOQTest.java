@@ -756,8 +756,18 @@ public class jOOQTest {
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(false));
 
+		q.addHaving(QueryFactory.createCompareCondition(FIELD_ID1, 1));
+		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = 1", q.toSQLReference(true));
+		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = ?", q.toSQLReference(false));
+	
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+		}});
+
 		int i = q.bind(statement);
-		assertEquals(1, i);
+		assertEquals(2, i);
+
+		context.assertIsSatisfied();
 	}
 
 	@Test
@@ -782,14 +792,21 @@ public class jOOQTest {
 		q.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
 		q.addSelect(FIELD_ID1, FIELD_ID2);
 		q.addGroupBy(FIELD_ID1, FIELD_ID2);
+		q.addHaving(FIELD_ID1, 1);
 		q.addOrderBy(FIELD_ID1, SortOrder.ASC);
 		q.addOrderBy(FIELD_ID2, SortOrder.DESC);
 
-		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(true));
-		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(false));
+		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = 1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(true));
+		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = ? order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+		}});
 
 		int i = q.bind(statement);
-		assertEquals(1, i);
+		assertEquals(2, i);
+
+		context.assertIsSatisfied();
 	}
 
 	@Test

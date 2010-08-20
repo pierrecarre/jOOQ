@@ -127,6 +127,42 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider {
 	void addGroupBy(Collection<Field<?>> fields);
 	
 	/**
+	 * Adds new conditions to the having clause of the query, connecting it to
+	 * existing conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	<T> void addHaving(Field<T> field, T value);
+
+	/**
+	 * Adds new conditions to the having clause of the query, connecting it to
+	 * existing conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	<T> void addHaving(Field<T> field, T value, Comparator comparator);
+
+	/**
+	 * Adds new conditions to the having clause of the query, connecting it to
+	 * existing conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	void addHaving(Condition... conditions);
+
+	/**
+	 * Adds new conditions to the having clause of the query, connecting it to
+	 * existing conditions with the and operator.
+	 * 
+	 * @param conditions
+	 *            The condition
+	 */
+	void addHaving(Collection<Condition> conditions);
+
+	/**
 	 * Limit the results of this select
 	 * <p>
 	 * This is the same as calling {@link #addLimit(int, int)} with lowerBound = 1
