@@ -56,7 +56,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	private final Map<Field<?>, Object> values;
 	private final ConditionProviderImpl condition;
 
-	public UpdateQueryImpl(Table table) {
+	UpdateQueryImpl(Table table) {
 		this.table = table;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 		this.condition = new ConditionProviderImpl();
