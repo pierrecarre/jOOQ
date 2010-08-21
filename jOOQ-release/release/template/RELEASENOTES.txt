@@ -2,6 +2,26 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.2.0
+=================================================================
+
+The added Oracle support is now unit tested and more stable.
+The Oracle NUMBER data type is mapped more precisely to Java
+types.
+
+Features
+--------
+#12 - Model primary keys and foreign keys in generated code
+#22 - Improve mapping of Oracle NUMBER data type
+#26 - Add Plain SQL QueryParts
+#27 - Add support for HAVING clause
+
+Bugfixes
+--------
+#24 - Add Unit tests for oracle database (and fixed bugs)
+#31 - Pull up addOrderBy() methods from SelectQuery to
+      ResultProviderQuery
+
 Version 1.1.0
 =================================================================
 
