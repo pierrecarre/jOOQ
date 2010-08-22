@@ -24,6 +24,8 @@ public class TAuthor extends TableImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 
