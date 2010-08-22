@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -72,6 +73,16 @@ class ResultImpl implements Result {
 	@Override
 	public Record getRecord(int index) throws IndexOutOfBoundsException {
 		return records.get(index);
+	}
+
+	@Override
+	public <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
+		return getRecord(index).getValue(field);
+	}
+
+	@Override
+	public <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException {
+		return getRecord(index).getValue(field, defaultValue);
 	}
 
 	@Override

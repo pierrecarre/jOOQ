@@ -61,6 +61,29 @@ public interface Result extends Iterable<Record> {
 	Record getRecord(int index) throws IndexOutOfBoundsException;
 
 	/**
+	 * Convenience method to fetch a value at a given position in the result.
+	 *
+	 * @param <T> The value's field's generic type parameter
+	 * @param index The record's index
+	 * @param field The value's field
+	 * @return The value
+	 * @throws IndexOutOfBoundsException
+	 */
+	<T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException;
+
+	/**
+	 * Convenience method to fetch a value at a given position in the result.
+	 *
+	 * @param <T> The value's field's generic type parameter
+	 * @param index The record's index
+	 * @param field The value's field
+	 * @param defaultValue The default value if the value was <code>null</code>
+	 * @return The value
+	 * @throws IndexOutOfBoundsException
+	 */
+	<T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException;
+
+	/**
 	 * @return The number of resulting records
 	 */
 	int getNumberOfRecords();
