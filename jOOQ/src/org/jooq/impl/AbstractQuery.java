@@ -60,7 +60,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 			bind(statement);
 			return execute(statement);
 		} finally {
-			statement.close();
+			if (statement != null) {
+				statement.close();
+			}
 		}
 	}
 
