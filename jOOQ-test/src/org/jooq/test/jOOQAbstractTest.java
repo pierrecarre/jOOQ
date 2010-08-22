@@ -47,7 +47,6 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.ResultProviderQuery;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -172,7 +171,7 @@ public abstract class jOOQAbstractTest {
         q1.addCompareCondition(getTBook_AUTHOR_ID(), 1);
         q2.addCompareCondition(getTBook_TITLE(), "Brida");
 
-        ResultProviderQuery combine = q1.combine(q2);
+        SelectQuery combine = q1.combine(q2);
 
         int rows = combine.execute(connection);
         assertEquals(3, rows);

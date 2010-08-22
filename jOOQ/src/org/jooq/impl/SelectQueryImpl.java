@@ -35,21 +35,9 @@ import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collection;
 
-import org.jooq.Comparator;
-import org.jooq.Condition;
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Join;
-import org.jooq.JoinCondition;
-import org.jooq.JoinList;
-import org.jooq.Limit;
-import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
-import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
@@ -58,27 +46,11 @@ class SelectQueryImpl extends AbstractSelectQuery implements SelectQuery {
 
 	private static final long serialVersionUID = -4128783317946627405L;
 
-	private final FieldList select;
-	private final TableList from;
-	private final JoinList join;
-	private final ConditionProviderImpl condition;
-	private final FieldList groupBy;
-	private final ConditionProviderImpl having;
-	private final LimitImpl limit;
-	
-	
+	SelectQueryImpl() {
+	}
+
 	SelectQueryImpl(Table from) {
-		this.select = new SelectFieldListImpl();
-		this.from = new TableListImpl();
-		this.join = new JoinListImpl();
-		this.condition = new ConditionProviderImpl();
-		this.groupBy = new FieldListImpl();
-		this.having = new ConditionProviderImpl();
-		this.limit = new LimitImpl();
-		
-		if (from != null) {
-			this.from.add(from);
-		}
+		super(from);
 	}
 
 	@Override
@@ -94,188 +66,6 @@ class SelectQueryImpl extends AbstractSelectQuery implements SelectQuery {
 		result = getOrderBy().bind(stmt, result);
 
 		return result;
-	}
-
-	@Override
-	public void addSelect(Collection<Field<?>> fields) {
-		getSelect0().addAll(fields);
-	}
-
-	@Override
-	public final void addSelect(Field<?>... fields) {
-		addSelect(Arrays.asList(fields));
-	}
-
-	@Override
-	public final void addConditions(Condition... conditions) {
-		condition.addConditions(conditions);
-	}
-
-	@Override
-	public final void addConditions(Collection<Condition> conditions) {
-		condition.addConditions(conditions);
-	}
-
-	@Override
-	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		condition.addBetweenCondition(field, minValue, maxValue);
-	}
-
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-		condition.addCompareCondition(field, value, comparator);
-	}
-
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value) {
-		condition.addCompareCondition(field, value);
-	}
-
-	@Override
-	public void addNullCondition(Field<?> field) {
-		condition.addNullCondition(field);
-	}
-
-	@Override
-	public void addNotNullCondition(Field<?> field) {
-		condition.addNotNullCondition(field);
-	}
-
-	@Override
-	public <T> void addInCondition(Field<T> field, Collection<T> values) {
-		condition.addInCondition(field, values);
-	}
-
-	@Override
-	public <T> void addInCondition(Field<T> field, T... values) {
-		condition.addInCondition(field, values);
-	}
-
-	TableList getFrom() {
-		return from;
-	}
-
-	@Override
-	public void addFrom(Collection<Table> from) {
-		getFrom().addAll(from);
-	}
-
-	@Override
-	public final void addFrom(Table... from) {
-		addFrom(Arrays.asList(from));
-	}
-
-	FieldList getGroupBy() {
-		return groupBy;
-	}
-
-	@Override
-	public void addGroupBy(Collection<Field<?>> fields) {
-		getGroupBy().addAll(fields);
-	}
-
-	@Override
-	public final void addGroupBy(Field<?>... fields) {
-		addGroupBy(Arrays.asList(fields));
-	}
-	
-	@Override
-	public final <T> void addHaving(Field<T> field, T value) {
-		addHaving(field, value, Comparator.EQUALS);
-	}
-
-	@Override
-	public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
-		addHaving(QueryFactory.createCompareCondition(field, value, comparator));
-	}
-
-	@Override
-	public final void addHaving(Condition... conditions) {
-		addHaving(Arrays.asList(conditions));
-	}
-
-	@Override
-	public void addHaving(Collection<Condition> conditions) {
-		having.addConditions(conditions);
-	}
-
-	@Override
-	public final void addLimit(int numberOfRows) {
-		addLimit(1, numberOfRows);
-	}
-
-	@Override
-	public void addLimit(int lowerBound, int numberOfRows) {
-		limit.setLowerBound(lowerBound);
-		limit.setNumberOfRows(numberOfRows);
-	}
-
-	JoinList getJoin() {
-		return join;
-	}
-	
-	Limit getLimit() {
-		return limit;
-	}
-
-	@Override
-	public void addJoin(Join join) {
-		getJoin().add(join);
-	}
-
-	@Override
-	public final <T> void addJoin(Table table, Field<T> field1, Field<T> field2) {
-		addJoin(QueryFactory.createJoin(table, field1, field2));
-	}
-
-	@Override
-	public final void addJoin(Table table, JoinCondition<?> condition) {
-		addJoin(QueryFactory.createJoin(table, condition));
-	}
-
-	@Override
-	public final void addJoin(Table table) {
-		addJoin(QueryFactory.createJoin(table));
-	}
-
-	private FieldList getSelect0() {
-		return select;
-	}
-
-	@Override
-	protected FieldList getSelect() {
-		if (getSelect0().isEmpty()) {
-			FieldList result = new SelectFieldListImpl();
-
-			for (Table table : getFrom()) {
-				for (Field<?> field : table.getFields()) {
-					result.add(field);
-				}
-			}
-
-			for (Join join : getJoin()) {
-				for (Field<?> field : join.getTable().getFields()) {
-					result.add(field);
-				}
-			}
-
-			return result;
-		}
-
-		return getSelect0();
-	}
-
-	@Override
-	protected Class<? extends Record> getRecordType() {
-		return getFrom().getRecordType();
-	}
-
-	final Condition getWhere() {
-		return condition.getWhere();
-	}
-	
-	final Condition getHaving() {
-		return having.getWhere();
 	}
 
 	@Override
@@ -307,12 +97,12 @@ class SelectQueryImpl extends AbstractSelectQuery implements SelectQuery {
 			sb.append(" having ");
 			sb.append(getHaving().toSQLDeclaration(inlineParameters));
 		}
-		
+
 		if (!getOrderBy().isEmpty()) {
 			sb.append(" order by ");
 			sb.append(getOrderBy().toSQLReference(inlineParameters));
 		}
-		
+
 		if (getLimit().isApplicable()) {
 			sb.append(" ");
 			sb.append(getLimit().toSQLReference(inlineParameters));

@@ -35,7 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
+import org.jooq.SelectQuery;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
@@ -88,7 +88,7 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart implement
 	}
 
 	@Override
-	public ResultProviderQuery getInnerSelect() {
+	public SelectQuery getInnerSelect() {
 		return query;
 	}
 }

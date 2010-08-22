@@ -128,7 +128,7 @@ public final class QueryFactory {
 	}
 
 	public static SelectQuery createSelectQuery() {
-		return createSelectQuery(null);
+		return new SelectQueryImpl();
 	}
 
 	public static SelectQuery createSelectQuery(Table table) {

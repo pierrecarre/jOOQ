@@ -61,7 +61,6 @@ import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
 import org.jooq.JoinCondition;
-import org.jooq.ResultProviderQuery;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.UpdateQuery;
@@ -759,7 +758,7 @@ public class jOOQTest {
 		q.addHaving(QueryFactory.createCompareCondition(FIELD_ID1, 1));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = 1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = ?", q.toSQLReference(false));
-	
+
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
 		}});
@@ -816,10 +815,10 @@ public class jOOQTest {
 
 		q1.addCompareCondition(FIELD_ID1, 1);
 		q2.addCompareCondition(FIELD_ID1, 2);
-		
-		ResultProviderQuery combine = q1.combine(q2);
+
+		SelectQuery combine = q1.combine(q2);
 		combine.addOrderBy(FIELD_ID1);
-		
+
 		assertEquals("(select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2) order by TABLE1.ID1", combine.toSQLReference(true));
 		assertEquals("(select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?) order by TABLE1.ID1", combine.toSQLReference(false));
 

@@ -37,19 +37,19 @@ import java.sql.SQLException;
 import org.jooq.CombineOperator;
 import org.jooq.FieldList;
 import org.jooq.Record;
-import org.jooq.ResultProviderQuery;
+import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryImpl extends AbstractSelectQuery {
+class CombinedSelectQueryImpl extends AbstractSelectQuery {
 
 	private static final long serialVersionUID = 3431079100479366798L;
-	private final AbstractSelectQuery left;
-	private final ResultProviderQuery right;
+	private final SelectQuery left;
+	private final SelectQuery right;
 	private final CombineOperator operator;
 
-	ResultProviderQueryImpl(AbstractSelectQuery left, ResultProviderQuery right, CombineOperator operator) {
+	CombinedSelectQueryImpl(SelectQuery left, SelectQuery right, CombineOperator operator) {
 		this.left = left;
 		this.right = right;
 		this.operator = operator;
@@ -81,17 +81,17 @@ class ResultProviderQueryImpl extends AbstractSelectQuery {
 			sb.append(" order by ");
 			sb.append(getOrderBy().toSQLReference(inlineParameters));
 		}
-		
+
 		return sb.toString();
 	}
 
 	@Override
-	protected FieldList getSelect() {
+	public FieldList getSelect() {
 		return left.getSelect();
 	}
 
 	@Override
-	protected Class<? extends Record> getRecordType() {
+	public Class<? extends Record> getRecordType() {
 		return left.getRecordType();
 	}
 }

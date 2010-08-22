@@ -36,7 +36,7 @@ import java.sql.SQLException;
 
 import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
-import org.jooq.ResultProviderQuery;
+import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
@@ -44,10 +44,10 @@ import org.jooq.ResultProviderQuery;
 class SelectQueryAsExistsCondition extends AbstractNamedQueryPart implements ExistsCondition {
 
 	private static final long serialVersionUID = 5678338161136603292L;
-	private final AbstractSelectQuery query;
+	private final SelectQuery query;
 	private final ExistsOperator operator;
 
-	public SelectQueryAsExistsCondition(AbstractSelectQuery query, ExistsOperator operator) {
+	SelectQueryAsExistsCondition(SelectQuery query, ExistsOperator operator) {
 		super("");
 
 		this.query = query;
@@ -77,7 +77,7 @@ class SelectQueryAsExistsCondition extends AbstractNamedQueryPart implements Exi
 	}
 
 	@Override
-	public ResultProviderQuery getInnerSelect() {
+	public SelectQuery getInnerSelect() {
 		return query;
 	}
 }
