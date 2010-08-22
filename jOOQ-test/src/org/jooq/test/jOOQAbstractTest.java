@@ -43,6 +43,7 @@ import java.sql.Timestamp;
 
 import org.apache.commons.io.FileUtils;
 import org.jooq.Comparator;
+import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -218,7 +219,7 @@ public abstract class jOOQAbstractTest {
 
         Field<Integer> year = Functions.extract(now, DatePart.YEAR).alias("y");
         Field<Integer> month = Functions.extract(now, DatePart.MONTH).alias("m");
-        Field<Integer> day = Functions.extract(now, DatePart.DAY).alias("day");
+        Field<Integer> day = Functions.extract(now, DatePart.DAY).alias("dd");
         Field<Integer> hour = Functions.extract(now, DatePart.HOUR).alias("h");
         Field<Integer> minute = Functions.extract(now, DatePart.MINUTE).alias("mn");
         Field<Integer> second = Functions.extract(now, DatePart.SECOND).alias("sec");
@@ -227,10 +228,10 @@ public abstract class jOOQAbstractTest {
         q1.execute(connection);
 
         Record record = q1.getResult().getRecord(0);
-        String timestamp = record.getValue(ts).toString();
+        String timestamp = record.getValue(ts).toString().replaceFirst("\\.\\d{1,3}$", "");
 
         assertEquals(timestamp.split(" ")[0], record.getValue(date).toString());
-        assertEquals(timestamp.split(" ")[1], record.getValue(time).toString() + ".0");
+        assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
 
         assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[0]), record.getValue(year));
         assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[1]), record.getValue(month));
@@ -254,8 +255,18 @@ public abstract class jOOQAbstractTest {
         Record record = q.getResult().getRecord(0);
 
         assertEquals((Integer) 3, record.getValue(charLength));
-        assertEquals((Integer) 24, record.getValue(bitLength));
-        assertEquals((Integer) 3, record.getValue(octetLength));
+
+        switch (Configuration.getInstance().getDialect()) {
+        case HSQLDB:
+        	// HSQLDB uses Java-style characters (16 bit)
+        	assertEquals((Integer) 48, record.getValue(bitLength));
+        	assertEquals((Integer) 6, record.getValue(octetLength));
+        	break;
+        default:
+        	assertEquals((Integer) 24, record.getValue(bitLength));
+        	assertEquals((Integer) 3, record.getValue(octetLength));
+        	break;
+        }
     }
 
     @Test

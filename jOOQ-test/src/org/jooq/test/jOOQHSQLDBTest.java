@@ -29,44 +29,80 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.test.hsqldb.generatedclasses.tables.TAuthor;
+import org.jooq.test.hsqldb.generatedclasses.tables.TBook;
+import org.jooq.test.hsqldb.generatedclasses.tables.VLibrary;
+
 
 /**
- * This enumeration lists all supported dialects. The dialect used by the
- * framework can be set in {@link Configuration#setDialect(SQLDialect)} or using
- * the JVM parameter -Dorg.jooq.sql-dialect
- *
  * @author Lukas Eder
  */
-public enum SQLDialect {
-	/**
-	 * The standard SQL dialect.
-	 */
-	SQL99,
+public class jOOQHSQLDBTest extends jOOQAbstractTest {
 
-	/**
-	 * The MySQL dialect
-	 */
-	MYSQL,
+	@Override
+	protected Connection getConnection() throws Exception {
+		Configuration.getInstance().setDialect(SQLDialect.HSQLDB);
 
-	/**
-	 * The Oracle dialect
-	 */
-	ORACLE,
+		Class.forName("org.hsqldb.jdbcDriver");
+		return DriverManager.getConnection ("jdbc:hsqldb:hsql://localhost", "sa", "");
+	}
 
-	/**
-	 * The Microsoft SQL dialect
-	 */
-	MSSQL,
+	@Override
+	protected String getCreateScript() {
+		return "/org/jooq/test/hsqldb/create.sql";
+	}
 
-	/**
-	 * The PostGres dialect
-	 */
-	POSTGRES,
+	@Override
+	protected Table getTAuthor() {
+		return TAuthor.T_AUTHOR;
+	}
 
-	/**
-	 * The Hypersonic SQL dialect
-	 */
-	HSQLDB;
+	@Override
+	protected TableField<String> getTAuthor_LAST_NAME() {
+		return TAuthor.LAST_NAME;
+	}
 
+	@Override
+	protected TableField<Integer> getTAuthor_ID() {
+		return TAuthor.ID;
+	}
+
+	@Override
+	protected Table getTBook() {
+		return TBook.T_BOOK;
+	}
+
+	@Override
+	protected TableField<Integer> getTBook_AUTHOR_ID() {
+		return TBook.AUTHOR_ID;
+	}
+
+	@Override
+	protected TableField<String> getTBook_TITLE() {
+		return TBook.TITLE;
+	}
+
+	@Override
+	protected Table getVLibrary() {
+		return VLibrary.V_LIBRARY;
+	}
+
+	@Override
+	protected TableField<String> getVLibrary_TITLE() {
+		return VLibrary.TITLE;
+	}
+
+	@Override
+	protected TableField<String> getVLibrary_AUTHOR() {
+		return VLibrary.AUTHOR;
+	}
 }

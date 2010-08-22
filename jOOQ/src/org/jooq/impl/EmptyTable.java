@@ -33,6 +33,8 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 
+import org.jooq.Configuration;
+
 /**
  * @author Lukas Eder
  */
@@ -47,6 +49,15 @@ class EmptyTable extends TableImpl {
 	}
 
 	private EmptyTable() {
-		super("dual");
+		super(getDummyTable());
+	}
+
+	private static String getDummyTable() {
+		switch (Configuration.getInstance().getDialect()) {
+		case HSQLDB:
+			return "INFORMATION_SCHEMA.SYSTEM_USERS";
+		default:
+			return "dual";
+		}
 	}
 }

@@ -81,30 +81,32 @@ class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements F
 
 	private String getArgumentListDelimiterStart() {
 		switch (Configuration.getInstance().getDialect()) {
-		case ORACLE:
-			
+		case ORACLE: // No break
+		case HSQLDB:
+
 			// Oracle empty argument lists do not have parentheses ()
 			if (arguments.isEmpty()) {
 				return "";
 			}
 		}
-		
+
 		return "(";
 	}
 
 	private String getArgumentListDelimiterEnd() {
 		switch (Configuration.getInstance().getDialect()) {
-		case ORACLE:
-			
+		case ORACLE: // No break
+		case HSQLDB:
+
 			// Oracle empty argument lists do not have parentheses ()
 			if (arguments.isEmpty()) {
 				return "";
 			}
 		}
-		
+
 		return ")";
 	}
-	
+
 	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
 		return field.toSQLReference(inlineParameters);
 	}

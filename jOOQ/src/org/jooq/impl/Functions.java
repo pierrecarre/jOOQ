@@ -226,7 +226,7 @@ public final class Functions {
 		case ORACLE:
 			return new IntegerFunction("length", field);
 		}
-		
+
 		return new IntegerFunction("char_length", field);
 	}
 
@@ -235,7 +235,7 @@ public final class Functions {
 		case ORACLE:
 			return new IntegerFunction("8 * lengthb", field);
 		}
-		
+
 		return new IntegerFunction("bit_length", field);
 	}
 
@@ -244,7 +244,7 @@ public final class Functions {
 		case ORACLE:
 			return new IntegerFunction("lengthb", field);
 		}
-		
+
 		return new IntegerFunction("octet_length", field);
 	}
 
@@ -252,6 +252,7 @@ public final class Functions {
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL: // No break
 		case POSTGRES:
+		case HSQLDB:
 			return new ExtractFunctionImpl(field, datePart);
 		case ORACLE:
 			switch (datePart) {
@@ -286,6 +287,7 @@ public final class Functions {
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL: // No break
 		case POSTGRES:
+		case HSQLDB:
 			return new PositionFunctionImpl(search, in);
 		case ORACLE:
 			return new IntegerFunction("instr", in, search);
