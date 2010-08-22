@@ -44,7 +44,9 @@ import org.jooq.SelectQuery;
 import org.jooq.util.AbstractColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultForeignKeyDefinition;
+import org.jooq.util.DefaultPrimaryKeyDefinition;
 import org.jooq.util.ForeignKeyDefinition;
+import org.jooq.util.PrimaryKeyDefinition;
 import org.jooq.util.hsqldb.information_schema.tables.ConstraintColumnUsage;
 import org.jooq.util.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.hsqldb.information_schema.tables.TableConstraints;
@@ -60,7 +62,9 @@ public class HSQLDBColumnDefinition extends AbstractColumnDefinition {
 	}
 
 	@Override
-	protected boolean isPrimaryKey0() throws SQLException {
+	protected PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
+		PrimaryKeyDefinition definition = null;
+
 		SelectQuery q = createSelectQuery(TABLE_CONSTRAINTS);
 		q.addJoin(CONSTRAINT_COLUMN_USAGE,
 				TableConstraints.CONSTRAINT_NAME,
@@ -71,7 +75,11 @@ public class HSQLDBColumnDefinition extends AbstractColumnDefinition {
 		q.addCompareCondition(ConstraintColumnUsage.COLUMN_NAME, getName());
 		q.execute(getConnection());
 
-		return q.getResult().getNumberOfRecords() > 0;
+		if (q.getResult().getNumberOfRecords() > 0) {
+			definition = new DefaultPrimaryKeyDefinition(getDatabase(), q.getResult().getValue(0, TableConstraints.CONSTRAINT_NAME));
+		}
+
+		return definition;
 	}
 
 	@Override

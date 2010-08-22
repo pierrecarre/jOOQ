@@ -39,7 +39,7 @@ public class TAuthor extends TableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11874'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 

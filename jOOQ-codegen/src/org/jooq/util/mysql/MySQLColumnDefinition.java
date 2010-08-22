@@ -45,7 +45,9 @@ import org.jooq.SelectQuery;
 import org.jooq.util.AbstractColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultForeignKeyDefinition;
+import org.jooq.util.DefaultPrimaryKeyDefinition;
 import org.jooq.util.ForeignKeyDefinition;
+import org.jooq.util.PrimaryKeyDefinition;
 import org.jooq.util.mysql.information_schema.tables.Columns;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 
@@ -60,7 +62,9 @@ public class MySQLColumnDefinition extends AbstractColumnDefinition {
 	}
 
 	@Override
-	protected boolean isPrimaryKey0() throws SQLException {
+	protected PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
+		PrimaryKeyDefinition definition = null;
+
 		SelectQuery q = createSelectQuery(COLUMNS);
 		q.addCompareCondition(Columns.COLUMN_KEY, "PRI");
 		q.addCompareCondition(Columns.TABLE_SCHEMA, getSchemaName());
@@ -68,7 +72,11 @@ public class MySQLColumnDefinition extends AbstractColumnDefinition {
 		q.addCompareCondition(Columns.COLUMN_NAME, getName());
 		q.execute(getConnection());
 
-		return q.getResult().getNumberOfRecords() > 0;
+		if (q.getResult().getNumberOfRecords() > 0) {
+			definition = new DefaultPrimaryKeyDefinition(getDatabase(), q.getResult().getValue(0, Columns.COLUMN_KEY));
+		}
+
+		return definition;
 	}
 
 	@Override

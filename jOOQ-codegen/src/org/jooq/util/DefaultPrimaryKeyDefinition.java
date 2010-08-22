@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,76 +28,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.util;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+public class DefaultPrimaryKeyDefinition extends AbstractDefinition implements PrimaryKeyDefinition {
 
-/**
- * A base implementation for column definitions.
- *
- * @author Lukas Eder
- */
-public abstract class AbstractColumnDefinition extends AbstractDefinition implements ColumnDefinition {
+	private final List<ForeignKeyDefinition> foreignKeys;
+	private final List<String> keyColumnNames;
 
-	private final int position;
-	private final Class<?> type;
-	private final String table;
+	public DefaultPrimaryKeyDefinition(Database database, String name) {
+		super(database, name, null);
 
-	private boolean primaryKeyLoaded;
-	private PrimaryKeyDefinition primaryKey;
-	private boolean foreignKeyLoaded;
-	private ForeignKeyDefinition foreignKey;
-
-	public AbstractColumnDefinition(Database database, String table, String name, int position, Class<?> type, String comment) {
-		super(database, name, comment);
-
-		this.table = table;
-		this.position = position;
-		this.type = type;
+		this.foreignKeys = new ArrayList<ForeignKeyDefinition>();
+		this.keyColumnNames = new ArrayList<String>();
 	}
 
 	@Override
-	public final int getPosition() {
-		return position;
+	public List<String> getKeyColumnNames() {
+		return keyColumnNames;
 	}
 
 	@Override
-	public final Class<?> getTypeClass() {
-		return type;
+	public List<ForeignKeyDefinition> getForeignKeys() {
+		return foreignKeys;
 	}
-
-	@Override
-	public final String getTableName() {
-		return table;
-	}
-
-	@Override
-	public final String getType() {
-		return type.getSimpleName();
-	}
-
-	@Override
-	public final PrimaryKeyDefinition getPrimaryKey() throws SQLException {
-		if (!primaryKeyLoaded) {
-			primaryKeyLoaded = true;
-			primaryKey = getPrimaryKey0();
-		}
-
-		return primaryKey;
-	}
-
-	@Override
-	public final ForeignKeyDefinition getForeignKey() throws SQLException {
-		if (!foreignKeyLoaded) {
-			foreignKeyLoaded = true;
-			foreignKey = getForeignKey0();
-		}
-
-		return foreignKey;
-	}
-
-	protected abstract PrimaryKeyDefinition getPrimaryKey0() throws SQLException;
-	protected abstract ForeignKeyDefinition getForeignKey0() throws SQLException;
 }

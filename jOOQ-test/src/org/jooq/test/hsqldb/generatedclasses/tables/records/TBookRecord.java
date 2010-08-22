@@ -18,7 +18,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11880'
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -27,7 +27,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11880'
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);

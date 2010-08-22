@@ -34,6 +34,7 @@ package org.jooq.util.oracle;
 import org.jooq.util.AbstractColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.ForeignKeyDefinition;
+import org.jooq.util.PrimaryKeyDefinition;
 
 
 /**
@@ -47,8 +48,8 @@ public class OracleColumnDefinition extends AbstractColumnDefinition {
 	}
 
 	@Override
-	protected boolean isPrimaryKey0() {
-		return false;
+	protected PrimaryKeyDefinition getPrimaryKey0() {
+		return null;
 	}
 
 	@Override

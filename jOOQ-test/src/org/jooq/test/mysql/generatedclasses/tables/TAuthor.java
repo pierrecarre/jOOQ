@@ -41,7 +41,7 @@ public class TAuthor extends TableImpl {
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 

@@ -38,7 +38,7 @@ public class TBook extends TableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11880'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 

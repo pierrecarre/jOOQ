@@ -40,7 +40,7 @@ public class TBook extends TableImpl {
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 

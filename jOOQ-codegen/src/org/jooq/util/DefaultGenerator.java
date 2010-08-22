@@ -403,7 +403,7 @@ public class DefaultGenerator implements Generator {
 	}
 
 	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, ColumnDefinition column) throws SQLException {
-		boolean isPrimaryKey = column.isPrimaryKey();
+		PrimaryKeyDefinition primaryKey = column.getPrimaryKey();
 		ForeignKeyDefinition foreignKey = column.getForeignKey();
 
 		out.println();
@@ -422,9 +422,12 @@ public class DefaultGenerator implements Generator {
 		    out.println("\t * The SQL type of this item could not be mapped. Deserialising this field might not work!");
 		}
 
-		if (isPrimaryKey) {
+		if (primaryKey != null) {
 		    out.println("\t * ");
-		    out.println("\t * PRIMARY KEY");
+		    out.print("\t * PRIMARY KEY '");
+		    out.print(primaryKey.getName());
+		    out.print("'");
+		    out.println();
 		}
 
 		if (foreignKey != null) {

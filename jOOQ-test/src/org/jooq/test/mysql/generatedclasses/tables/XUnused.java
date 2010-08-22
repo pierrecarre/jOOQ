@@ -40,14 +40,14 @@ public class XUnused extends TableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public static final TableField<String> NAME = new TableFieldImpl<String>("NAME", String.class, X_UNUSED);
 

@@ -19,7 +19,7 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11874'
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -28,7 +28,7 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11874'
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);

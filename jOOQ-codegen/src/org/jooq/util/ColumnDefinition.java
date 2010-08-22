@@ -64,7 +64,7 @@ public interface ColumnDefinition extends Definition {
 	/**
 	 * @return Whether this column is part of the primary key
 	 */
-	boolean isPrimaryKey() throws SQLException;
+	PrimaryKeyDefinition getPrimaryKey() throws SQLException;
 
 	/**
 	 * @return Information about this column's foreign key relationship.

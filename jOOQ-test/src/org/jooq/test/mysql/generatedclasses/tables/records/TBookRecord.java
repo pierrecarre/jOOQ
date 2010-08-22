@@ -20,7 +20,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -29,7 +29,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'PRI'
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);

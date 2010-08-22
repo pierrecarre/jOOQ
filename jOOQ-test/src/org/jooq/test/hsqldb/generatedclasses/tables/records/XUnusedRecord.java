@@ -18,7 +18,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11889'
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -27,7 +27,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11889'
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
@@ -36,7 +36,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11889'
 	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
@@ -45,7 +45,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY
+	 * PRIMARY KEY 'SYS_PK_11889'
 	 */
 	public String getName() {
 		return getValue(XUnused.NAME);
