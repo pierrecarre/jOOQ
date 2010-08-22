@@ -45,11 +45,11 @@ import org.jooq.SubQueryOperator;
 class SelectQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart implements SubQueryCondition<T> {
 
 	private static final long serialVersionUID = -402776705884329740L;
-	private final AbstractSelectQuery query;
+	private final SelectQuery query;
 	private final Field<T> field;
 	private final SubQueryOperator operator;
 
-	SelectQueryAsSubQueryCondition(AbstractSelectQuery query, Field<T> field, SubQueryOperator operator) {
+	SelectQueryAsSubQueryCondition(SelectQuery query, Field<T> field, SubQueryOperator operator) {
 		super("");
 
 		this.query = query;

@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Field;
+import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
@@ -44,10 +45,10 @@ import org.jooq.Field;
 class SelectQueryAsCompareCondition<T> extends AbstractNamedQueryPart implements CompareCondition<T> {
 
 	private static final long serialVersionUID = -3125318907657091582L;
-	private final AbstractSelectQuery query;
+	private final SelectQuery query;
 	private final Field<T> field;
 
-	SelectQueryAsCompareCondition(AbstractSelectQuery query, Field<T> field) {
+	SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
 		super("");
 
 		this.query = query;

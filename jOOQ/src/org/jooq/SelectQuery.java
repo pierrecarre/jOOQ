@@ -52,23 +52,23 @@ public interface SelectQuery extends Query, ConditionProvider {
 	 * Combine this SelectQuery with another one, using the
 	 * {@link CombineOperator#UNION} operator.
 	 *
-	 * @param other
+	 * @param others
 	 *            The SelectQuery to combine this one with
 	 * @return
 	 * @see #combine(SelectQuery, CombineOperator)
 	 */
-	SelectQuery combine(SelectQuery other);
+	SelectQuery combine(SelectQuery... others);
 
 	/**
 	 * Combine this SelectQuery with another one, using the given operator.
 	 *
-	 * @param other
+	 * @param others
 	 *            The SelectQuery to combine this one with
 	 * @param operator
 	 *            The combine operator
 	 * @return
 	 */
-	SelectQuery combine(SelectQuery other, CombineOperator operator);
+	SelectQuery combine(CombineOperator operator, SelectQuery... other);
 
 	/**
 	 * Use this query as a table

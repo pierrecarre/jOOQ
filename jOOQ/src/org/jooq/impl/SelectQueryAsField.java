@@ -35,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Field;
+import org.jooq.SelectQuery;
 
 /**
  * @author Lukas Eder
@@ -42,9 +43,9 @@ import org.jooq.Field;
 class SelectQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
 	private static final long serialVersionUID = 3463144434073231750L;
-	private final AbstractSelectQuery query;
+	private final SelectQuery query;
 
-	SelectQueryAsField(AbstractSelectQuery query, Class<T> type) {
+	SelectQueryAsField(SelectQuery query, Class<T> type) {
 		super("", type);
 
 		this.query = query;

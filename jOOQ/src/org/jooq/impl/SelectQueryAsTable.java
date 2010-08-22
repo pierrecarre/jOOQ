@@ -33,9 +33,13 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
+import org.jooq.CombineOperator;
 import org.jooq.FieldList;
 import org.jooq.Record;
+import org.jooq.SelectQuery;
 import org.jooq.Table;
 
 /**
@@ -44,12 +48,18 @@ import org.jooq.Table;
 class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
 
 	private static final long serialVersionUID = 6272398035926615668L;
-	private final AbstractSelectQuery query;
+	private final List<SelectQuery> queries;
+	private final CombineOperator operator;
 
-	SelectQueryAsTable(AbstractSelectQuery query) {
+	SelectQueryAsTable(SelectQuery... queries) {
+		this(CombineOperator.UNION, queries);
+	}
+
+	SelectQueryAsTable(CombineOperator operator, SelectQuery... queries) {
 		super("");
 
-		this.query = query;
+		this.operator = operator;
+		this.queries = Arrays.asList(queries);
 	}
 
 	@Override
@@ -59,21 +69,43 @@ class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
 
 	@Override
 	public FieldList getFields() {
-		return query.getSelect();
-	}
-
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return query.bind(stmt, initialIndex);
-	}
-
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return query.toSQLReference(inlineParameters);
+		return queries.get(0).getSelect();
 	}
 
 	@Override
 	public Class<? extends Record> getRecordType() {
-		return RecordImpl.class;
+		return queries.get(0).getRecordType();
+	}
+
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		for (SelectQuery query : queries) {
+			initialIndex = query.bind(stmt, initialIndex);
+		}
+
+		return initialIndex;
+	}
+
+	@Override
+	public String toSQLReference(boolean inlineParameters) {
+		if (queries.size() == 1) {
+			return queries.get(0).toSQLReference(inlineParameters);
+		} else {
+			StringBuilder sb = new StringBuilder();
+
+			String connector = "";
+			sb.append("(");
+			for (SelectQuery query : queries) {
+				sb.append(connector);
+				sb.append("(");
+				sb.append(query.toSQLReference(inlineParameters));
+				sb.append(")");
+
+				connector = " " + operator.toSQL() + " ";
+			}
+			sb.append(")");
+
+			return sb.toString();
+		}
 	}
 }

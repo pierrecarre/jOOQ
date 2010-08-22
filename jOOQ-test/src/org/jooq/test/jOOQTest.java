@@ -810,17 +810,19 @@ public class jOOQTest {
 
 	@Test
 	public final void testCombinedSelectQuery() throws Exception {
-		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery combine = createCombinedSelectQuery();
+		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.toSQLReference(true));
+		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.toSQLReference(false));
 
-		q1.addCompareCondition(FIELD_ID1, 1);
-		q2.addCompareCondition(FIELD_ID1, 2);
+		combine = createCombinedSelectQuery();
+		combine.addSelect(FIELD_ID1);
+		assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.toSQLReference(true));
+		assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.toSQLReference(false));
 
-		SelectQuery combine = q1.combine(q2);
-		combine.addOrderBy(FIELD_ID1);
-
-		assertEquals("(select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2) order by TABLE1.ID1", combine.toSQLReference(true));
-		assertEquals("(select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?) order by TABLE1.ID1", combine.toSQLReference(false));
+		combine = createCombinedSelectQuery();
+		combine.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
+		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.toSQLReference(true));
+		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
@@ -831,6 +833,18 @@ public class jOOQTest {
 		assertEquals(3, i);
 
 		context.assertIsSatisfied();
+	}
+
+	private SelectQuery createCombinedSelectQuery() {
+		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE1);
+
+		q1.addCompareCondition(FIELD_ID1, 1);
+		q2.addCompareCondition(FIELD_ID1, 2);
+
+		SelectQuery combine = q1.combine(q2);
+		combine.addOrderBy(FIELD_ID1);
+		return combine;
 	}
 
 	@Test
