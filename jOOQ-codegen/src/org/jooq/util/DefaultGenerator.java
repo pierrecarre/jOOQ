@@ -354,6 +354,18 @@ public class DefaultGenerator implements Generator {
 		out.println("\t\treturn getValue(" + table.getJavaClassName() + "." + column.getNameUC() + columnDisambiguationSuffix + ");");
 		out.println("\t}");
 
+		if (column.getDatabase().generateRelations()) {
+//			ForeignKeyDefinition foreignKey = column.getForeignKey();
+//
+//			if (foreignKey != null) {
+//				TableDefinition referenced = foreignKey.getReferencedTableDefinition();
+//				printFieldJavaDoc(out, null, column);
+//				out.println("\tpublic " + referenced.getJavaClassName("Record") + " get" + referenced.getJavaClassName() + "() {");
+//				out.println("\t\treturn null;");
+//				out.println("\t}");
+//			}
+		}
+
 		out.printImport(tablePackage + "." + table.getJavaClassName());
 		out.printImport(column.getTypeClass());
 	}

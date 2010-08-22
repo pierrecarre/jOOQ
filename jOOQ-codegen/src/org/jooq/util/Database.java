@@ -117,4 +117,14 @@ public interface Database {
 	 * Whether record classes should be generated for this database configuration.
 	 */
 	void setGenerateRecords(boolean generateRecords);
+
+	/**
+	 * Whether foreign key relations should be resolved
+	 */
+	boolean generateRelations();
+
+	/**
+	 * Whether foreign key relations should be resolved
+	 */
+	void setGenerateRelations(boolean generateRelations);
 }

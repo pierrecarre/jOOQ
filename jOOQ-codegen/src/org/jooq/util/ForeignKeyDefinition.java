@@ -50,6 +50,11 @@ public interface ForeignKeyDefinition extends Definition {
 	String getReferencedTableName();
 
 	/**
+	 * @return The definition of the referenced table.
+	 */
+	TableDefinition getReferencedTableDefinition();
+
+	/**
 	 * @return The list of columns referenced by this foreign key
 	 */
 	List<String> getReferencedColumnNames();

@@ -96,7 +96,8 @@ public abstract class AbstractDefinition implements Definition {
 		return getJavaClassName() + suffix + ".java";
 	}
 
-	protected final Database getDatabase() {
+	@Override
+	public final Database getDatabase() {
 		return database;
 	}
 

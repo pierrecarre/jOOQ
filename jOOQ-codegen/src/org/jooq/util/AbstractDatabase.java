@@ -48,6 +48,7 @@ public abstract class AbstractDatabase implements Database {
 	private String[] excludes;
 	private String[] includes;
 	private boolean generateRecords = true;
+	private boolean generateRelations = false;
 
 	private List<TableDefinition> tables;
 	private List<ProcedureDefinition> procedures;
@@ -106,6 +107,16 @@ public abstract class AbstractDatabase implements Database {
 	@Override
 	public void setGenerateRecords(boolean generateRecords) {
 		this.generateRecords = generateRecords;
+	}
+
+	@Override
+	public boolean generateRelations() {
+		return generateRelations;
+	}
+
+	@Override
+	public void setGenerateRelations(boolean generateRelations) {
+		this.generateRelations = generateRelations;
 	}
 
 	@Override

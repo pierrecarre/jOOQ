@@ -54,6 +54,7 @@ public class GenerationTask extends Task {
 		properties.setProperty("generator.database.includes", ".*");
 		properties.setProperty("generator.database.excludes", "");
 		properties.setProperty("generator.generate.records", "true");
+		properties.setProperty("generator.generate.relations", "false");
 
 		properties.setProperty("generator.target.directory", ".");
 	}
@@ -97,6 +98,10 @@ public class GenerationTask extends Task {
 
 	public void setGeneratorgeneraterecords(String value) {
 		properties.setProperty("generator.generate.records", value);
+	}
+
+	public void setGeneratorgeneraterelations(String value) {
+		properties.setProperty("generator.generate.relations", value);
 	}
 
 	public void setGeneratortargetpackage(String value) {

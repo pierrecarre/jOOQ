@@ -30,40 +30,21 @@
  */
 package org.jooq.util;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-public class DefaultForeignKeyDefinition extends AbstractDefinition implements ForeignKeyDefinition {
+/**
+ * @author Lukas Eder
+ */
+public class DefaultTableDefinition extends AbstractTableDefinition {
 
-	private final List<String> keyColumnNames;
-	private final List<String> referencedColumnNames;
-	private final String referencedTableName;
-
-	public DefaultForeignKeyDefinition(Database database, String name, String referencedTableName) {
-		super(database, name, null);
-
-		this.keyColumnNames = new ArrayList<String>();
-		this.referencedColumnNames = new ArrayList<String>();
-		this.referencedTableName = referencedTableName;
+	public DefaultTableDefinition(Database database, String name, String comment) {
+		super(database, name, comment);
 	}
 
 	@Override
-	public List<String> getKeyColumnNames() {
-		return keyColumnNames;
-	}
-
-	@Override
-	public String getReferencedTableName() {
-		return referencedTableName;
-	}
-
-	@Override
-	public TableDefinition getReferencedTableDefinition() {
-		return new DefaultTableDefinition(getDatabase(), referencedTableName, null);
-	}
-
-	@Override
-	public List<String> getReferencedColumnNames() {
-		return referencedColumnNames;
+	protected List<ColumnDefinition> getColumns0() throws SQLException {
+		return Collections.emptyList();
 	}
 }

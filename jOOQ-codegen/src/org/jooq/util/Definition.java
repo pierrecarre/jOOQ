@@ -40,6 +40,11 @@ package org.jooq.util;
 public interface Definition {
 
 	/**
+	 * @return A reference to the Database context
+	 */
+	Database getDatabase();
+
+	/**
 	 * @return The schema of this object
 	 */
 	String getSchemaName();
