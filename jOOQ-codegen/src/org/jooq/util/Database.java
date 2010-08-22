@@ -107,4 +107,14 @@ public interface Database {
 	 * generated.
 	 */
 	String[] getExcludes();
+
+	/**
+	 * Whether record classes should be generated for this database configuration.
+	 */
+	boolean generateRecords();
+
+	/**
+	 * Whether record classes should be generated for this database configuration.
+	 */
+	void setGenerateRecords(boolean generateRecords);
 }

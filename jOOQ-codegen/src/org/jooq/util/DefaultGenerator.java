@@ -127,20 +127,22 @@ public class DefaultGenerator implements Generator {
 			out.println("\t */");
 			out.println("\tpublic static final " + table.getJavaClassName() + " " + table.getNameUC() + " = new " + table.getJavaClassName() + "();");
 
-			out.println();
-			out.println("\t/**");
-			out.println("\t * The class holding records for this table");
-			out.println("\t */");
-			out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
-			out.println();
-			out.println("\t/**");
-			out.println("\t * The class holding records for this table");
-			out.println("\t */");
-			printOverride(out);
-			out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
-			out.println("\t\treturn RECORD_TYPE;");
-			out.println("\t}");
-			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
+			if (database.generateRecords()) {
+				out.println();
+				out.println("\t/**");
+				out.println("\t * The class holding records for this table");
+				out.println("\t */");
+				out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
+				out.println();
+				out.println("\t/**");
+				out.println("\t * The class holding records for this table");
+				out.println("\t */");
+				printOverride(out);
+				out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
+				out.println("\t\treturn RECORD_TYPE;");
+				out.println("\t}");
+				out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
+			}
 
 			for (ColumnDefinition column : table.getColumns()) {
 				printColumn(out, column, table.getNameUC());
@@ -160,34 +162,36 @@ public class DefaultGenerator implements Generator {
 		// ----------------------------------------------------------------------
 		// Generating table records
 		// ----------------------------------------------------------------------
-		File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
-		System.out.println("Generating classes in " + targetTableRecordPackageDir.getCanonicalPath());
+		if (database.generateRecords()) {
+			File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
+			System.out.println("Generating classes in " + targetTableRecordPackageDir.getCanonicalPath());
 
-		for (TableDefinition table : database.getTables()) {
-			targetTableRecordPackageDir.mkdirs();
+			for (TableDefinition table : database.getTables()) {
+				targetTableRecordPackageDir.mkdirs();
 
-			System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
+				System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
 
-			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
-			printHeader(out, targetPackageName + ".tables.records");
-			printClassJavadoc(out, table);
+				GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
+				printHeader(out, targetPackageName + ".tables.records");
+				printClassJavadoc(out, table);
 
-			out.println("public class " + table.getJavaClassName("Record") + " extends RecordImpl {");
-			printSerial(out);
-			out.printImport(RecordImpl.class);
+				out.println("public class " + table.getJavaClassName("Record") + " extends RecordImpl {");
+				printSerial(out);
+				out.printImport(RecordImpl.class);
 
-			for (ColumnDefinition column : table.getColumns()) {
-				printGetterAndSetter(out, column, table, targetPackageName + ".tables");
+				for (ColumnDefinition column : table.getColumns()) {
+					printGetterAndSetter(out, column, table, targetPackageName + ".tables");
+				}
+
+				out.println();
+				out.println("\tpublic " + table.getJavaClassName("Record") + "(Result result) {");
+				out.println("\t\tsuper(result);");
+				out.println("\t}");
+				out.printImport(Result.class);
+
+				out.println("}");
+				out.close();
 			}
-
-			out.println();
-			out.println("\tpublic " + table.getJavaClassName("Record") + "(Result result) {");
-			out.println("\t\tsuper(result);");
-			out.println("\t}");
-			out.printImport(Result.class);
-
-			out.println("}");
-			out.close();
 		}
 
 		// ----------------------------------------------------------------------

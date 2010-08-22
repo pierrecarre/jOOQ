@@ -47,7 +47,8 @@ public abstract class AbstractDatabase implements Database {
 	private String schema;
 	private String[] excludes;
 	private String[] includes;
-	
+	private boolean generateRecords = true;
+
 	private List<TableDefinition> tables;
 	private List<ProcedureDefinition> procedures;
 	private List<FunctionDefinition> functions;
@@ -98,11 +99,21 @@ public abstract class AbstractDatabase implements Database {
 	}
 
 	@Override
+	public boolean generateRecords() {
+		return generateRecords;
+	}
+
+	@Override
+	public void setGenerateRecords(boolean generateRecords) {
+		this.generateRecords = generateRecords;
+	}
+
+	@Override
 	public final List<TableDefinition> getTables() throws SQLException {
 		if (tables == null) {
 			tables = filter(getTables0());
 		}
-		
+
 		return tables;
 	}
 
@@ -111,7 +122,7 @@ public abstract class AbstractDatabase implements Database {
 		if (procedures == null) {
 			procedures = filter(getProcedures0());
 		}
-		
+
 		return procedures;
 	}
 
@@ -120,7 +131,7 @@ public abstract class AbstractDatabase implements Database {
 		if (functions == null) {
 			functions = filter(getFunctions0());
 		}
-		
+
 		return functions;
 	}
 
