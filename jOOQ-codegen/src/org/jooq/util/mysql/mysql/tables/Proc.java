@@ -8,7 +8,6 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
-import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
 
 
 /**
@@ -26,30 +25,23 @@ public class Proc extends TableImpl {
 	public static final Proc PROC = new Proc();
 
 	/**
-	 * The class holding records for this table
-	 */
-	private static final Class<ProcRecord> RECORD_TYPE = ProcRecord.class;
-
-	/**
-	 * The class holding records for this table
-	 */
-	@Override
-	public Class<ProcRecord> getRecordType() {
-		return RECORD_TYPE;
-	}
-
-	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<String> DB = new TableFieldImpl<String>("db", String.class, PROC);
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, PROC);
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<String> TYPE = new TableFieldImpl<String>("type", String.class, PROC);
 

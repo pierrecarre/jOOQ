@@ -8,7 +8,6 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.information_schema.InformationSchema;
-import org.jooq.util.mysql.information_schema.tables.records.TablesRecord;
 
 
 /**
@@ -22,19 +21,6 @@ public class Tables extends TableImpl {
 	 * The singleton instance of TABLES
 	 */
 	public static final Tables TABLES = new Tables();
-
-	/**
-	 * The class holding records for this table
-	 */
-	private static final Class<TablesRecord> RECORD_TYPE = TablesRecord.class;
-
-	/**
-	 * The class holding records for this table
-	 */
-	@Override
-	public Class<TablesRecord> getRecordType() {
-		return RECORD_TYPE;
-	}
 
 	/**
 	 * An uncommented item
