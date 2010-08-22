@@ -49,6 +49,7 @@ import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataType;
 import org.jooq.util.Database;
 
 /**
@@ -81,7 +82,14 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			String dataType = record.getValue(DATA_TYPE);
 			String comment = record.getValue(COLUMN_COMMENT);
 
-			Class<?> type = MySQLDataType.valueOf(dataType.toUpperCase()).getType();
+			Class<?> type = Object.class;
+
+			try {
+				type = MySQLDataType.valueOf(DataType.normalise(dataType)).getType();
+			} catch (Exception e) {
+				System.out.println("Unsupported datatype : " + dataType);
+			}
+
 			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), getName(), name, position, type, comment);
 			result.add(column);
 		}
