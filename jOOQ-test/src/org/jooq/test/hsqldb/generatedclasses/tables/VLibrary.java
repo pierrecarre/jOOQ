@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.hsqldb.generatedclasses.Public;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.VLibraryRecord;
 
 
 /**
@@ -20,6 +21,19 @@ public class VLibrary extends TableImpl {
 	 * The singleton instance of V_LIBRARY
 	 */
 	public static final VLibrary V_LIBRARY = new VLibrary();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<VLibraryRecord> RECORD_TYPE = VLibraryRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<VLibraryRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

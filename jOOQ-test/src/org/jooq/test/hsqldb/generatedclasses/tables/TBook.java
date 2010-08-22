@@ -7,6 +7,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.hsqldb.generatedclasses.Public;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord;
 
 
 /**
@@ -20,6 +21,19 @@ public class TBook extends TableImpl {
 	 * The singleton instance of T_BOOK
 	 */
 	public static final TBook T_BOOK = new TBook();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TBookRecord> RECORD_TYPE = TBookRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TBookRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item

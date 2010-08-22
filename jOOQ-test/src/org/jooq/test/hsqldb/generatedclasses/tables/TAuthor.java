@@ -8,6 +8,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.hsqldb.generatedclasses.Public;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord;
 
 
 /**
@@ -21,6 +22,19 @@ public class TAuthor extends TableImpl {
 	 * The singleton instance of T_AUTHOR
 	 */
 	public static final TAuthor T_AUTHOR = new TAuthor();
+
+	/**
+	 * The class holding records for this table
+	 */
+	private static final Class<TAuthorRecord> RECORD_TYPE = TAuthorRecord.class;
+
+	/**
+	 * The class holding records for this table
+	 */
+	@Override
+	public Class<TAuthorRecord> getRecordType() {
+		return RECORD_TYPE;
+	}
 
 	/**
 	 * An uncommented item
