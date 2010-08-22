@@ -46,6 +46,7 @@ import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataType;
 import org.jooq.util.Database;
 import org.jooq.util.oracle.sys.tables.AllColComments;
 import org.jooq.util.oracle.sys.tables.AllTabCols;
@@ -84,7 +85,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 			Class<?> type = Object.class;
 
 			try {
-				type = OracleDataType.valueOf(dataType.toUpperCase().replaceAll("[^\\d\\w]", "")).getType(precision, scale);
+				type = OracleDataType.valueOf(DataType.normalise(dataType)).getType(precision, scale);
 			} catch (Exception e) {
 				System.out.println("Unsupported datatype : " + dataType);
 			}
