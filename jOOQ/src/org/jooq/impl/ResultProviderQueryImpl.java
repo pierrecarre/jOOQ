@@ -42,14 +42,14 @@ import org.jooq.ResultProviderQuery;
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryImpl extends AbstractResultProviderQuery {
+class ResultProviderQueryImpl extends AbstractSelectQuery {
 
 	private static final long serialVersionUID = 3431079100479366798L;
-	private final AbstractResultProviderQuery left;
+	private final AbstractSelectQuery left;
 	private final ResultProviderQuery right;
 	private final CombineOperator operator;
 
-	ResultProviderQueryImpl(AbstractResultProviderQuery left, ResultProviderQuery right, CombineOperator operator) {
+	ResultProviderQueryImpl(AbstractSelectQuery left, ResultProviderQuery right, CombineOperator operator) {
 		this.left = left;
 		this.right = right;
 		this.operator = operator;

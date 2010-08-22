@@ -34,32 +34,36 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Table;
+import org.jooq.ExistsCondition;
+import org.jooq.ExistsOperator;
+import org.jooq.ResultProviderQuery;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table {
+class SelectQueryAsExistsCondition extends AbstractNamedQueryPart implements ExistsCondition {
 
-	private static final long serialVersionUID = 6272398035926615668L;
-	private final AbstractResultProviderQuery query;
+	private static final long serialVersionUID = 5678338161136603292L;
+	private final AbstractSelectQuery query;
+	private final ExistsOperator operator;
 
-	ResultProviderQueryAsTable(AbstractResultProviderQuery query) {
+	public SelectQueryAsExistsCondition(AbstractSelectQuery query, ExistsOperator operator) {
 		super("");
 
 		this.query = query;
+		this.operator = operator;
 	}
 
 	@Override
-	public Table alias(String alias) {
-		return new TableAlias(this, alias, true);
-	}
+	public String toSQLReference(boolean inlineParameters) {
+		StringBuilder sb = new StringBuilder();
 
-	@Override
-	public FieldList getFields() {
-		return query.getSelect();
+		sb.append(operator.toSQL());
+		sb.append(" (");
+		sb.append(query.toSQLReference(inlineParameters));
+		sb.append(")");
+
+		return sb.toString();
 	}
 
 	@Override
@@ -68,12 +72,12 @@ class ResultProviderQueryAsTable extends AbstractNamedQueryPart implements Table
 	}
 
 	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return query.toSQLReference(inlineParameters);
+	public ExistsOperator getOperator() {
+		return operator;
 	}
 
 	@Override
-	public Class<? extends Record> getRecordType() {
-		return RecordImpl.class;
+	public ResultProviderQuery getInnerSelect() {
+		return query;
 	}
 }

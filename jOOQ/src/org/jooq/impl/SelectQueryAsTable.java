@@ -34,59 +34,46 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.Comparator;
-import org.jooq.CompareCondition;
-import org.jooq.Field;
+import org.jooq.FieldList;
+import org.jooq.Record;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsCompareCondition<T> extends AbstractNamedQueryPart implements CompareCondition<T> {
+class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
 
-	private static final long serialVersionUID = -3125318907657091582L;
-	private final AbstractResultProviderQuery query;
-	private final Field<T> field;
+	private static final long serialVersionUID = 6272398035926615668L;
+	private final AbstractSelectQuery query;
 
-	ResultProviderQueryAsCompareCondition(AbstractResultProviderQuery query, Field<T> field) {
+	SelectQueryAsTable(AbstractSelectQuery query) {
 		super("");
 
 		this.query = query;
-		this.field = field;
 	}
 
 	@Override
-	public Field<T> getField() {
-		return field;
+	public Table alias(String alias) {
+		return new TableAlias(this, alias, true);
 	}
 
 	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(field.toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(getComparator().toSQL());
-		sb.append(" (");
-		sb.append(query.toSQLReference(inlineParameters));
-		sb.append(")");
-
-		return sb.toString();
+	public FieldList getFields() {
+		return query.getSelect();
 	}
 
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		initialIndex = field.bind(stmt, initialIndex);
 		return query.bind(stmt, initialIndex);
 	}
 
 	@Override
-	public Comparator getComparator() {
-		return Comparator.EQUALS;
+	public String toSQLReference(boolean inlineParameters) {
+		return query.toSQLReference(inlineParameters);
 	}
 
 	@Override
-	public T getValue() {
-		throw new UnsupportedOperationException("Cannot retrieve values of ResultProviderQueryAsCompareCondition");
+	public Class<? extends Record> getRecordType() {
+		return RecordImpl.class;
 	}
-
 }

@@ -52,14 +52,14 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractResultProviderQuery extends AbstractQuery implements ResultProviderQuery {
+abstract class AbstractSelectQuery extends AbstractQuery implements ResultProviderQuery {
 
 	private static final long serialVersionUID = 1555503854543561285L;
 
 	private ResultImpl result;
 	private final OrderByFieldList orderBy;
 
-	public AbstractResultProviderQuery() {
+	public AbstractSelectQuery() {
 		this.orderBy = new OrderByFieldListImpl();
 	}
 	
@@ -135,7 +135,7 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 
 	@Override
 	public final Table asTable() {
-		return new ResultProviderQueryAsTable(this);
+		return new SelectQueryAsTable(this);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -145,7 +145,7 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 			throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
 		}
 
-		return new ResultProviderQueryAsField<T>(this, (Class<T>) getSelect().get(0).getType());
+		return new SelectQueryAsField<T>(this, (Class<T>) getSelect().get(0).getType());
 	}
 
 	@Override
@@ -169,7 +169,7 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 			throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
 		}
 
-		return new ResultProviderQueryAsSubQueryCondition<T>(this, field, operator);
+		return new SelectQueryAsSubQueryCondition<T>(this, field, operator);
 	}
 
 	@Override
@@ -187,6 +187,6 @@ abstract class AbstractResultProviderQuery extends AbstractQuery implements Resu
 			throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
 		}
 
-		return new ResultProviderQueryAsExistsCondition(this, operator);
+		return new SelectQueryAsExistsCondition(this, operator);
 	}
 }

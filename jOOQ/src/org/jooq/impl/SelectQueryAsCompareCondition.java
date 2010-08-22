@@ -34,27 +34,24 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.Comparator;
+import org.jooq.CompareCondition;
 import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
-import org.jooq.SubQueryCondition;
-import org.jooq.SubQueryOperator;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart implements SubQueryCondition<T> {
+class SelectQueryAsCompareCondition<T> extends AbstractNamedQueryPart implements CompareCondition<T> {
 
-	private static final long serialVersionUID = -402776705884329740L;
-	private final AbstractResultProviderQuery query;
+	private static final long serialVersionUID = -3125318907657091582L;
+	private final AbstractSelectQuery query;
 	private final Field<T> field;
-	private final SubQueryOperator operator;
 
-	ResultProviderQueryAsSubQueryCondition(AbstractResultProviderQuery query, Field<T> field, SubQueryOperator operator) {
+	SelectQueryAsCompareCondition(AbstractSelectQuery query, Field<T> field) {
 		super("");
 
 		this.query = query;
 		this.field = field;
-		this.operator = operator;
 	}
 
 	@Override
@@ -68,7 +65,7 @@ class ResultProviderQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart i
 
 		sb.append(field.toSQLReference(inlineParameters));
 		sb.append(" ");
-		sb.append(operator.toSQL());
+		sb.append(getComparator().toSQL());
 		sb.append(" (");
 		sb.append(query.toSQLReference(inlineParameters));
 		sb.append(")");
@@ -83,12 +80,13 @@ class ResultProviderQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart i
 	}
 
 	@Override
-	public SubQueryOperator getOperator() {
-		return operator;
+	public Comparator getComparator() {
+		return Comparator.EQUALS;
 	}
 
 	@Override
-	public ResultProviderQuery getInnerSelect() {
-		return query;
+	public T getValue() {
+		throw new UnsupportedOperationException("Cannot retrieve values of ResultProviderQueryAsCompareCondition");
 	}
+
 }

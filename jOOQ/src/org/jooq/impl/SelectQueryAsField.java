@@ -34,36 +34,25 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.ExistsCondition;
-import org.jooq.ExistsOperator;
-import org.jooq.ResultProviderQuery;
+import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsExistsCondition extends AbstractNamedQueryPart implements ExistsCondition {
+class SelectQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
-	private static final long serialVersionUID = 5678338161136603292L;
-	private final AbstractResultProviderQuery query;
-	private final ExistsOperator operator;
+	private static final long serialVersionUID = 3463144434073231750L;
+	private final AbstractSelectQuery query;
 
-	public ResultProviderQueryAsExistsCondition(AbstractResultProviderQuery query, ExistsOperator operator) {
-		super("");
+	SelectQueryAsField(AbstractSelectQuery query, Class<T> type) {
+		super("", type);
 
 		this.query = query;
-		this.operator = operator;
 	}
 
 	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(operator.toSQL());
-		sb.append(" (");
-		sb.append(query.toSQLReference(inlineParameters));
-		sb.append(")");
-
-		return sb.toString();
+	public Field<T> alias(String alias) {
+		return new FieldAlias<T>(this, alias, true);
 	}
 
 	@Override
@@ -72,12 +61,7 @@ class ResultProviderQueryAsExistsCondition extends AbstractNamedQueryPart implem
 	}
 
 	@Override
-	public ExistsOperator getOperator() {
-		return operator;
-	}
-
-	@Override
-	public ResultProviderQuery getInnerSelect() {
-		return query;
+	public String toSQLReference(boolean inlineParameters) {
+		return query.toSQLReference(inlineParameters);
 	}
 }

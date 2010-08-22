@@ -45,10 +45,10 @@ import org.jooq.Result;
  */
 class ResultImpl implements Result {
 
-	private final AbstractResultProviderQuery query;
+	private final AbstractSelectQuery query;
 	private final List<Record> records;
 
-	ResultImpl(AbstractResultProviderQuery query) {
+	ResultImpl(AbstractSelectQuery query) {
 		this.query = query;
 		this.records = new ArrayList<Record>();
 	}

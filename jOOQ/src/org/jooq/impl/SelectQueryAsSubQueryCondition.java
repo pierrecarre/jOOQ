@@ -35,33 +35,60 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Field;
+import org.jooq.ResultProviderQuery;
+import org.jooq.SubQueryCondition;
+import org.jooq.SubQueryOperator;
 
 /**
  * @author Lukas Eder
  */
-class ResultProviderQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
+class SelectQueryAsSubQueryCondition<T> extends AbstractNamedQueryPart implements SubQueryCondition<T> {
 
-	private static final long serialVersionUID = 3463144434073231750L;
-	private final AbstractResultProviderQuery query;
+	private static final long serialVersionUID = -402776705884329740L;
+	private final AbstractSelectQuery query;
+	private final Field<T> field;
+	private final SubQueryOperator operator;
 
-	ResultProviderQueryAsField(AbstractResultProviderQuery query, Class<T> type) {
-		super("", type);
+	SelectQueryAsSubQueryCondition(AbstractSelectQuery query, Field<T> field, SubQueryOperator operator) {
+		super("");
 
 		this.query = query;
+		this.field = field;
+		this.operator = operator;
 	}
 
 	@Override
-	public Field<T> alias(String alias) {
-		return new FieldAlias<T>(this, alias, true);
-	}
-
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return query.bind(stmt, initialIndex);
+	public Field<T> getField() {
+		return field;
 	}
 
 	@Override
 	public String toSQLReference(boolean inlineParameters) {
-		return query.toSQLReference(inlineParameters);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(field.toSQLReference(inlineParameters));
+		sb.append(" ");
+		sb.append(operator.toSQL());
+		sb.append(" (");
+		sb.append(query.toSQLReference(inlineParameters));
+		sb.append(")");
+
+		return sb.toString();
+	}
+
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		initialIndex = field.bind(stmt, initialIndex);
+		return query.bind(stmt, initialIndex);
+	}
+
+	@Override
+	public SubQueryOperator getOperator() {
+		return operator;
+	}
+
+	@Override
+	public ResultProviderQuery getInnerSelect() {
+		return query;
 	}
 }
