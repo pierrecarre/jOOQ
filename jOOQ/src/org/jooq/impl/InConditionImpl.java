@@ -42,7 +42,7 @@ import org.jooq.InOperator;
 /**
  * @author Lukas Eder
  */
-class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
+class InConditionImpl<T> extends AbstractCondition implements InCondition<T> {
 
 	private static final long serialVersionUID = -1653924248576930761L;
 	private final Field<T> field;

@@ -44,7 +44,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class CompareConditionImpl<T> extends AbstractQueryPart implements CompareCondition<T> {
+class CompareConditionImpl<T> extends AbstractCondition implements CompareCondition<T> {
 
 	private static final long serialVersionUID = -6456616674773879690L;
 

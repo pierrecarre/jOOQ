@@ -40,7 +40,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondition<T> {
+class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondition<T> {
 
 	private static final long serialVersionUID = -4666251100802237878L;
 
@@ -49,12 +49,15 @@ class BetweenConditionImpl<T> extends AbstractQueryPart implements BetweenCondit
 	private final T maxValue;
 
 	BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
-		if (field == null)
+		if (field == null) {
 			throw new IllegalArgumentException("The argument 'field' must not be null");
-		if (minValue == null)
+		}
+		if (minValue == null) {
 			throw new IllegalArgumentException("The argument 'minValue' must not be null");
-		if (maxValue == null)
+		}
+		if (maxValue == null) {
 			throw new IllegalArgumentException("The argument 'maxValue' must not be null");
+		}
 
 		this.field = field;
 		this.minValue = minValue;

@@ -38,7 +38,7 @@ import org.jooq.Condition;
 /**
  * @author Lukas Eder
  */
-public class TrueCondition extends AbstractQueryPart implements Condition {
+public class TrueCondition extends AbstractCondition implements Condition {
 
 	private static final long serialVersionUID = 775364624704563687L;
 	public static final TrueCondition TRUE_CONDITION = new TrueCondition();

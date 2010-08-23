@@ -42,15 +42,13 @@ import org.jooq.SelectQuery;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsCompareCondition<T> extends AbstractNamedQueryPart implements CompareCondition<T> {
+class SelectQueryAsCompareCondition<T> extends AbstractCondition implements CompareCondition<T> {
 
 	private static final long serialVersionUID = -3125318907657091582L;
 	private final SelectQuery query;
 	private final Field<T> field;
 
 	SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
-		super("");
-
 		this.query = query;
 		this.field = field;
 	}

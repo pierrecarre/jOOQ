@@ -46,7 +46,7 @@ import org.jooq.Operator;
 /**
  * @author Lukas Eder
  */
-class CombinedConditionImpl extends AbstractQueryPart implements CombinedCondition {
+class CombinedConditionImpl extends AbstractCondition implements CombinedCondition {
 
 	private static final long serialVersionUID = -7373293246207052549L;
 
@@ -54,19 +54,37 @@ class CombinedConditionImpl extends AbstractQueryPart implements CombinedConditi
 	private final List<Condition> conditions;
 
 	CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
-		if (operator == null)
+		if (operator == null) {
 			throw new IllegalArgumentException("The argument 'operator' must not be null");
-		if (conditions == null)
+		}
+		if (conditions == null) {
 			throw new IllegalArgumentException("The argument 'conditions' must not be null");
+		}
 		for (Condition condition : conditions) {
 			if (condition == null) {
 				throw new IllegalArgumentException("The argument 'conditions' must contain null");
 			}
 		}
 
-
 		this.operator = operator;
-		this.conditions = new ArrayList<Condition>(conditions);
+		this.conditions = new ArrayList<Condition>();
+
+		init(operator, conditions);
+	}
+
+	private void init(Operator operator, Collection<Condition> conditions) {
+		for (Condition condition : conditions) {
+			if (condition instanceof CombinedCondition) {
+				CombinedCondition combinedCondition = (CombinedCondition) condition;
+				if (combinedCondition.getOperator() == operator) {
+					this.conditions.addAll(combinedCondition.getConditions());
+				} else {
+					this.conditions.add(condition);
+				}
+			} else {
+				this.conditions.add(condition);
+			}
+		}
 	}
 
 	@Override

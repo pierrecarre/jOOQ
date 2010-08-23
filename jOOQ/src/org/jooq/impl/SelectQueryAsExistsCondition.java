@@ -41,15 +41,13 @@ import org.jooq.SelectQuery;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsExistsCondition extends AbstractNamedQueryPart implements ExistsCondition {
+class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCondition {
 
 	private static final long serialVersionUID = 5678338161136603292L;
 	private final SelectQuery query;
 	private final ExistsOperator operator;
 
 	SelectQueryAsExistsCondition(SelectQuery query, ExistsOperator operator) {
-		super("");
-
 		this.query = query;
 		this.operator = operator;
 	}

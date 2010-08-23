@@ -134,18 +134,34 @@ public class jOOQTest {
 	public final void testMultipleCombinedCondition() throws Exception {
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID2.equal(20);
+		CompareCondition<Integer> c3 = FIELD_ID1.equal(30);
+		CompareCondition<Integer> c4 = FIELD_ID2.equal(40);
 
-		CombinedCondition c = QueryFactory.createCombinedCondition(c1, c2);
-		assertEquals("(TABLE1.ID1 = 10 and TABLE2.ID2 = 20)", c.toSQLReference(true));
-		assertEquals("(TABLE1.ID1 = ? and TABLE2.ID2 = ?)", c.toSQLReference(false));
+		CombinedCondition c = c1.and(c2).or(c3.and(c4));
+		assertEquals("((TABLE1.ID1 = 10 and TABLE2.ID2 = 20) or (TABLE1.ID1 = 30 and TABLE2.ID2 = 40))", c.toSQLReference(true));
+		assertEquals("((TABLE1.ID1 = ? and TABLE2.ID2 = ?) or (TABLE1.ID1 = ? and TABLE2.ID2 = ?))", c.toSQLReference(false));
+
+		c = c1.and(c2).or(c3).and(c4);
+		assertEquals("(((TABLE1.ID1 = 10 and TABLE2.ID2 = 20) or TABLE1.ID1 = 30) and TABLE2.ID2 = 40)", c.toSQLReference(true));
+		assertEquals("(((TABLE1.ID1 = ? and TABLE2.ID2 = ?) or TABLE1.ID1 = ?) and TABLE2.ID2 = ?)", c.toSQLReference(false));
+
+		c = c1.and(c2).and(c3).or(c4);
+		assertEquals("((TABLE1.ID1 = 10 and TABLE2.ID2 = 20 and TABLE1.ID1 = 30) or TABLE2.ID2 = 40)", c.toSQLReference(true));
+		assertEquals("((TABLE1.ID1 = ? and TABLE2.ID2 = ? and TABLE1.ID1 = ?) or TABLE2.ID2 = ?)", c.toSQLReference(false));
+
+		c = c1.and(c2).and(c3).and(c4);
+		assertEquals("(TABLE1.ID1 = 10 and TABLE2.ID2 = 20 and TABLE1.ID1 = 30 and TABLE2.ID2 = 40)", c.toSQLReference(true));
+		assertEquals("(TABLE1.ID1 = ? and TABLE2.ID2 = ? and TABLE1.ID1 = ? and TABLE2.ID2 = ?)", c.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
 			oneOf(statement).setInt(2, 20);
+			oneOf(statement).setInt(3, 30);
+			oneOf(statement).setInt(4, 40);
 		}});
 
 		int i = c.bind(statement);
-		assertEquals(3, i);
+		assertEquals(5, i);
 
 		context.assertIsSatisfied();
 	}
@@ -549,8 +565,8 @@ public class jOOQTest {
 		q.addConditions(c1);
 		q.addConditions(c2);
 		q.addConditions(c2, c1);
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC' where ((TABLE1.ID1 = 10 and TABLE1.ID1 = 20) and (TABLE1.ID1 = 20 and TABLE1.ID1 = 10))", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ? where ((TABLE1.ID1 = ? and TABLE1.ID1 = ?) and (TABLE1.ID1 = ? and TABLE1.ID1 = ?))", q.toSQLReference(false));
+		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC' where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
+		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ? where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -615,8 +631,8 @@ public class jOOQTest {
 		q.addConditions(c1);
 		q.addConditions(c2);
 		q.addConditions(c2, c1);
-		assertEquals("delete from TABLE1 where ((TABLE1.ID1 = 10 and TABLE1.ID1 = 20) and (TABLE1.ID1 = 20 and TABLE1.ID1 = 10))", q.toSQLReference(true));
-		assertEquals("delete from TABLE1 where ((TABLE1.ID1 = ? and TABLE1.ID1 = ?) and (TABLE1.ID1 = ? and TABLE1.ID1 = ?))", q.toSQLReference(false));
+		assertEquals("delete from TABLE1 where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
+		assertEquals("delete from TABLE1 where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -667,8 +683,8 @@ public class jOOQTest {
 		q.addConditions(c1);
 		q.addConditions(c2);
 		q.addConditions(c2, c1);
-		assertEquals("select * from dual where ((TABLE1.ID1 = 10 and TABLE1.ID1 = 20) and (TABLE1.ID1 = 20 and TABLE1.ID1 = 10))", q.toSQLReference(true));
-		assertEquals("select * from dual where ((TABLE1.ID1 = ? and TABLE1.ID1 = ?) and (TABLE1.ID1 = ? and TABLE1.ID1 = ?))", q.toSQLReference(false));
+		assertEquals("select * from dual where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
+		assertEquals("select * from dual where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);

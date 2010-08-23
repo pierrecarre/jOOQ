@@ -38,4 +38,23 @@ package org.jooq;
  */
 public interface Condition extends QueryPart {
 
+	/**
+	 * Combine this condition with another one using the {@link Operator#AND}
+	 * operator.
+	 *
+	 * @param other
+	 *            The other condition
+	 * @return The combined condition
+	 */
+	CombinedCondition and(Condition other);
+
+	/**
+	 * Combine this condition with another one using the {@link Operator#OR}
+	 * operator.
+	 *
+	 * @param other
+	 *            The other condition
+	 * @return The combined condition
+	 */
+	CombinedCondition or(Condition other);
 }

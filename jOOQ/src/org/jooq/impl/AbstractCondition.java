@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,67 +28,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import org.jooq.Comparator;
-import org.jooq.Field;
-import org.jooq.JoinCondition;
+import org.jooq.CombinedCondition;
+import org.jooq.Condition;
+import org.jooq.Operator;
 
 /**
  * @author Lukas Eder
  */
-class JoinConditionImpl<T> extends AbstractCondition implements JoinCondition<T> {
+abstract class AbstractCondition extends AbstractQueryPart implements Condition {
 
-	private static final long serialVersionUID = -747240442279619486L;
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = -6683692251799468624L;
 
-	private final Field<T> field1;
-	private final Field<T> field2;
-	private final Comparator comparator;
-
-	JoinConditionImpl(Field<T> field1, Field<T> field2) {
-		this(field1, field2, Comparator.EQUALS);
-	}
-
-	JoinConditionImpl(Field<T> field1, Field<T> field2, Comparator comparator) {
-		this.field1 = field1;
-		this.field2 = field2;
-		this.comparator = comparator;
+	@Override
+	public CombinedCondition and(Condition other) {
+		return QueryFactory.createCombinedCondition(this, other);
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
-
-		result = getField1().bind(stmt, result);
-		result = getField2().bind(stmt, result);
-
-		return result;
-	}
-
-	@Override
-	public Field<T> getField1() {
-		return field1;
-	}
-
-	@Override
-	public Field<T> getField2() {
-		return field2;
-	}
-
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getField1().toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(comparator.toSQL());
-		sb.append(" ");
-		sb.append(getField2().toSQLReference(inlineParameters));
-
-		return sb.toString();
+	public CombinedCondition or(Condition other) {
+		return QueryFactory.createCombinedCondition(Operator.OR, this, other);
 	}
 }
