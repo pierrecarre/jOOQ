@@ -162,9 +162,9 @@ public interface SelectQuery extends Query, ConditionProvider {
 	/**
 	 * Adds an ordering field, ordering by the default sort order
 	 *
-	 * @param field The ordering field
+	 * @param fields The ordering fields
 	 */
-	void addOrderBy(Field<?> field);
+	void addOrderBy(Field<?>... fields);
 
 	/**
 	 * Adds an ordering field

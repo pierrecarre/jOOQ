@@ -394,8 +394,10 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final void addOrderBy(Field<?> field) {
-		addOrderBy(field, null);
+	public final void addOrderBy(Field<?>... fields) {
+		for (Field<?> field : fields) {
+			addOrderBy(field, null);
+		}
 	}
 
 	@Override
