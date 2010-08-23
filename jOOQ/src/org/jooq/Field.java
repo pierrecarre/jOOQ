@@ -115,6 +115,12 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	InCondition<T> in(Collection<T> values);
 
 	/**
+	 * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
+	 */
+	@Override
+	boolean equals(Object other);
+
+	/**
 	 * @return <code>this = value</code>
 	 */
 	FieldCondition<T> equal(T value);
