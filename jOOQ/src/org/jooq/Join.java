@@ -51,5 +51,5 @@ public interface Join extends QueryPart {
 	/**
 	 * @return The join condition. If null, natural join is used
 	 */
-	JoinCondition<?> getCondition();
+	Condition getCondition();
 }

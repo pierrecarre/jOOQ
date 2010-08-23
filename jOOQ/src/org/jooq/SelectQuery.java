@@ -218,19 +218,21 @@ public interface SelectQuery extends Query, ConditionProvider {
 	void addFrom(Collection<Table> from);
 
 	/**
-	 * Joins the existing table product to a new table
+	 * Joins the existing table product to a new table using a condition
 	 *
 	 * @param table The joined table
+	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table table);
+	void addJoin(Table table, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
 	 *
 	 * @param table The joined table
-	 * @param condition The joining condition
+	 * @param type The type of join
+	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table table, JoinCondition<?> condition);
+	void addJoin(Table table, JoinType type, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table joining on two fields
@@ -241,6 +243,17 @@ public interface SelectQuery extends Query, ConditionProvider {
 	 * @param field2 The right field of the join condition
 	 */
 	<T> void addJoin(Table table, Field<T> field1, Field<T> field2);
+
+	/**
+	 * Joins the existing table product to a new table joining on two fields
+	 *
+	 * @param <T> The common field type
+	 * @param table The joined table
+	 * @param type The type of join
+	 * @param field1 The left field of the join condition
+	 * @param field2 The right field of the join condition
+	 */
+	<T> void addJoin(Table table, JoinType type, Field<T> field1, Field<T> field2);
 
 	/**
 	 * Joins the existing table product to join object

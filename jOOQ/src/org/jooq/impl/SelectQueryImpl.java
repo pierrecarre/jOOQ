@@ -47,8 +47,8 @@ import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Join;
-import org.jooq.JoinCondition;
 import org.jooq.JoinList;
+import org.jooq.JoinType;
 import org.jooq.Limit;
 import org.jooq.OrderByFieldList;
 import org.jooq.Record;
@@ -271,13 +271,18 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final void addJoin(Table table, JoinCondition<?> condition) {
-		addJoin(QueryFactory.createJoin(table, condition));
+	public final void addJoin(Table table, Condition... conditions) {
+		addJoin(QueryFactory.createJoin(table, conditions));
 	}
 
 	@Override
-	public final void addJoin(Table table) {
-		addJoin(QueryFactory.createJoin(table));
+	public final <T> void addJoin(Table table, JoinType type, Field<T> field1, Field<T> field2) {
+		addJoin(QueryFactory.createJoin(table, type, field1, field2));
+	}
+
+	@Override
+	public final void addJoin(Table table, JoinType type, Condition... conditions) {
+		addJoin(QueryFactory.createJoin(table, type, conditions));
 	}
 
 	final FieldList getSelect0() {

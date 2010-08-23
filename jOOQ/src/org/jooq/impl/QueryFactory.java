@@ -136,23 +136,19 @@ public final class QueryFactory {
 	}
 
 	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2) {
-		return createJoin(table, field1, field2, JoinType.JOIN);
+		return createJoin(table, JoinType.JOIN, field1, field2);
 	}
 
-	public static Join createJoin(Table table, JoinCondition<?> condition) {
-		return createJoin(table, condition, JoinType.JOIN);
+	public static Join createJoin(Table table, Condition... conditions) {
+		return createJoin(table, JoinType.JOIN, conditions);
 	}
 
-	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2, JoinType type) {
-		return createJoin(table, createJoinCondition(field1, field2), type);
+	public static <T> Join createJoin(Table table, JoinType type, Field<T> field1, Field<T> field2) {
+		return createJoin(table, type, createJoinCondition(field1, field2));
 	}
 
-	public static Join createJoin(Table table, JoinCondition<?> condition, JoinType type) {
-		return new JoinImpl(table, condition, type);
-	}
-
-	public static <T> Join createJoin(Table table) {
-		return createJoin(table, null, JoinType.JOIN);
+	public static Join createJoin(Table table, JoinType type, Condition... conditions) {
+		return new JoinImpl(table, type, conditions);
 	}
 
 	/**

@@ -2,6 +2,21 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.3.0
+=================================================================
+
+Support for HSQLDB was added.
+Some refactorings forced minor API changes, which were inevitable
+
+Features
+--------
+#34 - Add support for HSQLDB
+
+API changes
+-----------
+#23 - Add support for more advanced joins
+#32 - Merge SelectQuery and ResultProviderQuery interfaces
+
 Version 1.2.0
 =================================================================
 

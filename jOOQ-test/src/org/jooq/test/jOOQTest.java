@@ -731,9 +731,37 @@ public class jOOQTest {
 	}
 
 	@Test
+	public final void testJoinComplexSelectQuery() throws Exception {
+		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
+		JoinCondition<Integer> c1 = QueryFactory.createJoinCondition(FIELD_ID1, FIELD_ID2);
+		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 1);
+		InCondition<Integer> c3 = QueryFactory.createInCondition(FIELD_ID2, 1, 2, 3);
+		
+		q.addJoin(TABLE2, c1, c2, c3);
+		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3))", q.toSQLReference(true));
+		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?))", q.toSQLReference(false));
+
+		q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
+		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(true));
+		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(false));
+
+		context.checking(new Expectations() {{
+			oneOf(statement).setInt(1, 1);
+			oneOf(statement).setInt(2, 1);
+			oneOf(statement).setInt(3, 2);
+			oneOf(statement).setInt(4, 3);
+		}});
+
+		int i = q.bind(statement);
+		assertEquals(5, i);
+
+		context.assertIsSatisfied();
+	}
+
+	@Test
 	public final void testJoinTypeSelectQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
-		Join j = QueryFactory.createJoin(TABLE2, FIELD_ID1, FIELD_ID2, LEFT_OUTER_JOIN);
+		Join j = QueryFactory.createJoin(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
 
 		q.addJoin(j);
 		assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));

@@ -31,11 +31,13 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.Condition;
 import org.jooq.Join;
-import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Table;
 
@@ -47,12 +49,14 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	private static final long serialVersionUID = 2275930365728978050L;
 
 	private final Table table;
-	private final JoinCondition<?> condition;
+	private final ConditionProviderImpl condition;
 	private final JoinType type;
 
-	JoinImpl(Table table, JoinCondition<?> condition, JoinType type) {
+	JoinImpl(Table table, JoinType type, Condition... condition) {
+		this.condition = new ConditionProviderImpl();
+		
 		this.table = table;
-		this.condition = condition;
+		this.condition.addConditions(condition);
 		this.type = type;
 	}
 
@@ -69,8 +73,8 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	}
 
 	@Override
-	public JoinCondition<?> getCondition() {
-		return condition;
+	public Condition getCondition() {
+		return condition.getWhere();
 	}
 
 	@Override
@@ -91,7 +95,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 		sb.append(" ");
 		sb.append(getTable().toSQLReference(inlineParameters));
 
-		if (getCondition() != null) {
+		if (getCondition() != TRUE_CONDITION) {
 			sb.append(" on ");
 			sb.append(getCondition().toSQLReference(inlineParameters));
 		}
