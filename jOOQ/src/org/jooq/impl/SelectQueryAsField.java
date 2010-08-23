@@ -40,7 +40,7 @@ import org.jooq.SelectQuery;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
+class SelectQueryAsField<T> extends FieldImpl<T> implements Field<T> {
 
 	private static final long serialVersionUID = 3463144434073231750L;
 	private final SelectQuery query;
@@ -52,7 +52,7 @@ class SelectQueryAsField<T> extends AbstractNamedTypeProviderQueryPart<T> implem
 	}
 
 	@Override
-	public Field<T> alias(String alias) {
+	public Field<T> as(String alias) {
 		return new FieldAlias<T>(this, alias, true);
 	}
 

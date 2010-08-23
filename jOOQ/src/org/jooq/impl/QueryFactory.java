@@ -43,6 +43,7 @@ import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InCondition;
+import org.jooq.InOperator;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
 import org.jooq.JoinCondition;
@@ -67,7 +68,7 @@ public final class QueryFactory {
 	 * <p>
 	 * <code><pre>
 	 * String sql = "(X = 1 and Y = 2)";</pre></code>
-	 * 
+	 *
 	 * @param sql
 	 *            The SQL
 	 * @return A condition wrapping the plain SQL
@@ -85,7 +86,7 @@ public final class QueryFactory {
 	 * <code><pre>
 	 * String sql = "(X = ? and Y = ?)";
 	 * Object[] bindings = new Object[] { 1, 2 };</pre></code>
-	 * 
+	 *
 	 * @param sql
 	 *            The SQL
 	 * @param bindings
@@ -126,7 +127,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a {@link BetweenCondition} for a field and two values
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -143,7 +144,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create an {@link InCondition} for a list of values
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -157,8 +158,38 @@ public final class QueryFactory {
 	}
 
 	/**
+	 * Create an {@link InCondition} for a collection of values to be excluded
+	 *
+	 * @param <T>
+	 *            The generic type parameter
+	 * @param field
+	 *            The field to compare to the values
+	 * @param values
+	 *            The excluded values
+	 * @return An {@link InCondition}
+	 */
+	public static <T> InCondition<T> createNotInCondition(Field<T> field, Collection<T> values) {
+		return new InConditionImpl<T>(field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
+	}
+
+	/**
+	 * Create an {@link InCondition} for a list of values to be excluded
+	 *
+	 * @param <T>
+	 *            The generic type parameter
+	 * @param field
+	 *            The field to compare to the values
+	 * @param values
+	 *            The excluded values
+	 * @return An {@link InCondition}
+	 */
+	public static <T> InCondition<T> createNotInCondition(Field<T> field, T... values) {
+		return createNotInCondition(field, Arrays.asList(values));
+	}
+
+	/**
 	 * Create an {@link InCondition} for a collection of values
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -174,7 +205,7 @@ public final class QueryFactory {
 	/**
 	 * Create a condition comparing a field with a value using the
 	 * {@link Comparator#EQUALS} comparator
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -189,7 +220,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a condition comparing a field with a value using any comparator
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -206,7 +237,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a condition comparing a field with <code>null</code>
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -219,7 +250,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a condition comparing a field with <code>null</code>
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field
@@ -232,7 +263,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a condition comparing two fields (typically used for joins)
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param field1
@@ -242,12 +273,29 @@ public final class QueryFactory {
 	 * @return A {@link JoinCondition}
 	 */
 	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2) {
+		return createJoinCondition(field1, field2, Comparator.EQUALS);
+	}
+
+	/**
+	 * Create a condition comparing two fields (typically used for joins)
+	 *
+	 * @param <T>
+	 *            The generic type parameter
+	 * @param field1
+	 *            The first field
+	 * @param field2
+	 *            The second field
+	 * @param comparator
+	 * 			  The comparator to compare the two fields with
+	 * @return A {@link JoinCondition}
+	 */
+	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
 		return new JoinConditionImpl<T>(field1, field2);
 	}
 
 	/**
 	 * Create a new {@link InsertQuery}
-	 * 
+	 *
 	 * @param into
 	 *            The table to insert data into
 	 * @return The new {@link InsertQuery}
@@ -258,7 +306,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link UpdateQuery}
-	 * 
+	 *
 	 * @param table
 	 *            The table to update data into
 	 * @return The new {@link UpdateQuery}
@@ -269,7 +317,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link DeleteQuery}
-	 * 
+	 *
 	 * @param table
 	 *            The table to delete data from
 	 * @return The new {@link DeleteQuery}
@@ -287,7 +335,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link SelectQuery}
-	 * 
+	 *
 	 * @param table
 	 *            The table to select data from
 	 * @return The new {@link SelectQuery}
@@ -298,7 +346,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link Join} part using a {@link JoinCondition}
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param table
@@ -315,7 +363,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link Join} part using any number of conditions
-	 * 
+	 *
 	 * @param table
 	 *            The table to join
 	 * @param conditions
@@ -328,7 +376,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link Join} part using a {@link JoinCondition}
-	 * 
+	 *
 	 * @param <T>
 	 *            The generic type parameter
 	 * @param table
@@ -347,7 +395,7 @@ public final class QueryFactory {
 
 	/**
 	 * Create a new {@link Join} part using any number of conditions
-	 * 
+	 *
 	 * @param table
 	 *            The table to join
 	 * @param type

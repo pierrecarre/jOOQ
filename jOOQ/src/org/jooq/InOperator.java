@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,68 +28,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import org.jooq.AliasProvider;
+package org.jooq;
 
 /**
+ * A comparator to be used in in conditions
+ *
  * @author Lukas Eder
  */
-abstract class AbstractAliasQueryPart<T extends AliasProvider<T>>
-	extends AbstractNamedQueryPart
-	implements AliasProvider<T> {
+public enum InOperator {
 
-	private static final long serialVersionUID = -2456848365524191614L;
-	private final boolean aliasProviderNeedsBrackets;
-	private final T aliasProvider;
-	private final String alias;
+	/**
+	 * IN
+	 */
+	IN("in"),
 
-	AbstractAliasQueryPart(T aliasProvider, String alias, boolean aliasProviderNeedsBrackets) {
-		super(alias);
+	/**
+	 * NOT IN
+	 */
+	NOT_IN("not in");
 
-		this.aliasProviderNeedsBrackets = aliasProviderNeedsBrackets;
-		this.aliasProvider = aliasProvider;
-		this.alias = alias;
+	private final String sql;
+
+	private InOperator(String sql) {
+		this.sql = sql;
 	}
 
-	protected final T getAliasProvider() {
-		return aliasProvider;
-	}
-
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return alias;
-	}
-
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-
-		if (aliasProviderNeedsBrackets) {
-			sb.append("(");
-		}
-		sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
-		if (aliasProviderNeedsBrackets) {
-			sb.append(")");
-		}
-
-		sb.append(" ");
-		sb.append(alias);
-
-		return sb.toString();
-	}
-
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return aliasProvider.bind(stmt, initialIndex);
-	}
-
-	@Override
-	public final T alias(String alias) {
-		return aliasProvider.alias(alias);
+	public String toSQL() {
+		return sql;
 	}
 }

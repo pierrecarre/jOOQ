@@ -101,12 +101,12 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
 	@Override
 	public void addNullCondition(Field<?> field) {
-		addConditions(QueryFactory.createCompareCondition(field, null, Comparator.EQUALS));
+		addConditions(QueryFactory.createNullCondition(field));
 	}
 
 	@Override
 	public void addNotNullCondition(Field<?> field) {
-		addConditions(QueryFactory.createCompareCondition(field, null, Comparator.NOT_EQUALS));
+		addConditions(QueryFactory.createNotNullCondition(field));
 	}
 
 	@Override

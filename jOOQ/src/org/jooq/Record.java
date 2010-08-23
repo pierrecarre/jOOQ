@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * A wrapper for database result records returned by
  * <code>{@link SelectQuery}</code>
- * 
+ *
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
@@ -64,7 +64,7 @@ public interface Record {
 	 *            The field
 	 * @param defaultValue
 	 *            The default value instead of <code>null</code>
-	 * 
+	 *
 	 * @return The value of a field contained in this record, or defaultValue, if <code>null</code>
 	 * @throws IllegalArgumentException
 	 *             If the argument field is not contained in

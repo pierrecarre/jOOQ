@@ -97,21 +97,21 @@ public class jOOQTest {
 	public final void testAliasing() throws Exception {
 		assertEquals("TABLE1", TABLE1.toSQLDeclaration());
 		assertEquals("TABLE1", TABLE1.toSQLReference());
-		
-		assertEquals("TABLE1 t1", TABLE1.alias("t1").toSQLDeclaration());
-		assertEquals("t1",        TABLE1.alias("t1").toSQLReference());
-		
+
+		assertEquals("TABLE1 t1", TABLE1.as("t1").toSQLDeclaration());
+		assertEquals("t1",        TABLE1.as("t1").toSQLReference());
+
 		assertEquals("TABLE1.ID1", TABLE1.getField(FIELD_ID1).toSQLDeclaration());
 		assertEquals("TABLE1.ID1", TABLE1.getField(FIELD_ID1).toSQLReference());
-		
-		assertEquals("TABLE1.ID1 f1", TABLE1.getField(FIELD_ID1).alias("f1").toSQLDeclaration());
-		assertEquals("f1",            TABLE1.getField(FIELD_ID1).alias("f1").toSQLReference());
-		
-		assertEquals("t1.ID1", TABLE1.alias("t1").getField(FIELD_ID1).toSQLDeclaration());
-		assertEquals("t1.ID1", TABLE1.alias("t1").getField(FIELD_ID1).toSQLReference());
-		
-		assertEquals("t1.ID1 f1", TABLE1.alias("t1").getField(FIELD_ID1).alias("f1").toSQLDeclaration());
-		assertEquals("f1",        TABLE1.alias("t1").getField(FIELD_ID1).alias("f1").toSQLReference());
+
+		assertEquals("TABLE1.ID1 f1", TABLE1.getField(FIELD_ID1).as("f1").toSQLDeclaration());
+		assertEquals("f1",            TABLE1.getField(FIELD_ID1).as("f1").toSQLReference());
+
+		assertEquals("t1.ID1", TABLE1.as("t1").getField(FIELD_ID1).toSQLDeclaration());
+		assertEquals("t1.ID1", TABLE1.as("t1").getField(FIELD_ID1).toSQLReference());
+
+		assertEquals("t1.ID1 f1", TABLE1.as("t1").getField(FIELD_ID1).as("f1").toSQLDeclaration());
+		assertEquals("f1",        TABLE1.as("t1").getField(FIELD_ID1).as("f1").toSQLReference());
 	}
 
 	@Test
@@ -274,7 +274,7 @@ public class jOOQTest {
 		assertEquals("'test'", f2.toSQLDeclaration(true));
 		assertEquals("'test'", f2.toSQLDeclaration(false));
 
-		Field<Integer> f3 = Functions.constant(Integer.valueOf(1)).alias("value");
+		Field<Integer> f3 = Functions.constant(Integer.valueOf(1)).as("value");
 		assertEquals(Integer.class, f3.getType());
 		assertEquals("value", f3.toSQLReference(true));
 		assertEquals("value", f3.toSQLReference(false));
@@ -301,7 +301,7 @@ public class jOOQTest {
 		assertEquals("sum(TABLE1.ID1)", sum1.toSQLDeclaration(false));
 		assertEquals(1, sum1.bind(statement));
 
-		Field<Integer> sum2 = Functions.sum(FIELD_ID1).alias("value");
+		Field<Integer> sum2 = Functions.sum(FIELD_ID1).as("value");
 		assertEquals(Integer.class, sum2.getType());
 		assertEquals("value", sum2.toSQLReference(true));
 		assertEquals("value", sum2.toSQLReference(false));
@@ -317,7 +317,7 @@ public class jOOQTest {
 		assertEquals("avg(TABLE1.ID1)", avg1.toSQLDeclaration(false));
 		assertEquals(1, avg1.bind(statement));
 
-		Field<Double> avg2 = Functions.avg(FIELD_ID1).alias("value");
+		Field<Double> avg2 = Functions.avg(FIELD_ID1).as("value");
 		assertEquals(Double.class, avg2.getType());
 		assertEquals("value", avg2.toSQLReference(true));
 		assertEquals("value", avg2.toSQLReference(false));
@@ -333,7 +333,7 @@ public class jOOQTest {
 		assertEquals("min(TABLE1.ID1)", min1.toSQLDeclaration(false));
 		assertEquals(1, min1.bind(statement));
 
-		Field<Integer> min2 = Functions.min(FIELD_ID1).alias("value");
+		Field<Integer> min2 = Functions.min(FIELD_ID1).as("value");
 		assertEquals(Integer.class, min2.getType());
 		assertEquals("value", min2.toSQLReference(true));
 		assertEquals("value", min2.toSQLReference(false));
@@ -349,7 +349,7 @@ public class jOOQTest {
 		assertEquals("max(TABLE1.ID1)", max1.toSQLDeclaration(false));
 		assertEquals(1, max1.bind(statement));
 
-		Field<Integer> max2 = Functions.max(FIELD_ID1).alias("value");
+		Field<Integer> max2 = Functions.max(FIELD_ID1).as("value");
 		assertEquals(Integer.class, max2.getType());
 		assertEquals("value", max2.toSQLReference(true));
 		assertEquals("value", max2.toSQLReference(false));
@@ -365,7 +365,7 @@ public class jOOQTest {
 		assertEquals("count(*)", count1.toSQLDeclaration(false));
 		assertEquals(1, count1.bind(statement));
 
-		Field<Integer> count1a = Functions.count().alias("cnt");
+		Field<Integer> count1a = Functions.count().as("cnt");
 		assertEquals(Integer.class, count1a.getType());
 		assertEquals("cnt", count1a.toSQLReference(true));
 		assertEquals("cnt", count1a.toSQLReference(false));
@@ -381,7 +381,7 @@ public class jOOQTest {
 		assertEquals("count(TABLE1.ID1)", count2.toSQLDeclaration(false));
 		assertEquals(1, count2.bind(statement));
 
-		Field<Integer> count2a = Functions.count(FIELD_ID1).alias("cnt");
+		Field<Integer> count2a = Functions.count(FIELD_ID1).as("cnt");
 		assertEquals(Integer.class, count2a.getType());
 		assertEquals("cnt", count2a.toSQLReference(true));
 		assertEquals("cnt", count2a.toSQLReference(false));
@@ -397,7 +397,7 @@ public class jOOQTest {
 		assertEquals("count(distinct TABLE1.ID1)", count3.toSQLDeclaration(false));
 		assertEquals(1, count3.bind(statement));
 
-		Field<Integer> count3a = Functions.countDistinct(FIELD_ID1).alias("cnt");
+		Field<Integer> count3a = Functions.countDistinct(FIELD_ID1).as("cnt");
 		assertEquals(Integer.class, count3a.getType());
 		assertEquals("cnt", count3a.toSQLReference(true));
 		assertEquals("cnt", count3a.toSQLReference(false));
@@ -758,7 +758,7 @@ public class jOOQTest {
 		JoinCondition<Integer> c1 = QueryFactory.createJoinCondition(FIELD_ID1, FIELD_ID2);
 		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 1);
 		InCondition<Integer> c3 = QueryFactory.createInCondition(FIELD_ID2, 1, 2, 3);
-		
+
 		q.addJoin(TABLE2, c1, c2, c3);
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3))", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?))", q.toSQLReference(false));
@@ -782,19 +782,19 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinSelf() throws Exception {
-		Table t1 = TABLE1.alias("t1");
-		Table t2 = TABLE1.alias("t2");
-		
+		Table t1 = TABLE1.as("t1");
+		Table t2 = TABLE1.as("t2");
+
 		SelectQuery q = QueryFactory.createSelectQuery(t1);
 		q.addJoin(t2, t1.getField(FIELD_ID1), t2.getField(FIELD_ID1));
-		
+
 		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(false));
-		
+
 		int i = q.bind(statement);
 		assertEquals(1, i);
 	}
-	
+
 	@Test
 	public final void testJoinTypeSelectQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
@@ -915,8 +915,8 @@ public class jOOQTest {
 	@Test
 	public final void testInnerSelect1() throws Exception {
 		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery q2 = QueryFactory.createSelectQuery(q1.asTable().alias("inner_temp_table"));
-		SelectQuery q3 = QueryFactory.createSelectQuery(q2.asTable().alias("outer_temp_table"));
+		SelectQuery q2 = QueryFactory.createSelectQuery(q1.asTable().as("inner_temp_table"));
+		SelectQuery q3 = QueryFactory.createSelectQuery(q2.asTable().as("outer_temp_table"));
 
 		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(true));
 		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(false));
@@ -930,9 +930,9 @@ public class jOOQTest {
 		SelectQuery q1 = QueryFactory.createSelectQuery(TABLE1);
 		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
 
-		q1.addSelect(FIELD_ID1.alias("inner_id1"));
-		q2.addSelect(FIELD_ID2.alias("outer_id2"));
-		q2.addSelect(q1.asField().alias("outer_id1"));
+		q1.addSelect(FIELD_ID1.as("inner_id1"));
+		q2.addSelect(FIELD_ID2.as("outer_id2"));
+		q2.addSelect(q1.asField().as("outer_id1"));
 
 		assertEquals("select TABLE2.ID2 outer_id2, (select TABLE1.ID1 inner_id1 from TABLE1) outer_id1 from TABLE2", q2.toSQLReference(true));
 		assertEquals("select TABLE2.ID2 outer_id2, (select TABLE1.ID1 inner_id1 from TABLE1) outer_id1 from TABLE2", q2.toSQLReference(false));

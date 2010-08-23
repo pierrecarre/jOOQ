@@ -37,16 +37,21 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface Table extends NamedQueryPart, AliasProvider<Table>, FieldProvider {
-	
+
 	/**
 	 * Get the fields from this table.
 	 * <p>
 	 * Usually, this will return the fields contained in the table. However, if
 	 * this is an aliased table, the fields will be aliased accordingly.
-	 * 
+	 *
 	 * @return The list of fields contained in the table
 	 */
 	FieldList getFields();
+
+	/**
+	 * @return The table's schema
+	 */
+	Schema getSchema();
 
 	/**
 	 * @return The table's name
@@ -61,7 +66,7 @@ public interface Table extends NamedQueryPart, AliasProvider<Table>, FieldProvid
 	 * @return The table alias
 	 */
 	@Override
-	Table alias(String alias);
+	Table as(String alias);
 
 	/**
 	 * @return The record type produced by this table

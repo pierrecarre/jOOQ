@@ -111,9 +111,9 @@ public abstract class jOOQAbstractTest {
     @Test
     public final void testSelectSimpleQuery() throws Exception {
         SelectQuery q = QueryFactory.createSelectQuery();
-        Field<Integer> f1 = Functions.constant(1).alias("f1");
-        Field<Double> f2 = Functions.constant(2d).alias("f2");
-        Field<String> f3 = Functions.constant("test").alias("f3");
+        Field<Integer> f1 = Functions.constant(1).as("f1");
+        Field<Double> f2 = Functions.constant(2d).as("f2");
+        Field<String> f3 = Functions.constant("test").as("f3");
 
         q.addSelect(f1);
         q.addSelect(f2);
@@ -185,13 +185,13 @@ public abstract class jOOQAbstractTest {
         q1.addOrderBy(getVLibrary_TITLE());
         q1.addCompareCondition(getVLibrary_TITLE(), "1984", Comparator.NOT_EQUALS);
 
-        Table a = getTAuthor().alias("a");
-        Table b = getTBook().alias("b");
-        
+        Table a = getTAuthor().as("a");
+        Table b = getTBook().as("b");
+
         Field<Integer> a_authorID = a.getField(getTAuthor_ID());
         Field<Integer> b_authorID = b.getField(getTBook_AUTHOR_ID());
         Field<String> b_title = b.getField(getTBook_TITLE());
-        
+
 		SelectQuery q2 = QueryFactory.createSelectQuery(a);
 		q2.addJoin(b, b_authorID, a_authorID);
 		q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
@@ -220,16 +220,16 @@ public abstract class jOOQAbstractTest {
     public final void testFunction3() throws Exception {
         SelectQuery q1 = QueryFactory.createSelectQuery();
         Field<Timestamp> now = Functions.currentTimestamp();
-        Field<Timestamp> ts = now.alias("ts");
-        Field<Date> date = Functions.currentDate().alias("d");
-        Field<Time> time = Functions.currentTime().alias("t");
+        Field<Timestamp> ts = now.as("ts");
+        Field<Date> date = Functions.currentDate().as("d");
+        Field<Time> time = Functions.currentTime().as("t");
 
-        Field<Integer> year = Functions.extract(now, DatePart.YEAR).alias("y");
-        Field<Integer> month = Functions.extract(now, DatePart.MONTH).alias("m");
-        Field<Integer> day = Functions.extract(now, DatePart.DAY).alias("dd");
-        Field<Integer> hour = Functions.extract(now, DatePart.HOUR).alias("h");
-        Field<Integer> minute = Functions.extract(now, DatePart.MINUTE).alias("mn");
-        Field<Integer> second = Functions.extract(now, DatePart.SECOND).alias("sec");
+        Field<Integer> year = Functions.extract(now, DatePart.YEAR).as("y");
+        Field<Integer> month = Functions.extract(now, DatePart.MONTH).as("m");
+        Field<Integer> day = Functions.extract(now, DatePart.DAY).as("dd");
+        Field<Integer> hour = Functions.extract(now, DatePart.HOUR).as("h");
+        Field<Integer> minute = Functions.extract(now, DatePart.MINUTE).as("mn");
+        Field<Integer> second = Functions.extract(now, DatePart.SECOND).as("sec");
 
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
         q1.execute(connection);
@@ -252,9 +252,9 @@ public abstract class jOOQAbstractTest {
     public final void testFunction4() throws Exception {
         SelectQuery q = QueryFactory.createSelectQuery();
         Field<String> constant = Functions.constant("abc");
-        Field<Integer> charLength = Functions.charLength(constant).alias("len");
-        Field<Integer> bitLength = Functions.bitLength(constant).alias("bitlen");
-        Field<Integer> octetLength = Functions.octetLength(constant).alias("octetlen");
+        Field<Integer> charLength = Functions.charLength(constant).as("len");
+        Field<Integer> bitLength = Functions.bitLength(constant).as("bitlen");
+        Field<Integer> octetLength = Functions.octetLength(constant).as("octetlen");
 
         q.addSelect(charLength, bitLength, octetLength);
         q.execute(connection);
@@ -281,7 +281,7 @@ public abstract class jOOQAbstractTest {
         SelectQuery q = QueryFactory.createSelectQuery(getVLibrary());
 
         Field<String> o = Functions.constant("o");
-        Field<Integer> position = Functions.position(getVLibrary_AUTHOR(), o).alias("p");
+        Field<Integer> position = Functions.position(getVLibrary_AUTHOR(), o).as("p");
         q.addSelect(getVLibrary_AUTHOR());
         q.addSelect(position);
         q.addOrderBy(getVLibrary_AUTHOR(), ASC);

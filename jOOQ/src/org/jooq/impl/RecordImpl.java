@@ -47,7 +47,7 @@ public class RecordImpl implements Record {
 	private final Result result;
 	private final Map<Field<?>, Object> values;
 
-	protected RecordImpl(Result result) {
+	public RecordImpl(Result result) {
 		this.result = result;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
@@ -70,11 +70,11 @@ public class RecordImpl implements Record {
 	@Override
 	public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
 		T value = getValue(field);
-		
+
 		if (value == null) {
 			value = defaultValue;
 		}
-		
+
 		return value;
 	}
 

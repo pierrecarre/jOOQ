@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.CombineOperator;
-import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
@@ -46,7 +45,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
+class SelectQueryAsTable extends TableImpl implements Table {
 
 	private static final long serialVersionUID = 6272398035926615668L;
 	private final List<SelectQuery> queries;
@@ -64,23 +63,13 @@ class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
 	}
 
 	@Override
-	public Table alias(String alias) {
+	public Table as(String alias) {
 		return new TableAlias(this, alias, true);
 	}
 
 	@Override
 	public FieldList getFields() {
 		return queries.get(0).getSelect();
-	}
-
-	@Override
-	public <T> Field<T> getField(Field<T> field) {
-		return getFields().getField(field);
-	}
-	
-	@Override
-	public Field<?> getField(String name) {
-		return getFields().getField(name);
 	}
 
 	@Override

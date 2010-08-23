@@ -101,13 +101,13 @@ public class OracleColumnDefinition extends AbstractColumnDefinition {
 //		    and ccx.column_name = 'NAME_REF'
 //		    and cox.constraint_type = 'R');
 		
-		Table cc1 = ALL_CONS_COLUMNS.alias("cc1");
-		Table cc2 = ALL_CONS_COLUMNS.alias("cc2");
+		Table cc1 = ALL_CONS_COLUMNS.as("cc1");
+		Table cc2 = ALL_CONS_COLUMNS.as("cc2");
 		
-		Field<String> constraint = cc2.getField(AllConsColumns.CONSTRAINT_NAME).alias("constraint");
-		Field<String> referencedTable = cc2.getField(AllConsColumns.TABLE_NAME).alias("referenced_table");
-		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).alias("referencing_column");
-		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).alias("referenced_column");
+		Field<String> constraint = cc2.getField(AllConsColumns.CONSTRAINT_NAME).as("constraint");
+		Field<String> referencedTable = cc2.getField(AllConsColumns.TABLE_NAME).as("referenced_table");
+		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).as("referencing_column");
+		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).as("referenced_column");
 		
 		SelectQuery inner = createSelectQuery(ALL_CONS_COLUMNS);
 		inner.addJoin(ALL_CONSTRAINTS, AllConsColumns.CONSTRAINT_NAME, AllConstraints.CONSTRAINT_NAME);

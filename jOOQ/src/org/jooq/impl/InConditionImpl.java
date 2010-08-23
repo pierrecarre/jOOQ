@@ -37,6 +37,7 @@ import java.util.Set;
 
 import org.jooq.Field;
 import org.jooq.InCondition;
+import org.jooq.InOperator;
 
 /**
  * @author Lukas Eder
@@ -46,10 +47,16 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 	private static final long serialVersionUID = -1653924248576930761L;
 	private final Field<T> field;
 	private final Set<T> values;
+	private final InOperator operator;
 
 	InConditionImpl(Field<T> field, Set<T> values) {
+		this(field, values, InOperator.IN);
+	}
+
+	InConditionImpl(Field<T> field, Set<T> values, InOperator operator) {
 		this.field = field;
 		this.values = values;
+		this.operator = operator;
 	}
 
 	@Override
@@ -78,7 +85,9 @@ class InConditionImpl<T> extends AbstractQueryPart implements InCondition<T> {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getField().toSQLReference(inlineParameters));
-		sb.append(" in (");
+		sb.append(" ");
+		sb.append(operator.toSQL());
+		sb.append(" (");
 
 		String separator = "";
 		for (T value : getValues()) {

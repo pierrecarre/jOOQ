@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.jooq.Field;
 import org.jooq.FieldList;
@@ -61,15 +62,15 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	}
 
 	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		return initialIndex;
 	}
 
 	@Override
-	public final FieldList getFields() {
+	public FieldList getFields() {
 		return fields;
 	}
-	
+
 	@Override
 	public final <T> Field<T> getField(Field<T> field) {
 		return getFields().getField(field);
@@ -80,12 +81,13 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 		return getFields().getField(name);
 	}
 
-	protected Schema getSchema() {
+	@Override
+	public Schema getSchema() {
 		return schema;
 	}
 
 	@Override
-	public final String toSQLReference(boolean inlineParameters) {
+	public String toSQLReference(boolean inlineParameters) {
 		if (getSchema() != null) {
 			return getSchema().getName() + "." + getName();
 		}
@@ -94,7 +96,7 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	}
 
 	@Override
-	public Table alias(String alias) {
+	public Table as(String alias) {
 		return new TableAlias(this, alias);
 	}
 

@@ -31,6 +31,10 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import org.jooq.AliasProvider;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
@@ -39,46 +43,60 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
+class TableAlias extends TableImpl implements Table, AliasProvider<Table> {
 
 	private static final long serialVersionUID = -8417114874567698325L;
+	private final AliasProviderImpl<Table> aliasProvider;
 	private FieldList aliasedFields;
-	
+
 	TableAlias(Table table, String alias) {
 		this(table, alias, false);
 	}
 
-	TableAlias(Table table, String alias, boolean aliasProviderNeedsBrackets) {
-		super(table, alias, aliasProviderNeedsBrackets);
+	TableAlias(Table table, String alias, boolean wrapInParentheses) {
+		super(alias, table.getSchema());
+
+		this.aliasProvider = new AliasProviderImpl<Table>(table, alias, wrapInParentheses);
 	}
 
+	@Override
+	public final String toSQLReference(boolean inlineParameters) {
+		return aliasProvider.toSQLReference(inlineParameters);
+	}
+
+	@Override
+	public final String toSQLDeclaration(boolean inlineParameters) {
+		return aliasProvider.toSQLDeclaration(inlineParameters);
+	}
+
+	@Override
+	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return aliasProvider.bind(stmt, initialIndex);
+	}
+
+	@Override
+	public final Table as(String alias) {
+		return aliasProvider.as(alias);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public FieldList getFields() {
 		if (aliasedFields == null) {
 			aliasedFields = new FieldListImpl();
-			
-			for (Field<?> field : getAliasProvider().getFields()) {
-				
+
+			for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
+
 				// Instanciating a TableFieldImpl will add the field to this
 				new TableFieldImpl(field.getName(), field.getType(), this);
 			}
 		}
-		
-		return aliasedFields;
-	}
-	
-	@Override
-	public <T> Field<T> getField(Field<T> field) {
-		return getFields().getField(field);
-	}
 
-	@Override
-	public Field<?> getField(String name) {
-		return getFields().getField(name);
+		return aliasedFields;
 	}
 
 	@Override
 	public Class<? extends Record> getRecordType() {
-		return getAliasProvider().getRecordType();
+		return aliasProvider.getAliasProvider().getRecordType();
 	}
 }

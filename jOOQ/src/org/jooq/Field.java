@@ -31,6 +31,8 @@
 
 package org.jooq;
 
+import java.util.Collection;
+
 /**
  * A field used in tables and conditions
  *
@@ -56,5 +58,240 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	 * @return The field alias
 	 */
 	@Override
-	Field<T> alias(String alias);
+	Field<T> as(String alias);
+
+	// ------------------------------------------------------------------------
+	// Convenience methods
+	// ------------------------------------------------------------------------
+
+	/**
+	 * @return <code>this is null</code>
+	 */
+	FieldCondition<T> isNull();
+
+	/**
+	 * @return <code>this is not null</code>
+	 */
+	FieldCondition<T> isNotNull();
+
+	/**
+	 * @return <code>this like value</code>
+	 */
+	FieldCondition<T> like(T value);
+
+	/**
+	 * @return <code>this not like value</code>
+	 */
+	FieldCondition<T> notLike(T value);
+
+	/**
+	 * @return <code>this in (values...)</code>
+	 */
+	InCondition<T> in(T... values);
+
+	/**
+	 * @return <code>this in (select...)</code>
+	 */
+	SubQueryCondition<T> in(SelectQuery query);
+
+	/**
+	 * @return <code>this not in (values...)</code>
+	 */
+	InCondition<T> notIn(Collection<T> values);
+
+	/**
+	 * @return <code>this not in (values...)</code>
+	 */
+	InCondition<T> notIn(T... values);
+
+	/**
+	 * @return <code>this not in (select...)</code>
+	 */
+	SubQueryCondition<T> notIn(SelectQuery query);
+
+	/**
+	 * @return <code>this in (values...)</code>
+	 */
+	InCondition<T> in(Collection<T> values);
+
+	/**
+	 * @return <code>this = value</code>
+	 */
+	FieldCondition<T> equal(T value);
+
+	/**
+	 * @return <code>this = field</code>
+	 */
+	JoinCondition<T> equal(Field<T> field);
+
+	/**
+	 * @return <code>this = (select ...)</code>
+	 */
+	FieldCondition<T> equal(SelectQuery query);
+
+	/**
+	 * @return <code>this = any (select ...)</code>
+	 */
+	FieldCondition<T> equalAny(SelectQuery query);
+
+	/**
+	 * @return <code>this = some (select ...)</code>
+	 */
+	FieldCondition<T> equalSome(SelectQuery query);
+
+	/**
+	 * @return <code>this = all (select ...)</code>
+	 */
+	FieldCondition<T> equalAll(SelectQuery query);
+
+	/**
+	 * @return <code>this != value</code>
+	 */
+	FieldCondition<T> notEqual(T value);
+
+	/**
+	 * @return <code>this != field</code>
+	 */
+	JoinCondition<T> notEqual(Field<T> field);
+
+	/**
+	 * @return <code>this != (select ...)</code>
+	 */
+	FieldCondition<T> notEqual(SelectQuery query);
+
+	/**
+	 * @return <code>this != any (select ...)</code>
+	 */
+	FieldCondition<T> notEqualAny(SelectQuery query);
+
+	/**
+	 * @return <code>this != some (select ...)</code>
+	 */
+	FieldCondition<T> notEqualSome(SelectQuery query);
+
+	/**
+	 * @return <code>this != all (select ...)</code>
+	 */
+	FieldCondition<T> notEqualAll(SelectQuery query);
+
+	/**
+	 * @return <code>this < value</code>
+	 */
+	FieldCondition<T> lessThan(T value);
+
+	/**
+	 * @return <code>this < field</code>
+	 */
+	JoinCondition<T> lessThan(Field<T> field);
+
+	/**
+	 * @return <code>this < (select ...)</code>
+	 */
+	FieldCondition<T> lessThan(SelectQuery query);
+
+	/**
+	 * @return <code>this < any (select ...)</code>
+	 */
+	FieldCondition<T> lessThanAny(SelectQuery query);
+
+	/**
+	 * @return <code>this < some (select ...)</code>
+	 */
+	FieldCondition<T> lessThanSome(SelectQuery query);
+
+	/**
+	 * @return <code>this < all (select ...)</code>
+	 */
+	FieldCondition<T> lessThanAll(SelectQuery query);
+
+	/**
+	 * @return <code>this <= value</code>
+	 */
+	FieldCondition<T> lessOrEqual(T value);
+
+	/**
+	 * @return <code>this <= field</code>
+	 */
+	JoinCondition<T> lessOrEqual(Field<T> field);
+
+	/**
+	 * @return <code>this <= (select ...)</code>
+	 */
+	FieldCondition<T> lessOrEqual(SelectQuery query);
+
+	/**
+	 * @return <code>this <= any (select ...)</code>
+	 */
+	FieldCondition<T> lessOrEqualToAny(SelectQuery query);
+
+	/**
+	 * @return <code>this <= some (select ...)</code>
+	 */
+	FieldCondition<T> lessOrEqualToSome(SelectQuery query);
+
+	/**
+	 * @return <code>this <= all (select ...)</code>
+	 */
+	FieldCondition<T> lessOrEqualToAll(SelectQuery query);
+
+	/**
+	 * @return <code>this > value</code>
+	 */
+	FieldCondition<T> greaterThan(T value);
+
+	/**
+	 * @return <code>this > field</code>
+	 */
+	JoinCondition<T> greaterThan(Field<T> field);
+
+	/**
+	 * @return <code>this > (select ...)</code>
+	 */
+	FieldCondition<T> greaterThan(SelectQuery query);
+
+	/**
+	 * @return <code>this > any (select ...)</code>
+	 */
+	FieldCondition<T> greaterThanAny(SelectQuery query);
+
+	/**
+	 * @return <code>this > some (select ...)</code>
+	 */
+	FieldCondition<T> greaterThanSome(SelectQuery query);
+
+	/**
+	 * @return <code>this > all (select ...)</code>
+	 */
+	FieldCondition<T> greaterThanAll(SelectQuery query);
+
+	/**
+	 * @return <code>this >= value</code>
+	 */
+	FieldCondition<T> greaterOrEqual(T value);
+
+	/**
+	 * @return <code>this >= field</code>
+	 */
+	JoinCondition<T> greaterOrEqual(Field<T> field);
+
+	/**
+	 * @return <code>this >= (select ...)</code>
+	 */
+	FieldCondition<T> greaterOrEqual(SelectQuery query);
+
+	/**
+	 * @return <code>this >= any (select ...)</code>
+	 */
+	FieldCondition<T> greaterOrEqualAny(SelectQuery query);
+
+	/**
+	 * @return <code>this >= some (select ...)</code>
+	 */
+	FieldCondition<T> greaterOrEqualSome(SelectQuery query);
+
+	/**
+	 * @return <code>this >= all (select ...)</code>
+	 */
+	FieldCondition<T> greaterOrEqualAll(SelectQuery query);
+
 }

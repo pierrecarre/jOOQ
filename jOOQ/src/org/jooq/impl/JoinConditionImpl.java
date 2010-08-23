@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.JoinCondition;
 
@@ -46,10 +47,16 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T>
 
 	private final Field<T> field1;
 	private final Field<T> field2;
+	private final Comparator comparator;
 
 	JoinConditionImpl(Field<T> field1, Field<T> field2) {
+		this(field1, field2, Comparator.EQUALS);
+	}
+
+	JoinConditionImpl(Field<T> field1, Field<T> field2, Comparator comparator) {
 		this.field1 = field1;
 		this.field2 = field2;
+		this.comparator = comparator;
 	}
 
 	@Override
@@ -77,7 +84,9 @@ class JoinConditionImpl<T> extends AbstractQueryPart implements JoinCondition<T>
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getField1().toSQLReference(inlineParameters));
-		sb.append(" = ");
+		sb.append(" ");
+		sb.append(comparator.toSQL());
+		sb.append(" ");
 		sb.append(getField2().toSQLReference(inlineParameters));
 
 		return sb.toString();

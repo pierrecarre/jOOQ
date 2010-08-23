@@ -43,7 +43,7 @@ import org.jooq.NamedQueryPart;
 /**
  * @author Lukas Eder
  */
-class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
+class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 
 	private static final long serialVersionUID = 347252741712134044L;
 
@@ -117,7 +117,7 @@ class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements F
 
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+		int result = super.bind(stmt, initialIndex);
 
 		for (NamedQueryPart field : getFields()) {
 			result = field.bind(stmt, result);
@@ -128,10 +128,5 @@ class FunctionImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements F
 
 	protected final List<NamedQueryPart> getFields() {
 		return arguments;
-	}
-
-	@Override
-	public Field<T> alias(String alias) {
-		return new FieldAlias<T>(this, alias);
 	}
 }
