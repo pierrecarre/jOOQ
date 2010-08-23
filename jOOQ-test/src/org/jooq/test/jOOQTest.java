@@ -33,7 +33,6 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
-import static org.jooq.SubQueryOperator.GREATER_THAN_ANY;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import static org.jooq.test.Data.FIELD_ID1;
@@ -52,7 +51,6 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
-import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
@@ -60,7 +58,6 @@ import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
-import org.jooq.JoinCondition;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -135,8 +132,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testMultipleCombinedCondition() throws Exception {
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID2, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID2.equal(20);
 
 		CombinedCondition c = QueryFactory.createCombinedCondition(c1, c2);
 		assertEquals("(TABLE1.ID1 = 10 and TABLE2.ID2 = 20)", c.toSQLReference(true));
@@ -155,7 +152,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testBetweenCondition() throws Exception {
-		BetweenCondition<Integer> c = QueryFactory.createBetweenCondition(FIELD_ID1, 1, 10);
+		BetweenCondition<Integer> c = FIELD_ID1.between(1, 10);
 		assertEquals("TABLE1.ID1 between 1 and 10", c.toSQLReference(true));
 		assertEquals("TABLE1.ID1 between ? and ?", c.toSQLReference(false));
 
@@ -172,7 +169,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testInCondition() throws Exception {
-		InCondition<Integer> c = QueryFactory.createInCondition(FIELD_ID1, 1, 10);
+		InCondition<Integer> c = FIELD_ID1.in(1, 10);
 		assertEquals("TABLE1.ID1 in (1, 10)", c.toSQLReference(true));
 		assertEquals("TABLE1.ID1 in (?, ?)", c.toSQLReference(false));
 
@@ -189,7 +186,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testCompareCondition() throws Exception {
-		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c = FIELD_ID1.equal(10);
 		assertEquals("TABLE1.ID1 = 10", c.toSQLReference(true));
 		assertEquals("TABLE1.ID1 = ?", c.toSQLReference(false));
 
@@ -231,21 +228,19 @@ public class jOOQTest {
 
 	@Test
 	public final void testIsNullCondition() throws Exception {
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, null);
+		CompareCondition<Integer> c1 = FIELD_ID1.isNull();
 		assertEquals("TABLE1.ID1 is null", c1.toSQLReference(true));
 		assertEquals("TABLE1.ID1 is null", c1.toSQLReference(false));
 
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, null, Comparator.NOT_EQUALS);
+		CompareCondition<Integer> c2 = FIELD_ID1.isNotNull();
 		assertEquals("TABLE1.ID1 is not null", c2.toSQLReference(true));
 		assertEquals("TABLE1.ID1 is not null", c2.toSQLReference(false));
 
 		int i = c1.bind(statement);
 		assertEquals(1, i);
-		assertEquals(c1, QueryFactory.createNullCondition(FIELD_ID1));
 
 		int j = c2.bind(statement);
 		assertEquals(1, j);
-		assertEquals(c2, QueryFactory.createNotNullCondition(FIELD_ID1));
 	}
 
 	@Test
@@ -497,7 +492,7 @@ public class jOOQTest {
 	@Test
 	public final void testUpdateQuery3() throws Exception {
 		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
-		CompareCondition<Integer> c = QueryFactory.createCompareCondition(FIELD_ID1, 10);
+		CompareCondition<Integer> c = FIELD_ID1.equal(10);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -520,8 +515,8 @@ public class jOOQTest {
 	@Test
 	public final void testUpdateQuery4() throws Exception {
 		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -546,8 +541,8 @@ public class jOOQTest {
 	@Test
 	public final void testUpdateQuery5() throws Exception {
 		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -592,8 +587,8 @@ public class jOOQTest {
 	@Test
 	public final void testDeleteQuery3() throws Exception {
 		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
 		q.addConditions(c1);
 		q.addConditions(c2);
@@ -614,8 +609,8 @@ public class jOOQTest {
 	@Test
 	public final void testDeleteQuery4() throws Exception {
 		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
 		q.addConditions(c1);
 		q.addConditions(c2);
@@ -666,8 +661,8 @@ public class jOOQTest {
 	@Test
 	public final void testConditionalSelectQuery4() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery();
-		CompareCondition<Integer> c1 = QueryFactory.createCompareCondition(FIELD_ID1, 10);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 20);
+		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
+		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
 		q.addConditions(c1);
 		q.addConditions(c2);
@@ -738,9 +733,8 @@ public class jOOQTest {
 	@Test
 	public final void testJoinOnConditionSelectQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
-		JoinCondition<Integer> c = QueryFactory.createJoinCondition(FIELD_ID1, FIELD_ID2);
+		q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
 
-		q.addJoin(TABLE2, c);
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
 
@@ -755,11 +749,11 @@ public class jOOQTest {
 	@Test
 	public final void testJoinComplexSelectQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);
-		JoinCondition<Integer> c1 = QueryFactory.createJoinCondition(FIELD_ID1, FIELD_ID2);
-		CompareCondition<Integer> c2 = QueryFactory.createCompareCondition(FIELD_ID1, 1);
-		InCondition<Integer> c3 = QueryFactory.createInCondition(FIELD_ID2, 1, 2, 3);
 
-		q.addJoin(TABLE2, c1, c2, c3);
+		q.addJoin(TABLE2,
+				FIELD_ID1.equal(FIELD_ID2),
+				FIELD_ID1.equal(1),
+				FIELD_ID2.in(1, 2, 3));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3))", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?))", q.toSQLReference(false));
 
@@ -820,7 +814,7 @@ public class jOOQTest {
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(false));
 
-		q.addHaving(QueryFactory.createCompareCondition(FIELD_ID1, 1));
+		q.addHaving(FIELD_ID1.equal(1));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = 1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = ?", q.toSQLReference(false));
 
@@ -944,7 +938,7 @@ public class jOOQTest {
 		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
-		q1.addConditions(q2.asInCondition(FIELD_ID1));
+		q1.addConditions(FIELD_ID1.in(q2));
 
 		assertEquals("select * from TABLE1 where TABLE1.ID1 in (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
 		assertEquals("select * from TABLE1 where TABLE1.ID1 in (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
@@ -956,7 +950,7 @@ public class jOOQTest {
 		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
-		q1.addConditions(q2.asCompareCondition(FIELD_ID1));
+		q1.addConditions(FIELD_ID1.equal(q2));
 
 		assertEquals("select * from TABLE1 where TABLE1.ID1 = (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
 		assertEquals("select * from TABLE1 where TABLE1.ID1 = (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));
@@ -968,7 +962,7 @@ public class jOOQTest {
 		SelectQuery q2 = QueryFactory.createSelectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
-		q1.addConditions(q2.asSubQueryCondition(FIELD_ID1, GREATER_THAN_ANY));
+		q1.addConditions(FIELD_ID1.greaterThanAny(q2));
 
 		assertEquals("select * from TABLE1 where TABLE1.ID1 > any (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(true));
 		assertEquals("select * from TABLE1 where TABLE1.ID1 > any (select TABLE2.ID2 from TABLE2)", q1.toSQLReference(false));

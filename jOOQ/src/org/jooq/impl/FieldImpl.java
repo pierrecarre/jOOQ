@@ -35,7 +35,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import org.jooq.BetweenCondition;
 import org.jooq.Comparator;
+import org.jooq.CompareCondition;
 import org.jooq.Field;
 import org.jooq.FieldCondition;
 import org.jooq.InCondition;
@@ -75,22 +77,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> isNull() {
+	public CompareCondition<T> isNull() {
 		return QueryFactory.createNullCondition(this);
 	}
 
 	@Override
-	public FieldCondition<T> isNotNull() {
+	public CompareCondition<T> isNotNull() {
 		return QueryFactory.createNotNullCondition(this);
 	}
 
 	@Override
-	public FieldCondition<T> like(T value) {
+	public CompareCondition<T> like(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.LIKE);
 	}
 
 	@Override
-	public FieldCondition<T> notLike(T value) {
+	public CompareCondition<T> notLike(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.NOT_LIKE);
 	}
 
@@ -125,7 +127,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> equal(T value) {
+	public BetweenCondition<T> between(T minValue, T maxValue) {
+		return QueryFactory.createBetweenCondition(this, minValue, maxValue);
+	}
+
+	@Override
+	public CompareCondition<T> equal(T value) {
 		return QueryFactory.createCompareCondition(this, value);
 	}
 
@@ -155,7 +162,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> notEqual(T value) {
+	public CompareCondition<T> notEqual(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.NOT_EQUALS);
 	}
 
@@ -185,7 +192,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> lessThan(T value) {
+	public CompareCondition<T> lessThan(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.LESS);
 	}
 
@@ -215,7 +222,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> lessOrEqual(T value) {
+	public CompareCondition<T> lessOrEqual(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.LESS_OR_EQUAL);
 	}
 
@@ -245,7 +252,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> greaterThan(T value) {
+	public CompareCondition<T> greaterThan(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.GREATER);
 	}
 
@@ -275,7 +282,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public FieldCondition<T> greaterOrEqual(T value) {
+	public CompareCondition<T> greaterOrEqual(T value) {
 		return QueryFactory.createCompareCondition(this, value, Comparator.GREATER_OR_EQUAL);
 	}
 

@@ -67,22 +67,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this is null</code>
 	 */
-	FieldCondition<T> isNull();
+	CompareCondition<T> isNull();
 
 	/**
 	 * @return <code>this is not null</code>
 	 */
-	FieldCondition<T> isNotNull();
+	CompareCondition<T> isNotNull();
 
 	/**
 	 * @return <code>this like value</code>
 	 */
-	FieldCondition<T> like(T value);
+	CompareCondition<T> like(T value);
 
 	/**
 	 * @return <code>this not like value</code>
 	 */
-	FieldCondition<T> notLike(T value);
+	CompareCondition<T> notLike(T value);
 
 	/**
 	 * @return <code>this in (values...)</code>
@@ -115,6 +115,11 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	InCondition<T> in(Collection<T> values);
 
 	/**
+	 * @return <code>this between minValue and maxValue</code>
+	 */
+	BetweenCondition<T> between(T minValue, T maxValue);
+
+	/**
 	 * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
 	 */
 	@Override
@@ -123,7 +128,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this = value</code>
 	 */
-	FieldCondition<T> equal(T value);
+	CompareCondition<T> equal(T value);
 
 	/**
 	 * @return <code>this = field</code>
@@ -153,7 +158,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this != value</code>
 	 */
-	FieldCondition<T> notEqual(T value);
+	CompareCondition<T> notEqual(T value);
 
 	/**
 	 * @return <code>this != field</code>
@@ -183,7 +188,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this < value</code>
 	 */
-	FieldCondition<T> lessThan(T value);
+	CompareCondition<T> lessThan(T value);
 
 	/**
 	 * @return <code>this < field</code>
@@ -213,7 +218,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this <= value</code>
 	 */
-	FieldCondition<T> lessOrEqual(T value);
+	CompareCondition<T> lessOrEqual(T value);
 
 	/**
 	 * @return <code>this <= field</code>
@@ -243,7 +248,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this > value</code>
 	 */
-	FieldCondition<T> greaterThan(T value);
+	CompareCondition<T> greaterThan(T value);
 
 	/**
 	 * @return <code>this > field</code>
@@ -273,7 +278,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this >= value</code>
 	 */
-	FieldCondition<T> greaterOrEqual(T value);
+	CompareCondition<T> greaterOrEqual(T value);
 
 	/**
 	 * @return <code>this >= field</code>
