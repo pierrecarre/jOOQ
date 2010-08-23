@@ -185,10 +185,17 @@ public abstract class jOOQAbstractTest {
         q1.addOrderBy(getVLibrary_TITLE());
         q1.addCompareCondition(getVLibrary_TITLE(), "1984", Comparator.NOT_EQUALS);
 
-        SelectQuery q2 = QueryFactory.createSelectQuery(getTAuthor());
-        q2.addJoin(getTBook(), getTBook_AUTHOR_ID(), getTAuthor_ID());
-        q2.addCompareCondition(getTBook_TITLE(), "1984", Comparator.NOT_EQUALS);
-        q2.addOrderBy(Functions.lower(getTBook_TITLE()));
+        Table a = getTAuthor().alias("a");
+        Table b = getTBook().alias("b");
+        
+        Field<Integer> a_authorID = a.getField(getTAuthor_ID());
+        Field<Integer> b_authorID = b.getField(getTBook_AUTHOR_ID());
+        Field<String> b_title = b.getField(getTBook_TITLE());
+        
+		SelectQuery q2 = QueryFactory.createSelectQuery(a);
+		q2.addJoin(b, b_authorID, a_authorID);
+		q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
+        q2.addOrderBy(Functions.lower(b_title));
 
         int rows1 = q1.execute(connection);
         int rows2 = q2.execute(connection);
@@ -200,13 +207,13 @@ public abstract class jOOQAbstractTest {
         Result result2 = q2.getResult();
 
         assertEquals("Animal Farm", result1.getRecord(0).getValue(getVLibrary_TITLE()));
-        assertEquals("Animal Farm", result2.getRecord(0).getValue(getTBook_TITLE()));
+        assertEquals("Animal Farm", result2.getRecord(0).getValue(b_title));
 
         assertEquals("Brida", result1.getRecord(1).getValue(getVLibrary_TITLE()));
-        assertEquals("Brida", result2.getRecord(1).getValue(getTBook_TITLE()));
+        assertEquals("Brida", result2.getRecord(1).getValue(b_title));
 
         assertEquals("O Alquimista", result1.getRecord(2).getValue(getVLibrary_TITLE()));
-        assertEquals("O Alquimista", result2.getRecord(2).getValue(getTBook_TITLE()));
+        assertEquals("O Alquimista", result2.getRecord(2).getValue(b_title));
     }
 
     @Test

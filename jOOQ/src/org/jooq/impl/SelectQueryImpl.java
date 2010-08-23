@@ -138,7 +138,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 
 		if (getHaving() != TRUE_CONDITION) {
 			sb.append(" having ");
-			sb.append(getHaving().toSQLDeclaration(inlineParameters));
+			sb.append(getHaving().toSQLReference(inlineParameters));
 		}
 
 		if (!getOrderBy().isEmpty()) {

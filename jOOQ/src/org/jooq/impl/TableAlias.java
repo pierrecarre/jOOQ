@@ -31,6 +31,7 @@
 
 package org.jooq.impl;
 
+import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -41,7 +42,8 @@ import org.jooq.Table;
 class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 
 	private static final long serialVersionUID = -8417114874567698325L;
-
+	private FieldList aliasedFields;
+	
 	TableAlias(Table table, String alias) {
 		this(table, alias, false);
 	}
@@ -52,7 +54,22 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 
 	@Override
 	public FieldList getFields() {
-		return getAliasProvider().getFields();
+		if (aliasedFields == null) {
+			aliasedFields = new AliasedFieldListImpl();
+			
+			for (Field<?> field : getAliasProvider().getFields()) {
+				
+				// Instanciating a TableFieldImpl will add the field to this
+				new TableFieldImpl(field.getName(), field.getType(), this);
+			}
+		}
+		
+		return aliasedFields;
+	}
+	
+	@Override
+	public <T> Field<T> getField(Field<T> field) {
+		return getFields().getField(field);
 	}
 
 	@Override

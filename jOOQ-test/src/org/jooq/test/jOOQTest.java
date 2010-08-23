@@ -63,6 +63,7 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
+import org.jooq.Table;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
@@ -90,6 +91,27 @@ public class jOOQTest {
 	public void tearDown() throws Exception {
 		statement = null;
 		context = null;
+	}
+
+	@Test
+	public final void testAliasing() throws Exception {
+		assertEquals("TABLE1", TABLE1.toSQLDeclaration());
+		assertEquals("TABLE1", TABLE1.toSQLReference());
+		
+		assertEquals("TABLE1 t1", TABLE1.alias("t1").toSQLDeclaration());
+		assertEquals("t1",        TABLE1.alias("t1").toSQLReference());
+		
+		assertEquals("TABLE1.ID1", TABLE1.getField(FIELD_ID1).toSQLDeclaration());
+		assertEquals("TABLE1.ID1", TABLE1.getField(FIELD_ID1).toSQLReference());
+		
+		assertEquals("TABLE1.ID1 f1", TABLE1.getField(FIELD_ID1).alias("f1").toSQLDeclaration());
+		assertEquals("f1",            TABLE1.getField(FIELD_ID1).alias("f1").toSQLReference());
+		
+		assertEquals("t1.ID1", TABLE1.alias("t1").getField(FIELD_ID1).toSQLDeclaration());
+		assertEquals("t1.ID1", TABLE1.alias("t1").getField(FIELD_ID1).toSQLReference());
+		
+		assertEquals("t1.ID1 f1", TABLE1.alias("t1").getField(FIELD_ID1).alias("f1").toSQLDeclaration());
+		assertEquals("f1",        TABLE1.alias("t1").getField(FIELD_ID1).alias("f1").toSQLReference());
 	}
 
 	@Test
@@ -758,6 +780,21 @@ public class jOOQTest {
 		context.assertIsSatisfied();
 	}
 
+	@Test
+	public final void testJoinSelf() throws Exception {
+		Table t1 = TABLE1.alias("t1");
+		Table t2 = TABLE1.alias("t2");
+		
+		SelectQuery q = QueryFactory.createSelectQuery(t1);
+		q.addJoin(t2, t1.getField(FIELD_ID1), t2.getField(FIELD_ID1));
+		
+		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(true));
+		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(false));
+		
+		int i = q.bind(statement);
+		assertEquals(1, i);
+	}
+	
 	@Test
 	public final void testJoinTypeSelectQuery() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery(TABLE1);

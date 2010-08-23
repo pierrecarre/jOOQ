@@ -50,4 +50,9 @@ class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList
 	FieldListImpl(List<Field<?>> wrappedList) {
 		super(wrappedList);
 	}
+
+	@Override
+	public <T> Field<T> getField(Field<T> field) {
+		return field;
+	}
 }

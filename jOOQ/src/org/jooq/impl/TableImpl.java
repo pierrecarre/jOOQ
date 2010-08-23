@@ -33,6 +33,7 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 
+import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -67,6 +68,11 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	@Override
 	public final FieldList getFields() {
 		return fields;
+	}
+	
+	@Override
+	public <T> Field<T> getField(Field<T> field) {
+		return getFields().getField(field);
 	}
 
 	protected Schema getSchema() {
