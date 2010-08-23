@@ -93,7 +93,7 @@ public final class QueryFactory {
 	 * @return A condition wrapping the plain SQL
 	 */
 	public static Condition createPlainSQLCondition(String sql, Object... bindings) {
-		return new PlainSQLQueryPart(sql, bindings);
+		return new PlainSQLCondition(sql, bindings);
 	}
 
 	/**
