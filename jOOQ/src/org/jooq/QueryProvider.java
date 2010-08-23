@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * A query used for deletion of data
+ * An object able to provide a query
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query, ConditionProvider, QueryPart {
+public interface QueryProvider<T extends Query> {
 
 	/**
-	 * {@inheritDoc}
+	 * Reveal the inner representation of this Select statement.
 	 */
-	@Override
-	void addConditions(Condition... conditions);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
+	T getQuery();
 }

@@ -52,11 +52,11 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	private final ConditionProviderImpl condition;
 	private final JoinType type;
 
-	JoinImpl(Table table, JoinType type, Condition... condition) {
+	JoinImpl(Table table, JoinType type, Condition... conditions) {
 		this.condition = new ConditionProviderImpl();
-		
+
 		this.table = table;
-		this.condition.addConditions(condition);
+		this.condition.addConditions(conditions);
 		this.type = type;
 	}
 
@@ -102,7 +102,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 
 		sb.append(getType().toSQL());
 		sb.append(" ");
-		
+
 		if (renderAsDeclaration) {
 			sb.append(getTable().toSQLDeclaration(inlineParameters));
 		} else {
@@ -111,7 +111,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 
 		if (getCondition() != TRUE_CONDITION) {
 			sb.append(" on ");
-			
+
 			if (renderAsDeclaration) {
 				sb.append(getCondition().toSQLDeclaration(inlineParameters));
 			} else {

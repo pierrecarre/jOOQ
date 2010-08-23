@@ -33,6 +33,7 @@ package org.jooq.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -61,12 +62,16 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 		this.ordering = new HashMap<Field<?>, SortOrder>();
 	}
 
-	private Map<Field<?>, SortOrder> getOrdering() {
+	public Map<Field<?>, SortOrder> getOrdering() {
+		return Collections.unmodifiableMap(ordering);
+	}
+
+	private Map<Field<?>, SortOrder> getOrdering0() {
 		return ordering;
 	}
 
 	private SortOrder getOrdering(Field<?> field) {
-		return getOrdering().get(field);
+		return getOrdering0().get(field);
 	}
 
 	@Override
@@ -74,7 +79,7 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 		add(field);
 
 		if (order != null) {
-			getOrdering().put(field, order);
+			getOrdering0().put(field, order);
 		}
 	}
 

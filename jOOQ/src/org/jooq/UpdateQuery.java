@@ -39,7 +39,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface UpdateQuery extends Query, ConditionProvider {
+public interface UpdateQuery extends Query, ConditionProvider, QueryPart {
 
 	/**
 	 * @return A mapping of fields and values that are updated by the query

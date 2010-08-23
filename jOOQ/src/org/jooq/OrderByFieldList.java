@@ -32,6 +32,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * A field list used for fields in a query's order by clause
@@ -59,4 +60,9 @@ public interface OrderByFieldList extends FieldList {
 	 *            The sort orders
 	 */
 	void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders);
+
+	/**
+	 * @return Get an associative map of fields and their respective ordering
+	 */
+	Map<Field<?>, SortOrder> getOrdering();
 }

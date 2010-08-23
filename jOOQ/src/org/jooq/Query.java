@@ -31,6 +31,7 @@
 
 package org.jooq;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -41,7 +42,7 @@ import javax.sql.DataSource;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart {
+public interface Query extends Serializable {
 
 	/**
 	 * Execute the query

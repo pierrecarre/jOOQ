@@ -34,6 +34,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
+import static org.jooq.impl.QueryFactory.createSelect;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import static org.jooq.test.Data.FIELD_ID1;
 import static org.jooq.test.Data.FIELD_ID2;
@@ -58,6 +59,7 @@ import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -650,9 +652,11 @@ public class jOOQTest {
 	@Test
 	public final void testConditionalSelectQuery1() throws Exception {
 		SelectQuery q = QueryFactory.createSelectQuery();
+		Select s = createSelect();
 
 		assertEquals("select * from dual", q.toSQLReference(true));
 		assertEquals("select * from dual", q.toSQLReference(false));
+		assertEquals(q, s.getQuery());
 	}
 
 	@Test
@@ -662,6 +666,7 @@ public class jOOQTest {
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("select * from dual where 1 = 0", q.toSQLReference(true));
 		assertEquals("select * from dual where 1 = 0", q.toSQLReference(false));
+		assertEquals(q, createSelect().where(FALSE_CONDITION).getQuery());
 	}
 
 	@Test
@@ -672,6 +677,7 @@ public class jOOQTest {
 		q.addConditions(TRUE_CONDITION);
 		assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQLReference(true));
 		assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQLReference(false));
+		assertEquals(q, createSelect().where(FALSE_CONDITION.and(TRUE_CONDITION)).getQuery());
 	}
 
 	@Test
@@ -685,6 +691,7 @@ public class jOOQTest {
 		q.addConditions(c2, c1);
 		assertEquals("select * from dual where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
 		assertEquals("select * from dual where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
+		assertEquals(q, createSelect().where(c1.and(c2).and(c2.and(c1))).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -709,6 +716,7 @@ public class jOOQTest {
 		q.addConditions(c2);
 		assertEquals("select * from dual where ((TABLE1.ID1 = '10') and (TABLE2.ID2 = 20 or TABLE2.ID2 = 30))", q.toSQLReference(true));
 		assertEquals("select * from dual where ((TABLE1.ID1 = ?) and (TABLE2.ID2 = 20 or TABLE2.ID2 = ?))", q.toSQLReference(false));
+		assertEquals(q, createSelect().where(c1, c2).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setString(1, "10");
@@ -729,6 +737,7 @@ public class jOOQTest {
 		q.addFrom(TABLE2, TABLE3);
 		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1, TABLE2, TABLE3).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -741,6 +750,7 @@ public class jOOQTest {
 		q.addJoin(TABLE2);
 		assertEquals("select * from TABLE1 join TABLE2", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).join(TABLE2).on().getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -753,10 +763,14 @@ public class jOOQTest {
 
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
 		q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1)
+									  .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
+								      .join(TABLE3).on(FIELD_ID2.equal(FIELD_ID3)).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -772,10 +786,19 @@ public class jOOQTest {
 				FIELD_ID2.in(1, 2, 3));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3))", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?))", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1)
+									  .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)
+											      .and(FIELD_ID1.equal(1))
+											      .and(FIELD_ID2.in(1, 2, 3))).getQuery());
 
 		q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1)
+									  .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)
+											      .and(FIELD_ID1.equal(1))
+											      .and(FIELD_ID2.in(1, 2, 3)))
+								      .join(TABLE3).on(FIELD_ID2.equal(FIELD_ID3)).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
@@ -800,6 +823,9 @@ public class jOOQTest {
 
 		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(t1)
+									  .join(t2).on(t1.getField(FIELD_ID1).equal(
+											       t2.getField(FIELD_ID1))).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -813,6 +839,7 @@ public class jOOQTest {
 		q.addJoin(j);
 		assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).leftOuterJoin(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -825,14 +852,19 @@ public class jOOQTest {
 		q.addGroupBy(FIELD_ID1);
 		assertEquals("select * from TABLE1 group by TABLE1.ID1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).groupBy(FIELD_ID1).getQuery());
 
 		q.addGroupBy(FIELD_ID2, FIELD_ID3);
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).groupBy(FIELD_ID1, FIELD_ID2, FIELD_ID3).getQuery());
 
 		q.addHaving(FIELD_ID1.equal(1));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = 1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = ?", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1)
+									  .groupBy(FIELD_ID1, FIELD_ID2, FIELD_ID3)
+									  .having(FIELD_ID1.equal(1)).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
@@ -851,10 +883,14 @@ public class jOOQTest {
 		q.addOrderBy(FIELD_ID1);
 		assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1).orderBy(FIELD_ID1).getQuery());
 
 		q.addOrderBy(FIELD_ID2, SortOrder.DESC);
 		assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(false));
+		assertEquals(q, createSelect().from(TABLE1)
+									  .orderBy(FIELD_ID1)
+									  .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -872,6 +908,13 @@ public class jOOQTest {
 
 		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = 1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(true));
 		assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = ? order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(false));
+		assertEquals(q, createSelect().select(FIELD_ID1, FIELD_ID2)
+									  .from(TABLE1)
+									  .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
+									  .groupBy(FIELD_ID1, FIELD_ID2)
+									  .having(FIELD_ID1.equal(1))
+									  .orderBy(FIELD_ID1, SortOrder.ASC)
+									  .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
@@ -888,16 +931,18 @@ public class jOOQTest {
 		SelectQuery combine = createCombinedSelectQuery();
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.toSQLReference(true));
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.toSQLReference(false));
+		assertEquals(combine, createCombinedSelect().getQuery());
 
-		combine = createCombinedSelectQuery();
 		combine.addSelect(FIELD_ID1);
 		assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.toSQLReference(true));
 		assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.toSQLReference(false));
+		assertEquals(combine, createCombinedSelect().select(FIELD_ID1).getQuery());
 
 		combine = createCombinedSelectQuery();
 		combine.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.toSQLReference(true));
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.toSQLReference(false));
+		assertEquals(combine, createCombinedSelect().join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 1);
@@ -920,6 +965,13 @@ public class jOOQTest {
 		SelectQuery combine = q1.combine(q2);
 		combine.addOrderBy(FIELD_ID1);
 		return combine;
+	}
+
+	private Select createCombinedSelect() {
+		Select q1 = createSelect().from(TABLE1).where(FIELD_ID1.equal(1)).getSelect();
+		Select q2 = createSelect().from(TABLE1).where(FIELD_ID1.equal(2)).getSelect();
+
+		return q1.union(q2).orderBy(FIELD_ID1).getSelect();
 	}
 
 	@Test

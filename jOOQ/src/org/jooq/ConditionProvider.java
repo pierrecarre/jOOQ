@@ -40,7 +40,7 @@ import org.jooq.impl.QueryFactory;
  *
  * @author Lukas Eder
  */
-public interface ConditionProvider extends QueryPart {
+public interface ConditionProvider {
 
 	/**
 	 * Adds new conditions to the update query, connecting it to existing

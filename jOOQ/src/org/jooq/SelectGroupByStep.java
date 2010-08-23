@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
 import java.util.Collection;
 
 /**
- * A query used for deletion of data
+ * The group by step in a {@link Select} query
+ * <p>
+ * This is the step in query construction, where you can add grouping to a
+ * query. This step is optional. If you add grouping, you can proceed to the
+ * optional {@link SelectHavingStep}. Or you can skip that and proceed directly
+ * to the {@link SelectOrderByStep}
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query, ConditionProvider, QueryPart {
+public interface SelectGroupByStep extends SelectOrderByStep {
 
 	/**
-	 * {@inheritDoc}
+	 * Add grouping to the query and proceed to the next step
 	 */
-	@Override
-	void addConditions(Condition... conditions);
+	SelectHavingStep groupBy(Field<?>... fields);
 
 	/**
-	 * {@inheritDoc}
+	 * Add grouping to the query and proceed to the next step
 	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
+	SelectHavingStep groupBy(Collection<Field<?>> fields);
 }

@@ -38,7 +38,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends Query {
+public interface InsertQuery extends Query, QueryPart {
 
 	/**
 	 * @return The table that the data is inserted into

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
 import java.util.Collection;
 
 /**
- * A query used for deletion of data
+ * The where step in a {@link Select} query
+ * <p>
+ * This is the step in query construction, where you can add conditions to a
+ * query. This step is optional. If you add conditions, you can proceed to the
+ * optional {@link SelectGroupByStep}.
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query, ConditionProvider, QueryPart {
+public interface SelectWhereStep extends SelectGroupByStep {
 
 	/**
-	 * {@inheritDoc}
+	 * Add conditions to the query and proceed to the next step
 	 */
-	@Override
-	void addConditions(Condition... conditions);
+	SelectGroupByStep where(Condition... conditions);
 
 	/**
-	 * {@inheritDoc}
+	 * Add conditions to the query and proceed to the next step
 	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
+	SelectGroupByStep where(Collection<Condition> conditions);
 }

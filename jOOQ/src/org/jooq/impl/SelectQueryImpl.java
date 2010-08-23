@@ -394,10 +394,22 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final void addOrderBy(Field<?>... fields) {
+	public final void addOrderBy(Collection<Field<?>> fields) {
 		for (Field<?> field : fields) {
 			addOrderBy(field, null);
 		}
+	}
+
+	@Override
+	public void addOrderBy(OrderByFieldList fields) {
+		for (Field<?> field : fields) {
+			addOrderBy(field, fields.getOrdering().get(field));
+		}
+	}
+
+	@Override
+	public final void addOrderBy(Field<?>... fields) {
+		addOrderBy(Arrays.asList(fields));
 	}
 
 	@Override

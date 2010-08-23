@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * A query used for deletion of data
+ * The join step in a {@link Select} query
+ * <p>
+ * This is the step in query construction, where you can join tables to a query.
+ * This step is optional. If you join tables, you must proceed to the
+ * {@link SelectOnStep}. Or you can skip that and proceed directly to the
+ * {@link SelectWhereStep}
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query, ConditionProvider, QueryPart {
+public interface SelectJoinStep extends SelectWhereStep {
 
 	/**
-	 * {@inheritDoc}
+	 * Join a table and proceed to the next step
 	 */
-	@Override
-	void addConditions(Condition... conditions);
+	SelectOnStep join(Table table);
 
 	/**
-	 * {@inheritDoc}
+	 * Left join a table and proceed to the next step
 	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
+	SelectOnStep leftJoin(Table table);
+
+	/**
+	 * Left outer join a table and proceed to the next step
+	 */
+	SelectOnStep leftOuterJoin(Table table);
+
+	/**
+	 * Right join a table and proceed to the next step
+	 */
+	SelectOnStep rightJoin(Table table);
+
+	/**
+	 * Right outer join a table and proceed to the next step
+	 */
+	SelectOnStep rightOuterJoin(Table table);
 }

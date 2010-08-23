@@ -49,6 +49,7 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Operator;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
@@ -324,6 +325,13 @@ public final class QueryFactory {
 	 */
 	public static DeleteQuery createDeleteQuery(Table table) {
 		return new DeleteQueryImpl(table);
+	}
+
+	/**
+	 * Create a new {@link Select}
+	 */
+	public static Select createSelect() {
+		return new SelectImpl();
 	}
 
 	/**
