@@ -7,7 +7,6 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.oracle.sys.Sys;
-import org.jooq.util.oracle.sys.tables.records.AllTabCommentsRecord;
 
 
 /**
@@ -23,19 +22,6 @@ public class AllTabComments extends TableImpl {
 	 * The singleton instance of ALL_TAB_COMMENTS
 	 */
 	public static final AllTabComments ALL_TAB_COMMENTS = new AllTabComments();
-
-	/**
-	 * The class holding records for this table
-	 */
-	private static final Class<AllTabCommentsRecord> RECORD_TYPE = AllTabCommentsRecord.class;
-
-	/**
-	 * The class holding records for this table
-	 */
-	@Override
-	public Class<AllTabCommentsRecord> getRecordType() {
-		return RECORD_TYPE;
-	}
 
 	/**
 	 * Owner of the object

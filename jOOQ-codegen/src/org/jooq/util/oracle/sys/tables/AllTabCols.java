@@ -9,7 +9,6 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.oracle.sys.Sys;
-import org.jooq.util.oracle.sys.tables.records.AllTabColsRecord;
 
 
 /**
@@ -25,19 +24,6 @@ public class AllTabCols extends TableImpl {
 	 * The singleton instance of ALL_TAB_COLS
 	 */
 	public static final AllTabCols ALL_TAB_COLS = new AllTabCols();
-
-	/**
-	 * The class holding records for this table
-	 */
-	private static final Class<AllTabColsRecord> RECORD_TYPE = AllTabColsRecord.class;
-
-	/**
-	 * The class holding records for this table
-	 */
-	@Override
-	public Class<AllTabColsRecord> getRecordType() {
-		return RECORD_TYPE;
-	}
 
 	/**
 	 * An uncommented item
