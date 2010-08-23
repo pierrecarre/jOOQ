@@ -55,7 +55,7 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 	@Override
 	public FieldList getFields() {
 		if (aliasedFields == null) {
-			aliasedFields = new AliasedFieldListImpl();
+			aliasedFields = new FieldListImpl();
 			
 			for (Field<?> field : getAliasProvider().getFields()) {
 				
@@ -70,6 +70,11 @@ class TableAlias extends AbstractAliasQueryPart<Table> implements Table {
 	@Override
 	public <T> Field<T> getField(Field<T> field) {
 		return getFields().getField(field);
+	}
+
+	@Override
+	public Field<?> getField(String name) {
+		return getFields().getField(name);
 	}
 
 	@Override

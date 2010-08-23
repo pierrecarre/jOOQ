@@ -51,8 +51,20 @@ class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList
 		super(wrappedList);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Field<T> getField(Field<T> field) {
-		return field;
+	public final <T> Field<T> getField(Field<T> field) {
+		return (Field<T>) getField(field.getName());
+	}
+	
+	@Override
+	public final Field<?> getField(String name) {
+		for (Field<?> f : this) {
+			if (f.getName() == name) {
+				return f;
+			}
+		}
+		
+		return null;
 	}
 }

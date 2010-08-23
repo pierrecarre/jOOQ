@@ -21,7 +21,7 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY 'SYS_C0012695'
+	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -30,7 +30,7 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY 'SYS_C0012695'
+	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);

@@ -71,8 +71,13 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	}
 	
 	@Override
-	public <T> Field<T> getField(Field<T> field) {
+	public final <T> Field<T> getField(Field<T> field) {
 		return getFields().getField(field);
+	}
+
+	@Override
+	public final Field<?> getField(String name) {
+		return getFields().getField(name);
 	}
 
 	protected Schema getSchema() {

@@ -77,6 +77,11 @@ class SelectQueryAsTable extends AbstractNamedQueryPart implements Table {
 	public <T> Field<T> getField(Field<T> field) {
 		return getFields().getField(field);
 	}
+	
+	@Override
+	public Field<?> getField(String name) {
+		return getFields().getField(name);
+	}
 
 	@Override
 	public Class<? extends Record> getRecordType() {

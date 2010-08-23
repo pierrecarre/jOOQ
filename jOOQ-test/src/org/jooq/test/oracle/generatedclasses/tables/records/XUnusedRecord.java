@@ -20,7 +20,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_C0012703'
+	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -29,7 +29,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_C0012703'
+	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
@@ -38,7 +38,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_C0012703'
+	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
@@ -47,7 +47,7 @@ public class XUnusedRecord extends RecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_C0012703'
+	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public String getName() {
 		return getValue(XUnused.NAME);
@@ -55,6 +55,8 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -62,6 +64,8 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -69,6 +73,8 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -76,6 +82,8 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);

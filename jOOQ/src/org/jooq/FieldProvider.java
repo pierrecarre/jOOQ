@@ -43,4 +43,12 @@ public interface FieldProvider {
 	 * @return The field itself or an aliased field
 	 */
 	<T> Field<T> getField(Field<T> field);
+
+	/**
+	 * Get a specific field from this field provider.
+	 * 
+	 * @param name The field to fetch
+	 * @return The field with the given name
+	 */
+	Field<?> getField(String name);
 }
