@@ -6,16 +6,30 @@ Version 1.3.0
 =================================================================
 
 Support for HSQLDB was added.
-Some refactorings forced minor API changes, which were inevitable
+There is a major API change due to #44.
 
 Features
 --------
+#29 - Generate primary keys and foreign keys in Oracle code 
+      generation
 #34 - Add support for HSQLDB
+#39 - Generate primary keys and foreign keys in HSQLDB code 
+      generation
+#41 - Add documentation to QueryFactory and Functions
 
 API changes
 -----------
 #23 - Add support for more advanced joins
 #32 - Merge SelectQuery and ResultProviderQuery interfaces
+#44 - Let Query methods return "this"
+
+Bugfixes
+--------
+#35 - Add unit tests for HSQLDB support
+#37 - Syntax error in combined select queries!
+      The usage of combined queries in MySQL may still be a bit
+      awkward. Keep an eye out for further fixes
+#43 - Join with aliased tables doesn't work
 
 Version 1.2.0
 =================================================================
