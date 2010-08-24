@@ -44,6 +44,9 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 	 */
 	private static final long serialVersionUID = -6683692251799468624L;
 
+	AbstractCondition() {
+	}
+
 	@Override
 	public CombinedCondition and(Condition other) {
 		return QueryFactory.createCombinedCondition(this, other);

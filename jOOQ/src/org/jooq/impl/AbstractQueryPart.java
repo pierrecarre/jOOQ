@@ -47,6 +47,9 @@ abstract class AbstractQueryPart implements QueryPart {
 
 	private static final long serialVersionUID = 2078114876079493107L;
 
+	AbstractQueryPart() {
+	}
+	
 	@Override
 	public final String toSQLReference() {
 		return toSQLReference(false);

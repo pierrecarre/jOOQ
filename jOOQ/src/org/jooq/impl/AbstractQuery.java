@@ -46,6 +46,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
 	private static final long serialVersionUID = -8046199737354507547L;
 
+	AbstractQuery() {
+	}
+	
 	@Override
 	public final int execute(DataSource source) throws SQLException {
 		return execute(source.getConnection());

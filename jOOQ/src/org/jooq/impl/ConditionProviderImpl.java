@@ -52,6 +52,9 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
 	private Condition condition;
 
+	ConditionProviderImpl() {
+	}
+	
 	Condition getWhere() {
 		if (condition == null) {
 			return TRUE_CONDITION;

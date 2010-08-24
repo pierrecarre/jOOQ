@@ -38,6 +38,9 @@ class SelectFieldListImpl extends FieldListImpl {
 
 	private static final long serialVersionUID = 8850104968428500798L;
 
+	SelectFieldListImpl() {
+	}
+	
 	@Override
 	protected String toSQLEmptyList() {
 		return "*";

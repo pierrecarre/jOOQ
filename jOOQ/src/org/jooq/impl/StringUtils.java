@@ -202,4 +202,7 @@ public class StringUtils {
         }
         return count;
     }
+    
+    private StringUtils() {
+    }
 }

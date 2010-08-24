@@ -42,7 +42,7 @@ class PositionFunctionImpl extends IntegerFunction {
 	private static final long serialVersionUID = 3544690069533526544L;
 	private final Field<String> search;
 
-	public PositionFunctionImpl(Field<String> search, Field<String> in) {
+	PositionFunctionImpl(Field<String> search, Field<String> in) {
 		super("position", in);
 
 		this.search = search;
