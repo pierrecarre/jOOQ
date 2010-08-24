@@ -42,6 +42,7 @@ import org.jooq.Field;
 import org.jooq.FieldCondition;
 import org.jooq.InCondition;
 import org.jooq.JoinCondition;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
@@ -309,5 +310,135 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	@Override
 	public FieldCondition<T> greaterOrEqualAll(SelectQuery query) {
 		return query.asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_ALL);
+	}
+
+	@Override
+	public SubQueryCondition<T> in(Select query) {
+		return in(query.getQuery());
+	}
+
+	@Override
+	public SubQueryCondition<T> notIn(Select query) {
+		return notIn(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> equal(Select query) {
+		return equal(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> equalAny(Select query) {
+		return equalAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> equalSome(Select query) {
+		return equalSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> equalAll(Select query) {
+		return equalAll(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> notEqual(Select query) {
+		return notEqual(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> notEqualAny(Select query) {
+		return notEqualAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> notEqualSome(Select query) {
+		return notEqualSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> notEqualAll(Select query) {
+		return notEqualAll(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessThan(Select query) {
+		return lessThan(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessThanAny(Select query) {
+		return lessThanAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessThanSome(Select query) {
+		return lessThanSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessThanAll(Select query) {
+		return lessThanAll(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessOrEqual(Select query) {
+		return lessOrEqual(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessOrEqualToAny(Select query) {
+		return lessOrEqualToAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessOrEqualToSome(Select query) {
+		return lessOrEqualToSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> lessOrEqualToAll(Select query) {
+		return lessOrEqualToAll(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterThan(Select query) {
+		return greaterThan(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterThanAny(Select query) {
+		return greaterThanAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterThanSome(Select query) {
+		return greaterThanSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterThanAll(Select query) {
+		return greaterThanAll(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterOrEqual(Select query) {
+		return greaterOrEqual(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterOrEqualAny(Select query) {
+		return greaterOrEqualAny(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterOrEqualSome(Select query) {
+		return greaterOrEqualSome(query.getQuery());
+	}
+
+	@Override
+	public FieldCondition<T> greaterOrEqualAll(Select query) {
+		return greaterOrEqualAll(query.getQuery());
 	}
 }
