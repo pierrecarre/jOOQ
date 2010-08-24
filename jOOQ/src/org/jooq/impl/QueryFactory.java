@@ -50,6 +50,7 @@ import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Select;
+import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
@@ -330,8 +331,22 @@ public final class QueryFactory {
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static Select createSelect() {
+	public static Select select() {
 		return new SelectImpl();
+	}
+
+	/**
+	 * Create a new {@link Select}
+	 */
+	public static SelectFromStep select(Field<?>... fields) {
+		return new SelectImpl().select(fields);
+	}
+
+	/**
+	 * Create a new {@link Select}
+	 */
+	public static SelectFromStep select(Collection<Field<?>> fields) {
+		return new SelectImpl().select(fields);
 	}
 
 	/**
