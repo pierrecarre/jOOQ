@@ -42,6 +42,7 @@ import java.util.Collection;
 import org.jooq.CombineOperator;
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
@@ -422,12 +423,25 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		SelectQuery[] queries = new SelectQuery[others.length + 1];
 		queries[0] = this;
 		System.arraycopy(others, 0, queries, 1, others.length);
-		return new SelectQueryImpl(new SelectQueryAsTable(operator, queries));
+		return new SelectQueryImpl(asTable(operator, queries));
 	}
 
 	@Override
 	public final Table asTable() {
-		return new SelectQueryAsTable(this);
+		return asTable(CombineOperator.UNION, this);
+	}
+
+	private Table asTable(CombineOperator operator, SelectQuery... queries) {
+		Table result = new SelectQueryAsTable(operator, queries);
+
+		// Some dialects require derived tables to provide an alias
+		switch (Configuration.getInstance().getDialect()) {
+		case MYSQL:
+			result = result.as("gen_" + (int) (Math.random() * 1000000));
+			break;
+		}
+
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
