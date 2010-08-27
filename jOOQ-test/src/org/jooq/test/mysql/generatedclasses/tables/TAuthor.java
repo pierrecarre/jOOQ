@@ -61,6 +61,11 @@ public class TAuthor extends TableImpl {
 	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
 
 	/**
+	 * The author's year of birth
+	 */
+	public static final TableField<Integer> YEAR_OF_BIRTH = new TableFieldImpl<Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
+
+	/**
 	 * No further instances allowed
 	 */
 	private TAuthor() {

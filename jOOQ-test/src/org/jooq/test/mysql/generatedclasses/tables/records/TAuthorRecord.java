@@ -78,6 +78,20 @@ public class TAuthorRecord extends RecordImpl {
 		return getValue(TAuthor.DATE_OF_BIRTH);
 	}
 
+	/**
+	 * The author's year of birth
+	 */
+	public void setYearOfBirth(Integer value) {
+		setValue(TAuthor.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * The author's year of birth
+	 */
+	public Integer getYearOfBirth() {
+		return getValue(TAuthor.YEAR_OF_BIRTH);
+	}
+
 	public TAuthorRecord(Result result) {
 		super(result);
 	}

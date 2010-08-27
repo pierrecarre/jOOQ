@@ -57,6 +57,11 @@ public class TBook extends TableImpl {
 	public static final TableField<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, T_BOOK);
 
 	/**
+	 * The year the book was published in
+	 */
+	public static final TableField<Integer> PUBLISHED_IN = new TableFieldImpl<Integer>("PUBLISHED_IN", Integer.class, T_BOOK);
+
+	/**
 	 * No further instances allowed
 	 */
 	private TBook() {

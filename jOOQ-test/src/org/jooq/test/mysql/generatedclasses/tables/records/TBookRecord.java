@@ -67,6 +67,20 @@ public class TBookRecord extends RecordImpl {
 		return getValue(TBook.TITLE);
 	}
 
+	/**
+	 * The year the book was published in
+	 */
+	public void setPublishedIn(Integer value) {
+		setValue(TBook.PUBLISHED_IN, value);
+	}
+
+	/**
+	 * The year the book was published in
+	 */
+	public Integer getPublishedIn() {
+		return getValue(TBook.PUBLISHED_IN);
+	}
+
 	public TBookRecord(Result result) {
 		super(result);
 	}
