@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,73 +28,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
 /**
- * A wrapper for database result records returned by
- * <code>{@link SelectQuery}</code>
+ * A wrapper for a value in a {@link Record}
  *
  * @author Lukas Eder
- * @see SelectQuery#getResult()
  */
-public interface Record {
+public interface Value<T> {
 
 	/**
-	 * @return The fields contained in the result table
+	 * @return The wrapped value
 	 */
-	FieldList getFields();
+	T getValue();
 
 	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @return The value of a field contained in this record
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
-	 */
-	<T> T getValue(Field<T> field) throws IllegalArgumentException;
-
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param defaultValue
-	 *            The default value instead of <code>null</code>
+	 * Get the wrapped value or a default value if the wrapped value is
+	 * <code>null</code>.
 	 *
-	 * @return The value of a field contained in this record, or defaultValue,
-	 *         if <code>null</code>
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
+	 * @param defaultValue
+	 *            The default value if the wrapped value is <code>null</code>.
+	 * @return The wrapped value.
 	 */
-	<T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
+	T getValue(T defaultValue);
 
 	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
+	 * Set the wrapped value.
+	 *
 	 * @param value
-	 *            The value
+	 *            The new wrapped value.
 	 */
-	<T> void setValue(Field<T> field, T value);
+	void setValue(T value);
 
 	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
+	 * @return Whether this value has been changed since the record was loaded.
 	 */
-	<T> void setValue(Field<T> field, Value<T> value);
-
-	/**
-	 * @return Whether any values have been changed since the record was loaded.
-	 */
-	boolean hasChangedValues();
+	boolean isChanged();
 }

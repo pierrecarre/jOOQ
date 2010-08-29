@@ -342,7 +342,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 					Field<Object> field = (Field<Object>) f;
 					Object value = FieldTypeHelper.getFromResultSet(rs, f);
 
-					record.setValue(field, value);
+					record.setValue(field, new ValueImpl<Object>(value));
 				}
 
 				result.addRecord(record);

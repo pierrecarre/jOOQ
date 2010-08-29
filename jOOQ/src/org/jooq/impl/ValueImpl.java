@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,78 +28,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Value;
 
-/**
- * @author Lukas Eder
- */
-public class RecordImpl implements Record {
+class ValueImpl<T> implements Value<T> {
 
-	private final Result result;
-	private final Map<Field<?>, Value<?>> values;
+	private T value;
+	private boolean isChanged;
 
-	public RecordImpl(Result result) {
-		this.result = result;
-		this.values = new LinkedHashMap<Field<?>, Value<?>>();
+	ValueImpl(T value) {
+		this.value = value;
 	}
 
 	@Override
-	public FieldList getFields() {
-		return result.getFields();
+	public T getValue() {
+		return value;
 	}
 
-	@SuppressWarnings("unchecked")
-	private <T> Value<T> getValue0(Field<T> field) {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
+	@Override
+	public T getValue(T defaultValue) {
+		return value != null ? value : defaultValue;
+	}
+
+	@Override
+	public void setValue(T value) {
+		if (this.value == null) {
+			this.isChanged = value != null;
 		}
 
-		return (Value<T>) values.get(field);
-	}
-
-	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		return getValue0(field).getValue();
-	}
-
-	@Override
-	public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
-		return getValue0(field).getValue(defaultValue);
-	}
-
-	@Override
-	public <T> void setValue(Field<T> field, T value) {
-		getValue0(field).setValue(value);
-	}
-
-	@Override
-	public <T> void setValue(Field<T> field, Value<T> value) {
-		values.put(field, value);
-	}
-
-	@Override
-	public boolean hasChangedValues() {
-		for (Value<?> value : values.values()) {
-			if (value.isChanged()) {
-				return true;
-			}
+		else {
+			this.isChanged = !this.value.equals(value);
 		}
 
-		return false;
+		this.value = value;
 	}
 
 	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
+	public boolean isChanged() {
+		return isChanged;
 	}
 }

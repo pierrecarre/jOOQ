@@ -31,6 +31,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SortOrder.ASC;
 
@@ -152,6 +153,10 @@ public abstract class jOOQAbstractTest {
         assertEquals(2, result.getNumberOfRecords());
         assertEquals("Coelho", result.getRecord(0).getValue(getTAuthor_LAST_NAME()));
         assertEquals("Orwell", result.getRecord(1).getValue(getTAuthor_LAST_NAME()));
+
+        assertFalse(result.getRecord(0).hasChangedValues());
+        result.getRecord(0).setValue(getTAuthor_LAST_NAME(), "Coelhinho");
+        assertTrue(result.getRecord(0).hasChangedValues());
     }
 
 	protected abstract Table getTAuthor();
