@@ -46,6 +46,7 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
@@ -54,6 +55,16 @@ import org.jooq.util.TableDefinition;
  * @author Lukas Eder
  */
 public class OracleDatabase extends AbstractDatabase {
+
+	@Override
+	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	protected List<TableDefinition> getTables0() throws SQLException {

@@ -44,8 +44,8 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
-import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultForeignKeyDefinition;
 import org.jooq.util.DefaultPrimaryKeyDefinition;
 import org.jooq.util.ForeignKeyDefinition;
@@ -64,13 +64,12 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 		super (database, table, name, position, type, comment);
 	}
 
-	@Override
-	protected PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
+	protected PrimaryKeyDefinition getPrimaryKey1() throws SQLException {
 		PrimaryKeyDefinition definition = null;
-		
+
 		SelectQuery q = createSelectQuery(ALL_CONS_COLUMNS);
-		q.addJoin(ALL_CONSTRAINTS, 
-				AllConsColumns.CONSTRAINT_NAME, 
+		q.addJoin(ALL_CONSTRAINTS,
+				AllConsColumns.CONSTRAINT_NAME,
 				AllConstraints.CONSTRAINT_NAME);
 		q.addCompareCondition(AllConstraints.CONSTRAINT_TYPE, "P");
 		q.addCompareCondition(AllConsColumns.OWNER, getSchemaName());
@@ -85,30 +84,29 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 		return definition;
 	}
 
-	@Override
-	protected ForeignKeyDefinition getForeignKey0() throws SQLException {
+	protected ForeignKeyDefinition getForeignKey1() throws SQLException {
 		DefaultForeignKeyDefinition definition = null;
-		
+
 //		select cc1.*, cc2.* from all_constraints co
 //		join all_cons_columns cc1 on (cc1.constraint_name = co.constraint_name)
 //		join all_cons_columns cc2 on (cc2.constraint_name = co.r_constraint_name and cc1.position = cc2.position)
 //		where cc1.constraint_name = (
-//		  select cox.constraint_name 
+//		  select cox.constraint_name
 //		  from all_cons_columns ccx
 //		  join all_constraints cox on (ccx.constraint_name = cox.constraint_name)
-//		    where ccx.owner = 'ODS_TEST' 
+//		    where ccx.owner = 'ODS_TEST'
 //		    and ccx.table_name = 'X_UNUSED'
 //		    and ccx.column_name = 'NAME_REF'
 //		    and cox.constraint_type = 'R');
-		
+
 		Table cc1 = ALL_CONS_COLUMNS.as("cc1");
 		Table cc2 = ALL_CONS_COLUMNS.as("cc2");
-		
+
 		Field<String> constraint = cc2.getField(AllConsColumns.CONSTRAINT_NAME).as("constraint");
 		Field<String> referencedTable = cc2.getField(AllConsColumns.TABLE_NAME).as("referenced_table");
 		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).as("referencing_column");
 		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).as("referenced_column");
-		
+
 		SelectQuery inner = createSelectQuery(ALL_CONS_COLUMNS);
 		inner.addJoin(ALL_CONSTRAINTS, AllConsColumns.CONSTRAINT_NAME, AllConstraints.CONSTRAINT_NAME);
 		inner.addSelect(AllConstraints.CONSTRAINT_NAME);
@@ -117,16 +115,16 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 				createCompareCondition(AllConsColumns.OWNER, getSchemaName()),
 				createCompareCondition(AllConsColumns.TABLE_NAME, getTableName()),
 				createCompareCondition(AllConsColumns.COLUMN_NAME, getName()));
-		
+
 		SelectQuery q = createSelectQuery(ALL_CONSTRAINTS);
 		q.addSelect(constraint, referencingColumn, referencedTable, referencedColumn);
 		q.addJoin(cc1,
 				createJoinCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.CONSTRAINT_NAME));
-		q.addJoin(cc2, 
+		q.addJoin(cc2,
 				createJoinCondition(cc2.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.R_CONSTRAINT_NAME),
 				createJoinCondition(cc2.getField(AllConsColumns.POSITION), cc1.getField(AllConsColumns.POSITION)));
 		q.addConditions(inner.asCompareCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME)));
-		
+
 		q.execute(getConnection());
 
 		Result result = q.getResult();
@@ -143,7 +141,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 			definition.getReferencedColumnNames().add(
 					record.getValue(referencedColumn));
 		}
-		
+
 		return definition;
 	}
 }
