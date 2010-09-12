@@ -19,7 +19,7 @@ public class TBookRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11604'
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -28,7 +28,7 @@ public class TBookRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11604'
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);
@@ -37,7 +37,7 @@ public class TBookRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11607' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -46,7 +46,7 @@ public class TBookRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11607' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);

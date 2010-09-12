@@ -39,14 +39,14 @@ public class TBook extends UpdatableTableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11604'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11607' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 

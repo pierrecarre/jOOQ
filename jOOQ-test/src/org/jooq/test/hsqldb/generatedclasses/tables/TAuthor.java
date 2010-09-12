@@ -41,7 +41,7 @@ public class TAuthor extends UpdatableTableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11598'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 
@@ -59,6 +59,11 @@ public class TAuthor extends UpdatableTableImpl {
 	 * An uncommented item
 	 */
 	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+
+	/**
+	 * An uncommented item
+	 */
+	public static final TableField<Integer> YEAR_OF_BIRTH = new TableFieldImpl<Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed

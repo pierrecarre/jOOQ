@@ -19,7 +19,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11613'
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -28,7 +28,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11613'
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
@@ -37,7 +37,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11613'
+	 * PRIMARY KEY
 	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
@@ -46,7 +46,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11613'
+	 * PRIMARY KEY
 	 */
 	public String getName() {
 		return getValue(XUnused.NAME);
@@ -55,7 +55,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11614' [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -64,7 +64,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11614' [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -73,7 +73,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11614' [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -82,7 +82,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'SYS_FK_11614' [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);

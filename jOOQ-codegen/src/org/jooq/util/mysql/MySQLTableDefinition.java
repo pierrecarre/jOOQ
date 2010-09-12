@@ -51,6 +51,7 @@ import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 
 /**
  * @author Lukas Eder
@@ -90,7 +91,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 				System.out.println("Unsupported datatype : " + dataType);
 			}
 
-			MySQLColumnDefinition column = new MySQLColumnDefinition(getDatabase(), getName(), name, position, type, comment);
+			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);
 			result.add(column);
 		}
 

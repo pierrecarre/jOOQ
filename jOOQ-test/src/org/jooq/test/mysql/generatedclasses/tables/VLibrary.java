@@ -3,6 +3,7 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -53,4 +54,5 @@ public class VLibrary extends TableImpl {
 	private VLibrary() {
 		super("v_library", Test.TEST);
 	}
+
 }

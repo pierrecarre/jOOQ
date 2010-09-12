@@ -95,6 +95,11 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	}
 
 	@Override
+	protected TableField<Integer> getTAuthor_YEAR_OF_BIRTH() {
+		return TAuthor.YEAR_OF_BIRTH;
+	}
+
+	@Override
 	protected TableField<Integer> getTAuthor_ID() {
 		return TAuthor.ID;
 	}

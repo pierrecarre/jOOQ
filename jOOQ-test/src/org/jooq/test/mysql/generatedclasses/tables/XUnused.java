@@ -3,9 +3,10 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
 import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
 
@@ -15,7 +16,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
  *
  * An unused table in the same schema.
  */
-public class XUnused extends TableImpl {
+public class XUnused extends UpdatableTableImpl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,28 +41,28 @@ public class XUnused extends TableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<String> NAME = new TableFieldImpl<String>("NAME", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [ID_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public static final TableField<Integer> ID_REF = new TableFieldImpl<Integer>("ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY 'x_unused_ibfk_1' [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public static final TableField<String> NAME_REF = new TableFieldImpl<String>("NAME_REF", String.class, X_UNUSED);
 
@@ -71,4 +72,13 @@ public class XUnused extends TableImpl {
 	private XUnused() {
 		super("x_unused", Test.TEST);
 	}
+
+	/*
+	 * static initialiser
+	 */
+	static {
+		X_UNUSED.addToPrimaryKey(ID);
+		X_UNUSED.addToPrimaryKey(NAME);
+	}
+
 }

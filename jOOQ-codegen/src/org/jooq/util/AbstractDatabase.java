@@ -191,7 +191,24 @@ public abstract class AbstractDatabase implements Database {
 	/**
 	 * Retrieve ALL relations from the database.
 	 */
-	protected abstract Relations getRelations0() throws SQLException;
+	protected final Relations getRelations0() throws SQLException {
+		DefaultRelations relations = new DefaultRelations(this);
+
+		loadPrimaryKeys(relations);
+		loadForeignKeys(relations);
+
+		return relations;
+	}
+
+	/**
+	 * Retrieve primary keys and store them to relations
+	 */
+	protected abstract void loadPrimaryKeys(DefaultRelations relations) throws SQLException;
+
+	/**
+	 * Retrieve foreign keys and store them to relations. Primary keys are already loaded.
+	 */
+	protected abstract void loadForeignKeys(DefaultRelations relations) throws SQLException;
 
 	/**
 	 * Retrieve ALL tables from the database. This will be filtered in

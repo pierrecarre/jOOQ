@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables;
 
 import java.sql.Date;
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -40,7 +41,7 @@ public class TAuthor extends TableImpl {
 
 	/**
 	 * The author ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
@@ -59,6 +60,11 @@ public class TAuthor extends TableImpl {
 	 * The author's date of birth
 	 */
 	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+
+	/**
+	 * The author's year of birth
+	 */
+	public static final TableField<Integer> YEAR_OF_BIRTH = new TableFieldImpl<Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed

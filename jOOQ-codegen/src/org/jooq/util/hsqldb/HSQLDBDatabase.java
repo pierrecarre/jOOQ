@@ -49,7 +49,6 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
-import org.jooq.util.Relations;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.hsqldb.information_schema.tables.ConstraintColumnUsage;
 import org.jooq.util.hsqldb.information_schema.tables.KeyColumnUsage;
@@ -61,16 +60,7 @@ import org.jooq.util.hsqldb.information_schema.tables.TableConstraints;
 public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
-	protected Relations getRelations0() throws SQLException {
-		DefaultRelations relations = new DefaultRelations(this);
-
-		loadPrimaryKeys(relations);
-		loadForeignKeys(relations);
-
-		return relations;
-	}
-
-	private void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
 		SelectQuery query = QueryFactory.select()
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
@@ -89,7 +79,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
 		}
 	}
 
-	private void loadForeignKeys(DefaultRelations relations) throws SQLException {
+	@Override
+	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
 		SelectQuery query = QueryFactory.select()
 			.from(CONSTRAINT_COLUMN_USAGE)
 			.join(KEY_COLUMN_USAGE)

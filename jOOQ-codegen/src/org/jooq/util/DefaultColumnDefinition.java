@@ -29,32 +29,85 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.hsqldb;
+package org.jooq.util;
 
 import java.sql.SQLException;
 
-import org.jooq.util.AbstractColumnDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.ForeignKeyDefinition;
-import org.jooq.util.PrimaryKeyDefinition;
 
 /**
+ * A base implementation for column definitions.
+ *
  * @author Lukas Eder
  */
-public class HSQLDBColumnDefinition extends AbstractColumnDefinition {
+public class DefaultColumnDefinition extends AbstractDefinition implements ColumnDefinition {
 
-	public HSQLDBColumnDefinition(Database database, String table, String name, int position, Class<?> type,
-			String comment) {
-		super(database, table, name, position, type, comment);
+	private final int position;
+	private final Class<?> type;
+	private final String table;
+
+	private boolean primaryKeyLoaded;
+	private PrimaryKeyDefinition primaryKey;
+	private boolean foreignKeyLoaded;
+	private ForeignKeyDefinition foreignKey;
+
+	public DefaultColumnDefinition(Database database, String table, String name, int position, Class<?> type, String comment) {
+		super(database, name, comment);
+
+		this.table = table;
+		this.position = position;
+		this.type = type;
 	}
 
 	@Override
-	protected PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
+	public final int getPosition() {
+		return position;
+	}
+
+	@Override
+	public final Class<?> getTypeClass() {
+		return type;
+	}
+
+	@Override
+	public final String getTableName() {
+		return table;
+	}
+
+	@Override
+	public final String getType() {
+		return type.getSimpleName();
+	}
+
+	@Override
+	public final String getQualifiedName() {
+		return getSchemaName() + "." + getTableName() + "." + getName();
+	}
+
+	@Override
+	public final PrimaryKeyDefinition getPrimaryKey() throws SQLException {
+		if (!primaryKeyLoaded) {
+			primaryKeyLoaded = true;
+			primaryKey = getPrimaryKey0();
+		}
+
+		return primaryKey;
+	}
+
+	@Override
+	public final ForeignKeyDefinition getForeignKey() throws SQLException {
+		if (!foreignKeyLoaded) {
+			foreignKeyLoaded = true;
+			foreignKey = getForeignKey0();
+		}
+
+		return foreignKey;
+	}
+
+	protected final PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
 		return getDatabase().getRelations().getPrimaryKey(this);
 	}
 
-	@Override
-	protected ForeignKeyDefinition getForeignKey0() throws SQLException {
+	protected final ForeignKeyDefinition getForeignKey0() throws SQLException {
 		return getDatabase().getRelations().getForeignKey(this);
 	}
 }

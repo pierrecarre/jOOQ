@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import org.jooq.util.AbstractFunctionDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.FunctionDefinition;
 
 /**
@@ -74,7 +75,7 @@ public class MySQLFunctionDefinition extends AbstractFunctionDefinition implemen
 		String paramType = matcher.group(group + 1);
 
 		Class<?> type = MySQLDataType.valueOf(paramType.toUpperCase()).getType();
-		return new MySQLColumnDefinition(getDatabase(), getName(), paramName, columnIndex, type, null);
+		return new DefaultColumnDefinition(getDatabase(), getName(), paramName, columnIndex, type, null);
 	}
 
 	@Override

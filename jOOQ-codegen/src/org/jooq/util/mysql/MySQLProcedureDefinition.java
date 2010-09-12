@@ -38,6 +38,7 @@ import java.util.regex.Matcher;
 import org.jooq.util.AbstractProcedureDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ProcedureDefinition;
 
@@ -73,7 +74,7 @@ public class MySQLProcedureDefinition extends AbstractProcedureDefinition implem
 				String paramType = matcher.group(4);
 
 				Class<?> type = MySQLDataType.valueOf(paramType).getType();
-				ColumnDefinition column = new MySQLColumnDefinition(getDatabase(), getName(), paramName, i + 1, type, null);
+				ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), paramName, i + 1, type, null);
 				allParameters.add(column);
 
 				switch (InOutDefinition.getFromString(inOut)) {

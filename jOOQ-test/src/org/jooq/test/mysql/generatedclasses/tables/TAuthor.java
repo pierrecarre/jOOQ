@@ -3,10 +3,12 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
 import java.sql.Date;
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 
@@ -16,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
  *
  * An entity holding authors of books
  */
-public class TAuthor extends TableImpl {
+public class TAuthor extends UpdatableTableImpl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +43,7 @@ public class TAuthor extends TableImpl {
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
 
@@ -71,4 +73,12 @@ public class TAuthor extends TableImpl {
 	private TAuthor() {
 		super("t_author", Test.TEST);
 	}
+
+	/*
+	 * static initialiser
+	 */
+	static {
+		T_AUTHOR.addToPrimaryKey(ID);
+	}
+
 }

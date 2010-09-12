@@ -33,6 +33,7 @@ package org.jooq.util.mysql;
 
 import static org.jooq.impl.QueryFactory.createCompareCondition;
 import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_COMMENT;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
@@ -49,18 +50,61 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Comparator;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
+import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 
 /**
  * @author Lukas Eder
  */
 public class MySQLDatabase extends AbstractDatabase {
+
+	@Override
+	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+		SelectQuery q = createSelectQuery(KEY_COLUMN_USAGE);
+		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
+		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+		q.execute(getConnection());
+
+		for (Record record : q.getResult()) {
+			String key = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
+			String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
+			String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
+
+			key = key + "_" + tableName;
+			relations.addPrimaryKey(key, getTable(tableName).getColumn(columnName));
+		}
+	}
+
+	@Override
+	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+		SelectQuery q = createSelectQuery(KEY_COLUMN_USAGE);
+		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
+		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+		q.execute(getConnection());
+
+		for (Record record : q.getResult()) {
+			String key = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
+			String referencingTableName = record.getValue(KeyColumnUsage.TABLE_NAME);
+			String referencingColumnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
+			String referencedTableName = record.getValue(KeyColumnUsage.REFERENCED_TABLE_NAME);
+			String referencedColumnName = record.getValue(KeyColumnUsage.REFERENCED_COLUMN_NAME);
+
+			ColumnDefinition referencingColumn = getTable(referencingTableName).getColumn(referencingColumnName);
+			ColumnDefinition referencedColumn = getTable(referencedTableName).getColumn(referencedColumnName);
+
+			String primaryKey = relations.getPrimaryKey(referencedColumn).getName();
+			relations.addForeignKey(key, primaryKey, referencingColumn);
+		}
+	}
 
 	@Override
 	protected List<TableDefinition> getTables0() throws SQLException {

@@ -3,6 +3,7 @@
  */
 package org.jooq.test.mysql.generatedclasses;
 
+
 import org.jooq.impl.SchemaImpl;
 
 

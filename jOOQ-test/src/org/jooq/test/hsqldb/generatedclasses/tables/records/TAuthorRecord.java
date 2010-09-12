@@ -21,7 +21,7 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11598'
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -30,7 +30,7 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * PRIMARY KEY 'SYS_PK_11598'
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);
@@ -76,6 +76,20 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 	 */
 	public Date getDateOfBirth() {
 		return getValue(TAuthor.DATE_OF_BIRTH);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setYearOfBirth(Integer value) {
+		setValue(TAuthor.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public Integer getYearOfBirth() {
+		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
 	public TAuthorRecord(Result result) {

@@ -3,8 +3,9 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
+
 import org.jooq.Result;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 
 
@@ -13,7 +14,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
  *
  * VIEW
  */
-public class VLibraryRecord extends RecordImpl {
+public class VLibraryRecord extends TableRecordImpl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,6 +47,6 @@ public class VLibraryRecord extends RecordImpl {
 	}
 
 	public VLibraryRecord(Result result) {
-		super(result);
+		super(result, VLibrary.V_LIBRARY);
 	}
 }

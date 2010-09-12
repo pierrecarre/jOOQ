@@ -44,7 +44,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
-import org.jooq.util.AbstractColumnDefinition;
+import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultForeignKeyDefinition;
 import org.jooq.util.DefaultPrimaryKeyDefinition;
@@ -57,7 +57,7 @@ import org.jooq.util.oracle.sys.tables.AllConstraints;
 /**
  * @author Lukas Eder
  */
-public class OracleColumnDefinition extends AbstractColumnDefinition {
+public class OracleColumnDefinition extends DefaultColumnDefinition {
 
 	public OracleColumnDefinition(Database database, String table, String name, int position, Class<?> type,
 			String comment) {

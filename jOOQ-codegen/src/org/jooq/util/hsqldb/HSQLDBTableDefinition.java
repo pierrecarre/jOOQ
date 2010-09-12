@@ -41,6 +41,7 @@ import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 
 /**
  * @author Lukas Eder
@@ -76,7 +77,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 				System.out.println("Unsupported datatype : " + dataType);
 			}
 
-			HSQLDBColumnDefinition column = new HSQLDBColumnDefinition(getDatabase(), getName(), name, position, type, comment);
+			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);
 			result.add(column);
 		}
 

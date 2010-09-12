@@ -3,9 +3,10 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
@@ -15,7 +16,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
  *
  * An entity holding books
  */
-public class TBook extends TableImpl {
+public class TBook extends UpdatableTableImpl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,14 +41,14 @@ public class TBook extends TableImpl {
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 * 
-	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 
@@ -67,4 +68,12 @@ public class TBook extends TableImpl {
 	private TBook() {
 		super("t_book", Test.TEST);
 	}
+
+	/*
+	 * static initialiser
+	 */
+	static {
+		T_BOOK.addToPrimaryKey(ID);
+	}
+
 }

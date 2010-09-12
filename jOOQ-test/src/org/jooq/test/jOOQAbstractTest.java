@@ -170,6 +170,7 @@ public abstract class jOOQAbstractTest {
     	i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
     	i.addValue(getTAuthor_LAST_NAME(), "Hesse");
     	i.addValue(getTAuthor_DATE_OF_BIRTH(), new Date(System.currentTimeMillis()));
+    	i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
     	assertEquals(1, i.execute(connection));
 
     	UpdateQuery u = QueryFactory.createUpdateQuery(getTAuthor());
@@ -221,6 +222,7 @@ public abstract class jOOQAbstractTest {
 	protected abstract TableField<String> getTAuthor_LAST_NAME();
 	protected abstract TableField<String> getTAuthor_FIRST_NAME();
 	protected abstract TableField<Date> getTAuthor_DATE_OF_BIRTH();
+	protected abstract TableField<Integer> getTAuthor_YEAR_OF_BIRTH();
 	protected abstract TableField<Integer> getTAuthor_ID() ;
 	protected abstract Table getTBook();
 	protected abstract TableField<Integer> getTBook_ID();

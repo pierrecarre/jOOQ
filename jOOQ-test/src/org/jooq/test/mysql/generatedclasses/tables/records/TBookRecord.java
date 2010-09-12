@@ -3,8 +3,9 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
+
 import org.jooq.Result;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 
 
@@ -13,14 +14,14 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
  *
  * An entity holding books
  */
-public class TBookRecord extends RecordImpl {
+public class TBookRecord extends UpdatableRecordImpl {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -29,7 +30,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The book ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);
@@ -38,7 +39,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The author ID in entity 'author'
 	 * 
-	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -47,7 +48,7 @@ public class TBookRecord extends RecordImpl {
 	/**
 	 * The author ID in entity 'author'
 	 * 
-	 * FOREIGN KEY 't_book_ibfk_1' [AUTHOR_ID] REFERENCES t_author [ID]
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);
@@ -82,6 +83,6 @@ public class TBookRecord extends RecordImpl {
 	}
 
 	public TBookRecord(Result result) {
-		super(result);
+		super(result, TBook.T_BOOK);
 	}
 }

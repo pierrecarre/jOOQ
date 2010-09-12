@@ -474,17 +474,13 @@ public class DefaultGenerator implements Generator {
 
 		if (primaryKey != null) {
 		    out.println("\t * ");
-		    out.print("\t * PRIMARY KEY '");
-		    out.print(primaryKey.getName());
-		    out.print("'");
+		    out.print("\t * PRIMARY KEY");
 		    out.println();
 		}
 
 		if (foreignKey != null) {
 		    out.println("\t * ");
-		    out.print("\t * FOREIGN KEY '");
-		    out.print(foreignKey.getName());
-		    out.print("' ");
+		    out.print("\t * FOREIGN KEY ");
 		    out.print(foreignKey.getKeyColumnNames().toString());
 		    out.print(" REFERENCES ");
 		    out.print(foreignKey.getReferencedTableName());

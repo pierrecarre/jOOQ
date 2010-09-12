@@ -3,9 +3,11 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
+
 import java.sql.Date;
+
 import org.jooq.Result;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 
 
@@ -14,14 +16,14 @@ import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
  *
  * An entity holding authors of books
  */
-public class TAuthorRecord extends RecordImpl {
+public class TAuthorRecord extends UpdatableRecordImpl {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -30,7 +32,7 @@ public class TAuthorRecord extends RecordImpl {
 	/**
 	 * The author ID
 	 * 
-	 * PRIMARY KEY 'PRI'
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);
@@ -93,6 +95,6 @@ public class TAuthorRecord extends RecordImpl {
 	}
 
 	public TAuthorRecord(Result result) {
-		super(result);
+		super(result, TAuthor.T_AUTHOR);
 	}
 }
