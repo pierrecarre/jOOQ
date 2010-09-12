@@ -31,42 +31,12 @@
 
 package org.jooq;
 
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * A query for data updating
  *
  * @author Lukas Eder
  */
-public interface UpdateQuery extends Query, ConditionProvider, QueryPart {
+public interface UpdateQuery extends StoreQuery, ConditionProvider {
 
-	/**
-	 * @return A mapping of fields and values that are updated by the query
-	 */
-	Map<Field<?>, ?> getValues();
-
-	/**
-	 * Add a value to the insert statement
-	 *
-	 * @param <T>
-	 *            The value type
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
-	 */
-	<T> void addValue(Field<T> field, T value);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Condition... conditions);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
 }

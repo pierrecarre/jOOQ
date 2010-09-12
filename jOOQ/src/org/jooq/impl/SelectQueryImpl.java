@@ -314,8 +314,19 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
+	public TableList getTables() {
+		TableList result = new TableListImpl(getFrom());
+
+		for (Join join : getJoin()) {
+			result.add(join.getTable());
+		}
+
+		return result;
+	}
+
+	@Override
 	public Class<? extends Record> getRecordType() {
-		return getFrom().getRecordType();
+		return getTables().getRecordType();
 	}
 
 	@Override

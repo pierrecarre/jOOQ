@@ -97,11 +97,36 @@ public abstract class AbstractDefinition implements Definition {
 	}
 
 	@Override
+	public String getQualifiedName() {
+		return getName();
+	}
+
+	@Override
 	public final Database getDatabase() {
 		return database;
 	}
 
 	protected final Connection getConnection() {
 		return database.getConnection();
+	}
+
+	@Override
+	public String toString() {
+		return getQualifiedName();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Definition) {
+			Definition that = (Definition) obj;
+			return that.getQualifiedName().equals(getQualifiedName());
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getQualifiedName().hashCode();
 	}
 }

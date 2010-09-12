@@ -48,9 +48,19 @@ public interface Database {
 	SchemaDefinition getSchema() throws SQLException;
 
 	/**
+	 * Retrieve the schema's primary key / foreign key relations
+	 */
+	Relations getRelations() throws SQLException;
+
+	/**
 	 * The tables contained in this database (for schema {@link #getSchema()})
 	 */
 	List<TableDefinition> getTables() throws SQLException;
+
+	/**
+	 * Get a table in this database by name
+	 */
+	TableDefinition getTable(String name) throws SQLException;
 
 	/**
 	 * The stored procedures contained in this database (for schema

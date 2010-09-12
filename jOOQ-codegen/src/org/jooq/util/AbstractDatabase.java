@@ -53,6 +53,7 @@ public abstract class AbstractDatabase implements Database {
 	private List<TableDefinition> tables;
 	private List<ProcedureDefinition> procedures;
 	private List<FunctionDefinition> functions;
+	private Relations relations;
 
 	@Override
 	public final void setConnection(Connection connection) {
@@ -129,6 +130,26 @@ public abstract class AbstractDatabase implements Database {
 	}
 
 	@Override
+	public final TableDefinition getTable(String name) throws SQLException {
+		for (TableDefinition table : getTables()) {
+			if (table.getName().equals(name)) {
+				return table;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public Relations getRelations() throws SQLException {
+		if (relations == null) {
+			relations = getRelations0();
+		}
+
+		return relations;
+	}
+
+	@Override
 	public final List<ProcedureDefinition> getProcedures() throws SQLException {
 		if (procedures == null) {
 			procedures = filter(getProcedures0());
@@ -166,6 +187,11 @@ public abstract class AbstractDatabase implements Database {
 
 		return result;
 	}
+
+	/**
+	 * Retrieve ALL relations from the database.
+	 */
+	protected abstract Relations getRelations0() throws SQLException;
 
 	/**
 	 * Retrieve ALL tables from the database. This will be filtered in

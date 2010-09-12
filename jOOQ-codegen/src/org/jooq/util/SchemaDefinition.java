@@ -41,4 +41,9 @@ public class SchemaDefinition extends AbstractDefinition {
 	public SchemaDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}
+
+	@Override
+	public final String getQualifiedName() {
+		return getSchemaName();
+	}
 }

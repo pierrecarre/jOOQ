@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq;
-
+package org.jooq.util;
 
 /**
- * A query for data insertion
+ * A model for all known Primary Key / Foreign Key relations in the
+ * {@link Database}'s schema.
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public interface Relations extends Definition {
 
 	/**
-	 * @return The table that the data is inserted into
+	 * Get the primary key for a given column, or <code>null</code> if that
+	 * column is not part of the primary key.
 	 */
-	Table getInto();
+	PrimaryKeyDefinition getPrimaryKey(ColumnDefinition column);
 
+	/**
+	 * Get the foreign key for a given column, or <code>null</code> if that
+	 * column is not part of a foreign key.
+	 */
+	ForeignKeyDefinition getForeignKey(ColumnDefinition column);
 }

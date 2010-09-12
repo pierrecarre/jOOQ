@@ -180,9 +180,6 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 */
 	void addOrderBy(Field<?> field, SortOrder order);
 
-	FieldList getSelect();
-	Class<? extends Record> getRecordType();
-
 	/**
 	 * Add a list of select fields
 	 *
@@ -334,4 +331,19 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @param numberOfRows The number of rows to return
 	 */
 	void addLimit(int lowerBound, int numberOfRows);
+
+	/**
+	 * All fields selected in this query
+	 */
+	FieldList getSelect();
+
+	/**
+	 * All tables from which this query selects (from and join parts)
+	 */
+	TableList getTables();
+
+	/**
+	 * The record type returned by this query
+	 */
+	Class<? extends Record> getRecordType();
 }

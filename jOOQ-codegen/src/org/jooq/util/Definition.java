@@ -83,4 +83,9 @@ public interface Definition {
 	 * @return The Java class file name representing this object, e.g. [MyTableSuffix.java]
 	 */
 	String getFileName(String suffix);
+
+	/**
+	 * @return A qualified name for this object
+	 */
+	String getQualifiedName();
 }

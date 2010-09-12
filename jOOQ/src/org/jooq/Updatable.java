@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,22 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
+
+import java.util.List;
 
 
 /**
- * A query for data insertion
+ * A common interface for objects (tables, records) that can be updated or
+ * deleted using their primary keys.
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public interface Updatable {
 
 	/**
-	 * @return The table that the data is inserted into
+	 * @return All fields the table's primary key consists of. This will at
+	 *         least contain one {@link TableField}.
 	 */
-	Table getInto();
-
+	List<TableField<?>> getPrimaryKey();
 }

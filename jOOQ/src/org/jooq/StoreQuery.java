@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,78 +28,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
+import java.util.Map;
+
 /**
- * A wrapper for database result records returned by
- * <code>{@link SelectQuery}</code>
+ * A query storing objects to the database. This is either an insert or an
+ * update query.
  *
  * @author Lukas Eder
- * @see SelectQuery#getResult()
  */
-public interface Record {
+public interface StoreQuery extends Query, QueryPart {
 
 	/**
-	 * @return The fields contained in the result table
+	 * @return A mapping of fields and values that are stored by the query
 	 */
-	FieldList getFields();
+	Map<Field<?>, ?> getValues();
 
 	/**
-	 * @return The tables from which this record is read
-	 */
-	TableList getTables();
-
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @return The value of a field contained in this record
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
-	 */
-	<T> T getValue(Field<T> field) throws IllegalArgumentException;
-
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param defaultValue
-	 *            The default value instead of <code>null</code>
+	 * Add a value to the store statement
 	 *
-	 * @return The value of a field contained in this record, or defaultValue,
-	 *         if <code>null</code>
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
-	 */
-	<T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
-
-	/**
 	 * @param <T>
-	 *            The generic field parameter
+	 *            The value type
 	 * @param field
 	 *            The field
 	 * @param value
 	 *            The value
 	 */
-	<T> void setValue(Field<T> field, T value);
-
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
-	 */
-	<T> void setValue(Field<T> field, Value<T> value);
-
-	/**
-	 * @return Whether any values have been changed since the record was loaded.
-	 */
-	boolean hasChangedValues();
+	<T> void addValue(Field<T> field, T value);
 }

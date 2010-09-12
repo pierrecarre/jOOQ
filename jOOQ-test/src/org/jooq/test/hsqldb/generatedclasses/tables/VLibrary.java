@@ -3,6 +3,7 @@
  */
 package org.jooq.test.hsqldb.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -51,4 +52,5 @@ public class VLibrary extends TableImpl {
 	private VLibrary() {
 		super("V_LIBRARY", Public.PUBLIC);
 	}
+
 }

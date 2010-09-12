@@ -79,6 +79,11 @@ public abstract class AbstractColumnDefinition extends AbstractDefinition implem
 	}
 
 	@Override
+	public final String getQualifiedName() {
+		return getSchemaName() + "." + getTableName() + "." + getName();
+	}
+
+	@Override
 	public final PrimaryKeyDefinition getPrimaryKey() throws SQLException {
 		if (!primaryKeyLoaded) {
 			primaryKeyLoaded = true;

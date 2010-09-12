@@ -35,16 +35,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.jooq.Parameter;
 import org.jooq.Result;
 import org.jooq.TableField;
 import org.jooq.impl.ParameterImpl;
-import org.jooq.impl.RecordImpl;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.impl.UpdatableTableImpl;
 
 /**
  * A default implementation for code generation. Replace this code with your own
@@ -118,9 +123,17 @@ public class DefaultGenerator implements Generator {
 			printHeader(out, targetPackageName + ".tables");
 			printClassJavadoc(out, table);
 
-			out.println("public class " + table.getJavaClassName() + " extends TableImpl {");
+			String baseClass;
+			if (database.generateRelations() && table.hasPrimaryKey()) {
+				baseClass = "UpdatableTableImpl";
+				out.printImport(UpdatableTableImpl.class);
+			} else {
+				baseClass = "TableImpl";
+				out.printImport(TableImpl.class);
+			}
+
+			out.println("public class " + table.getJavaClassName() + " extends " + baseClass + " {");
 			printSerial(out);
-			out.printImport(TableImpl.class);
 			out.println();
 			out.println("\t/**");
 			out.println("\t * The singleton instance of " + table.getName());
@@ -152,9 +165,28 @@ public class DefaultGenerator implements Generator {
 			printNoFurtherInstancesAllowedJavadoc(out);
 			out.println("\tprivate " + table.getJavaClassName() + "() {");
 			out.println("\t\tsuper(\"" + table.getName() + "\", " + schema.getJavaClassName() + "." + schema.getNameUC() + ");");
+
+			if (database.generateRelations()) {
+				Set<String> primaryKeys = new HashSet<String>();
+
+				for (ColumnDefinition column : table.getColumns()) {
+					PrimaryKeyDefinition primaryKey = database.getRelations().getPrimaryKey(column);
+
+					if (primaryKey != null && !primaryKeys.contains(primaryKey.getNameUC())) {
+						primaryKeys.add(primaryKey.getNameUC());
+
+						for (String c : primaryKey.getKeyColumnNames()) {
+							String statement = table.getNameUC() + ".addToPrimaryKey(" + c + ");";
+							out.printStaticInitialisationStatement(statement);
+						}
+					}
+				}
+			}
+
 			out.println("\t}");
 			out.printImport(targetPackageName + "." + schema.getJavaClassName());
 
+			out.printStaticInitialisationStatementsPlaceholder();
 			out.println("}");
 			out.close();
 		}
@@ -175,9 +207,17 @@ public class DefaultGenerator implements Generator {
 				printHeader(out, targetPackageName + ".tables.records");
 				printClassJavadoc(out, table);
 
-				out.println("public class " + table.getJavaClassName("Record") + " extends RecordImpl {");
+				String baseClass;
+				if (database.generateRelations() && table.hasPrimaryKey()) {
+					baseClass = "UpdatableRecordImpl";
+					out.printImport(UpdatableRecordImpl.class);
+				} else {
+					baseClass = "TableRecordImpl";
+					out.printImport(TableRecordImpl.class);
+				}
+
+				out.println("public class " + table.getJavaClassName("Record") + " extends " + baseClass + " {");
 				printSerial(out);
-				out.printImport(RecordImpl.class);
 
 				for (ColumnDefinition column : table.getColumns()) {
 					printGetterAndSetter(out, column, table, targetPackageName + ".tables");
@@ -185,7 +225,14 @@ public class DefaultGenerator implements Generator {
 
 				out.println();
 				out.println("\tpublic " + table.getJavaClassName("Record") + "(Result result) {");
-				out.println("\t\tsuper(result);");
+
+				out.print("\t\tsuper(result");
+				out.print(", ");
+				out.print(table.getJavaClassName());
+				out.print(".");
+				out.print(table.getNameUC());
+				out.println(");");
+
 				out.println("\t}");
 				out.printImport(Result.class);
 
@@ -371,11 +418,14 @@ public class DefaultGenerator implements Generator {
 	}
 
 	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) throws SQLException {
-		printColumnDefinition(out, column, targetTableNameUC, TableField.class, TableFieldImpl.class);
+		Class<?> declaredMemberClass = TableField.class;
+		Class<?> concreteMemberClass = TableFieldImpl.class;
+
+		printColumnDefinition(out, column, targetTableNameUC, declaredMemberClass, concreteMemberClass);
 	}
 
 	private void printParameter(GenerationWriter out, ColumnDefinition parameter) throws SQLException {
-		printColumnDefinition(out, parameter, null, ParameterImpl.class, ParameterImpl.class);
+		printColumnDefinition(out, parameter, null, Parameter.class, ParameterImpl.class);
 	}
 
 	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, String targetObjectNameUC, Class<?> declaredMemberClass, Class<?> concreteMemberClass) throws SQLException {

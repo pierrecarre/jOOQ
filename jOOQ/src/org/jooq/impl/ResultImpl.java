@@ -41,6 +41,7 @@ import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
+import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
@@ -58,6 +59,11 @@ class ResultImpl implements Result {
 	@Override
 	public FieldList getFields() {
 		return query.getSelect();
+	}
+
+	@Override
+	public TableList getTables() {
+		return query.getTables();
 	}
 
 	@Override

@@ -68,4 +68,33 @@ class ValueImpl<T> implements Value<T> {
 	public boolean isChanged() {
 		return isChanged;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Value<?>) {
+			Value<?> other = (Value<?>) obj;
+
+			if (value == null) {
+				return other.getValue() == null;
+			}
+
+			return value.equals(other.getValue());
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		if (value == null) {
+			return 0;
+		}
+
+		return value.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "ValueImpl [" + value + "]";
+	}
 }

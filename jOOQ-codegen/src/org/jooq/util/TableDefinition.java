@@ -45,4 +45,14 @@ public interface TableDefinition extends Definition {
 	 * All columns in the table or view
 	 */
 	List<ColumnDefinition> getColumns() throws SQLException;
+
+	/**
+	 * Get a column in this table by its name
+	 */
+	ColumnDefinition getColumn(String columnName) throws SQLException;
+
+	/**
+	 * Whether this table has primary key columns
+	 */
+	boolean hasPrimaryKey() throws SQLException;
 }

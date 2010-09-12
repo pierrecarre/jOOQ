@@ -32,8 +32,12 @@
 package org.jooq.util;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.jooq.impl.StringUtils;
 
 /**
  * A wrapper for a {@link PrintWriter}
@@ -47,19 +51,26 @@ import java.util.TreeSet;
 public class GenerationWriter {
 
 	private static final String IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
+	private static final String STATIC_INITIALISATION_STATEMENT = "__STATIC_INITIALISATION_STATEMENT__";
 
 	private final PrintWriter writer;
 	private final StringBuilder sb;
 	private final Set<String> imported;
+	private final List<String> staticInitialisationStatements;
 
 	public GenerationWriter(PrintWriter writer) {
 		this.writer = writer;
 		this.sb = new StringBuilder();
 		this.imported = new TreeSet<String>();
+		this.staticInitialisationStatements = new ArrayList<String>();
 	}
 
 	public void printImportPlaceholder() {
 		println(IMPORT_STATEMENT);
+	}
+
+	public void printStaticInitialisationStatementsPlaceholder() {
+		println(STATIC_INITIALISATION_STATEMENT);
 	}
 
 	public void printImport(Class<?> clazz) {
@@ -78,6 +89,10 @@ public class GenerationWriter {
 		imported.add(name);
 	}
 
+	public void printStaticInitialisationStatement(String statement) {
+		staticInitialisationStatements.add(statement);
+	}
+
 	public void print(String string) {
 		sb.append(string);
 	}
@@ -94,11 +109,43 @@ public class GenerationWriter {
 		String string = sb.toString();
 
 		StringBuilder imports = new StringBuilder();
+		String previous = ".";
 		for (String clazz : imported) {
+			String domain1 = clazz.substring(0, clazz.indexOf("."));
+			String domain2 = previous.substring(0, previous.indexOf("."));
+
+			if (!domain1.equals(domain2)) {
+				imports.append("\n");
+			}
+
 			imports.append("import " + clazz + ";\n");
+			previous = clazz;
+		}
+
+		StringBuilder statics = new StringBuilder();
+		boolean hasStatics = false;
+
+		for (String statement : staticInitialisationStatements) {
+			if (!StringUtils.isBlank(statement)) {
+				hasStatics = true;
+				break;
+			}
+		}
+
+		if (hasStatics) {
+			statics.append("\n");
+			statics.append("\t/*\n");
+			statics.append("\t * static initialiser\n");
+			statics.append("\t */\n");
+			statics.append("\tstatic {\n");
+			for (String statement : staticInitialisationStatements) {
+				statics.append("\t\t" + statement + "\n");
+			}
+			statics.append("\t}\n");
 		}
 
 		string = string.replace(IMPORT_STATEMENT, imports.toString());
+		string = string.replace(STATIC_INITIALISATION_STATEMENT, statics.toString());
 
 		writer.append(string);
 		writer.close();

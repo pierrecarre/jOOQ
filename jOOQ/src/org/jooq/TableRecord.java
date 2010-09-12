@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
-
 /**
- * A query for data insertion
+ * A record originating from a single table
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public interface TableRecord extends Record {
 
 	/**
-	 * @return The table that the data is inserted into
+	 * The table from which this record was read
 	 */
-	Table getInto();
-
+	Table getTable();
 }

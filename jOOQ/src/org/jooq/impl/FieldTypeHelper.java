@@ -116,7 +116,15 @@ final class FieldTypeHelper {
 	}
 
 	public static <T> T getFromResultSet(ResultSet rs, Field<T> field) throws SQLException {
-		return getFromResultSet(rs, field.getType(), field.getName());
+		// Try fetching fully qualified field name (or alias)
+		try {
+			return getFromResultSet(rs, field.getType(), field.toSQLReference());
+		}
+
+		// If that didn't work, use the unqualified field name itself
+		catch (Exception e) {
+			return getFromResultSet(rs, field.getType(), field.getName());
+		}
 	}
 
 	@SuppressWarnings("unchecked")

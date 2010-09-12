@@ -38,6 +38,7 @@ import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.TableList;
 import org.jooq.Value;
 
 /**
@@ -54,12 +55,17 @@ public class RecordImpl implements Record {
 	}
 
 	@Override
-	public FieldList getFields() {
+	public final FieldList getFields() {
 		return result.getFields();
 	}
 
+	@Override
+	public final TableList getTables() {
+		return result.getTables();
+	}
+
 	@SuppressWarnings("unchecked")
-	private <T> Value<T> getValue0(Field<T> field) {
+	protected final <T> Value<T> getValue0(Field<T> field) {
 		if (!values.containsKey(field)) {
 			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
 		}
@@ -68,7 +74,7 @@ public class RecordImpl implements Record {
 	}
 
 	@Override
-	public <T> T getValue(Field<T> field) throws IllegalArgumentException {
+	public final <T> T getValue(Field<T> field) throws IllegalArgumentException {
 		return getValue0(field).getValue();
 	}
 
@@ -78,17 +84,17 @@ public class RecordImpl implements Record {
 	}
 
 	@Override
-	public <T> void setValue(Field<T> field, T value) {
+	public final <T> void setValue(Field<T> field, T value) {
 		getValue0(field).setValue(value);
 	}
 
 	@Override
-	public <T> void setValue(Field<T> field, Value<T> value) {
+	public final <T> void setValue(Field<T> field, Value<T> value) {
 		values.put(field, value);
 	}
 
 	@Override
-	public boolean hasChangedValues() {
+	public final boolean hasChangedValues() {
 		for (Value<?> value : values.values()) {
 			if (value.isChanged()) {
 				return true;
@@ -99,7 +105,7 @@ public class RecordImpl implements Record {
 	}
 
 	@Override
-	public String toString() {
-		return "RecordImpl [values=" + values + "]";
+	public final String toString() {
+		return getClass().getSimpleName() + " [values=" + values + "]";
 	}
 }

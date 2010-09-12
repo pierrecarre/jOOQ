@@ -47,6 +47,11 @@ public interface Result extends Iterable<Record> {
 	FieldList getFields();
 
 	/**
+	 * @return The tables from which the result table is read
+	 */
+	TableList getTables();
+
+	/**
 	 * @return The resulting records
 	 */
 	List<Record> getRecords();

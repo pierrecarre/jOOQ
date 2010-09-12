@@ -3,6 +3,7 @@
  */
 package org.jooq.test.hsqldb.generatedclasses;
 
+
 import org.jooq.impl.SchemaImpl;
 
 

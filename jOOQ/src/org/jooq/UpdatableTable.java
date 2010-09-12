@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
 
 /**
- * A query for data insertion
+ * A common interface for tables whose records can be stored back to the database again.
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
-
-	/**
-	 * @return The table that the data is inserted into
-	 */
-	Table getInto();
+public interface UpdatableTable extends Updatable, Table {
 
 }

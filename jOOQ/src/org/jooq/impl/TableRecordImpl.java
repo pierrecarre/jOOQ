@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.impl;
 
-package org.jooq;
+import org.jooq.Result;
+import org.jooq.Table;
+import org.jooq.TableRecord;
 
 
 /**
- * A query for data insertion
+ * A record implementation for a record originating from a single table
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public class TableRecordImpl extends RecordImpl implements TableRecord {
 
-	/**
-	 * @return The table that the data is inserted into
-	 */
-	Table getInto();
+	private final Table table;
 
+	public TableRecordImpl(Result result, Table table) {
+		super(result);
+
+		this.table = table;
+	}
+
+	@Override
+	public Table getTable() {
+		return table;
+	}
 }

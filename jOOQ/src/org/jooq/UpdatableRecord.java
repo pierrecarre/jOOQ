@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
- * A query for data insertion
+ * A common interface for records that can be stored back to the database again.
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public interface UpdatableRecord extends Updatable, TableRecord {
 
 	/**
-	 * @return The table that the data is inserted into
+	 * The table from which this record was read
 	 */
-	Table getInto();
+	@Override
+	UpdatableTable getTable();
 
+	/**
+	 * Store this record back to the database.
+	 * <p>
+	 * If the primary key was loaded, this results in an update statement.
+	 * Otherwise, an insert statement is executed.
+	 *
+	 * @throws SQLException
+	 */
+	void store(Connection con) throws SQLException;
+
+	/**
+	 * Deletes this record from the database.
+	 *
+	 * @throws SQLException
+	 */
+	void delete(Connection con) throws SQLException;
 }

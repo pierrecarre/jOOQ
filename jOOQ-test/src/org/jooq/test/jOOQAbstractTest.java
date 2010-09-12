@@ -52,6 +52,7 @@ import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UpdatableRecord;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
 import org.jooq.impl.StringUtils;
@@ -157,6 +158,42 @@ public abstract class jOOQAbstractTest {
         assertFalse(result.getRecord(0).hasChangedValues());
         result.getRecord(0).setValue(getTAuthor_LAST_NAME(), "Coelhinho");
         assertTrue(result.getRecord(0).hasChangedValues());
+    }
+
+
+    @Test
+    public final void testORMapper() throws Exception {
+
+    	// Fetch the original record
+        SelectQuery q = QueryFactory.createSelectQuery(getTAuthor());
+        q.addCompareCondition(getTAuthor_LAST_NAME(), "Coelho");
+        q.execute(connection);
+        Result result = q.getResult();
+
+        // Modify and store the original record
+        UpdatableRecord record = (UpdatableRecord) result.getRecord(0);
+        Integer id = record.getValue(getTAuthor_ID());
+		record.setValue(getTAuthor_LAST_NAME(), "Coelhinho");
+		record.store(connection);
+
+		// Fetch the modified record
+		q = QueryFactory.createSelectQuery(getTAuthor());
+		q.addCompareCondition(getTAuthor_ID(), id);
+		q.execute(connection);
+		result = q.getResult();
+        record = (UpdatableRecord) result.getRecord(0);
+
+		assertEquals(id, record.getValue(getTAuthor_ID()));
+		assertEquals("Coelhinho", record.getValue(getTAuthor_LAST_NAME()));
+
+		// Delete the modified record
+		record.delete(connection);
+
+		// Fetch the remaining records
+		q.execute(connection);
+		result = q.getResult();
+
+		assertEquals(0, result.getNumberOfRecords());
     }
 
 	protected abstract Table getTAuthor();

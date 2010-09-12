@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,20 +28,42 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.impl;
 
-package org.jooq;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import org.jooq.Schema;
+import org.jooq.TableField;
+import org.jooq.UpdatableTable;
 
 /**
- * A query for data insertion
+ * A table implementation for a table holding a primary key
  *
  * @author Lukas Eder
  */
-public interface InsertQuery extends StoreQuery {
+public class UpdatableTableImpl extends TableImpl implements UpdatableTable {
 
 	/**
-	 * @return The table that the data is inserted into
+	 * Generated UID
 	 */
-	Table getInto();
+	private static final long serialVersionUID = 8214807990871116060L;
 
+	private final List<TableField<?>> primaryKey;
+
+	public UpdatableTableImpl(String name, Schema schema) {
+		super(name, schema);
+
+		this.primaryKey = new ArrayList<TableField<?>>();
+	}
+
+	@Override
+	public List<TableField<?>> getPrimaryKey() {
+		return Collections.unmodifiableList(primaryKey);
+	}
+
+	protected void addToPrimaryKey(TableField<?> field) {
+		primaryKey.add(field);
+	}
 }

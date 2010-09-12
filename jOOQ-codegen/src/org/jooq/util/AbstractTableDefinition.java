@@ -48,12 +48,38 @@ public abstract class AbstractTableDefinition extends AbstractDefinition impleme
 	}
 
 	@Override
+	public final String getQualifiedName() {
+		return getSchemaName() + "." + getName();
+	}
+
+	@Override
 	public final List<ColumnDefinition> getColumns() throws SQLException {
 		if (columns == null) {
 			columns = getColumns0();
 		}
-		
+
 		return columns;
+	}
+
+	@Override
+	public final ColumnDefinition getColumn(String columnName) throws SQLException {
+		for (ColumnDefinition column : getColumns()) {
+			if (column.getName().equals(columnName)) {
+				return column;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public final boolean hasPrimaryKey() throws SQLException {
+		for (ColumnDefinition column : getColumns()) {
+			if (getDatabase().getRelations().getPrimaryKey(column) != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected abstract List<ColumnDefinition> getColumns0() throws SQLException;
