@@ -74,7 +74,7 @@ public abstract class AbstractTableDefinition extends AbstractDefinition impleme
 	@Override
 	public final boolean hasPrimaryKey() throws SQLException {
 		for (ColumnDefinition column : getColumns()) {
-			if (getDatabase().getRelations().getPrimaryKey(column) != null) {
+			if (column.getPrimaryKey() != null) {
 				return true;
 			}
 		}

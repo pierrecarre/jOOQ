@@ -36,11 +36,13 @@ import static junit.framework.Assert.assertTrue;
 import static org.jooq.SortOrder.ASC;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.jooq.Comparator;
@@ -181,6 +183,27 @@ public abstract class jOOQAbstractTest {
     	DeleteQuery d = QueryFactory.createDeleteQuery(getTAuthor());
     	d.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, d.execute(connection));
+    }
+
+    @Test
+    public final void testReferentials() throws Exception {
+    	SelectQuery q = QueryFactory.createSelectQuery(getTBook());
+        q.addCompareCondition(getTBook_TITLE(), "1984");
+        q.execute(connection);
+        Result result = q.getResult();
+
+        Record book = result.getRecord(0);
+        Method getTAuthor = book.getClass().getMethod("getTAuthor", Connection.class);
+
+        Record author = (Record) getTAuthor.invoke(book, connection);
+        assertEquals("Orwell", author.getValue(getTAuthor_LAST_NAME()));
+
+        Method getTBooks = author.getClass().getMethod("getTBooks", Connection.class);
+
+        @SuppressWarnings("unchecked")
+		List<? extends Record> books = (List<? extends Record>) getTBooks.invoke(author, connection);
+
+        assertEquals(2, books.size());
     }
 
     @Test

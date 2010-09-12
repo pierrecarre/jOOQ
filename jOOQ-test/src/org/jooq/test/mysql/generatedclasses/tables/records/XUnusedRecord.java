@@ -4,7 +4,14 @@
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SelectQuery;
+import org.jooq.impl.QueryFactory;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.XUnused;
 
@@ -41,6 +48,20 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	 * 
 	 * PRIMARY KEY
 	 */
+	public List<XUnusedRecord> getXUnuseds(Connection connection) throws SQLException {
+		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
+		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
+		q.execute(connection);
+
+		return q.getResult().getRecords();
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
 	}
@@ -57,7 +78,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -66,10 +87,25 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 */
+	public XUnusedRecord getXUnused(Connection connection) throws SQLException {
+		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		q.addCompareCondition(XUnused.ID, getValue(XUnused.ID_REF));
+		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
+		q.execute(connection);
+
+		List<Record> result = q.getResult().getRecords();
+		return (XUnusedRecord) (result.size() == 1 ? result.get(0) : null);
 	}
 
 	/**

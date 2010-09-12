@@ -54,7 +54,7 @@ public interface Result extends Iterable<Record> {
 	/**
 	 * @return The resulting records
 	 */
-	List<Record> getRecords();
+	<R extends Record> List<R> getRecords();
 
 	/**
 	 * Returns a record at a given index

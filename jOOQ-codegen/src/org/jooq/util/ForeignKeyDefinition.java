@@ -40,6 +40,11 @@ import java.util.List;
 public interface ForeignKeyDefinition extends Definition {
 
 	/**
+	 * @return The definition of the referencing table
+	 */
+	TableDefinition getKeyTableDefinition();
+
+	/**
 	 * @return The list of columns making up the foreign key.
 	 */
 	List<String>  getKeyColumnNames();

@@ -34,14 +34,19 @@ package org.jooq.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SelectQuery;
 import org.jooq.TableField;
 import org.jooq.impl.ParameterImpl;
+import org.jooq.impl.QueryFactory;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
@@ -170,7 +175,7 @@ public class DefaultGenerator implements Generator {
 				Set<String> primaryKeys = new HashSet<String>();
 
 				for (ColumnDefinition column : table.getColumns()) {
-					PrimaryKeyDefinition primaryKey = database.getRelations().getPrimaryKey(column);
+					PrimaryKeyDefinition primaryKey = column.getPrimaryKey();
 
 					if (primaryKey != null && !primaryKeys.contains(primaryKey.getNameUC())) {
 						primaryKeys.add(primaryKey.getNameUC());
@@ -402,15 +407,98 @@ public class DefaultGenerator implements Generator {
 		out.println("\t}");
 
 		if (column.getDatabase().generateRelations()) {
-//			ForeignKeyDefinition foreignKey = column.getForeignKey();
-//
-//			if (foreignKey != null) {
-//				TableDefinition referenced = foreignKey.getReferencedTableDefinition();
-//				printFieldJavaDoc(out, null, column);
-//				out.println("\tpublic " + referenced.getJavaClassName("Record") + " get" + referenced.getJavaClassName() + "() {");
-//				out.println("\t\treturn null;");
-//				out.println("\t}");
-//			}
+			PrimaryKeyDefinition primaryKey = column.getPrimaryKey();
+			if (primaryKey != null && out.printOnlyOnce(primaryKey)) {
+				for (ForeignKeyDefinition foreignKey : primaryKey.getForeignKeys()) {
+					TableDefinition referencing = foreignKey.getKeyTableDefinition();
+					printFieldJavaDoc(out, null, column);
+					out.print("\tpublic List<");
+					out.print(referencing.getJavaClassName("Record"));
+					out.print("> get");
+					out.print(referencing.getJavaClassName());
+					if (!referencing.getJavaClassName().endsWith("s")) {
+						out.print("s");
+					}
+					out.println("(Connection connection) throws SQLException {");
+
+					out.print("\t\tSelectQuery q = QueryFactory.createSelectQuery(");
+					out.print(referencing.getJavaClassName());
+					out.print(".");
+					out.print(referencing.getNameUC());
+					out.println(");");
+
+					for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
+						out.print("\t\tq.addCompareCondition(");
+						out.print(referencing.getJavaClassName());
+						out.print(".");
+						out.print(foreignKey.getKeyColumnNames().get(i));
+						out.print(", getValue(");
+						out.print(table.getJavaClassName());
+						out.print(".");
+						out.print(primaryKey.getKeyColumnNames().get(i));
+						out.println("));");
+					}
+
+					out.println("\t\tq.execute(connection);");
+					out.println();
+					out.println("\t\treturn q.getResult().getRecords();");
+					out.println("\t}");
+
+					out.printImport(tablePackage + "." + referencing.getJavaClassName());
+					out.printImport(SelectQuery.class);
+					out.printImport(QueryFactory.class);
+					out.printImport(Connection.class);
+					out.printImport(SQLException.class);
+					out.printImport(List.class);
+				}
+			}
+
+			ForeignKeyDefinition foreignKey = column.getForeignKey();
+			if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
+				TableDefinition referenced = foreignKey.getReferencedTableDefinition();
+				printFieldJavaDoc(out, null, column);
+				out.print("\tpublic ");
+				out.print(referenced.getJavaClassName("Record"));
+				out.print(" get");
+				out.print(referenced.getJavaClassName());
+				out.println("(Connection connection) throws SQLException {");
+
+				out.print("\t\tSelectQuery q = QueryFactory.createSelectQuery(");
+				out.print(referenced.getJavaClassName());
+				out.print(".");
+				out.print(referenced.getNameUC());
+				out.println(");");
+
+				for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
+					out.print("\t\tq.addCompareCondition(");
+					out.print(referenced.getJavaClassName());
+					out.print(".");
+					out.print(foreignKey.getReferencedColumnNames().get(i));
+					out.print(", getValue(");
+					out.print(table.getJavaClassName());
+					out.print(".");
+					out.print(foreignKey.getKeyColumnNames().get(i));
+					out.println("));");
+				}
+
+				out.println("\t\tq.execute(connection);");
+				out.println();
+				out.println("\t\tList<Record> result = q.getResult().getRecords();");
+
+				out.print("\t\treturn (");
+				out.print(referenced.getJavaClassName("Record"));
+				out.println(") (result.size() == 1 ? result.get(0) : null);");
+
+				out.println("\t}");
+
+				out.printImport(tablePackage + "." + referenced.getJavaClassName());
+				out.printImport(SelectQuery.class);
+				out.printImport(QueryFactory.class);
+				out.printImport(Connection.class);
+				out.printImport(SQLException.class);
+				out.printImport(Record.class);
+				out.printImport(List.class);
+			}
 		}
 
 		out.printImport(tablePackage + "." + table.getJavaClassName());

@@ -102,7 +102,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			ColumnDefinition referencingColumn = getTable(referencingTableName).getColumn(referencingColumnName);
 			ColumnDefinition referencedColumn = getTable(referencedTableName).getColumn(referencedColumnName);
 
-			String primaryKey = relations.getPrimaryKey(referencedColumn).getName();
+			String primaryKey = relations.getPrimaryKeyName(referencedColumn);
 			relations.addForeignKey(key, primaryKey, referencingColumn);
 		}
 	}

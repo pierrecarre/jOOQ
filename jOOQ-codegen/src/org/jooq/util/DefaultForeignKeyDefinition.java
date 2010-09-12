@@ -37,14 +37,21 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 
 	private final List<String> keyColumnNames;
 	private final List<String> referencedColumnNames;
+	private final String referencingTableName;
 	private final String referencedTableName;
 
-	public DefaultForeignKeyDefinition(Database database, String name, String referencedTableName) {
+	public DefaultForeignKeyDefinition(Database database, String name, String referencingTableName, String referencedTableName) {
 		super(database, name, null);
 
 		this.keyColumnNames = new ArrayList<String>();
 		this.referencedColumnNames = new ArrayList<String>();
+		this.referencingTableName = referencingTableName;
 		this.referencedTableName = referencedTableName;
+	}
+
+	@Override
+	public TableDefinition getKeyTableDefinition() {
+		return new DefaultTableDefinition(getDatabase(), referencingTableName, null);
 	}
 
 	@Override

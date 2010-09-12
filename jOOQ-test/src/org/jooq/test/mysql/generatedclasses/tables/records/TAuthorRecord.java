@@ -4,11 +4,17 @@
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
 
 import org.jooq.Result;
+import org.jooq.SelectQuery;
+import org.jooq.impl.QueryFactory;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
+import org.jooq.test.mysql.generatedclasses.tables.TBook;
 
 
 /**
@@ -36,6 +42,19 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);
+	}
+
+	/**
+	 * The author ID
+	 * 
+	 * PRIMARY KEY
+	 */
+	public List<TBookRecord> getTBooks(Connection connection) throws SQLException {
+		SelectQuery q = QueryFactory.createSelectQuery(TBook.T_BOOK);
+		q.addCompareCondition(TBook.AUTHOR_ID, getValue(TAuthor.ID));
+		q.execute(connection);
+
+		return q.getResult().getRecords();
 	}
 
 	/**

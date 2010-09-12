@@ -41,6 +41,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 	private Map<String, String> columnToForeignKey = new HashMap<String, String>();
 
 	private Map<String, String> primaryKeyToTable = new HashMap<String, String>();
+	private Map<String, String> foreignKeyToTable = new HashMap<String, String>();
 	private Map<String, Set<ColumnDefinition>> primaryKeyToColumns = new HashMap<String, Set<ColumnDefinition>>();
 	private Map<String, Set<ColumnDefinition>> foreignKeyToColumns = new HashMap<String, Set<ColumnDefinition>>();
 
@@ -69,6 +70,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 
 	public void addForeignKey(String key, String primaryKey, ColumnDefinition column) {
 		columnToForeignKey.put(column.getQualifiedName(), key);
+		foreignKeyToTable.put(key, column.getTableName());
 		Set<ColumnDefinition> list = foreignKeyToColumns.get(key);
 
 		if (list == null) {
@@ -87,6 +89,11 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 		}
 
 		list2.add(key);
+	}
+
+	public String getPrimaryKeyName(ColumnDefinition column) {
+		String qualifiedName = column.getQualifiedName();
+		return columnToPrimaryKey.get(qualifiedName);
 	}
 
 	@Override
@@ -130,7 +137,10 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 				String primaryKey = foreignKeyToPrimaryKey.get(foreignKey);
 
 				if (primaryKey != null) {
-					definition = new DefaultForeignKeyDefinition(getDatabase(), foreignKey, primaryKeyToTable.get(primaryKey));
+					definition = new DefaultForeignKeyDefinition(
+							getDatabase(), foreignKey,
+							foreignKeyToTable.get(foreignKey),
+							primaryKeyToTable.get(primaryKey));
 
 					for (ColumnDefinition c : foreignKeyToColumns.get(foreignKey)) {
 						definition.getKeyColumnNames().add(c.getName());

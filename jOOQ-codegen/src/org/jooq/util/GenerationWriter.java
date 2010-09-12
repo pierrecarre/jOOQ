@@ -33,6 +33,7 @@ package org.jooq.util;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -57,12 +58,14 @@ public class GenerationWriter {
 	private final StringBuilder sb;
 	private final Set<String> imported;
 	private final List<String> staticInitialisationStatements;
+	private final Set<Object> alreadyPrinted;
 
 	public GenerationWriter(PrintWriter writer) {
 		this.writer = writer;
 		this.sb = new StringBuilder();
 		this.imported = new TreeSet<String>();
 		this.staticInitialisationStatements = new ArrayList<String>();
+		this.alreadyPrinted = new HashSet<Object>();
 	}
 
 	public void printImportPlaceholder() {
@@ -103,6 +106,15 @@ public class GenerationWriter {
 
 	public void println() {
 		sb.append("\n");
+	}
+
+	public boolean printOnlyOnce(Object object) {
+		if (!alreadyPrinted.contains(object)) {
+			alreadyPrinted.add(object);
+			return true;
+		}
+
+		return false;
 	}
 
 	public void close() {

@@ -132,6 +132,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 			if (definition == null) {
 				definition = new DefaultForeignKeyDefinition(
 						getDatabase(),
+						getTableName(),
 						record.getValue(constraint),
 						record.getValue(referencedTable));
 			}

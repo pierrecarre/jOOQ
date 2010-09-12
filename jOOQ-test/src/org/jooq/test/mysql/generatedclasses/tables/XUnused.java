@@ -55,7 +55,7 @@ public class XUnused extends UpdatableTableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public static final TableField<Integer> ID_REF = new TableFieldImpl<Integer>("ID_REF", Integer.class, X_UNUSED);
 
