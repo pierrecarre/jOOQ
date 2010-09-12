@@ -48,7 +48,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
 	AbstractQuery() {
 	}
-	
+
 	@Override
 	public final int execute(DataSource source) throws SQLException {
 		return execute(source.getConnection());
@@ -69,5 +69,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 		}
 	}
 
-	protected abstract int execute(PreparedStatement statement) throws SQLException;
+	/**
+	 * Default implementation for query execution. Subclasses may override this
+	 * method.
+	 */
+	protected int execute(PreparedStatement statement) throws SQLException {
+		return statement.executeUpdate();
+	}
 }

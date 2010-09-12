@@ -41,6 +41,7 @@ import static org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 
 import org.jooq.Configuration;
@@ -72,27 +73,42 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	protected String getCreateScript() {
 		return "/org/jooq/test/mysql/create.sql";
 	}
-	
+
 	@Override
 	protected Table getTAuthor() {
 		return T_AUTHOR;
 	}
-	
+
 	@Override
 	protected TableField<String> getTAuthor_LAST_NAME() {
 		return LAST_NAME;
 	}
 
 	@Override
+	protected TableField<String> getTAuthor_FIRST_NAME() {
+		return TAuthor.FIRST_NAME;
+	}
+
+	@Override
+	protected TableField<Date> getTAuthor_DATE_OF_BIRTH() {
+		return TAuthor.DATE_OF_BIRTH;
+	}
+
+	@Override
 	protected TableField<Integer> getTAuthor_ID() {
 		return TAuthor.ID;
 	}
-	
+
 	@Override
 	protected Table getTBook() {
 		return T_BOOK;
 	}
-	
+
+	@Override
+	protected TableField<Integer> getTBook_ID() {
+		return TBook.ID;
+	}
+
 	@Override
 	protected TableField<Integer> getTBook_AUTHOR_ID() {
 		return TBook.AUTHOR_ID;
@@ -117,7 +133,7 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	protected TableField<String> getVLibrary_AUTHOR() {
 		return AUTHOR;
 	}
-	
+
 	@Test
     public final void testProcedure() throws Exception {
         PAuthorExists procedure = new PAuthorExists();

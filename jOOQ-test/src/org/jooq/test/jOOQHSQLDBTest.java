@@ -32,6 +32,7 @@
 package org.jooq.test;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 
 import org.jooq.Configuration;
@@ -72,6 +73,16 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest {
 	}
 
 	@Override
+	protected TableField<String> getTAuthor_FIRST_NAME() {
+		return TAuthor.FIRST_NAME;
+	}
+
+	@Override
+	protected TableField<Date> getTAuthor_DATE_OF_BIRTH() {
+		return TAuthor.DATE_OF_BIRTH;
+	}
+
+	@Override
 	protected TableField<Integer> getTAuthor_ID() {
 		return TAuthor.ID;
 	}
@@ -79,6 +90,11 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest {
 	@Override
 	protected Table getTBook() {
 		return TBook.T_BOOK;
+	}
+
+	@Override
+	protected TableField<Integer> getTBook_ID() {
+		return TBook.ID;
 	}
 
 	@Override

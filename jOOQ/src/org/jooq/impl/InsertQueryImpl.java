@@ -69,11 +69,6 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 	}
 
 	@Override
-	protected int execute(PreparedStatement statement) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
-	@Override
 	public Table getInto() {
 		return into;
 	}
@@ -107,7 +102,7 @@ class InsertQueryImpl extends AbstractQuery implements InsertQuery {
 		String separator1 = "";
 		for (Field<?> field : getValues0().keySet()) {
 			sb.append(separator1);
-			sb.append(field.toSQLReference(inlineParameters));
+			sb.append(field.getName());
 			separator1 = ", ";
 		}
 

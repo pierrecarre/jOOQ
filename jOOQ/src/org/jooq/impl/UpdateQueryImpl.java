@@ -77,11 +77,6 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		return result;
 	}
 
-	@Override
-	protected int execute(PreparedStatement statement) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
 	Table getTable() {
 		return table;
 	}

@@ -46,13 +46,16 @@ import org.apache.commons.io.FileUtils;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.DatePart;
+import org.jooq.DeleteQuery;
 import org.jooq.Field;
+import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
+import org.jooq.UpdateQuery;
 import org.jooq.impl.Functions;
 import org.jooq.impl.QueryFactory;
 import org.jooq.impl.StringUtils;
@@ -160,31 +163,49 @@ public abstract class jOOQAbstractTest {
         assertTrue(result.getRecord(0).hasChangedValues());
     }
 
+    @Test
+    public final void testInsertUpdateDelete() throws Exception {
+    	InsertQuery i = QueryFactory.createInsertQuery(getTAuthor());
+    	i.addValue(getTAuthor_ID(), 100);
+    	i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
+    	i.addValue(getTAuthor_LAST_NAME(), "Hesse");
+    	i.addValue(getTAuthor_DATE_OF_BIRTH(), new Date(System.currentTimeMillis()));
+    	assertEquals(1, i.execute(connection));
+
+    	UpdateQuery u = QueryFactory.createUpdateQuery(getTAuthor());
+    	u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
+    	u.addCompareCondition(getTAuthor_ID(), 100);
+    	assertEquals(1, u.execute(connection));
+
+    	DeleteQuery d = QueryFactory.createDeleteQuery(getTAuthor());
+    	d.addCompareCondition(getTAuthor_ID(), 100);
+    	assertEquals(1, d.execute(connection));
+    }
 
     @Test
     public final void testORMapper() throws Exception {
 
     	// Fetch the original record
-        SelectQuery q = QueryFactory.createSelectQuery(getTAuthor());
-        q.addCompareCondition(getTAuthor_LAST_NAME(), "Coelho");
+        SelectQuery q = QueryFactory.createSelectQuery(getTBook());
+        q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result result = q.getResult();
 
         // Modify and store the original record
         UpdatableRecord record = (UpdatableRecord) result.getRecord(0);
-        Integer id = record.getValue(getTAuthor_ID());
-		record.setValue(getTAuthor_LAST_NAME(), "Coelhinho");
+        Integer id = record.getValue(getTBook_ID());
+		record.setValue(getTBook_TITLE(), "1985");
 		record.store(connection);
 
 		// Fetch the modified record
-		q = QueryFactory.createSelectQuery(getTAuthor());
-		q.addCompareCondition(getTAuthor_ID(), id);
+		q = QueryFactory.createSelectQuery(getTBook());
+		q.addCompareCondition(getTBook_ID(), id);
 		q.execute(connection);
 		result = q.getResult();
         record = (UpdatableRecord) result.getRecord(0);
 
-		assertEquals(id, record.getValue(getTAuthor_ID()));
-		assertEquals("Coelhinho", record.getValue(getTAuthor_LAST_NAME()));
+		assertEquals(id, record.getValue(getTBook_ID()));
+		assertEquals("1985", record.getValue(getTBook_TITLE()));
 
 		// Delete the modified record
 		record.delete(connection);
@@ -198,8 +219,11 @@ public abstract class jOOQAbstractTest {
 
 	protected abstract Table getTAuthor();
 	protected abstract TableField<String> getTAuthor_LAST_NAME();
+	protected abstract TableField<String> getTAuthor_FIRST_NAME();
+	protected abstract TableField<Date> getTAuthor_DATE_OF_BIRTH();
 	protected abstract TableField<Integer> getTAuthor_ID() ;
 	protected abstract Table getTBook();
+	protected abstract TableField<Integer> getTBook_ID();
 	protected abstract TableField<Integer> getTBook_AUTHOR_ID();
 	protected abstract TableField<String> getTBook_TITLE();
 	protected abstract Table getVLibrary();

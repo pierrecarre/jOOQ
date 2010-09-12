@@ -68,11 +68,6 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 		return result;
 	}
 
-	@Override
-	protected int execute(PreparedStatement statement) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
-
 	Table getFrom() {
 		return table;
 	}

@@ -431,8 +431,8 @@ public class jOOQTest {
 		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
-		assertEquals("insert into TABLE1 (TABLE1.ID1) values (10)", q.toSQLReference(true));
-		assertEquals("insert into TABLE1 (TABLE1.ID1) values (?)", q.toSQLReference(false));
+		assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQLReference(true));
+		assertEquals("insert into TABLE1 (ID1) values (?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -450,8 +450,8 @@ public class jOOQTest {
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
-		assertEquals("insert into TABLE1 (TABLE1.ID1, TABLE1.NAME1) values (10, 'ABC')", q.toSQLReference(true));
-		assertEquals("insert into TABLE1 (TABLE1.ID1, TABLE1.NAME1) values (?, ?)", q.toSQLReference(false));
+		assertEquals("insert into TABLE1 (ID1, NAME1) values (10, 'ABC')", q.toSQLReference(true));
+		assertEquals("insert into TABLE1 (ID1, NAME1) values (?, ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
