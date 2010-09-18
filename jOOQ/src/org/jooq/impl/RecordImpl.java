@@ -37,7 +37,7 @@ import java.util.Map;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.TableList;
 import org.jooq.Value;
 
@@ -46,22 +46,22 @@ import org.jooq.Value;
  */
 public class RecordImpl implements Record {
 
-	private final Result result;
+	private final RecordMetaData metaData;
 	private final Map<Field<?>, Value<?>> values;
 
-	public RecordImpl(Result result) {
-		this.result = result;
+	public RecordImpl(RecordMetaData metaData) {
+		this.metaData = metaData;
 		this.values = new LinkedHashMap<Field<?>, Value<?>>();
 	}
 
 	@Override
 	public final FieldList getFields() {
-		return result.getFields();
+		return metaData.getFields();
 	}
 
 	@Override
 	public final TableList getTables() {
-		return result.getTables();
+		return metaData.getTables();
 	}
 
 	@SuppressWarnings("unchecked")

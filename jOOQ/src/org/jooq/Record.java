@@ -38,17 +38,7 @@ package org.jooq;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Record {
-
-	/**
-	 * @return The fields contained in the result table
-	 */
-	FieldList getFields();
-
-	/**
-	 * @return The tables from which this record is read
-	 */
-	TableList getTables();
+public interface Record extends RecordMetaData {
 
 	/**
 	 * @param <T>

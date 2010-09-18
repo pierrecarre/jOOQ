@@ -42,7 +42,7 @@ import java.util.Set;
 
 import org.jooq.Parameter;
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.TableField;
 import org.jooq.impl.ParameterImpl;
@@ -229,9 +229,9 @@ public class DefaultGenerator implements Generator {
 				}
 
 				out.println();
-				out.println("\tpublic " + table.getJavaClassName("Record") + "(Result result) {");
+				out.println("\tpublic " + table.getJavaClassName("Record") + "(RecordMetaData metaData) {");
 
-				out.print("\t\tsuper(result");
+				out.print("\t\tsuper(metaData");
 				out.print(", ");
 				out.print(table.getJavaClassName());
 				out.print(".");
@@ -239,7 +239,7 @@ public class DefaultGenerator implements Generator {
 				out.println(");");
 
 				out.println("\t}");
-				out.printImport(Result.class);
+				out.printImport(RecordMetaData.class);
 
 				out.println("}");
 				out.close();

@@ -39,9 +39,4 @@ package org.jooq;
  */
 public interface InsertQuery extends StoreQuery {
 
-	/**
-	 * @return The table that the data is inserted into
-	 */
-	Table getInto();
-
 }

@@ -4,7 +4,7 @@
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 
@@ -46,7 +46,7 @@ public class VLibraryRecord extends TableRecordImpl {
 		return getValue(VLibrary.TITLE);
 	}
 
-	public VLibraryRecord(Result result) {
-		super(result, VLibrary.V_LIBRARY);
+	public VLibraryRecord(RecordMetaData metaData) {
+		super(metaData, VLibrary.V_LIBRARY);
 	}
 }

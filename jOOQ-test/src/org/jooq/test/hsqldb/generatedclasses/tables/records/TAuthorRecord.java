@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -111,7 +111,7 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
-	public TAuthorRecord(Result result) {
-		super(result, TAuthor.T_AUTHOR);
+	public TAuthorRecord(RecordMetaData metaData) {
+		super(metaData, TAuthor.T_AUTHOR);
 	}
 }

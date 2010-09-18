@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -124,7 +124,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 		return getValue(XUnused.NAME_REF);
 	}
 
-	public XUnusedRecord(Result result) {
-		super(result, XUnused.X_UNUSED);
+	public XUnusedRecord(RecordMetaData metaData) {
+		super(metaData, XUnused.X_UNUSED);
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,60 +28,89 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.jooq.Field;
-import org.jooq.InsertQuery;
 import org.jooq.Record;
+import org.jooq.StoreQuery;
 import org.jooq.Table;
 
 /**
+ * A default implementation for store queries.
+ *
  * @author Lukas Eder
  */
-class InsertQueryImpl extends AbstractStoreQuery implements InsertQuery {
+abstract class AbstractStoreQuery extends AbstractQuery implements StoreQuery {
 
-	private static final long serialVersionUID = 4466005417945353842L;
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = 6864591335823160569L;
 
-	InsertQueryImpl(Table into) {
-		super(into);
+	private final Table into;
+	private final Map<Field<?>, Object> values;
+
+	AbstractStoreQuery(Table into) {
+		this.into = into;
+		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
 
-	InsertQueryImpl(Table into, Record record) {
-		super(into, record);
+	AbstractStoreQuery(Table into, Record record) {
+		this(into);
+
+		setRecord(record);
 	}
 
 	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getValues0().isEmpty()) {
-			throw new IllegalStateException("Cannot create SQL for empty insert statement");
+	public final Table getInto() {
+		return into;
+	}
+
+	@Override
+	public final Map<Field<?>, ?> getValues() {
+		return Collections.unmodifiableMap(getValues0());
+	}
+
+	protected final Map<Field<?>, Object> getValues0() {
+		return values;
+	}
+
+	@Override
+	public final void setRecord(Record record) {
+		for (Field<?> field : record.getFields()) {
+			getValues0().put(field, record.getValue(field));
 		}
+	}
 
-		StringBuilder sb = new StringBuilder();
+	@Override
+	public final <T> void addValue(Field<T> field, T value) {
+		getValues0().put(field, value);
+	}
 
-		sb.append("insert into ");
-		sb.append(getInto().toSQLReference(inlineParameters));
-		sb.append(" (");
+	@Override
+	public final void addValues(Map<Field<?>, ?> values) {
+		for (Entry<Field<?>, ?> value : values.entrySet()) {
+			getValues0().put(value.getKey(), value.getValue());
+		}
+	}
 
-		String separator1 = "";
+	@Override
+	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		int result = initialIndex;
+
+		result = getInto().bind(stmt, result);
 		for (Field<?> field : getValues0().keySet()) {
-			sb.append(separator1);
-			sb.append(field.getName());
-			separator1 = ", ";
+			result = field.bind(stmt, result);
+			bind(stmt, result++, field, getValues0().get(field));
 		}
 
-		sb.append(") values (");
-
-		String separator2 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			Object value = getValues0().get(field);
-
-			sb.append(separator2);
-			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
-			separator2 = ", ";
-		}
-		sb.append(")");
-
-		return sb.toString();
+		return result;
 	}
 }

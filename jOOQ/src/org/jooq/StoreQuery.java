@@ -41,9 +41,22 @@ import java.util.Map;
 public interface StoreQuery extends Query, QueryPart {
 
 	/**
+	 * @return The table that the data is stored into
+	 */
+	Table getInto();
+
+	/**
 	 * @return A mapping of fields and values that are stored by the query
 	 */
 	Map<Field<?>, ?> getValues();
+
+	/**
+	 * Add values to the store statement
+	 *
+	 * @param record
+	 *            The record holding values that are stored by the query
+	 */
+	void setRecord(Record record);
 
 	/**
 	 * Add a value to the store statement
@@ -56,4 +69,12 @@ public interface StoreQuery extends Query, QueryPart {
 	 *            The value
 	 */
 	<T> void addValue(Field<T> field, T value);
+
+	/**
+	 * Add values to the store statement
+	 *
+	 * @param values
+	 *            A mapping of fields and values that are stored by the query
+	 */
+	void addValues(Map<Field<?>, ?> values);
 }

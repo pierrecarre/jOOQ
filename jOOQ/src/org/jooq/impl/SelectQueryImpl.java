@@ -53,6 +53,7 @@ import org.jooq.JoinType;
 import org.jooq.Limit;
 import org.jooq.OrderByFieldList;
 import org.jooq.Record;
+import org.jooq.RecordMetaData;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.SortOrder;
@@ -342,7 +343,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 
 				Class<? extends Record> recordType = getRecordType();
 				try {
-					record = recordType.getConstructor(Result.class).newInstance(result);
+					record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
 				} catch (Exception e) {
 					record = new RecordImpl(result);
 				}

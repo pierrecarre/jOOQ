@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,60 +28,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.impl;
-
-import org.jooq.Field;
-import org.jooq.InsertQuery;
-import org.jooq.Record;
-import org.jooq.Table;
+package org.jooq;
 
 /**
+ * RecordMetaData holds meta data information about a given record
+ *
  * @author Lukas Eder
  */
-class InsertQueryImpl extends AbstractStoreQuery implements InsertQuery {
+public interface RecordMetaData {
 
-	private static final long serialVersionUID = 4466005417945353842L;
+	/**
+	 * @return The fields contained in the result table
+	 */
+	FieldList getFields();
 
-	InsertQueryImpl(Table into) {
-		super(into);
-	}
+	/**
+	 * @return The tables from which this record is read
+	 */
+	TableList getTables();
 
-	InsertQueryImpl(Table into, Record record) {
-		super(into, record);
-	}
-
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getValues0().isEmpty()) {
-			throw new IllegalStateException("Cannot create SQL for empty insert statement");
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("insert into ");
-		sb.append(getInto().toSQLReference(inlineParameters));
-		sb.append(" (");
-
-		String separator1 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			sb.append(separator1);
-			sb.append(field.getName());
-			separator1 = ", ";
-		}
-
-		sb.append(") values (");
-
-		String separator2 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			Object value = getValues0().get(field);
-
-			sb.append(separator2);
-			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
-			separator2 = ", ";
-		}
-		sb.append(")");
-
-		return sb.toString();
-	}
 }

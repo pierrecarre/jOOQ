@@ -39,17 +39,7 @@ import java.util.List;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Result extends Iterable<Record> {
-
-	/**
-	 * @return The fields contained in the result table
-	 */
-	FieldList getFields();
-
-	/**
-	 * @return The tables from which the result table is read
-	 */
-	TableList getTables();
+public interface Result extends RecordMetaData, Iterable<Record> {
 
 	/**
 	 * @return The resulting records

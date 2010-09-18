@@ -36,29 +36,31 @@ import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 
 /**
  * @author Lukas Eder
  */
-class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
+class UpdateQueryImpl extends AbstractStoreQuery implements UpdateQuery {
 
 	private static final long serialVersionUID = -660460731970074719L;
-	private final Table table;
-	private final Map<Field<?>, Object> values;
 	private final ConditionProviderImpl condition;
 
 	UpdateQueryImpl(Table table) {
-		this.table = table;
-		this.values = new LinkedHashMap<Field<?>, Object>();
+		super(table);
+
+		this.condition = new ConditionProviderImpl();
+	}
+
+	UpdateQueryImpl(Table table, Record record) {
+		super(table, record);
+
 		this.condition = new ConditionProviderImpl();
 	}
 
@@ -66,19 +68,10 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
 		int result = initialIndex;
 
-		result = getTable().bind(stmt, result);
-		for (Field<?> field : getValues0().keySet()) {
-			result = field.bind(stmt, result);
-			bind(stmt, result++, field, getValues0().get(field));
-		}
-
+		result = super.bind(stmt, initialIndex);
 		result = condition.bind(stmt, result);
 
 		return result;
-	}
-
-	Table getTable() {
-		return table;
 	}
 
 	@Override
@@ -131,20 +124,6 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 	}
 
 	@Override
-	public Map<Field<?>, ?> getValues() {
-		return Collections.unmodifiableMap(getValues0());
-	}
-
-	protected Map<Field<?>, Object> getValues0() {
-		return values;
-	}
-
-	@Override
-	public <T> void addValue(Field<T> field, T value) {
-		getValues0().put(field, value);
-	}
-
-	@Override
 	public String toSQLReference(boolean inlineParameters) {
 		if (getValues0().isEmpty()) {
 			throw new IllegalStateException("Cannot create SQL for empty insert statement");
@@ -153,7 +132,7 @@ class UpdateQueryImpl extends AbstractQuery implements UpdateQuery {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("update ");
-		sb.append(getTable().toSQLReference(inlineParameters));
+		sb.append(getInto().toSQLReference(inlineParameters));
 		sb.append(" set ");
 
 		String separator = "";

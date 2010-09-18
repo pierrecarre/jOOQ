@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -88,7 +88,7 @@ public class TBookRecord extends UpdatableRecordImpl {
 		return getValue(TBook.TITLE);
 	}
 
-	public TBookRecord(Result result) {
-		super(result, TBook.T_BOOK);
+	public TBookRecord(RecordMetaData metaData) {
+		super(metaData, TBook.T_BOOK);
 	}
 }

@@ -30,7 +30,7 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
@@ -44,8 +44,8 @@ public class TableRecordImpl extends RecordImpl implements TableRecord {
 
 	private final Table table;
 
-	public TableRecordImpl(Result result, Table table) {
-		super(result);
+	public TableRecordImpl(RecordMetaData metaData, Table table) {
+		super(metaData);
 
 		this.table = table;
 	}
