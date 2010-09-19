@@ -75,7 +75,16 @@ public abstract class AbstractDefinition implements Definition {
 		StringBuilder result = new StringBuilder();
 
 		for (String word : getName().split("_")) {
-			result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
+
+			// Uppercase first letter of a word
+			if (word.length() > 0) {
+				result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
+			}
+
+			// If no letter exists, prevail the underscore (e.g. leading underscores)
+			else {
+				result.append("_");
+			}
 		}
 
 		return result.toString();
