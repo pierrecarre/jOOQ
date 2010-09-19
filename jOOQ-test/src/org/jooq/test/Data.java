@@ -31,6 +31,8 @@
 
 package org.jooq.test;
 
+import java.sql.Date;
+
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
@@ -51,6 +53,10 @@ public final class Data {
 	public static final TableField<String> FIELD_NAME1 = new TableFieldImpl<String>("NAME1", String.class, TABLE1);
 	public static final TableField<String> FIELD_NAME2 = new TableFieldImpl<String>("NAME2", String.class, TABLE2);
 	public static final TableField<String> FIELD_NAME3 = new TableFieldImpl<String>("NAME3", String.class, TABLE3);
+
+	public static final TableField<Date> FIELD_DATE1 = new TableFieldImpl<Date>("DATE1", Date.class, TABLE1);
+	public static final TableField<Date> FIELD_DATE2 = new TableFieldImpl<Date>("DATE2", Date.class, TABLE2);
+	public static final TableField<Date> FIELD_DATE3 = new TableFieldImpl<Date>("DATE3", Date.class, TABLE3);
 
 	private Data() {}
 }

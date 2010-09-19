@@ -41,6 +41,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 
 import org.jooq.Field;
 import org.jooq.NamedTypeProviderQueryPart;
@@ -79,7 +80,10 @@ final class FieldTypeHelper {
 				// Not supported
 			}
 			else if (type == Date.class) {
-				// Not supported
+				if (value instanceof Date) {
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+					return "'" + f.format((Date) value) + "'";
+				}
 			}
 			else if (type == Double.class) {
 				return value.toString();
@@ -100,10 +104,16 @@ final class FieldTypeHelper {
 				return "'" + value.toString().replace("'", "''") + "'";
 			}
 			else if (type == Time.class) {
-				// Not supported
+				if (value instanceof Date) {
+					SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+					return "'" + f.format((Time) value) + "'";
+				}
 			}
 			else if (type == Timestamp.class) {
-				// Not supported
+				if (value instanceof Timestamp) {
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					return "'" + f.format((Timestamp) value) + "'";
+				}
 			}
 			else {
 				// Not supported

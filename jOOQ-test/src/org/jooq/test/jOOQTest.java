@@ -37,6 +37,7 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
 import static org.jooq.impl.QueryFactory.select;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
+import static org.jooq.test.Data.FIELD_DATE1;
 import static org.jooq.test.Data.FIELD_ID1;
 import static org.jooq.test.Data.FIELD_ID2;
 import static org.jooq.test.Data.FIELD_ID3;
@@ -45,6 +46,7 @@ import static org.jooq.test.Data.TABLE1;
 import static org.jooq.test.Data.TABLE2;
 import static org.jooq.test.Data.TABLE3;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 
 import junit.framework.Assert;
@@ -450,16 +452,18 @@ public class jOOQTest {
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
-		assertEquals("insert into TABLE1 (ID1, NAME1) values (10, 'ABC')", q.toSQLReference(true));
-		assertEquals("insert into TABLE1 (ID1, NAME1) values (?, ?)", q.toSQLReference(false));
+		q.addValue(FIELD_DATE1, new Date(0));
+		assertEquals("insert into TABLE1 (ID1, NAME1, DATE1) values (10, 'ABC', '1970-01-01')", q.toSQLReference(true));
+		assertEquals("insert into TABLE1 (ID1, NAME1, DATE1) values (?, ?, ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
 			oneOf(statement).setString(2, "ABC");
+			oneOf(statement).setDate(3, new Date(0));
 		}});
 
 		int i = q.bind(statement);
-		assertEquals(3, i);
+		assertEquals(4, i);
 
 		context.assertIsSatisfied();
 	}
