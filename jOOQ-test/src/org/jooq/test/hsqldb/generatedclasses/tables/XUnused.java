@@ -53,14 +53,14 @@ public class XUnused extends UpdatableTableImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public static final TableField<Integer> ID_REF = new TableFieldImpl<Integer>("ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public static final TableField<String> NAME_REF = new TableFieldImpl<String>("NAME_REF", String.class, X_UNUSED);
 
@@ -75,8 +75,8 @@ public class XUnused extends UpdatableTableImpl {
 	 * static initialiser
 	 */
 	static {
-		X_UNUSED.addToPrimaryKey(NAME);
 		X_UNUSED.addToPrimaryKey(ID);
+		X_UNUSED.addToPrimaryKey(NAME);
 	}
 
 }

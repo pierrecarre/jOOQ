@@ -475,8 +475,8 @@ public class jOOQTest {
 		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?", q.toSQLReference(false));
+		assertEquals("update TABLE1 set ID1 = 10", q.toSQLReference(true));
+		assertEquals("update TABLE1 set ID1 = ?", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -494,8 +494,8 @@ public class jOOQTest {
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC'", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ?", q.toSQLReference(false));
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC'", q.toSQLReference(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ?", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -516,8 +516,8 @@ public class jOOQTest {
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
 		q.addConditions(c);
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC' where TABLE1.ID1 = 10", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ? where TABLE1.ID1 = ?", q.toSQLReference(false));
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where TABLE1.ID1 = 10", q.toSQLReference(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where TABLE1.ID1 = ?", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -541,8 +541,8 @@ public class jOOQTest {
 		q.addValue(FIELD_NAME1, "ABC");
 		q.addConditions(c1);
 		q.addConditions(c2);
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC' where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20)", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ? where (TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20)", q.toSQLReference(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where (TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);
@@ -568,8 +568,8 @@ public class jOOQTest {
 		q.addConditions(c1);
 		q.addConditions(c2);
 		q.addConditions(c2, c1);
-		assertEquals("update TABLE1 set TABLE1.ID1 = 10, TABLE1.NAME1 = 'ABC' where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
-		assertEquals("update TABLE1 set TABLE1.ID1 = ?, TABLE1.NAME1 = ? where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
+		assertEquals("update TABLE1 set ID1 = 10, NAME1 = 'ABC' where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
+		assertEquals("update TABLE1 set ID1 = ?, NAME1 = ? where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
 
 		context.checking(new Expectations() {{
 			oneOf(statement).setInt(1, 10);

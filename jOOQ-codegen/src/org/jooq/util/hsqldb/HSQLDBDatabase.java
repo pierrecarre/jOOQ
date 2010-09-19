@@ -31,6 +31,7 @@
 
 package org.jooq.util.hsqldb;
 
+import static org.jooq.util.hsqldb.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.hsqldb.information_schema.tables.ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
 import static org.jooq.util.hsqldb.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.hsqldb.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
@@ -50,6 +51,7 @@ import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
+import org.jooq.util.hsqldb.information_schema.tables.Columns;
 import org.jooq.util.hsqldb.information_schema.tables.ConstraintColumnUsage;
 import org.jooq.util.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.hsqldb.information_schema.tables.TableConstraints;
@@ -65,8 +67,13 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
 			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
+			.join(COLUMNS)
+			.on(ConstraintColumnUsage.TABLE_SCHEMA.equal(Columns.TABLE_SCHEMA)
+			.and(ConstraintColumnUsage.TABLE_NAME.equal(Columns.TABLE_NAME))
+			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
 			.where(TableConstraints.CONSTRAINT_TYPE.equal("PRIMARY KEY")
 			.and(ConstraintColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
+			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
 		query.execute(getConnection());
@@ -87,8 +94,13 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
 			.join(TABLE_CONSTRAINTS)
 			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(TableConstraints.CONSTRAINT_NAME))
+			.join(COLUMNS)
+			.on(ConstraintColumnUsage.TABLE_SCHEMA.equal(Columns.TABLE_SCHEMA)
+			.and(ConstraintColumnUsage.TABLE_NAME.equal(Columns.TABLE_NAME))
+			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
 			.where(TableConstraints.CONSTRAINT_TYPE.equal("FOREIGN KEY")
 			.and(KeyColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
+			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
 		query.execute(getConnection());

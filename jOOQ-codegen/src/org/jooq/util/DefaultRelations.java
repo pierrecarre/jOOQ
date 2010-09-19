@@ -30,26 +30,26 @@
  */
 package org.jooq.util;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class DefaultRelations extends AbstractDefinition implements Relations {
 
-	private Map<String, String> columnToPrimaryKey = new HashMap<String, String>();
-	private Map<String, String> columnToForeignKey = new HashMap<String, String>();
+	private Map<String, String> columnToPrimaryKey = new LinkedHashMap<String, String>();
+	private Map<String, String> columnToForeignKey = new LinkedHashMap<String, String>();
 
-	private Map<String, String> primaryKeyToTable = new HashMap<String, String>();
-	private Map<String, String> foreignKeyToTable = new HashMap<String, String>();
-	private Map<String, Set<ColumnDefinition>> primaryKeyToColumns = new HashMap<String, Set<ColumnDefinition>>();
-	private Map<String, Set<ColumnDefinition>> foreignKeyToColumns = new HashMap<String, Set<ColumnDefinition>>();
+	private Map<String, String> primaryKeyToTable = new LinkedHashMap<String, String>();
+	private Map<String, String> foreignKeyToTable = new LinkedHashMap<String, String>();
+	private Map<String, Set<ColumnDefinition>> primaryKeyToColumns = new LinkedHashMap<String, Set<ColumnDefinition>>();
+	private Map<String, Set<ColumnDefinition>> foreignKeyToColumns = new LinkedHashMap<String, Set<ColumnDefinition>>();
 
-	private Map<String, Set<String>> primaryKeyToForeignKeys = new HashMap<String, Set<String>>();
-	private Map<String, String> foreignKeyToPrimaryKey = new HashMap<String, String>();
+	private Map<String, Set<String>> primaryKeyToForeignKeys = new LinkedHashMap<String, Set<String>>();
+	private Map<String, String> foreignKeyToPrimaryKey = new LinkedHashMap<String, String>();
 
-	private Map<String, PrimaryKeyDefinition> primaryKeys = new HashMap<String, PrimaryKeyDefinition>();
-	private Map<String, ForeignKeyDefinition> foreignKeys = new HashMap<String, ForeignKeyDefinition>();
+	private Map<String, PrimaryKeyDefinition> primaryKeys = new LinkedHashMap<String, PrimaryKeyDefinition>();
+	private Map<String, ForeignKeyDefinition> foreignKeys = new LinkedHashMap<String, ForeignKeyDefinition>();
 
 	public DefaultRelations(Database database) {
 		super(database, "", "");
@@ -61,7 +61,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 		Set<ColumnDefinition> list = primaryKeyToColumns.get(key);
 
 		if (list == null) {
-			list = new HashSet<ColumnDefinition>();
+			list = new LinkedHashSet<ColumnDefinition>();
 			primaryKeyToColumns.put(key, list);
 		}
 
@@ -74,7 +74,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 		Set<ColumnDefinition> list = foreignKeyToColumns.get(key);
 
 		if (list == null) {
-			list = new HashSet<ColumnDefinition>();
+			list = new LinkedHashSet<ColumnDefinition>();
 			foreignKeyToColumns.put(key, list);
 		}
 
@@ -84,7 +84,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 		Set<String> list2 = primaryKeyToForeignKeys.get(primaryKey);
 
 		if (list2 == null) {
-			list2 = new HashSet<String>();
+			list2 = new LinkedHashSet<String>();
 			primaryKeyToForeignKeys.put(primaryKey, list2);
 		}
 

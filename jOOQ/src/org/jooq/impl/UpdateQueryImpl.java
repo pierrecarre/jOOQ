@@ -140,7 +140,7 @@ class UpdateQueryImpl extends AbstractStoreQuery implements UpdateQuery {
 			Object value = getValues0().get(field);
 
 			sb.append(separator);
-			sb.append(field.toSQLReference(inlineParameters));
+			sb.append(field.getName());
 			sb.append(" = ");
 			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
 			separator = ", ";

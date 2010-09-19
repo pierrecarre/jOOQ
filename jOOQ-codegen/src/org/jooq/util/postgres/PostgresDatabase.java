@@ -31,20 +31,30 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.util.postgres.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.postgres.information_schema.tables.ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
+import static org.jooq.util.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+import static org.jooq.util.postgres.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.tables.Tables.TABLES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
 import org.jooq.util.AbstractDatabase;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
+import org.jooq.util.postgres.information_schema.tables.Columns;
+import org.jooq.util.postgres.information_schema.tables.ConstraintColumnUsage;
+import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
+import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 import org.jooq.util.postgres.information_schema.tables.Tables;
 
 /**
@@ -54,10 +64,68 @@ public class PostgresDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+		SelectQuery query = QueryFactory.select()
+			.from(TABLE_CONSTRAINTS)
+			.join(CONSTRAINT_COLUMN_USAGE)
+			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
+			.join(COLUMNS)
+			.on(ConstraintColumnUsage.TABLE_SCHEMA.equal(Columns.TABLE_SCHEMA)
+			.and(ConstraintColumnUsage.TABLE_NAME.equal(Columns.TABLE_NAME))
+			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
+			.where(TableConstraints.CONSTRAINT_TYPE.equal("PRIMARY KEY")
+			.and(ConstraintColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
+			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
+			.getQuery();
+
+		query.execute(getConnection());
+		for (Record record : query.getResult()) {
+			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
+			String tableName = record.getValue(ConstraintColumnUsage.TABLE_NAME);
+			String columnName = record.getValue(ConstraintColumnUsage.COLUMN_NAME);
+
+			relations.addPrimaryKey(key, getTable(tableName).getColumn(columnName));
+		}
 	}
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+		Field<String> kcuTableName = KeyColumnUsage.TABLE_NAME.as("kcu_table_name");
+		Field<String> kcuColumnName = KeyColumnUsage.COLUMN_NAME.as("kcu_column_name");
+		Field<String> ccuTableName = ConstraintColumnUsage.TABLE_NAME.as("ccu_table_name");
+		Field<String> ccuColumnName = ConstraintColumnUsage.COLUMN_NAME.as("ccu_column_name");
+
+		SelectQuery query = QueryFactory.select(
+			TableConstraints.CONSTRAINT_NAME,
+			kcuTableName, kcuColumnName,
+			ccuTableName, ccuColumnName)
+			.from(CONSTRAINT_COLUMN_USAGE)
+			.join(KEY_COLUMN_USAGE)
+			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
+			.join(TABLE_CONSTRAINTS)
+			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(TableConstraints.CONSTRAINT_NAME))
+			.join(COLUMNS)
+			.on(ConstraintColumnUsage.TABLE_SCHEMA.equal(Columns.TABLE_SCHEMA)
+			.and(ConstraintColumnUsage.TABLE_NAME.equal(Columns.TABLE_NAME))
+			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
+			.where(TableConstraints.CONSTRAINT_TYPE.equal("FOREIGN KEY")
+			.and(KeyColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
+			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
+			.getQuery();
+
+		query.execute(getConnection());
+		for (Record record : query.getResult()) {
+			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
+			String referencingTableName = record.getValue(kcuTableName);
+			String referencingColumnName = record.getValue(kcuColumnName);
+			String referencedTableName = record.getValue(ccuTableName);
+			String referencedColumnName = record.getValue(ccuColumnName);
+
+			ColumnDefinition referencingColumn = getTable(referencingTableName).getColumn(referencingColumnName);
+			ColumnDefinition referencedColumn = getTable(referencedTableName).getColumn(referencedColumnName);
+
+			String primaryKey = relations.getPrimaryKeyName(referencedColumn);
+			relations.addForeignKey(key, primaryKey, referencingColumn);
+		}
 	}
 
 	@Override

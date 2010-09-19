@@ -181,7 +181,7 @@ public class DefaultGenerator implements Generator {
 						primaryKeys.add(primaryKey.getNameUC());
 
 						for (String c : primaryKey.getKeyColumnNames()) {
-							String statement = table.getNameUC() + ".addToPrimaryKey(" + c + ");";
+							String statement = table.getNameUC() + ".addToPrimaryKey(" + c.toUpperCase() + ");";
 							out.printStaticInitialisationStatement(statement);
 						}
 					}
@@ -431,11 +431,11 @@ public class DefaultGenerator implements Generator {
 						out.print("\t\tq.addCompareCondition(");
 						out.print(referencing.getJavaClassName());
 						out.print(".");
-						out.print(foreignKey.getKeyColumnNames().get(i));
+						out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
 						out.print(", getValue(");
 						out.print(table.getJavaClassName());
 						out.print(".");
-						out.print(primaryKey.getKeyColumnNames().get(i));
+						out.print(primaryKey.getKeyColumnNames().get(i).toUpperCase());
 						out.println("));");
 					}
 
@@ -473,11 +473,11 @@ public class DefaultGenerator implements Generator {
 					out.print("\t\tq.addCompareCondition(");
 					out.print(referenced.getJavaClassName());
 					out.print(".");
-					out.print(foreignKey.getReferencedColumnNames().get(i));
+					out.print(foreignKey.getReferencedColumnNames().get(i).toUpperCase());
 					out.print(", getValue(");
 					out.print(table.getJavaClassName());
 					out.print(".");
-					out.print(foreignKey.getKeyColumnNames().get(i));
+					out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
 					out.println("));");
 				}
 

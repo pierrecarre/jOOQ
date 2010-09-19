@@ -48,8 +48,8 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	 */
 	public List<XUnusedRecord> getXUnuseds(Connection connection) throws SQLException {
 		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
-		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
 		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
+		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
 		q.execute(connection);
 
 		return q.getResult().getRecords();
@@ -76,7 +76,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -85,7 +85,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -94,12 +94,12 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public XUnusedRecord getXUnused(Connection connection) throws SQLException {
 		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
-		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
 		q.addCompareCondition(XUnused.ID, getValue(XUnused.ID_REF));
+		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
 		q.execute(connection);
 
 		List<Record> result = q.getResult().getRecords();
@@ -109,7 +109,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -118,7 +118,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [NAME_REF, ID_REF] REFERENCES X_UNUSED [NAME, ID]
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);
