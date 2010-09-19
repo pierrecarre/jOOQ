@@ -82,7 +82,8 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 	private String getArgumentListDelimiterStart() {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE: // No break
-		case HSQLDB:
+		case HSQLDB: // No break
+		case POSTGRES:
 
 			// Oracle empty argument lists do not have parentheses ()
 			if (arguments.isEmpty()) {
@@ -90,13 +91,15 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 			}
 		}
 
+		// So far, only MySQL has empty parentheses ()
 		return "(";
 	}
 
 	private String getArgumentListDelimiterEnd() {
 		switch (Configuration.getInstance().getDialect()) {
 		case ORACLE: // No break
-		case HSQLDB:
+		case HSQLDB: // No break
+		case POSTGRES:
 
 			// Oracle empty argument lists do not have parentheses ()
 			if (arguments.isEmpty()) {
@@ -104,6 +107,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 			}
 		}
 
+		// So far, only MySQL has empty parentheses ()
 		return ")";
 	}
 

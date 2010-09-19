@@ -120,8 +120,10 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		sb.append("select ");
 		sb.append(getSelect0().toSQLDeclaration(inlineParameters));
 
-		sb.append(" from ");
-		sb.append(getFrom().toSQLDeclaration(inlineParameters));
+		if (!getFrom().toSQLDeclaration(inlineParameters).isEmpty()) {
+			sb.append(" from ");
+			sb.append(getFrom().toSQLDeclaration(inlineParameters));
+		}
 
 		if (!getJoin().isEmpty()) {
 			sb.append(" ");
@@ -449,6 +451,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		// Some dialects require derived tables to provide an alias
 		switch (Configuration.getInstance().getDialect()) {
 		case MYSQL:
+		case POSTGRES:
 			result = result.as("gen_" + (int) (Math.random() * 1000000));
 			break;
 		}

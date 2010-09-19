@@ -326,7 +326,7 @@ public abstract class jOOQAbstractTest {
         q1.execute(connection);
 
         Record record = q1.getResult().getRecord(0);
-        String timestamp = record.getValue(ts).toString().replaceFirst("\\.\\d{1,3}$", "");
+        String timestamp = record.getValue(ts).toString().replaceFirst("\\.\\d+$", "");
 
         assertEquals(timestamp.split(" ")[0], record.getValue(date).toString());
         assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());

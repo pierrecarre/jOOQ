@@ -56,6 +56,8 @@ class EmptyTable extends TableImpl {
 		switch (Configuration.getInstance().getDialect()) {
 		case HSQLDB:
 			return "INFORMATION_SCHEMA.SYSTEM_USERS";
+		case POSTGRES:
+			return "";
 		default:
 			return "dual";
 		}
