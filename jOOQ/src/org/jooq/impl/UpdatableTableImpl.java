@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.TableField;
 import org.jooq.UpdatableTable;
@@ -43,7 +44,7 @@ import org.jooq.UpdatableTable;
  *
  * @author Lukas Eder
  */
-public class UpdatableTableImpl extends TableImpl implements UpdatableTable {
+public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implements UpdatableTable<R> {
 
 	/**
 	 * Generated UID

@@ -33,6 +33,7 @@ package org.jooq.test;
 
 import java.sql.Date;
 
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
@@ -42,9 +43,9 @@ import org.jooq.impl.TableImpl;
  * @author Lukas Eder
  */
 public final class Data {
-	public static final Table TABLE1 = new TableImpl("TABLE1");
-	public static final Table TABLE2 = new TableImpl("TABLE2");
-	public static final Table TABLE3 = new TableImpl("TABLE3");
+	public static final Table<Record> TABLE1 = new TableImpl<Record>("TABLE1");
+	public static final Table<Record> TABLE2 = new TableImpl<Record>("TABLE2");
+	public static final Table<Record> TABLE3 = new TableImpl<Record>("TABLE3");
 
 	public static final TableField<Integer> FIELD_ID1 = new TableFieldImpl<Integer>("ID1", Integer.class, TABLE1);
 	public static final TableField<Integer> FIELD_ID2 = new TableFieldImpl<Integer>("ID2", Integer.class, TABLE2);

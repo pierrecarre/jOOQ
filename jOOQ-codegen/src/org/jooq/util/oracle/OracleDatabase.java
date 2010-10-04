@@ -70,7 +70,7 @@ public class OracleDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SelectQuery q = createSelectQuery(ALL_TAB_COMMENTS);
+		SelectQuery<Record> q = createSelectQuery(ALL_TAB_COMMENTS);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(COMMENTS);
 		q.addConditions(

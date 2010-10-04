@@ -3,6 +3,7 @@
  */
 package org.jooq.util.hsqldb.information_schema;
 
+
 import org.jooq.impl.SchemaImpl;
 
 

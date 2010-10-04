@@ -50,10 +50,10 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 
 	private static final long serialVersionUID = -1943687511774150929L;
 
-	private final Table table;
+	private final Table<?> table;
 	private final ConditionProviderImpl condition;
 
-	DeleteQueryImpl(Table table) {
+	DeleteQueryImpl(Table<?> table) {
 		this.table = table;
 		this.condition = new ConditionProviderImpl();
 	}
@@ -68,7 +68,7 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 		return result;
 	}
 
-	Table getFrom() {
+	Table<?> getFrom() {
 		return table;
 	}
 

@@ -110,7 +110,6 @@ public class GenerationTool {
 			database.setSchemaName(properties.getProperty("jdbc.Schema"));
 			database.setIncludes(properties.getProperty("generator.database.includes").split(","));
 			database.setExcludes(properties.getProperty("generator.database.excludes").split(","));
-			database.setGenerateRecords(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.records")));
 			database.setGenerateRelations("true".equalsIgnoreCase(properties.getProperty("generator.generate.relations")));
 
 			generator.setTargetDirectory(properties.getProperty("generator.target.directory"));

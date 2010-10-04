@@ -3,7 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.impl.RecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
@@ -19,7 +19,7 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The book ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public void setId(Integer value) {
@@ -28,7 +28,7 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The book ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public Integer getId() {
@@ -37,7 +37,7 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The author ID in entity 'author'
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public void setAuthorId(Integer value) {
@@ -46,7 +46,7 @@ public class TBookRecord extends RecordImpl {
 
 	/**
 	 * The author ID in entity 'author'
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public Integer getAuthorId() {
@@ -67,7 +67,7 @@ public class TBookRecord extends RecordImpl {
 		return getValue(TBook.TITLE);
 	}
 
-	public TBookRecord(Result result) {
+	public TBookRecord(RecordMetaData result) {
 		super(result);
 	}
 }

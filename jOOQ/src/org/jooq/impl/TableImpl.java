@@ -43,7 +43,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-public class TableImpl extends AbstractNamedQueryPart implements Table {
+public class TableImpl<R extends Record> extends AbstractNamedQueryPart implements Table<R> {
 
 	private static final long serialVersionUID = 261033315221985068L;
 	private final Schema schema;
@@ -96,12 +96,13 @@ public class TableImpl extends AbstractNamedQueryPart implements Table {
 	}
 
 	@Override
-	public Table as(String alias) {
-		return new TableAlias(this, alias);
+	public Table<R> as(String alias) {
+		return new TableAlias<R>(this, alias);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Class<? extends Record> getRecordType() {
-		return RecordImpl.class;
+	public Class<R> getRecordType() {
+		return (Class<R>) RecordImpl.class;
 	}
 }

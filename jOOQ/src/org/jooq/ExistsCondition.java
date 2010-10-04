@@ -46,5 +46,5 @@ public interface ExistsCondition extends Condition {
 	/**
 	 * @return The inner select used in the condition
 	 */
-	SelectQuery getInnerSelect();
+	SelectQuery<?> getInnerSelect();
 }

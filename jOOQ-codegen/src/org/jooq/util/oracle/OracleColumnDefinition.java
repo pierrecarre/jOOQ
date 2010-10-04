@@ -67,7 +67,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 	protected PrimaryKeyDefinition getPrimaryKey1() throws SQLException {
 		PrimaryKeyDefinition definition = null;
 
-		SelectQuery q = createSelectQuery(ALL_CONS_COLUMNS);
+		SelectQuery<Record> q = createSelectQuery(ALL_CONS_COLUMNS);
 		q.addJoin(ALL_CONSTRAINTS,
 				AllConsColumns.CONSTRAINT_NAME,
 				AllConstraints.CONSTRAINT_NAME);
@@ -99,15 +99,15 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 //		    and ccx.column_name = 'NAME_REF'
 //		    and cox.constraint_type = 'R');
 
-		Table cc1 = ALL_CONS_COLUMNS.as("cc1");
-		Table cc2 = ALL_CONS_COLUMNS.as("cc2");
+		Table<Record> cc1 = ALL_CONS_COLUMNS.as("cc1");
+		Table<Record> cc2 = ALL_CONS_COLUMNS.as("cc2");
 
 		Field<String> constraint = cc2.getField(AllConsColumns.CONSTRAINT_NAME).as("constraint");
 		Field<String> referencedTable = cc2.getField(AllConsColumns.TABLE_NAME).as("referenced_table");
 		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).as("referencing_column");
 		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).as("referenced_column");
 
-		SelectQuery inner = createSelectQuery(ALL_CONS_COLUMNS);
+		SelectQuery<Record> inner = createSelectQuery(ALL_CONS_COLUMNS);
 		inner.addJoin(ALL_CONSTRAINTS, AllConsColumns.CONSTRAINT_NAME, AllConstraints.CONSTRAINT_NAME);
 		inner.addSelect(AllConstraints.CONSTRAINT_NAME);
 		inner.addConditions(
@@ -116,7 +116,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 				createCompareCondition(AllConsColumns.TABLE_NAME, getTableName()),
 				createCompareCondition(AllConsColumns.COLUMN_NAME, getName()));
 
-		SelectQuery q = createSelectQuery(ALL_CONSTRAINTS);
+		SelectQuery<Record> q = createSelectQuery(ALL_CONSTRAINTS);
 		q.addSelect(constraint, referencingColumn, referencedTable, referencedColumn);
 		q.addJoin(cc1,
 				createJoinCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.CONSTRAINT_NAME));
@@ -127,7 +127,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 
 		q.execute(getConnection());
 
-		Result result = q.getResult();
+		Result<Record> result = q.getResult();
 		for (Record record : result) {
 			if (definition == null) {
 				definition = new DefaultForeignKeyDefinition(

@@ -46,7 +46,7 @@ public interface Join extends QueryPart {
 	/**
 	 * @return The joined table
 	 */
-	Table getTable();
+	Table<?> getTable();
 
 	/**
 	 * @return The join condition. If null, natural join is used

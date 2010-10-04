@@ -34,11 +34,12 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 
 import org.jooq.Configuration;
+import org.jooq.Record;
 
 /**
  * @author Lukas Eder
  */
-class EmptyTable extends TableImpl {
+class EmptyTable extends TableImpl<Record> {
 
 	private static final long serialVersionUID = -7492790780048090156L;
 	public static final EmptyTable EMPTY_TABLE = new EmptyTable();

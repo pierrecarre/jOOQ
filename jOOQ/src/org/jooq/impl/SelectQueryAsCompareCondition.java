@@ -45,10 +45,10 @@ import org.jooq.SelectQuery;
 class SelectQueryAsCompareCondition<T> extends AbstractCondition implements CompareCondition<T> {
 
 	private static final long serialVersionUID = -3125318907657091582L;
-	private final SelectQuery query;
+	private final SelectQuery<?> query;
 	private final Field<T> field;
 
-	SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
+	SelectQueryAsCompareCondition(SelectQuery<?> query, Field<T> field) {
 		this.query = query;
 		this.field = field;
 	}

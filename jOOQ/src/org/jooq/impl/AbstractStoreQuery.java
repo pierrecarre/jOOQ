@@ -54,22 +54,22 @@ abstract class AbstractStoreQuery extends AbstractQuery implements StoreQuery {
 	 */
 	private static final long serialVersionUID = 6864591335823160569L;
 
-	private final Table into;
+	private final Table<?> into;
 	private final Map<Field<?>, Object> values;
 
-	AbstractStoreQuery(Table into) {
+	AbstractStoreQuery(Table<?> into) {
 		this.into = into;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
 
-	AbstractStoreQuery(Table into, Record record) {
+	AbstractStoreQuery(Table<?> into, Record record) {
 		this(into);
 
 		setRecord(record);
 	}
 
 	@Override
-	public final Table getInto() {
+	public final Table<?> getInto() {
 		return into;
 	}
 

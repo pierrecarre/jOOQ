@@ -40,30 +40,30 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectJoinStep extends SelectWhereStep {
+public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
 
 	/**
 	 * Join a table and proceed to the next step
 	 */
-	SelectOnStep join(Table table);
+	SelectOnStep<R> join(Table<?> table);
 
 	/**
 	 * Left join a table and proceed to the next step
 	 */
-	SelectOnStep leftJoin(Table table);
+	SelectOnStep<R> leftJoin(Table<?> table);
 
 	/**
 	 * Left outer join a table and proceed to the next step
 	 */
-	SelectOnStep leftOuterJoin(Table table);
+	SelectOnStep<R> leftOuterJoin(Table<?> table);
 
 	/**
 	 * Right join a table and proceed to the next step
 	 */
-	SelectOnStep rightJoin(Table table);
+	SelectOnStep<R> rightJoin(Table<?> table);
 
 	/**
 	 * Right outer join a table and proceed to the next step
 	 */
-	SelectOnStep rightOuterJoin(Table table);
+	SelectOnStep<R> rightOuterJoin(Table<?> table);
 }

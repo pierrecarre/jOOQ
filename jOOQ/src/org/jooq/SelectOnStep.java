@@ -40,10 +40,10 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectOnStep {
+public interface SelectOnStep<R extends Record> {
 
 	/**
 	 * Provide join conditions and proceed to the next step
 	 */
-	SelectJoinStep on(Condition... conditions);
+	SelectJoinStep<R> on(Condition... conditions);
 }

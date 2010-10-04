@@ -64,7 +64,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery q = createSelectQuery(ALL_TAB_COLS);
+		SelectQuery<Record> q = createSelectQuery(ALL_TAB_COLS);
 		q.addFrom(ALL_COL_COMMENTS);
 		q.addConditions(
 				createJoinCondition(AllTabCols.TABLE_NAME, AllColComments.TABLE_NAME),

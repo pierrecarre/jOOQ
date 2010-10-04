@@ -44,6 +44,7 @@ import javax.sql.DataSource;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.JoinType;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
@@ -64,8 +65,8 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SelectImpl implements Select, SelectStep, SelectFromStep, SelectJoinStep, SelectOnStep, SelectWhereStep,
-		SelectGroupByStep, SelectHavingStep, SelectOrderByStep {
+class SelectImpl<R extends Record> implements Select<R>, SelectStep<R>, SelectFromStep<R>, SelectJoinStep<R>, SelectOnStep<R>, SelectWhereStep<R>,
+		SelectGroupByStep<R>, SelectHavingStep<R>, SelectOrderByStep<R> {
 
 	/**
 	 * Generated UID
@@ -75,12 +76,12 @@ class SelectImpl implements Select, SelectStep, SelectFromStep, SelectJoinStep, 
 	/**
 	 * The wrapped query
 	 */
-	private final SelectQuery query;
+	private final SelectQuery<R> query;
 
 	/**
 	 * A temporary member holding a join
 	 */
-	private transient Table join;
+	private transient Table<?> join;
 
 	/**
 	 * A temporary member holding a join type
@@ -88,116 +89,106 @@ class SelectImpl implements Select, SelectStep, SelectFromStep, SelectJoinStep, 
 	private transient JoinType joinType;
 
 	SelectImpl() {
-		this(new SelectQueryImpl());
+		this(new SelectQueryImpl<R>());
 	}
 
-	SelectImpl(SelectQuery query) {
+	SelectImpl(SelectQuery<R> query) {
 		this.query = query;
 	}
 
 	@Override
-	public SelectFromStep select(Field<?>... fields) {
+	public SelectFromStep<R> select(Field<?>... fields) {
 		query.addSelect(fields);
 		return this;
 	}
 
 	@Override
-	public SelectFromStep select(Collection<Field<?>> fields) {
+	public SelectFromStep<R> select(Collection<Field<?>> fields) {
 		query.addSelect(fields);
 		return this;
 	}
 
 	@Override
-	public SelectJoinStep from(Table... tables) {
+	public SelectJoinStep<R> from(Table<?>... tables) {
 		query.addFrom(tables);
 		return this;
 	}
 
 	@Override
-	public SelectJoinStep from(Collection<Table> tables) {
+	public SelectJoinStep<R> from(Collection<Table<?>> tables) {
 		query.addFrom(tables);
 		return this;
 	}
 
 	@Override
-	public SelectGroupByStep where(Condition... conditions) {
+	public SelectGroupByStep<R> where(Condition... conditions) {
 		query.addConditions(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectGroupByStep where(Collection<Condition> conditions) {
+	public SelectGroupByStep<R> where(Collection<Condition> conditions) {
 		query.addConditions(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectHavingStep groupBy(Field<?>... fields) {
+	public SelectHavingStep<R> groupBy(Field<?>... fields) {
 		query.addGroupBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectHavingStep groupBy(Collection<Field<?>> fields) {
+	public SelectHavingStep<R> groupBy(Collection<Field<?>> fields) {
 		query.addGroupBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep orderBy(Field<?>... fields) {
+	public SelectOrderByStep<R> orderBy(Field<?>... fields) {
 		query.addOrderBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep orderBy(Collection<Field<?>> fields) {
+	public SelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
 		query.addOrderBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep orderBy(Field<?> field, SortOrder order) {
+	public SelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
 		query.addOrderBy(field, order);
 		return this;
 	}
 
 	@Override
-	public Select union(Select... selects) {
-		return new SelectImpl(query.combine(UNION, getSelectQueries(selects)));
+	public Select<R> union(Select<R> select) {
+		return new SelectImpl<R>(query.combine(UNION, select.getQuery()));
 	}
 
 	@Override
-	public Select unionAll(Select... selects) {
-		return new SelectImpl(query.combine(UNION_ALL, getSelectQueries(selects)));
+	public Select<R> unionAll(Select<R> select) {
+		return new SelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
 	}
 
 	@Override
-	public Select except(Select... selects) {
-		return new SelectImpl(query.combine(EXCEPT, getSelectQueries(selects)));
+	public Select<R> except(Select<R> select) {
+		return new SelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
 	}
 
 	@Override
-	public Select intersect(Select... selects) {
-		return new SelectImpl(query.combine(INTERSECT, getSelectQueries(selects)));
-	}
-
-	private SelectQuery[] getSelectQueries(Select[] selects) {
-		SelectQuery[] result = new SelectQuery[selects.length];
-
-		for (int i = 0; i < selects.length; i++) {
-			result[i] = selects[i].getQuery();
-		}
-
-		return result;
+	public Select<R> intersect(Select<R> select) {
+		return new SelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
 	}
 
 	@Override
-	public SelectQuery getQuery() {
+	public SelectQuery<R> getQuery() {
 		return query;
 	}
 
 	@Override
-	public Result getResult() {
+	public Result<R> getResult() {
 		return query.getResult();
 	}
 
@@ -212,19 +203,19 @@ class SelectImpl implements Select, SelectStep, SelectFromStep, SelectJoinStep, 
 	}
 
 	@Override
-	public SelectOrderByStep having(Condition... conditions) {
+	public SelectOrderByStep<R> having(Condition... conditions) {
 		query.addHaving(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep having(Collection<Condition> conditions) {
+	public SelectOrderByStep<R> having(Collection<Condition> conditions) {
 		query.addHaving(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectJoinStep on(Condition... conditions) {
+	public SelectJoinStep<R> on(Condition... conditions) {
 		query.addJoin(new JoinImpl(join, joinType, conditions));
 		join = null;
 		joinType = null;
@@ -232,42 +223,42 @@ class SelectImpl implements Select, SelectStep, SelectFromStep, SelectJoinStep, 
 	}
 
 	@Override
-	public SelectOnStep join(Table table) {
+	public SelectOnStep<R> join(Table<?> table) {
 		join = table;
 		joinType = JoinType.JOIN;
 		return this;
 	}
 
 	@Override
-	public SelectOnStep leftJoin(Table table) {
+	public SelectOnStep<R> leftJoin(Table<?> table) {
 		join = table;
 		joinType = JoinType.LEFT_JOIN;
 		return this;
 	}
 
 	@Override
-	public SelectOnStep leftOuterJoin(Table table) {
+	public SelectOnStep<R> leftOuterJoin(Table<?> table) {
 		join = table;
 		joinType = JoinType.LEFT_OUTER_JOIN;
 		return this;
 	}
 
 	@Override
-	public SelectOnStep rightJoin(Table table) {
+	public SelectOnStep<R> rightJoin(Table<?> table) {
 		join = table;
 		joinType = JoinType.RIGHT_JOIN;
 		return this;
 	}
 
 	@Override
-	public SelectOnStep rightOuterJoin(Table table) {
+	public SelectOnStep<R> rightOuterJoin(Table<?> table) {
 		join = table;
 		joinType = JoinType.RIGHT_OUTER_JOIN;
 		return this;
 	}
 
 	@Override
-	public Select getSelect() {
+	public Select<R> getSelect() {
 		return this;
 	}
 

@@ -3,6 +3,7 @@
  */
 package org.jooq.util.oracle.sys.tables;
 
+import org.jooq.Record;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -14,7 +15,7 @@ import org.jooq.util.oracle.sys.Sys;
  *
  * Comments on tables and views accessible to the user
  */
-public class AllTabComments extends TableImpl {
+public class AllTabComments extends TableImpl<Record> {
 
 	private static final long serialVersionUID = 1L;
 

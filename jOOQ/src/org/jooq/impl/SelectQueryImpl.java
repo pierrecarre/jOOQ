@@ -65,11 +65,11 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl extends AbstractQuery implements SelectQuery {
+class SelectQueryImpl<R extends Record> extends AbstractQuery implements SelectQuery<R> {
 
 	private static final long serialVersionUID = 1555503854543561285L;
 
-	private ResultImpl result;
+	private ResultImpl<R> result;
 	private final FieldList select;
 	private final TableList from;
 	private final JoinList join;
@@ -83,7 +83,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		this(null);
 	}
 
-	SelectQueryImpl(Table from) {
+	SelectQueryImpl(Table<R> from) {
 		this.select = new SelectFieldListImpl();
 		this.from = new TableListImpl();
 		this.join = new JoinListImpl();
@@ -214,12 +214,12 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public void addFrom(Collection<Table> from) {
+	public void addFrom(Collection<Table<?>> from) {
 		getFrom().addAll(from);
 	}
 
 	@Override
-	public final void addFrom(Table... from) {
+	public final void addFrom(Table<?>... from) {
 		addFrom(Arrays.asList(from));
 	}
 
@@ -270,22 +270,22 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final <T> void addJoin(Table table, Field<T> field1, Field<T> field2) {
+	public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
 		addJoin(QueryFactory.createJoin(table, field1, field2));
 	}
 
 	@Override
-	public final void addJoin(Table table, Condition... conditions) {
+	public final void addJoin(Table<?> table, Condition... conditions) {
 		addJoin(QueryFactory.createJoin(table, conditions));
 	}
 
 	@Override
-	public final <T> void addJoin(Table table, JoinType type, Field<T> field1, Field<T> field2) {
+	public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
 		addJoin(QueryFactory.createJoin(table, type, field1, field2));
 	}
 
 	@Override
-	public final void addJoin(Table table, JoinType type, Condition... conditions) {
+	public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
 		addJoin(QueryFactory.createJoin(table, type, conditions));
 	}
 
@@ -298,7 +298,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		if (getSelect0().isEmpty()) {
 			FieldList result = new SelectFieldListImpl();
 
-			for (Table table : getFrom()) {
+			for (Table<?> table : getFrom()) {
 				for (Field<?> field : table.getFields()) {
 					result.add(field);
 				}
@@ -327,32 +327,32 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Class<? extends Record> getRecordType() {
-		return getTables().getRecordType();
+	public Class<R> getRecordType() {
+		return (Class<R>) getTables().getRecordType();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected final int execute(PreparedStatement statement) throws SQLException {
 		ResultSet rs = null;
 
 		try {
 			rs = statement.executeQuery();
-			result = new ResultImpl(this);
+			result = new ResultImpl<R>(this);
 
 			while (rs.next()) {
-				Record record = null;
+				R record = null;
 
-				Class<? extends Record> recordType = getRecordType();
+				Class<R> recordType = getRecordType();
 				try {
 					record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
 				} catch (Exception e) {
-					record = new RecordImpl(result);
+					record = (R) new RecordImpl(result);
 				}
 
 				for (Field<?> f : getSelect()) {
-
-					@SuppressWarnings("unchecked")
 					Field<Object> field = (Field<Object>) f;
 					Object value = FieldTypeHelper.getFromResultSet(rs, f);
 
@@ -371,7 +371,7 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final Result getResult() {
+	public final Result<R> getResult() {
 		return result;
 	}
 
@@ -428,25 +428,24 @@ class SelectQueryImpl extends AbstractQuery implements SelectQuery {
 	}
 
 	@Override
-	public final SelectQuery combine(SelectQuery... others) {
-		return combine(CombineOperator.UNION, others);
+	public final SelectQuery<R> combine(SelectQuery<R> other) {
+		return combine(CombineOperator.UNION, other);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public final SelectQuery combine(CombineOperator operator, SelectQuery... others) {
-		SelectQuery[] queries = new SelectQuery[others.length + 1];
-		queries[0] = this;
-		System.arraycopy(others, 0, queries, 1, others.length);
-		return new SelectQueryImpl(asTable(operator, queries));
+	public final SelectQuery<R> combine(CombineOperator operator, SelectQuery<R> other) {
+		return new SelectQueryImpl<R>(asTable(operator, this, other));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public final Table asTable() {
+	public final Table<R> asTable() {
 		return asTable(CombineOperator.UNION, this);
 	}
 
-	private Table asTable(CombineOperator operator, SelectQuery... queries) {
-		Table result = new SelectQueryAsTable(operator, queries);
+	private Table<R> asTable(CombineOperator operator, SelectQuery<R>... queries) {
+		Table<R> result = new SelectQueryAsTable<R>(operator, queries);
 
 		// Some dialects require derived tables to provide an alias
 		switch (Configuration.getInstance().getDialect()) {

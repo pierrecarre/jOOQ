@@ -4,6 +4,8 @@
 package org.jooq.util.oracle.sys.tables;
 
 import java.math.BigDecimal;
+
+import org.jooq.Record;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -15,7 +17,7 @@ import org.jooq.util.oracle.sys.Sys;
  *
  * Information about accessible columns in constraint definitions
  */
-public class AllConsColumns extends TableImpl {
+public class AllConsColumns extends TableImpl<Record> {
 
 	private static final long serialVersionUID = 1L;
 

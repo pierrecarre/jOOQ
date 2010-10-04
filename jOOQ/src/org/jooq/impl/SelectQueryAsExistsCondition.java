@@ -44,10 +44,10 @@ import org.jooq.SelectQuery;
 class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCondition {
 
 	private static final long serialVersionUID = 5678338161136603292L;
-	private final SelectQuery query;
+	private final SelectQuery<?> query;
 	private final ExistsOperator operator;
 
-	SelectQueryAsExistsCondition(SelectQuery query, ExistsOperator operator) {
+	SelectQueryAsExistsCondition(SelectQuery<?> query, ExistsOperator operator) {
 		this.query = query;
 		this.operator = operator;
 	}
@@ -75,7 +75,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCo
 	}
 
 	@Override
-	public SelectQuery getInnerSelect() {
+	public SelectQuery<?> getInnerSelect() {
 		return query;
 	}
 }

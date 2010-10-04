@@ -36,6 +36,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface UpdatableTable extends Updatable, Table {
+public interface UpdatableTable<R extends Record> extends Updatable, Table<R> {
 
 }

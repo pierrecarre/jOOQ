@@ -43,11 +43,11 @@ class InsertQueryImpl extends AbstractStoreQuery implements InsertQuery {
 
 	private static final long serialVersionUID = 4466005417945353842L;
 
-	InsertQueryImpl(Table into) {
+	InsertQueryImpl(Table<?> into) {
 		super(into);
 	}
 
-	InsertQueryImpl(Table into, Record record) {
+	InsertQueryImpl(Table<?> into, Record record) {
 		super(into, record);
 	}
 

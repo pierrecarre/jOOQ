@@ -5,6 +5,8 @@ package org.jooq.util.oracle.sys.tables;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+
+import org.jooq.Record;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -16,7 +18,7 @@ import org.jooq.util.oracle.sys.Sys;
  *
  * Columns of user's tables, views and clusters
  */
-public class AllTabCols extends TableImpl {
+public class AllTabCols extends TableImpl<Record> {
 
 	private static final long serialVersionUID = 1L;
 

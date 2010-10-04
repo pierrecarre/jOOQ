@@ -38,7 +38,7 @@ import org.jooq.impl.RecordImpl;
  *
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table> {
+public interface TableList extends QueryPartList<Table<?>> {
 
 	/**
 	 * Returns the common record type of this table list.

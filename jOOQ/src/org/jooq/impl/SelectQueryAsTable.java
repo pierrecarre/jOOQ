@@ -45,26 +45,26 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsTable extends TableImpl implements Table {
+class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table<R> {
 
 	private static final long serialVersionUID = 6272398035926615668L;
-	private final List<SelectQuery> queries;
+	private final List<SelectQuery<R>> queries;
 	private final CombineOperator operator;
 
-	SelectQueryAsTable(SelectQuery... queries) {
-		this(CombineOperator.UNION, queries);
+	SelectQueryAsTable(SelectQuery<R>... query) {
+		this(CombineOperator.UNION, query);
 	}
 
-	SelectQueryAsTable(CombineOperator operator, SelectQuery... queries) {
+	SelectQueryAsTable(CombineOperator operator, SelectQuery<R>... query) {
 		super("");
 
 		this.operator = operator;
-		this.queries = Arrays.asList(queries);
+		this.queries = Arrays.asList(query);
 	}
 
 	@Override
-	public Table as(String alias) {
-		return new TableAlias(this, alias, true);
+	public Table<R> as(String alias) {
+		return new TableAlias<R>(this, alias, true);
 	}
 
 	@Override
@@ -73,13 +73,13 @@ class SelectQueryAsTable extends TableImpl implements Table {
 	}
 
 	@Override
-	public Class<? extends Record> getRecordType() {
+	public Class<R> getRecordType() {
 		return queries.get(0).getRecordType();
 	}
 
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		for (SelectQuery query : queries) {
+		for (SelectQuery<?> query : queries) {
 			initialIndex = query.bind(stmt, initialIndex);
 		}
 
@@ -95,7 +95,7 @@ class SelectQueryAsTable extends TableImpl implements Table {
 
 			String connector = "";
 			sb.append("(");
-			for (SelectQuery query : queries) {
+			for (SelectQuery<?> query : queries) {
 				sb.append(connector);
 				sb.append("(");
 				sb.append(query.toSQLReference(inlineParameters));

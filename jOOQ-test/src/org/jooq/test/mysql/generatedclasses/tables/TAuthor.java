@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
  *
  * An entity holding authors of books
  */
-public class TAuthor extends UpdatableTableImpl {
+public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -62,6 +62,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest {
 		return "/org/jooq/test/hsqldb/create.sql";
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected Table getTAuthor() {
 		return TAuthor.T_AUTHOR;
@@ -92,6 +93,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest {
 		return TAuthor.ID;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected Table getTBook() {
 		return TBook.T_BOOK;
@@ -112,6 +114,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest {
 		return TBook.TITLE;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected Table getVLibrary() {
 		return VLibrary.V_LIBRARY;

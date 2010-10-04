@@ -46,14 +46,14 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class ResultImpl implements Result {
+class ResultImpl<R extends Record> implements Result<R> {
 
-	private final SelectQuery query;
-	private final List<Record> records;
+	private final SelectQuery<R> query;
+	private final List<R> records;
 
-	ResultImpl(SelectQuery query) {
+	ResultImpl(SelectQuery<R> query) {
 		this.query = query;
-		this.records = new ArrayList<Record>();
+		this.records = new ArrayList<R>();
 	}
 
 	@Override
@@ -72,12 +72,12 @@ class ResultImpl implements Result {
 	}
 
 	@Override
-	public List<Record> getRecords() {
+	public List<R> getRecords() {
 		return Collections.unmodifiableList(records);
 	}
 
 	@Override
-	public Record getRecord(int index) throws IndexOutOfBoundsException {
+	public R getRecord(int index) throws IndexOutOfBoundsException {
 		return records.get(index);
 	}
 
@@ -92,11 +92,11 @@ class ResultImpl implements Result {
 	}
 
 	@Override
-	public Iterator<Record> iterator() {
+	public Iterator<R> iterator() {
 		return records.iterator();
 	}
 
-	void addRecord(Record record) {
+	void addRecord(R record) {
 		records.add(record);
 	}
 

@@ -70,7 +70,7 @@ public class Library {
 	 */
 	public static void firstRun(Connection c) throws SQLException {
 		// Create the query
-		SelectQuery q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = QueryFactory.createSelectQuery();
 		q.addFrom(T_AUTHOR);
 		q.addJoin(T_BOOK, TAuthor.ID, TBook.AUTHOR_ID);
 		q.addCompareCondition(TAuthor.YEAR_OF_BIRTH, 1920, Comparator.GREATER);
@@ -78,7 +78,7 @@ public class Library {
 
 		// Execute the query and fetch the results
 		q.execute(c);
-		Result result = q.getResult();
+		Result<Record> result = q.getResult();
 
 		// Loop over the resulting records
 		for (Record record : result) {
@@ -97,7 +97,7 @@ public class Library {
 	 * Run this code providing your own database connection.
 	 */
 	public static void secondRun(Connection c) throws SQLException {
-		SelectQuery q = QueryFactory.select()
+		SelectQuery<Record> q = QueryFactory.select()
 			.from(T_AUTHOR)
 			.join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
@@ -105,7 +105,7 @@ public class Library {
 
 		// Execute the query and fetch the results
 		q.execute(c);
-		Result result = q.getResult();
+		Result<Record> result = q.getResult();
 
 		// Loop over the resulting records
 		for (Record record : result) {

@@ -49,6 +49,7 @@ import org.jooq.Join;
 import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Operator;
+import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
@@ -302,7 +303,7 @@ public final class QueryFactory {
 	 *            The table to insert data into
 	 * @return The new {@link InsertQuery}
 	 */
-	public static InsertQuery createInsertQuery(Table into) {
+	public static InsertQuery createInsertQuery(Table<?> into) {
 		return new InsertQueryImpl(into);
 	}
 
@@ -313,7 +314,7 @@ public final class QueryFactory {
 	 *            The table to update data into
 	 * @return The new {@link UpdateQuery}
 	 */
-	public static UpdateQuery createUpdateQuery(Table table) {
+	public static UpdateQuery createUpdateQuery(Table<?> table) {
 		return new UpdateQueryImpl(table);
 	}
 
@@ -324,36 +325,36 @@ public final class QueryFactory {
 	 *            The table to delete data from
 	 * @return The new {@link DeleteQuery}
 	 */
-	public static DeleteQuery createDeleteQuery(Table table) {
+	public static DeleteQuery createDeleteQuery(Table<?> table) {
 		return new DeleteQueryImpl(table);
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static Select select() {
-		return new SelectImpl();
+	public static Select<Record> select() {
+		return new SelectImpl<Record>();
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static SelectFromStep select(Field<?>... fields) {
-		return new SelectImpl().select(fields);
+	public static SelectFromStep<Record> select(Field<?>... fields) {
+		return new SelectImpl<Record>().select(fields);
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static SelectFromStep select(Collection<Field<?>> fields) {
-		return new SelectImpl().select(fields);
+	public static SelectFromStep<Record> select(Collection<Field<?>> fields) {
+		return new SelectImpl<Record>().select(fields);
 	}
 
 	/**
 	 * Create a new {@link SelectQuery}
 	 */
-	public static SelectQuery createSelectQuery() {
-		return new SelectQueryImpl();
+	public static SelectQuery<Record> createSelectQuery() {
+		return new SelectQueryImpl<Record>();
 	}
 
 	/**
@@ -363,8 +364,8 @@ public final class QueryFactory {
 	 *            The table to select data from
 	 * @return The new {@link SelectQuery}
 	 */
-	public static SelectQuery createSelectQuery(Table table) {
-		return new SelectQueryImpl(table);
+	public static <R extends Record> SelectQuery<R> createSelectQuery(Table<R> table) {
+		return new SelectQueryImpl<R>(table);
 	}
 
 	/**
@@ -380,7 +381,7 @@ public final class QueryFactory {
 	 *            The second field of the join condition
 	 * @return A new {@link Join} part
 	 */
-	public static <T> Join createJoin(Table table, Field<T> field1, Field<T> field2) {
+	public static <T> Join createJoin(Table<?> table, Field<T> field1, Field<T> field2) {
 		return createJoin(table, JoinType.JOIN, field1, field2);
 	}
 
@@ -393,7 +394,7 @@ public final class QueryFactory {
 	 *            Any number of conditions
 	 * @return A new {@link Join} part
 	 */
-	public static Join createJoin(Table table, Condition... conditions) {
+	public static Join createJoin(Table<?> table, Condition... conditions) {
 		return createJoin(table, JoinType.JOIN, conditions);
 	}
 
@@ -412,7 +413,7 @@ public final class QueryFactory {
 	 *            The second field of the join condition
 	 * @return A new {@link Join} part
 	 */
-	public static <T> Join createJoin(Table table, JoinType type, Field<T> field1, Field<T> field2) {
+	public static <T> Join createJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
 		return createJoin(table, type, createJoinCondition(field1, field2));
 	}
 
@@ -427,7 +428,7 @@ public final class QueryFactory {
 	 *            Any number of conditions
 	 * @return A new {@link Join} part
 	 */
-	public static Join createJoin(Table table, JoinType type, Condition... conditions) {
+	public static Join createJoin(Table<?> table, JoinType type, Condition... conditions) {
 		return new JoinImpl(table, type, conditions);
 	}
 

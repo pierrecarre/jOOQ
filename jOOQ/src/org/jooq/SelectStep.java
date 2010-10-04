@@ -41,15 +41,15 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectStep extends SelectFromStep {
+public interface SelectStep<R extends Record> extends SelectFromStep<R> {
 
 	/**
 	 * Add select fields to the query and proceed to the next step
 	 */
-	SelectFromStep select(Field<?>... fields);
+	SelectFromStep<R> select(Field<?>... fields);
 
 	/**
 	 * Add select fields to the query and proceed to the next step
 	 */
-	SelectFromStep select(Collection<Field<?>> fields);
+	SelectFromStep<R> select(Collection<Field<?>> fields);
 }

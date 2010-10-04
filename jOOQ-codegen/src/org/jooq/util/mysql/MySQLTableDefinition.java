@@ -45,13 +45,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
+import org.jooq.util.mysql.information_schema.tables.records.ColumnsRecord;
 
 /**
  * @author Lukas Eder
@@ -66,7 +66,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery q = createSelectQuery(COLUMNS);
+		SelectQuery<ColumnsRecord> q = createSelectQuery(COLUMNS);
 
 		q.addSelect(COLUMN_NAME);
 		q.addSelect(ORDINAL_POSITION);
@@ -77,11 +77,11 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.addOrderBy(ORDINAL_POSITION);
 
 		q.execute(getConnection());
-		for (Record record : q.getResult()) {
-			String name = record.getValue(COLUMN_NAME);
-			int position = record.getValue(ORDINAL_POSITION);
-			String dataType = record.getValue(DATA_TYPE);
-			String comment = record.getValue(COLUMN_COMMENT);
+		for (ColumnsRecord record : q.getResult()) {
+			String name = record.getColumnName();
+			int position = record.getOrdinalPosition();
+			String dataType = record.getDataType();
+			String comment = record.getColumnComment();
 
 			Class<?> type = Object.class;
 

@@ -15,7 +15,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
  *
  * An entity holding books
  */
-public class TBook extends TableImpl {
+public class TBook extends TableImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,14 +39,14 @@ public class TBook extends TableImpl {
 
 	/**
 	 * The book ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("AUTHOR_ID", Integer.class, T_BOOK);

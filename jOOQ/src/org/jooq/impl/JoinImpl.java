@@ -48,11 +48,11 @@ class JoinImpl extends AbstractQueryPart implements Join {
 
 	private static final long serialVersionUID = 2275930365728978050L;
 
-	private final Table table;
+	private final Table<?> table;
 	private final ConditionProviderImpl condition;
 	private final JoinType type;
 
-	JoinImpl(Table table, JoinType type, Condition... conditions) {
+	JoinImpl(Table<?> table, JoinType type, Condition... conditions) {
 		this.condition = new ConditionProviderImpl();
 
 		this.table = table;
@@ -78,7 +78,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	}
 
 	@Override
-	public Table getTable() {
+	public Table<?> getTable() {
 		return table;
 	}
 

@@ -38,6 +38,7 @@ import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
+import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
@@ -50,15 +51,15 @@ import org.jooq.UpdateQuery;
  *
  * @author Lukas Eder
  */
-public class UpdatableRecordImpl extends TableRecordImpl implements UpdatableRecord {
+public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> implements UpdatableRecord<R> {
 
-	public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable table) {
+	public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable<R> table) {
 		super(metaData, table);
 	}
 
 	@Override
-	public final UpdatableTable getTable() {
-		return (UpdatableTable) super.getTable();
+	public final UpdatableTable<R> getTable() {
+		return (UpdatableTable<R>) super.getTable();
 	}
 
 	@Override

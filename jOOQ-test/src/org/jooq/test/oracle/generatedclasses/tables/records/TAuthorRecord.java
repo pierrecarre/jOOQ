@@ -4,7 +4,8 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 import java.sql.Date;
-import org.jooq.Result;
+
+import org.jooq.RecordMetaData;
 import org.jooq.impl.RecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 
@@ -20,7 +21,7 @@ public class TAuthorRecord extends RecordImpl {
 
 	/**
 	 * The author ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public void setId(Integer value) {
@@ -29,7 +30,7 @@ public class TAuthorRecord extends RecordImpl {
 
 	/**
 	 * The author ID
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public Integer getId() {
@@ -78,7 +79,7 @@ public class TAuthorRecord extends RecordImpl {
 		return getValue(TAuthor.DATE_OF_BIRTH);
 	}
 
-	public TAuthorRecord(Result result) {
+	public TAuthorRecord(RecordMetaData result) {
 		super(result);
 	}
 }

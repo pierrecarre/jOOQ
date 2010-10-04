@@ -41,15 +41,15 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectFromStep extends SelectJoinStep {
+public interface SelectFromStep<R extends Record> extends SelectJoinStep<R> {
 
 	/**
 	 * Add tables to the query and proceed to the next step
 	 */
-	SelectJoinStep from(Table... tables);
+	SelectJoinStep<R> from(Table<?>... tables);
 
 	/**
 	 * Add select fields to the query and proceed to the next step
 	 */
-	SelectJoinStep from(Collection<Table> tables);
+	SelectJoinStep<R> from(Collection<Table<?>> tables);
 }

@@ -42,7 +42,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
+class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList {
 
 	private static final long serialVersionUID = -8545559185481762229L;
 
@@ -50,7 +50,7 @@ class TableListImpl extends AbstractQueryPartList<Table> implements TableList {
 		super();
 	}
 
-	TableListImpl(List<Table> wrappedList) {
+	TableListImpl(List<Table<?>> wrappedList) {
 		super(wrappedList);
 	}
 

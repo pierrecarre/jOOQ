@@ -43,7 +43,7 @@ public interface StoreQuery extends Query, QueryPart {
 	/**
 	 * @return The table that the data is stored into
 	 */
-	Table getInto();
+	Table<?> getInto();
 
 	/**
 	 * @return A mapping of fields and values that are stored by the query

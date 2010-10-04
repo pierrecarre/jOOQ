@@ -37,7 +37,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
 import org.jooq.util.AbstractTableDefinition;
@@ -46,6 +45,7 @@ import org.jooq.util.DataType;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.postgres.information_schema.tables.Columns;
+import org.jooq.util.postgres.information_schema.tables.records.ColumnsRecord;
 
 /**
  * @author Lukas Eder
@@ -60,16 +60,16 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery q = QueryFactory.createSelectQuery(COLUMNS);
+		SelectQuery<ColumnsRecord> q = QueryFactory.createSelectQuery(COLUMNS);
 		q.addCompareCondition(Columns.TABLE_SCHEMA, getSchemaName());
 		q.addCompareCondition(Columns.TABLE_NAME, getName());
 		q.addOrderBy(Columns.ORDINAL_POSITION);
 		q.execute(getConnection());
 
-		for (Record record : q.getResult()) {
-			String name = record.getValue(Columns.COLUMN_NAME);
-			int position = record.getValue(Columns.ORDINAL_POSITION);
-			String dataType = record.getValue(Columns.DATA_TYPE);
+		for (ColumnsRecord record : q.getResult()) {
+			String name = record.getColumnName();
+			int position = record.getOrdinalPosition();
+			String dataType = record.getDataType();
 
 			Class<?> type = Object.class;
 

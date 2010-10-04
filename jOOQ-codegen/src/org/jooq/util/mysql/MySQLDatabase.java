@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Comparator;
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
 import org.jooq.util.AbstractDatabase;
@@ -61,6 +60,9 @@ import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
+import org.jooq.util.mysql.information_schema.tables.records.KeyColumnUsageRecord;
+import org.jooq.util.mysql.information_schema.tables.records.TablesRecord;
+import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
 
 /**
  * @author Lukas Eder
@@ -69,15 +71,15 @@ public class MySQLDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery q = createSelectQuery(KEY_COLUMN_USAGE);
+		SelectQuery<KeyColumnUsageRecord> q = createSelectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
 		q.execute(getConnection());
 
-		for (Record record : q.getResult()) {
-			String key = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
-			String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
-			String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
+		for (KeyColumnUsageRecord record : q.getResult()) {
+			String key = record.getConstraintName();
+			String tableName = record.getTableName();
+			String columnName = record.getColumnName();
 
 			key = key + "_" + tableName;
 			relations.addPrimaryKey(key, getTable(tableName).getColumn(columnName));
@@ -86,17 +88,17 @@ public class MySQLDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery q = createSelectQuery(KEY_COLUMN_USAGE);
+		SelectQuery<KeyColumnUsageRecord> q = createSelectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
 		q.execute(getConnection());
 
-		for (Record record : q.getResult()) {
-			String key = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
-			String referencingTableName = record.getValue(KeyColumnUsage.TABLE_NAME);
-			String referencingColumnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
-			String referencedTableName = record.getValue(KeyColumnUsage.REFERENCED_TABLE_NAME);
-			String referencedColumnName = record.getValue(KeyColumnUsage.REFERENCED_COLUMN_NAME);
+		for (KeyColumnUsageRecord record : q.getResult()) {
+			String key = record.getConstraintName();
+			String referencingTableName = record.getTableName();
+			String referencingColumnName = record.getColumnName();
+			String referencedTableName = record.getReferencedTableName();
+			String referencedColumnName = record.getReferencedColumnName();
 
 			ColumnDefinition referencingColumn = getTable(referencingTableName).getColumn(referencingColumnName);
 			ColumnDefinition referencedColumn = getTable(referencedTableName).getColumn(referencedColumnName);
@@ -110,16 +112,16 @@ public class MySQLDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SelectQuery q = createSelectQuery(TABLES);
+		SelectQuery<TablesRecord> q = createSelectQuery(TABLES);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(TABLE_COMMENT);
 		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 
-		for (Record record : q.getResult()) {
-			String name = record.getValue(TABLE_NAME);
-			String comment = record.getValue(TABLE_COMMENT);
+		for (TablesRecord record : q.getResult()) {
+			String name = record.getTableName();
+			String comment = record.getTableComment();
 
 			MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
 			result.add(table);
@@ -132,10 +134,10 @@ public class MySQLDatabase extends AbstractDatabase {
 	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
 		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
 
-		for (Record record : executeProcedureQuery("PROCEDURE")) {
-			String name = record.getValue(NAME);
-			String comment = record.getValue(COMMENT);
-			String params = new String(record.getValue(PARAM_LIST));
+		for (ProcRecord record : executeProcedureQuery("PROCEDURE")) {
+			String name = record.getName();
+			String comment = record.getComment();
+			String params = new String(record.getParamList());
 
 			MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
 			result.add(procedure);
@@ -148,11 +150,11 @@ public class MySQLDatabase extends AbstractDatabase {
 	protected List<FunctionDefinition> getFunctions0() throws SQLException {
 		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
 
-		for (Record record : executeProcedureQuery("FUNCTION")) {
-			String name = record.getValue(NAME);
-			String comment = record.getValue(COMMENT);
-			String params = new String(record.getValue(PARAM_LIST));
-			String returnValue = new String(record.getValue(RETURNS));
+		for (ProcRecord record : executeProcedureQuery("FUNCTION")) {
+			String name = record.getName();
+			String comment = record.getComment();
+			String params = new String(record.getParamList());
+			String returnValue = new String(record.getReturns());
 
 			MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
 			result.add(function);
@@ -161,8 +163,8 @@ public class MySQLDatabase extends AbstractDatabase {
 		return result;
 	}
 
-	private Result executeProcedureQuery(String type) throws SQLException {
-		SelectQuery q = createSelectQuery(PROC);
+	private Result<ProcRecord> executeProcedureQuery(String type) throws SQLException {
+		SelectQuery<ProcRecord> q = createSelectQuery(PROC);
 		q.addSelect(NAME);
 		q.addSelect(PARAM_LIST);
 		q.addSelect(COMMENT);

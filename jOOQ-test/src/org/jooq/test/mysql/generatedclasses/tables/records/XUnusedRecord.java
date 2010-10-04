@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
@@ -21,7 +20,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XUnused;
  *
  * An unused table in the same schema.
  */
-public class XUnusedRecord extends UpdatableRecordImpl {
+public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +48,7 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	 * PRIMARY KEY
 	 */
 	public List<XUnusedRecord> getXUnuseds(Connection connection) throws SQLException {
-		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		SelectQuery<XUnusedRecord> q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
 		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
 		q.execute(connection);
@@ -99,13 +98,13 @@ public class XUnusedRecord extends UpdatableRecordImpl {
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
 	public XUnusedRecord getXUnused(Connection connection) throws SQLException {
-		SelectQuery q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		SelectQuery<XUnusedRecord> q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID, getValue(XUnused.ID_REF));
 		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
 		q.execute(connection);
 
-		List<Record> result = q.getResult().getRecords();
-		return (XUnusedRecord) (result.size() == 1 ? result.get(0) : null);
+		List<XUnusedRecord> result = q.getResult().getRecords();
+		return result.size() == 1 ? result.get(0) : null;
 	}
 
 	/**

@@ -41,45 +41,45 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectOrderByStep extends QueryProvider<SelectQuery> {
+public interface SelectOrderByStep<R extends Record> extends QueryProvider<SelectQuery<R>> {
 
 	/**
 	 * Add an order by clause to the query.
 	 */
-	SelectOrderByStep orderBy(Field<?>... fields);
+	SelectOrderByStep<R> orderBy(Field<?>... fields);
 
 	/**
 	 * Add an order by clause to the query.
 	 */
-	SelectOrderByStep orderBy(Collection<Field<?>> fields);
+	SelectOrderByStep<R> orderBy(Collection<Field<?>> fields);
 
 	/**
 	 * Add an order by clause to the query.
 	 */
-	SelectOrderByStep orderBy(Field<?> field, SortOrder order);
+	SelectOrderByStep<R> orderBy(Field<?> field, SortOrder order);
 
 	/**
 	 * Combine with other selects
 	 */
-	Select union(Select... selects);
+	Select<R> union(Select<R> select);
 
 	/**
 	 * Combine with other selects
 	 */
-	Select unionAll(Select... selects);
+	Select<R> unionAll(Select<R> select);
 
 	/**
 	 * Combine with other selects
 	 */
-	Select except(Select... selects);
+	Select<R> except(Select<R> select);
 
 	/**
 	 * Combine with other selects
 	 */
-	Select intersect(Select... selects);
+	Select<R> intersect(Select<R> select);
 
 	/**
 	 * Return this as a {@link Select} object
 	 */
-	Select getSelect();
+	Select<R> getSelect();
 }

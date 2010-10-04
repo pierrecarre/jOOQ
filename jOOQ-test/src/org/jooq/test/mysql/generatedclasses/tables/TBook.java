@@ -16,7 +16,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
  *
  * An entity holding books
  */
-public class TBook extends UpdatableTableImpl {
+public class TBook extends UpdatableTableImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 

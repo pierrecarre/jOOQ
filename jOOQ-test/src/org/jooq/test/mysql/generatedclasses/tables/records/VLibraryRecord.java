@@ -14,7 +14,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
  *
  * VIEW
  */
-public class VLibraryRecord extends TableRecordImpl {
+public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 
 	private static final long serialVersionUID = 1L;
 

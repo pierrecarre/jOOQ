@@ -63,7 +63,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery query = QueryFactory.select()
+		SelectQuery<Record> query = QueryFactory.select()
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
 			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
@@ -88,7 +88,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery query = QueryFactory.select()
+		SelectQuery<Record> query = QueryFactory.select()
 			.from(CONSTRAINT_COLUMN_USAGE)
 			.join(KEY_COLUMN_USAGE)
 			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))

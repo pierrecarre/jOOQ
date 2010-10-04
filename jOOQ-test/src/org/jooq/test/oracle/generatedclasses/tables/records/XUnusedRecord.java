@@ -3,7 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.impl.RecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.XUnused;
 
@@ -19,7 +19,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setId(Integer value) {
@@ -28,7 +28,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public Integer getId() {
@@ -37,7 +37,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setName(String value) {
@@ -46,7 +46,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public String getName() {
@@ -55,7 +55,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
@@ -64,7 +64,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public Integer getIdRef() {
@@ -73,7 +73,7 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setNameRef(String value) {
@@ -82,14 +82,14 @@ public class XUnusedRecord extends RecordImpl {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);
 	}
 
-	public XUnusedRecord(Result result) {
+	public XUnusedRecord(RecordMetaData result) {
 		super(result);
 	}
 }

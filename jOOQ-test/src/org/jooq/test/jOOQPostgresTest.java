@@ -62,6 +62,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest {
 		return "/org/jooq/test/postgres/create.sql";
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected Table getTAuthor() {
 		return TAuthor.T_AUTHOR;
@@ -92,6 +93,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest {
 		return TAuthor.ID;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected Table getTBook() {
 		return TBook.T_BOOK;
@@ -112,6 +114,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest {
 		return TBook.TITLE;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected Table getVLibrary() {
 		return VLibrary.V_LIBRARY;

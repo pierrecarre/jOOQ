@@ -3,7 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
-import org.jooq.Result;
+import org.jooq.RecordMetaData;
 import org.jooq.impl.RecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
 
@@ -43,7 +43,7 @@ public class VLibraryRecord extends RecordImpl {
 		return getValue(VLibrary.TITLE);
 	}
 
-	public VLibraryRecord(Result result) {
+	public VLibraryRecord(RecordMetaData result) {
 		super(result);
 	}
 }

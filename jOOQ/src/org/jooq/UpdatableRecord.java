@@ -38,13 +38,13 @@ import java.sql.SQLException;
  *
  * @author Lukas Eder
  */
-public interface UpdatableRecord extends Updatable, TableRecord {
+public interface UpdatableRecord<R extends Record> extends Updatable, TableRecord<R> {
 
 	/**
 	 * The table from which this record was read
 	 */
 	@Override
-	UpdatableTable getTable();
+	UpdatableTable<R> getTable();
 
 	/**
 	 * Store this record back to the database.

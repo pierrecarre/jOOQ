@@ -39,12 +39,12 @@ import java.util.List;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Result extends RecordMetaData, Iterable<Record> {
+public interface Result<R extends Record> extends RecordMetaData, Iterable<R> {
 
 	/**
 	 * @return The resulting records
 	 */
-	<R extends Record> List<R> getRecords();
+	List<R> getRecords();
 
 	/**
 	 * Returns a record at a given index
@@ -53,7 +53,7 @@ public interface Result extends RecordMetaData, Iterable<Record> {
 	 * @return The Record
 	 * @throws IndexOutOfBoundsException
 	 */
-	Record getRecord(int index) throws IndexOutOfBoundsException;
+	R getRecord(int index) throws IndexOutOfBoundsException;
 
 	/**
 	 * Convenience method to fetch a value at a given position in the result.

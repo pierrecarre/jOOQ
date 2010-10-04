@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.impl.QueryFactory;
@@ -22,7 +21,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
  *
  * An entity holding books
  */
-public class TBookRecord extends UpdatableRecordImpl {
+public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,12 +67,12 @@ public class TBookRecord extends UpdatableRecordImpl {
 	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public TAuthorRecord getTAuthor(Connection connection) throws SQLException {
-		SelectQuery q = QueryFactory.createSelectQuery(TAuthor.T_AUTHOR);
+		SelectQuery<TAuthorRecord> q = QueryFactory.createSelectQuery(TAuthor.T_AUTHOR);
 		q.addCompareCondition(TAuthor.ID, getValue(TBook.AUTHOR_ID));
 		q.execute(connection);
 
-		List<Record> result = q.getResult().getRecords();
-		return (TAuthorRecord) (result.size() == 1 ? result.get(0) : null);
+		List<TAuthorRecord> result = q.getResult().getRecords();
+		return result.size() == 1 ? result.get(0) : null;
 	}
 
 	/**

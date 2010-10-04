@@ -47,7 +47,6 @@ public abstract class AbstractDatabase implements Database {
 	private String schema;
 	private String[] excludes;
 	private String[] includes;
-	private boolean generateRecords = true;
 	private boolean generateRelations = false;
 
 	private List<TableDefinition> tables;
@@ -98,16 +97,6 @@ public abstract class AbstractDatabase implements Database {
 	@Override
 	public final String[] getIncludes() {
 		return includes;
-	}
-
-	@Override
-	public boolean generateRecords() {
-		return generateRecords;
-	}
-
-	@Override
-	public void setGenerateRecords(boolean generateRecords) {
-		this.generateRecords = generateRecords;
 	}
 
 	@Override
@@ -194,8 +183,10 @@ public abstract class AbstractDatabase implements Database {
 	protected final Relations getRelations0() throws SQLException {
 		DefaultRelations relations = new DefaultRelations(this);
 
-		loadPrimaryKeys(relations);
-		loadForeignKeys(relations);
+		if (generateRelations()) {
+			loadPrimaryKeys(relations);
+			loadForeignKeys(relations);
+		}
 
 		return relations;
 	}

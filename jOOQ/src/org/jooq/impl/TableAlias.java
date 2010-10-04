@@ -43,20 +43,20 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class TableAlias extends TableImpl implements Table, AliasProvider<Table> {
+class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, AliasProvider<Table<R>> {
 
 	private static final long serialVersionUID = -8417114874567698325L;
-	private final AliasProviderImpl<Table> aliasProvider;
+	private final AliasProviderImpl<Table<R>> aliasProvider;
 	private FieldList aliasedFields;
 
-	TableAlias(Table table, String alias) {
+	TableAlias(Table<R> table, String alias) {
 		this(table, alias, false);
 	}
 
-	TableAlias(Table table, String alias, boolean wrapInParentheses) {
+	TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
 		super(alias, table.getSchema());
 
-		this.aliasProvider = new AliasProviderImpl<Table>(table, alias, wrapInParentheses);
+		this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ class TableAlias extends TableImpl implements Table, AliasProvider<Table> {
 	}
 
 	@Override
-	public final Table as(String alias) {
+	public final Table<R> as(String alias) {
 		return aliasProvider.as(alias);
 	}
 
@@ -96,7 +96,7 @@ class TableAlias extends TableImpl implements Table, AliasProvider<Table> {
 	}
 
 	@Override
-	public Class<? extends Record> getRecordType() {
+	public Class<R> getRecordType() {
 		return aliasProvider.getAliasProvider().getRecordType();
 	}
 }

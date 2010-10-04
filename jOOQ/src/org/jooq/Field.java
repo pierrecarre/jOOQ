@@ -92,12 +92,12 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this in (select...)</code>
 	 */
-	SubQueryCondition<T> in(SelectQuery query);
+	SubQueryCondition<T> in(SelectQuery<?> query);
 
 	/**
 	 * @return <code>this in (select...)</code>
 	 */
-	SubQueryCondition<T> in(Select query);
+	SubQueryCondition<T> in(Select<?> query);
 
 	/**
 	 * @return <code>this not in (values...)</code>
@@ -112,12 +112,12 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this not in (select...)</code>
 	 */
-	SubQueryCondition<T> notIn(SelectQuery query);
+	SubQueryCondition<T> notIn(SelectQuery<?> query);
 
 	/**
 	 * @return <code>this not in (select...)</code>
 	 */
-	SubQueryCondition<T> notIn(Select query);
+	SubQueryCondition<T> notIn(Select<?> query);
 
 	/**
 	 * @return <code>this in (values...)</code>
@@ -146,44 +146,44 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> equal(Field<T> field);
 
 	/**
-	 * @return <code>this = (select ...)</code>
+	 * @return <code>this = (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equal(SelectQuery query);
+	FieldCondition<T> equal(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this = (select ...)</code>
+	 * @return <code>this = (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equal(Select query);
+	FieldCondition<T> equal(Select<?> query);
 
 	/**
-	 * @return <code>this = any (select ...)</code>
+	 * @return <code>this = any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalAny(SelectQuery query);
+	FieldCondition<T> equalAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this = any (select ...)</code>
+	 * @return <code>this = any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalAny(Select query);
+	FieldCondition<T> equalAny(Select<?> query);
 
 	/**
-	 * @return <code>this = some (select ...)</code>
+	 * @return <code>this = some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalSome(SelectQuery query);
+	FieldCondition<T> equalSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this = some (select ...)</code>
+	 * @return <code>this = some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalSome(Select query);
+	FieldCondition<T> equalSome(Select<?> query);
 
 	/**
-	 * @return <code>this = all (select ...)</code>
+	 * @return <code>this = all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalAll(SelectQuery query);
+	FieldCondition<T> equalAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this = all (select ...)</code>
+	 * @return <code>this = all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> equalAll(Select query);
+	FieldCondition<T> equalAll(Select<?> query);
 
 	/**
 	 * @return <code>this != value</code>
@@ -196,44 +196,44 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> notEqual(Field<T> field);
 
 	/**
-	 * @return <code>this != (select ...)</code>
+	 * @return <code>this != (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqual(SelectQuery query);
+	FieldCondition<T> notEqual(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this != (select ...)</code>
+	 * @return <code>this != (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqual(Select query);
+	FieldCondition<T> notEqual(Select<?> query);
 
 	/**
-	 * @return <code>this != any (select ...)</code>
+	 * @return <code>this != any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualAny(SelectQuery query);
+	FieldCondition<T> notEqualAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this != any (select ...)</code>
+	 * @return <code>this != any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualAny(Select query);
+	FieldCondition<T> notEqualAny(Select<?> query);
 
 	/**
-	 * @return <code>this != some (select ...)</code>
+	 * @return <code>this != some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualSome(SelectQuery query);
+	FieldCondition<T> notEqualSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this != some (select ...)</code>
+	 * @return <code>this != some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualSome(Select query);
+	FieldCondition<T> notEqualSome(Select<?> query);
 
 	/**
-	 * @return <code>this != all (select ...)</code>
+	 * @return <code>this != all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualAll(SelectQuery query);
+	FieldCondition<T> notEqualAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this != all (select ...)</code>
+	 * @return <code>this != all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> notEqualAll(Select query);
+	FieldCondition<T> notEqualAll(Select<?> query);
 
 	/**
 	 * @return <code>this < value</code>
@@ -246,44 +246,44 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> lessThan(Field<T> field);
 
 	/**
-	 * @return <code>this < (select ...)</code>
+	 * @return <code>this < (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThan(SelectQuery query);
+	FieldCondition<T> lessThan(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this < (select ...)</code>
+	 * @return <code>this < (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThan(Select query);
+	FieldCondition<T> lessThan(Select<?> query);
 
 	/**
-	 * @return <code>this < any (select ...)</code>
+	 * @return <code>this < any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanAny(SelectQuery query);
+	FieldCondition<T> lessThanAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this < any (select ...)</code>
+	 * @return <code>this < any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanAny(Select query);
+	FieldCondition<T> lessThanAny(Select<?> query);
 
 	/**
-	 * @return <code>this < some (select ...)</code>
+	 * @return <code>this < some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanSome(SelectQuery query);
+	FieldCondition<T> lessThanSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this < some (select ...)</code>
+	 * @return <code>this < some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanSome(Select query);
+	FieldCondition<T> lessThanSome(Select<?> query);
 
 	/**
-	 * @return <code>this < all (select ...)</code>
+	 * @return <code>this < all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanAll(SelectQuery query);
+	FieldCondition<T> lessThanAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this < all (select ...)</code>
+	 * @return <code>this < all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessThanAll(Select query);
+	FieldCondition<T> lessThanAll(Select<?> query);
 
 	/**
 	 * @return <code>this <= value</code>
@@ -296,44 +296,44 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> lessOrEqual(Field<T> field);
 
 	/**
-	 * @return <code>this <= (select ...)</code>
+	 * @return <code>this <= (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqual(SelectQuery query);
+	FieldCondition<T> lessOrEqual(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this <= (select ...)</code>
+	 * @return <code>this <= (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqual(Select query);
+	FieldCondition<T> lessOrEqual(Select<?> query);
 
 	/**
-	 * @return <code>this <= any (select ...)</code>
+	 * @return <code>this <= any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToAny(SelectQuery query);
+	FieldCondition<T> lessOrEqualToAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this <= any (select ...)</code>
+	 * @return <code>this <= any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToAny(Select query);
+	FieldCondition<T> lessOrEqualToAny(Select<?> query);
 
 	/**
-	 * @return <code>this <= some (select ...)</code>
+	 * @return <code>this <= some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToSome(SelectQuery query);
+	FieldCondition<T> lessOrEqualToSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this <= some (select ...)</code>
+	 * @return <code>this <= some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToSome(Select query);
+	FieldCondition<T> lessOrEqualToSome(Select<?> query);
 
 	/**
-	 * @return <code>this <= all (select ...)</code>
+	 * @return <code>this <= all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToAll(SelectQuery query);
+	FieldCondition<T> lessOrEqualToAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this <= all (select ...)</code>
+	 * @return <code>this <= all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> lessOrEqualToAll(Select query);
+	FieldCondition<T> lessOrEqualToAll(Select<?> query);
 
 	/**
 	 * @return <code>this > value</code>
@@ -346,44 +346,44 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> greaterThan(Field<T> field);
 
 	/**
-	 * @return <code>this > (select ...)</code>
+	 * @return <code>this > (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThan(SelectQuery query);
+	FieldCondition<T> greaterThan(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this > (select ...)</code>
+	 * @return <code>this > (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThan(Select query);
+	FieldCondition<T> greaterThan(Select<?> query);
 
 	/**
-	 * @return <code>this > any (select ...)</code>
+	 * @return <code>this > any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanAny(SelectQuery query);
+	FieldCondition<T> greaterThanAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this > any (select ...)</code>
+	 * @return <code>this > any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanAny(Select query);
+	FieldCondition<T> greaterThanAny(Select<?> query);
 
 	/**
-	 * @return <code>this > some (select ...)</code>
+	 * @return <code>this > some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanSome(SelectQuery query);
+	FieldCondition<T> greaterThanSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this > some (select ...)</code>
+	 * @return <code>this > some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanSome(Select query);
+	FieldCondition<T> greaterThanSome(Select<?> query);
 
 	/**
-	 * @return <code>this > all (select ...)</code>
+	 * @return <code>this > all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanAll(SelectQuery query);
+	FieldCondition<T> greaterThanAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this > all (select ...)</code>
+	 * @return <code>this > all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterThanAll(Select query);
+	FieldCondition<T> greaterThanAll(Select<?> query);
 
 	/**
 	 * @return <code>this >= value</code>
@@ -396,43 +396,43 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	JoinCondition<T> greaterOrEqual(Field<T> field);
 
 	/**
-	 * @return <code>this >= (select ...)</code>
+	 * @return <code>this >= (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqual(SelectQuery query);
+	FieldCondition<T> greaterOrEqual(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this >= (select ...)</code>
+	 * @return <code>this >= (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqual(Select query);
+	FieldCondition<T> greaterOrEqual(Select<?> query);
 
 	/**
-	 * @return <code>this >= any (select ...)</code>
+	 * @return <code>this >= any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualAny(SelectQuery query);
+	FieldCondition<T> greaterOrEqualAny(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this >= any (select ...)</code>
+	 * @return <code>this >= any (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualAny(Select query);
+	FieldCondition<T> greaterOrEqualAny(Select<?> query);
 
 	/**
-	 * @return <code>this >= some (select ...)</code>
+	 * @return <code>this >= some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualSome(SelectQuery query);
+	FieldCondition<T> greaterOrEqualSome(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this >= some (select ...)</code>
+	 * @return <code>this >= some (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualSome(Select query);
+	FieldCondition<T> greaterOrEqualSome(Select<?> query);
 
 	/**
-	 * @return <code>this >= all (select ...)</code>
+	 * @return <code>this >= all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualAll(SelectQuery query);
+	FieldCondition<T> greaterOrEqualAll(SelectQuery<?> query);
 
 	/**
-	 * @return <code>this >= all (select ...)</code>
+	 * @return <code>this >= all (Select<?> ...)</code>
 	 */
-	FieldCondition<T> greaterOrEqualAll(Select query);
+	FieldCondition<T> greaterOrEqualAll(Select<?> query);
 
 }

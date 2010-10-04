@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.Parameter;
-import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.SelectQuery;
 import org.jooq.TableField;
@@ -137,7 +136,7 @@ public class DefaultGenerator implements Generator {
 				out.printImport(TableImpl.class);
 			}
 
-			out.println("public class " + table.getJavaClassName() + " extends " + baseClass + " {");
+			out.println("public class " + table.getJavaClassName() + " extends " + baseClass + "<"  + table.getJavaClassName("Record") + "> {");
 			printSerial(out);
 			out.println();
 			out.println("\t/**");
@@ -145,22 +144,20 @@ public class DefaultGenerator implements Generator {
 			out.println("\t */");
 			out.println("\tpublic static final " + table.getJavaClassName() + " " + table.getNameUC() + " = new " + table.getJavaClassName() + "();");
 
-			if (database.generateRecords()) {
-				out.println();
-				out.println("\t/**");
-				out.println("\t * The class holding records for this table");
-				out.println("\t */");
-				out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
-				out.println();
-				out.println("\t/**");
-				out.println("\t * The class holding records for this table");
-				out.println("\t */");
-				printOverride(out);
-				out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
-				out.println("\t\treturn RECORD_TYPE;");
-				out.println("\t}");
-				out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
-			}
+			out.println();
+			out.println("\t/**");
+			out.println("\t * The class holding records for this table");
+			out.println("\t */");
+			out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
+			out.println();
+			out.println("\t/**");
+			out.println("\t * The class holding records for this table");
+			out.println("\t */");
+			printOverride(out);
+			out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
+			out.println("\t\treturn RECORD_TYPE;");
+			out.println("\t}");
+			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
 
 			for (ColumnDefinition column : table.getColumns()) {
 				printColumn(out, column, table.getNameUC());
@@ -199,51 +196,49 @@ public class DefaultGenerator implements Generator {
 		// ----------------------------------------------------------------------
 		// Generating table records
 		// ----------------------------------------------------------------------
-		if (database.generateRecords()) {
-			File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
-			System.out.println("Generating classes in " + targetTableRecordPackageDir.getCanonicalPath());
+		File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
+		System.out.println("Generating classes in " + targetTableRecordPackageDir.getCanonicalPath());
 
-			for (TableDefinition table : database.getTables()) {
-				targetTableRecordPackageDir.mkdirs();
+		for (TableDefinition table : database.getTables()) {
+			targetTableRecordPackageDir.mkdirs();
 
-				System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
+			System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
 
-				GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
-				printHeader(out, targetPackageName + ".tables.records");
-				printClassJavadoc(out, table);
+			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
+			printHeader(out, targetPackageName + ".tables.records");
+			printClassJavadoc(out, table);
 
-				String baseClass;
-				if (database.generateRelations() && table.hasPrimaryKey()) {
-					baseClass = "UpdatableRecordImpl";
-					out.printImport(UpdatableRecordImpl.class);
-				} else {
-					baseClass = "TableRecordImpl";
-					out.printImport(TableRecordImpl.class);
-				}
-
-				out.println("public class " + table.getJavaClassName("Record") + " extends " + baseClass + " {");
-				printSerial(out);
-
-				for (ColumnDefinition column : table.getColumns()) {
-					printGetterAndSetter(out, column, table, targetPackageName + ".tables");
-				}
-
-				out.println();
-				out.println("\tpublic " + table.getJavaClassName("Record") + "(RecordMetaData metaData) {");
-
-				out.print("\t\tsuper(metaData");
-				out.print(", ");
-				out.print(table.getJavaClassName());
-				out.print(".");
-				out.print(table.getNameUC());
-				out.println(");");
-
-				out.println("\t}");
-				out.printImport(RecordMetaData.class);
-
-				out.println("}");
-				out.close();
+			String baseClass;
+			if (database.generateRelations() && table.hasPrimaryKey()) {
+				baseClass = "UpdatableRecordImpl";
+				out.printImport(UpdatableRecordImpl.class);
+			} else {
+				baseClass = "TableRecordImpl";
+				out.printImport(TableRecordImpl.class);
 			}
+
+			out.println("public class " + table.getJavaClassName("Record") + " extends " + baseClass + "<"  + table.getJavaClassName("Record") + "> {");
+			printSerial(out);
+
+			for (ColumnDefinition column : table.getColumns()) {
+				printGetterAndSetter(out, column, table, targetPackageName + ".tables");
+			}
+
+			out.println();
+			out.println("\tpublic " + table.getJavaClassName("Record") + "(RecordMetaData metaData) {");
+
+			out.print("\t\tsuper(metaData");
+			out.print(", ");
+			out.print(table.getJavaClassName());
+			out.print(".");
+			out.print(table.getNameUC());
+			out.println(");");
+
+			out.println("\t}");
+			out.printImport(RecordMetaData.class);
+
+			out.println("}");
+			out.close();
 		}
 
 		// ----------------------------------------------------------------------
@@ -421,7 +416,7 @@ public class DefaultGenerator implements Generator {
 					}
 					out.println("(Connection connection) throws SQLException {");
 
-					out.print("\t\tSelectQuery q = QueryFactory.createSelectQuery(");
+					out.print("\t\tSelectQuery<" + referencing.getJavaClassName("Record") + "> q = QueryFactory.createSelectQuery(");
 					out.print(referencing.getJavaClassName());
 					out.print(".");
 					out.print(referencing.getNameUC());
@@ -463,7 +458,7 @@ public class DefaultGenerator implements Generator {
 				out.print(referenced.getJavaClassName());
 				out.println("(Connection connection) throws SQLException {");
 
-				out.print("\t\tSelectQuery q = QueryFactory.createSelectQuery(");
+				out.print("\t\tSelectQuery<" + referenced.getJavaClassName("Record") + "> q = QueryFactory.createSelectQuery(");
 				out.print(referenced.getJavaClassName());
 				out.print(".");
 				out.print(referenced.getNameUC());
@@ -483,11 +478,8 @@ public class DefaultGenerator implements Generator {
 
 				out.println("\t\tq.execute(connection);");
 				out.println();
-				out.println("\t\tList<Record> result = q.getResult().getRecords();");
-
-				out.print("\t\treturn (");
-				out.print(referenced.getJavaClassName("Record"));
-				out.println(") (result.size() == 1 ? result.get(0) : null);");
+				out.println("\t\tList<" + referenced.getJavaClassName("Record") + "> result = q.getResult().getRecords();");
+				out.println("\t\treturn result.size() == 1 ? result.get(0) : null;");
 
 				out.println("\t}");
 
@@ -496,7 +488,6 @@ public class DefaultGenerator implements Generator {
 				out.printImport(QueryFactory.class);
 				out.printImport(Connection.class);
 				out.printImport(SQLException.class);
-				out.printImport(Record.class);
 				out.printImport(List.class);
 			}
 		}

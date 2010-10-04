@@ -16,7 +16,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
  *
  * An unused table in the same schema.
  */
-public class XUnused extends UpdatableTableImpl {
+public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 

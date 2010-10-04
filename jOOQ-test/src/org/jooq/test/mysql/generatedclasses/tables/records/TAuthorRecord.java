@@ -22,7 +22,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
  *
  * An entity holding authors of books
  */
-public class TAuthorRecord extends UpdatableRecordImpl {
+public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class TAuthorRecord extends UpdatableRecordImpl {
 	 * PRIMARY KEY
 	 */
 	public List<TBookRecord> getTBooks(Connection connection) throws SQLException {
-		SelectQuery q = QueryFactory.createSelectQuery(TBook.T_BOOK);
+		SelectQuery<TBookRecord> q = QueryFactory.createSelectQuery(TBook.T_BOOK);
 		q.addCompareCondition(TBook.AUTHOR_ID, getValue(TAuthor.ID));
 		q.execute(connection);
 

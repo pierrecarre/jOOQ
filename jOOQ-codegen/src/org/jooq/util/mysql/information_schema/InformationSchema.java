@@ -3,6 +3,7 @@
  */
 package org.jooq.util.mysql.information_schema;
 
+
 import org.jooq.impl.SchemaImpl;
 
 

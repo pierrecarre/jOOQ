@@ -41,9 +41,9 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 
 	private static final long serialVersionUID = -2211214195583539735L;
 
-	private final Table table;
+	private final Table<?> table;
 
-	public TableFieldImpl(String name, Class<T> type, Table table) {
+	public TableFieldImpl(String name, Class<T> type, Table<?> table) {
 		super(name, type);
 
 		this.table = table;
@@ -51,7 +51,7 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 	}
 
 	@Override
-	public Table getTable() {
+	public Table<?> getTable() {
 		return table;
 	}
 

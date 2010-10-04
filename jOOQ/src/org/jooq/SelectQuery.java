@@ -38,7 +38,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectQuery extends ResultProviderQuery, ConditionProvider, QueryPart {
+public interface SelectQuery<R extends Record> extends ResultProviderQuery<R>, ConditionProvider, QueryPart {
 
 	/**
 	 * Combine this SelectQuery with another one, using the
@@ -49,7 +49,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @return
 	 * @see #combine(SelectQuery, CombineOperator)
 	 */
-	SelectQuery combine(SelectQuery... others);
+	SelectQuery<R> combine(SelectQuery<R> other);
 
 	/**
 	 * Combine this SelectQuery with another one, using the given operator.
@@ -60,7 +60,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 *            The combine operator
 	 * @return
 	 */
-	SelectQuery combine(CombineOperator operator, SelectQuery... other);
+	SelectQuery<R> combine(CombineOperator operator, SelectQuery<R> other);
 
 	/**
 	 * Use this query as a table
@@ -69,7 +69,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE
 	 * @return This result provider as a Table object
 	 */
-	Table asTable();
+	Table<R> asTable();
 
 	/**
 	 * Use this query as a field.
@@ -211,14 +211,14 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 *
 	 * @param from The added tables
 	 */
-	void addFrom(Table... from);
+	void addFrom(Table<?>... from);
 
 	/**
 	 * Add tables to the table product
 	 *
 	 * @param from The added tables
 	 */
-	void addFrom(Collection<Table> from);
+	void addFrom(Collection<Table<?>> from);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
@@ -226,7 +226,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @param table The joined table
 	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table table, Condition... conditions);
+	void addJoin(Table<?> table, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
@@ -235,7 +235,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @param type The type of join
 	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table table, JoinType type, Condition... conditions);
+	void addJoin(Table<?> table, JoinType type, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table joining on two fields
@@ -245,7 +245,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @param field1 The left field of the join condition
 	 * @param field2 The right field of the join condition
 	 */
-	<T> void addJoin(Table table, Field<T> field1, Field<T> field2);
+	<T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2);
 
 	/**
 	 * Joins the existing table product to a new table joining on two fields
@@ -256,7 +256,7 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	 * @param field1 The left field of the join condition
 	 * @param field2 The right field of the join condition
 	 */
-	<T> void addJoin(Table table, JoinType type, Field<T> field1, Field<T> field2);
+	<T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2);
 
 	/**
 	 * Joins the existing table product to join object
@@ -345,5 +345,5 @@ public interface SelectQuery extends ResultProviderQuery, ConditionProvider, Que
 	/**
 	 * The record type returned by this query
 	 */
-	Class<? extends Record> getRecordType();
+	Class<R> getRecordType();
 }

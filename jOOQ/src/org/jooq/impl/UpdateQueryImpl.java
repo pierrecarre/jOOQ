@@ -52,13 +52,13 @@ class UpdateQueryImpl extends AbstractStoreQuery implements UpdateQuery {
 	private static final long serialVersionUID = -660460731970074719L;
 	private final ConditionProviderImpl condition;
 
-	UpdateQueryImpl(Table table) {
+	UpdateQueryImpl(Table<?> table) {
 		super(table);
 
 		this.condition = new ConditionProviderImpl();
 	}
 
-	UpdateQueryImpl(Table table, Record record) {
+	UpdateQueryImpl(Table<?> table, Record record) {
 		super(table, record);
 
 		this.condition = new ConditionProviderImpl();

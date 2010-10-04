@@ -41,15 +41,15 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectWhereStep extends SelectGroupByStep {
+public interface SelectWhereStep<R extends Record> extends SelectGroupByStep<R> {
 
 	/**
 	 * Add conditions to the query and proceed to the next step
 	 */
-	SelectGroupByStep where(Condition... conditions);
+	SelectGroupByStep<R> where(Condition... conditions);
 
 	/**
 	 * Add conditions to the query and proceed to the next step
 	 */
-	SelectGroupByStep where(Collection<Condition> conditions);
+	SelectGroupByStep<R> where(Collection<Condition> conditions);
 }
