@@ -39,15 +39,15 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl extends AbstractStoreQuery implements InsertQuery {
+class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
 	private static final long serialVersionUID = 4466005417945353842L;
 
-	InsertQueryImpl(Table<?> into) {
+	InsertQueryImpl(Table<R> into) {
 		super(into);
 	}
 
-	InsertQueryImpl(Table<?> into, Record record) {
+	InsertQueryImpl(Table<R> into, R record) {
 		super(into, record);
 	}
 

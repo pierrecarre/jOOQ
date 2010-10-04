@@ -168,7 +168,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testInsertUpdateDelete() throws Exception {
-    	InsertQuery i = QueryFactory.createInsertQuery(getTAuthor());
+    	InsertQuery<Record> i = QueryFactory.createInsertQuery(getTAuthor());
     	i.addValue(getTAuthor_ID(), 100);
     	i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
     	i.addValue(getTAuthor_LAST_NAME(), "Hesse");
@@ -176,7 +176,7 @@ public abstract class jOOQAbstractTest {
     	i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
     	assertEquals(1, i.execute(connection));
 
-    	UpdateQuery u = QueryFactory.createUpdateQuery(getTAuthor());
+    	UpdateQuery<Record> u = QueryFactory.createUpdateQuery(getTAuthor());
     	u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
     	u.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, u.execute(connection));

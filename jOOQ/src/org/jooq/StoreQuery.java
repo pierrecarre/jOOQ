@@ -38,12 +38,12 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface StoreQuery extends Query, QueryPart {
+public interface StoreQuery<R extends Record> extends Query, QueryPart {
 
 	/**
 	 * @return The table that the data is stored into
 	 */
-	Table<?> getInto();
+	Table<R> getInto();
 
 	/**
 	 * @return A mapping of fields and values that are stored by the query
@@ -56,7 +56,7 @@ public interface StoreQuery extends Query, QueryPart {
 	 * @param record
 	 *            The record holding values that are stored by the query
 	 */
-	void setRecord(Record record);
+	void setRecord(R record);
 
 	/**
 	 * Add a value to the store statement

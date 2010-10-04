@@ -303,8 +303,8 @@ public final class QueryFactory {
 	 *            The table to insert data into
 	 * @return The new {@link InsertQuery}
 	 */
-	public static InsertQuery createInsertQuery(Table<?> into) {
-		return new InsertQueryImpl(into);
+	public static <R extends Record> InsertQuery<R> createInsertQuery(Table<R> into) {
+		return new InsertQueryImpl<R>(into);
 	}
 
 	/**
@@ -314,8 +314,8 @@ public final class QueryFactory {
 	 *            The table to update data into
 	 * @return The new {@link UpdateQuery}
 	 */
-	public static UpdateQuery createUpdateQuery(Table<?> table) {
-		return new UpdateQueryImpl(table);
+	public static <R extends Record> UpdateQuery<R> createUpdateQuery(Table<R> table) {
+		return new UpdateQueryImpl<R>(table);
 	}
 
 	/**

@@ -47,29 +47,29 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery extends AbstractQuery implements StoreQuery {
+abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implements StoreQuery<R> {
 
 	/**
 	 * Generated UID
 	 */
 	private static final long serialVersionUID = 6864591335823160569L;
 
-	private final Table<?> into;
+	private final Table<R> into;
 	private final Map<Field<?>, Object> values;
 
-	AbstractStoreQuery(Table<?> into) {
+	AbstractStoreQuery(Table<R> into) {
 		this.into = into;
 		this.values = new LinkedHashMap<Field<?>, Object>();
 	}
 
-	AbstractStoreQuery(Table<?> into, Record record) {
+	AbstractStoreQuery(Table<R> into, R record) {
 		this(into);
 
 		setRecord(record);
 	}
 
 	@Override
-	public final Table<?> getInto() {
+	public final Table<R> getInto() {
 		return into;
 	}
 
@@ -83,7 +83,7 @@ abstract class AbstractStoreQuery extends AbstractQuery implements StoreQuery {
 	}
 
 	@Override
-	public final void setRecord(Record record) {
+	public final void setRecord(R record) {
 		for (Field<?> field : record.getFields()) {
 			getValues0().put(field, record.getValue(field));
 		}

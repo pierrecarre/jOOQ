@@ -425,13 +425,13 @@ public class jOOQTest {
 
 	@Test(expected = IllegalStateException.class)
 	public final void testEmptyInsertQuery() throws Exception {
-		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Record> q = QueryFactory.createInsertQuery(TABLE1);
 		q.toSQLReference();
 	}
 
 	@Test
 	public final void testInsertQuery1() throws Exception {
-		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Record> q = QueryFactory.createInsertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQLReference(true));
@@ -449,7 +449,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testInsertQuery2() throws Exception {
-		InsertQuery q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Record> q = QueryFactory.createInsertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -471,13 +471,13 @@ public class jOOQTest {
 
 	@Test(expected = IllegalStateException.class)
 	public final void testEmptyUpdateQuery() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 		q.toSQLReference();
 	}
 
 	@Test
 	public final void testUpdateQuery1() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("update TABLE1 set ID1 = 10", q.toSQLReference(true));
@@ -495,7 +495,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery2() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -515,7 +515,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery3() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 		CompareCondition<Integer> c = FIELD_ID1.equal(10);
 
 		q.addValue(FIELD_ID1, 10);
@@ -538,7 +538,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery4() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -564,7 +564,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery5() throws Exception {
-		UpdateQuery q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Record> q = QueryFactory.createUpdateQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 

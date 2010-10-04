@@ -93,7 +93,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	}
 
 	private final void storeInsert(Connection con) throws SQLException {
-		InsertQuery insert = QueryFactory.createInsertQuery(getTable());
+		InsertQuery<R> insert = QueryFactory.createInsertQuery(getTable());
 
 		for (Field<?> field : getFields()) {
 			addValue(insert, field);
@@ -103,7 +103,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	}
 
 	private final void storeUpdate(Connection con) throws SQLException {
-		UpdateQuery update = QueryFactory.createUpdateQuery(getTable());
+		UpdateQuery<R> update = QueryFactory.createUpdateQuery(getTable());
 
 		for (Field<?> field : getFields()) {
 			if (getValue0(field).isChanged()) {
@@ -139,7 +139,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	/**
 	 * Extracted method to ensure generic type safety.
 	 */
-	private final <T> void addValue(StoreQuery store, Field<T> field) {
+	private final <T> void addValue(StoreQuery<R> store, Field<T> field) {
 		store.addValue(field, getValue(field));
 	}
 }
