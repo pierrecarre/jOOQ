@@ -43,28 +43,28 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>("ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<String> NAME = new TableFieldImpl<String>("NAME", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>("NAME", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
-	public static final TableField<Integer> ID_REF = new TableFieldImpl<Integer>("ID_REF", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>("ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
 	 */
-	public static final TableField<String> NAME_REF = new TableFieldImpl<String>("NAME_REF", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>("NAME_REF", String.class, X_UNUSED);
 
 	/**
 	 * No further instances allowed

@@ -39,62 +39,62 @@ public class Tables extends TableImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("table_catalog", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_CATALOG = new TableFieldImpl<TablesRecord, String>("table_catalog", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("table_schema", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_SCHEMA = new TableFieldImpl<TablesRecord, String>("table_schema", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("table_name", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_NAME = new TableFieldImpl<TablesRecord, String>("table_name", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_TYPE = new TableFieldImpl<String>("table_type", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_TYPE = new TableFieldImpl<TablesRecord, String>("table_type", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SELF_REFERENCING_COLUMN_NAME = new TableFieldImpl<String>("self_referencing_column_name", String.class, TABLES);
+	public static final TableField<TablesRecord, String> SELF_REFERENCING_COLUMN_NAME = new TableFieldImpl<TablesRecord, String>("self_referencing_column_name", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> REFERENCE_GENERATION = new TableFieldImpl<String>("reference_generation", String.class, TABLES);
+	public static final TableField<TablesRecord, String> REFERENCE_GENERATION = new TableFieldImpl<TablesRecord, String>("reference_generation", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> USER_DEFINED_TYPE_CATALOG = new TableFieldImpl<String>("user_defined_type_catalog", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_CATALOG = new TableFieldImpl<TablesRecord, String>("user_defined_type_catalog", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> USER_DEFINED_TYPE_SCHEMA = new TableFieldImpl<String>("user_defined_type_schema", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_SCHEMA = new TableFieldImpl<TablesRecord, String>("user_defined_type_schema", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> USER_DEFINED_TYPE_NAME = new TableFieldImpl<String>("user_defined_type_name", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_NAME = new TableFieldImpl<TablesRecord, String>("user_defined_type_name", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_INSERTABLE_INTO = new TableFieldImpl<String>("is_insertable_into", String.class, TABLES);
+	public static final TableField<TablesRecord, String> IS_INSERTABLE_INTO = new TableFieldImpl<TablesRecord, String>("is_insertable_into", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_TYPED = new TableFieldImpl<String>("is_typed", String.class, TABLES);
+	public static final TableField<TablesRecord, String> IS_TYPED = new TableFieldImpl<TablesRecord, String>("is_typed", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COMMIT_ACTION = new TableFieldImpl<String>("commit_action", String.class, TABLES);
+	public static final TableField<TablesRecord, String> COMMIT_ACTION = new TableFieldImpl<TablesRecord, String>("commit_action", String.class, TABLES);
 
 	/**
 	 * No further instances allowed

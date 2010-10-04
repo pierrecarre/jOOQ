@@ -41,12 +41,12 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> AUTHOR = new TableFieldImpl<String>("AUTHOR", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> AUTHOR = new TableFieldImpl<VLibraryRecord, String>("AUTHOR", String.class, V_LIBRARY);
 
 	/**
 	 * The book's title
 	 */
-	public static final TableField<String> TITLE = new TableFieldImpl<String>("TITLE", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> TITLE = new TableFieldImpl<VLibraryRecord, String>("TITLE", String.class, V_LIBRARY);
 
 	/**
 	 * No further instances allowed

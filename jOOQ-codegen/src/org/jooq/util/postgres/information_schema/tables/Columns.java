@@ -39,222 +39,222 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("table_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_CATALOG = new TableFieldImpl<ColumnsRecord, String>("table_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("table_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("table_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("table_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_NAME = new TableFieldImpl<ColumnsRecord, String>("table_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLUMN_NAME = new TableFieldImpl<String>("column_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_NAME = new TableFieldImpl<ColumnsRecord, String>("column_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> ORDINAL_POSITION = new TableFieldImpl<Integer>("ordinal_position", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>("ordinal_position", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLUMN_DEFAULT = new TableFieldImpl<String>("column_default", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_DEFAULT = new TableFieldImpl<ColumnsRecord, String>("column_default", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_NULLABLE = new TableFieldImpl<String>("is_nullable", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_NULLABLE = new TableFieldImpl<ColumnsRecord, String>("is_nullable", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DATA_TYPE = new TableFieldImpl<String>("data_type", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DATA_TYPE = new TableFieldImpl<ColumnsRecord, String>("data_type", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<Integer>("character_maximum_length", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("character_maximum_length", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<Integer>("character_octet_length", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("character_octet_length", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> NUMERIC_PRECISION = new TableFieldImpl<Integer>("numeric_precision", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>("numeric_precision", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> NUMERIC_PRECISION_RADIX = new TableFieldImpl<Integer>("numeric_precision_radix", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION_RADIX = new TableFieldImpl<ColumnsRecord, Integer>("numeric_precision_radix", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> NUMERIC_SCALE = new TableFieldImpl<Integer>("numeric_scale", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>("numeric_scale", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> DATETIME_PRECISION = new TableFieldImpl<Integer>("datetime_precision", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> DATETIME_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>("datetime_precision", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> INTERVAL_TYPE = new TableFieldImpl<String>("interval_type", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> INTERVAL_TYPE = new TableFieldImpl<ColumnsRecord, String>("interval_type", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> INTERVAL_PRECISION = new TableFieldImpl<String>("interval_precision", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> INTERVAL_PRECISION = new TableFieldImpl<ColumnsRecord, String>("interval_precision", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CHARACTER_SET_CATALOG = new TableFieldImpl<String>("character_set_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_CATALOG = new TableFieldImpl<ColumnsRecord, String>("character_set_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CHARACTER_SET_SCHEMA = new TableFieldImpl<String>("character_set_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("character_set_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CHARACTER_SET_NAME = new TableFieldImpl<String>("character_set_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<ColumnsRecord, String>("character_set_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLLATION_CATALOG = new TableFieldImpl<String>("collation_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_CATALOG = new TableFieldImpl<ColumnsRecord, String>("collation_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLLATION_SCHEMA = new TableFieldImpl<String>("collation_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("collation_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLLATION_NAME = new TableFieldImpl<String>("collation_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_NAME = new TableFieldImpl<ColumnsRecord, String>("collation_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DOMAIN_CATALOG = new TableFieldImpl<String>("domain_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_CATALOG = new TableFieldImpl<ColumnsRecord, String>("domain_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DOMAIN_SCHEMA = new TableFieldImpl<String>("domain_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("domain_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DOMAIN_NAME = new TableFieldImpl<String>("domain_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_NAME = new TableFieldImpl<ColumnsRecord, String>("domain_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> UDT_CATALOG = new TableFieldImpl<String>("udt_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_CATALOG = new TableFieldImpl<ColumnsRecord, String>("udt_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> UDT_SCHEMA = new TableFieldImpl<String>("udt_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("udt_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> UDT_NAME = new TableFieldImpl<String>("udt_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_NAME = new TableFieldImpl<ColumnsRecord, String>("udt_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SCOPE_CATALOG = new TableFieldImpl<String>("scope_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_CATALOG = new TableFieldImpl<ColumnsRecord, String>("scope_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SCOPE_SCHEMA = new TableFieldImpl<String>("scope_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("scope_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SCOPE_NAME = new TableFieldImpl<String>("scope_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_NAME = new TableFieldImpl<ColumnsRecord, String>("scope_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> MAXIMUM_CARDINALITY = new TableFieldImpl<Integer>("maximum_cardinality", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> MAXIMUM_CARDINALITY = new TableFieldImpl<ColumnsRecord, Integer>("maximum_cardinality", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DTD_IDENTIFIER = new TableFieldImpl<String>("dtd_identifier", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DTD_IDENTIFIER = new TableFieldImpl<ColumnsRecord, String>("dtd_identifier", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_SELF_REFERENCING = new TableFieldImpl<String>("is_self_referencing", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_SELF_REFERENCING = new TableFieldImpl<ColumnsRecord, String>("is_self_referencing", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_IDENTITY = new TableFieldImpl<String>("is_identity", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_IDENTITY = new TableFieldImpl<ColumnsRecord, String>("is_identity", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_GENERATION = new TableFieldImpl<String>("identity_generation", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_GENERATION = new TableFieldImpl<ColumnsRecord, String>("identity_generation", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_START = new TableFieldImpl<String>("identity_start", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_START = new TableFieldImpl<ColumnsRecord, String>("identity_start", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_INCREMENT = new TableFieldImpl<String>("identity_increment", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_INCREMENT = new TableFieldImpl<ColumnsRecord, String>("identity_increment", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_MAXIMUM = new TableFieldImpl<String>("identity_maximum", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_MAXIMUM = new TableFieldImpl<ColumnsRecord, String>("identity_maximum", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_MINIMUM = new TableFieldImpl<String>("identity_minimum", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_MINIMUM = new TableFieldImpl<ColumnsRecord, String>("identity_minimum", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IDENTITY_CYCLE = new TableFieldImpl<String>("identity_cycle", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_CYCLE = new TableFieldImpl<ColumnsRecord, String>("identity_cycle", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_GENERATED = new TableFieldImpl<String>("is_generated", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_GENERATED = new TableFieldImpl<ColumnsRecord, String>("is_generated", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> GENERATION_EXPRESSION = new TableFieldImpl<String>("generation_expression", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> GENERATION_EXPRESSION = new TableFieldImpl<ColumnsRecord, String>("generation_expression", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_UPDATABLE = new TableFieldImpl<String>("is_updatable", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_UPDATABLE = new TableFieldImpl<ColumnsRecord, String>("is_updatable", String.class, COLUMNS);
 
 	/**
 	 * No further instances allowed

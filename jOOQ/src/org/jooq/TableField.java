@@ -36,10 +36,10 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface TableField<T> extends Field<T> {
+public interface TableField<R extends Record, T> extends Field<T> {
 
 	/**
 	 * @return The table this field is contained in
 	 */
-	Table<?> getTable();
+	Table<R> getTable();
 }

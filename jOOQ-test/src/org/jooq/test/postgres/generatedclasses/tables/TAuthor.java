@@ -43,27 +43,27 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("id", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>("id", Integer.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> FIRST_NAME = new TableFieldImpl<String>("first_name", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>("first_name", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> LAST_NAME = new TableFieldImpl<String>("last_name", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>("last_name", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("date_of_birth", Date.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>("date_of_birth", Date.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Integer> YEAR_OF_BIRTH = new TableFieldImpl<Integer>("year_of_birth", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>("year_of_birth", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed

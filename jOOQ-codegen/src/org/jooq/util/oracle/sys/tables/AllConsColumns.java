@@ -29,27 +29,27 @@ public class AllConsColumns extends TableImpl<Record> {
 	/**
 	 * Owner of the constraint definition
 	 */
-	public static final TableField<String> OWNER = new TableFieldImpl<String>("OWNER", String.class, ALL_CONS_COLUMNS);
+	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>("OWNER", String.class, ALL_CONS_COLUMNS);
 
 	/**
 	 * Name associated with the constraint definition
 	 */
-	public static final TableField<String> CONSTRAINT_NAME = new TableFieldImpl<String>("CONSTRAINT_NAME", String.class, ALL_CONS_COLUMNS);
+	public static final TableField<Record, String> CONSTRAINT_NAME = new TableFieldImpl<Record, String>("CONSTRAINT_NAME", String.class, ALL_CONS_COLUMNS);
 
 	/**
 	 * Name associated with table with constraint definition
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, ALL_CONS_COLUMNS);
+	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>("TABLE_NAME", String.class, ALL_CONS_COLUMNS);
 
 	/**
 	 * Name associated with column or attribute of object column specified in the constraint definition
 	 */
-	public static final TableField<String> COLUMN_NAME = new TableFieldImpl<String>("COLUMN_NAME", String.class, ALL_CONS_COLUMNS);
+	public static final TableField<Record, String> COLUMN_NAME = new TableFieldImpl<Record, String>("COLUMN_NAME", String.class, ALL_CONS_COLUMNS);
 
 	/**
 	 * Original position of column or attribute in definition
 	 */
-	public static final TableField<BigDecimal> POSITION = new TableFieldImpl<BigDecimal>("POSITION", BigDecimal.class, ALL_CONS_COLUMNS);
+	public static final TableField<Record, BigDecimal> POSITION = new TableFieldImpl<Record, BigDecimal>("POSITION", BigDecimal.class, ALL_CONS_COLUMNS);
 
 	/**
 	 * No further instances allowed

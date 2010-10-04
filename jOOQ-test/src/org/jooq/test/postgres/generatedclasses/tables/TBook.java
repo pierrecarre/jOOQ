@@ -41,19 +41,19 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("id", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>("id", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
 	 */
-	public static final TableField<Integer> AUTHOR_ID = new TableFieldImpl<Integer>("author_id", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>("author_id", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TITLE = new TableFieldImpl<String>("title", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>("title", String.class, T_BOOK);
 
 	/**
 	 * No further instances allowed

@@ -45,6 +45,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -81,27 +82,27 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	}
 
 	@Override
-	protected TableField<String> getTAuthor_LAST_NAME() {
+	protected TableField<? extends Record, String> getTAuthor_LAST_NAME() {
 		return LAST_NAME;
 	}
 
 	@Override
-	protected TableField<String> getTAuthor_FIRST_NAME() {
+	protected TableField<? extends Record, String> getTAuthor_FIRST_NAME() {
 		return TAuthor.FIRST_NAME;
 	}
 
 	@Override
-	protected TableField<Date> getTAuthor_DATE_OF_BIRTH() {
+	protected TableField<? extends Record, Date> getTAuthor_DATE_OF_BIRTH() {
 		return TAuthor.DATE_OF_BIRTH;
 	}
 
 	@Override
-	protected TableField<Integer> getTAuthor_YEAR_OF_BIRTH() {
+	protected TableField<? extends Record, Integer> getTAuthor_YEAR_OF_BIRTH() {
 		return TAuthor.YEAR_OF_BIRTH;
 	}
 
 	@Override
-	protected TableField<Integer> getTAuthor_ID() {
+	protected TableField<? extends Record, Integer> getTAuthor_ID() {
 		return TAuthor.ID;
 	}
 
@@ -112,17 +113,17 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	}
 
 	@Override
-	protected TableField<Integer> getTBook_ID() {
+	protected TableField<? extends Record, Integer> getTBook_ID() {
 		return TBook.ID;
 	}
 
 	@Override
-	protected TableField<Integer> getTBook_AUTHOR_ID() {
+	protected TableField<? extends Record, Integer> getTBook_AUTHOR_ID() {
 		return TBook.AUTHOR_ID;
 	}
 
 	@Override
-	protected TableField<String> getTBook_TITLE() {
+	protected TableField<? extends Record, String> getTBook_TITLE() {
 		return TBook.TITLE;
 	}
 
@@ -133,12 +134,12 @@ public class jOOQMySQLTest extends jOOQAbstractTest {
 	}
 
 	@Override
-	protected TableField<String> getVLibrary_TITLE() {
+	protected TableField<? extends Record, String> getVLibrary_TITLE() {
 		return VLibrary.TITLE;
 	}
 
 	@Override
-	protected TableField<String> getVLibrary_AUTHOR() {
+	protected TableField<? extends Record, String> getVLibrary_AUTHOR() {
 		return AUTHOR;
 	}
 

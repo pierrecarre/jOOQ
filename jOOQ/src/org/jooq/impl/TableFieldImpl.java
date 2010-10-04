@@ -31,19 +31,20 @@
 
 package org.jooq.impl;
 
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 
 /**
  * @author Lukas Eder
  */
-public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
+public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements TableField<R, T> {
 
 	private static final long serialVersionUID = -2211214195583539735L;
 
-	private final Table<?> table;
+	private final Table<R> table;
 
-	public TableFieldImpl(String name, Class<T> type, Table<?> table) {
+	public TableFieldImpl(String name, Class<T> type, Table<R> table) {
 		super(name, type);
 
 		this.table = table;
@@ -51,7 +52,7 @@ public class TableFieldImpl<T> extends FieldImpl<T> implements TableField<T> {
 	}
 
 	@Override
-	public Table<?> getTable() {
+	public Table<R> getTable() {
 		return table;
 	}
 

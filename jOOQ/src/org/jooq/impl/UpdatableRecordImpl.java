@@ -63,7 +63,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	}
 
 	@Override
-	public final List<TableField<?>> getPrimaryKey() {
+	public final List<TableField<R, ?>> getPrimaryKey() {
 		return getTable().getPrimaryKey();
 	}
 
@@ -71,7 +71,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	public final void store(Connection con) throws SQLException {
 		boolean executeUpdate = false;
 
-		for (TableField<?> field : getPrimaryKey()) {
+		for (TableField<R, ?> field : getPrimaryKey()) {
 
 			// If any primary key value is null or changed, execute an insert
 			if (getValue(field) == null || getValue0(field).isChanged()) {

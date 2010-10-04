@@ -29,102 +29,102 @@ public class AllConstraints extends TableImpl<Record> {
 	/**
 	 * Owner of the table
 	 */
-	public static final TableField<String> OWNER = new TableFieldImpl<String>("OWNER", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>("OWNER", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Name associated with constraint definition
 	 */
-	public static final TableField<String> CONSTRAINT_NAME = new TableFieldImpl<String>("CONSTRAINT_NAME", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> CONSTRAINT_NAME = new TableFieldImpl<Record, String>("CONSTRAINT_NAME", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Type of constraint definition
 	 */
-	public static final TableField<String> CONSTRAINT_TYPE = new TableFieldImpl<String>("CONSTRAINT_TYPE", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> CONSTRAINT_TYPE = new TableFieldImpl<Record, String>("CONSTRAINT_TYPE", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Name associated with table with constraint definition
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>("TABLE_NAME", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Text of search condition for table check
 	 */
-	public static final TableField<String> SEARCH_CONDITION = new TableFieldImpl<String>("SEARCH_CONDITION", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> SEARCH_CONDITION = new TableFieldImpl<Record, String>("SEARCH_CONDITION", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Owner of table used in referential constraint
 	 */
-	public static final TableField<String> R_OWNER = new TableFieldImpl<String>("R_OWNER", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> R_OWNER = new TableFieldImpl<Record, String>("R_OWNER", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Name of unique constraint definition for referenced table
 	 */
-	public static final TableField<String> R_CONSTRAINT_NAME = new TableFieldImpl<String>("R_CONSTRAINT_NAME", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> R_CONSTRAINT_NAME = new TableFieldImpl<Record, String>("R_CONSTRAINT_NAME", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * The delete rule for a referential constraint
 	 */
-	public static final TableField<String> DELETE_RULE = new TableFieldImpl<String>("DELETE_RULE", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> DELETE_RULE = new TableFieldImpl<Record, String>("DELETE_RULE", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Enforcement status of constraint - ENABLED or DISABLED
 	 */
-	public static final TableField<String> STATUS = new TableFieldImpl<String>("STATUS", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> STATUS = new TableFieldImpl<Record, String>("STATUS", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Is the constraint deferrable - DEFERRABLE or NOT DEFERRABLE
 	 */
-	public static final TableField<String> DEFERRABLE = new TableFieldImpl<String>("DEFERRABLE", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> DEFERRABLE = new TableFieldImpl<Record, String>("DEFERRABLE", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Is the constraint deferred by default -  DEFERRED or IMMEDIATE
 	 */
-	public static final TableField<String> DEFERRED = new TableFieldImpl<String>("DEFERRED", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> DEFERRED = new TableFieldImpl<Record, String>("DEFERRED", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Was this constraint system validated? -  VALIDATED or NOT VALIDATED
 	 */
-	public static final TableField<String> VALIDATED = new TableFieldImpl<String>("VALIDATED", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> VALIDATED = new TableFieldImpl<Record, String>("VALIDATED", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Was the constraint name system generated? -  GENERATED NAME or USER NAME
 	 */
-	public static final TableField<String> GENERATED = new TableFieldImpl<String>("GENERATED", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> GENERATED = new TableFieldImpl<Record, String>("GENERATED", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * Creating this constraint should give ORA-02436.  Rewrite it before 2000 AD.
 	 */
-	public static final TableField<String> BAD = new TableFieldImpl<String>("BAD", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> BAD = new TableFieldImpl<Record, String>("BAD", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * If set, this flag will be used in optimizer
 	 */
-	public static final TableField<String> RELY = new TableFieldImpl<String>("RELY", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> RELY = new TableFieldImpl<Record, String>("RELY", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * The date when this column was last enabled or disabled
 	 */
-	public static final TableField<Date> LAST_CHANGE = new TableFieldImpl<Date>("LAST_CHANGE", Date.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, Date> LAST_CHANGE = new TableFieldImpl<Record, Date>("LAST_CHANGE", Date.class, ALL_CONSTRAINTS);
 
 	/**
 	 * The owner of the index used by this constraint
 	 */
-	public static final TableField<String> INDEX_OWNER = new TableFieldImpl<String>("INDEX_OWNER", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> INDEX_OWNER = new TableFieldImpl<Record, String>("INDEX_OWNER", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * The index used by this constraint
 	 */
-	public static final TableField<String> INDEX_NAME = new TableFieldImpl<String>("INDEX_NAME", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> INDEX_NAME = new TableFieldImpl<Record, String>("INDEX_NAME", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> INVALID = new TableFieldImpl<String>("INVALID", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> INVALID = new TableFieldImpl<Record, String>("INVALID", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> VIEW_RELATED = new TableFieldImpl<String>("VIEW_RELATED", String.class, ALL_CONSTRAINTS);
+	public static final TableField<Record, String> VIEW_RELATED = new TableFieldImpl<Record, String>("VIEW_RELATED", String.class, ALL_CONSTRAINTS);
 
 	/**
 	 * No further instances allowed

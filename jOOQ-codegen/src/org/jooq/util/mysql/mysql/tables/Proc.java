@@ -43,102 +43,102 @@ public class Proc extends TableImpl<ProcRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DB = new TableFieldImpl<String>("db", String.class, PROC);
+	public static final TableField<ProcRecord, String> DB = new TableFieldImpl<ProcRecord, String>("db", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> NAME = new TableFieldImpl<String>("name", String.class, PROC);
+	public static final TableField<ProcRecord, String> NAME = new TableFieldImpl<ProcRecord, String>("name", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TYPE = new TableFieldImpl<String>("type", String.class, PROC);
+	public static final TableField<ProcRecord, String> TYPE = new TableFieldImpl<ProcRecord, String>("type", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SPECIFIC_NAME = new TableFieldImpl<String>("specific_name", String.class, PROC);
+	public static final TableField<ProcRecord, String> SPECIFIC_NAME = new TableFieldImpl<ProcRecord, String>("specific_name", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> LANGUAGE = new TableFieldImpl<String>("language", String.class, PROC);
+	public static final TableField<ProcRecord, String> LANGUAGE = new TableFieldImpl<ProcRecord, String>("language", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SQL_DATA_ACCESS = new TableFieldImpl<String>("sql_data_access", String.class, PROC);
+	public static final TableField<ProcRecord, String> SQL_DATA_ACCESS = new TableFieldImpl<ProcRecord, String>("sql_data_access", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_DETERMINISTIC = new TableFieldImpl<String>("is_deterministic", String.class, PROC);
+	public static final TableField<ProcRecord, String> IS_DETERMINISTIC = new TableFieldImpl<ProcRecord, String>("is_deterministic", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SECURITY_TYPE = new TableFieldImpl<String>("security_type", String.class, PROC);
+	public static final TableField<ProcRecord, String> SECURITY_TYPE = new TableFieldImpl<ProcRecord, String>("security_type", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<byte[]> PARAM_LIST = new TableFieldImpl<byte[]>("param_list", byte[].class, PROC);
+	public static final TableField<ProcRecord, byte[]> PARAM_LIST = new TableFieldImpl<ProcRecord, byte[]>("param_list", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<byte[]> RETURNS = new TableFieldImpl<byte[]>("returns", byte[].class, PROC);
+	public static final TableField<ProcRecord, byte[]> RETURNS = new TableFieldImpl<ProcRecord, byte[]>("returns", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<byte[]> BODY = new TableFieldImpl<byte[]>("body", byte[].class, PROC);
+	public static final TableField<ProcRecord, byte[]> BODY = new TableFieldImpl<ProcRecord, byte[]>("body", byte[].class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DEFINER = new TableFieldImpl<String>("definer", String.class, PROC);
+	public static final TableField<ProcRecord, String> DEFINER = new TableFieldImpl<ProcRecord, String>("definer", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Timestamp> CREATED = new TableFieldImpl<Timestamp>("created", Timestamp.class, PROC);
+	public static final TableField<ProcRecord, Timestamp> CREATED = new TableFieldImpl<ProcRecord, Timestamp>("created", Timestamp.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<Timestamp> MODIFIED = new TableFieldImpl<Timestamp>("modified", Timestamp.class, PROC);
+	public static final TableField<ProcRecord, Timestamp> MODIFIED = new TableFieldImpl<ProcRecord, Timestamp>("modified", Timestamp.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> SQL_MODE = new TableFieldImpl<String>("sql_mode", String.class, PROC);
+	public static final TableField<ProcRecord, String> SQL_MODE = new TableFieldImpl<ProcRecord, String>("sql_mode", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COMMENT = new TableFieldImpl<String>("comment", String.class, PROC);
+	public static final TableField<ProcRecord, String> COMMENT = new TableFieldImpl<ProcRecord, String>("comment", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CHARACTER_SET_CLIENT = new TableFieldImpl<String>("character_set_client", String.class, PROC);
+	public static final TableField<ProcRecord, String> CHARACTER_SET_CLIENT = new TableFieldImpl<ProcRecord, String>("character_set_client", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLLATION_CONNECTION = new TableFieldImpl<String>("collation_connection", String.class, PROC);
+	public static final TableField<ProcRecord, String> COLLATION_CONNECTION = new TableFieldImpl<ProcRecord, String>("collation_connection", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> DB_COLLATION = new TableFieldImpl<String>("db_collation", String.class, PROC);
+	public static final TableField<ProcRecord, String> DB_COLLATION = new TableFieldImpl<ProcRecord, String>("db_collation", String.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<byte[]> BODY_UTF8 = new TableFieldImpl<byte[]>("body_utf8", byte[].class, PROC);
+	public static final TableField<ProcRecord, byte[]> BODY_UTF8 = new TableFieldImpl<ProcRecord, byte[]>("body_utf8", byte[].class, PROC);
 
 	/**
 	 * No further instances allowed

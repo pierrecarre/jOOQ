@@ -39,37 +39,37 @@ public class ConstraintColumnUsage extends TableImpl<ConstraintColumnUsageRecord
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("table_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("table_schema", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_schema", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("table_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> COLUMN_NAME = new TableFieldImpl<String>("column_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> COLUMN_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("column_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_CATALOG = new TableFieldImpl<String>("constraint_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_SCHEMA = new TableFieldImpl<String>("constraint_schema", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_schema", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_NAME = new TableFieldImpl<String>("constraint_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * No further instances allowed

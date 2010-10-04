@@ -47,17 +47,17 @@ public final class Data {
 	public static final Table<Record> TABLE2 = new TableImpl<Record>("TABLE2");
 	public static final Table<Record> TABLE3 = new TableImpl<Record>("TABLE3");
 
-	public static final TableField<Integer> FIELD_ID1 = new TableFieldImpl<Integer>("ID1", Integer.class, TABLE1);
-	public static final TableField<Integer> FIELD_ID2 = new TableFieldImpl<Integer>("ID2", Integer.class, TABLE2);
-	public static final TableField<Integer> FIELD_ID3 = new TableFieldImpl<Integer>("ID3", Integer.class, TABLE3);
+	public static final TableField<Record, Integer> FIELD_ID1 = new TableFieldImpl<Record, Integer>("ID1", Integer.class, TABLE1);
+	public static final TableField<Record, Integer> FIELD_ID2 = new TableFieldImpl<Record, Integer>("ID2", Integer.class, TABLE2);
+	public static final TableField<Record, Integer> FIELD_ID3 = new TableFieldImpl<Record, Integer>("ID3", Integer.class, TABLE3);
 
-	public static final TableField<String> FIELD_NAME1 = new TableFieldImpl<String>("NAME1", String.class, TABLE1);
-	public static final TableField<String> FIELD_NAME2 = new TableFieldImpl<String>("NAME2", String.class, TABLE2);
-	public static final TableField<String> FIELD_NAME3 = new TableFieldImpl<String>("NAME3", String.class, TABLE3);
+	public static final TableField<Record, String> FIELD_NAME1 = new TableFieldImpl<Record, String>("NAME1", String.class, TABLE1);
+	public static final TableField<Record, String> FIELD_NAME2 = new TableFieldImpl<Record, String>("NAME2", String.class, TABLE2);
+	public static final TableField<Record, String> FIELD_NAME3 = new TableFieldImpl<Record, String>("NAME3", String.class, TABLE3);
 
-	public static final TableField<Date> FIELD_DATE1 = new TableFieldImpl<Date>("DATE1", Date.class, TABLE1);
-	public static final TableField<Date> FIELD_DATE2 = new TableFieldImpl<Date>("DATE2", Date.class, TABLE2);
-	public static final TableField<Date> FIELD_DATE3 = new TableFieldImpl<Date>("DATE3", Date.class, TABLE3);
+	public static final TableField<Record, Date> FIELD_DATE1 = new TableFieldImpl<Record, Date>("DATE1", Date.class, TABLE1);
+	public static final TableField<Record, Date> FIELD_DATE2 = new TableFieldImpl<Record, Date>("DATE2", Date.class, TABLE2);
+	public static final TableField<Record, Date> FIELD_DATE3 = new TableFieldImpl<Record, Date>("DATE3", Date.class, TABLE3);
 
 	private Data() {}
 }

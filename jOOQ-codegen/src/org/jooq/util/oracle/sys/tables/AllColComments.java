@@ -27,22 +27,22 @@ public class AllColComments extends TableImpl<Record> {
 	/**
 	 * Owner of the object
 	 */
-	public static final TableField<String> OWNER = new TableFieldImpl<String>("OWNER", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>("OWNER", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Name of the object
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("TABLE_NAME", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>("TABLE_NAME", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Name of the column
 	 */
-	public static final TableField<String> COLUMN_NAME = new TableFieldImpl<String>("COLUMN_NAME", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> COLUMN_NAME = new TableFieldImpl<Record, String>("COLUMN_NAME", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Comment on the column
 	 */
-	public static final TableField<String> COMMENTS = new TableFieldImpl<String>("COMMENTS", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> COMMENTS = new TableFieldImpl<Record, String>("COMMENTS", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * No further instances allowed

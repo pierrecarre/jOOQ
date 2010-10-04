@@ -160,7 +160,7 @@ public class DefaultGenerator implements Generator {
 			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
 
 			for (ColumnDefinition column : table.getColumns()) {
-				printColumn(out, column, table.getNameUC());
+				printColumn(out, column, table);
 			}
 
 			out.println();
@@ -263,7 +263,7 @@ public class DefaultGenerator implements Generator {
 
 
 			for (ColumnDefinition parameter : procedure.getAllParameters()) {
-				printParameter(out, parameter);
+				printParameter(out, parameter, procedure);
 			}
 
 			out.println();
@@ -332,7 +332,7 @@ public class DefaultGenerator implements Generator {
 
 
 			for (ColumnDefinition parameter : function.getInParameters()) {
-				printParameter(out, parameter);
+				printParameter(out, parameter, function);
 			}
 
 			out.println();
@@ -496,30 +496,37 @@ public class DefaultGenerator implements Generator {
 		out.printImport(column.getTypeClass());
 	}
 
-	private void printColumn(GenerationWriter out, ColumnDefinition column, String targetTableNameUC) throws SQLException {
+	private void printColumn(GenerationWriter out, ColumnDefinition column, TableDefinition table) throws SQLException {
 		Class<?> declaredMemberClass = TableField.class;
 		Class<?> concreteMemberClass = TableFieldImpl.class;
 
-		printColumnDefinition(out, column, targetTableNameUC, declaredMemberClass, concreteMemberClass);
+		printColumnDefinition(out, column, table, declaredMemberClass, concreteMemberClass);
 	}
 
-	private void printParameter(GenerationWriter out, ColumnDefinition parameter) throws SQLException {
-		printColumnDefinition(out, parameter, null, Parameter.class, ParameterImpl.class);
+	private void printParameter(GenerationWriter out, ColumnDefinition parameter, Definition proc) throws SQLException {
+		printColumnDefinition(out, parameter, proc, Parameter.class, ParameterImpl.class);
 	}
 
-	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, String targetObjectNameUC, Class<?> declaredMemberClass, Class<?> concreteMemberClass) throws SQLException {
+	private void printColumnDefinition(GenerationWriter out, ColumnDefinition column, Definition table, Class<?> declaredMemberClass, Class<?> concreteMemberClass) throws SQLException {
 		String concreteMemberType = concreteMemberClass.getSimpleName();
 		String declaredMemberType = declaredMemberClass.getSimpleName();
 
-		String columnDisambiguationSuffix = column.getNameUC().equals(targetObjectNameUC) ? "_" : "";
+		String columnDisambiguationSuffix = column.getNameUC().equals(table.getNameUC()) ? "_" : "";
 		printFieldJavaDoc(out, columnDisambiguationSuffix, column);
 
-		out.println("\tpublic static final " + declaredMemberType + "<" + column.getType() + "> " +
+		String genericPrefix = "<";
+		if (table instanceof TableDefinition) {
+			genericPrefix += table.getJavaClassName("Record") + ", ";
+		}
+
+		out.println("\tpublic static final " + declaredMemberType +
+				genericPrefix + column.getType() + "> " +
 				column.getNameUC() + columnDisambiguationSuffix +
-				" = new " + concreteMemberType + "<" + column.getType() + ">(\""
+				" = new " + concreteMemberType
+				+ genericPrefix + column.getType() + ">(\""
 				+ column.getName() + "\", " +
 				column.getType() + ".class" +
-				(targetObjectNameUC != null ? ", " + targetObjectNameUC : "") +
+				(table instanceof TableDefinition ? ", " + table.getNameUC() : "") +
 				");");
 		out.printImport(declaredMemberClass);
 		out.printImport(concreteMemberClass);

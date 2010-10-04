@@ -44,27 +44,27 @@ public class TAuthor extends TableImpl<TAuthorRecord> {
 	 *
 	 * PRIMARY KEY 'SYS_C0012919'
 	 */
-	public static final TableField<Integer> ID = new TableFieldImpl<Integer>("ID", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>("ID", Integer.class, T_AUTHOR);
 
 	/**
 	 * The author's first name
 	 */
-	public static final TableField<String> FIRST_NAME = new TableFieldImpl<String>("FIRST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>("FIRST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's last name
 	 */
-	public static final TableField<String> LAST_NAME = new TableFieldImpl<String>("LAST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>("LAST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's date of birth
 	 */
-	public static final TableField<Date> DATE_OF_BIRTH = new TableFieldImpl<Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
 
 	/**
 	 * The author's year of birth
 	 */
-	public static final TableField<Integer> YEAR_OF_BIRTH = new TableFieldImpl<Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed

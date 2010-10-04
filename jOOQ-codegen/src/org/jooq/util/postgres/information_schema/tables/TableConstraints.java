@@ -39,47 +39,47 @@ public class TableConstraints extends TableImpl<TableConstraintsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_CATALOG = new TableFieldImpl<String>("constraint_catalog", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<TableConstraintsRecord, String>("constraint_catalog", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_SCHEMA = new TableFieldImpl<String>("constraint_schema", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<TableConstraintsRecord, String>("constraint_schema", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_NAME = new TableFieldImpl<String>("constraint_name", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> CONSTRAINT_NAME = new TableFieldImpl<TableConstraintsRecord, String>("constraint_name", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_CATALOG = new TableFieldImpl<String>("table_catalog", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> TABLE_CATALOG = new TableFieldImpl<TableConstraintsRecord, String>("table_catalog", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_SCHEMA = new TableFieldImpl<String>("table_schema", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> TABLE_SCHEMA = new TableFieldImpl<TableConstraintsRecord, String>("table_schema", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> TABLE_NAME = new TableFieldImpl<String>("table_name", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> TABLE_NAME = new TableFieldImpl<TableConstraintsRecord, String>("table_name", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> CONSTRAINT_TYPE = new TableFieldImpl<String>("constraint_type", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> CONSTRAINT_TYPE = new TableFieldImpl<TableConstraintsRecord, String>("constraint_type", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> IS_DEFERRABLE = new TableFieldImpl<String>("is_deferrable", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> IS_DEFERRABLE = new TableFieldImpl<TableConstraintsRecord, String>("is_deferrable", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<String> INITIALLY_DEFERRED = new TableFieldImpl<String>("initially_deferred", String.class, TABLE_CONSTRAINTS);
+	public static final TableField<TableConstraintsRecord, String> INITIALLY_DEFERRED = new TableFieldImpl<TableConstraintsRecord, String>("initially_deferred", String.class, TABLE_CONSTRAINTS);
 
 	/**
 	 * No further instances allowed

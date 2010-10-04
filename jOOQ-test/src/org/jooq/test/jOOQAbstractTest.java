@@ -244,18 +244,18 @@ public abstract class jOOQAbstractTest {
     }
 
 	protected abstract Table<Record> getTAuthor();
-	protected abstract TableField<String> getTAuthor_LAST_NAME();
-	protected abstract TableField<String> getTAuthor_FIRST_NAME();
-	protected abstract TableField<Date> getTAuthor_DATE_OF_BIRTH();
-	protected abstract TableField<Integer> getTAuthor_YEAR_OF_BIRTH();
-	protected abstract TableField<Integer> getTAuthor_ID() ;
+	protected abstract TableField<? extends Record, String> getTAuthor_LAST_NAME();
+	protected abstract TableField<? extends Record, String> getTAuthor_FIRST_NAME();
+	protected abstract TableField<? extends Record, Date> getTAuthor_DATE_OF_BIRTH();
+	protected abstract TableField<? extends Record, Integer> getTAuthor_YEAR_OF_BIRTH();
+	protected abstract TableField<? extends Record, Integer> getTAuthor_ID() ;
 	protected abstract Table<Record> getTBook();
-	protected abstract TableField<Integer> getTBook_ID();
-	protected abstract TableField<Integer> getTBook_AUTHOR_ID();
-	protected abstract TableField<String> getTBook_TITLE();
+	protected abstract TableField<? extends Record, Integer> getTBook_ID();
+	protected abstract TableField<? extends Record, Integer> getTBook_AUTHOR_ID();
+	protected abstract TableField<? extends Record, String> getTBook_TITLE();
 	protected abstract Table<Record> getVLibrary();
-	protected abstract TableField<String> getVLibrary_TITLE();
-	protected abstract TableField<String> getVLibrary_AUTHOR();
+	protected abstract TableField<? extends Record, String> getVLibrary_TITLE();
+	protected abstract TableField<? extends Record, String> getVLibrary_AUTHOR();
 
     @Test
     public final void testCombinedSelectQuery() throws Exception {
