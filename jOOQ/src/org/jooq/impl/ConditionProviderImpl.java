@@ -47,7 +47,7 @@ import org.jooq.Record;
 /**
  * @author Lukas Eder
  */
-class ConditionProviderImpl<R extends Record> extends AbstractQueryPart implements ConditionProvider<R> {
+class ConditionProviderImpl<R extends Record<R>> extends AbstractQueryPart implements ConditionProvider<R> {
 
 	private static final long serialVersionUID = 6073328960551062973L;
 

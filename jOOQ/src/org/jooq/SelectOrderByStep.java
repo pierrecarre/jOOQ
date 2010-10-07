@@ -41,7 +41,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectOrderByStep<R extends Record> extends QueryProvider<SelectQuery<R>> {
+public interface SelectOrderByStep<R extends Record<R>> extends QueryProvider<SelectQuery<R>> {
 
 	/**
 	 * Add an order by clause to the query.

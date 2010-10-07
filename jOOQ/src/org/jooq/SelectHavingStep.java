@@ -42,7 +42,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R> {
+public interface SelectHavingStep<R extends Record<R>> extends SelectOrderByStep<R> {
 
 	/**
 	 * Add a having clause to the query and proceed to the next step

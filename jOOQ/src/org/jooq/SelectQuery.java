@@ -38,7 +38,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
+public interface SelectQuery<R extends Record<R>> extends SimpleSelectQuery<R> {
 
 	/**
 	 * {@inheritDoc}

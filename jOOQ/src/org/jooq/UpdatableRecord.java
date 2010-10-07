@@ -38,7 +38,7 @@ import java.sql.SQLException;
  *
  * @author Lukas Eder
  */
-public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRecord<R> {
+public interface UpdatableRecord<R extends Record<R>> extends Updatable<R>, TableRecord<R> {
 
 	/**
 	 * The table from which this record was read

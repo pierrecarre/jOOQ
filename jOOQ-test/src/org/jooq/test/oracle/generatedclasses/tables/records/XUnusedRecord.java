@@ -13,7 +13,7 @@ import org.jooq.test.oracle.generatedclasses.tables.XUnused;
  *
  * An unused table in the same schema.
  */
-public class XUnusedRecord extends RecordImpl {
+public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 

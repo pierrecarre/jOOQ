@@ -66,7 +66,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements SelectQuery<R> {
+class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements SelectQuery<R> {
 
 	private static final long serialVersionUID = 1555503854543561285L;
 
@@ -350,7 +350,7 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 				try {
 					record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
 				} catch (Exception e) {
-					record = (R) new RecordImpl(result);
+					record = (R) new DefaultRecord(result);
 				}
 
 				for (Field<?> f : getSelect()) {

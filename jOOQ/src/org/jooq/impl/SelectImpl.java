@@ -66,7 +66,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SelectImpl<R extends Record> implements
+class SelectImpl<R extends Record<R>> implements
 
 	// Cascading interface implementations for Select behaviour
 	Select<R>, SelectStep<R>, SelectFromStep<R>,

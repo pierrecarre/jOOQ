@@ -62,7 +62,6 @@ import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
-import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
@@ -70,6 +69,7 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.Create;
+import org.jooq.impl.DefaultRecord;
 import org.jooq.impl.Functions;
 import org.jooq.test.Data.Table1Record;
 import org.jooq.test.Data.Table2Record;
@@ -660,8 +660,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery1() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
-		Select<Record> s = select();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
+		Select<DefaultRecord> s = select();
 
 		assertEquals("select * from dual", q.toSQLReference(true));
 		assertEquals("select * from dual", q.toSQLReference(false));
@@ -670,7 +670,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery2() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("select * from dual where 1 = 0", q.toSQLReference(true));
@@ -680,7 +680,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery3() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 
 		q.addConditions(FALSE_CONDITION);
 		q.addConditions(TRUE_CONDITION);
@@ -691,7 +691,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery4() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -717,7 +717,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery5() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		Condition c1 = Create.plainSQLCondition("TABLE1.ID1 = ?", "10");
 		Condition c2 = Create.plainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
 
@@ -740,7 +740,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testProductSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addFrom(TABLE2);
@@ -755,7 +755,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2);
@@ -769,7 +769,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinOnConditionSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
 
@@ -790,7 +790,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinComplexSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2,
@@ -831,7 +831,7 @@ public class jOOQTest {
 		Table<Table1Record> t1 = TABLE1.as("t1");
 		Table<Table1Record> t2 = TABLE1.as("t2");
 
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		q.addFrom(t1);
 		q.addJoin(t2, t1.getField(FIELD_ID1), t2.getField(FIELD_ID1));
 
@@ -847,7 +847,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinTypeSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 		Join j = Create.join(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
 
@@ -862,7 +862,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testGroupSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 
 		q.addGroupBy(FIELD_ID1);
@@ -914,7 +914,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testCompleteSelectQuery() throws Exception {
-		SelectQuery<Record> q = Create.selectQuery();
+		SelectQuery<DefaultRecord> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
 		q.addSelect(FIELD_ID1, FIELD_ID2);
@@ -949,7 +949,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testCombinedSelectQuery() throws Exception {
-		SelectQuery<Record> combine = createCombinedSelectQuery();
+		SelectQuery<DefaultRecord> combine = createCombinedSelectQuery();
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.toSQLReference(true));
 		assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.toSQLReference(false));
 		assertEquals(combine, createCombinedSelect().getQuery());
@@ -976,9 +976,9 @@ public class jOOQTest {
 		context.assertIsSatisfied();
 	}
 
-	private SelectQuery<Record> createCombinedSelectQuery() {
-		SelectQuery<Record> q1 = Create.selectQuery();
-		SelectQuery<Record> q2 = Create.selectQuery();
+	private SelectQuery<DefaultRecord> createCombinedSelectQuery() {
+		SelectQuery<DefaultRecord> q1 = Create.selectQuery();
+		SelectQuery<DefaultRecord> q2 = Create.selectQuery();
 
 		q1.addFrom(TABLE1);
 		q2.addFrom(TABLE1);
@@ -986,14 +986,14 @@ public class jOOQTest {
 		q1.addCompareCondition(FIELD_ID1, 1);
 		q2.addCompareCondition(FIELD_ID1, 2);
 
-		SelectQuery<Record> combine = q1.combine(q2);
+		SelectQuery<DefaultRecord> combine = q1.combine(q2);
 		combine.addOrderBy(FIELD_ID1);
 		return combine;
 	}
 
-	private Select<Record> createCombinedSelect() {
-		Select<Record> q1 = select().from(TABLE1).where(FIELD_ID1.equal(1)).getSelect();
-		Select<Record> q2 = select().from(TABLE1).where(FIELD_ID1.equal(2)).getSelect();
+	private Select<DefaultRecord> createCombinedSelect() {
+		Select<DefaultRecord> q1 = select().from(TABLE1).where(FIELD_ID1.equal(1)).getSelect();
+		Select<DefaultRecord> q2 = select().from(TABLE1).where(FIELD_ID1.equal(2)).getSelect();
 
 		return q1.union(q2).orderBy(FIELD_ID1).getSelect();
 	}

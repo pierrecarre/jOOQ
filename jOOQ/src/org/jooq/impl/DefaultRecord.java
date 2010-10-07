@@ -28,28 +28,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.util.Collection;
+import org.jooq.RecordMetaData;
 
 /**
- * The select step in a {@link SimpleSelect} query
- * <p>
- * This is the step in query construction, where you can add select fields to a
- * query. This step is optional. After this step, you'll proceed to the
- * {@link SimpleSelectWhereStep}
+ * The generic record object
  *
  * @author Lukas Eder
  */
-public interface SimpleSelectStep<R extends Record<R>> extends SimpleSelectWhereStep<R> {
+public class DefaultRecord extends RecordImpl<DefaultRecord> {
 
 	/**
-	 * Add select fields to the query and proceed to the next step
+	 * Generated UID
 	 */
-	SimpleSelectWhereStep<R> select(Field<?>... fields);
+	private static final long serialVersionUID = 2262839758058305332L;
 
-	/**
-	 * Add select fields to the query and proceed to the next step
-	 */
-	SimpleSelectWhereStep<R> select(Collection<Field<?>> fields);
+	public DefaultRecord(RecordMetaData metaData) {
+		super(metaData);
+	}
 }

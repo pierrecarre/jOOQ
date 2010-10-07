@@ -305,7 +305,7 @@ public final class Create {
 	 *            The table to insert data into
 	 * @return The new {@link InsertQuery}
 	 */
-	public static <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
+	public static <R extends Record<R>> InsertQuery<R> insertQuery(Table<R> into) {
 		return new InsertQueryImpl<R>(into);
 	}
 
@@ -316,7 +316,7 @@ public final class Create {
 	 *            The table to update data into
 	 * @return The new {@link UpdateQuery}
 	 */
-	public static <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
+	public static <R extends Record<R>> UpdateQuery<R> updateQuery(Table<R> table) {
 		return new UpdateQueryImpl<R>(table);
 	}
 
@@ -327,43 +327,43 @@ public final class Create {
 	 *            The table to delete data from
 	 * @return The new {@link DeleteQuery}
 	 */
-	public static <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
+	public static <R extends Record<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
 		return new DeleteQueryImpl<R>(table);
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static Select<Record> select() {
-		return new SelectImpl<Record>();
+	public static Select<DefaultRecord> select() {
+		return new SelectImpl<DefaultRecord>();
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static <R extends Record> SimpleSelect<R> select(Table<R> table) {
+	public static <R extends Record<R>> SimpleSelect<R> select(Table<R> table) {
 		return new SimpleSelectImpl<R>(table);
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static SelectFromStep<Record> select(Field<?>... fields) {
-		return new SelectImpl<Record>().select(fields);
+	public static SelectFromStep<DefaultRecord> select(Field<?>... fields) {
+		return new SelectImpl<DefaultRecord>().select(fields);
 	}
 
 	/**
 	 * Create a new {@link Select}
 	 */
-	public static SelectFromStep<Record> select(Collection<Field<?>> fields) {
-		return new SelectImpl<Record>().select(fields);
+	public static SelectFromStep<DefaultRecord> select(Collection<Field<?>> fields) {
+		return new SelectImpl<DefaultRecord>().select(fields);
 	}
 
 	/**
 	 * Create a new {@link SelectQuery}
 	 */
-	public static SelectQuery<Record> selectQuery() {
-		return new SelectQueryImpl<Record>();
+	public static SelectQuery<DefaultRecord> selectQuery() {
+		return new SelectQueryImpl<DefaultRecord>();
 	}
 
 	/**
@@ -373,7 +373,7 @@ public final class Create {
 	 *            The table to select data from
 	 * @return The new {@link SelectQuery}
 	 */
-	public static <R extends Record> SimpleSelectQuery<R> selectQuery(Table<R> table) {
+	public static <R extends Record<R>> SimpleSelectQuery<R> selectQuery(Table<R> table) {
 		return new SelectQueryImpl<R>(table);
 	}
 

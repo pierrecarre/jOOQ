@@ -43,7 +43,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-public class TableImpl<R extends Record> extends AbstractNamedQueryPart implements Table<R> {
+public class TableImpl<R extends Record<R>> extends AbstractNamedQueryPart implements Table<R> {
 
 	private static final long serialVersionUID = 261033315221985068L;
 	private final Schema schema;

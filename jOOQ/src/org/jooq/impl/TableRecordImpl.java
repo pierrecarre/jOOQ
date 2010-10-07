@@ -41,7 +41,12 @@ import org.jooq.TableRecord;
  *
  * @author Lukas Eder
  */
-public class TableRecordImpl<R extends Record> extends RecordImpl implements TableRecord<R> {
+public class TableRecordImpl<R extends Record<R>> extends RecordImpl<R> implements TableRecord<R> {
+
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = -4613985511514503387L;
 
 	private final Table<R> table;
 

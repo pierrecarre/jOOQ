@@ -35,7 +35,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface TableRecord<R extends Record> extends Record {
+public interface TableRecord<R extends Record<R>> extends Record<R> {
 
 	/**
 	 * The table from which this record was read

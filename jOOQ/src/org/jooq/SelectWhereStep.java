@@ -41,7 +41,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectWhereStep<R extends Record> extends SelectGroupByStep<R> {
+public interface SelectWhereStep<R extends Record<R>> extends SelectGroupByStep<R> {
 
 	/**
 	 * Add conditions to the query and proceed to the next step

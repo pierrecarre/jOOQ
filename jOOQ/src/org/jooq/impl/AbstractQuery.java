@@ -43,7 +43,7 @@ import org.jooq.Record;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
+abstract class AbstractQuery<R extends Record<R>> extends AbstractQueryPart implements Query {
 
 	private static final long serialVersionUID = -8046199737354507547L;
 

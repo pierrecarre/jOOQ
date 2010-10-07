@@ -54,6 +54,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends SelectStep<R>, ResultProviderQuery<R> {
+public interface Select<R extends Record<R>> extends SelectStep<R>, ResultProviderQuery<R> {
 
 }

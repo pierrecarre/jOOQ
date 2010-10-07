@@ -38,7 +38,7 @@ package org.jooq;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Record extends RecordMetaData {
+public interface Record<R extends Record<R>> extends RecordMetaData {
 
 	/**
 	 * @param <T>

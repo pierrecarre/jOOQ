@@ -47,7 +47,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements DeleteQuery<R> {
+class DeleteQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements DeleteQuery<R> {
 
 	private static final long serialVersionUID = -1943687511774150929L;
 

@@ -37,6 +37,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertQuery<R extends Record> extends StoreQuery<R> {
+public interface InsertQuery<R extends Record<R>> extends StoreQuery<R> {
 
 }

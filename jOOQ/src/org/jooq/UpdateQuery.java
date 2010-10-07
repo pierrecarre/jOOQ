@@ -37,6 +37,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider<R> {
+public interface UpdateQuery<R extends Record<R>> extends StoreQuery<R>, ConditionProvider<R> {
 
 }

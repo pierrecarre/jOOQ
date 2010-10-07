@@ -39,7 +39,6 @@ import java.sql.SQLException;
 import org.jooq.Condition;
 import org.jooq.Join;
 import org.jooq.JoinType;
-import org.jooq.Record;
 import org.jooq.Table;
 
 /**
@@ -50,11 +49,11 @@ class JoinImpl extends AbstractQueryPart implements Join {
 	private static final long serialVersionUID = 2275930365728978050L;
 
 	private final Table<?> table;
-	private final ConditionProviderImpl<Record> condition;
+	private final ConditionProviderImpl<DefaultRecord> condition;
 	private final JoinType type;
 
 	JoinImpl(Table<?> table, JoinType type, Condition... conditions) {
-		this.condition = new ConditionProviderImpl<Record>();
+		this.condition = new ConditionProviderImpl<DefaultRecord>();
 
 		this.table = table;
 		this.condition.addConditions(conditions);

@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface Updatable<R extends Record> {
+public interface Updatable<R extends Record<R>> {
 
 	/**
 	 * @return All fields the table's primary key consists of. This will at

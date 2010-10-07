@@ -41,7 +41,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrderByStep<R> {
+public interface SimpleSelectWhereStep<R extends Record<R>> extends SimpleSelectOrderByStep<R> {
 
 	/**
 	 * Add conditions to the query and proceed to the next step

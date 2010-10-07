@@ -109,7 +109,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> SubQueryCondition<T> in(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> SubQueryCondition<T> in(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asInCondition(this);
 	}
 
@@ -124,7 +124,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> SubQueryCondition<T> notIn(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> SubQueryCondition<T> notIn(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asNotInCondition(this);
 	}
 
@@ -144,22 +144,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> equal(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> equal(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asCompareCondition(this);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> equalAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> equalAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_ANY);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> equalSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> equalSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> equalAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> equalAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_ALL);
 	}
 
@@ -174,22 +174,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> notEqual(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> notEqual(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> notEqualAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> notEqualAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_ALL);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> notEqualSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> notEqualSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> notEqualAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> notEqualAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_ALL);
 	}
 
@@ -204,22 +204,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessThan(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessThan(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessThanAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessThanAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_ANY);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessThanSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessThanSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessThanAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessThanAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_ALL);
 	}
 
@@ -234,22 +234,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessOrEqual(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessOrEqual(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessOrEqualToAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessOrEqualToAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_ANY);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessOrEqualToSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessOrEqualToSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> lessOrEqualToAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> lessOrEqualToAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_ALL);
 	}
 
@@ -264,22 +264,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterThan(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterThan(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterThanAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterThanAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_ANY);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterThanSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterThanSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterThanAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterThanAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_ALL);
 	}
 
@@ -294,22 +294,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterOrEqual(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterOrEqual(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterOrEqualAny(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterOrEqualAny(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_ANY);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterOrEqualSome(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterOrEqualSome(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_SOME);
 	}
 
 	@Override
-	public <R extends Record> FieldCondition<T> greaterOrEqualAll(QueryProvider<SelectQuery<R>> query) {
+	public <R extends Record<R>> FieldCondition<T> greaterOrEqualAll(QueryProvider<SelectQuery<R>> query) {
 		return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_ALL);
 	}
 }

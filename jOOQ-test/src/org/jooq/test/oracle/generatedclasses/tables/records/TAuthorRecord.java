@@ -15,7 +15,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
  *
  * An entity holding authors of books
  */
-public class TAuthorRecord extends RecordImpl {
+public class TAuthorRecord extends RecordImpl<TAuthorRecord> {
 
 	private static final long serialVersionUID = 1L;
 

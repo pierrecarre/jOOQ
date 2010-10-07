@@ -30,12 +30,14 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+
 /**
  * RecordMetaData holds meta data information about a given record
  *
  * @author Lukas Eder
  */
-public interface RecordMetaData {
+public interface RecordMetaData extends Serializable {
 
 	/**
 	 * @return The fields contained in the result table

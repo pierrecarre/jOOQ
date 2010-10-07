@@ -45,7 +45,7 @@ import java.util.Collection;
  * @author Lukas Eder
  * @see SelectQuery
  */
-public interface SimpleSelectQuery<R extends Record> extends ResultProviderQuery<R>, ConditionProvider<R>, QueryPart, QueryProvider<SelectQuery<R>> {
+public interface SimpleSelectQuery<R extends Record<R>> extends ResultProviderQuery<R>, ConditionProvider<R>, QueryPart, QueryProvider<SelectQuery<R>> {
 
 	/**
 	 * Combine this SelectQuery with another one, using the

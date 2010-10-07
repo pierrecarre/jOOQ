@@ -40,7 +40,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
+public interface SelectJoinStep<R extends Record<R>> extends SelectWhereStep<R> {
 
 	/**
 	 * Join a table and proceed to the next step

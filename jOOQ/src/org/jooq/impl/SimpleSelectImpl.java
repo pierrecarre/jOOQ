@@ -60,7 +60,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SimpleSelectImpl<R extends Record> implements
+class SimpleSelectImpl<R extends Record<R>> implements
 
 	// Cascading interface implementations for SimpleSelect behaviour
 	SimpleSelect<R>, SimpleSelectStep<R>,

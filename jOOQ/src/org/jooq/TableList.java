@@ -57,5 +57,5 @@ public interface TableList extends QueryPartList<Table<?>> {
 	 *
 	 * @return The common record type of this table list
 	 */
-	Class<? extends Record> getRecordType();
+	Class<? extends Record<?>> getRecordType();
 }

@@ -51,7 +51,12 @@ import org.jooq.UpdateQuery;
  *
  * @author Lukas Eder
  */
-public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> implements UpdatableRecord<R> {
+public class UpdatableRecordImpl<R extends Record<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
+
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = -1012420583600561579L;
 
 	public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable<R> table) {
 		super(metaData, table);

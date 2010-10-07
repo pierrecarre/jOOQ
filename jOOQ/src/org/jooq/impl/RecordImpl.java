@@ -44,7 +44,12 @@ import org.jooq.Value;
 /**
  * @author Lukas Eder
  */
-public class RecordImpl implements Record {
+public abstract class RecordImpl<R extends Record<R>> implements Record<R> {
+
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = -6052512608911220404L;
 
 	private final RecordMetaData metaData;
 	private final Map<Field<?>, Value<?>> values;

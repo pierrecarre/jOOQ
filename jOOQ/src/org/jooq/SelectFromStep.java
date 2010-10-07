@@ -41,7 +41,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectFromStep<R extends Record> extends SelectJoinStep<R> {
+public interface SelectFromStep<R extends Record<R>> extends SelectJoinStep<R> {
 
 	/**
 	 * Add tables to the query and proceed to the next step

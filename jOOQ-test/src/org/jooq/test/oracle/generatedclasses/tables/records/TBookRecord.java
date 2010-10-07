@@ -13,7 +13,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TBook;
  *
  * An entity holding books
  */
-public class TBookRecord extends RecordImpl {
+public class TBookRecord extends RecordImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 
