@@ -46,10 +46,10 @@ public interface SelectFromStep<R extends Record> extends SelectJoinStep<R> {
 	/**
 	 * Add tables to the query and proceed to the next step
 	 */
-	SelectJoinStep<R> from(Table<?>... tables);
+	SelectFromStep<R> from(Table<? extends R> table);
 
 	/**
 	 * Add select fields to the query and proceed to the next step
 	 */
-	SelectJoinStep<R> from(Collection<Table<?>> tables);
+	SelectJoinStep<R> from(Collection<Table<? extends R>> tables);
 }

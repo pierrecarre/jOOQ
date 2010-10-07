@@ -109,13 +109,13 @@ class SelectImpl<R extends Record> implements Select<R>, SelectStep<R>, SelectFr
 	}
 
 	@Override
-	public SelectJoinStep<R> from(Table<?>... tables) {
-		query.addFrom(tables);
+	public SelectFromStep<R> from(Table<? extends R> table) {
+		query.addFrom(table);
 		return this;
 	}
 
 	@Override
-	public SelectJoinStep<R> from(Collection<Table<?>> tables) {
+	public SelectJoinStep<R> from(Collection<Table<? extends R>> tables) {
 		query.addFrom(tables);
 		return this;
 	}
