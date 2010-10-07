@@ -38,7 +38,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectQuery<R extends Record> extends ResultProviderQuery<R>, ConditionProvider, QueryPart {
+public interface SelectQuery<R extends Record> extends ResultProviderQuery<R>, ConditionProvider<R>, QueryPart {
 
 	/**
 	 * Combine this SelectQuery with another one, using the

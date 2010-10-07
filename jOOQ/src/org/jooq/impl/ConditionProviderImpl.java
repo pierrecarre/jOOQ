@@ -42,11 +42,12 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Field;
+import org.jooq.Record;
 
 /**
  * @author Lukas Eder
  */
-class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider {
+class ConditionProviderImpl<R extends Record> extends AbstractQueryPart implements ConditionProvider<R> {
 
 	private static final long serialVersionUID = 6073328960551062973L;
 
@@ -54,7 +55,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
 	ConditionProviderImpl() {
 	}
-	
+
 	Condition getWhere() {
 		if (condition == null) {
 			return TRUE_CONDITION;

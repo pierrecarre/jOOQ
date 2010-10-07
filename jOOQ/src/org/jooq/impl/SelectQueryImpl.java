@@ -73,9 +73,9 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 	private final FieldList select;
 	private final TableList from;
 	private final JoinList join;
-	private final ConditionProviderImpl condition;
+	private final ConditionProviderImpl<R> condition;
 	private final FieldList groupBy;
-	private final ConditionProviderImpl having;
+	private final ConditionProviderImpl<R> having;
 	private final OrderByFieldList orderBy;
 	private final LimitImpl limit;
 
@@ -87,9 +87,9 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 		this.select = new SelectFieldListImpl();
 		this.from = new TableListImpl();
 		this.join = new JoinListImpl();
-		this.condition = new ConditionProviderImpl();
+		this.condition = new ConditionProviderImpl<R>();
 		this.groupBy = new FieldListImpl();
-		this.having = new ConditionProviderImpl();
+		this.having = new ConditionProviderImpl<R>();
 		this.orderBy = new OrderByFieldListImpl();
 		this.limit = new LimitImpl();
 

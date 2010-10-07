@@ -50,18 +50,18 @@ import org.jooq.UpdateQuery;
 class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
 	private static final long serialVersionUID = -660460731970074719L;
-	private final ConditionProviderImpl condition;
+	private final ConditionProviderImpl<R> condition;
 
 	UpdateQueryImpl(Table<R> table) {
 		super(table);
 
-		this.condition = new ConditionProviderImpl();
+		this.condition = new ConditionProviderImpl<R>();
 	}
 
 	UpdateQueryImpl(Table<R> table, R record) {
 		super(table, record);
 
-		this.condition = new ConditionProviderImpl();
+		this.condition = new ConditionProviderImpl<R>();
 	}
 
 	@Override

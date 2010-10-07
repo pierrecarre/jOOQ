@@ -132,7 +132,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	/**
 	 * Extracted method to ensure generic type safety.
 	 */
-	private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
+	private final <T> void addCondition(ConditionProvider<R> provider, Field<T> field) {
 		provider.addCompareCondition(field, getValue(field));
 	}
 

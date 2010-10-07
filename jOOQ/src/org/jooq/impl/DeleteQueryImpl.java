@@ -52,11 +52,11 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements Dele
 	private static final long serialVersionUID = -1943687511774150929L;
 
 	private final Table<R> table;
-	private final ConditionProviderImpl condition;
+	private final ConditionProviderImpl<R> condition;
 
 	DeleteQueryImpl(Table<R> table) {
 		this.table = table;
-		this.condition = new ConditionProviderImpl();
+		this.condition = new ConditionProviderImpl<R>();
 	}
 
 	@Override
