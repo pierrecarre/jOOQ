@@ -215,13 +215,13 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 	}
 
 	@Override
-	public void addFrom(Collection<Table<? extends R>> from) {
+	public void addFrom(Collection<Table<?>> from) {
 		getFrom().addAll(from);
 	}
 
 	@Override
-	public final void addFrom(Table<? extends R> from) {
-		getFrom().add(from);
+	public final void addFrom(Table<?>... from) {
+		addFrom(Arrays.asList(from));
 	}
 
 	@Override
@@ -271,22 +271,22 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 	}
 
 	@Override
-	public final <T> void addJoin(Table<? extends R> table, Field<T> field1, Field<T> field2) {
+	public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
 		addJoin(Create.join(table, field1, field2));
 	}
 
 	@Override
-	public final void addJoin(Table<? extends R> table, Condition... conditions) {
+	public final void addJoin(Table<?> table, Condition... conditions) {
 		addJoin(Create.join(table, conditions));
 	}
 
 	@Override
-	public final <T> void addJoin(Table<? extends R> table, JoinType type, Field<T> field1, Field<T> field2) {
+	public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
 		addJoin(Create.join(table, type, field1, field2));
 	}
 
 	@Override
-	public final void addJoin(Table<? extends R> table, JoinType type, Condition... conditions) {
+	public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
 		addJoin(Create.join(table, type, conditions));
 	}
 

@@ -747,7 +747,7 @@ public class jOOQTest {
 		q.addFrom(TABLE3);
 		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(true));
 		assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(false));
-		assertEquals(q, select().from(TABLE1).from(TABLE2).from(TABLE3).getQuery());
+		assertEquals(q, select().from(TABLE1, TABLE2, TABLE3).getQuery());
 
 		int i = q.bind(statement);
 		assertEquals(1, i);
@@ -899,12 +899,12 @@ public class jOOQTest {
 		q.addOrderBy(FIELD_ID1);
 		assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(false));
-		assertEquals(q, select().from(TABLE1).orderBy(FIELD_ID1).getQuery());
+		assertEquals(q, select(TABLE1).orderBy(FIELD_ID1).getQuery());
 
 		q.addOrderBy(FIELD_ID2, SortOrder.DESC);
 		assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(true));
 		assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(false));
-		assertEquals(q, select().from(TABLE1)
+		assertEquals(q, select(TABLE1)
 							    .orderBy(FIELD_ID1)
 							    .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
 

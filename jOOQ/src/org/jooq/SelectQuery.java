@@ -57,14 +57,14 @@ public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
 	 *
 	 * @param from The added tables
 	 */
-	void addFrom(Table<? extends R> from);
+	void addFrom(Table<?>... from);
 
 	/**
 	 * Add tables to the table product
 	 *
 	 * @param from The added tables
 	 */
-	void addFrom(Collection<Table<? extends R>> from);
+	void addFrom(Collection<Table<?>> from);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
@@ -72,7 +72,7 @@ public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
 	 * @param table The joined table
 	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table<? extends R> table, Condition... conditions);
+	void addJoin(Table<?> table, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table using a condition
@@ -81,7 +81,7 @@ public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
 	 * @param type The type of join
 	 * @param conditions The joining conditions
 	 */
-	void addJoin(Table<? extends R> table, JoinType type, Condition... conditions);
+	void addJoin(Table<?> table, JoinType type, Condition... conditions);
 
 	/**
 	 * Joins the existing table product to a new table joining on two fields
@@ -91,7 +91,7 @@ public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
 	 * @param field1 The left field of the join condition
 	 * @param field2 The right field of the join condition
 	 */
-	<T> void addJoin(Table<? extends R> table, Field<T> field1, Field<T> field2);
+	<T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2);
 
 	/**
 	 * Joins the existing table product to a new table joining on two fields
@@ -102,7 +102,7 @@ public interface SelectQuery<R extends Record> extends SimpleSelectQuery<R> {
 	 * @param field1 The left field of the join condition
 	 * @param field2 The right field of the join condition
 	 */
-	<T> void addJoin(Table<? extends R> table, JoinType type, Field<T> field1, Field<T> field2);
+	<T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2);
 
 	/**
 	 * Joins the existing table product to join object

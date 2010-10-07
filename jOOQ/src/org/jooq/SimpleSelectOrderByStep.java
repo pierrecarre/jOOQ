@@ -30,19 +30,56 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
- * A simple select query that provides Records from a single table, with no
- * joins allowed.
+ * The order by clause step in a {@link SimpleSelect} query
  * <p>
- * This is the type of query that is possible with a {@link SimpleSelectQuery}:
- * <p>
- * <code>
- * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
- * </code>
+ * This is the final step in query construction, where you can add a order by
+ * clause to a query. This step is optional. You cannot proceed any further from
+ * this clause
  *
  * @author Lukas Eder
- * @see Select
  */
-public interface SimpleSelect<R extends Record> extends SimpleSelectStep<R>, ResultProviderQuery<R> {
+public interface SimpleSelectOrderByStep<R extends Record> extends QueryProvider<SelectQuery<R>> {
 
+	/**
+	 * Add an order by clause to the query.
+	 */
+	SimpleSelectOrderByStep<R> orderBy(Field<?>... fields);
+
+	/**
+	 * Add an order by clause to the query.
+	 */
+	SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields);
+
+	/**
+	 * Add an order by clause to the query.
+	 */
+	SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order);
+
+	/**
+	 * Combine with other selects
+	 */
+	SimpleSelect<R> union(SimpleSelect<R> select);
+
+	/**
+	 * Combine with other selects
+	 */
+	SimpleSelect<R> unionAll(SimpleSelect<R> select);
+
+	/**
+	 * Combine with other selects
+	 */
+	SimpleSelect<R> except(SimpleSelect<R> select);
+
+	/**
+	 * Combine with other selects
+	 */
+	SimpleSelect<R> intersect(SimpleSelect<R> select);
+
+	/**
+	 * Return this as a {@link SimpleSelect} object
+	 */
+	SimpleSelect<R> getSelect();
 }

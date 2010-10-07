@@ -30,19 +30,26 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
- * A simple select query that provides Records from a single table, with no
- * joins allowed.
+ * The select step in a {@link SimpleSelect} query
  * <p>
- * This is the type of query that is possible with a {@link SimpleSelectQuery}:
- * <p>
- * <code>
- * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
- * </code>
+ * This is the step in query construction, where you can add select fields to a
+ * query. This step is optional. After this step, you'll proceed to the
+ * {@link SimpleSelectWhereStep}
  *
  * @author Lukas Eder
- * @see Select
  */
-public interface SimpleSelect<R extends Record> extends SimpleSelectStep<R>, ResultProviderQuery<R> {
+public interface SimpleSelectStep<R extends Record> extends SimpleSelectWhereStep<R> {
 
+	/**
+	 * Add select fields to the query and proceed to the next step
+	 */
+	SimpleSelectWhereStep<R> select(Field<?>... fields);
+
+	/**
+	 * Add select fields to the query and proceed to the next step
+	 */
+	SimpleSelectWhereStep<R> select(Collection<Field<?>> fields);
 }

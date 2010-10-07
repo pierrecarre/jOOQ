@@ -53,6 +53,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
+import org.jooq.SimpleSelect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
@@ -335,6 +336,13 @@ public final class Create {
 	 */
 	public static Select<Record> select() {
 		return new SelectImpl<Record>();
+	}
+
+	/**
+	 * Create a new {@link Select}
+	 */
+	public static <R extends Record> SimpleSelect<R> select(Table<R> table) {
+		return new SimpleSelectImpl<R>(table);
 	}
 
 	/**

@@ -43,20 +43,14 @@ import javax.sql.DataSource;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Select;
-import org.jooq.SelectFromStep;
-import org.jooq.SelectGroupByStep;
-import org.jooq.SelectHavingStep;
-import org.jooq.SelectJoinStep;
-import org.jooq.SelectOnStep;
-import org.jooq.SelectOrderByStep;
 import org.jooq.SelectQuery;
-import org.jooq.SelectStep;
-import org.jooq.SelectWhereStep;
 import org.jooq.SimpleSelect;
+import org.jooq.SimpleSelectOrderByStep;
+import org.jooq.SimpleSelectStep;
+import org.jooq.SimpleSelectWhereStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 
@@ -66,12 +60,11 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SelectImpl<R extends Record> implements
+class SimpleSelectImpl<R extends Record> implements
 
-	// Cascading interface implementations for Select behaviour
-	Select<R>, SelectStep<R>, SelectFromStep<R>,
-	SelectJoinStep<R>, SelectOnStep<R>, SelectWhereStep<R>,
-	SelectGroupByStep<R>, SelectHavingStep<R>, SelectOrderByStep<R> {
+	// Cascading interface implementations for SimpleSelect behaviour
+	SimpleSelect<R>, SimpleSelectStep<R>,
+	SimpleSelectWhereStep<R>, SimpleSelectOrderByStep<R> {
 
 	/**
 	 * Generated UID
@@ -83,108 +76,79 @@ class SelectImpl<R extends Record> implements
 	 */
 	private final SelectQuery<R> query;
 
-	/**
-	 * A temporary member holding a join
-	 */
-	private transient Table<?> join;
-
-	/**
-	 * A temporary member holding a join type
-	 */
-	private transient JoinType joinType;
-
-	SelectImpl() {
+	SimpleSelectImpl() {
 		this(new SelectQueryImpl<R>());
 	}
 
-	SelectImpl(SelectQuery<R> query) {
+	SimpleSelectImpl(Table<R> table) {
+		this();
+		this.query.addFrom(table);
+	}
+
+	SimpleSelectImpl(SelectQuery<R> query) {
 		this.query = query;
 	}
 
 	@Override
-	public SelectFromStep<R> select(Field<?>... fields) {
+	public SimpleSelectWhereStep<R> select(Field<?>... fields) {
 		query.addSelect(fields);
 		return this;
 	}
 
 	@Override
-	public SelectFromStep<R> select(Collection<Field<?>> fields) {
+	public SimpleSelectWhereStep<R> select(Collection<Field<?>> fields) {
 		query.addSelect(fields);
 		return this;
 	}
 
 	@Override
-	public SelectFromStep<R> from(Table<?>... tables) {
-		query.addFrom(tables);
-		return this;
-	}
-
-	@Override
-	public SelectJoinStep<R> from(Collection<Table<?>> tables) {
-		query.addFrom(tables);
-		return this;
-	}
-
-	@Override
-	public SelectGroupByStep<R> where(Condition... conditions) {
+	public SimpleSelectOrderByStep<R> where(Condition... conditions) {
 		query.addConditions(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectGroupByStep<R> where(Collection<Condition> conditions) {
+	public SimpleSelectOrderByStep<R> where(Collection<Condition> conditions) {
 		query.addConditions(conditions);
 		return this;
 	}
 
 	@Override
-	public SelectHavingStep<R> groupBy(Field<?>... fields) {
-		query.addGroupBy(fields);
-		return this;
-	}
-
-	@Override
-	public SelectHavingStep<R> groupBy(Collection<Field<?>> fields) {
-		query.addGroupBy(fields);
-		return this;
-	}
-
-	@Override
-	public SelectOrderByStep<R> orderBy(Field<?>... fields) {
+	public SimpleSelectOrderByStep<R> orderBy(Field<?>... fields) {
 		query.addOrderBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
+	public SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
 		query.addOrderBy(fields);
 		return this;
 	}
 
 	@Override
-	public SelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
+	public SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
 		query.addOrderBy(field, order);
 		return this;
 	}
 
 	@Override
-	public Select<R> union(Select<R> select) {
-		return new SelectImpl<R>(query.combine(UNION, select.getQuery()));
+	public SimpleSelect<R> union(SimpleSelect<R> select) {
+		return new SimpleSelectImpl<R>(query.combine(UNION, select.getQuery()));
 	}
 
 	@Override
-	public Select<R> unionAll(Select<R> select) {
-		return new SelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
+	public SimpleSelect<R> unionAll(SimpleSelect<R> select) {
+		return new SimpleSelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
 	}
 
 	@Override
-	public Select<R> except(Select<R> select) {
-		return new SelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
+	public SimpleSelect<R> except(SimpleSelect<R> select) {
+		return new SimpleSelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
 	}
 
 	@Override
-	public Select<R> intersect(Select<R> select) {
-		return new SelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
+	public SimpleSelect<R> intersect(SimpleSelect<R> select) {
+		return new SimpleSelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
 	}
 
 	@Override
@@ -208,62 +172,7 @@ class SelectImpl<R extends Record> implements
 	}
 
 	@Override
-	public SelectOrderByStep<R> having(Condition... conditions) {
-		query.addHaving(conditions);
-		return this;
-	}
-
-	@Override
-	public SelectOrderByStep<R> having(Collection<Condition> conditions) {
-		query.addHaving(conditions);
-		return this;
-	}
-
-	@Override
-	public SelectJoinStep<R> on(Condition... conditions) {
-		query.addJoin(new JoinImpl(join, joinType, conditions));
-		join = null;
-		joinType = null;
-		return this;
-	}
-
-	@Override
-	public SelectOnStep<R> join(Table<?> table) {
-		join = table;
-		joinType = JoinType.JOIN;
-		return this;
-	}
-
-	@Override
-	public SelectOnStep<R> leftJoin(Table<?> table) {
-		join = table;
-		joinType = JoinType.LEFT_JOIN;
-		return this;
-	}
-
-	@Override
-	public SelectOnStep<R> leftOuterJoin(Table<?> table) {
-		join = table;
-		joinType = JoinType.LEFT_OUTER_JOIN;
-		return this;
-	}
-
-	@Override
-	public SelectOnStep<R> rightJoin(Table<?> table) {
-		join = table;
-		joinType = JoinType.RIGHT_JOIN;
-		return this;
-	}
-
-	@Override
-	public SelectOnStep<R> rightOuterJoin(Table<?> table) {
-		join = table;
-		joinType = JoinType.RIGHT_OUTER_JOIN;
-		return this;
-	}
-
-	@Override
-	public Select<R> getSelect() {
+	public SimpleSelect<R> getSelect() {
 		return this;
 	}
 
