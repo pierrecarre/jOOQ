@@ -38,7 +38,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery extends Query, ConditionProvider, QueryPart {
+public interface DeleteQuery<R extends Record> extends Query, ConditionProvider, QueryPart {
 
 	/**
 	 * {@inheritDoc}

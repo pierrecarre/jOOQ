@@ -41,19 +41,20 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
+class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements DeleteQuery<R> {
 
 	private static final long serialVersionUID = -1943687511774150929L;
 
-	private final Table<?> table;
+	private final Table<R> table;
 	private final ConditionProviderImpl condition;
 
-	DeleteQueryImpl(Table<?> table) {
+	DeleteQueryImpl(Table<R> table) {
 		this.table = table;
 		this.condition = new ConditionProviderImpl();
 	}
@@ -68,7 +69,7 @@ class DeleteQueryImpl extends AbstractQuery implements DeleteQuery {
 		return result;
 	}
 
-	Table<?> getFrom() {
+	Table<R> getFrom() {
 		return table;
 	}
 

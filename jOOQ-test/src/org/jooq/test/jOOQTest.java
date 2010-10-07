@@ -593,7 +593,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery1() throws Exception {
-		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Record> q = QueryFactory.createDeleteQuery(TABLE1);
 
 		assertEquals("delete from TABLE1", q.toSQLReference(true));
 		assertEquals("delete from TABLE1", q.toSQLReference(false));
@@ -601,7 +601,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery2() throws Exception {
-		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Record> q = QueryFactory.createDeleteQuery(TABLE1);
 
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("delete from TABLE1 where 1 = 0", q.toSQLReference(true));
@@ -610,7 +610,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery3() throws Exception {
-		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Record> q = QueryFactory.createDeleteQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -632,7 +632,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery4() throws Exception {
-		DeleteQuery q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Record> q = QueryFactory.createDeleteQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 

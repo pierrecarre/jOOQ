@@ -120,7 +120,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 
 	@Override
 	public final void delete(Connection con) throws SQLException {
-		DeleteQuery delete = QueryFactory.createDeleteQuery(getTable());
+		DeleteQuery<R> delete = QueryFactory.createDeleteQuery(getTable());
 
 		for (Field<?> field : getPrimaryKey()) {
 			addCondition(delete, field);

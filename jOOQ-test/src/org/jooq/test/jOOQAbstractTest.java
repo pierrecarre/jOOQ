@@ -181,7 +181,7 @@ public abstract class jOOQAbstractTest {
     	u.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, u.execute(connection));
 
-    	DeleteQuery d = QueryFactory.createDeleteQuery(getTAuthor());
+    	DeleteQuery<Record> d = QueryFactory.createDeleteQuery(getTAuthor());
     	d.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, d.execute(connection));
     }

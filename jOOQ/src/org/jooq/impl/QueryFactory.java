@@ -325,8 +325,8 @@ public final class QueryFactory {
 	 *            The table to delete data from
 	 * @return The new {@link DeleteQuery}
 	 */
-	public static DeleteQuery createDeleteQuery(Table<?> table) {
-		return new DeleteQueryImpl(table);
+	public static <R extends Record> DeleteQuery<R> createDeleteQuery(Table<R> table) {
+		return new DeleteQueryImpl<R>(table);
 	}
 
 	/**

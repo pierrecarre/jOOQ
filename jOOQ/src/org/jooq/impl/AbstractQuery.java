@@ -38,11 +38,12 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.jooq.Query;
+import org.jooq.Record;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQuery extends AbstractQueryPart implements Query {
+abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
 
 	private static final long serialVersionUID = -8046199737354507547L;
 

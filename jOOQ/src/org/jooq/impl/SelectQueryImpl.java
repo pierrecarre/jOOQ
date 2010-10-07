@@ -65,7 +65,7 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl<R extends Record> extends AbstractQuery implements SelectQuery<R> {
+class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements SelectQuery<R> {
 
 	private static final long serialVersionUID = 1555503854543561285L;
 
