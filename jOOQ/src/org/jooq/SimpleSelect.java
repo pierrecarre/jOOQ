@@ -28,32 +28,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
-
-import org.jooq.CombinedCondition;
-import org.jooq.Condition;
-import org.jooq.Operator;
+package org.jooq;
 
 /**
+ * A simple select query that provides Records from a single table, with no
+ * joins allowed.
+ * <p>
+ * This is the type of query that is possible with a {@link SimpleSelectQuery}:
+ * <p>
+ * <code>
+ * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+ * </code>
+ *
  * @author Lukas Eder
+ * @see Select
  */
-abstract class AbstractCondition extends AbstractQueryPart implements Condition {
+public interface SimpleSelect<R extends Record> extends QueryProvider<SelectQuery<R>> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -6683692251799468624L;
-
-	AbstractCondition() {
-	}
-
-	@Override
-	public CombinedCondition and(Condition other) {
-		return Create.combinedCondition(this, other);
-	}
-
-	@Override
-	public CombinedCondition or(Condition other) {
-		return Create.combinedCondition(Operator.OR, this, other);
-	}
 }

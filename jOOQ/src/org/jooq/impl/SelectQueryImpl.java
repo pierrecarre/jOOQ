@@ -56,6 +56,7 @@ import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
@@ -240,7 +241,7 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 
 	@Override
 	public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
-		addHaving(QueryFactory.createCompareCondition(field, value, comparator));
+		addHaving(Create.compareCondition(field, value, comparator));
 	}
 
 	@Override
@@ -271,22 +272,22 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 
 	@Override
 	public final <T> void addJoin(Table<? extends R> table, Field<T> field1, Field<T> field2) {
-		addJoin(QueryFactory.createJoin(table, field1, field2));
+		addJoin(Create.join(table, field1, field2));
 	}
 
 	@Override
 	public final void addJoin(Table<? extends R> table, Condition... conditions) {
-		addJoin(QueryFactory.createJoin(table, conditions));
+		addJoin(Create.join(table, conditions));
 	}
 
 	@Override
 	public final <T> void addJoin(Table<? extends R> table, JoinType type, Field<T> field1, Field<T> field2) {
-		addJoin(QueryFactory.createJoin(table, type, field1, field2));
+		addJoin(Create.join(table, type, field1, field2));
 	}
 
 	@Override
 	public final void addJoin(Table<? extends R> table, JoinType type, Condition... conditions) {
-		addJoin(QueryFactory.createJoin(table, type, conditions));
+		addJoin(Create.join(table, type, conditions));
 	}
 
 	final FieldList getSelect0() {
@@ -428,13 +429,13 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 	}
 
 	@Override
-	public final SelectQuery<R> combine(SelectQuery<R> other) {
+	public final SelectQuery<R> combine(SimpleSelectQuery<R> other) {
 		return combine(CombineOperator.UNION, other);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final SelectQuery<R> combine(CombineOperator operator, SelectQuery<R> other) {
+	public final SelectQuery<R> combine(CombineOperator operator, SimpleSelectQuery<R> other) {
 		return new SelectQueryImpl<R>(asTable(operator, this, other));
 	}
 
@@ -444,7 +445,7 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 		return asTable(CombineOperator.UNION, this);
 	}
 
-	private Table<R> asTable(CombineOperator operator, SelectQuery<R>... queries) {
+	private Table<R> asTable(CombineOperator operator, SimpleSelectQuery<R>... queries) {
 		Table<R> result = new SelectQueryAsTable<R>(operator, queries);
 
 		// Some dialects require derived tables to provide an alias
@@ -508,5 +509,10 @@ class SelectQueryImpl<R extends Record> extends AbstractQuery<R> implements Sele
 		}
 
 		return new SelectQueryAsExistsCondition(this, operator);
+	}
+
+	@Override
+	public SelectQuery<R> getQuery() {
+		return this;
 	}
 }

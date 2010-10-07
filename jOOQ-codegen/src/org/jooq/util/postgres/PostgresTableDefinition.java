@@ -37,8 +37,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.SelectQuery;
-import org.jooq.impl.QueryFactory;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.impl.Create;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
@@ -60,7 +60,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery<ColumnsRecord> q = QueryFactory.createSelectQuery(COLUMNS);
+		SimpleSelectQuery<ColumnsRecord> q = Create.selectQuery(COLUMNS);
 		q.addCompareCondition(Columns.TABLE_SCHEMA, getSchemaName());
 		q.addCompareCondition(Columns.TABLE_NAME, getName());
 		q.addOrderBy(Columns.ORDINAL_POSITION);

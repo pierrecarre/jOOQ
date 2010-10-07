@@ -93,7 +93,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	}
 
 	private final void storeInsert(Connection con) throws SQLException {
-		InsertQuery<R> insert = QueryFactory.createInsertQuery(getTable());
+		InsertQuery<R> insert = Create.insertQuery(getTable());
 
 		for (Field<?> field : getFields()) {
 			addValue(insert, field);
@@ -103,7 +103,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 	}
 
 	private final void storeUpdate(Connection con) throws SQLException {
-		UpdateQuery<R> update = QueryFactory.createUpdateQuery(getTable());
+		UpdateQuery<R> update = Create.updateQuery(getTable());
 
 		for (Field<?> field : getFields()) {
 			if (getValue0(field).isChanged()) {
@@ -120,7 +120,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
 
 	@Override
 	public final void delete(Connection con) throws SQLException {
-		DeleteQuery<R> delete = QueryFactory.createDeleteQuery(getTable());
+		DeleteQuery<R> delete = Create.deleteQuery(getTable());
 
 		for (Field<?> field : getPrimaryKey()) {
 			addCondition(delete, field);

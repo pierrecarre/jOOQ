@@ -32,8 +32,8 @@
 package org.jooq.util.oracle;
 
 import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.impl.QueryFactory.createCompareCondition;
-import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.impl.Create.compareCondition;
+import static org.jooq.impl.Create.selectQuery;
 import static org.jooq.util.oracle.sys.tables.AllTabComments.ALL_TAB_COMMENTS;
 import static org.jooq.util.oracle.sys.tables.AllTabComments.COMMENTS;
 import static org.jooq.util.oracle.sys.tables.AllTabComments.OWNER;
@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
@@ -70,12 +70,10 @@ public class OracleDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SelectQuery<Record> q = createSelectQuery(ALL_TAB_COMMENTS);
-		q.addSelect(TABLE_NAME);
-		q.addSelect(COMMENTS);
+		SimpleSelectQuery<Record> q = selectQuery(ALL_TAB_COMMENTS);
 		q.addConditions(
-				createCompareCondition(OWNER, getSchemaName()),
-				createCompareCondition(TABLE_NAME, "%$%", NOT_LIKE)); // Exclude weird oracle binary objects
+				compareCondition(OWNER, getSchemaName()),
+				compareCondition(TABLE_NAME, "%$%", NOT_LIKE)); // Exclude weird oracle binary objects
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 

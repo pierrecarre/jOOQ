@@ -34,8 +34,8 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.impl.Create.select;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
-import static org.jooq.impl.QueryFactory.select;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import static org.jooq.test.Data.FIELD_DATE1;
 import static org.jooq.test.Data.FIELD_ID1;
@@ -65,11 +65,12 @@ import org.jooq.Join;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
+import org.jooq.impl.Create;
 import org.jooq.impl.Functions;
-import org.jooq.impl.QueryFactory;
 import org.jooq.test.Data.Table1Record;
 import org.jooq.test.Data.Table2Record;
 import org.junit.After;
@@ -121,7 +122,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testEmptyCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition();
+		CombinedCondition c = Create.combinedCondition();
 		assertEquals("1 = 1", c.toSQLReference());
 
 		int i = c.bind(statement);
@@ -130,7 +131,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testSingleCombinedCondition() throws Exception {
-		CombinedCondition c = QueryFactory.createCombinedCondition(TRUE_CONDITION);
+		CombinedCondition c = Create.combinedCondition(TRUE_CONDITION);
 		assertEquals(TRUE_CONDITION.toSQLReference(true), c.toSQLReference(true));
 		assertEquals(TRUE_CONDITION.toSQLReference(false), c.toSQLReference(false));
 
@@ -226,11 +227,11 @@ public class jOOQTest {
 
 	@Test
 	public final void testPlainSQLCondition() throws Exception {
-		Condition c1 = QueryFactory.createPlainSQLCondition("TABLE1.ID = 10");
-		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
+		Condition c1 = Create.plainSQLCondition("TABLE1.ID = 10");
+		Condition c2 = Create.plainSQLCondition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
 
 		try {
-			QueryFactory.createPlainSQLCondition("ABC", "ABC");
+			Create.plainSQLCondition("ABC", "ABC");
 			Assert.fail("Binding mismatch");
 		} catch (Exception expected) {}
 
@@ -427,13 +428,13 @@ public class jOOQTest {
 
 	@Test(expected = IllegalStateException.class)
 	public final void testEmptyInsertQuery() throws Exception {
-		InsertQuery<Table1Record> q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
 		q.toSQLReference();
 	}
 
 	@Test
 	public final void testInsertQuery1() throws Exception {
-		InsertQuery<Table1Record> q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQLReference(true));
@@ -451,7 +452,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testInsertQuery2() throws Exception {
-		InsertQuery<Table1Record> q = QueryFactory.createInsertQuery(TABLE1);
+		InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -473,13 +474,13 @@ public class jOOQTest {
 
 	@Test(expected = IllegalStateException.class)
 	public final void testEmptyUpdateQuery() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 		q.toSQLReference();
 	}
 
 	@Test
 	public final void testUpdateQuery1() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		assertEquals("update TABLE1 set ID1 = 10", q.toSQLReference(true));
@@ -497,7 +498,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery2() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 
 		q.addValue(FIELD_ID1, 10);
 		q.addValue(FIELD_NAME1, "ABC");
@@ -517,7 +518,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery3() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 		CompareCondition<Integer> c = FIELD_ID1.equal(10);
 
 		q.addValue(FIELD_ID1, 10);
@@ -540,7 +541,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery4() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -566,7 +567,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testUpdateQuery5() throws Exception {
-		UpdateQuery<Table1Record> q = QueryFactory.createUpdateQuery(TABLE1);
+		UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -595,7 +596,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery1() throws Exception {
-		DeleteQuery<Table1Record> q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
 
 		assertEquals("delete from TABLE1", q.toSQLReference(true));
 		assertEquals("delete from TABLE1", q.toSQLReference(false));
@@ -603,7 +604,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery2() throws Exception {
-		DeleteQuery<Table1Record> q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
 
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("delete from TABLE1 where 1 = 0", q.toSQLReference(true));
@@ -612,7 +613,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery3() throws Exception {
-		DeleteQuery<Table1Record> q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -634,7 +635,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testDeleteQuery4() throws Exception {
-		DeleteQuery<Table1Record> q = QueryFactory.createDeleteQuery(TABLE1);
+		DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -659,7 +660,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery1() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 		Select<Record> s = select();
 
 		assertEquals("select * from dual", q.toSQLReference(true));
@@ -669,7 +670,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery2() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 
 		q.addConditions(FALSE_CONDITION);
 		assertEquals("select * from dual where 1 = 0", q.toSQLReference(true));
@@ -679,7 +680,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery3() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 
 		q.addConditions(FALSE_CONDITION);
 		q.addConditions(TRUE_CONDITION);
@@ -690,7 +691,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery4() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 		CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
 		CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -716,9 +717,9 @@ public class jOOQTest {
 
 	@Test
 	public final void testConditionalSelectQuery5() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
-		Condition c1 = QueryFactory.createPlainSQLCondition("TABLE1.ID1 = ?", "10");
-		Condition c2 = QueryFactory.createPlainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
+		SelectQuery<Record> q = Create.selectQuery();
+		Condition c1 = Create.plainSQLCondition("TABLE1.ID1 = ?", "10");
+		Condition c2 = Create.plainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
 
 		q.addConditions(c1);
 		q.addConditions(c2);
@@ -739,7 +740,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testProductSelectQuery() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addFrom(TABLE2);
@@ -754,7 +755,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinSelectQuery() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2);
@@ -768,7 +769,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinOnConditionSelectQuery() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
 
@@ -789,7 +790,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinComplexSelectQuery() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2,
@@ -830,7 +831,8 @@ public class jOOQTest {
 		Table<Table1Record> t1 = TABLE1.as("t1");
 		Table<Table1Record> t2 = TABLE1.as("t2");
 
-		SelectQuery<Table1Record> q = QueryFactory.createSelectQuery(t1);
+		SelectQuery<Record> q = Create.selectQuery();
+		q.addFrom(t1);
 		q.addJoin(t2, t1.getField(FIELD_ID1), t2.getField(FIELD_ID1));
 
 		assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(true));
@@ -845,8 +847,9 @@ public class jOOQTest {
 
 	@Test
 	public final void testJoinTypeSelectQuery() throws Exception {
-		SelectQuery<Table1Record> q = QueryFactory.createSelectQuery(TABLE1);
-		Join j = QueryFactory.createJoin(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
+		SelectQuery<Record> q = Create.selectQuery();
+		q.addFrom(TABLE1);
+		Join j = Create.join(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
 
 		q.addJoin(j);
 		assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
@@ -859,7 +862,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testGroupSelectQuery() throws Exception {
-		SelectQuery<Table1Record> q = QueryFactory.createSelectQuery(TABLE1);
+		SelectQuery<Record> q = Create.selectQuery();
+		q.addFrom(TABLE1);
 
 		q.addGroupBy(FIELD_ID1);
 		assertEquals("select * from TABLE1 group by TABLE1.ID1", q.toSQLReference(true));
@@ -890,7 +894,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testOrderSelectQuery() throws Exception {
-		SelectQuery<Table1Record> q = QueryFactory.createSelectQuery(TABLE1);
+		SimpleSelectQuery<Table1Record> q = Create.selectQuery(TABLE1);
 
 		q.addOrderBy(FIELD_ID1);
 		assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(true));
@@ -910,7 +914,7 @@ public class jOOQTest {
 
 	@Test
 	public final void testCompleteSelectQuery() throws Exception {
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 		q.addFrom(TABLE1);
 		q.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
 		q.addSelect(FIELD_ID1, FIELD_ID2);
@@ -973,8 +977,8 @@ public class jOOQTest {
 	}
 
 	private SelectQuery<Record> createCombinedSelectQuery() {
-		SelectQuery<Record> q1 = QueryFactory.createSelectQuery();
-		SelectQuery<Record> q2 = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q1 = Create.selectQuery();
+		SelectQuery<Record> q2 = Create.selectQuery();
 
 		q1.addFrom(TABLE1);
 		q2.addFrom(TABLE1);
@@ -996,9 +1000,9 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect1() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table1Record> q2 = QueryFactory.createSelectQuery(q1.asTable().as("inner_temp_table"));
-		SelectQuery<Table1Record> q3 = QueryFactory.createSelectQuery(q2.asTable().as("outer_temp_table"));
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table1Record> q2 = Create.selectQuery(q1.asTable().as("inner_temp_table"));
+		SimpleSelectQuery<Table1Record> q3 = Create.selectQuery(q2.asTable().as("outer_temp_table"));
 
 		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(true));
 		assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(false));
@@ -1009,8 +1013,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect2() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table2Record> q2 = QueryFactory.createSelectQuery(TABLE2);
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
 
 		q1.addSelect(FIELD_ID1.as("inner_id1"));
 		q2.addSelect(FIELD_ID2.as("outer_id2"));
@@ -1022,8 +1026,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect3() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table2Record> q2 = QueryFactory.createSelectQuery(TABLE2);
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
 		q1.addConditions(FIELD_ID1.in(q2));
@@ -1034,8 +1038,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect4() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table2Record> q2 = QueryFactory.createSelectQuery(TABLE2);
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
 		q1.addConditions(FIELD_ID1.equal(q2));
@@ -1046,8 +1050,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect5() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table2Record> q2 = QueryFactory.createSelectQuery(TABLE2);
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
 		q1.addConditions(FIELD_ID1.greaterThanAny(q2));
@@ -1058,8 +1062,8 @@ public class jOOQTest {
 
 	@Test
 	public final void testInnerSelect6() throws Exception {
-		SelectQuery<Table1Record> q1 = QueryFactory.createSelectQuery(TABLE1);
-		SelectQuery<Table2Record> q2 = QueryFactory.createSelectQuery(TABLE2);
+		SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
+		SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
 
 		q2.addSelect(FIELD_ID2);
 		q1.addConditions(q2.asExistsCondition());

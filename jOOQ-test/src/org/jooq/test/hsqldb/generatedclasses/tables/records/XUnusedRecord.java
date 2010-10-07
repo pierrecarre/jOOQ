@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.RecordMetaData;
-import org.jooq.SelectQuery;
-import org.jooq.impl.QueryFactory;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.impl.Create;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.hsqldb.generatedclasses.tables.XUnused;
 
@@ -46,7 +46,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	 * PRIMARY KEY
 	 */
 	public List<XUnusedRecord> getXUnuseds(Connection connection) throws SQLException {
-		SelectQuery<XUnusedRecord> q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		SimpleSelectQuery<XUnusedRecord> q = Create.selectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
 		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
 		q.execute(connection);
@@ -96,7 +96,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public XUnusedRecord getXUnused(Connection connection) throws SQLException {
-		SelectQuery<XUnusedRecord> q = QueryFactory.createSelectQuery(XUnused.X_UNUSED);
+		SimpleSelectQuery<XUnusedRecord> q = Create.selectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID, getValue(XUnused.ID_REF));
 		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
 		q.execute(connection);

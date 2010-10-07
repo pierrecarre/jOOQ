@@ -43,7 +43,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
-import org.jooq.impl.QueryFactory;
+import org.jooq.impl.Create;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 
@@ -70,7 +70,7 @@ public class Library {
 	 */
 	public static void firstRun(Connection c) throws SQLException {
 		// Create the query
-		SelectQuery<Record> q = QueryFactory.createSelectQuery();
+		SelectQuery<Record> q = Create.selectQuery();
 		q.addFrom(T_AUTHOR);
 		q.addJoin(T_BOOK, TAuthor.ID, TBook.AUTHOR_ID);
 		q.addCompareCondition(TAuthor.YEAR_OF_BIRTH, 1920, Comparator.GREATER);
@@ -97,7 +97,7 @@ public class Library {
 	 * Run this code providing your own database connection.
 	 */
 	public static void secondRun(Connection c) throws SQLException {
-		SelectQuery<Record> q = QueryFactory.select()
+		SelectQuery<Record> q = Create.select()
 			.from(T_AUTHOR)
 			.join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))

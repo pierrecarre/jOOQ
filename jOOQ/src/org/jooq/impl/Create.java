@@ -53,6 +53,7 @@ import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 
@@ -61,7 +62,7 @@ import org.jooq.UpdateQuery;
  *
  * @author Lukas Eder
  */
-public final class QueryFactory {
+public final class Create {
 
 	/**
 	 * Create a new condition holding plain SQL. There must not be any binding
@@ -76,8 +77,8 @@ public final class QueryFactory {
 	 *            The SQL
 	 * @return A condition wrapping the plain SQL
 	 */
-	public static Condition createPlainSQLCondition(String sql) {
-		return createPlainSQLCondition(sql, new Object[0]);
+	public static Condition plainSQLCondition(String sql) {
+		return plainSQLCondition(sql, new Object[0]);
 	}
 
 	/**
@@ -96,35 +97,35 @@ public final class QueryFactory {
 	 *            The bindings
 	 * @return A condition wrapping the plain SQL
 	 */
-	public static Condition createPlainSQLCondition(String sql, Object... bindings) {
+	public static Condition plainSQLCondition(String sql, Object... bindings) {
 		return new PlainSQLCondition(sql, bindings);
 	}
 
 	/**
 	 * Combine a list of conditions with the {@link Operator#AND} operator
 	 */
-	public static CombinedCondition createCombinedCondition(Condition... conditions) {
-		return createCombinedCondition(Operator.AND, conditions);
+	public static CombinedCondition combinedCondition(Condition... conditions) {
+		return combinedCondition(Operator.AND, conditions);
 	}
 
 	/**
 	 * Combine a collection of conditions with the {@link Operator#AND} operator
 	 */
-	public static CombinedCondition createCombinedCondition(Collection<Condition> conditions) {
-		return createCombinedCondition(Operator.AND, conditions);
+	public static CombinedCondition combinedCondition(Collection<Condition> conditions) {
+		return combinedCondition(Operator.AND, conditions);
 	}
 
 	/**
 	 * Combine a list of conditions with any operator
 	 */
-	public static CombinedCondition createCombinedCondition(Operator operator, Condition... conditions) {
-		return createCombinedCondition(operator, Arrays.asList(conditions));
+	public static CombinedCondition combinedCondition(Operator operator, Condition... conditions) {
+		return combinedCondition(operator, Arrays.asList(conditions));
 	}
 
 	/**
 	 * Combine a collection of conditions with any operator
 	 */
-	public static CombinedCondition createCombinedCondition(Operator operator, Collection<Condition> conditions) {
+	public static CombinedCondition combinedCondition(Operator operator, Collection<Condition> conditions) {
 		return new CombinedConditionImpl(operator, conditions);
 	}
 
@@ -141,7 +142,7 @@ public final class QueryFactory {
 	 *            The upper bound
 	 * @return A {@link BetweenCondition}
 	 */
-	public static <T> BetweenCondition<T> createBetweenCondition(Field<T> field, T minValue, T maxValue) {
+	public static <T> BetweenCondition<T> betweenCondition(Field<T> field, T minValue, T maxValue) {
 		return new BetweenConditionImpl<T>(field, minValue, maxValue);
 	}
 
@@ -156,8 +157,8 @@ public final class QueryFactory {
 	 *            The accepted values
 	 * @return An {@link InCondition}
 	 */
-	public static <T> InCondition<T> createInCondition(Field<T> field, T... values) {
-		return createInCondition(field, Arrays.asList(values));
+	public static <T> InCondition<T> inCondition(Field<T> field, T... values) {
+		return inCondition(field, Arrays.asList(values));
 	}
 
 	/**
@@ -171,7 +172,7 @@ public final class QueryFactory {
 	 *            The excluded values
 	 * @return An {@link InCondition}
 	 */
-	public static <T> InCondition<T> createNotInCondition(Field<T> field, Collection<T> values) {
+	public static <T> InCondition<T> notInCondition(Field<T> field, Collection<T> values) {
 		return new InConditionImpl<T>(field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
 	}
 
@@ -186,8 +187,8 @@ public final class QueryFactory {
 	 *            The excluded values
 	 * @return An {@link InCondition}
 	 */
-	public static <T> InCondition<T> createNotInCondition(Field<T> field, T... values) {
-		return createNotInCondition(field, Arrays.asList(values));
+	public static <T> InCondition<T> notInCondition(Field<T> field, T... values) {
+		return notInCondition(field, Arrays.asList(values));
 	}
 
 	/**
@@ -201,7 +202,7 @@ public final class QueryFactory {
 	 *            The accepted values
 	 * @return An {@link InCondition}
 	 */
-	public static <T> InCondition<T> createInCondition(Field<T> field, Collection<T> values) {
+	public static <T> InCondition<T> inCondition(Field<T> field, Collection<T> values) {
 		return new InConditionImpl<T>(field, new LinkedHashSet<T>(values));
 	}
 
@@ -217,8 +218,8 @@ public final class QueryFactory {
 	 *            The accepted value
 	 * @return A {@link CompareCondition}
 	 */
-	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value) {
-		return createCompareCondition(field, value, Comparator.EQUALS);
+	public static <T> CompareCondition<T> compareCondition(Field<T> field, T value) {
+		return compareCondition(field, value, Comparator.EQUALS);
 	}
 
 	/**
@@ -234,7 +235,7 @@ public final class QueryFactory {
 	 *            The comparator
 	 * @return A {@link CompareCondition}
 	 */
-	public static <T> CompareCondition<T> createCompareCondition(Field<T> field, T value, Comparator comparator) {
+	public static <T> CompareCondition<T> compareCondition(Field<T> field, T value, Comparator comparator) {
 		return new CompareConditionImpl<T>(field, value, comparator);
 	}
 
@@ -247,8 +248,8 @@ public final class QueryFactory {
 	 *            The field to compare to null
 	 * @return A {@link CompareCondition}
 	 */
-	public static <T> CompareCondition<T> createNullCondition(Field<T> field) {
-		return createCompareCondition(field, null, Comparator.EQUALS);
+	public static <T> CompareCondition<T> nullCondition(Field<T> field) {
+		return compareCondition(field, null, Comparator.EQUALS);
 	}
 
 	/**
@@ -260,8 +261,8 @@ public final class QueryFactory {
 	 *            The field to compare to null
 	 * @return A {@link CompareCondition}
 	 */
-	public static <T> CompareCondition<T> createNotNullCondition(Field<T> field) {
-		return createCompareCondition(field, null, Comparator.NOT_EQUALS);
+	public static <T> CompareCondition<T> notNullCondition(Field<T> field) {
+		return compareCondition(field, null, Comparator.NOT_EQUALS);
 	}
 
 	/**
@@ -275,8 +276,8 @@ public final class QueryFactory {
 	 *            The second field
 	 * @return A {@link JoinCondition}
 	 */
-	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2) {
-		return createJoinCondition(field1, field2, Comparator.EQUALS);
+	public static <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2) {
+		return joinCondition(field1, field2, Comparator.EQUALS);
 	}
 
 	/**
@@ -292,7 +293,7 @@ public final class QueryFactory {
 	 * 			  The comparator to compare the two fields with
 	 * @return A {@link JoinCondition}
 	 */
-	public static <T> JoinCondition<T> createJoinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
+	public static <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
 		return new JoinConditionImpl<T>(field1, field2);
 	}
 
@@ -303,7 +304,7 @@ public final class QueryFactory {
 	 *            The table to insert data into
 	 * @return The new {@link InsertQuery}
 	 */
-	public static <R extends Record> InsertQuery<R> createInsertQuery(Table<R> into) {
+	public static <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
 		return new InsertQueryImpl<R>(into);
 	}
 
@@ -314,7 +315,7 @@ public final class QueryFactory {
 	 *            The table to update data into
 	 * @return The new {@link UpdateQuery}
 	 */
-	public static <R extends Record> UpdateQuery<R> createUpdateQuery(Table<R> table) {
+	public static <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
 		return new UpdateQueryImpl<R>(table);
 	}
 
@@ -325,7 +326,7 @@ public final class QueryFactory {
 	 *            The table to delete data from
 	 * @return The new {@link DeleteQuery}
 	 */
-	public static <R extends Record> DeleteQuery<R> createDeleteQuery(Table<R> table) {
+	public static <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
 		return new DeleteQueryImpl<R>(table);
 	}
 
@@ -353,7 +354,7 @@ public final class QueryFactory {
 	/**
 	 * Create a new {@link SelectQuery}
 	 */
-	public static SelectQuery<Record> createSelectQuery() {
+	public static SelectQuery<Record> selectQuery() {
 		return new SelectQueryImpl<Record>();
 	}
 
@@ -364,7 +365,7 @@ public final class QueryFactory {
 	 *            The table to select data from
 	 * @return The new {@link SelectQuery}
 	 */
-	public static <R extends Record> SelectQuery<R> createSelectQuery(Table<R> table) {
+	public static <R extends Record> SimpleSelectQuery<R> selectQuery(Table<R> table) {
 		return new SelectQueryImpl<R>(table);
 	}
 
@@ -381,8 +382,8 @@ public final class QueryFactory {
 	 *            The second field of the join condition
 	 * @return A new {@link Join} part
 	 */
-	public static <T> Join createJoin(Table<?> table, Field<T> field1, Field<T> field2) {
-		return createJoin(table, JoinType.JOIN, field1, field2);
+	public static <T> Join join(Table<?> table, Field<T> field1, Field<T> field2) {
+		return join(table, JoinType.JOIN, field1, field2);
 	}
 
 	/**
@@ -394,8 +395,8 @@ public final class QueryFactory {
 	 *            Any number of conditions
 	 * @return A new {@link Join} part
 	 */
-	public static Join createJoin(Table<?> table, Condition... conditions) {
-		return createJoin(table, JoinType.JOIN, conditions);
+	public static Join join(Table<?> table, Condition... conditions) {
+		return join(table, JoinType.JOIN, conditions);
 	}
 
 	/**
@@ -413,8 +414,8 @@ public final class QueryFactory {
 	 *            The second field of the join condition
 	 * @return A new {@link Join} part
 	 */
-	public static <T> Join createJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
-		return createJoin(table, type, createJoinCondition(field1, field2));
+	public static <T> Join join(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
+		return join(table, type, joinCondition(field1, field2));
 	}
 
 	/**
@@ -428,13 +429,13 @@ public final class QueryFactory {
 	 *            Any number of conditions
 	 * @return A new {@link Join} part
 	 */
-	public static Join createJoin(Table<?> table, JoinType type, Condition... conditions) {
+	public static Join join(Table<?> table, JoinType type, Condition... conditions) {
 		return new JoinImpl(table, type, conditions);
 	}
 
 	/**
 	 * No instances
 	 */
-	private QueryFactory() {
+	private Create() {
 	}
 }

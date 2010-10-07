@@ -31,7 +31,6 @@
 
 package org.jooq;
 
-import java.util.Collection;
 
 /**
  * A query used for deletion of data
@@ -40,15 +39,4 @@ import java.util.Collection;
  */
 public interface DeleteQuery<R extends Record> extends Query, ConditionProvider<R>, QueryPart {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Condition... conditions);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	void addConditions(Collection<Condition> conditions);
 }

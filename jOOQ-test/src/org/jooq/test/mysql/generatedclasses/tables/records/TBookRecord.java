@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.RecordMetaData;
-import org.jooq.SelectQuery;
-import org.jooq.impl.QueryFactory;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.impl.Create;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -67,7 +67,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
 	public TAuthorRecord getTAuthor(Connection connection) throws SQLException {
-		SelectQuery<TAuthorRecord> q = QueryFactory.createSelectQuery(TAuthor.T_AUTHOR);
+		SimpleSelectQuery<TAuthorRecord> q = Create.selectQuery(TAuthor.T_AUTHOR);
 		q.addCompareCondition(TAuthor.ID, getValue(TBook.AUTHOR_ID));
 		q.execute(connection);
 

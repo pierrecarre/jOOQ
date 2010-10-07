@@ -42,10 +42,10 @@ import java.util.Set;
 
 import org.jooq.Parameter;
 import org.jooq.RecordMetaData;
-import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.TableField;
+import org.jooq.impl.Create;
 import org.jooq.impl.ParameterImpl;
-import org.jooq.impl.QueryFactory;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
 import org.jooq.impl.StoredProcedureImpl;
@@ -416,7 +416,7 @@ public class DefaultGenerator implements Generator {
 					}
 					out.println("(Connection connection) throws SQLException {");
 
-					out.print("\t\tSelectQuery<" + referencing.getJavaClassName("Record") + "> q = QueryFactory.createSelectQuery(");
+					out.print("\t\tSimpleSelectQuery<" + referencing.getJavaClassName("Record") + "> q = Create.selectQuery(");
 					out.print(referencing.getJavaClassName());
 					out.print(".");
 					out.print(referencing.getNameUC());
@@ -440,8 +440,8 @@ public class DefaultGenerator implements Generator {
 					out.println("\t}");
 
 					out.printImport(tablePackage + "." + referencing.getJavaClassName());
-					out.printImport(SelectQuery.class);
-					out.printImport(QueryFactory.class);
+					out.printImport(SimpleSelectQuery.class);
+					out.printImport(Create.class);
 					out.printImport(Connection.class);
 					out.printImport(SQLException.class);
 					out.printImport(List.class);
@@ -458,7 +458,7 @@ public class DefaultGenerator implements Generator {
 				out.print(referenced.getJavaClassName());
 				out.println("(Connection connection) throws SQLException {");
 
-				out.print("\t\tSelectQuery<" + referenced.getJavaClassName("Record") + "> q = QueryFactory.createSelectQuery(");
+				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = Create.selectQuery(");
 				out.print(referenced.getJavaClassName());
 				out.print(".");
 				out.print(referenced.getNameUC());
@@ -484,8 +484,8 @@ public class DefaultGenerator implements Generator {
 				out.println("\t}");
 
 				out.printImport(tablePackage + "." + referenced.getJavaClassName());
-				out.printImport(SelectQuery.class);
-				out.printImport(QueryFactory.class);
+				out.printImport(SimpleSelectQuery.class);
+				out.printImport(Create.class);
 				out.printImport(Connection.class);
 				out.printImport(SQLException.class);
 				out.printImport(List.class);

@@ -31,19 +31,15 @@
 
 package org.jooq.util.mysql;
 
-import static org.jooq.impl.QueryFactory.createCompareCondition;
-import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.impl.Create.compareCondition;
+import static org.jooq.impl.Create.selectQuery;
 import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_COMMENT;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_SCHEMA;
-import static org.jooq.util.mysql.mysql.tables.Proc.COMMENT;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
-import static org.jooq.util.mysql.mysql.tables.Proc.NAME;
-import static org.jooq.util.mysql.mysql.tables.Proc.PARAM_LIST;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
-import static org.jooq.util.mysql.mysql.tables.Proc.RETURNS;
 import static org.jooq.util.mysql.mysql.tables.Proc.TYPE;
 
 import java.sql.SQLException;
@@ -52,7 +48,7 @@ import java.util.List;
 
 import org.jooq.Comparator;
 import org.jooq.Result;
-import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
@@ -71,7 +67,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery<KeyColumnUsageRecord> q = createSelectQuery(KEY_COLUMN_USAGE);
+		SimpleSelectQuery<KeyColumnUsageRecord> q = selectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
 		q.execute(getConnection());
@@ -88,7 +84,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery<KeyColumnUsageRecord> q = createSelectQuery(KEY_COLUMN_USAGE);
+		SimpleSelectQuery<KeyColumnUsageRecord> q = selectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
 		q.execute(getConnection());
@@ -112,10 +108,10 @@ public class MySQLDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SelectQuery<TablesRecord> q = createSelectQuery(TABLES);
+		SimpleSelectQuery<TablesRecord> q = selectQuery(TABLES);
 		q.addSelect(TABLE_NAME);
 		q.addSelect(TABLE_COMMENT);
-		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchemaName()));
+		q.addConditions(compareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 
@@ -164,13 +160,9 @@ public class MySQLDatabase extends AbstractDatabase {
 	}
 
 	private Result<ProcRecord> executeProcedureQuery(String type) throws SQLException {
-		SelectQuery<ProcRecord> q = createSelectQuery(PROC);
-		q.addSelect(NAME);
-		q.addSelect(PARAM_LIST);
-		q.addSelect(COMMENT);
-		q.addSelect(RETURNS);
-		q.addConditions(createCompareCondition(DB, getSchemaName()));
-		q.addConditions(createCompareCondition(TYPE, type));
+		SimpleSelectQuery<ProcRecord> q = selectQuery(PROC);
+		q.addConditions(compareCondition(DB, getSchemaName()));
+		q.addConditions(compareCondition(TYPE, type));
 		q.execute(getConnection());
 
 		return q.getResult();

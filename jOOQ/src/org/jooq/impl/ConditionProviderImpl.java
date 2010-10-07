@@ -77,50 +77,50 @@ class ConditionProviderImpl<R extends Record> extends AbstractQueryPart implemen
 			if (conditions.size() == 1) {
 				c = conditions.iterator().next();
 			} else {
-				c = QueryFactory.createCombinedCondition(conditions);
+				c = Create.combinedCondition(conditions);
 			}
 
 			if (getWhere() == TRUE_CONDITION) {
 				condition = c;
 			} else {
-				condition = QueryFactory.createCombinedCondition(getWhere(), c);
+				condition = Create.combinedCondition(getWhere(), c);
 			}
 		}
 	}
 
 	@Override
 	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		addConditions(QueryFactory.createBetweenCondition(field, minValue, maxValue));
+		addConditions(Create.betweenCondition(field, minValue, maxValue));
 	}
 
 	@Override
 	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-		addConditions(QueryFactory.createCompareCondition(field, value, comparator));
+		addConditions(Create.compareCondition(field, value, comparator));
 	}
 
 	@Override
 	public <T> void addCompareCondition(Field<T> field, T value) {
-		addConditions(QueryFactory.createCompareCondition(field, value));
+		addConditions(Create.compareCondition(field, value));
 	}
 
 	@Override
 	public void addNullCondition(Field<?> field) {
-		addConditions(QueryFactory.createNullCondition(field));
+		addConditions(Create.nullCondition(field));
 	}
 
 	@Override
 	public void addNotNullCondition(Field<?> field) {
-		addConditions(QueryFactory.createNotNullCondition(field));
+		addConditions(Create.notNullCondition(field));
 	}
 
 	@Override
 	public <T> void addInCondition(Field<T> field, Collection<T> values) {
-		addConditions(QueryFactory.createInCondition(field, values));
+		addConditions(Create.inCondition(field, values));
 	}
 
 	@Override
 	public <T> void addInCondition(Field<T> field, T... values) {
-		addConditions(QueryFactory.createInCondition(field, values));
+		addConditions(Create.inCondition(field, values));
 	}
 
 	@Override

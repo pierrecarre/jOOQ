@@ -31,8 +31,8 @@
 
 package org.jooq.util.mysql;
 
-import static org.jooq.impl.QueryFactory.createCompareCondition;
-import static org.jooq.impl.QueryFactory.createSelectQuery;
+import static org.jooq.impl.Create.compareCondition;
+import static org.jooq.impl.Create.selectQuery;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_COMMENT;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_NAME;
@@ -45,7 +45,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
@@ -66,14 +66,14 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery<ColumnsRecord> q = createSelectQuery(COLUMNS);
+		SimpleSelectQuery<ColumnsRecord> q = selectQuery(COLUMNS);
 
 		q.addSelect(COLUMN_NAME);
 		q.addSelect(ORDINAL_POSITION);
 		q.addSelect(DATA_TYPE);
 		q.addSelect(COLUMN_COMMENT);
-		q.addConditions(createCompareCondition(TABLE_SCHEMA, getSchemaName()));
-		q.addConditions(createCompareCondition(TABLE_NAME, getName()));
+		q.addConditions(compareCondition(TABLE_SCHEMA, getSchemaName()));
+		q.addConditions(compareCondition(TABLE_NAME, getName()));
 		q.addOrderBy(ORDINAL_POSITION);
 
 		q.execute(getConnection());
