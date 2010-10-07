@@ -46,6 +46,7 @@ import org.jooq.SelectQuery;
 import org.jooq.impl.Create;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
+import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 
 public class Library {
 
@@ -56,6 +57,10 @@ public class Library {
 		System.out.println();
 		System.out.println("Second run...");
 		secondRun(getConnection());
+
+		System.out.println();
+		System.out.println("Third run...");
+		thirdRun(getConnection());
 	}
 
 	protected static Connection getConnection() throws Exception {
@@ -117,6 +122,29 @@ public class Library {
 			Integer publishedIn = record.getValue(TBook.PUBLISHED_IN);
 
 			System.out.println(title + " (published in " + publishedIn + ") by " + firstName + " " + lastName);
+		}
+	}
+
+	/**
+	 * Run this code providing your own database connection.
+	 */
+	public static void thirdRun(Connection c) throws SQLException {
+		SelectQuery<TAuthorRecord> q = Create.select(T_AUTHOR)
+			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
+			.orderBy(TAuthor.LAST_NAME).getQuery();
+
+		// Execute the query and fetch the results
+		q.execute(c);
+		Result<TAuthorRecord> result = q.getResult();
+
+		// Loop over the resulting records
+		for (TAuthorRecord record : result) {
+
+			// Type safety assured with generics
+			String firstName = record.getFirstName();
+			String lastName = record.getLastName();
+
+			System.out.println("Author : " + firstName + " " + lastName);
 		}
 	}
 }
