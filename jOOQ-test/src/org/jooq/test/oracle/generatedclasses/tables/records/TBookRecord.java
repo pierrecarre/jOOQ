@@ -3,8 +3,9 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
+
 import org.jooq.RecordMetaData;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
 
@@ -13,14 +14,12 @@ import org.jooq.test.oracle.generatedclasses.tables.TBook;
  *
  * An entity holding books
  */
-public class TBookRecord extends RecordImpl<TBookRecord> {
+public class TBookRecord extends TableRecordImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The book ID
-	 *
-	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -28,8 +27,6 @@ public class TBookRecord extends RecordImpl<TBookRecord> {
 
 	/**
 	 * The book ID
-	 *
-	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);
@@ -37,8 +34,6 @@ public class TBookRecord extends RecordImpl<TBookRecord> {
 
 	/**
 	 * The author ID in entity 'author'
-	 *
-	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -46,8 +41,6 @@ public class TBookRecord extends RecordImpl<TBookRecord> {
 
 	/**
 	 * The author ID in entity 'author'
-	 *
-	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);
@@ -67,7 +60,7 @@ public class TBookRecord extends RecordImpl<TBookRecord> {
 		return getValue(TBook.TITLE);
 	}
 
-	public TBookRecord(RecordMetaData result) {
-		super(result);
+	public TBookRecord(RecordMetaData metaData) {
+		super(metaData, TBook.T_BOOK);
 	}
 }

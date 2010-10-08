@@ -3,6 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,15 +40,11 @@ public class TBook extends TableImpl<TBookRecord> {
 
 	/**
 	 * The book ID
-	 *
-	 * PRIMARY KEY 'SYS_C0012923'
 	 */
 	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>("ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
-	 *
-	 * FOREIGN KEY 'SYS_C0012919' [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>("AUTHOR_ID", Integer.class, T_BOOK);
 
@@ -62,4 +59,5 @@ public class TBook extends TableImpl<TBookRecord> {
 	private TBook() {
 		super("T_BOOK", OdsTest.ODS_TEST);
 	}
+
 }

@@ -3,8 +3,9 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
+
 import org.jooq.RecordMetaData;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.XUnused;
 
 
@@ -13,14 +14,12 @@ import org.jooq.test.oracle.generatedclasses.tables.XUnused;
  *
  * An unused table in the same schema.
  */
-public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
+public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * An uncommented item
-	 *
-	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -28,8 +27,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
@@ -37,8 +34,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
@@ -46,8 +41,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * PRIMARY KEY 'SYS_C0012927'
 	 */
 	public String getName() {
 		return getValue(XUnused.NAME);
@@ -55,8 +48,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -64,8 +55,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -73,8 +62,6 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -82,14 +69,12 @@ public class XUnusedRecord extends RecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
-	 *
-	 * FOREIGN KEY 'SYS_C0012927' [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);
 	}
 
-	public XUnusedRecord(RecordMetaData result) {
-		super(result);
+	public XUnusedRecord(RecordMetaData metaData) {
+		super(metaData, XUnused.X_UNUSED);
 	}
 }

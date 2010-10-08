@@ -3,6 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses;
 
+
 import org.jooq.impl.SchemaImpl;
 
 

@@ -3,10 +3,11 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
+
 import java.sql.Date;
 
 import org.jooq.RecordMetaData;
-import org.jooq.impl.RecordImpl;
+import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 
 
@@ -15,14 +16,12 @@ import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
  *
  * An entity holding authors of books
  */
-public class TAuthorRecord extends RecordImpl<TAuthorRecord> {
+public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The author ID
-	 *
-	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -30,8 +29,6 @@ public class TAuthorRecord extends RecordImpl<TAuthorRecord> {
 
 	/**
 	 * The author ID
-	 *
-	 * PRIMARY KEY 'SYS_C0012919'
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);
@@ -79,7 +76,21 @@ public class TAuthorRecord extends RecordImpl<TAuthorRecord> {
 		return getValue(TAuthor.DATE_OF_BIRTH);
 	}
 
-	public TAuthorRecord(RecordMetaData result) {
-		super(result);
+	/**
+	 * The author's year of birth
+	 */
+	public void setYearOfBirth(Integer value) {
+		setValue(TAuthor.YEAR_OF_BIRTH, value);
+	}
+
+	/**
+	 * The author's year of birth
+	 */
+	public Integer getYearOfBirth() {
+		return getValue(TAuthor.YEAR_OF_BIRTH);
+	}
+
+	public TAuthorRecord(RecordMetaData metaData) {
+		super(metaData, TAuthor.T_AUTHOR);
 	}
 }

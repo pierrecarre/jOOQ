@@ -3,6 +3,7 @@
  */
 package org.jooq.test.oracle.generatedclasses.tables;
 
+
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -51,4 +52,5 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	private VLibrary() {
 		super("V_LIBRARY", OdsTest.ODS_TEST);
 	}
+
 }
