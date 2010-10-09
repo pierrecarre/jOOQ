@@ -82,7 +82,7 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 
 			return 0;
 		} finally {
-			statement.close();
+			SQLUtils.safeClose(statement);
 		}
 	}
 

@@ -258,9 +258,7 @@ implements ResultProviderSelectQuery<Q, R> {
 				result.addRecord(record);
 			}
 		} finally {
-			if (rs != null) {
-				rs.close();
-			}
+			SQLUtils.safeClose(rs);
 		}
 
 		return result.getNumberOfRecords();

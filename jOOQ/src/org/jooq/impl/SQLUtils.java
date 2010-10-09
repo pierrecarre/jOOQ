@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,51 +28,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-import javax.sql.DataSource;
+final class SQLUtils {
 
-import org.jooq.Query;
-import org.jooq.Record;
-
-/**
- * @author Lukas Eder
- */
-abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
-
-	private static final long serialVersionUID = -8046199737354507547L;
-
-	AbstractQuery() {
-	}
-
-	@Override
-	public final int execute(DataSource source) throws SQLException {
-		return execute(source.getConnection());
-	}
-
-	@Override
-	public final int execute(Connection connection) throws SQLException {
-		PreparedStatement statement = null;
-
-		try {
-			statement = connection.prepareStatement(toSQLReference());
-			bind(statement);
-			return execute(statement);
-		} finally {
-			SQLUtils.safeClose(statement);
+	static void safeClose(Statement statement) {
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (Exception ignore) {
+			}
 		}
 	}
 
-	/**
-	 * Default implementation for query execution. Subclasses may override this
-	 * method.
-	 */
-	protected int execute(PreparedStatement statement) throws SQLException {
-		return statement.executeUpdate();
+	static void safeClose(ResultSet resultSet) {
+		if (resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (Exception ignore) {
+			}
+		}
+	}
+
+	static void safeClose(ResultSet resultSet, PreparedStatement statement) {
+		safeClose(resultSet);
+		safeClose(statement);
+	}
+
+	private SQLUtils() {
 	}
 }

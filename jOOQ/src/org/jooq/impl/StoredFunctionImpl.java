@@ -98,13 +98,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 
 			return 0;
 		} finally {
-			if (rs != null) {
-				rs.close();
-			}
-
-			if (statement != null) {
-				statement.close();
-			}
+			SQLUtils.safeClose(rs, statement);
 		}
 	}
 
