@@ -42,7 +42,7 @@ class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
 
 	@SuppressWarnings("unchecked")
 	ConstantFieldImpl(T value) {
-		super(value.toString(), (Class<T>) value.getClass());
+		super(value.toString(), (Class<? extends T>) value.getClass());
 	}
 
 	@Override

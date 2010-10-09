@@ -49,7 +49,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	 * @return The type of the field
 	 */
 	@Override
-	Class<T> getType();
+	Class<? extends T> getType();
 
 	/**
 	 * Create an alias for this field

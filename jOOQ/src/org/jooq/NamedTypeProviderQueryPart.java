@@ -41,5 +41,5 @@ public interface NamedTypeProviderQueryPart<T> extends NamedQueryPart {
 	/**
 	 * @return The type of this object
 	 */
-	Class<T> getType();
+	Class<? extends T> getType();
 }

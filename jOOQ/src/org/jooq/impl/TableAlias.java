@@ -79,20 +79,25 @@ class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, Ali
 		return aliasProvider.as(alias);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public FieldList getFields() {
 		if (aliasedFields == null) {
 			aliasedFields = new FieldListImpl();
 
 			for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
-
-				// Instanciating a TableFieldImpl will add the field to this
-				new TableFieldImpl(field.getName(), field.getType(), this);
+				registerTableField(field);
 			}
 		}
 
 		return aliasedFields;
+	}
+
+	/**
+	 * Register a field for this table alias
+	 */
+	private <T> void registerTableField(Field<T> field) {
+		// Instanciating a TableFieldImpl will add the field to this
+		new TableFieldImpl<R, T>(field.getName(), field.getType(), this);
 	}
 
 	@Override

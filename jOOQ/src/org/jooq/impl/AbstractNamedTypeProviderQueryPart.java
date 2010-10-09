@@ -43,16 +43,16 @@ abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryP
 	 * Generated UID
 	 */
 	private static final long serialVersionUID = -9087742153758783482L;
-	private final Class<T> type;
+	private final Class<? extends T> type;
 
-	AbstractNamedTypeProviderQueryPart(String name, Class<T> type) {
+	AbstractNamedTypeProviderQueryPart(String name, Class<? extends T> type) {
 		super(name);
 
 		this.type = type;
 	}
 
 	@Override
-	public final Class<T> getType() {
+	public final Class<? extends T> getType() {
 		return type;
 	}
 }

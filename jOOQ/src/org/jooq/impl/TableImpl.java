@@ -49,7 +49,6 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
 	private final Schema schema;
 	private final FieldList fields;
 
-
 	public TableImpl(String name) {
 		this(name, (Schema) null);
 	}
@@ -100,6 +99,10 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
 		return new TableAlias<R>(this, alias);
 	}
 
+	/**
+	 * Subclasses must override this method if they use the generic type
+	 * parameter <R> for other types than {@link Record}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class<? extends R> getRecordType() {

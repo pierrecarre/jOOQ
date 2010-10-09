@@ -49,7 +49,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 
 	private final List<NamedQueryPart> arguments;
 
-	FunctionImpl(String name, Class<T> type, NamedQueryPart... arguments) {
+	FunctionImpl(String name, Class<? extends T> type, NamedQueryPart... arguments) {
 		super (name, type);
 
 		this.arguments = Arrays.asList(arguments);

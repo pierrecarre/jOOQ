@@ -44,7 +44,7 @@ public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements
 
 	private final Table<R> table;
 
-	public TableFieldImpl(String name, Class<T> type, Table<R> table) {
+	public TableFieldImpl(String name, Class<? extends T> type, Table<R> table) {
 		super(name, type);
 
 		this.table = table;

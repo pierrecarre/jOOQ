@@ -138,7 +138,7 @@ final class FieldTypeHelper {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> T getFromResultSet(ResultSet rs, Class<T> type, String fieldName) throws SQLException {
+	public static <T> T getFromResultSet(ResultSet rs, Class<? extends T> type, String fieldName) throws SQLException {
 		if (type == Blob.class) {
 			return (T) rs.getBlob(fieldName);
 		}
@@ -194,7 +194,7 @@ final class FieldTypeHelper {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> T getFromStatement(CallableStatement statement, Class<T> type, String fieldName) throws SQLException {
+	public static <T> T getFromStatement(CallableStatement statement, Class<? extends T> type, String fieldName) throws SQLException {
 		if (type == Blob.class) {
 			return (T) statement.getBlob(fieldName);
 		}

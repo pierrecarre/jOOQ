@@ -53,7 +53,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
 	private static final long serialVersionUID = 5589200289715501493L;
 
-	FieldImpl(String name, Class<T> type) {
+	FieldImpl(String name, Class<? extends T> type) {
 		super(name, type);
 	}
 
