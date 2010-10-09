@@ -91,6 +91,6 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> {
 	}
 
 	public TAuthorRecord(RecordMetaData metaData) {
-		super(metaData, TAuthor.T_AUTHOR);
+		super(TAuthor.T_AUTHOR);
 	}
 }

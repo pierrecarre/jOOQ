@@ -38,7 +38,6 @@ import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.RecordMetaData;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -58,8 +57,8 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
      */
     private static final long serialVersionUID = -1012420583600561579L;
 
-    public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable<R> table) {
-        super(metaData, table);
+    public UpdatableRecordImpl(UpdatableTable<R> table) {
+        super(table);
     }
 
     @Override

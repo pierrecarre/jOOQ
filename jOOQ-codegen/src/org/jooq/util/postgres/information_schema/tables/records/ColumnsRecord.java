@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.Columns;
 
@@ -632,7 +633,15 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 		return getValue(Columns.IS_UPDATABLE);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public ColumnsRecord(RecordMetaData metaData) {
-		super(metaData, Columns.COLUMNS);
+		this();
+	}
+
+	public ColumnsRecord() {
+		super(Columns.COLUMNS);
 	}
 }

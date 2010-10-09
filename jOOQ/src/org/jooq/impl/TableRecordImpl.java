@@ -31,7 +31,6 @@
 package org.jooq.impl;
 
 import org.jooq.Record;
-import org.jooq.RecordMetaData;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
@@ -47,16 +46,14 @@ public class TableRecordImpl<R extends Record> extends RecordImpl implements Tab
      */
     private static final long serialVersionUID = -4613985511514503387L;
 
-    private final Table<R>    table;
-
-    public TableRecordImpl(RecordMetaData metaData, Table<R> table) {
-        super(metaData);
-
-        this.table = table;
+    public TableRecordImpl(Table<R> table) {
+        super(table);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Table<R> getTable() {
-        return table;
+        // We can be sure about that cast, as this is the only possibility
+        return (Table<R>) getMetaData();
     }
 }

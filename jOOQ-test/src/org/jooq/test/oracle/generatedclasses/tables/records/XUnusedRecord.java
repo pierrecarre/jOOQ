@@ -75,6 +75,6 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 	}
 
 	public XUnusedRecord(RecordMetaData metaData) {
-		super(metaData, XUnused.X_UNUSED);
+		super(XUnused.X_UNUSED);
 	}
 }

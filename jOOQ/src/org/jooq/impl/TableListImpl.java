@@ -50,7 +50,7 @@ class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList
         super();
     }
 
-    TableListImpl(List<Table<?>> wrappedList) {
+    TableListImpl(List<? extends Table<?>> wrappedList) {
         super(wrappedList);
     }
 

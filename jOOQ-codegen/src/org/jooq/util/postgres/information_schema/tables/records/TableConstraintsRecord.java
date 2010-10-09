@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 
@@ -142,7 +143,15 @@ public class TableConstraintsRecord extends TableRecordImpl<TableConstraintsReco
 		return getValue(TableConstraints.INITIALLY_DEFERRED);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public TableConstraintsRecord(RecordMetaData metaData) {
-		super(metaData, TableConstraints.TABLE_CONSTRAINTS);
+		this();
+	}
+
+	public TableConstraintsRecord() {
+		super(TableConstraints.TABLE_CONSTRAINTS);
 	}
 }

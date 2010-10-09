@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.ConstraintColumnUsage;
 
@@ -114,7 +115,15 @@ public class ConstraintColumnUsageRecord extends TableRecordImpl<ConstraintColum
 		return getValue(ConstraintColumnUsage.CONSTRAINT_NAME);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public ConstraintColumnUsageRecord(RecordMetaData metaData) {
-		super(metaData, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
+		this();
+	}
+
+	public ConstraintColumnUsageRecord() {
+		super(ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
 	}
 }

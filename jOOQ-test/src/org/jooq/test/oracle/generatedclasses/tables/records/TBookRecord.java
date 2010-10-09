@@ -61,6 +61,6 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> {
 	}
 
 	public TBookRecord(RecordMetaData metaData) {
-		super(metaData, TBook.T_BOOK);
+		super(TBook.T_BOOK);
 	}
 }

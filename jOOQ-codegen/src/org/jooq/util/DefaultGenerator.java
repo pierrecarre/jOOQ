@@ -225,16 +225,24 @@ public class DefaultGenerator implements Generator {
 			}
 
 			out.println();
+			out.println("\t/**");
+			out.println("\t * This constructor has no effect, as a {@link TableFieldImpl} will always");
+			out.println("\t * use its underlying table as a RecordMetaData descriptor");
+			out.println("\t */");
 			out.println("\tpublic " + table.getJavaClassName("Record") + "(RecordMetaData metaData) {");
+			out.println("\t\tthis();");
+			out.println("\t}");
+			out.println();
+			out.println("\tpublic " + table.getJavaClassName("Record") + "() {");
 
-			out.print("\t\tsuper(metaData");
-			out.print(", ");
+			out.print("\t\tsuper(");
 			out.print(table.getJavaClassName());
 			out.print(".");
 			out.print(table.getNameUC());
 			out.println(");");
 
 			out.println("\t}");
+			out.printImport(TableFieldImpl.class);
 			out.printImport(RecordMetaData.class);
 
 			out.println("}");

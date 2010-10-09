@@ -33,7 +33,6 @@ package org.jooq.test;
 
 import java.sql.Date;
 
-import org.jooq.RecordMetaData;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
@@ -77,18 +76,18 @@ public final class Data {
 	public static final TableField<Table3Record, Date> FIELD_DATE3 = new TableFieldImpl<Table3Record, Date>("DATE3", Date.class, TABLE3);
 
 	public static class Table1Record extends TableRecordImpl<Table1Record> {
-		public Table1Record(RecordMetaData metaData, Table<Table1Record> table) {
-			super(metaData, table);
+		public Table1Record() {
+			super(TABLE1);
 		}
 	}
 	public static class Table2Record extends TableRecordImpl<Table2Record> {
-		public Table2Record(RecordMetaData metaData, Table<Table2Record> table) {
-			super(metaData, table);
+		public Table2Record() {
+			super(TABLE2);
 		}
 	}
 	public static class Table3Record extends TableRecordImpl<Table3Record> {
-		public Table3Record(RecordMetaData metaData, Table<Table3Record> table) {
-			super(metaData, table);
+		public Table3Record() {
+			super(TABLE3);
 		}
 	}
 

@@ -59,6 +59,10 @@ public class RecordImpl implements Record {
         this.values = new LinkedHashMap<Field<?>, Value<?>>();
     }
 
+    RecordMetaData getMetaData() {
+        return metaData;
+    }
+
     @Override
     public final FieldList getFields() {
         return metaData.getFields();

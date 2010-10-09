@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.Tables;
 
@@ -184,7 +185,15 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 		return getValue(Tables.COMMIT_ACTION);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public TablesRecord(RecordMetaData metaData) {
-		super(metaData, Tables.TABLES);
+		this();
+	}
+
+	public TablesRecord() {
+		super(Tables.TABLES);
 	}
 }

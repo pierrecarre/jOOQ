@@ -11,6 +11,7 @@ import java.util.List;
 import org.jooq.RecordMetaData;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Create;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -103,7 +104,15 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 		return getValue(TBook.PUBLISHED_IN);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public TBookRecord(RecordMetaData metaData) {
-		super(metaData, TBook.T_BOOK);
+		this();
+	}
+
+	public TBookRecord() {
+		super(TBook.T_BOOK);
 	}
 }

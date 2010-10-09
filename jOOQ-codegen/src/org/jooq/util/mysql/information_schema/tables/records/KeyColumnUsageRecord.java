@@ -5,6 +5,7 @@ package org.jooq.util.mysql.information_schema.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 
@@ -184,7 +185,15 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 		return getValue(KeyColumnUsage.REFERENCED_COLUMN_NAME);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public KeyColumnUsageRecord(RecordMetaData metaData) {
-		super(metaData, KeyColumnUsage.KEY_COLUMN_USAGE);
+		this();
+	}
+
+	public KeyColumnUsageRecord() {
+		super(KeyColumnUsage.KEY_COLUMN_USAGE);
 	}
 }

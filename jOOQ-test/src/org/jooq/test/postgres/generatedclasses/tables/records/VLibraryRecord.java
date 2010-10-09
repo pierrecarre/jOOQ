@@ -5,6 +5,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.VLibrary;
 
@@ -44,7 +45,15 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 		return getValue(VLibrary.TITLE);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public VLibraryRecord(RecordMetaData metaData) {
-		super(metaData, VLibrary.V_LIBRARY);
+		this();
+	}
+
+	public VLibraryRecord() {
+		super(VLibrary.V_LIBRARY);
 	}
 }

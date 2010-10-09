@@ -33,12 +33,14 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
@@ -68,6 +70,11 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
     @Override
     public FieldList getFields() {
         return fields;
+    }
+
+    @Override
+    public TableList getTables() {
+        return new TableListImpl(Collections.singletonList(this));
     }
 
     @Override

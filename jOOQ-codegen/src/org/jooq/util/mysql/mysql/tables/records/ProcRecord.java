@@ -7,6 +7,7 @@ package org.jooq.util.mysql.mysql.tables.records;
 import java.sql.Timestamp;
 
 import org.jooq.RecordMetaData;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.mysql.tables.Proc;
 
@@ -300,7 +301,15 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 		return getValue(Proc.BODY_UTF8);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public ProcRecord(RecordMetaData metaData) {
-		super(metaData, Proc.PROC);
+		this();
+	}
+
+	public ProcRecord() {
+		super(Proc.PROC);
 	}
 }

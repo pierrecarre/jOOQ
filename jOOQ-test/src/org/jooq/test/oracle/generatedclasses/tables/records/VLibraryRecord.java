@@ -45,6 +45,6 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 	}
 
 	public VLibraryRecord(RecordMetaData metaData) {
-		super(metaData, VLibrary.V_LIBRARY);
+		super(VLibrary.V_LIBRARY);
 	}
 }

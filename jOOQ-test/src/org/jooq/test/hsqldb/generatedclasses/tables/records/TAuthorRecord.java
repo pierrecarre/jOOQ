@@ -12,6 +12,7 @@ import java.util.List;
 import org.jooq.RecordMetaData;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Create;
+import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.hsqldb.generatedclasses.tables.TAuthor;
 import org.jooq.test.hsqldb.generatedclasses.tables.TBook;
@@ -111,7 +112,15 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
+	/**
+	 * This constructor has no effect, as a {@link TableFieldImpl} will always
+	 * use its underlying table as a RecordMetaData descriptor
+	 */
 	public TAuthorRecord(RecordMetaData metaData) {
-		super(metaData, TAuthor.T_AUTHOR);
+		this();
+	}
+
+	public TAuthorRecord() {
+		super(TAuthor.T_AUTHOR);
 	}
 }

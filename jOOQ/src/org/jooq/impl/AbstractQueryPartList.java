@@ -52,7 +52,7 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
         this(null);
     }
 
-    AbstractQueryPartList(List<T> wrappedList) {
+    AbstractQueryPartList(List<? extends T> wrappedList) {
         if (wrappedList != null) {
             addAll(wrappedList);
         }
