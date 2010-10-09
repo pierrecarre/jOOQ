@@ -35,10 +35,10 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface QueryProvider<T extends Query> {
+public interface QueryProvider<Q extends Query> {
 
 	/**
 	 * Reveal the inner representation of this Select statement.
 	 */
-	T getQuery();
+	Q getQuery();
 }
