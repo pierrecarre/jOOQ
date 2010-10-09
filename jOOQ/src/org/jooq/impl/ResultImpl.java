@@ -41,7 +41,6 @@ import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.Result;
-import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
@@ -64,11 +63,6 @@ class ResultImpl<R extends Record> implements Result<R> {
     @Override
     public FieldList getFields() {
         return meta.getFields();
-    }
-
-    @Override
-    public TableList getTables() {
-        return meta.getTables();
     }
 
     @Override

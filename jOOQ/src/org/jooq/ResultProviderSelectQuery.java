@@ -215,7 +215,6 @@ extends ResultProviderQuery<R>,
     /**
      * All tables from which this query selects (from and join parts)
      */
-    @Override
     TableList getTables();
 
     /**

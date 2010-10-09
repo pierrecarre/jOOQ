@@ -44,9 +44,4 @@ public interface RecordMetaData extends Serializable {
      */
     FieldList getFields();
 
-    /**
-     * @return The tables from which this record is read
-     */
-    TableList getTables();
-
 }

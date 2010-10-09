@@ -38,7 +38,6 @@ import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.RecordMetaData;
-import org.jooq.TableList;
 import org.jooq.Value;
 
 /**
@@ -66,11 +65,6 @@ public class RecordImpl implements Record {
     @Override
     public final FieldList getFields() {
         return metaData.getFields();
-    }
-
-    @Override
-    public final TableList getTables() {
-        return metaData.getTables();
     }
 
     @SuppressWarnings("unchecked")
