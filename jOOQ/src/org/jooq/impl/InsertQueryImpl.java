@@ -41,47 +41,47 @@ import org.jooq.Table;
  */
 class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-	private static final long serialVersionUID = 4466005417945353842L;
+    private static final long serialVersionUID = 4466005417945353842L;
 
-	InsertQueryImpl(Table<R> into) {
-		super(into);
-	}
+    InsertQueryImpl(Table<R> into) {
+        super(into);
+    }
 
-	InsertQueryImpl(Table<R> into, R record) {
-		super(into, record);
-	}
+    InsertQueryImpl(Table<R> into, R record) {
+        super(into, record);
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getValues0().isEmpty()) {
-			throw new IllegalStateException("Cannot create SQL for empty insert statement");
-		}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        if (getValues0().isEmpty()) {
+            throw new IllegalStateException("Cannot create SQL for empty insert statement");
+        }
 
-		StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-		sb.append("insert into ");
-		sb.append(getInto().toSQLReference(inlineParameters));
-		sb.append(" (");
+        sb.append("insert into ");
+        sb.append(getInto().toSQLReference(inlineParameters));
+        sb.append(" (");
 
-		String separator1 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			sb.append(separator1);
-			sb.append(field.getName());
-			separator1 = ", ";
-		}
+        String separator1 = "";
+        for (Field<?> field : getValues0().keySet()) {
+            sb.append(separator1);
+            sb.append(field.getName());
+            separator1 = ", ";
+        }
 
-		sb.append(") values (");
+        sb.append(") values (");
 
-		String separator2 = "";
-		for (Field<?> field : getValues0().keySet()) {
-			Object value = getValues0().get(field);
+        String separator2 = "";
+        for (Field<?> field : getValues0().keySet()) {
+            Object value = getValues0().get(field);
 
-			sb.append(separator2);
-			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
-			separator2 = ", ";
-		}
-		sb.append(")");
+            sb.append(separator2);
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            separator2 = ", ";
+        }
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

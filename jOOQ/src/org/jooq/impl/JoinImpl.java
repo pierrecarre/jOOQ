@@ -46,79 +46,81 @@ import org.jooq.Table;
  */
 class JoinImpl extends AbstractQueryPart implements Join {
 
-	private static final long serialVersionUID = 2275930365728978050L;
+    private static final long           serialVersionUID = 2275930365728978050L;
 
-	private final Table<?> table;
-	private final ConditionProviderImpl condition;
-	private final JoinType type;
+    private final Table<?>              table;
+    private final ConditionProviderImpl condition;
+    private final JoinType              type;
 
-	JoinImpl(Table<?> table, JoinType type, Condition... conditions) {
-		this.condition = new ConditionProviderImpl();
+    JoinImpl(Table<?> table, JoinType type, Condition... conditions) {
+        this.condition = new ConditionProviderImpl();
 
-		this.table = table;
-		this.condition.addConditions(conditions);
-		this.type = type;
-	}
+        this.table = table;
+        this.condition.addConditions(conditions);
+        this.type = type;
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		result = getTable().bind(stmt, result);
-		if (getCondition() != null) {
-			result = getCondition().bind(stmt, result);
-		}
+        result = getTable().bind(stmt, result);
+        if (getCondition() != null) {
+            result = getCondition().bind(stmt, result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Condition getCondition() {
-		return condition.getWhere();
-	}
+    @Override
+    public Condition getCondition() {
+        return condition.getWhere();
+    }
 
-	@Override
-	public Table<?> getTable() {
-		return table;
-	}
+    @Override
+    public Table<?> getTable() {
+        return table;
+    }
 
-	@Override
-	public JoinType getType() {
-		return type;
-	}
+    @Override
+    public JoinType getType() {
+        return type;
+    }
 
-	@Override
-	public String toSQLDeclaration(boolean inlineParameters) {
-		return toSQL(inlineParameters, true);
-	}
+    @Override
+    public String toSQLDeclaration(boolean inlineParameters) {
+        return toSQL(inlineParameters, true);
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return toSQL(inlineParameters, false);
-	}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return toSQL(inlineParameters, false);
+    }
 
-	private String toSQL(boolean inlineParameters, boolean renderAsDeclaration) {
-		StringBuilder sb = new StringBuilder();
+    private String toSQL(boolean inlineParameters, boolean renderAsDeclaration) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getType().toSQL());
-		sb.append(" ");
+        sb.append(getType().toSQL());
+        sb.append(" ");
 
-		if (renderAsDeclaration) {
-			sb.append(getTable().toSQLDeclaration(inlineParameters));
-		} else {
-			sb.append(getTable().toSQLReference(inlineParameters));
-		}
+        if (renderAsDeclaration) {
+            sb.append(getTable().toSQLDeclaration(inlineParameters));
+        }
+        else {
+            sb.append(getTable().toSQLReference(inlineParameters));
+        }
 
-		if (getCondition() != TRUE_CONDITION) {
-			sb.append(" on ");
+        if (getCondition() != TRUE_CONDITION) {
+            sb.append(" on ");
 
-			if (renderAsDeclaration) {
-				sb.append(getCondition().toSQLDeclaration(inlineParameters));
-			} else {
-				sb.append(getCondition().toSQLReference(inlineParameters));
-			}
-		}
+            if (renderAsDeclaration) {
+                sb.append(getCondition().toSQLDeclaration(inlineParameters));
+            }
+            else {
+                sb.append(getCondition().toSQLReference(inlineParameters));
+            }
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

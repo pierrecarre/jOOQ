@@ -37,28 +37,28 @@ import org.jooq.QueryPart;
 
 abstract class AbstractDelegatingQueryPart extends AbstractQueryPart {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 3382400928803573548L;
-	private final QueryPart delegate;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 3382400928803573548L;
+    private final QueryPart   delegate;
 
-	AbstractDelegatingQueryPart(QueryPart delegate) {
-		this.delegate = delegate;
-	}
+    AbstractDelegatingQueryPart(QueryPart delegate) {
+        this.delegate = delegate;
+    }
 
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		return delegate.toSQLDeclaration(inlineParameters);
-	}
+    @Override
+    public final String toSQLDeclaration(boolean inlineParameters) {
+        return delegate.toSQLDeclaration(inlineParameters);
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return delegate.toSQLReference(inlineParameters);
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return delegate.toSQLReference(inlineParameters);
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return delegate.bind(stmt, initialIndex);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return delegate.bind(stmt, initialIndex);
+    }
 }

@@ -40,18 +40,18 @@ import org.jooq.Condition;
  */
 public class TrueCondition extends AbstractCondition implements Condition {
 
-	private static final long serialVersionUID = 775364624704563687L;
-	public static final TrueCondition TRUE_CONDITION = new TrueCondition();
+    private static final long         serialVersionUID = 775364624704563687L;
+    public static final TrueCondition TRUE_CONDITION   = new TrueCondition();
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) {
+        return initialIndex;
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return "1 = 1";
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return "1 = 1";
+    }
 
-	private TrueCondition() {}
+    private TrueCondition() {}
 }

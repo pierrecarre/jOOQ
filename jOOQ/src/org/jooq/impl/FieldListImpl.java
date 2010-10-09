@@ -41,30 +41,30 @@ import org.jooq.FieldList;
  */
 class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList {
 
-	private static final long serialVersionUID = -6911012275707591576L;
+    private static final long serialVersionUID = -6911012275707591576L;
 
-	FieldListImpl() {
-		super();
-	}
+    FieldListImpl() {
+        super();
+    }
 
-	FieldListImpl(List<Field<?>> wrappedList) {
-		super(wrappedList);
-	}
+    FieldListImpl(List<Field<?>> wrappedList) {
+        super(wrappedList);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final <T> Field<T> getField(Field<T> field) {
-		return (Field<T>) getField(field.getName());
-	}
-	
-	@Override
-	public final Field<?> getField(String name) {
-		for (Field<?> f : this) {
-			if (f.getName() == name) {
-				return f;
-			}
-		}
-		
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> Field<T> getField(Field<T> field) {
+        return (Field<T>) getField(field.getName());
+    }
+
+    @Override
+    public final Field<?> getField(String name) {
+        for (Field<?> f : this) {
+            if (f.getName() == name) {
+                return f;
+            }
+        }
+
+        return null;
+    }
 }

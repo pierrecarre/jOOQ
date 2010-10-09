@@ -48,88 +48,90 @@ import org.jooq.Operator;
  */
 class CombinedConditionImpl extends AbstractCondition implements CombinedCondition {
 
-	private static final long serialVersionUID = -7373293246207052549L;
+    private static final long     serialVersionUID = -7373293246207052549L;
 
-	private final Operator operator;
-	private final List<Condition> conditions;
+    private final Operator        operator;
+    private final List<Condition> conditions;
 
-	CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
-		if (operator == null) {
-			throw new IllegalArgumentException("The argument 'operator' must not be null");
-		}
-		if (conditions == null) {
-			throw new IllegalArgumentException("The argument 'conditions' must not be null");
-		}
-		for (Condition condition : conditions) {
-			if (condition == null) {
-				throw new IllegalArgumentException("The argument 'conditions' must contain null");
-			}
-		}
+    CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
+        if (operator == null) {
+            throw new IllegalArgumentException("The argument 'operator' must not be null");
+        }
+        if (conditions == null) {
+            throw new IllegalArgumentException("The argument 'conditions' must not be null");
+        }
+        for (Condition condition : conditions) {
+            if (condition == null) {
+                throw new IllegalArgumentException("The argument 'conditions' must contain null");
+            }
+        }
 
-		this.operator = operator;
-		this.conditions = new ArrayList<Condition>();
+        this.operator = operator;
+        this.conditions = new ArrayList<Condition>();
 
-		init(operator, conditions);
-	}
+        init(operator, conditions);
+    }
 
-	private void init(Operator operator, Collection<Condition> conditions) {
-		for (Condition condition : conditions) {
-			if (condition instanceof CombinedCondition) {
-				CombinedCondition combinedCondition = (CombinedCondition) condition;
-				if (combinedCondition.getOperator() == operator) {
-					this.conditions.addAll(combinedCondition.getConditions());
-				} else {
-					this.conditions.add(condition);
-				}
-			} else {
-				this.conditions.add(condition);
-			}
-		}
-	}
+    private void init(Operator operator, Collection<Condition> conditions) {
+        for (Condition condition : conditions) {
+            if (condition instanceof CombinedCondition) {
+                CombinedCondition combinedCondition = (CombinedCondition) condition;
+                if (combinedCondition.getOperator() == operator) {
+                    this.conditions.addAll(combinedCondition.getConditions());
+                }
+                else {
+                    this.conditions.add(condition);
+                }
+            }
+            else {
+                this.conditions.add(condition);
+            }
+        }
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		for (Condition condition : getConditions()) {
-			result = condition.bind(stmt, result);
-		}
+        for (Condition condition : getConditions()) {
+            result = condition.bind(stmt, result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public List<Condition> getConditions() {
-		return conditions;
-	}
+    @Override
+    public List<Condition> getConditions() {
+        return conditions;
+    }
 
-	@Override
-	public Operator getOperator() {
-		return operator;
-	}
+    @Override
+    public Operator getOperator() {
+        return operator;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getConditions().isEmpty()) {
-			return TRUE_CONDITION.toSQLReference(inlineParameters);
-		}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        if (getConditions().isEmpty()) {
+            return TRUE_CONDITION.toSQLReference(inlineParameters);
+        }
 
-		if (getConditions().size() == 1) {
-			return conditions.get(0).toSQLReference(inlineParameters);
-		}
+        if (getConditions().size() == 1) {
+            return conditions.get(0).toSQLReference(inlineParameters);
+        }
 
-		StringBuilder sb = new StringBuilder();
-		String operator = " " + getOperator().name().toLowerCase() + " ";
-		String separator = "";
+        StringBuilder sb = new StringBuilder();
+        String operator = " " + getOperator().name().toLowerCase() + " ";
+        String separator = "";
 
-		sb.append("(");
-		for (Condition condition : getConditions()) {
-			sb.append(separator);
-			sb.append(condition.toSQLReference(inlineParameters));
-			separator = operator;
-		}
-		sb.append(")");
+        sb.append("(");
+        for (Condition condition : getConditions()) {
+            sb.append(separator);
+            sb.append(condition.toSQLReference(inlineParameters));
+            separator = operator;
+        }
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

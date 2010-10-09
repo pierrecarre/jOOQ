@@ -35,47 +35,47 @@ import java.sql.SQLException;
 
 class PlainSQLCondition extends AbstractCondition {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -7661748411414898501L;
-	private final String sql;
-	private final Object[] bindings;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -7661748411414898501L;
+    private final String      sql;
+    private final Object[]    bindings;
 
-	PlainSQLCondition(String sql, Object[] bindings) {
-		this.sql = sql;
-		this.bindings = (bindings == null) ? new Object[0] : bindings;
+    PlainSQLCondition(String sql, Object[] bindings) {
+        this.sql = sql;
+        this.bindings = (bindings == null) ? new Object[0] : bindings;
 
-		// This comparison is a bit awkward, and probably not very precise...
-		if (StringUtils.countMatches(sql, "?") != this.bindings.length) {
-			throw new IllegalArgumentException(
-					"The number of bind variables must match the number of bindings. " +
-					"SQL = [" + sql + "], bindings.length = " + bindings.length);
-		}
-	}
+        // This comparison is a bit awkward, and probably not very precise...
+        if (StringUtils.countMatches(sql, "?") != this.bindings.length) {
+            throw new IllegalArgumentException(
+                "The number of bind variables must match the number of bindings. " +
+                "SQL = [" + sql + "], bindings.length = " + bindings.length);
+        }
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		String result = sql;
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        String result = sql;
 
-		if (inlineParameters) {
-			for (Object binding : bindings) {
-				result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(binding, inlineParameters));
-			}
-		}
+        if (inlineParameters) {
+            for (Object binding : bindings) {
+                result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(binding, inlineParameters));
+            }
+        }
 
-		// We have no control over the plain SQL content, hence we MUST put it in
-		// parentheses to ensure correct semantics
-		return "(" + result + ")";
-	}
+        // We have no control over the plain SQL content, hence we MUST put it
+        // in parentheses to ensure correct semantics
+        return "(" + result + ")";
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		for (Object binding : bindings) {
-			Class<?> type = (binding == null) ? Object.class : binding.getClass();
-			bind(stmt, initialIndex++, type, binding);
-		}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        for (Object binding : bindings) {
+            Class<?> type = (binding == null) ? Object.class : binding.getClass();
+            bind(stmt, initialIndex++, type, binding);
+        }
 
-		return initialIndex;
-	}
+        return initialIndex;
+    }
 }

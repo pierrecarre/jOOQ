@@ -35,7 +35,6 @@ import org.jooq.RecordMetaData;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
-
 /**
  * A record implementation for a record originating from a single table
  *
@@ -43,21 +42,21 @@ import org.jooq.TableRecord;
  */
 public class TableRecordImpl<R extends Record> extends RecordImpl implements TableRecord<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -4613985511514503387L;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -4613985511514503387L;
 
-	private final Table<R> table;
+    private final Table<R>    table;
 
-	public TableRecordImpl(RecordMetaData metaData, Table<R> table) {
-		super(metaData);
+    public TableRecordImpl(RecordMetaData metaData, Table<R> table) {
+        super(metaData);
 
-		this.table = table;
-	}
+        this.table = table;
+    }
 
-	@Override
-	public Table<R> getTable() {
-		return table;
-	}
+    @Override
+    public Table<R> getTable() {
+        return table;
+    }
 }

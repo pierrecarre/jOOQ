@@ -45,92 +45,93 @@ import org.jooq.NamedQueryPart;
  */
 class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 
-	private static final long serialVersionUID = 347252741712134044L;
+    private static final long          serialVersionUID = 347252741712134044L;
 
-	private final List<NamedQueryPart> arguments;
+    private final List<NamedQueryPart> arguments;
 
-	FunctionImpl(String name, Class<? extends T> type, NamedQueryPart... arguments) {
-		super (name, type);
+    FunctionImpl(String name, Class<? extends T> type, NamedQueryPart... arguments) {
+        super(name, type);
 
-		this.arguments = Arrays.asList(arguments);
-	}
+        this.arguments = Arrays.asList(arguments);
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getName());
-		sb.append(getArgumentListDelimiterStart());
+        sb.append(getName());
+        sb.append(getArgumentListDelimiterStart());
 
-		String separator = "";
-		if (arguments.isEmpty()) {
-			sb.append(toSQLEmptyFields(inlineParameters));
-		} else {
-			for (NamedQueryPart field : arguments) {
-				sb.append(separator);
-				sb.append(toSQLField(field, inlineParameters));
+        String separator = "";
+        if (arguments.isEmpty()) {
+            sb.append(toSQLEmptyFields(inlineParameters));
+        }
+        else {
+            for (NamedQueryPart field : arguments) {
+                sb.append(separator);
+                sb.append(toSQLField(field, inlineParameters));
 
-				separator = ", ";
-			}
-		}
+                separator = ", ";
+            }
+        }
 
-		sb.append(getArgumentListDelimiterEnd());
+        sb.append(getArgumentListDelimiterEnd());
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	private String getArgumentListDelimiterStart() {
-		switch (Configuration.getInstance().getDialect()) {
-		case ORACLE: // No break
-		case HSQLDB: // No break
-		case POSTGRES:
+    private String getArgumentListDelimiterStart() {
+        switch (Configuration.getInstance().getDialect()) {
+            case ORACLE: // No break
+            case HSQLDB: // No break
+            case POSTGRES:
 
-			// Oracle empty argument lists do not have parentheses ()
-			if (arguments.isEmpty()) {
-				return "";
-			}
-		}
+                // Oracle empty argument lists do not have parentheses ()
+                if (arguments.isEmpty()) {
+                    return "";
+                }
+        }
 
-		// So far, only MySQL has empty parentheses ()
-		return "(";
-	}
+        // So far, only MySQL has empty parentheses ()
+        return "(";
+    }
 
-	private String getArgumentListDelimiterEnd() {
-		switch (Configuration.getInstance().getDialect()) {
-		case ORACLE: // No break
-		case HSQLDB: // No break
-		case POSTGRES:
+    private String getArgumentListDelimiterEnd() {
+        switch (Configuration.getInstance().getDialect()) {
+            case ORACLE: // No break
+            case HSQLDB: // No break
+            case POSTGRES:
 
-			// Oracle empty argument lists do not have parentheses ()
-			if (arguments.isEmpty()) {
-				return "";
-			}
-		}
+                // Oracle empty argument lists do not have parentheses ()
+                if (arguments.isEmpty()) {
+                    return "";
+                }
+        }
 
-		// So far, only MySQL has empty parentheses ()
-		return ")";
-	}
+        // So far, only MySQL has empty parentheses ()
+        return ")";
+    }
 
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		return field.toSQLReference(inlineParameters);
-	}
+    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        return field.toSQLReference(inlineParameters);
+    }
 
-	protected String toSQLEmptyFields(boolean inlineParameters) {
-		return "";
-	}
+    protected String toSQLEmptyFields(boolean inlineParameters) {
+        return "";
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = super.bind(stmt, initialIndex);
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = super.bind(stmt, initialIndex);
 
-		for (NamedQueryPart field : getFields()) {
-			result = field.bind(stmt, result);
-		}
+        for (NamedQueryPart field : getFields()) {
+            result = field.bind(stmt, result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected final List<NamedQueryPart> getFields() {
-		return arguments;
-	}
+    protected final List<NamedQueryPart> getFields() {
+        return arguments;
+    }
 }

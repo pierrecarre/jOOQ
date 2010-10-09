@@ -43,34 +43,34 @@ import org.jooq.ResultProviderQuery;
  */
 class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCondition {
 
-	private static final long serialVersionUID = 5678338161136603292L;
-	private final ResultProviderQuery<?> query;
-	private final ExistsOperator operator;
+    private static final long            serialVersionUID = 5678338161136603292L;
+    private final ResultProviderQuery<?> query;
+    private final ExistsOperator         operator;
 
-	SelectQueryAsExistsCondition(ResultProviderQuery<?> query, ExistsOperator operator) {
-		this.query = query;
-		this.operator = operator;
-	}
+    SelectQueryAsExistsCondition(ResultProviderQuery<?> query, ExistsOperator operator) {
+        this.query = query;
+        this.operator = operator;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(operator.toSQL());
-		sb.append(" (");
-		sb.append(query.toSQLReference(inlineParameters));
-		sb.append(")");
+        sb.append(operator.toSQL());
+        sb.append(" (");
+        sb.append(query.toSQLReference(inlineParameters));
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return query.bind(stmt, initialIndex);
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return query.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public ExistsOperator getOperator() {
-		return operator;
-	}
+    @Override
+    public ExistsOperator getOperator() {
+        return operator;
+    }
 }

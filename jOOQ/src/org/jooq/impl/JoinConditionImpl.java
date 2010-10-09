@@ -43,52 +43,52 @@ import org.jooq.JoinCondition;
  */
 class JoinConditionImpl<T> extends AbstractCondition implements JoinCondition<T> {
 
-	private static final long serialVersionUID = -747240442279619486L;
+    private static final long serialVersionUID = -747240442279619486L;
 
-	private final Field<T> field1;
-	private final Field<T> field2;
-	private final Comparator comparator;
+    private final Field<T>    field1;
+    private final Field<T>    field2;
+    private final Comparator  comparator;
 
-	JoinConditionImpl(Field<T> field1, Field<T> field2) {
-		this(field1, field2, Comparator.EQUALS);
-	}
+    JoinConditionImpl(Field<T> field1, Field<T> field2) {
+        this(field1, field2, Comparator.EQUALS);
+    }
 
-	JoinConditionImpl(Field<T> field1, Field<T> field2, Comparator comparator) {
-		this.field1 = field1;
-		this.field2 = field2;
-		this.comparator = comparator;
-	}
+    JoinConditionImpl(Field<T> field1, Field<T> field2, Comparator comparator) {
+        this.field1 = field1;
+        this.field2 = field2;
+        this.comparator = comparator;
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		result = getField1().bind(stmt, result);
-		result = getField2().bind(stmt, result);
+        result = getField1().bind(stmt, result);
+        result = getField2().bind(stmt, result);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Field<T> getField1() {
-		return field1;
-	}
+    @Override
+    public Field<T> getField1() {
+        return field1;
+    }
 
-	@Override
-	public Field<T> getField2() {
-		return field2;
-	}
+    @Override
+    public Field<T> getField2() {
+        return field2;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getField1().toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(comparator.toSQL());
-		sb.append(" ");
-		sb.append(getField2().toSQLReference(inlineParameters));
+        sb.append(getField1().toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(comparator.toSQL());
+        sb.append(" ");
+        sb.append(getField2().toSQLReference(inlineParameters));
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

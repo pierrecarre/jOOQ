@@ -49,68 +49,68 @@ import org.jooq.Table;
  */
 abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery<R> implements StoreQuery<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 6864591335823160569L;
+    /**
+     * Generated UID
+     */
+    private static final long           serialVersionUID = 6864591335823160569L;
 
-	private final Table<R> into;
-	private final Map<Field<?>, Object> values;
+    private final Table<R>              into;
+    private final Map<Field<?>, Object> values;
 
-	AbstractStoreQuery(Table<R> into) {
-		this.into = into;
-		this.values = new LinkedHashMap<Field<?>, Object>();
-	}
+    AbstractStoreQuery(Table<R> into) {
+        this.into = into;
+        this.values = new LinkedHashMap<Field<?>, Object>();
+    }
 
-	AbstractStoreQuery(Table<R> into, R record) {
-		this(into);
+    AbstractStoreQuery(Table<R> into, R record) {
+        this(into);
 
-		setRecord(record);
-	}
+        setRecord(record);
+    }
 
-	@Override
-	public final Table<R> getInto() {
-		return into;
-	}
+    @Override
+    public final Table<R> getInto() {
+        return into;
+    }
 
-	@Override
-	public final Map<Field<?>, ?> getValues() {
-		return Collections.unmodifiableMap(getValues0());
-	}
+    @Override
+    public final Map<Field<?>, ?> getValues() {
+        return Collections.unmodifiableMap(getValues0());
+    }
 
-	protected final Map<Field<?>, Object> getValues0() {
-		return values;
-	}
+    protected final Map<Field<?>, Object> getValues0() {
+        return values;
+    }
 
-	@Override
-	public final void setRecord(R record) {
-		for (Field<?> field : record.getFields()) {
-			getValues0().put(field, record.getValue(field));
-		}
-	}
+    @Override
+    public final void setRecord(R record) {
+        for (Field<?> field : record.getFields()) {
+            getValues0().put(field, record.getValue(field));
+        }
+    }
 
-	@Override
-	public final <T> void addValue(Field<T> field, T value) {
-		getValues0().put(field, value);
-	}
+    @Override
+    public final <T> void addValue(Field<T> field, T value) {
+        getValues0().put(field, value);
+    }
 
-	@Override
-	public final void addValues(Map<Field<?>, ?> values) {
-		for (Entry<Field<?>, ?> value : values.entrySet()) {
-			getValues0().put(value.getKey(), value.getValue());
-		}
-	}
+    @Override
+    public final void addValues(Map<Field<?>, ?> values) {
+        for (Entry<Field<?>, ?> value : values.entrySet()) {
+            getValues0().put(value.getKey(), value.getValue());
+        }
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		result = getInto().bind(stmt, result);
-		for (Field<?> field : getValues0().keySet()) {
-			result = field.bind(stmt, result);
-			bind(stmt, result++, field, getValues0().get(field));
-		}
+        result = getInto().bind(stmt, result);
+        for (Field<?> field : getValues0().keySet()) {
+            result = field.bind(stmt, result);
+            bind(stmt, result++, field, getValues0().get(field));
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

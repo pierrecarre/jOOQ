@@ -42,36 +42,36 @@ import org.jooq.Field;
  */
 class FieldAlias<T> extends FieldImpl<T> implements Field<T>, AliasProvider<Field<T>> {
 
-	private static final long serialVersionUID = -85277321749681553L;
-	private final AliasProviderImpl<Field<T>> aliasProvider;
+    private static final long                 serialVersionUID = -85277321749681553L;
+    private final AliasProviderImpl<Field<T>> aliasProvider;
 
-	FieldAlias(Field<T> field, String alias) {
-		this(field, alias, false);
-	}
+    FieldAlias(Field<T> field, String alias) {
+        this(field, alias, false);
+    }
 
-	FieldAlias(Field<T> field, String alias, boolean wrapInParentheses) {
-		super(alias, field.getType());
+    FieldAlias(Field<T> field, String alias, boolean wrapInParentheses) {
+        super(alias, field.getType());
 
-		this.aliasProvider = new AliasProviderImpl<Field<T>>(field, alias, wrapInParentheses);
-	}
+        this.aliasProvider = new AliasProviderImpl<Field<T>>(field, alias, wrapInParentheses);
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return aliasProvider.toSQLReference(inlineParameters);
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return aliasProvider.toSQLReference(inlineParameters);
+    }
 
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		return aliasProvider.toSQLDeclaration(inlineParameters);
-	}
+    @Override
+    public final String toSQLDeclaration(boolean inlineParameters) {
+        return aliasProvider.toSQLDeclaration(inlineParameters);
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return aliasProvider.bind(stmt, initialIndex);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return aliasProvider.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public final Field<T> as(String alias) {
-		return aliasProvider.as(alias);
-	}
+    @Override
+    public final Field<T> as(String alias) {
+        return aliasProvider.as(alias);
+    }
 }

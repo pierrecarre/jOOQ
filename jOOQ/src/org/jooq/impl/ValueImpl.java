@@ -34,67 +34,67 @@ import org.jooq.Value;
 
 class ValueImpl<T> implements Value<T> {
 
-	private T value;
-	private boolean isChanged;
+    private T       value;
+    private boolean isChanged;
 
-	ValueImpl(T value) {
-		this.value = value;
-	}
+    ValueImpl(T value) {
+        this.value = value;
+    }
 
-	@Override
-	public T getValue() {
-		return value;
-	}
+    @Override
+    public T getValue() {
+        return value;
+    }
 
-	@Override
-	public T getValue(T defaultValue) {
-		return value != null ? value : defaultValue;
-	}
+    @Override
+    public T getValue(T defaultValue) {
+        return value != null ? value : defaultValue;
+    }
 
-	@Override
-	public void setValue(T value) {
-		if (this.value == null) {
-			this.isChanged = value != null;
-		}
+    @Override
+    public void setValue(T value) {
+        if (this.value == null) {
+            this.isChanged = value != null;
+        }
 
-		else {
-			this.isChanged = !this.value.equals(value);
-		}
+        else {
+            this.isChanged = !this.value.equals(value);
+        }
 
-		this.value = value;
-	}
+        this.value = value;
+    }
 
-	@Override
-	public boolean isChanged() {
-		return isChanged;
-	}
+    @Override
+    public boolean isChanged() {
+        return isChanged;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Value<?>) {
-			Value<?> other = (Value<?>) obj;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Value<?>) {
+            Value<?> other = (Value<?>) obj;
 
-			if (value == null) {
-				return other.getValue() == null;
-			}
+            if (value == null) {
+                return other.getValue() == null;
+            }
 
-			return value.equals(other.getValue());
-		}
+            return value.equals(other.getValue());
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		if (value == null) {
-			return 0;
-		}
+    @Override
+    public int hashCode() {
+        if (value == null) {
+            return 0;
+        }
 
-		return value.hashCode();
-	}
+        return value.hashCode();
+    }
 
-	@Override
-	public String toString() {
-		return "ValueImpl [" + value + "]";
-	}
+    @Override
+    public String toString() {
+        return "ValueImpl [" + value + "]";
+    }
 }

@@ -41,18 +41,18 @@ import org.jooq.JoinList;
  */
 class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
 
-	private static final long serialVersionUID = -8180029905491753071L;
+    private static final long serialVersionUID = -8180029905491753071L;
 
-	JoinListImpl() {
-		super();
-	}
+    JoinListImpl() {
+        super();
+    }
 
-	JoinListImpl(List<Join> wrappedList) {
-		super(wrappedList);
-	}
+    JoinListImpl(List<Join> wrappedList) {
+        super(wrappedList);
+    }
 
-	@Override
-	protected String getListSeparator() {
-		return "";
-	}
+    @Override
+    protected String getListSeparator() {
+        return "";
+    }
 }

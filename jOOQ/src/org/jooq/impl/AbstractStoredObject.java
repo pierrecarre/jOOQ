@@ -48,87 +48,88 @@ import org.jooq.StoredObject;
  */
 abstract class AbstractStoredObject extends AbstractNamedQueryPart implements StoredObject {
 
-	private static final long serialVersionUID = 5478305057107861491L;
+    private static final long               serialVersionUID = 5478305057107861491L;
 
-	private final List<Parameter<?>> inParameters;
-	private final Map<Parameter<?>, Object> inValues;
+    private final List<Parameter<?>>        inParameters;
+    private final Map<Parameter<?>, Object> inValues;
 
-	AbstractStoredObject(String name) {
-		super(name);
+    AbstractStoredObject(String name) {
+        super(name);
 
-		this.inParameters = new ArrayList<Parameter<?>>();
-		this.inValues = new HashMap<Parameter<?>, Object>();
-	}
+        this.inParameters = new ArrayList<Parameter<?>>();
+        this.inValues = new HashMap<Parameter<?>, Object>();
+    }
 
-	@Override
-	public final int execute(DataSource source) throws SQLException {
-		return execute(source.getConnection());
-	}
+    @Override
+    public final int execute(DataSource source) throws SQLException {
+        return execute(source.getConnection());
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		for (Parameter<?> parameter : getParameters()) {
-			bind(stmt, result++, parameter, inValues.get(parameter));
-		}
+        for (Parameter<?> parameter : getParameters()) {
+            bind(stmt, result++, parameter, inValues.get(parameter));
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(toSQLPrefix());
-		sb.append(" ");
-		sb.append(getName());
-		sb.append("(");
+        sb.append(toSQLPrefix());
+        sb.append(" ");
+        sb.append(getName());
+        sb.append("(");
 
-		String separator = "";
-		for (Parameter<?> parameter : getParameters()) {
-			sb.append(separator);
+        String separator = "";
+        for (Parameter<?> parameter : getParameters()) {
+            sb.append(separator);
 
-			if (inlineParameters && getInValues().containsKey(parameter)) {
-				FieldTypeHelper.toSQL(getInValues().get(parameter), inlineParameters, parameter);
-			} else {
-				sb.append("?");
-			}
+            if (inlineParameters && getInValues().containsKey(parameter)) {
+                FieldTypeHelper.toSQL(getInValues().get(parameter), inlineParameters, parameter);
+            }
+            else {
+                sb.append("?");
+            }
 
-			separator = ", ";
-		}
+            separator = ", ";
+        }
 
-		sb.append(")");
-		String postFix = toSQLPostFix();
+        sb.append(")");
+        String postFix = toSQLPostFix();
 
-		if (postFix != null && postFix.length() > 0) {
-			sb.append(" ");
-			sb.append(postFix);
-		}
+        if (postFix != null && postFix.length() > 0) {
+            sb.append(" ");
+            sb.append(postFix);
+        }
 
-		return sb.toString();
+        return sb.toString();
 
-	}
+    }
 
-	protected abstract String toSQLPrefix();
+    protected abstract String toSQLPrefix();
 
-	protected String toSQLPostFix() {
-		return null;
-	}
+    protected String toSQLPostFix() {
+        return null;
+    }
 
-	protected final Map<Parameter<?>, Object> getInValues() {
-		return inValues;
-	}
+    protected final Map<Parameter<?>, Object> getInValues() {
+        return inValues;
+    }
 
-	protected <T> void setValue(Parameter<T> parameter, T value) {
-		inValues.put(parameter, value);
-	}
+    protected <T> void setValue(Parameter<T> parameter, T value) {
+        inValues.put(parameter, value);
+    }
 
-	public final List<Parameter<?>> getInParameters() {
-		return inParameters;
-	}
+    public final List<Parameter<?>> getInParameters() {
+        return inParameters;
+    }
 
-	protected void addInParameter(Parameter<?> parameter) {
-		inParameters.add(parameter);
-	}
+    protected void addInParameter(Parameter<?> parameter) {
+        inParameters.add(parameter);
+    }
 }

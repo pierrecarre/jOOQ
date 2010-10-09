@@ -37,22 +37,22 @@ import org.jooq.NamedTypeProviderQueryPart;
  * @author Lukas Eder
  */
 abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryPart implements
-		NamedTypeProviderQueryPart<T> {
+    NamedTypeProviderQueryPart<T> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -9087742153758783482L;
-	private final Class<? extends T> type;
+    /**
+     * Generated UID
+     */
+    private static final long        serialVersionUID = -9087742153758783482L;
+    private final Class<? extends T> type;
 
-	AbstractNamedTypeProviderQueryPart(String name, Class<? extends T> type) {
-		super(name);
+    AbstractNamedTypeProviderQueryPart(String name, Class<? extends T> type) {
+        super(name);
 
-		this.type = type;
-	}
+        this.type = type;
+    }
 
-	@Override
-	public final Class<? extends T> getType() {
-		return type;
-	}
+    @Override
+    public final Class<? extends T> getType() {
+        return type;
+    }
 }

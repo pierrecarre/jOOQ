@@ -45,34 +45,34 @@ import org.jooq.Record;
  */
 abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
 
-	private static final long serialVersionUID = -8046199737354507547L;
+    private static final long serialVersionUID = -8046199737354507547L;
 
-	AbstractQuery() {
-	}
+    AbstractQuery() {}
 
-	@Override
-	public final int execute(DataSource source) throws SQLException {
-		return execute(source.getConnection());
-	}
+    @Override
+    public final int execute(DataSource source) throws SQLException {
+        return execute(source.getConnection());
+    }
 
-	@Override
-	public final int execute(Connection connection) throws SQLException {
-		PreparedStatement statement = null;
+    @Override
+    public final int execute(Connection connection) throws SQLException {
+        PreparedStatement statement = null;
 
-		try {
-			statement = connection.prepareStatement(toSQLReference());
-			bind(statement);
-			return execute(statement);
-		} finally {
-			SQLUtils.safeClose(statement);
-		}
-	}
+        try {
+            statement = connection.prepareStatement(toSQLReference());
+            bind(statement);
+            return execute(statement);
+        }
+        finally {
+            SQLUtils.safeClose(statement);
+        }
+    }
 
-	/**
-	 * Default implementation for query execution. Subclasses may override this
-	 * method.
-	 */
-	protected int execute(PreparedStatement statement) throws SQLException {
-		return statement.executeUpdate();
-	}
+    /**
+     * Default implementation for query execution. Subclasses may override this
+     * method.
+     */
+    protected int execute(PreparedStatement statement) throws SQLException {
+        return statement.executeUpdate();
+    }
 }

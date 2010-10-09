@@ -48,83 +48,83 @@ import org.jooq.Table;
  */
 class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Record> implements SelectQuery {
 
-	private static final long serialVersionUID = 1555503854543561285L;
+    private static final long serialVersionUID = 1555503854543561285L;
 
-	SelectQueryImpl() {
-		this(null);
-	}
+    SelectQueryImpl() {
+        this(null);
+    }
 
-	SelectQueryImpl(Table<Record> from) {
-		super(from);
-	}
+    SelectQueryImpl(Table<Record> from) {
+        super(from);
+    }
 
-	@Override
-	final SelectQuery createNew(Table<Record> from) {
-		return new SelectQueryImpl(from);
-	}
+    @Override
+    final SelectQuery createNew(Table<Record> from) {
+        return new SelectQueryImpl(from);
+    }
 
-	@Override
-	public void addFrom(Collection<Table<?>> from) {
-		getFrom().addAll(from);
-	}
+    @Override
+    public void addFrom(Collection<Table<?>> from) {
+        getFrom().addAll(from);
+    }
 
-	@Override
-	public final void addFrom(Table<?>... from) {
-		addFrom(Arrays.asList(from));
-	}
+    @Override
+    public final void addFrom(Table<?>... from) {
+        addFrom(Arrays.asList(from));
+    }
 
-	@Override
-	public void addGroupBy(Collection<Field<?>> fields) {
-		getGroupBy().addAll(fields);
-	}
+    @Override
+    public void addGroupBy(Collection<Field<?>> fields) {
+        getGroupBy().addAll(fields);
+    }
 
-	@Override
-	public final void addGroupBy(Field<?>... fields) {
-		addGroupBy(Arrays.asList(fields));
-	}
+    @Override
+    public final void addGroupBy(Field<?>... fields) {
+        addGroupBy(Arrays.asList(fields));
+    }
 
-	@Override
-	public final <T> void addHaving(Field<T> field, T value) {
-		addHaving(field, value, Comparator.EQUALS);
-	}
+    @Override
+    public final <T> void addHaving(Field<T> field, T value) {
+        addHaving(field, value, Comparator.EQUALS);
+    }
 
-	@Override
-	public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
-		addHaving(Create.compareCondition(field, value, comparator));
-	}
+    @Override
+    public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
+        addHaving(Create.compareCondition(field, value, comparator));
+    }
 
-	@Override
-	public final void addHaving(Condition... conditions) {
-		addHaving(Arrays.asList(conditions));
-	}
+    @Override
+    public final void addHaving(Condition... conditions) {
+        addHaving(Arrays.asList(conditions));
+    }
 
-	@Override
-	public void addHaving(Collection<Condition> conditions) {
-		getHaving().addConditions(conditions);
-	}
+    @Override
+    public void addHaving(Collection<Condition> conditions) {
+        getHaving().addConditions(conditions);
+    }
 
-	@Override
-	public void addJoin(Join join) {
-		getJoin().add(join);
-	}
+    @Override
+    public void addJoin(Join join) {
+        getJoin().add(join);
+    }
 
-	@Override
-	public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
-		addJoin(Create.join(table, field1, field2));
-	}
+    @Override
+    public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
+        addJoin(Create.join(table, field1, field2));
+    }
 
-	@Override
-	public final void addJoin(Table<?> table, Condition... conditions) {
-		addJoin(Create.join(table, conditions));
-	}
+    @Override
+    public final void addJoin(Table<?> table, Condition... conditions) {
+        addJoin(Create.join(table, conditions));
+    }
 
-	@Override
-	public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
-		addJoin(Create.join(table, type, field1, field2));
-	}
+    @Override
+    public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
+        addJoin(Create.join(table, type, field1, field2));
+    }
 
-	@Override
-	public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
-		addJoin(Create.join(table, type, conditions));
-	}
+    @Override
+    public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
+        addJoin(Create.join(table, type, conditions));
+    }
 }

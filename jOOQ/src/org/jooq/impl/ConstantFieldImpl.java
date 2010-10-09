@@ -38,15 +38,15 @@ import org.jooq.Field;
  */
 class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
 
-	private static final long serialVersionUID = 6807729087019209084L;
+    private static final long serialVersionUID = 6807729087019209084L;
 
-	@SuppressWarnings("unchecked")
-	ConstantFieldImpl(T value) {
-		super(value.toString(), (Class<? extends T>) value.getClass());
-	}
+    @SuppressWarnings("unchecked")
+    ConstantFieldImpl(T value) {
+        super(value.toString(), (Class<? extends T>) value.getClass());
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return "'" + super.toSQLReference(inlineParameters) + "'";
-	}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return "'" + super.toSQLReference(inlineParameters) + "'";
+    }
 }

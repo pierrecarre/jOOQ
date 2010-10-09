@@ -46,71 +46,71 @@ import org.jooq.Value;
  */
 public class RecordImpl implements Record {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -6052512608911220404L;
+    /**
+     * Generated UID
+     */
+    private static final long             serialVersionUID = -6052512608911220404L;
 
-	private final RecordMetaData metaData;
-	private final Map<Field<?>, Value<?>> values;
+    private final RecordMetaData          metaData;
+    private final Map<Field<?>, Value<?>> values;
 
-	public RecordImpl(RecordMetaData metaData) {
-		this.metaData = metaData;
-		this.values = new LinkedHashMap<Field<?>, Value<?>>();
-	}
+    public RecordImpl(RecordMetaData metaData) {
+        this.metaData = metaData;
+        this.values = new LinkedHashMap<Field<?>, Value<?>>();
+    }
 
-	@Override
-	public final FieldList getFields() {
-		return metaData.getFields();
-	}
+    @Override
+    public final FieldList getFields() {
+        return metaData.getFields();
+    }
 
-	@Override
-	public final TableList getTables() {
-		return metaData.getTables();
-	}
+    @Override
+    public final TableList getTables() {
+        return metaData.getTables();
+    }
 
-	@SuppressWarnings("unchecked")
-	protected final <T> Value<T> getValue0(Field<T> field) {
-		if (!values.containsKey(field)) {
-			throw new IllegalArgumentException("Field " + field + " is not contained in Record");
-		}
+    @SuppressWarnings("unchecked")
+    protected final <T> Value<T> getValue0(Field<T> field) {
+        if (!values.containsKey(field)) {
+            throw new IllegalArgumentException("Field " + field + " is not contained in Record");
+        }
 
-		return (Value<T>) values.get(field);
-	}
+        return (Value<T>) values.get(field);
+    }
 
-	@Override
-	public final <T> T getValue(Field<T> field) throws IllegalArgumentException {
-		return getValue0(field).getValue();
-	}
+    @Override
+    public final <T> T getValue(Field<T> field) throws IllegalArgumentException {
+        return getValue0(field).getValue();
+    }
 
-	@Override
-	public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
-		return getValue0(field).getValue(defaultValue);
-	}
+    @Override
+    public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
+        return getValue0(field).getValue(defaultValue);
+    }
 
-	@Override
-	public final <T> void setValue(Field<T> field, T value) {
-		getValue0(field).setValue(value);
-	}
+    @Override
+    public final <T> void setValue(Field<T> field, T value) {
+        getValue0(field).setValue(value);
+    }
 
-	@Override
-	public final <T> void setValue(Field<T> field, Value<T> value) {
-		values.put(field, value);
-	}
+    @Override
+    public final <T> void setValue(Field<T> field, Value<T> value) {
+        values.put(field, value);
+    }
 
-	@Override
-	public final boolean hasChangedValues() {
-		for (Value<?> value : values.values()) {
-			if (value.isChanged()) {
-				return true;
-			}
-		}
+    @Override
+    public final boolean hasChangedValues() {
+        for (Value<?> value : values.values()) {
+            if (value.isChanged()) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public final String toString() {
-		return getClass().getSimpleName() + " [values=" + values + "]";
-	}
+    @Override
+    public final String toString() {
+        return getClass().getSimpleName() + " [values=" + values + "]";
+    }
 }

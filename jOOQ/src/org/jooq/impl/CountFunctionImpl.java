@@ -39,35 +39,35 @@ import org.jooq.NamedQueryPart;
  */
 class CountFunctionImpl extends FunctionImpl<Integer> {
 
-	private static final long serialVersionUID = 4685583105296376461L;
+    private static final long serialVersionUID = 4685583105296376461L;
 
-	private final boolean distinct;
+    private final boolean     distinct;
 
-	CountFunctionImpl() {
-		super("count", Integer.class);
+    CountFunctionImpl() {
+        super("count", Integer.class);
 
-		this.distinct = false;
-	}
+        this.distinct = false;
+    }
 
-	CountFunctionImpl(Field<?> field, boolean distinct) {
-		super("count", Integer.class, field);
+    CountFunctionImpl(Field<?> field, boolean distinct) {
+        super("count", Integer.class, field);
 
-		this.distinct = distinct;
-	}
+        this.distinct = distinct;
+    }
 
-	@Override
-	protected String toSQLEmptyFields(boolean inlineParameters) {
-		return "*";
-	}
+    @Override
+    protected String toSQLEmptyFields(boolean inlineParameters) {
+        return "*";
+    }
 
-	@Override
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		String result = super.toSQLField(field, inlineParameters);
+    @Override
+    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        String result = super.toSQLField(field, inlineParameters);
 
-		if (distinct) {
-			result = "distinct " + result;
-		}
+        if (distinct) {
+            result = "distinct " + result;
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

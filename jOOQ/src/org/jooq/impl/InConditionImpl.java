@@ -44,60 +44,60 @@ import org.jooq.InOperator;
  */
 class InConditionImpl<T> extends AbstractCondition implements InCondition<T> {
 
-	private static final long serialVersionUID = -1653924248576930761L;
-	private final Field<T> field;
-	private final Set<T> values;
-	private final InOperator operator;
+    private static final long serialVersionUID = -1653924248576930761L;
+    private final Field<T>    field;
+    private final Set<T>      values;
+    private final InOperator  operator;
 
-	InConditionImpl(Field<T> field, Set<T> values) {
-		this(field, values, InOperator.IN);
-	}
+    InConditionImpl(Field<T> field, Set<T> values) {
+        this(field, values, InOperator.IN);
+    }
 
-	InConditionImpl(Field<T> field, Set<T> values, InOperator operator) {
-		this.field = field;
-		this.values = values;
-		this.operator = operator;
-	}
+    InConditionImpl(Field<T> field, Set<T> values, InOperator operator) {
+        this.field = field;
+        this.values = values;
+        this.operator = operator;
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		for (T value : values) {
-			bind(stmt, result++, field, value);
-		}
+        for (T value : values) {
+            bind(stmt, result++, field, value);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public Set<T> getValues() {
-		return values;
-	}
+    @Override
+    public Set<T> getValues() {
+        return values;
+    }
 
-	@Override
-	public Field<T> getField() {
-		return field;
-	}
+    @Override
+    public Field<T> getField() {
+        return field;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getField().toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(operator.toSQL());
-		sb.append(" (");
+        sb.append(getField().toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(operator.toSQL());
+        sb.append(" (");
 
-		String separator = "";
-		for (T value : getValues()) {
-			sb.append(separator);
-			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, getField()));
-			separator = ", ";
-		}
+        String separator = "";
+        for (T value : getValues()) {
+            sb.append(separator);
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, getField()));
+            separator = ", ";
+        }
 
-		sb.append(")");
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

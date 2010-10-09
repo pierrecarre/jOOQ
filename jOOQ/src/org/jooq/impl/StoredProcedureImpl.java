@@ -47,79 +47,80 @@ import org.jooq.StoredProcedure;
  */
 public class StoredProcedureImpl extends AbstractStoredObject implements StoredProcedure {
 
-	private static final long serialVersionUID = -8046199737354507547L;
+    private static final long         serialVersionUID = -8046199737354507547L;
 
-	private final List<Parameter<?>> allParameters;
-	private final List<Parameter<?>> outParameters;
+    private final List<Parameter<?>>  allParameters;
+    private final List<Parameter<?>>  outParameters;
 
-	private Map<Parameter<?>, Object> results;
+    private Map<Parameter<?>, Object> results;
 
-	public StoredProcedureImpl(String name) {
-		super(name);
-		this.allParameters = new ArrayList<Parameter<?>>();
-		this.outParameters = new ArrayList<Parameter<?>>();
-	}
+    public StoredProcedureImpl(String name) {
+        super(name);
+        this.allParameters = new ArrayList<Parameter<?>>();
+        this.outParameters = new ArrayList<Parameter<?>>();
+    }
 
-	@Override
-	public final int execute(Connection connection) throws SQLException {
-		CallableStatement statement = null;
+    @Override
+    public final int execute(Connection connection) throws SQLException {
+        CallableStatement statement = null;
 
-		try {
-			results = new HashMap<Parameter<?>, Object>();
+        try {
+            results = new HashMap<Parameter<?>, Object>();
 
-			statement = connection.prepareCall(toSQLReference());
-			bind(statement);
+            statement = connection.prepareCall(toSQLReference());
+            bind(statement);
 
-			for (Parameter<?> field : getOutParameters()) {
-				statement.registerOutParameter(field.getName(), FieldTypeHelper.getSQLType(field));
-			}
+            for (Parameter<?> field : getOutParameters()) {
+                statement.registerOutParameter(field.getName(), FieldTypeHelper.getSQLType(field));
+            }
 
-			statement.execute();
+            statement.execute();
 
-			for (Parameter<?> field : getOutParameters()) {
-				results.put(field, FieldTypeHelper.getFromStatement(statement, field));
-			}
+            for (Parameter<?> field : getOutParameters()) {
+                results.put(field, FieldTypeHelper.getFromStatement(statement, field));
+            }
 
-			return 0;
-		} finally {
-			SQLUtils.safeClose(statement);
-		}
-	}
+            return 0;
+        }
+        finally {
+            SQLUtils.safeClose(statement);
+        }
+    }
 
-	@Override
-	protected String toSQLPrefix() {
-		return "call";
-	}
+    @Override
+    protected String toSQLPrefix() {
+        return "call";
+    }
 
-	@Override
-	public final List<Parameter<?>> getOutParameters() {
-		return outParameters;
-	}
+    @Override
+    public final List<Parameter<?>> getOutParameters() {
+        return outParameters;
+    }
 
-	@Override
-	public final List<Parameter<?>> getParameters() {
-		return allParameters;
-	}
+    @Override
+    public final List<Parameter<?>> getParameters() {
+        return allParameters;
+    }
 
-	protected void addInOutParameter(Parameter<?> parameter) {
-		super.addInParameter(parameter);
-		outParameters.add(parameter);
-		allParameters.add(parameter);
-	}
+    protected void addInOutParameter(Parameter<?> parameter) {
+        super.addInParameter(parameter);
+        outParameters.add(parameter);
+        allParameters.add(parameter);
+    }
 
-	@Override
-	protected void addInParameter(Parameter<?> parameter) {
-		super.addInParameter(parameter);
-		allParameters.add(parameter);
-	}
+    @Override
+    protected void addInParameter(Parameter<?> parameter) {
+        super.addInParameter(parameter);
+        allParameters.add(parameter);
+    }
 
-	protected void addOutParameter(Parameter<?> parameter) {
-		outParameters.add(parameter);
-		allParameters.add(parameter);
-	}
+    protected void addOutParameter(Parameter<?> parameter) {
+        outParameters.add(parameter);
+        allParameters.add(parameter);
+    }
 
-	@SuppressWarnings("unchecked")
-	protected <T> T getValue(Parameter<T> parameter) {
-		return (T) results.get(parameter);
-	}
+    @SuppressWarnings("unchecked")
+    protected <T> T getValue(Parameter<T> parameter) {
+        return (T) results.get(parameter);
+    }
 }

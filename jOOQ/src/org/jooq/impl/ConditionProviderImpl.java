@@ -48,87 +48,88 @@ import org.jooq.Field;
  */
 class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider {
 
-	private static final long serialVersionUID = 6073328960551062973L;
+    private static final long serialVersionUID = 6073328960551062973L;
 
-	private Condition condition;
+    private Condition         condition;
 
-	ConditionProviderImpl() {
-	}
+    ConditionProviderImpl() {}
 
-	Condition getWhere() {
-		if (condition == null) {
-			return TRUE_CONDITION;
-		}
+    Condition getWhere() {
+        if (condition == null) {
+            return TRUE_CONDITION;
+        }
 
-		return condition;
-	}
+        return condition;
+    }
 
-	@Override
-	public void addConditions(Condition... conditions) {
-		addConditions(Arrays.asList(conditions));
-	}
+    @Override
+    public void addConditions(Condition... conditions) {
+        addConditions(Arrays.asList(conditions));
+    }
 
-	@Override
-	public void addConditions(Collection<Condition> conditions) {
-		if (!conditions.isEmpty()) {
-			Condition c;
+    @Override
+    public void addConditions(Collection<Condition> conditions) {
+        if (!conditions.isEmpty()) {
+            Condition c;
 
-			if (conditions.size() == 1) {
-				c = conditions.iterator().next();
-			} else {
-				c = Create.combinedCondition(conditions);
-			}
+            if (conditions.size() == 1) {
+                c = conditions.iterator().next();
+            }
+            else {
+                c = Create.combinedCondition(conditions);
+            }
 
-			if (getWhere() == TRUE_CONDITION) {
-				condition = c;
-			} else {
-				condition = Create.combinedCondition(getWhere(), c);
-			}
-		}
-	}
+            if (getWhere() == TRUE_CONDITION) {
+                condition = c;
+            }
+            else {
+                condition = Create.combinedCondition(getWhere(), c);
+            }
+        }
+    }
 
-	@Override
-	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		addConditions(Create.betweenCondition(field, minValue, maxValue));
-	}
+    @Override
+    public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+        addConditions(Create.betweenCondition(field, minValue, maxValue));
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-		addConditions(Create.compareCondition(field, value, comparator));
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+        addConditions(Create.compareCondition(field, value, comparator));
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value) {
-		addConditions(Create.compareCondition(field, value));
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value) {
+        addConditions(Create.compareCondition(field, value));
+    }
 
-	@Override
-	public void addNullCondition(Field<?> field) {
-		addConditions(Create.nullCondition(field));
-	}
+    @Override
+    public void addNullCondition(Field<?> field) {
+        addConditions(Create.nullCondition(field));
+    }
 
-	@Override
-	public void addNotNullCondition(Field<?> field) {
-		addConditions(Create.notNullCondition(field));
-	}
+    @Override
+    public void addNotNullCondition(Field<?> field) {
+        addConditions(Create.notNullCondition(field));
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, Collection<T> values) {
-		addConditions(Create.inCondition(field, values));
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, Collection<T> values) {
+        addConditions(Create.inCondition(field, values));
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, T... values) {
-		addConditions(Create.inCondition(field, values));
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, T... values) {
+        addConditions(Create.inCondition(field, values));
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return getWhere().bind(stmt, initialIndex);
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return getWhere().bind(stmt, initialIndex);
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return getWhere().toSQLReference(inlineParameters);
-	}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return getWhere().toSQLReference(inlineParameters);
+    }
 }

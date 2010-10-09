@@ -38,24 +38,24 @@ import org.jooq.NamedQueryPart;
  */
 abstract class AbstractNamedQueryPart extends AbstractQueryPart implements NamedQueryPart {
 
-	private static final long serialVersionUID = -4496974591205380167L;
-	private final String name;
+    private static final long serialVersionUID = -4496974591205380167L;
+    private final String      name;
 
-	AbstractNamedQueryPart(String name) {
-		this.name = name;
-	}
+    AbstractNamedQueryPart(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public final String getName() {
-		return name;
-	}
+    @Override
+    public final String getName() {
+        return name;
+    }
 
-	@Override
-	public final int compareTo(NamedQueryPart that) {
-		if (that == null) {
-			return 1;
-		}
+    @Override
+    public final int compareTo(NamedQueryPart that) {
+        if (that == null) {
+            return 1;
+        }
 
-		return getName().compareToIgnoreCase(that.getName());
-	}
+        return getName().compareToIgnoreCase(that.getName());
+    }
 }

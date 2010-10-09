@@ -38,9 +38,9 @@ import org.jooq.Field;
  */
 class StringFunction extends FunctionImpl<String> {
 
-	private static final long serialVersionUID = 615059858963131774L;
+    private static final long serialVersionUID = 615059858963131774L;
 
-	StringFunction(String name, Field<?>... fields) {
-		super(name, String.class, fields);
-	}
+    StringFunction(String name, Field<?>... fields) {
+        super(name, String.class, fields);
+    }
 }

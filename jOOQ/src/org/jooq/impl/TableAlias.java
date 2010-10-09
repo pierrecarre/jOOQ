@@ -45,63 +45,63 @@ import org.jooq.Table;
  */
 class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, AliasProvider<Table<R>> {
 
-	private static final long serialVersionUID = -8417114874567698325L;
-	private final AliasProviderImpl<Table<R>> aliasProvider;
-	private FieldList aliasedFields;
+    private static final long                 serialVersionUID = -8417114874567698325L;
+    private final AliasProviderImpl<Table<R>> aliasProvider;
+    private FieldList                         aliasedFields;
 
-	TableAlias(Table<R> table, String alias) {
-		this(table, alias, false);
-	}
+    TableAlias(Table<R> table, String alias) {
+        this(table, alias, false);
+    }
 
-	TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
-		super(alias, table.getSchema());
+    TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
+        super(alias, table.getSchema());
 
-		this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
-	}
+        this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return aliasProvider.toSQLReference(inlineParameters);
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return aliasProvider.toSQLReference(inlineParameters);
+    }
 
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		return aliasProvider.toSQLDeclaration(inlineParameters);
-	}
+    @Override
+    public final String toSQLDeclaration(boolean inlineParameters) {
+        return aliasProvider.toSQLDeclaration(inlineParameters);
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return aliasProvider.bind(stmt, initialIndex);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return aliasProvider.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public final Table<R> as(String alias) {
-		return aliasProvider.as(alias);
-	}
+    @Override
+    public final Table<R> as(String alias) {
+        return aliasProvider.as(alias);
+    }
 
-	@Override
-	public FieldList getFields() {
-		if (aliasedFields == null) {
-			aliasedFields = new FieldListImpl();
+    @Override
+    public FieldList getFields() {
+        if (aliasedFields == null) {
+            aliasedFields = new FieldListImpl();
 
-			for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
-				registerTableField(field);
-			}
-		}
+            for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
+                registerTableField(field);
+            }
+        }
 
-		return aliasedFields;
-	}
+        return aliasedFields;
+    }
 
-	/**
-	 * Register a field for this table alias
-	 */
-	private <T> void registerTableField(Field<T> field) {
-		// Instanciating a TableFieldImpl will add the field to this
-		new TableFieldImpl<R, T>(field.getName(), field.getType(), this);
-	}
+    /**
+     * Register a field for this table alias
+     */
+    private <T> void registerTableField(Field<T> field) {
+        // Instanciating a TableFieldImpl will add the field to this
+        new TableFieldImpl<R, T>(field.getName(), field.getType(), this);
+    }
 
-	@Override
-	public Class<? extends R> getRecordType() {
-		return aliasProvider.getAliasProvider().getRecordType();
-	}
+    @Override
+    public Class<? extends R> getRecordType() {
+        return aliasProvider.getAliasProvider().getRecordType();
+    }
 }

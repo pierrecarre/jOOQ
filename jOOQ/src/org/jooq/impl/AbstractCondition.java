@@ -39,21 +39,20 @@ import org.jooq.Operator;
  */
 abstract class AbstractCondition extends AbstractQueryPart implements Condition {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -6683692251799468624L;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -6683692251799468624L;
 
-	AbstractCondition() {
-	}
+    AbstractCondition() {}
 
-	@Override
-	public CombinedCondition and(Condition other) {
-		return Create.combinedCondition(this, other);
-	}
+    @Override
+    public CombinedCondition and(Condition other) {
+        return Create.combinedCondition(this, other);
+    }
 
-	@Override
-	public CombinedCondition or(Condition other) {
-		return Create.combinedCondition(Operator.OR, this, other);
-	}
+    @Override
+    public CombinedCondition or(Condition other) {
+        return Create.combinedCondition(Operator.OR, this, other);
+    }
 }

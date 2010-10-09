@@ -44,48 +44,48 @@ import org.jooq.SelectQuery;
  */
 class SelectQueryAsCompareCondition<T> extends AbstractCondition implements CompareCondition<T> {
 
-	private static final long serialVersionUID = -3125318907657091582L;
-	private final SelectQuery query;
-	private final Field<T> field;
+    private static final long serialVersionUID = -3125318907657091582L;
+    private final SelectQuery query;
+    private final Field<T>    field;
 
-	SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
-		this.query = query;
-		this.field = field;
-	}
+    SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
+        this.query = query;
+        this.field = field;
+    }
 
-	@Override
-	public Field<T> getField() {
-		return field;
-	}
+    @Override
+    public Field<T> getField() {
+        return field;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(field.toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(getComparator().toSQL());
-		sb.append(" (");
-		sb.append(query.toSQLReference(inlineParameters));
-		sb.append(")");
+        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(getComparator().toSQL());
+        sb.append(" (");
+        sb.append(query.toSQLReference(inlineParameters));
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		initialIndex = field.bind(stmt, initialIndex);
-		return query.bind(stmt, initialIndex);
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        initialIndex = field.bind(stmt, initialIndex);
+        return query.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public Comparator getComparator() {
-		return Comparator.EQUALS;
-	}
+    @Override
+    public Comparator getComparator() {
+        return Comparator.EQUALS;
+    }
 
-	@Override
-	public T getValue() {
-		throw new UnsupportedOperationException("Cannot retrieve values of ResultProviderQueryAsCompareCondition");
-	}
+    @Override
+    public T getValue() {
+        throw new UnsupportedOperationException("Cannot retrieve values of ResultProviderQueryAsCompareCondition");
+    }
 
 }

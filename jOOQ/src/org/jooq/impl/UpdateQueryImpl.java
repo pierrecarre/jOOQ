@@ -49,108 +49,108 @@ import org.jooq.UpdateQuery;
  */
 class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
-	private static final long serialVersionUID = -660460731970074719L;
-	private final ConditionProviderImpl condition;
+    private static final long           serialVersionUID = -660460731970074719L;
+    private final ConditionProviderImpl condition;
 
-	UpdateQueryImpl(Table<R> table) {
-		super(table);
+    UpdateQueryImpl(Table<R> table) {
+        super(table);
 
-		this.condition = new ConditionProviderImpl();
-	}
+        this.condition = new ConditionProviderImpl();
+    }
 
-	UpdateQueryImpl(Table<R> table, R record) {
-		super(table, record);
+    UpdateQueryImpl(Table<R> table, R record) {
+        super(table, record);
 
-		this.condition = new ConditionProviderImpl();
-	}
+        this.condition = new ConditionProviderImpl();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		result = super.bind(stmt, initialIndex);
-		result = condition.bind(stmt, result);
+        result = super.bind(stmt, initialIndex);
+        result = condition.bind(stmt, result);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public void addConditions(Collection<Condition> conditions) {
-		condition.addConditions(conditions);
-	}
+    @Override
+    public void addConditions(Collection<Condition> conditions) {
+        condition.addConditions(conditions);
+    }
 
-	@Override
-	public void addConditions(Condition... conditions) {
-		condition.addConditions(conditions);
-	}
+    @Override
+    public void addConditions(Condition... conditions) {
+        condition.addConditions(conditions);
+    }
 
-	@Override
-	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		condition.addBetweenCondition(field, minValue, maxValue);
-	}
+    @Override
+    public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+        condition.addBetweenCondition(field, minValue, maxValue);
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-		condition.addCompareCondition(field, value, comparator);
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+        condition.addCompareCondition(field, value, comparator);
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value) {
-		condition.addCompareCondition(field, value);
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value) {
+        condition.addCompareCondition(field, value);
+    }
 
-	@Override
-	public void addNullCondition(Field<?> field) {
-		condition.addNullCondition(field);
-	}
+    @Override
+    public void addNullCondition(Field<?> field) {
+        condition.addNullCondition(field);
+    }
 
-	@Override
-	public void addNotNullCondition(Field<?> field) {
-		condition.addNotNullCondition(field);
-	}
+    @Override
+    public void addNotNullCondition(Field<?> field) {
+        condition.addNotNullCondition(field);
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, Collection<T> values) {
-		condition.addInCondition(field, values);
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, Collection<T> values) {
+        condition.addInCondition(field, values);
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, T... values) {
-		condition.addInCondition(field, values);
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, T... values) {
+        condition.addInCondition(field, values);
+    }
 
-	final Condition getWhere() {
-		return condition.getWhere();
-	}
+    final Condition getWhere() {
+        return condition.getWhere();
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getValues0().isEmpty()) {
-			throw new IllegalStateException("Cannot create SQL for empty insert statement");
-		}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        if (getValues0().isEmpty()) {
+            throw new IllegalStateException("Cannot create SQL for empty insert statement");
+        }
 
-		StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-		sb.append("update ");
-		sb.append(getInto().toSQLReference(inlineParameters));
-		sb.append(" set ");
+        sb.append("update ");
+        sb.append(getInto().toSQLReference(inlineParameters));
+        sb.append(" set ");
 
-		String separator = "";
-		for (Field<?> field : getValues0().keySet()) {
-			Object value = getValues0().get(field);
+        String separator = "";
+        for (Field<?> field : getValues0().keySet()) {
+            Object value = getValues0().get(field);
 
-			sb.append(separator);
-			sb.append(field.getName());
-			sb.append(" = ");
-			sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
-			separator = ", ";
-		}
+            sb.append(separator);
+            sb.append(field.getName());
+            sb.append(" = ");
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            separator = ", ";
+        }
 
-		if (getWhere() != TRUE_CONDITION) {
-			sb.append(" where ");
-			sb.append(getWhere().toSQLReference(inlineParameters));
-		}
+        if (getWhere() != TRUE_CONDITION) {
+            sb.append(" where ");
+            sb.append(getWhere().toSQLReference(inlineParameters));
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

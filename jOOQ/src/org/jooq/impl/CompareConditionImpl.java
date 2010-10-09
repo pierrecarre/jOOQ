@@ -46,71 +46,73 @@ import org.jooq.Field;
  */
 class CompareConditionImpl<T> extends AbstractCondition implements CompareCondition<T> {
 
-	private static final long serialVersionUID = -6456616674773879690L;
+    private static final long serialVersionUID = -6456616674773879690L;
 
-	private final Field<T> field;
-	private final T value;
-	private final Comparator comparator;
+    private final Field<T>    field;
+    private final T           value;
+    private final Comparator  comparator;
 
-	CompareConditionImpl(Field<T> field, T value, Comparator comparator) {
-		if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {
-			throw new IllegalArgumentException("Cannot compare null with " + comparator);
-		}
+    CompareConditionImpl(Field<T> field, T value, Comparator comparator) {
+        if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {
+            throw new IllegalArgumentException("Cannot compare null with " + comparator);
+        }
 
-		this.field = field;
-		this.value = value;
-		this.comparator = comparator;
-	}
+        this.field = field;
+        this.value = value;
+        this.comparator = comparator;
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		if (getValue() != null) {
-			bind(stmt, initialIndex, getField(), getValue());
-			return initialIndex + 1;
-		} else {
-			return initialIndex;
-		}
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        if (getValue() != null) {
+            bind(stmt, initialIndex, getField(), getValue());
+            return initialIndex + 1;
+        }
+        else {
+            return initialIndex;
+        }
+    }
 
-	@Override
-	public Comparator getComparator() {
-		return comparator;
-	}
+    @Override
+    public Comparator getComparator() {
+        return comparator;
+    }
 
-	@Override
-	public T getValue() {
-		return value;
-	}
+    @Override
+    public T getValue() {
+        return value;
+    }
 
-	@Override
-	public Field<T> getField() {
-		return field;
-	}
+    @Override
+    public Field<T> getField() {
+        return field;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getField().toSQLReference(inlineParameters));
-		sb.append(" ");
-		if (getValue() != null) {
-			sb.append(getComparator().toSQL());
-			sb.append(" ");
-			sb.append(FieldTypeHelper.toSQL(getValue(), inlineParameters, getField()));
-		} else {
-			switch (getComparator()) {
-			case EQUALS:
-				sb.append("is null");
-				break;
-			case NOT_EQUALS:
-				sb.append("is not null");
-				break;
+        sb.append(getField().toSQLReference(inlineParameters));
+        sb.append(" ");
+        if (getValue() != null) {
+            sb.append(getComparator().toSQL());
+            sb.append(" ");
+            sb.append(FieldTypeHelper.toSQL(getValue(), inlineParameters, getField()));
+        }
+        else {
+            switch (getComparator()) {
+                case EQUALS:
+                    sb.append("is null");
+                    break;
+                case NOT_EQUALS:
+                    sb.append("is not null");
+                    break;
 
-			default:
-				throw new IllegalStateException("Cannot compare null with " + getComparator());
-			}
-		}
+                default:
+                    throw new IllegalStateException("Cannot compare null with " + getComparator());
+            }
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

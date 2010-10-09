@@ -46,64 +46,65 @@ import org.jooq.StoredFunction;
  */
 public class StoredFunctionImpl<T> extends AbstractStoredObject implements StoredFunction<T> {
 
-	private static final long serialVersionUID = -2938795269169609664L;
+    private static final long        serialVersionUID = -2938795269169609664L;
 
-	private T result;
-	private Field<T> function;
-	private final Class<? extends T> type;
+    private T                        result;
+    private Field<T>                 function;
+    private final Class<? extends T> type;
 
-	public StoredFunctionImpl(String name, Class<? extends T> type) {
-		super(name);
+    public StoredFunctionImpl(String name, Class<? extends T> type) {
+        super(name);
 
-		this.type = type;
-	}
+        this.type = type;
+    }
 
-	@Override
-	public final T getReturnValue() {
-		return result;
-	}
+    @Override
+    public final T getReturnValue() {
+        return result;
+    }
 
-	@Override
-	public Field<T> getFunction() {
-		if (function == null) {
-			function = new FunctionImpl<T>(getName(), type, getParameters().toArray(new Parameter[0]));
-		}
+    @Override
+    public Field<T> getFunction() {
+        if (function == null) {
+            function = new FunctionImpl<T>(getName(), type, getParameters().toArray(new Parameter[0]));
+        }
 
-		return function;
-	}
+        return function;
+    }
 
-	@Override
-	protected String toSQLPrefix() {
-		return "select";
-	}
+    @Override
+    protected String toSQLPrefix() {
+        return "select";
+    }
 
-	@Override
-	protected String toSQLPostFix() {
-		return getName() + " from dual";
-	}
+    @Override
+    protected String toSQLPostFix() {
+        return getName() + " from dual";
+    }
 
-	@Override
-	public int execute(Connection connection) throws SQLException {
-		PreparedStatement statement = null;
-		ResultSet rs = null;
+    @Override
+    public int execute(Connection connection) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
 
-		try {
-			statement = connection.prepareStatement(toSQLReference());
-			bind(statement);
+        try {
+            statement = connection.prepareStatement(toSQLReference());
+            bind(statement);
 
-			rs = statement.executeQuery();
-			if (rs.next()) {
-				result = FieldTypeHelper.getFromResultSet(rs, getFunction());
-			}
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                result = FieldTypeHelper.getFromResultSet(rs, getFunction());
+            }
 
-			return 0;
-		} finally {
-			SQLUtils.safeClose(rs, statement);
-		}
-	}
+            return 0;
+        }
+        finally {
+            SQLUtils.safeClose(rs, statement);
+        }
+    }
 
-	@Override
-	public List<Parameter<?>> getParameters() {
-		return getInParameters();
-	}
+    @Override
+    public List<Parameter<?>> getParameters() {
+        return getInParameters();
+    }
 }

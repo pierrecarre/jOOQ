@@ -53,98 +53,99 @@ import org.jooq.UpdateQuery;
  */
 public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> implements UpdatableRecord<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -1012420583600561579L;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -1012420583600561579L;
 
-	public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable<R> table) {
-		super(metaData, table);
-	}
+    public UpdatableRecordImpl(RecordMetaData metaData, UpdatableTable<R> table) {
+        super(metaData, table);
+    }
 
-	@Override
-	public final UpdatableTable<R> getTable() {
-		return (UpdatableTable<R>) super.getTable();
-	}
+    @Override
+    public final UpdatableTable<R> getTable() {
+        return (UpdatableTable<R>) super.getTable();
+    }
 
-	@Override
-	public final List<TableField<R, ?>> getPrimaryKey() {
-		return getTable().getPrimaryKey();
-	}
+    @Override
+    public final List<TableField<R, ?>> getPrimaryKey() {
+        return getTable().getPrimaryKey();
+    }
 
-	@Override
-	public final void store(Connection con) throws SQLException {
-		boolean executeUpdate = false;
+    @Override
+    public final void store(Connection con) throws SQLException {
+        boolean executeUpdate = false;
 
-		for (TableField<R, ?> field : getPrimaryKey()) {
+        for (TableField<R, ?> field : getPrimaryKey()) {
 
-			// If any primary key value is null or changed, execute an insert
-			if (getValue(field) == null || getValue0(field).isChanged()) {
-				executeUpdate = false;
-				break;
-			}
+            // If any primary key value is null or changed, execute an insert
+            if (getValue(field) == null || getValue0(field).isChanged()) {
+                executeUpdate = false;
+                break;
+            }
 
-			// If primary key values are unchanged, updates are possible
-			else {
-				executeUpdate = true;
-			}
-		}
+            // If primary key values are unchanged, updates are possible
+            else {
+                executeUpdate = true;
+            }
+        }
 
-		if (executeUpdate) {
-			storeUpdate(con);
-		} else {
-			storeInsert(con);
-		}
-	}
+        if (executeUpdate) {
+            storeUpdate(con);
+        }
+        else {
+            storeInsert(con);
+        }
+    }
 
-	private final void storeInsert(Connection con) throws SQLException {
-		InsertQuery<R> insert = Create.insertQuery(getTable());
+    private final void storeInsert(Connection con) throws SQLException {
+        InsertQuery<R> insert = Create.insertQuery(getTable());
 
-		for (Field<?> field : getFields()) {
-			addValue(insert, field);
-		}
+        for (Field<?> field : getFields()) {
+            addValue(insert, field);
+        }
 
-		insert.execute(con);
-	}
+        insert.execute(con);
+    }
 
-	private final void storeUpdate(Connection con) throws SQLException {
-		UpdateQuery<R> update = Create.updateQuery(getTable());
+    private final void storeUpdate(Connection con) throws SQLException {
+        UpdateQuery<R> update = Create.updateQuery(getTable());
 
-		for (Field<?> field : getFields()) {
-			if (getValue0(field).isChanged()) {
-				addValue(update, field);
-			}
-		}
+        for (Field<?> field : getFields()) {
+            if (getValue0(field).isChanged()) {
+                addValue(update, field);
+            }
+        }
 
-		for (Field<?> field : getPrimaryKey()) {
-			addCondition(update, field);
-		}
+        for (Field<?> field : getPrimaryKey()) {
+            addCondition(update, field);
+        }
 
-		update.execute(con);
-	}
+        update.execute(con);
+    }
 
-	@Override
-	public final void delete(Connection con) throws SQLException {
-		DeleteQuery<R> delete = Create.deleteQuery(getTable());
+    @Override
+    public final void delete(Connection con) throws SQLException {
+        DeleteQuery<R> delete = Create.deleteQuery(getTable());
 
-		for (Field<?> field : getPrimaryKey()) {
-			addCondition(delete, field);
-		}
+        for (Field<?> field : getPrimaryKey()) {
+            addCondition(delete, field);
+        }
 
-		delete.execute(con);
-	}
+        delete.execute(con);
+    }
 
-	/**
-	 * Extracted method to ensure generic type safety.
-	 */
-	private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
-		provider.addCompareCondition(field, getValue(field));
-	}
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
+        provider.addCompareCondition(field, getValue(field));
+    }
 
-	/**
-	 * Extracted method to ensure generic type safety.
-	 */
-	private final <T> void addValue(StoreQuery<R> store, Field<T> field) {
-		store.addValue(field, getValue(field));
-	}
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    private final <T> void addValue(StoreQuery<R> store, Field<T> field) {
+        store.addValue(field, getValue(field));
+    }
 }

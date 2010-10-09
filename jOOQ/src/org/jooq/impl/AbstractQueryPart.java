@@ -45,96 +45,111 @@ import org.jooq.QueryPart;
 
 abstract class AbstractQueryPart implements QueryPart {
 
-	private static final long serialVersionUID = 2078114876079493107L;
+    private static final long serialVersionUID = 2078114876079493107L;
 
-	AbstractQueryPart() {
-	}
-	
-	@Override
-	public final String toSQLReference() {
-		return toSQLReference(false);
-	}
+    AbstractQueryPart() {}
 
-	@Override
-	public final String toSQLDeclaration() {
-		return toSQLDeclaration(false);
-	}
+    @Override
+    public final String toSQLReference() {
+        return toSQLReference(false);
+    }
 
-	/**
-	 * The default implementation is the same as that of
-	 * {@link #toSQLReference(boolean)}. Subclasses may override this method.
-	 */
-	@Override
-	public String toSQLDeclaration(boolean inlineParameters) {
-		return toSQLReference(inlineParameters);
-	}
+    @Override
+    public final String toSQLDeclaration() {
+        return toSQLDeclaration(false);
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt) throws SQLException {
-		return bind(stmt, 1);
-	}
+    /**
+     * The default implementation is the same as that of
+     * {@link #toSQLReference(boolean)}. Subclasses may override this method.
+     */
+    @Override
+    public String toSQLDeclaration(boolean inlineParameters) {
+        return toSQLReference(inlineParameters);
+    }
 
-	protected final void bind(PreparedStatement stmt, int index, NamedTypeProviderQueryPart<?> field, Object value) throws SQLException {
-		bind(stmt, index, field.getType(), value);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt) throws SQLException {
+        return bind(stmt, 1);
+    }
 
-	protected final void bind(PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
-		if (value == null) {
-			stmt.setNull(index, FieldTypeHelper.getSQLType(type));
-			return;
-		}
+    protected final void bind(PreparedStatement stmt, int index, NamedTypeProviderQueryPart<?> field, Object value)
+        throws SQLException {
+        bind(stmt, index, field.getType(), value);
+    }
 
-		if (type == Blob.class) {
-			stmt.setBlob(index, (Blob) value);
-		} else if (type == Boolean.class) {
-			stmt.setBoolean(index, (Boolean) value);
-		} else if (type == BigDecimal.class) {
-			stmt.setBigDecimal(index, (BigDecimal) value);
-		} else if (type == Byte.class) {
-			stmt.setByte(index, (Byte) value);
-		} else if (type == byte[].class) {
-			stmt.setBytes(index, (byte[]) value);
-		} else if (type == Clob.class) {
-			stmt.setClob(index, (Clob) value);
-		} else if (type == Date.class) {
-			stmt.setDate(index, (Date) value);
-		} else if (type == Double.class) {
-			stmt.setDouble(index, (Double) value);
-		} else if (type == Float.class) {
-			stmt.setFloat(index, (Float) value);
-		} else if (type == Integer.class) {
-			stmt.setInt(index, (Integer) value);
-		} else if (type == Long.class) {
-			stmt.setLong(index, (Long) value);
-		} else if (type == Short.class) {
-			stmt.setShort(index, (Short) value);
-		} else if (type == String.class) {
-			stmt.setString(index, (String) value);
-		} else if (type == Time.class) {
-			stmt.setTime(index, (Time) value);
-		} else if (type == Timestamp.class) {
-			stmt.setTimestamp(index, (Timestamp) value);
-		} else {
-			stmt.setObject(index, value);
-		}
-	}
+    protected final void bind(PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
+        if (value == null) {
+            stmt.setNull(index, FieldTypeHelper.getSQLType(type));
+            return;
+        }
 
-	@Override
-	public final boolean equals(Object that) {
-		if (that instanceof QueryPart) {
-			return toSQLReference(true).equals(((QueryPart) that).toSQLReference(true));
-		}
+        if (type == Blob.class) {
+            stmt.setBlob(index, (Blob) value);
+        }
+        else if (type == Boolean.class) {
+            stmt.setBoolean(index, (Boolean) value);
+        }
+        else if (type == BigDecimal.class) {
+            stmt.setBigDecimal(index, (BigDecimal) value);
+        }
+        else if (type == Byte.class) {
+            stmt.setByte(index, (Byte) value);
+        }
+        else if (type == byte[].class) {
+            stmt.setBytes(index, (byte[]) value);
+        }
+        else if (type == Clob.class) {
+            stmt.setClob(index, (Clob) value);
+        }
+        else if (type == Date.class) {
+            stmt.setDate(index, (Date) value);
+        }
+        else if (type == Double.class) {
+            stmt.setDouble(index, (Double) value);
+        }
+        else if (type == Float.class) {
+            stmt.setFloat(index, (Float) value);
+        }
+        else if (type == Integer.class) {
+            stmt.setInt(index, (Integer) value);
+        }
+        else if (type == Long.class) {
+            stmt.setLong(index, (Long) value);
+        }
+        else if (type == Short.class) {
+            stmt.setShort(index, (Short) value);
+        }
+        else if (type == String.class) {
+            stmt.setString(index, (String) value);
+        }
+        else if (type == Time.class) {
+            stmt.setTime(index, (Time) value);
+        }
+        else if (type == Timestamp.class) {
+            stmt.setTimestamp(index, (Timestamp) value);
+        }
+        else {
+            stmt.setObject(index, value);
+        }
+    }
 
-		return false;
-	}
+    @Override
+    public final boolean equals(Object that) {
+        if (that instanceof QueryPart) {
+            return toSQLReference(true).equals(((QueryPart) that).toSQLReference(true));
+        }
 
-	@Override
-	public final int hashCode() {
-		return toSQLReference(true).hashCode();
-	}
+        return false;
+    }
 
-	@Override
-	public final String toString() {
-		return toSQLReference(true);
-	}
+    @Override
+    public final int hashCode() {
+        return toSQLReference(true).hashCode();
+    }
+
+    @Override
+    public final String toString() {
+        return toSQLReference(true);
+    }
 }

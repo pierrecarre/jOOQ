@@ -45,67 +45,67 @@ import org.jooq.Table;
  */
 public class TableImpl<R extends Record> extends AbstractNamedQueryPart implements Table<R> {
 
-	private static final long serialVersionUID = 261033315221985068L;
-	private final Schema schema;
-	private final FieldList fields;
+    private static final long serialVersionUID = 261033315221985068L;
+    private final Schema      schema;
+    private final FieldList   fields;
 
-	public TableImpl(String name) {
-		this(name, (Schema) null);
-	}
+    public TableImpl(String name) {
+        this(name, (Schema) null);
+    }
 
-	public TableImpl(String name, Schema schema) {
-		super(name);
+    public TableImpl(String name, Schema schema) {
+        super(name);
 
-		this.schema = schema;
-		this.fields = new FieldListImpl();
-	}
+        this.schema = schema;
+        this.fields = new FieldListImpl();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return initialIndex;
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return initialIndex;
+    }
 
-	@Override
-	public FieldList getFields() {
-		return fields;
-	}
+    @Override
+    public FieldList getFields() {
+        return fields;
+    }
 
-	@Override
-	public final <T> Field<T> getField(Field<T> field) {
-		return getFields().getField(field);
-	}
+    @Override
+    public final <T> Field<T> getField(Field<T> field) {
+        return getFields().getField(field);
+    }
 
-	@Override
-	public final Field<?> getField(String name) {
-		return getFields().getField(name);
-	}
+    @Override
+    public final Field<?> getField(String name) {
+        return getFields().getField(name);
+    }
 
-	@Override
-	public Schema getSchema() {
-		return schema;
-	}
+    @Override
+    public Schema getSchema() {
+        return schema;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (getSchema() != null) {
-			return getSchema().getName() + "." + getName();
-		}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        if (getSchema() != null) {
+            return getSchema().getName() + "." + getName();
+        }
 
-		return getName();
-	}
+        return getName();
+    }
 
-	@Override
-	public Table<R> as(String alias) {
-		return new TableAlias<R>(this, alias);
-	}
+    @Override
+    public Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias);
+    }
 
-	/**
-	 * Subclasses must override this method if they use the generic type
-	 * parameter <R> for other types than {@link Record}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<? extends R> getRecordType() {
-		return (Class<? extends R>) RecordImpl.class;
-	}
+    /**
+     * Subclasses must override this method if they use the generic type
+     * parameter <R> for other types than {@link Record}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends R> getRecordType() {
+        return (Class<? extends R>) RecordImpl.class;
+    }
 }

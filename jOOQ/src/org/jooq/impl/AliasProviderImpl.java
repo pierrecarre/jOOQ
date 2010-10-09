@@ -39,62 +39,61 @@ import org.jooq.AliasProvider;
 /**
  * @author Lukas Eder
  */
-class AliasProviderImpl<T extends AliasProvider<T>>
-	extends AbstractNamedQueryPart
-	implements AliasProvider<T> {
+class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPart implements AliasProvider<T> {
 
-	private static final long serialVersionUID = -2456848365524191614L;
-	private final T aliasProvider;
-	private final String alias;
-	private final boolean wrapInParentheses;
+    private static final long serialVersionUID = -2456848365524191614L;
+    private final T           aliasProvider;
+    private final String      alias;
+    private final boolean     wrapInParentheses;
 
-	AliasProviderImpl(T aliasProvider, String alias) {
-		this(aliasProvider, alias, false);
-	}
+    AliasProviderImpl(T aliasProvider, String alias) {
+        this(aliasProvider, alias, false);
+    }
 
-	AliasProviderImpl(T aliasProvider, String alias, boolean wrapInParentheses) {
-		super(alias);
+    AliasProviderImpl(T aliasProvider, String alias, boolean wrapInParentheses) {
+        super(alias);
 
-		this.aliasProvider = aliasProvider;
-		this.alias = alias;
-		this.wrapInParentheses = wrapInParentheses;
-	}
+        this.aliasProvider = aliasProvider;
+        this.alias = alias;
+        this.wrapInParentheses = wrapInParentheses;
+    }
 
-	protected final T getAliasProvider() {
-		return aliasProvider;
-	}
+    protected final T getAliasProvider() {
+        return aliasProvider;
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return alias;
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return alias;
+    }
 
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public final String toSQLDeclaration(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		if (wrapInParentheses) {
-			sb.append("(");
-		}
+        if (wrapInParentheses) {
+            sb.append("(");
+        }
 
-		sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
+        sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
 
-		if (wrapInParentheses) {
-			sb.append(")");
-		}
+        if (wrapInParentheses) {
+            sb.append(")");
+        }
 
-		sb.append(" ");
-		sb.append(alias);
+        sb.append(" ");
+        sb.append(alias);
 
-		return sb.toString();	}
+        return sb.toString();
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return aliasProvider.bind(stmt, initialIndex);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return aliasProvider.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public final T as(String alias) {
-		return aliasProvider.as(alias);
-	}
+    @Override
+    public final T as(String alias) {
+        return aliasProvider.as(alias);
+    }
 }

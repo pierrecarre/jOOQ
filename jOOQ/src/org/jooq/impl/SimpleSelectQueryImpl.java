@@ -35,24 +35,24 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 
 class SimpleSelectQueryImpl<R extends Record>
-extends AbstractResultProviderSelectQuery<SimpleSelectQuery<R>, R>
-implements SimpleSelectQuery<R> {
+    extends AbstractResultProviderSelectQuery<SimpleSelectQuery<R>, R>
+    implements SimpleSelectQuery<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 3200508777418108686L;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 3200508777418108686L;
 
-	SimpleSelectQueryImpl() {
-		this(null);
-	}
+    SimpleSelectQueryImpl() {
+        this(null);
+    }
 
-	SimpleSelectQueryImpl(Table<R> from) {
-		super(from);
-	}
+    SimpleSelectQueryImpl(Table<R> from) {
+        super(from);
+    }
 
-	@Override
-	final SimpleSelectQuery<R> createNew(Table<R> from) {
-		return new SimpleSelectQueryImpl<R>(from);
-	}
+    @Override
+    final SimpleSelectQuery<R> createNew(Table<R> from) {
+        return new SimpleSelectQueryImpl<R>(from);
+    }
 }

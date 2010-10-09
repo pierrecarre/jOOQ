@@ -45,106 +45,107 @@ import org.jooq.QueryPartList;
  */
 abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPartList<T> {
 
-	private static final long serialVersionUID = -2936922742534009564L;
-	private final List<T> wrappedList = new ArrayList<T>();
+    private static final long serialVersionUID = -2936922742534009564L;
+    private final List<T>     wrappedList      = new ArrayList<T>();
 
-	AbstractQueryPartList() {
-		this(null);
-	}
+    AbstractQueryPartList() {
+        this(null);
+    }
 
-	AbstractQueryPartList(List<T> wrappedList) {
-		if (wrappedList != null) {
-			addAll(wrappedList);
-		}
-	}
+    AbstractQueryPartList(List<T> wrappedList) {
+        if (wrappedList != null) {
+            addAll(wrappedList);
+        }
+    }
 
-	@Override
-	public final T get(int index) {
-		return wrappedList.get(index);
-	}
+    @Override
+    public final T get(int index) {
+        return wrappedList.get(index);
+    }
 
-	@Override
-	public final int size() {
-		return wrappedList.size();
-	}
+    @Override
+    public final int size() {
+        return wrappedList.size();
+    }
 
-	@Override
-	public void add(int index, T element) {
-		wrappedList.add(index, element);
-	}
+    @Override
+    public void add(int index, T element) {
+        wrappedList.add(index, element);
+    }
 
-	@Override
-	public final String toSQLReference() {
-		return toSQLReference(false);
-	}
+    @Override
+    public final String toSQLReference() {
+        return toSQLReference(false);
+    }
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		return toSQL(inlineParameters, false);
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        return toSQL(inlineParameters, false);
+    }
 
-	@Override
-	public final String toSQLDeclaration() {
-		return toSQLDeclaration(false);
-	}
+    @Override
+    public final String toSQLDeclaration() {
+        return toSQLDeclaration(false);
+    }
 
-	@Override
-	public final String toSQLDeclaration(boolean inlineParameters) {
-		return toSQL(inlineParameters, true);
-	}
+    @Override
+    public final String toSQLDeclaration(boolean inlineParameters) {
+        return toSQL(inlineParameters, true);
+    }
 
-	private final String toSQL(boolean inlineParameters, boolean renderAsDeclaration) {
-		if (isEmpty()) {
-			return toSQLEmptyList();
-		}
+    private final String toSQL(boolean inlineParameters, boolean renderAsDeclaration) {
+        if (isEmpty()) {
+            return toSQLEmptyList();
+        }
 
-		StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-		String separator = "";
-		for (T queryPart : this) {
-			sb.append(separator);
+        String separator = "";
+        for (T queryPart : this) {
+            sb.append(separator);
 
-			if (renderAsDeclaration) {
-				sb.append(toSQLDeclaration(queryPart, inlineParameters));
-			} else {
-				sb.append(toSQLReference(queryPart, inlineParameters));
-			}
+            if (renderAsDeclaration) {
+                sb.append(toSQLDeclaration(queryPart, inlineParameters));
+            }
+            else {
+                sb.append(toSQLReference(queryPart, inlineParameters));
+            }
 
-			separator = getListSeparator() + " ";
-		}
+            separator = getListSeparator() + " ";
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	protected String toSQLReference(T queryPart, boolean inlineParameters) {
-		return queryPart.toSQLReference(inlineParameters);
-	}
+    protected String toSQLReference(T queryPart, boolean inlineParameters) {
+        return queryPart.toSQLReference(inlineParameters);
+    }
 
-	protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
-		return queryPart.toSQLDeclaration(inlineParameters);
-	}
+    protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
+        return queryPart.toSQLDeclaration(inlineParameters);
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		for (T queryPart : this) {
-			result = queryPart.bind(stmt, result);
-		}
+        for (T queryPart : this) {
+            result = queryPart.bind(stmt, result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt) throws SQLException {
-		return bind(stmt, 1);
-	}
+    @Override
+    public final int bind(PreparedStatement stmt) throws SQLException {
+        return bind(stmt, 1);
+    }
 
-	protected String toSQLEmptyList() {
-		throw new IllegalStateException("This list does not support generating SQL from empty lists : " + getClass());
-	}
+    protected String toSQLEmptyList() {
+        throw new IllegalStateException("This list does not support generating SQL from empty lists : " + getClass());
+    }
 
-	protected String getListSeparator() {
-		return ",";
-	}
+    protected String getListSeparator() {
+        return ",";
+    }
 }

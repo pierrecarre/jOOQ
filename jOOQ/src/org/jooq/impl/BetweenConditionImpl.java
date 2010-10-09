@@ -42,63 +42,63 @@ import org.jooq.Field;
  */
 class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondition<T> {
 
-	private static final long serialVersionUID = -4666251100802237878L;
+    private static final long serialVersionUID = -4666251100802237878L;
 
-	private final Field<T> field;
-	private final T minValue;
-	private final T maxValue;
+    private final Field<T>    field;
+    private final T           minValue;
+    private final T           maxValue;
 
-	BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
-		if (field == null) {
-			throw new IllegalArgumentException("The argument 'field' must not be null");
-		}
-		if (minValue == null) {
-			throw new IllegalArgumentException("The argument 'minValue' must not be null");
-		}
-		if (maxValue == null) {
-			throw new IllegalArgumentException("The argument 'maxValue' must not be null");
-		}
+    BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
+        if (field == null) {
+            throw new IllegalArgumentException("The argument 'field' must not be null");
+        }
+        if (minValue == null) {
+            throw new IllegalArgumentException("The argument 'minValue' must not be null");
+        }
+        if (maxValue == null) {
+            throw new IllegalArgumentException("The argument 'maxValue' must not be null");
+        }
 
-		this.field = field;
-		this.minValue = minValue;
-		this.maxValue = maxValue;
-	}
+        this.field = field;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		bind(stmt, result++, getField(), getMinValue());
-		bind(stmt, result++, getField(), getMaxValue());
+        bind(stmt, result++, getField(), getMinValue());
+        bind(stmt, result++, getField(), getMaxValue());
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public final T getMaxValue() {
-		return maxValue;
-	}
+    @Override
+    public final T getMaxValue() {
+        return maxValue;
+    }
 
-	@Override
-	public T getMinValue() {
-		return minValue;
-	}
+    @Override
+    public T getMinValue() {
+        return minValue;
+    }
 
-	@Override
-	public Field<T> getField() {
-		return field;
-	}
+    @Override
+    public Field<T> getField() {
+        return field;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getField().toSQLReference(inlineParameters));
-		sb.append(" between ");
-		sb.append(FieldTypeHelper.toSQL(getMinValue(), inlineParameters, getField()));
-		sb.append(" and ");
-		sb.append(FieldTypeHelper.toSQL(getMaxValue(), inlineParameters, getField()));
+        sb.append(getField().toSQLReference(inlineParameters));
+        sb.append(" between ");
+        sb.append(FieldTypeHelper.toSQL(getMinValue(), inlineParameters, getField()));
+        sb.append(" and ");
+        sb.append(FieldTypeHelper.toSQL(getMaxValue(), inlineParameters, getField()));
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

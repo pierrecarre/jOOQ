@@ -47,65 +47,66 @@ import org.jooq.Table;
  */
 class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table<R> {
 
-	private static final long serialVersionUID = 6272398035926615668L;
-	private final List<ResultProviderSelectQuery<?, R>> queries;
-	private final CombineOperator operator;
+    private static final long                           serialVersionUID = 6272398035926615668L;
+    private final List<ResultProviderSelectQuery<?, R>> queries;
+    private final CombineOperator                       operator;
 
-	SelectQueryAsTable(ResultProviderSelectQuery<?, R>... query) {
-		this(CombineOperator.UNION, query);
-	}
+    SelectQueryAsTable(ResultProviderSelectQuery<?, R>... query) {
+        this(CombineOperator.UNION, query);
+    }
 
-	SelectQueryAsTable(CombineOperator operator, ResultProviderSelectQuery<?, R>... query) {
-		super("");
+    SelectQueryAsTable(CombineOperator operator, ResultProviderSelectQuery<?, R>... query) {
+        super("");
 
-		this.operator = operator;
-		this.queries = Arrays.asList(query);
-	}
+        this.operator = operator;
+        this.queries = Arrays.asList(query);
+    }
 
-	@Override
-	public Table<R> as(String alias) {
-		return new TableAlias<R>(this, alias, true);
-	}
+    @Override
+    public Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias, true);
+    }
 
-	@Override
-	public FieldList getFields() {
-		return queries.get(0).getSelect();
-	}
+    @Override
+    public FieldList getFields() {
+        return queries.get(0).getSelect();
+    }
 
-	@Override
-	public Class<? extends R> getRecordType() {
-		return queries.get(0).getRecordType();
-	}
+    @Override
+    public Class<? extends R> getRecordType() {
+        return queries.get(0).getRecordType();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		for (ResultProviderSelectQuery<?, R> query : queries) {
-			initialIndex = query.bind(stmt, initialIndex);
-		}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        for (ResultProviderSelectQuery<?, R> query : queries) {
+            initialIndex = query.bind(stmt, initialIndex);
+        }
 
-		return initialIndex;
-	}
+        return initialIndex;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		if (queries.size() == 1) {
-			return queries.get(0).toSQLReference(inlineParameters);
-		} else {
-			StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        if (queries.size() == 1) {
+            return queries.get(0).toSQLReference(inlineParameters);
+        }
+        else {
+            StringBuilder sb = new StringBuilder();
 
-			String connector = "";
-			sb.append("(");
-			for (ResultProviderSelectQuery<?, R> query : queries) {
-				sb.append(connector);
-				sb.append("(");
-				sb.append(query.toSQLReference(inlineParameters));
-				sb.append(")");
+            String connector = "";
+            sb.append("(");
+            for (ResultProviderSelectQuery<?, R> query : queries) {
+                sb.append(connector);
+                sb.append("(");
+                sb.append(query.toSQLReference(inlineParameters));
+                sb.append(")");
 
-				connector = " " + operator.toSQL() + " ";
-			}
-			sb.append(")");
+                connector = " " + operator.toSQL() + " ";
+            }
+            sb.append(")");
 
-			return sb.toString();
-		}
-	}
+            return sb.toString();
+        }
+    }
 }

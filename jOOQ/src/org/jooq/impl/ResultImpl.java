@@ -48,80 +48,80 @@ import org.jooq.TableList;
  */
 class ResultImpl<R extends Record> implements Result<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 6416154375799578362L;
+    /**
+     * Generated UID
+     */
+    private static final long    serialVersionUID = 6416154375799578362L;
 
-	private final RecordMetaData meta;
-	private final List<R> records;
+    private final RecordMetaData meta;
+    private final List<R>        records;
 
-	ResultImpl(RecordMetaData meta) {
-		this.meta = meta;
-		this.records = new ArrayList<R>();
-	}
+    ResultImpl(RecordMetaData meta) {
+        this.meta = meta;
+        this.records = new ArrayList<R>();
+    }
 
-	@Override
-	public FieldList getFields() {
-		return meta.getFields();
-	}
+    @Override
+    public FieldList getFields() {
+        return meta.getFields();
+    }
 
-	@Override
-	public TableList getTables() {
-		return meta.getTables();
-	}
+    @Override
+    public TableList getTables() {
+        return meta.getTables();
+    }
 
-	@Override
-	public int getNumberOfRecords() {
-		return records.size();
-	}
+    @Override
+    public int getNumberOfRecords() {
+        return records.size();
+    }
 
-	@Override
-	public List<R> getRecords() {
-		return Collections.unmodifiableList(records);
-	}
+    @Override
+    public List<R> getRecords() {
+        return Collections.unmodifiableList(records);
+    }
 
-	@Override
-	public R getRecord(int index) throws IndexOutOfBoundsException {
-		return records.get(index);
-	}
+    @Override
+    public R getRecord(int index) throws IndexOutOfBoundsException {
+        return records.get(index);
+    }
 
-	@Override
-	public <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
-		return getRecord(index).getValue(field);
-	}
+    @Override
+    public <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
+        return getRecord(index).getValue(field);
+    }
 
-	@Override
-	public <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException {
-		return getRecord(index).getValue(field, defaultValue);
-	}
+    @Override
+    public <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException {
+        return getRecord(index).getValue(field, defaultValue);
+    }
 
-	@Override
-	public Iterator<R> iterator() {
-		return records.iterator();
-	}
+    @Override
+    public Iterator<R> iterator() {
+        return records.iterator();
+    }
 
-	void addRecord(R record) {
-		records.add(record);
-	}
+    void addRecord(R record) {
+        records.add(record);
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(getClass().getSimpleName() + " [query=" + meta + "]\n");
-		sb.append("Records:\n");
+        sb.append(getClass().getSimpleName() + " [query=" + meta + "]\n");
+        sb.append("Records:\n");
 
-		int i = 0;
-		for (; i < 10 && i < getNumberOfRecords(); i++) {
-			sb.append(getRecord(i));
-			sb.append("\n");
-		}
+        int i = 0;
+        for (; i < 10 && i < getNumberOfRecords(); i++) {
+            sb.append(getRecord(i));
+            sb.append("\n");
+        }
 
-		if (i == 10) {
-			sb.append("[...]");
-		}
+        if (i == 10) {
+            sb.append("[...]");
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

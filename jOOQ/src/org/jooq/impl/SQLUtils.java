@@ -36,29 +36,28 @@ import java.sql.Statement;
 
 final class SQLUtils {
 
-	static void safeClose(Statement statement) {
-		if (statement != null) {
-			try {
-				statement.close();
-			} catch (Exception ignore) {
-			}
-		}
-	}
+    static void safeClose(Statement statement) {
+        if (statement != null) {
+            try {
+                statement.close();
+            }
+            catch (Exception ignore) {}
+        }
+    }
 
-	static void safeClose(ResultSet resultSet) {
-		if (resultSet != null) {
-			try {
-				resultSet.close();
-			} catch (Exception ignore) {
-			}
-		}
-	}
+    static void safeClose(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            }
+            catch (Exception ignore) {}
+        }
+    }
 
-	static void safeClose(ResultSet resultSet, PreparedStatement statement) {
-		safeClose(resultSet);
-		safeClose(statement);
-	}
+    static void safeClose(ResultSet resultSet, PreparedStatement statement) {
+        safeClose(resultSet);
+        safeClose(statement);
+    }
 
-	private SQLUtils() {
-	}
+    private SQLUtils() {}
 }

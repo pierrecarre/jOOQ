@@ -35,25 +35,24 @@ import java.sql.PreparedStatement;
 
 import org.jooq.Parameter;
 
-
 /**
  * @author Lukas Eder
  */
 public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
 
-	private static final long serialVersionUID = -5277225593751085577L;
+    private static final long serialVersionUID = -5277225593751085577L;
 
-	public ParameterImpl(String name, Class<? extends T> type) {
-		super(name, type);
-	}
+    public ParameterImpl(String name, Class<? extends T> type) {
+        super(name, type);
+    }
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) {
+        return initialIndex;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return getName();
-	}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return getName();
+    }
 }

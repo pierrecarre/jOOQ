@@ -48,66 +48,68 @@ import org.jooq.SortOrder;
  */
 class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 
-	private static final long serialVersionUID = -1825164005148183725L;
+    private static final long              serialVersionUID = -1825164005148183725L;
 
-	private final Map<Field<?>, SortOrder> ordering;
+    private final Map<Field<?>, SortOrder> ordering;
 
-	OrderByFieldListImpl() {
-		this(new ArrayList<Field<?>>());
-	}
+    OrderByFieldListImpl() {
+        this(new ArrayList<Field<?>>());
+    }
 
-	OrderByFieldListImpl(List<Field<?>> wrappedList) {
-		super(wrappedList);
+    OrderByFieldListImpl(List<Field<?>> wrappedList) {
+        super(wrappedList);
 
-		this.ordering = new HashMap<Field<?>, SortOrder>();
-	}
+        this.ordering = new HashMap<Field<?>, SortOrder>();
+    }
 
-	public Map<Field<?>, SortOrder> getOrdering() {
-		return Collections.unmodifiableMap(ordering);
-	}
+    @Override
+    public Map<Field<?>, SortOrder> getOrdering() {
+        return Collections.unmodifiableMap(ordering);
+    }
 
-	private Map<Field<?>, SortOrder> getOrdering0() {
-		return ordering;
-	}
+    private Map<Field<?>, SortOrder> getOrdering0() {
+        return ordering;
+    }
 
-	private SortOrder getOrdering(Field<?> field) {
-		return getOrdering0().get(field);
-	}
+    private SortOrder getOrdering(Field<?> field) {
+        return getOrdering0().get(field);
+    }
 
-	@Override
-	public void add(Field<?> field, SortOrder order) {
-		add(field);
+    @Override
+    public void add(Field<?> field, SortOrder order) {
+        add(field);
 
-		if (order != null) {
-			getOrdering0().put(field, order);
-		}
-	}
+        if (order != null) {
+            getOrdering0().put(field, order);
+        }
+    }
 
-	@Override
-	public void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders) {
-		if (fields.size() != orders.size()) {
-			throw new IllegalArgumentException("The argument 'fields' and the argument 'orders' must be of equal length");
-		}
+    @Override
+    public void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders) {
+        if (fields.size() != orders.size()) {
+            throw new IllegalArgumentException(
+                "The argument 'fields' and the argument 'orders' must be of equal length");
+        }
 
-		Iterator<Field<?>> it1 = fields.iterator();
-		Iterator<SortOrder> it2 = orders.iterator();
+        Iterator<Field<?>> it1 = fields.iterator();
+        Iterator<SortOrder> it2 = orders.iterator();
 
-		while (it1.hasNext() && it2.hasNext()) {
-			add(it1.next(), it2.next());
-		}
-	}
+        while (it1.hasNext() && it2.hasNext()) {
+            add(it1.next(), it2.next());
+        }
+    }
 
-	@Override
-	protected String toSQLReference(Field<?> field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    protected String toSQLReference(Field<?> field, boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(super.toSQLReference(field, inlineParameters));
+        sb.append(super.toSQLReference(field, inlineParameters));
 
-		if (getOrdering(field) != null) {
-			sb.append(" ");
-			sb.append(getOrdering(field).toSQL());
-		}
+        if (getOrdering(field) != null) {
+            sb.append(" ");
+            sb.append(getOrdering(field).toSQL());
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

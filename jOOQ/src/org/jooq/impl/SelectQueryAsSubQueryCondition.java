@@ -44,44 +44,44 @@ import org.jooq.SubQueryOperator;
  */
 class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements SubQueryCondition<T> {
 
-	private static final long serialVersionUID = -402776705884329740L;
-	private final ResultProviderQuery<?> query;
-	private final Field<T> field;
-	private final SubQueryOperator operator;
+    private static final long            serialVersionUID = -402776705884329740L;
+    private final ResultProviderQuery<?> query;
+    private final Field<T>               field;
+    private final SubQueryOperator       operator;
 
-	SelectQueryAsSubQueryCondition(ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
-		this.query = query;
-		this.field = field;
-		this.operator = operator;
-	}
+    SelectQueryAsSubQueryCondition(ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
+        this.query = query;
+        this.field = field;
+        this.operator = operator;
+    }
 
-	@Override
-	public Field<T> getField() {
-		return field;
-	}
+    @Override
+    public Field<T> getField() {
+        return field;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(field.toSQLReference(inlineParameters));
-		sb.append(" ");
-		sb.append(operator.toSQL());
-		sb.append(" (");
-		sb.append(query.toSQLReference(inlineParameters));
-		sb.append(")");
+        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(operator.toSQL());
+        sb.append(" (");
+        sb.append(query.toSQLReference(inlineParameters));
+        sb.append(")");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		initialIndex = field.bind(stmt, initialIndex);
-		return query.bind(stmt, initialIndex);
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        initialIndex = field.bind(stmt, initialIndex);
+        return query.bind(stmt, initialIndex);
+    }
 
-	@Override
-	public SubQueryOperator getOperator() {
-		return operator;
-	}
+    @Override
+    public SubQueryOperator getOperator() {
+        return operator;
+    }
 }

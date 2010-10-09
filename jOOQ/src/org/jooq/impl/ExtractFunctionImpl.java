@@ -40,23 +40,23 @@ import org.jooq.NamedQueryPart;
  */
 class ExtractFunctionImpl extends FunctionImpl<Integer> {
 
-	private static final long serialVersionUID = 3748640920856031034L;
-	private final DatePart datePart;
+    private static final long serialVersionUID = 3748640920856031034L;
+    private final DatePart    datePart;
 
-	ExtractFunctionImpl(Field<?> field, DatePart datePart) {
-		super("extract", Integer.class, field);
+    ExtractFunctionImpl(Field<?> field, DatePart datePart) {
+        super("extract", Integer.class, field);
 
-		this.datePart = datePart;
-	}
+        this.datePart = datePart;
+    }
 
-	@Override
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(datePart.toSQL());
-		sb.append(" from ");
-		sb.append(super.toSQLField(field, inlineParameters));
+        sb.append(datePart.toSQL());
+        sb.append(" from ");
+        sb.append(super.toSQLField(field, inlineParameters));
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

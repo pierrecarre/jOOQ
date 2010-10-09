@@ -41,26 +41,26 @@ import org.jooq.Record;
  */
 class EmptyTable extends TableImpl<Record> {
 
-	private static final long serialVersionUID = -7492790780048090156L;
-	public static final EmptyTable EMPTY_TABLE = new EmptyTable();
+    private static final long      serialVersionUID = -7492790780048090156L;
+    public static final EmptyTable EMPTY_TABLE      = new EmptyTable();
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) {
-		return initialIndex;
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) {
+        return initialIndex;
+    }
 
-	private EmptyTable() {
-		super(getDummyTable());
-	}
+    private EmptyTable() {
+        super(getDummyTable());
+    }
 
-	private static String getDummyTable() {
-		switch (Configuration.getInstance().getDialect()) {
-		case HSQLDB:
-			return "INFORMATION_SCHEMA.SYSTEM_USERS";
-		case POSTGRES:
-			return "";
-		default:
-			return "dual";
-		}
-	}
+    private static String getDummyTable() {
+        switch (Configuration.getInstance().getDialect()) {
+            case HSQLDB:
+                return "INFORMATION_SCHEMA.SYSTEM_USERS";
+            case POSTGRES:
+                return "";
+            default:
+                return "dual";
+        }
+    }
 }

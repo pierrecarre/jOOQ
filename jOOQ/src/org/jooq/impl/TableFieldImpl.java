@@ -40,30 +40,30 @@ import org.jooq.TableField;
  */
 public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements TableField<R, T> {
 
-	private static final long serialVersionUID = -2211214195583539735L;
+    private static final long serialVersionUID = -2211214195583539735L;
 
-	private final Table<R> table;
+    private final Table<R>    table;
 
-	public TableFieldImpl(String name, Class<? extends T> type, Table<R> table) {
-		super(name, type);
+    public TableFieldImpl(String name, Class<? extends T> type, Table<R> table) {
+        super(name, type);
 
-		this.table = table;
-		this.table.getFields().add(this);
-	}
+        this.table = table;
+        this.table.getFields().add(this);
+    }
 
-	@Override
-	public Table<R> getTable() {
-		return table;
-	}
+    @Override
+    public Table<R> getTable() {
+        return table;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(table.toSQLReference(inlineParameters));
-		sb.append(".");
-		sb.append(super.toSQLReference(inlineParameters));
+        sb.append(table.toSQLReference(inlineParameters));
+        sb.append(".");
+        sb.append(super.toSQLReference(inlineParameters));
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

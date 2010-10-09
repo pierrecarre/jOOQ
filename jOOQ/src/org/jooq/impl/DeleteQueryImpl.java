@@ -49,92 +49,92 @@ import org.jooq.Table;
  */
 class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements DeleteQuery<R> {
 
-	private static final long serialVersionUID = -1943687511774150929L;
+    private static final long           serialVersionUID = -1943687511774150929L;
 
-	private final Table<R> table;
-	private final ConditionProviderImpl condition;
+    private final Table<R>              table;
+    private final ConditionProviderImpl condition;
 
-	DeleteQueryImpl(Table<R> table) {
-		this.table = table;
-		this.condition = new ConditionProviderImpl();
-	}
+    DeleteQueryImpl(Table<R> table) {
+        this.table = table;
+        this.condition = new ConditionProviderImpl();
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		int result = initialIndex;
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
 
-		result = getFrom().bind(stmt, result);
-		result = getWhere().bind(stmt, result);
+        result = getFrom().bind(stmt, result);
+        result = getWhere().bind(stmt, result);
 
-		return result;
-	}
+        return result;
+    }
 
-	Table<R> getFrom() {
-		return table;
-	}
+    Table<R> getFrom() {
+        return table;
+    }
 
-	Condition getWhere() {
-		return condition.getWhere();
-	}
+    Condition getWhere() {
+        return condition.getWhere();
+    }
 
-	@Override
-	public void addConditions(Collection<Condition> conditions) {
-		condition.addConditions(conditions);
-	}
+    @Override
+    public void addConditions(Collection<Condition> conditions) {
+        condition.addConditions(conditions);
+    }
 
-	@Override
-	public void addConditions(Condition... conditions) {
-		condition.addConditions(conditions);
-	}
+    @Override
+    public void addConditions(Condition... conditions) {
+        condition.addConditions(conditions);
+    }
 
-	@Override
-	public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-		condition.addBetweenCondition(field, minValue, maxValue);
-	}
+    @Override
+    public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+        condition.addBetweenCondition(field, minValue, maxValue);
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-		condition.addCompareCondition(field, value, comparator);
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+        condition.addCompareCondition(field, value, comparator);
+    }
 
-	@Override
-	public <T> void addCompareCondition(Field<T> field, T value) {
-		condition.addCompareCondition(field, value);
-	}
+    @Override
+    public <T> void addCompareCondition(Field<T> field, T value) {
+        condition.addCompareCondition(field, value);
+    }
 
-	@Override
-	public void addNullCondition(Field<?> field) {
-		condition.addNullCondition(field);
-	}
+    @Override
+    public void addNullCondition(Field<?> field) {
+        condition.addNullCondition(field);
+    }
 
-	@Override
-	public void addNotNullCondition(Field<?> field) {
-		condition.addNotNullCondition(field);
-	}
+    @Override
+    public void addNotNullCondition(Field<?> field) {
+        condition.addNotNullCondition(field);
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, Collection<T> values) {
-		condition.addInCondition(field, values);
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, Collection<T> values) {
+        condition.addInCondition(field, values);
+    }
 
-	@Override
-	public <T> void addInCondition(Field<T> field, T... values) {
-		condition.addInCondition(field, values);
-	}
+    @Override
+    public <T> void addInCondition(Field<T> field, T... values) {
+        condition.addInCondition(field, values);
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append("delete from ");
-		sb.append(getFrom().toSQLReference(inlineParameters));
+        sb.append("delete from ");
+        sb.append(getFrom().toSQLReference(inlineParameters));
 
-		if (getWhere() != TRUE_CONDITION) {
-			sb.append(" where ");
-			sb.append(getWhere().toSQLReference(inlineParameters));
-		}
+        if (getWhere() != TRUE_CONDITION) {
+            sb.append(" where ");
+            sb.append(getWhere().toSQLReference(inlineParameters));
+        }
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
 }

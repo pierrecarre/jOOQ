@@ -39,23 +39,23 @@ import org.jooq.NamedQueryPart;
  */
 class PositionFunctionImpl extends IntegerFunction {
 
-	private static final long serialVersionUID = 3544690069533526544L;
-	private final Field<String> search;
+    private static final long   serialVersionUID = 3544690069533526544L;
+    private final Field<String> search;
 
-	PositionFunctionImpl(Field<String> search, Field<String> in) {
-		super("position", in);
+    PositionFunctionImpl(Field<String> search, Field<String> in) {
+        super("position", in);
 
-		this.search = search;
-	}
+        this.search = search;
+    }
 
-	@Override
-	protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-		sb.append(super.toSQLField(search, inlineParameters));
-		sb.append(" in ");
-		sb.append(super.toSQLField(field, inlineParameters));
+        sb.append(super.toSQLField(search, inlineParameters));
+        sb.append(" in ");
+        sb.append(super.toSQLField(field, inlineParameters));
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

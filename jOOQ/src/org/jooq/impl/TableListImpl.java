@@ -44,27 +44,28 @@ import org.jooq.TableList;
  */
 class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList {
 
-	private static final long serialVersionUID = -8545559185481762229L;
+    private static final long serialVersionUID = -8545559185481762229L;
 
-	TableListImpl() {
-		super();
-	}
+    TableListImpl() {
+        super();
+    }
 
-	TableListImpl(List<Table<?>> wrappedList) {
-		super(wrappedList);
-	}
+    TableListImpl(List<Table<?>> wrappedList) {
+        super(wrappedList);
+    }
 
-	@Override
-	protected String toSQLEmptyList() {
-		return EMPTY_TABLE.toSQLReference();
-	}
+    @Override
+    protected String toSQLEmptyList() {
+        return EMPTY_TABLE.toSQLReference();
+    }
 
-	@Override
-	public Class<? extends Record> getRecordType() {
-		if (size() == 1) {
-			return get(0).getRecordType();
-		} else {
-			return RecordImpl.class;
-		}
-	}
+    @Override
+    public Class<? extends Record> getRecordType() {
+        if (size() == 1) {
+            return get(0).getRecordType();
+        }
+        else {
+            return RecordImpl.class;
+        }
+    }
 }

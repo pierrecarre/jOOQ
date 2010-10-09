@@ -42,67 +42,69 @@ import org.jooq.SQLDialectNotSupportedException;
  */
 class LimitImpl extends AbstractQueryPart implements Limit {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 2053741242981425602L;
-	private int lowerBound;
-	private int numberOfRows;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 2053741242981425602L;
+    private int               lowerBound;
+    private int               numberOfRows;
 
-	LimitImpl() {
-		lowerBound = 1;
-		numberOfRows = Integer.MAX_VALUE - 2; // such that getUpperBound() == Integer.MAX_VALUE 
-	}
+    LimitImpl() {
+        lowerBound = 1;
 
-	@Override
-	public final String toSQLReference(boolean inlineParameters) {
-		StringBuilder sb = new StringBuilder();
-		
-		switch (Configuration.getInstance().getDialect()) {
-		case MYSQL: {
-			sb.append("limit ");
-			sb.append(getLowerBound());
-			sb.append(", ");
-			sb.append(getNumberOfRows());
-			break;
-		}
-		default:
-			throw new SQLDialectNotSupportedException("LIMIT not supported");
-		}
+        // such that getUpperBound() == Integer.MAX_VALUE
+        numberOfRows = Integer.MAX_VALUE - 2;
+    }
 
-		return sb.toString();
-	}
+    @Override
+    public final String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-	@Override
-	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return initialIndex;
-	}
+        switch (Configuration.getInstance().getDialect()) {
+            case MYSQL: {
+                sb.append("limit ");
+                sb.append(getLowerBound());
+                sb.append(", ");
+                sb.append(getNumberOfRows());
+                break;
+            }
+            default:
+                throw new SQLDialectNotSupportedException("LIMIT not supported");
+        }
 
-	@Override
-	public final int getLowerBound() {
-		return lowerBound;
-	}
+        return sb.toString();
+    }
 
-	@Override
-	public final int getUpperBound() {
-		return lowerBound + numberOfRows + 1;
-	}
+    @Override
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return initialIndex;
+    }
 
-	@Override
-	public final int getNumberOfRows() {
-		return numberOfRows;
-	}
+    @Override
+    public final int getLowerBound() {
+        return lowerBound;
+    }
 
-	@Override
-	public final boolean isApplicable() {
-		return getLowerBound() != 1 || getUpperBound() != Integer.MAX_VALUE;
-	}
+    @Override
+    public final int getUpperBound() {
+        return lowerBound + numberOfRows + 1;
+    }
 
-	void setLowerBound(int lowerBound) {
-		this.lowerBound = lowerBound;
-	}
+    @Override
+    public final int getNumberOfRows() {
+        return numberOfRows;
+    }
 
-	void setNumberOfRows(int numberOfRows) {
-		this.numberOfRows = numberOfRows;
-	}
+    @Override
+    public final boolean isApplicable() {
+        return getLowerBound() != 1 || getUpperBound() != Integer.MAX_VALUE;
+    }
+
+    void setLowerBound(int lowerBound) {
+        this.lowerBound = lowerBound;
+    }
+
+    void setNumberOfRows(int numberOfRows) {
+        this.numberOfRows = numberOfRows;
+    }
 }

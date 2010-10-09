@@ -63,118 +63,118 @@ import org.jooq.Table;
  */
 class SimpleSelectImpl<R extends Record> extends AbstractDelegatingQueryPart implements
 
-	// Cascading interface implementations for SimpleSelect behaviour
-	SimpleSelect<R>, SimpleSelectStep<R>,
-	SimpleSelectWhereStep<R>, SimpleSelectOrderByStep<R> {
+    // Cascading interface implementations for SimpleSelect behaviour
+    SimpleSelect<R>, SimpleSelectStep<R>,
+    SimpleSelectWhereStep<R>, SimpleSelectOrderByStep<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = -5425308887382166448L;
+    /**
+     * Generated UID
+     */
+    private static final long          serialVersionUID = -5425308887382166448L;
 
-	/**
-	 * The wrapped query
-	 */
-	private final SimpleSelectQuery<R> query;
+    /**
+     * The wrapped query
+     */
+    private final SimpleSelectQuery<R> query;
 
-	SimpleSelectImpl() {
-		this(new SimpleSelectQueryImpl<R>());
-	}
+    SimpleSelectImpl() {
+        this(new SimpleSelectQueryImpl<R>());
+    }
 
-	SimpleSelectImpl(Table<R> table) {
-		this(new SimpleSelectQueryImpl<R>(table));
-	}
+    SimpleSelectImpl(Table<R> table) {
+        this(new SimpleSelectQueryImpl<R>(table));
+    }
 
-	SimpleSelectImpl(SimpleSelectQuery<R> query) {
-		super(query);
+    SimpleSelectImpl(SimpleSelectQuery<R> query) {
+        super(query);
 
-		this.query = query;
-	}
+        this.query = query;
+    }
 
-	@Override
-	public SimpleSelectWhereStep<R> select(Field<?>... fields) {
-		query.addSelect(fields);
-		return this;
-	}
+    @Override
+    public SimpleSelectWhereStep<R> select(Field<?>... fields) {
+        query.addSelect(fields);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectWhereStep<R> select(Collection<Field<?>> fields) {
-		query.addSelect(fields);
-		return this;
-	}
+    @Override
+    public SimpleSelectWhereStep<R> select(Collection<Field<?>> fields) {
+        query.addSelect(fields);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectOrderByStep<R> where(Condition... conditions) {
-		query.addConditions(conditions);
-		return this;
-	}
+    @Override
+    public SimpleSelectOrderByStep<R> where(Condition... conditions) {
+        query.addConditions(conditions);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectOrderByStep<R> where(Collection<Condition> conditions) {
-		query.addConditions(conditions);
-		return this;
-	}
+    @Override
+    public SimpleSelectOrderByStep<R> where(Collection<Condition> conditions) {
+        query.addConditions(conditions);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectOrderByStep<R> orderBy(Field<?>... fields) {
-		query.addOrderBy(fields);
-		return this;
-	}
+    @Override
+    public SimpleSelectOrderByStep<R> orderBy(Field<?>... fields) {
+        query.addOrderBy(fields);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
-		query.addOrderBy(fields);
-		return this;
-	}
+    @Override
+    public SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
+        query.addOrderBy(fields);
+        return this;
+    }
 
-	@Override
-	public SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
-		query.addOrderBy(field, order);
-		return this;
-	}
+    @Override
+    public SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
+        query.addOrderBy(field, order);
+        return this;
+    }
 
-	@Override
-	public SimpleSelect<R> union(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(UNION, select.getQuery()));
-	}
+    @Override
+    public SimpleSelect<R> union(SimpleSelect<R> select) {
+        return new SimpleSelectImpl<R>(query.combine(UNION, select.getQuery()));
+    }
 
-	@Override
-	public SimpleSelect<R> unionAll(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
-	}
+    @Override
+    public SimpleSelect<R> unionAll(SimpleSelect<R> select) {
+        return new SimpleSelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
+    }
 
-	@Override
-	public SimpleSelect<R> except(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
-	}
+    @Override
+    public SimpleSelect<R> except(SimpleSelect<R> select) {
+        return new SimpleSelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
+    }
 
-	@Override
-	public SimpleSelect<R> intersect(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
-	}
+    @Override
+    public SimpleSelect<R> intersect(SimpleSelect<R> select) {
+        return new SimpleSelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
+    }
 
-	@Override
-	public SimpleSelectQuery<R> getQuery() {
-		return query;
-	}
+    @Override
+    public SimpleSelectQuery<R> getQuery() {
+        return query;
+    }
 
-	@Override
-	public Result<R> getResult() {
-		return query.getResult();
-	}
+    @Override
+    public Result<R> getResult() {
+        return query.getResult();
+    }
 
-	@Override
-	public int execute(DataSource source) throws SQLException {
-		return query.execute(source);
-	}
+    @Override
+    public int execute(DataSource source) throws SQLException {
+        return query.execute(source);
+    }
 
-	@Override
-	public int execute(Connection connection) throws SQLException {
-		return query.execute(connection);
-	}
+    @Override
+    public int execute(Connection connection) throws SQLException {
+        return query.execute(connection);
+    }
 
-	@Override
-	public SimpleSelect<R> getSelect() {
-		return this;
-	}
+    @Override
+    public SimpleSelect<R> getSelect() {
+        return this;
+    }
 }

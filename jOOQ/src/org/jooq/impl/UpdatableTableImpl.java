@@ -46,25 +46,25 @@ import org.jooq.UpdatableTable;
  */
 public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implements UpdatableTable<R> {
 
-	/**
-	 * Generated UID
-	 */
-	private static final long serialVersionUID = 8214807990871116060L;
+    /**
+     * Generated UID
+     */
+    private static final long            serialVersionUID = 8214807990871116060L;
 
-	private final List<TableField<R, ?>> primaryKey;
+    private final List<TableField<R, ?>> primaryKey;
 
-	public UpdatableTableImpl(String name, Schema schema) {
-		super(name, schema);
+    public UpdatableTableImpl(String name, Schema schema) {
+        super(name, schema);
 
-		this.primaryKey = new ArrayList<TableField<R, ?>>();
-	}
+        this.primaryKey = new ArrayList<TableField<R, ?>>();
+    }
 
-	@Override
-	public List<TableField<R, ?>> getPrimaryKey() {
-		return Collections.unmodifiableList(primaryKey);
-	}
+    @Override
+    public List<TableField<R, ?>> getPrimaryKey() {
+        return Collections.unmodifiableList(primaryKey);
+    }
 
-	protected void addToPrimaryKey(TableField<R, ?> field) {
-		primaryKey.add(field);
-	}
+    protected void addToPrimaryKey(TableField<R, ?> field) {
+        primaryKey.add(field);
+    }
 }

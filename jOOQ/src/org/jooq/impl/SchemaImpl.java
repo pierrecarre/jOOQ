@@ -41,19 +41,19 @@ import org.jooq.Schema;
  */
 public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
 
-	private static final long serialVersionUID = -8101463810207566546L;
+    private static final long serialVersionUID = -8101463810207566546L;
 
-	public SchemaImpl(String name) {
-		super(name);
-	}
+    public SchemaImpl(String name) {
+        super(name);
+    }
 
-	@Override
-	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		return initialIndex;
-	}
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return initialIndex;
+    }
 
-	@Override
-	public String toSQLReference(boolean inlineParameters) {
-		return getName();
-	}
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return getName();
+    }
 }
