@@ -39,12 +39,12 @@ import java.sql.SQLException;
 
 import org.jooq.Comparator;
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Create;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
@@ -76,7 +76,7 @@ public class Library {
 	 */
 	public static void firstRun(Connection c) throws SQLException {
 		// Create the query
-		SelectQuery<DefaultRecord> q = Create.selectQuery();
+		SelectQuery q = Create.selectQuery();
 		q.addFrom(T_AUTHOR);
 		q.addJoin(T_BOOK, TAuthor.ID, TBook.AUTHOR_ID);
 		q.addCompareCondition(TAuthor.YEAR_OF_BIRTH, 1920, Comparator.GREATER);
@@ -84,10 +84,10 @@ public class Library {
 
 		// Execute the query and fetch the results
 		q.execute(c);
-		Result<DefaultRecord> result = q.getResult();
+		Result<?> result = q.getResult();
 
 		// Loop over the resulting records
-		for (DefaultRecord record : result) {
+		for (Record record : result) {
 
 			// Type safety assured with generics
 			String firstName = record.getValue(TAuthor.FIRST_NAME);
@@ -103,7 +103,7 @@ public class Library {
 	 * Run this code providing your own database connection.
 	 */
 	public static void secondRun(Connection c) throws SQLException {
-		SelectQuery<DefaultRecord> q = Create.select()
+		SelectQuery q = Create.select()
 			.from(T_AUTHOR)
 			.join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
@@ -111,10 +111,10 @@ public class Library {
 
 		// Execute the query and fetch the results
 		q.execute(c);
-		Result<DefaultRecord> result = q.getResult();
+		Result<?> result = q.getResult();
 
 		// Loop over the resulting records
-		for (DefaultRecord record : result) {
+		for (Record record : result) {
 
 			// Type safety assured with generics
 			String firstName = record.getValue(TAuthor.FIRST_NAME);

@@ -41,7 +41,7 @@ import org.jooq.TableRecord;
  *
  * @author Lukas Eder
  */
-public class TableRecordImpl<R extends Record<R>> extends RecordImpl<R> implements TableRecord<R> {
+public class TableRecordImpl<R extends Record> extends RecordImpl implements TableRecord<R> {
 
 	/**
 	 * Generated UID

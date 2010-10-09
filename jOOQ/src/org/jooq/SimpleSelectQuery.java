@@ -45,7 +45,7 @@ import java.util.Collection;
  * @author Lukas Eder
  * @see SelectQuery
  */
-public interface SimpleSelectQuery<R extends Record<R>> extends ResultProviderQuery<R>, ConditionProvider<R>, QueryPart, QueryProvider<SelectQuery<R>> {
+public interface SimpleSelectQuery<R extends Record> extends ResultProviderQuery<R>, ConditionProvider, QueryPart, QueryProvider<SelectQuery> {
 
 	/**
 	 * Combine this SelectQuery with another one, using the
@@ -231,5 +231,5 @@ public interface SimpleSelectQuery<R extends Record<R>> extends ResultProviderQu
 	/**
 	 * The record type returned by this query
 	 */
-	Class<R> getRecordType();
+	Class<? extends R> getRecordType();
 }

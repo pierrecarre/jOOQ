@@ -40,9 +40,9 @@ import static org.jooq.util.oracle.sys.tables.AllConstraints.ALL_CONSTRAINTS;
 import java.sql.SQLException;
 
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultForeignKeyDefinition;
@@ -66,7 +66,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 	protected PrimaryKeyDefinition getPrimaryKey1() throws SQLException {
 		PrimaryKeyDefinition definition = null;
 
-		SelectQuery<DefaultRecord> q = selectQuery();
+		SelectQuery q = selectQuery();
 		q.addFrom(ALL_CONS_COLUMNS);
 		q.addJoin(ALL_CONSTRAINTS,
 				AllConsColumns.CONSTRAINT_NAME,
@@ -99,15 +99,15 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 //		    and ccx.column_name = 'NAME_REF'
 //		    and cox.constraint_type = 'R');
 
-		Table<DefaultRecord> cc1 = ALL_CONS_COLUMNS.as("cc1");
-		Table<DefaultRecord> cc2 = ALL_CONS_COLUMNS.as("cc2");
+		Table<?> cc1 = ALL_CONS_COLUMNS.as("cc1");
+		Table<?> cc2 = ALL_CONS_COLUMNS.as("cc2");
 
 		Field<String> constraint = cc2.getField(AllConsColumns.CONSTRAINT_NAME).as("constraint");
 		Field<String> referencedTable = cc2.getField(AllConsColumns.TABLE_NAME).as("referenced_table");
 		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).as("referencing_column");
 		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).as("referenced_column");
 
-		SelectQuery<DefaultRecord> inner = selectQuery();
+		SelectQuery inner = selectQuery();
 		inner.addFrom(ALL_CONS_COLUMNS);
 		inner.addJoin(ALL_CONSTRAINTS, AllConsColumns.CONSTRAINT_NAME, AllConstraints.CONSTRAINT_NAME);
 		inner.addSelect(AllConstraints.CONSTRAINT_NAME);
@@ -117,7 +117,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 				compareCondition(AllConsColumns.TABLE_NAME, getTableName()),
 				compareCondition(AllConsColumns.COLUMN_NAME, getName()));
 
-		SelectQuery<DefaultRecord> q = selectQuery();
+		SelectQuery q = selectQuery();
 		q.addFrom(ALL_CONSTRAINTS);
 		q.addSelect(constraint, referencingColumn, referencedTable, referencedColumn);
 		q.addJoin(cc1,
@@ -129,7 +129,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 
 		q.execute(getConnection());
 
-		for (DefaultRecord record : q.getResult()) {
+		for (Record record : q.getResult()) {
 			if (definition == null) {
 				definition = new DefaultForeignKeyDefinition(
 						getDatabase(),

@@ -42,9 +42,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Create;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
@@ -63,7 +63,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery<DefaultRecord> query = Create.select()
+		SelectQuery query = Create.select()
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
 			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
@@ -77,7 +77,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.getQuery();
 
 		query.execute(getConnection());
-		for (DefaultRecord record : query.getResult()) {
+		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String tableName = record.getValue(ConstraintColumnUsage.TABLE_NAME);
 			String columnName = record.getValue(ConstraintColumnUsage.COLUMN_NAME);
@@ -88,7 +88,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery<DefaultRecord> query = Create.select()
+		SelectQuery query = Create.select()
 			.from(CONSTRAINT_COLUMN_USAGE)
 			.join(KEY_COLUMN_USAGE)
 			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
@@ -104,7 +104,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.getQuery();
 
 		query.execute(getConnection());
-		for (DefaultRecord record : query.getResult()) {
+		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String referencingTableName = record.getValue(KeyColumnUsage.TABLE_NAME);
 			String referencingColumnName = record.getValue(KeyColumnUsage.COLUMN_NAME);

@@ -49,6 +49,7 @@ import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelect;
 import org.jooq.SimpleSelectOrderByStep;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.SimpleSelectStep;
 import org.jooq.SimpleSelectWhereStep;
 import org.jooq.SortOrder;
@@ -60,7 +61,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SimpleSelectImpl<R extends Record<R>> implements
+class SimpleSelectImpl<R extends Record> implements
 
 	// Cascading interface implementations for SimpleSelect behaviour
 	SimpleSelect<R>, SimpleSelectStep<R>,
@@ -74,10 +75,10 @@ class SimpleSelectImpl<R extends Record<R>> implements
 	/**
 	 * The wrapped query
 	 */
-	private final SelectQuery<R> query;
+	private final SelectQuery query;
 
 	SimpleSelectImpl() {
-		this(new SelectQueryImpl<R>());
+		this(new SelectQueryImpl());
 	}
 
 	SimpleSelectImpl(Table<R> table) {
@@ -85,7 +86,7 @@ class SimpleSelectImpl<R extends Record<R>> implements
 		this.query.addFrom(table);
 	}
 
-	SimpleSelectImpl(SelectQuery<R> query) {
+	SimpleSelectImpl(SelectQuery query) {
 		this.query = query;
 	}
 
@@ -131,34 +132,40 @@ class SimpleSelectImpl<R extends Record<R>> implements
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SimpleSelect<R> union(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(UNION, select.getQuery()));
+		return new SimpleSelectImpl<R>(query.combine(UNION, (SimpleSelectQuery<Record>) select.getQuery()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SimpleSelect<R> unionAll(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
+		return new SimpleSelectImpl<R>(query.combine(UNION_ALL, (SimpleSelectQuery<Record>) select.getQuery()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SimpleSelect<R> except(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
+		return new SimpleSelectImpl<R>(query.combine(EXCEPT, (SimpleSelectQuery<Record>) select.getQuery()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SimpleSelect<R> intersect(SimpleSelect<R> select) {
-		return new SimpleSelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
+		return new SimpleSelectImpl<R>(query.combine(INTERSECT, (SimpleSelectQuery<Record>) select.getQuery()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public SelectQuery<R> getQuery() {
-		return query;
+	public SimpleSelectQuery<R> getQuery() {
+		return (SimpleSelectQuery<R>) query;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Result<R> getResult() {
-		return query.getResult();
+		return (Result<R>) query.getResult();
 	}
 
 	@Override

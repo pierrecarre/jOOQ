@@ -42,15 +42,15 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectHavingStep<R extends Record<R>> extends SelectOrderByStep<R> {
+public interface SelectHavingStep extends SelectOrderByStep {
 
 	/**
 	 * Add a having clause to the query and proceed to the next step
 	 */
-	SelectOrderByStep<R> having(Condition... conditions);
+	SelectOrderByStep having(Condition... conditions);
 
 	/**
 	 * Add a having clause to the query and proceed to the next step
 	 */
-	SelectOrderByStep<R> having(Collection<Condition> conditions);
+	SelectOrderByStep having(Collection<Condition> conditions);
 }

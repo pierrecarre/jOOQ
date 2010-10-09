@@ -37,6 +37,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface DeleteQuery<R extends Record<R>> extends Query, ConditionProvider<R>, QueryPart {
+public interface DeleteQuery<R extends Record> extends Query, ConditionProvider, QueryPart {
 
 }

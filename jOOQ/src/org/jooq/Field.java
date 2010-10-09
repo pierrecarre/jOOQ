@@ -92,7 +92,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this in (select...)</code>
 	 */
-	<R extends Record<R>> SubQueryCondition<T> in(QueryProvider<SelectQuery<R>> query);
+	SubQueryCondition<T> in(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this not in (values...)</code>
@@ -107,7 +107,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this not in (select...)</code>
 	 */
-	<R extends Record<R>> SubQueryCondition<T> notIn(QueryProvider<SelectQuery<R>> query);
+	SubQueryCondition<T> notIn(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this in (values...)</code>
@@ -138,22 +138,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this = (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> equal(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> equal(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this = any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> equalAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> equalAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this = some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> equalSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> equalSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this = all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> equalAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> equalAll(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this != value</code>
@@ -168,22 +168,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this != (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> notEqual(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> notEqual(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this != any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> notEqualAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> notEqualAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this != some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> notEqualSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> notEqualSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this != all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> notEqualAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> notEqualAll(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this < value</code>
@@ -198,22 +198,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this < (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessThan(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessThan(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this < any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessThanAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessThanAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this < some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessThanSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessThanSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this < all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessThanAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessThanAll(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this <= value</code>
@@ -228,22 +228,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this <= (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessOrEqual(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessOrEqual(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this <= any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessOrEqualToAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessOrEqualToAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this <= some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessOrEqualToSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessOrEqualToSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this <= all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> lessOrEqualToAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> lessOrEqualToAll(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this > value</code>
@@ -258,22 +258,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this > (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterThan(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterThan(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this > any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterThanAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterThanAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this > some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterThanSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterThanSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this > all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterThanAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterThanAll(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this >= value</code>
@@ -288,21 +288,21 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 	/**
 	 * @return <code>this >= (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterOrEqual(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterOrEqual(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this >= any (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterOrEqualAny(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterOrEqualAny(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this >= some (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterOrEqualSome(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterOrEqualSome(QueryProvider<SelectQuery> query);
 
 	/**
 	 * @return <code>this >= all (QueryProvider<SelectQuery<?>> ...)</code>
 	 */
-	<R extends Record<R>> FieldCondition<T> greaterOrEqualAll(QueryProvider<SelectQuery<R>> query);
+	FieldCondition<T> greaterOrEqualAll(QueryProvider<SelectQuery> query);
 
 }

@@ -47,7 +47,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends Record<R>> extends AbstractQuery<R> implements StoreQuery<R> {
+abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery<R> implements StoreQuery<R> {
 
 	/**
 	 * Generated UID

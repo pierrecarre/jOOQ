@@ -119,7 +119,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testSelectSimpleQuery() throws Exception {
-        SelectQuery<?> q = Create.selectQuery();
+        SelectQuery q = Create.selectQuery();
         Field<Integer> f1 = Functions.constant(1).as("f1");
         Field<Double> f2 = Functions.constant(2d).as("f2");
         Field<String> f3 = Functions.constant("test").as("f3");
@@ -150,12 +150,12 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testSelectQuery() throws Exception {
-        SimpleSelectQuery<? extends Record<?>> q = Create.selectQuery(getTAuthor());
+        SimpleSelectQuery<?> q = Create.selectQuery(getTAuthor());
         q.addSelect(getTAuthor().getFields());
         q.addOrderBy(getTAuthor_LAST_NAME());
 
         int rows = q.execute(connection);
-        Result<? extends Record<?>> result = q.getResult();
+        Result<?> result = q.getResult();
 
         assertEquals(2, rows);
         assertEquals(2, result.getNumberOfRecords());
@@ -169,7 +169,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testInsertUpdateDelete() throws Exception {
-    	InsertQuery<? extends Record<?>> i = Create.insertQuery(getTAuthor());
+    	InsertQuery<?> i = Create.insertQuery(getTAuthor());
     	i.addValue(getTAuthor_ID(), 100);
     	i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
     	i.addValue(getTAuthor_LAST_NAME(), "Hesse");
@@ -177,12 +177,12 @@ public abstract class jOOQAbstractTest {
     	i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
     	assertEquals(1, i.execute(connection));
 
-    	UpdateQuery<? extends Record<?>> u = Create.updateQuery(getTAuthor());
+    	UpdateQuery<?> u = Create.updateQuery(getTAuthor());
     	u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
     	u.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, u.execute(connection));
 
-    	DeleteQuery<? extends Record<?>> d = Create.deleteQuery(getTAuthor());
+    	DeleteQuery<?> d = Create.deleteQuery(getTAuthor());
     	d.addCompareCondition(getTAuthor_ID(), 100);
     	assertEquals(1, d.execute(connection));
     }
@@ -194,10 +194,10 @@ public abstract class jOOQAbstractTest {
         q.execute(connection);
         Result<?> result = q.getResult();
 
-        Record<?> book = result.getRecord(0);
+        Record book = result.getRecord(0);
         Method getTAuthor = book.getClass().getMethod("getTAuthor", Connection.class);
 
-        Record<?> author = (Record<?>) getTAuthor.invoke(book, connection);
+        Record author = (Record) getTAuthor.invoke(book, connection);
         assertEquals("Orwell", author.getValue(getTAuthor_LAST_NAME()));
 
         Method getTBooks = author.getClass().getMethod("getTBooks", Connection.class);
@@ -211,7 +211,7 @@ public abstract class jOOQAbstractTest {
     public final void testORMapper() throws Exception {
 
     	// Fetch the original record
-    	SimpleSelectQuery<? extends Record<?>> q = Create.selectQuery(getTBook());
+    	SimpleSelectQuery<?> q = Create.selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result<?> result = q.getResult();
@@ -242,21 +242,20 @@ public abstract class jOOQAbstractTest {
 		assertEquals(0, result.getNumberOfRecords());
     }
 
-	protected abstract Table<? extends Record<?>> getTAuthor();
-	protected abstract TableField<? extends Record<?>, String> getTAuthor_LAST_NAME();
-	protected abstract TableField<? extends Record<?>, String> getTAuthor_FIRST_NAME();
-	protected abstract TableField<? extends Record<?>, Date> getTAuthor_DATE_OF_BIRTH();
-	protected abstract TableField<? extends Record<?>, Integer> getTAuthor_YEAR_OF_BIRTH();
-	protected abstract TableField<? extends Record<?>, Integer> getTAuthor_ID() ;
-	protected abstract Table<? extends Record<?>> getTBook();
-	protected abstract TableField<? extends Record<?>, Integer> getTBook_ID();
-	protected abstract TableField<? extends Record<?>, Integer> getTBook_AUTHOR_ID();
-	protected abstract TableField<? extends Record<?>, String> getTBook_TITLE();
-	protected abstract Table<? extends Record<?>> getVLibrary();
-	protected abstract TableField<? extends Record<?>, String> getVLibrary_TITLE();
-	protected abstract TableField<? extends Record<?>, String> getVLibrary_AUTHOR();
+	protected abstract Table<? extends Record> getTAuthor();
+	protected abstract TableField<? extends Record, String> getTAuthor_LAST_NAME();
+	protected abstract TableField<? extends Record, String> getTAuthor_FIRST_NAME();
+	protected abstract TableField<? extends Record, Date> getTAuthor_DATE_OF_BIRTH();
+	protected abstract TableField<? extends Record, Integer> getTAuthor_YEAR_OF_BIRTH();
+	protected abstract TableField<? extends Record, Integer> getTAuthor_ID() ;
+	protected abstract Table<? extends Record> getTBook();
+	protected abstract TableField<? extends Record, Integer> getTBook_ID();
+	protected abstract TableField<? extends Record, Integer> getTBook_AUTHOR_ID();
+	protected abstract TableField<? extends Record, String> getTBook_TITLE();
+	protected abstract Table<? extends Record> getVLibrary();
+	protected abstract TableField<? extends Record, String> getVLibrary_TITLE();
+	protected abstract TableField<? extends Record, String> getVLibrary_AUTHOR();
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
     public final void testCombinedSelectQuery() throws Exception {
     	SelectQuery q1 = Create.selectQuery();
@@ -288,7 +287,7 @@ public abstract class jOOQAbstractTest {
         Field<Integer> b_authorID = b.getField(getTBook_AUTHOR_ID());
         Field<String> b_title = b.getField(getTBook_TITLE());
 
-		SelectQuery<?> q2 = Create.selectQuery();
+		SelectQuery q2 = Create.selectQuery();
 		q2.addFrom(a);
 		q2.addJoin(b, b_authorID, a_authorID);
 		q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
@@ -315,7 +314,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testFunction3() throws Exception {
-        SelectQuery<? extends Record<?>> q1 = Create.selectQuery();
+        SelectQuery q1 = Create.selectQuery();
         Field<Timestamp> now = Functions.currentTimestamp();
         Field<Timestamp> ts = now.as("ts");
         Field<Date> date = Functions.currentDate().as("d");
@@ -331,7 +330,7 @@ public abstract class jOOQAbstractTest {
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
         q1.execute(connection);
 
-        Record<?> record = q1.getResult().getRecord(0);
+        Record record = q1.getResult().getRecord(0);
         String timestamp = record.getValue(ts).toString().replaceFirst("\\.\\d+$", "");
 
         assertEquals(timestamp.split(" ")[0], record.getValue(date).toString());
@@ -352,7 +351,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testFunction4() throws Exception {
-        SelectQuery<? extends Record<?>> q = Create.selectQuery();
+        SelectQuery q = Create.selectQuery();
         Field<String> constant = Functions.constant("abc");
         Field<Integer> charLength = Functions.charLength(constant).as("len");
         Field<Integer> bitLength = Functions.bitLength(constant).as("bitlen");
@@ -361,7 +360,7 @@ public abstract class jOOQAbstractTest {
         q.addSelect(charLength, bitLength, octetLength);
         q.execute(connection);
 
-        Record<?> record = q.getResult().getRecord(0);
+        Record record = q.getResult().getRecord(0);
 
         assertEquals(Integer.valueOf(3), record.getValue(charLength));
 
@@ -380,7 +379,7 @@ public abstract class jOOQAbstractTest {
 
     @Test
     public final void testFunction5() throws Exception {
-    	SimpleSelectQuery<? extends Record<?>> q = Create.selectQuery(getVLibrary());
+    	SimpleSelectQuery<?> q = Create.selectQuery(getVLibrary());
 
         Field<String> o = Functions.constant("o");
         Field<Integer> position = Functions.position(getVLibrary_AUTHOR(), o).as("p");
@@ -389,8 +388,8 @@ public abstract class jOOQAbstractTest {
         q.addOrderBy(getVLibrary_AUTHOR(), ASC);
 
         q.execute(connection);
-        Record<?> r1 = q.getResult().getRecord(1); // George Orwell
-        Record<?> r2 = q.getResult().getRecord(2); // Paulo Coelho
+        Record r1 = q.getResult().getRecord(1); // George Orwell
+        Record r2 = q.getResult().getRecord(2); // Paulo Coelho
 
         assertEquals(Integer.valueOf(3), r1.getValue(position));
         assertEquals(Integer.valueOf(5), r2.getValue(position));

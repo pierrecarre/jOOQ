@@ -43,6 +43,6 @@ package org.jooq;
  * @author Lukas Eder
  * @see Select
  */
-public interface SimpleSelect<R extends Record<R>> extends SimpleSelectStep<R>, ResultProviderQuery<R> {
+public interface SimpleSelect<R extends Record> extends SimpleSelectStep<R>, ResultProviderQuery<R> {
 
 }

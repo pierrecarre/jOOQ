@@ -66,17 +66,17 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements SelectQuery<R> {
+class SelectQueryImpl extends AbstractQuery<Record> implements SelectQuery {
 
 	private static final long serialVersionUID = 1555503854543561285L;
 
-	private ResultImpl<R> result;
+	private ResultImpl<Record> result;
 	private final FieldList select;
 	private final TableList from;
 	private final JoinList join;
-	private final ConditionProviderImpl<R> condition;
+	private final ConditionProviderImpl condition;
 	private final FieldList groupBy;
-	private final ConditionProviderImpl<R> having;
+	private final ConditionProviderImpl having;
 	private final OrderByFieldList orderBy;
 	private final LimitImpl limit;
 
@@ -84,13 +84,13 @@ class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements S
 		this(null);
 	}
 
-	SelectQueryImpl(Table<R> from) {
+	SelectQueryImpl(Table<?> from) {
 		this.select = new SelectFieldListImpl();
 		this.from = new TableListImpl();
 		this.join = new JoinListImpl();
-		this.condition = new ConditionProviderImpl<R>();
+		this.condition = new ConditionProviderImpl();
 		this.groupBy = new FieldListImpl();
-		this.having = new ConditionProviderImpl<R>();
+		this.having = new ConditionProviderImpl();
 		this.orderBy = new OrderByFieldListImpl();
 		this.limit = new LimitImpl();
 
@@ -328,32 +328,31 @@ class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements S
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Class<R> getRecordType() {
-		return (Class<R>) getTables().getRecordType();
+	public Class<? extends Record> getRecordType() {
+		return getTables().getRecordType();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected final int execute(PreparedStatement statement) throws SQLException {
 		ResultSet rs = null;
 
 		try {
 			rs = statement.executeQuery();
-			result = new ResultImpl<R>(this);
+			result = new ResultImpl<Record>(this);
 
 			while (rs.next()) {
-				R record = null;
+				Record record = null;
 
-				Class<R> recordType = getRecordType();
+				Class<? extends Record> recordType = getRecordType();
 				try {
 					record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
 				} catch (Exception e) {
-					record = (R) new DefaultRecord(result);
+					record = new RecordImpl(result);
 				}
 
 				for (Field<?> f : getSelect()) {
+					@SuppressWarnings("unchecked")
 					Field<Object> field = (Field<Object>) f;
 					Object value = FieldTypeHelper.getFromResultSet(rs, f);
 
@@ -372,7 +371,7 @@ class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements S
 	}
 
 	@Override
-	public final Result<R> getResult() {
+	public final Result<Record> getResult() {
 		return result;
 	}
 
@@ -429,24 +428,24 @@ class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements S
 	}
 
 	@Override
-	public final SelectQuery<R> combine(SimpleSelectQuery<R> other) {
+	public final SelectQuery combine(SimpleSelectQuery<Record> other) {
 		return combine(CombineOperator.UNION, other);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final SelectQuery<R> combine(CombineOperator operator, SimpleSelectQuery<R> other) {
-		return new SelectQueryImpl<R>(asTable(operator, this, other));
+	public final SelectQuery combine(CombineOperator operator, SimpleSelectQuery<Record> other) {
+		return new SelectQueryImpl(asTable(operator, this, other));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final Table<R> asTable() {
+	public final Table<Record> asTable() {
 		return asTable(CombineOperator.UNION, this);
 	}
 
-	private Table<R> asTable(CombineOperator operator, SimpleSelectQuery<R>... queries) {
-		Table<R> result = new SelectQueryAsTable<R>(operator, queries);
+	private Table<Record> asTable(CombineOperator operator, SimpleSelectQuery<Record>... queries) {
+		Table<Record> result = new SelectQueryAsTable<Record>(operator, queries);
 
 		// Some dialects require derived tables to provide an alias
 		switch (Configuration.getInstance().getDialect()) {
@@ -512,7 +511,7 @@ class SelectQueryImpl<R extends Record<R>> extends AbstractQuery<R> implements S
 	}
 
 	@Override
-	public SelectQuery<R> getQuery() {
+	public SelectQuery getQuery() {
 		return this;
 	}
 }

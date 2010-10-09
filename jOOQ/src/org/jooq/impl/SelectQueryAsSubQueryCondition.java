@@ -45,11 +45,11 @@ import org.jooq.SubQueryOperator;
 class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements SubQueryCondition<T> {
 
 	private static final long serialVersionUID = -402776705884329740L;
-	private final SelectQuery<?> query;
+	private final SelectQuery query;
 	private final Field<T> field;
 	private final SubQueryOperator operator;
 
-	SelectQueryAsSubQueryCondition(SelectQuery<?> query, Field<T> field, SubQueryOperator operator) {
+	SelectQueryAsSubQueryCondition(SelectQuery query, Field<T> field, SubQueryOperator operator) {
 		this.query = query;
 		this.field = field;
 		this.operator = operator;
@@ -86,7 +86,7 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements Sub
 	}
 
 	@Override
-	public SelectQuery<?> getInnerSelect() {
+	public SelectQuery getInnerSelect() {
 		return query;
 	}
 }

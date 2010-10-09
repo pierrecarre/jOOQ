@@ -42,8 +42,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.SelectQuery;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
@@ -64,7 +64,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery<DefaultRecord> q = selectQuery();
+		SelectQuery q = selectQuery();
 		q.addFrom(ALL_TAB_COLS);
 		q.addFrom(ALL_COL_COMMENTS);
 		q.addConditions(
@@ -75,7 +75,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		q.addOrderBy(AllTabCols.COLUMN_ID);
 
 		q.execute(getConnection());
-		for (DefaultRecord record : q.getResult()) {
+		for (Record record : q.getResult()) {
 			String name = record.getValue(AllTabCols.COLUMN_NAME);
 			int position = record.getValue(AllTabCols.COLUMN_ID).intValue();
 			String dataType = record.getValue(AllTabCols.DATA_TYPE);

@@ -42,15 +42,15 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectGroupByStep<R extends Record<R>> extends SelectOrderByStep<R> {
+public interface SelectGroupByStep extends SelectOrderByStep {
 
 	/**
 	 * Add grouping to the query and proceed to the next step
 	 */
-	SelectHavingStep<R> groupBy(Field<?>... fields);
+	SelectHavingStep groupBy(Field<?>... fields);
 
 	/**
 	 * Add grouping to the query and proceed to the next step
 	 */
-	SelectHavingStep<R> groupBy(Collection<Field<?>> fields);
+	SelectHavingStep groupBy(Collection<Field<?>> fields);
 }

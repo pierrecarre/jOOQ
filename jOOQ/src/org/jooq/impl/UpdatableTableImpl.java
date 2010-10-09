@@ -44,7 +44,7 @@ import org.jooq.UpdatableTable;
  *
  * @author Lukas Eder
  */
-public class UpdatableTableImpl<R extends Record<R>> extends TableImpl<R> implements UpdatableTable<R> {
+public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implements UpdatableTable<R> {
 
 	/**
 	 * Generated UID

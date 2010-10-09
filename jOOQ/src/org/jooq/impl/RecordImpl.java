@@ -44,7 +44,7 @@ import org.jooq.Value;
 /**
  * @author Lukas Eder
  */
-public abstract class RecordImpl<R extends Record<R>> implements Record<R> {
+public class RecordImpl implements Record {
 
 	/**
 	 * Generated UID

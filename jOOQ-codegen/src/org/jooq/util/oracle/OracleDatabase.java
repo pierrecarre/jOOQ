@@ -43,8 +43,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.FunctionDefinition;
@@ -70,14 +70,14 @@ public class OracleDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SimpleSelectQuery<DefaultRecord> q = selectQuery(ALL_TAB_COMMENTS);
+		SimpleSelectQuery<Record> q = selectQuery(ALL_TAB_COMMENTS);
 		q.addConditions(
 				compareCondition(OWNER, getSchemaName()),
 				compareCondition(TABLE_NAME, "%$%", NOT_LIKE)); // Exclude weird oracle binary objects
 		q.addOrderBy(TABLE_NAME);
 		q.execute(getConnection());
 
-		for (DefaultRecord record : q.getResult()) {
+		for (Record record : q.getResult()) {
 			String name = record.getValue(TABLE_NAME);
 			String comment = record.getValue(COMMENTS);
 

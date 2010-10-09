@@ -43,7 +43,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class TableAlias<R extends Record<R>> extends TableImpl<R> implements Table<R>, AliasProvider<Table<R>> {
+class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, AliasProvider<Table<R>> {
 
 	private static final long serialVersionUID = -8417114874567698325L;
 	private final AliasProviderImpl<Table<R>> aliasProvider;
@@ -96,7 +96,7 @@ class TableAlias<R extends Record<R>> extends TableImpl<R> implements Table<R>, 
 	}
 
 	@Override
-	public Class<R> getRecordType() {
+	public Class<? extends R> getRecordType() {
 		return aliasProvider.getAliasProvider().getRecordType();
 	}
 }

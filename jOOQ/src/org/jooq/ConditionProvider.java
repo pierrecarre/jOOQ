@@ -40,7 +40,7 @@ import org.jooq.impl.Create;
  *
  * @author Lukas Eder
  */
-public interface ConditionProvider<R extends Record<R>> {
+public interface ConditionProvider {
 
 	/**
 	 * Adds new conditions to the update query, connecting it to existing

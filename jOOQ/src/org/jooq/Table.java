@@ -36,7 +36,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Table<R extends Record<R>> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider {
+public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider {
 
 	/**
 	 * Get the fields from this table.
@@ -71,5 +71,5 @@ public interface Table<R extends Record<R>> extends NamedQueryPart, AliasProvide
 	/**
 	 * @return The record type produced by this table
 	 */
-	Class<R> getRecordType();
+	Class<? extends R> getRecordType();
 }

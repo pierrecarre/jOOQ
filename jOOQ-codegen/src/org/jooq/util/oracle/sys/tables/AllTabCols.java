@@ -6,8 +6,8 @@ package org.jooq.util.oracle.sys.tables;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import org.jooq.Record;
 import org.jooq.TableField;
-import org.jooq.impl.DefaultRecord;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.oracle.sys.Sys;
@@ -18,7 +18,7 @@ import org.jooq.util.oracle.sys.Sys;
  *
  * Columns of user's tables, views and clusters
  */
-public class AllTabCols extends TableImpl<DefaultRecord> {
+public class AllTabCols extends TableImpl<Record> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,182 +30,182 @@ public class AllTabCols extends TableImpl<DefaultRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<DefaultRecord, String> OWNER = new TableFieldImpl<DefaultRecord, String>("OWNER", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>("OWNER", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Table, view or cluster name
 	 */
-	public static final TableField<DefaultRecord, String> TABLE_NAME = new TableFieldImpl<DefaultRecord, String>("TABLE_NAME", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>("TABLE_NAME", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Column name
 	 */
-	public static final TableField<DefaultRecord, String> COLUMN_NAME = new TableFieldImpl<DefaultRecord, String>("COLUMN_NAME", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> COLUMN_NAME = new TableFieldImpl<Record, String>("COLUMN_NAME", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Datatype of the column
 	 */
-	public static final TableField<DefaultRecord, String> DATA_TYPE = new TableFieldImpl<DefaultRecord, String>("DATA_TYPE", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> DATA_TYPE = new TableFieldImpl<Record, String>("DATA_TYPE", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Datatype modifier of the column
 	 */
-	public static final TableField<DefaultRecord, String> DATA_TYPE_MOD = new TableFieldImpl<DefaultRecord, String>("DATA_TYPE_MOD", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> DATA_TYPE_MOD = new TableFieldImpl<Record, String>("DATA_TYPE_MOD", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Owner of the datatype of the column
 	 */
-	public static final TableField<DefaultRecord, String> DATA_TYPE_OWNER = new TableFieldImpl<DefaultRecord, String>("DATA_TYPE_OWNER", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> DATA_TYPE_OWNER = new TableFieldImpl<Record, String>("DATA_TYPE_OWNER", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Length of the column in bytes
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> DATA_LENGTH = new TableFieldImpl<DefaultRecord, BigDecimal>("DATA_LENGTH", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> DATA_LENGTH = new TableFieldImpl<Record, BigDecimal>("DATA_LENGTH", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Length: decimal digits (NUMBER) or binary digits (FLOAT)
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> DATA_PRECISION = new TableFieldImpl<DefaultRecord, BigDecimal>("DATA_PRECISION", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> DATA_PRECISION = new TableFieldImpl<Record, BigDecimal>("DATA_PRECISION", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Digits to right of decimal point in a number
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> DATA_SCALE = new TableFieldImpl<DefaultRecord, BigDecimal>("DATA_SCALE", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> DATA_SCALE = new TableFieldImpl<Record, BigDecimal>("DATA_SCALE", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Does column allow NULL values?
 	 */
-	public static final TableField<DefaultRecord, String> NULLABLE = new TableFieldImpl<DefaultRecord, String>("NULLABLE", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> NULLABLE = new TableFieldImpl<Record, String>("NULLABLE", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Sequence number of the column as created
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> COLUMN_ID = new TableFieldImpl<DefaultRecord, BigDecimal>("COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> COLUMN_ID = new TableFieldImpl<Record, BigDecimal>("COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Length of default value for the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> DEFAULT_LENGTH = new TableFieldImpl<DefaultRecord, BigDecimal>("DEFAULT_LENGTH", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> DEFAULT_LENGTH = new TableFieldImpl<Record, BigDecimal>("DEFAULT_LENGTH", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Default value for the column
 	 */
-	public static final TableField<DefaultRecord, String> DATA_DEFAULT = new TableFieldImpl<DefaultRecord, String>("DATA_DEFAULT", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> DATA_DEFAULT = new TableFieldImpl<Record, String>("DATA_DEFAULT", String.class, ALL_TAB_COLS);
 
 	/**
 	 * The number of distinct values in the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> NUM_DISTINCT = new TableFieldImpl<DefaultRecord, BigDecimal>("NUM_DISTINCT", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> NUM_DISTINCT = new TableFieldImpl<Record, BigDecimal>("NUM_DISTINCT", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * The low value in the column
 	 */
-	public static final TableField<DefaultRecord, byte[]> LOW_VALUE = new TableFieldImpl<DefaultRecord, byte[]>("LOW_VALUE", byte[].class, ALL_TAB_COLS);
+	public static final TableField<Record, byte[]> LOW_VALUE = new TableFieldImpl<Record, byte[]>("LOW_VALUE", byte[].class, ALL_TAB_COLS);
 
 	/**
 	 * The high value in the column
 	 */
-	public static final TableField<DefaultRecord, byte[]> HIGH_VALUE = new TableFieldImpl<DefaultRecord, byte[]>("HIGH_VALUE", byte[].class, ALL_TAB_COLS);
+	public static final TableField<Record, byte[]> HIGH_VALUE = new TableFieldImpl<Record, byte[]>("HIGH_VALUE", byte[].class, ALL_TAB_COLS);
 
 	/**
 	 * The density of the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> DENSITY = new TableFieldImpl<DefaultRecord, BigDecimal>("DENSITY", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> DENSITY = new TableFieldImpl<Record, BigDecimal>("DENSITY", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * The number of nulls in the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> NUM_NULLS = new TableFieldImpl<DefaultRecord, BigDecimal>("NUM_NULLS", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> NUM_NULLS = new TableFieldImpl<Record, BigDecimal>("NUM_NULLS", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * The number of buckets in histogram for the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> NUM_BUCKETS = new TableFieldImpl<DefaultRecord, BigDecimal>("NUM_BUCKETS", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> NUM_BUCKETS = new TableFieldImpl<Record, BigDecimal>("NUM_BUCKETS", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * The date of the most recent time this column was analyzed
 	 */
-	public static final TableField<DefaultRecord, Date> LAST_ANALYZED = new TableFieldImpl<DefaultRecord, Date>("LAST_ANALYZED", Date.class, ALL_TAB_COLS);
+	public static final TableField<Record, Date> LAST_ANALYZED = new TableFieldImpl<Record, Date>("LAST_ANALYZED", Date.class, ALL_TAB_COLS);
 
 	/**
 	 * The sample size used in analyzing this column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> SAMPLE_SIZE = new TableFieldImpl<DefaultRecord, BigDecimal>("SAMPLE_SIZE", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> SAMPLE_SIZE = new TableFieldImpl<Record, BigDecimal>("SAMPLE_SIZE", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Character set name
 	 */
-	public static final TableField<DefaultRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<DefaultRecord, String>("CHARACTER_SET_NAME", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> CHARACTER_SET_NAME = new TableFieldImpl<Record, String>("CHARACTER_SET_NAME", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Declaration length of character type column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> CHAR_COL_DECL_LENGTH = new TableFieldImpl<DefaultRecord, BigDecimal>("CHAR_COL_DECL_LENGTH", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> CHAR_COL_DECL_LENGTH = new TableFieldImpl<Record, BigDecimal>("CHAR_COL_DECL_LENGTH", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Are the statistics calculated without merging underlying partitions?
 	 */
-	public static final TableField<DefaultRecord, String> GLOBAL_STATS = new TableFieldImpl<DefaultRecord, String>("GLOBAL_STATS", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> GLOBAL_STATS = new TableFieldImpl<Record, String>("GLOBAL_STATS", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Were the statistics entered directly by the user?
 	 */
-	public static final TableField<DefaultRecord, String> USER_STATS = new TableFieldImpl<DefaultRecord, String>("USER_STATS", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> USER_STATS = new TableFieldImpl<Record, String>("USER_STATS", String.class, ALL_TAB_COLS);
 
 	/**
 	 * The average length of the column in bytes
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> AVG_COL_LEN = new TableFieldImpl<DefaultRecord, BigDecimal>("AVG_COL_LEN", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> AVG_COL_LEN = new TableFieldImpl<Record, BigDecimal>("AVG_COL_LEN", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * The maximum length of the column in characters
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> CHAR_LENGTH = new TableFieldImpl<DefaultRecord, BigDecimal>("CHAR_LENGTH", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> CHAR_LENGTH = new TableFieldImpl<Record, BigDecimal>("CHAR_LENGTH", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * C if maximum length is specified in characters, B if in bytes
 	 */
-	public static final TableField<DefaultRecord, String> CHAR_USED = new TableFieldImpl<DefaultRecord, String>("CHAR_USED", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> CHAR_USED = new TableFieldImpl<Record, String>("CHAR_USED", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Is column data in 8.0 image format?
 	 */
-	public static final TableField<DefaultRecord, String> V80_FMT_IMAGE = new TableFieldImpl<DefaultRecord, String>("V80_FMT_IMAGE", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> V80_FMT_IMAGE = new TableFieldImpl<Record, String>("V80_FMT_IMAGE", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Has column data been upgraded to the latest type version format?
 	 */
-	public static final TableField<DefaultRecord, String> DATA_UPGRADED = new TableFieldImpl<DefaultRecord, String>("DATA_UPGRADED", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> DATA_UPGRADED = new TableFieldImpl<Record, String>("DATA_UPGRADED", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Is this a hidden column?
 	 */
-	public static final TableField<DefaultRecord, String> HIDDEN_COLUMN = new TableFieldImpl<DefaultRecord, String>("HIDDEN_COLUMN", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> HIDDEN_COLUMN = new TableFieldImpl<Record, String>("HIDDEN_COLUMN", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Is this a virtual column?
 	 */
-	public static final TableField<DefaultRecord, String> VIRTUAL_COLUMN = new TableFieldImpl<DefaultRecord, String>("VIRTUAL_COLUMN", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> VIRTUAL_COLUMN = new TableFieldImpl<Record, String>("VIRTUAL_COLUMN", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Sequence number of the column in the segment
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> SEGMENT_COLUMN_ID = new TableFieldImpl<DefaultRecord, BigDecimal>("SEGMENT_COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> SEGMENT_COLUMN_ID = new TableFieldImpl<Record, BigDecimal>("SEGMENT_COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * Internal sequence number of the column
 	 */
-	public static final TableField<DefaultRecord, BigDecimal> INTERNAL_COLUMN_ID = new TableFieldImpl<DefaultRecord, BigDecimal>("INTERNAL_COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
+	public static final TableField<Record, BigDecimal> INTERNAL_COLUMN_ID = new TableFieldImpl<Record, BigDecimal>("INTERNAL_COLUMN_ID", BigDecimal.class, ALL_TAB_COLS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<DefaultRecord, String> HISTOGRAM = new TableFieldImpl<DefaultRecord, String>("HISTOGRAM", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> HISTOGRAM = new TableFieldImpl<Record, String>("HISTOGRAM", String.class, ALL_TAB_COLS);
 
 	/**
 	 * Qualified column name
 	 */
-	public static final TableField<DefaultRecord, String> QUALIFIED_COL_NAME = new TableFieldImpl<DefaultRecord, String>("QUALIFIED_COL_NAME", String.class, ALL_TAB_COLS);
+	public static final TableField<Record, String> QUALIFIED_COL_NAME = new TableFieldImpl<Record, String>("QUALIFIED_COL_NAME", String.class, ALL_TAB_COLS);
 
 	/**
 	 * No further instances allowed

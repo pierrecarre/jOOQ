@@ -38,19 +38,19 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectQuery<R extends Record<R>> extends SimpleSelectQuery<R> {
+public interface SelectQuery extends SimpleSelectQuery<Record> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	SelectQuery<R> combine(SimpleSelectQuery<R> other);
+	SelectQuery combine(SimpleSelectQuery<Record> other);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	SelectQuery<R> combine(CombineOperator operator, SimpleSelectQuery<R> other);
+	SelectQuery combine(CombineOperator operator, SimpleSelectQuery<Record> other);
 
 	/**
 	 * Add tables to the table product

@@ -46,17 +46,17 @@ import org.jooq.TableList;
 /**
  * @author Lukas Eder
  */
-class ResultImpl<R extends Record<R>> implements Result<R> {
+class ResultImpl<R extends Record> implements Result<R> {
 
 	/**
 	 * Generated UID
 	 */
 	private static final long serialVersionUID = 6416154375799578362L;
 
-	private final SelectQuery<R> query;
+	private final SelectQuery query;
 	private final List<R> records;
 
-	ResultImpl(SelectQuery<R> query) {
+	ResultImpl(SelectQuery query) {
 		this.query = query;
 		this.records = new ArrayList<R>();
 	}

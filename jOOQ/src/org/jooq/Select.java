@@ -30,6 +30,7 @@
  */
 package org.jooq;
 
+
 /**
  * A simpler version of the {@link SelectQuery}
  * <p>
@@ -54,6 +55,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Select<R extends Record<R>> extends SelectStep<R>, ResultProviderQuery<R> {
+public interface Select extends SelectStep, ResultProviderQuery<Record> {
 
 }

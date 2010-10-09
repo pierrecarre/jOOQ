@@ -60,11 +60,11 @@ class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList
 	}
 
 	@Override
-	public Class<? extends Record<?>> getRecordType() {
+	public Class<? extends Record> getRecordType() {
 		if (size() == 1) {
 			return get(0).getRecordType();
 		} else {
-			return DefaultRecord.class;
+			return RecordImpl.class;
 		}
 	}
 }
