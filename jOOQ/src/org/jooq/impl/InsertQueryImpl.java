@@ -33,13 +33,13 @@ package org.jooq.impl;
 
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableRecord;
 
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
+class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
     private static final long serialVersionUID = 4466005417945353842L;
 

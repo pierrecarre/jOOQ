@@ -36,19 +36,21 @@ import java.sql.Date;
 import java.sql.DriverManager;
 
 import org.jooq.Configuration;
-import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
+import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.VLibraryRecord;
 
 
 /**
  * @author Lukas Eder
  */
-public class jOOQOracleTest extends jOOQAbstractTest {
+public class jOOQOracleTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord, VLibraryRecord> {
 
 	@Override
 	protected Connection getConnection() throws Exception {
@@ -63,68 +65,68 @@ public class jOOQOracleTest extends jOOQAbstractTest {
 		return "/org/jooq/test/oracle/create.sql";
 	}
 
-	@Override
-	protected Table<? extends Record> getTAuthor() {
-		return TAuthor.T_AUTHOR;
-	}
+    @Override
+    protected Table<TAuthorRecord> getTAuthor() {
+        return TAuthor.T_AUTHOR;
+    }
 
-	@Override
-	protected TableField<? extends Record, String> getTAuthor_LAST_NAME() {
-		return TAuthor.LAST_NAME;
-	}
+    @Override
+    protected TableField<TAuthorRecord, String> getTAuthor_LAST_NAME() {
+        return TAuthor.LAST_NAME;
+    }
 
-	@Override
-	protected TableField<? extends Record, String> getTAuthor_FIRST_NAME() {
-		return TAuthor.FIRST_NAME;
-	}
+    @Override
+    protected TableField<TAuthorRecord, String> getTAuthor_FIRST_NAME() {
+        return TAuthor.FIRST_NAME;
+    }
 
-	@Override
-	protected TableField<? extends Record, Date> getTAuthor_DATE_OF_BIRTH() {
-		return TAuthor.DATE_OF_BIRTH;
-	}
+    @Override
+    protected TableField<TAuthorRecord, Date> getTAuthor_DATE_OF_BIRTH() {
+        return TAuthor.DATE_OF_BIRTH;
+    }
 
-	@Override
-	protected TableField<? extends Record, Integer> getTAuthor_YEAR_OF_BIRTH() {
-		return TAuthor.YEAR_OF_BIRTH;
-	}
+    @Override
+    protected TableField<TAuthorRecord, Integer> getTAuthor_YEAR_OF_BIRTH() {
+        return TAuthor.YEAR_OF_BIRTH;
+    }
 
-	@Override
-	protected TableField<? extends Record, Integer> getTAuthor_ID() {
-		return TAuthor.ID;
-	}
+    @Override
+    protected TableField<TAuthorRecord, Integer> getTAuthor_ID() {
+        return TAuthor.ID;
+    }
 
-	@Override
-	protected Table<? extends Record> getTBook() {
-		return TBook.T_BOOK;
-	}
+    @Override
+    protected Table<TBookRecord> getTBook() {
+        return TBook.T_BOOK;
+    }
 
-	@Override
-	protected TableField<? extends Record, Integer> getTBook_ID() {
-		return TBook.ID;
-	}
+    @Override
+    protected TableField<TBookRecord, Integer> getTBook_ID() {
+        return TBook.ID;
+    }
 
-	@Override
-	protected TableField<? extends Record, Integer> getTBook_AUTHOR_ID() {
-		return TBook.AUTHOR_ID;
-	}
+    @Override
+    protected TableField<TBookRecord, Integer> getTBook_AUTHOR_ID() {
+        return TBook.AUTHOR_ID;
+    }
 
-	@Override
-	protected TableField<? extends Record, String> getTBook_TITLE() {
-		return TBook.TITLE;
-	}
+    @Override
+    protected TableField<TBookRecord, String> getTBook_TITLE() {
+        return TBook.TITLE;
+    }
 
-	@Override
-	protected Table<? extends Record> getVLibrary() {
-		return VLibrary.V_LIBRARY;
-	}
+    @Override
+    protected Table<VLibraryRecord> getVLibrary() {
+        return VLibrary.V_LIBRARY;
+    }
 
-	@Override
-	protected TableField<? extends Record, String> getVLibrary_TITLE() {
-		return VLibrary.TITLE;
-	}
+    @Override
+    protected TableField<VLibraryRecord, String> getVLibrary_TITLE() {
+        return VLibrary.TITLE;
+    }
 
-	@Override
-	protected TableField<? extends Record, String> getVLibrary_AUTHOR() {
-		return VLibrary.AUTHOR;
-	}
+    @Override
+    protected TableField<VLibraryRecord, String> getVLibrary_AUTHOR() {
+        return VLibrary.AUTHOR;
+    }
 }

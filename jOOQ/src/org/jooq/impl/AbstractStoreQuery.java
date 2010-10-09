@@ -38,28 +38,29 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.Field;
-import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.TableRecord;
 
 /**
  * A default implementation for store queries.
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery<R> implements StoreQuery<R> {
+abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuery<R> implements StoreQuery<R> {
 
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 6864591335823160569L;
+    private static final long                   serialVersionUID = 6864591335823160569L;
 
-    private final Table<R>              into;
-    private final Map<Field<?>, Object> values;
+    private final Table<R>                      into;
+    private final Map<TableField<R, ?>, Object> values;
 
     AbstractStoreQuery(Table<R> into) {
         this.into = into;
-        this.values = new LinkedHashMap<Field<?>, Object>();
+        this.values = new LinkedHashMap<TableField<R, ?>, Object>();
     }
 
     AbstractStoreQuery(Table<R> into, R record) {
@@ -74,29 +75,34 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery<R> imp
     }
 
     @Override
-    public final Map<Field<?>, ?> getValues() {
+    public final Map<TableField<R, ?>, ?> getValues() {
         return Collections.unmodifiableMap(getValues0());
     }
 
-    protected final Map<Field<?>, Object> getValues0() {
+    protected final Map<TableField<R, ?>, Object> getValues0() {
         return values;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void setRecord(R record) {
         for (Field<?> field : record.getFields()) {
-            getValues0().put(field, record.getValue(field));
+            if (!(field instanceof TableField)) {
+                throw new IllegalArgumentException("Cannot provide non-tablefields");
+            }
+
+            getValues0().put((TableField<R, ?>)field, record.getValue(field));
         }
     }
 
     @Override
-    public final <T> void addValue(Field<T> field, T value) {
+    public final <T> void addValue(TableField<R, T> field, T value) {
         getValues0().put(field, value);
     }
 
     @Override
-    public final void addValues(Map<Field<?>, ?> values) {
-        for (Entry<Field<?>, ?> value : values.entrySet()) {
+    public final void addValues(Map<TableField<R, ?>, ?> values) {
+        for (Entry<TableField<R, ?>, ?> value : values.entrySet()) {
             getValues0().put(value.getKey(), value.getValue());
         }
     }

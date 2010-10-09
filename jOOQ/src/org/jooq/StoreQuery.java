@@ -38,7 +38,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface StoreQuery<R extends Record> extends Query {
+public interface StoreQuery<R extends TableRecord<R>> extends Query {
 
     /**
      * @return The table that the data is stored into
@@ -48,7 +48,7 @@ public interface StoreQuery<R extends Record> extends Query {
     /**
      * @return A mapping of fields and values that are stored by the query
      */
-    Map<Field<?>, ?> getValues();
+    Map<TableField<R, ?>, ?> getValues();
 
     /**
      * Add values to the store statement
@@ -64,12 +64,12 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param field The field
      * @param value The value
      */
-    <T> void addValue(Field<T> field, T value);
+    <T> void addValue(TableField<R, T> field, T value);
 
     /**
      * Add values to the store statement
      *
      * @param values A mapping of fields and values that are stored by the query
      */
-    void addValues(Map<Field<?>, ?> values);
+    void addValues(Map<TableField<R, ?>, ?> values);
 }

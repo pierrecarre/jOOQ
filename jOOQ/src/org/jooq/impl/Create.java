@@ -56,6 +56,7 @@ import org.jooq.SelectQuery;
 import org.jooq.SimpleSelect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
+import org.jooq.TableRecord;
 import org.jooq.UpdateQuery;
 
 /**
@@ -267,7 +268,7 @@ public final class Create {
      * @param into The table to insert data into
      * @return The new {@link InsertQuery}
      */
-    public static <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
+    public static <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
         return new InsertQueryImpl<R>(into);
     }
 
@@ -277,7 +278,7 @@ public final class Create {
      * @param table The table to update data into
      * @return The new {@link UpdateQuery}
      */
-    public static <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
+    public static <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table) {
         return new UpdateQueryImpl<R>(table);
     }
 
@@ -287,7 +288,7 @@ public final class Create {
      * @param table The table to delete data from
      * @return The new {@link DeleteQuery}
      */
-    public static <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
+    public static <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
         return new DeleteQueryImpl<R>(table);
     }
 

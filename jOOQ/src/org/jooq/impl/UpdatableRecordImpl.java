@@ -38,10 +38,10 @@ import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.Record;
 import org.jooq.RecordMetaData;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
+import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
@@ -51,7 +51,7 @@ import org.jooq.UpdateQuery;
  *
  * @author Lukas Eder
  */
-public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> implements UpdatableRecord<R> {
+public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
 
     /**
      * Generated UID
@@ -98,22 +98,24 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
         }
     }
 
+    @SuppressWarnings("unchecked")
     private final void storeInsert(Connection con) throws SQLException {
         InsertQuery<R> insert = Create.insertQuery(getTable());
 
         for (Field<?> field : getFields()) {
-            addValue(insert, field);
+            addValue(insert, (TableField<R, ?>)field);
         }
 
         insert.execute(con);
     }
 
+    @SuppressWarnings("unchecked")
     private final void storeUpdate(Connection con) throws SQLException {
         UpdateQuery<R> update = Create.updateQuery(getTable());
 
         for (Field<?> field : getFields()) {
             if (getValue0(field).isChanged()) {
-                addValue(update, field);
+                addValue(update, (TableField<R, ?>)field);
             }
         }
 
@@ -145,7 +147,7 @@ public class UpdatableRecordImpl<R extends Record> extends TableRecordImpl<R> im
     /**
      * Extracted method to ensure generic type safety.
      */
-    private final <T> void addValue(StoreQuery<R> store, Field<T> field) {
+    private final <T> void addValue(StoreQuery<R> store, TableField<R, T> field) {
         store.addValue(field, getValue(field));
     }
 }
