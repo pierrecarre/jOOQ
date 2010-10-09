@@ -42,6 +42,7 @@ import org.jooq.Configuration;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Create;
 import org.jooq.impl.DefaultRecord;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
@@ -129,7 +130,7 @@ public class Library {
 	 * Run this code providing your own database connection.
 	 */
 	public static void thirdRun(Connection c) throws SQLException {
-		SelectQuery<TAuthorRecord> q = Create.select(T_AUTHOR)
+		SimpleSelectQuery<TAuthorRecord> q = Create.select(T_AUTHOR)
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
 			.orderBy(TAuthor.LAST_NAME).getQuery();
 
