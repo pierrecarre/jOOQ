@@ -43,7 +43,7 @@ public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> impl
 
 	private static final long serialVersionUID = -5277225593751085577L;
 
-	public ParameterImpl(String name, Class<T> type) {
+	public ParameterImpl(String name, Class<? extends T> type) {
 		super(name, type);
 	}
 

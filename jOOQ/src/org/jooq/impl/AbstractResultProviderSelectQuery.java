@@ -338,7 +338,7 @@ implements ResultProviderSelectQuery<Q, R> {
 			throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
 		}
 
-		return new SelectQueryAsField<T>(this, (Class<T>) getSelect().get(0).getType());
+		return new SelectQueryAsField<T>(this, (Class<? extends T>) getSelect().get(0).getType());
 	}
 
 	@Override

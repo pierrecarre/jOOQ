@@ -50,9 +50,9 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 
 	private T result;
 	private Field<T> function;
-	private final Class<T> type;
+	private final Class<? extends T> type;
 
-	public StoredFunctionImpl(String name, Class<T> type) {
+	public StoredFunctionImpl(String name, Class<? extends T> type) {
 		super(name);
 
 		this.type = type;

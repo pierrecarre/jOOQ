@@ -45,7 +45,7 @@ class SelectQueryAsField<T> extends FieldImpl<T> implements Field<T> {
 	private static final long serialVersionUID = 3463144434073231750L;
 	private final ResultProviderQuery<?> query;
 
-	SelectQueryAsField(ResultProviderQuery<?> query, Class<T> type) {
+	SelectQueryAsField(ResultProviderQuery<?> query, Class<? extends T> type) {
 		super("", type);
 
 		this.query = query;
