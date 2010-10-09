@@ -373,9 +373,8 @@ public final class Create {
 	 *            The table to select data from
 	 * @return The new {@link SelectQuery}
 	 */
-	@SuppressWarnings("unchecked")
 	public static <R extends Record> SimpleSelectQuery<R> selectQuery(Table<R> table) {
-		return (SimpleSelectQuery<R>) new SelectQueryImpl(table);
+		return new SimpleSelectQueryImpl<R>(table);
 	}
 
 	/**

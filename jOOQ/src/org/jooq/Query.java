@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  *
  * @author Lukas Eder
  */
-public interface Query extends Serializable {
+public interface Query extends QueryPart, Serializable {
 
 	/**
 	 * Execute the query

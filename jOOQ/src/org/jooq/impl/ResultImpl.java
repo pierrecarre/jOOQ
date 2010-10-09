@@ -39,8 +39,8 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
+import org.jooq.RecordMetaData;
 import org.jooq.Result;
-import org.jooq.SelectQuery;
 import org.jooq.TableList;
 
 /**
@@ -53,22 +53,22 @@ class ResultImpl<R extends Record> implements Result<R> {
 	 */
 	private static final long serialVersionUID = 6416154375799578362L;
 
-	private final SelectQuery query;
+	private final RecordMetaData meta;
 	private final List<R> records;
 
-	ResultImpl(SelectQuery query) {
-		this.query = query;
+	ResultImpl(RecordMetaData meta) {
+		this.meta = meta;
 		this.records = new ArrayList<R>();
 	}
 
 	@Override
 	public FieldList getFields() {
-		return query.getSelect();
+		return meta.getFields();
 	}
 
 	@Override
 	public TableList getTables() {
-		return query.getTables();
+		return meta.getTables();
 	}
 
 	@Override
@@ -109,7 +109,7 @@ class ResultImpl<R extends Record> implements Result<R> {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getClass().getSimpleName() + " [query=" + query + "]\n");
+		sb.append(getClass().getSimpleName() + " [query=" + meta + "]\n");
 		sb.append("Records:\n");
 
 		int i = 0;

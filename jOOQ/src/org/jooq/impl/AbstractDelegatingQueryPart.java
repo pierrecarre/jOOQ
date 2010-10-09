@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,15 +28,37 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.impl;
 
-package org.jooq;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import org.jooq.QueryPart;
 
-/**
- * A query used for deletion of data
- *
- * @author Lukas Eder
- */
-public interface DeleteQuery<R extends Record> extends Query, ConditionProvider {
+abstract class AbstractDelegatingQueryPart extends AbstractQueryPart {
 
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = 3382400928803573548L;
+	private final QueryPart delegate;
+
+	AbstractDelegatingQueryPart(QueryPart delegate) {
+		this.delegate = delegate;
+	}
+
+	@Override
+	public final String toSQLDeclaration(boolean inlineParameters) {
+		return delegate.toSQLDeclaration(inlineParameters);
+	}
+
+	@Override
+	public final String toSQLReference(boolean inlineParameters) {
+		return delegate.toSQLReference(inlineParameters);
+	}
+
+	@Override
+	public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+		return delegate.bind(stmt, initialIndex);
+	}
 }

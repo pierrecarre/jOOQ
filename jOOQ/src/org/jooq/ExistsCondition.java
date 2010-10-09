@@ -42,9 +42,4 @@ public interface ExistsCondition extends Condition {
 	 * @return The operator used in the condition
 	 */
 	ExistsOperator getOperator();
-
-	/**
-	 * @return The inner select used in the condition
-	 */
-	SelectQuery getInnerSelect();
 }

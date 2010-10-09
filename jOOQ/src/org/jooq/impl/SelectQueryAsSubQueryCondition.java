@@ -35,7 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Field;
-import org.jooq.SelectQuery;
+import org.jooq.ResultProviderQuery;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
@@ -45,11 +45,11 @@ import org.jooq.SubQueryOperator;
 class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements SubQueryCondition<T> {
 
 	private static final long serialVersionUID = -402776705884329740L;
-	private final SelectQuery query;
+	private final ResultProviderQuery<?> query;
 	private final Field<T> field;
 	private final SubQueryOperator operator;
 
-	SelectQueryAsSubQueryCondition(SelectQuery query, Field<T> field, SubQueryOperator operator) {
+	SelectQueryAsSubQueryCondition(ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
 		this.query = query;
 		this.field = field;
 		this.operator = operator;
@@ -83,10 +83,5 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements Sub
 	@Override
 	public SubQueryOperator getOperator() {
 		return operator;
-	}
-
-	@Override
-	public SelectQuery getInnerSelect() {
-		return query;
 	}
 }

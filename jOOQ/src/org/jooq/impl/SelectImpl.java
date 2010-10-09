@@ -66,7 +66,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SelectImpl implements
+class SelectImpl extends AbstractDelegatingQueryPart implements
 
 	// Cascading interface implementations for Select behaviour
 	Select, SelectStep, SelectFromStep,
@@ -98,6 +98,8 @@ class SelectImpl implements
 	}
 
 	SelectImpl(SelectQuery query) {
+		super(query);
+
 		this.query = query;
 	}
 
@@ -265,10 +267,5 @@ class SelectImpl implements
 	@Override
 	public Select getSelect() {
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		return query.toString();
 	}
 }

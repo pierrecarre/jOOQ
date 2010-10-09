@@ -38,7 +38,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface StoreQuery<R extends Record> extends Query, QueryPart {
+public interface StoreQuery<R extends Record> extends Query {
 
 	/**
 	 * @return The table that the data is stored into

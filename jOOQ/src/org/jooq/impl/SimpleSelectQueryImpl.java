@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,15 +28,31 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.impl;
 
-package org.jooq;
+import org.jooq.Record;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.Table;
 
+class SimpleSelectQueryImpl<R extends Record>
+extends AbstractResultProviderSelectQuery<SimpleSelectQuery<R>, R>
+implements SimpleSelectQuery<R> {
 
-/**
- * A query used for deletion of data
- *
- * @author Lukas Eder
- */
-public interface DeleteQuery<R extends Record> extends Query, ConditionProvider {
+	/**
+	 * Generated UID
+	 */
+	private static final long serialVersionUID = 3200508777418108686L;
 
+	SimpleSelectQueryImpl() {
+		this(null);
+	}
+
+	SimpleSelectQueryImpl(Table<R> from) {
+		super(from);
+	}
+
+	@Override
+	final SimpleSelectQuery<R> createNew(Table<R> from) {
+		return new SimpleSelectQueryImpl<R>(from);
+	}
 }

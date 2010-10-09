@@ -267,7 +267,7 @@ public abstract class jOOQAbstractTest {
         q1.addCompareCondition(getTBook_AUTHOR_ID(), 1);
         q2.addCompareCondition(getTBook_TITLE(), "Brida");
 
-        SimpleSelectQuery<?> combine = q1.combine(q2);
+        SelectQuery combine = q1.combine(q2);
 
         int rows = combine.execute(connection);
         assertEquals(3, rows);

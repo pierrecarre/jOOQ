@@ -38,19 +38,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectQuery extends SimpleSelectQuery<Record> {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	SelectQuery combine(SimpleSelectQuery<Record> other);
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	SelectQuery combine(CombineOperator operator, SimpleSelectQuery<Record> other);
+public interface SelectQuery extends ResultProviderSelectQuery<SelectQuery, Record> {
 
 	/**
 	 * Add tables to the table product

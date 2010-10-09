@@ -39,7 +39,7 @@ import java.util.List;
 import org.jooq.CombineOperator;
 import org.jooq.FieldList;
 import org.jooq.Record;
-import org.jooq.SimpleSelectQuery;
+import org.jooq.ResultProviderSelectQuery;
 import org.jooq.Table;
 
 /**
@@ -48,14 +48,14 @@ import org.jooq.Table;
 class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table<R> {
 
 	private static final long serialVersionUID = 6272398035926615668L;
-	private final List<SimpleSelectQuery<R>> queries;
+	private final List<ResultProviderSelectQuery<?, R>> queries;
 	private final CombineOperator operator;
 
-	SelectQueryAsTable(SimpleSelectQuery<R>... query) {
+	SelectQueryAsTable(ResultProviderSelectQuery<?, R>... query) {
 		this(CombineOperator.UNION, query);
 	}
 
-	SelectQueryAsTable(CombineOperator operator, SimpleSelectQuery<R>... query) {
+	SelectQueryAsTable(CombineOperator operator, ResultProviderSelectQuery<?, R>... query) {
 		super("");
 
 		this.operator = operator;
@@ -79,7 +79,7 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
 
 	@Override
 	public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-		for (SimpleSelectQuery<?> query : queries) {
+		for (ResultProviderSelectQuery<?, R> query : queries) {
 			initialIndex = query.bind(stmt, initialIndex);
 		}
 
@@ -95,7 +95,7 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
 
 			String connector = "";
 			sb.append("(");
-			for (SimpleSelectQuery<?> query : queries) {
+			for (ResultProviderSelectQuery<?, R> query : queries) {
 				sb.append(connector);
 				sb.append("(");
 				sb.append(query.toSQLReference(inlineParameters));
