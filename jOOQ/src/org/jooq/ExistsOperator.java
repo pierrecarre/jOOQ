@@ -38,16 +38,16 @@ package org.jooq;
  */
 public enum ExistsOperator {
 
-	EXISTS("exists"),
-	NOT_EXISTS("not exists");
+    EXISTS("exists"),
+    NOT_EXISTS("not exists");
 
-	private final String sql;
+    private final String sql;
 
-	private ExistsOperator(String sql) {
-		this.sql = sql;
-	}
+    private ExistsOperator(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		return sql;
-	}
+    public String toSQL() {
+        return sql;
+    }
 }

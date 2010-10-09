@@ -38,38 +38,38 @@ package org.jooq;
  */
 public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider {
 
-	/**
-	 * Get the fields from this table.
-	 * <p>
-	 * Usually, this will return the fields contained in the table. However, if
-	 * this is an aliased table, the fields will be aliased accordingly.
-	 *
-	 * @return The list of fields contained in the table
-	 */
-	FieldList getFields();
+    /**
+     * Get the fields from this table.
+     * <p>
+     * Usually, this will return the fields contained in the table. However, if
+     * this is an aliased table, the fields will be aliased accordingly.
+     *
+     * @return The list of fields contained in the table
+     */
+    FieldList getFields();
 
-	/**
-	 * @return The table's schema
-	 */
-	Schema getSchema();
+    /**
+     * @return The table's schema
+     */
+    Schema getSchema();
 
-	/**
-	 * @return The table's name
-	 */
-	@Override
-	String getName();
+    /**
+     * @return The table's name
+     */
+    @Override
+    String getName();
 
-	/**
-	 * Create an alias for this table
-	 *
-	 * @param alias The alias name
-	 * @return The table alias
-	 */
-	@Override
-	Table<R> as(String alias);
+    /**
+     * Create an alias for this table
+     *
+     * @param alias The alias name
+     * @return The table alias
+     */
+    @Override
+    Table<R> as(String alias);
 
-	/**
-	 * @return The record type produced by this table
-	 */
-	Class<? extends R> getRecordType();
+    /**
+     * @return The record type produced by this table
+     */
+    Class<? extends R> getRecordType();
 }

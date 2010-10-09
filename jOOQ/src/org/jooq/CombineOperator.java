@@ -39,40 +39,40 @@ package org.jooq;
  */
 public enum CombineOperator {
 
-	/**
-	 * Unite the two {@link ResultProviderQuery}'s disallowing duplicate records
-	 */
-	UNION("union"),
+    /**
+     * Unite the two {@link ResultProviderQuery}'s disallowing duplicate records
+     */
+    UNION("union"),
 
-	/**
-	 * Unite the two {@link ResultProviderQuery}'s allowing duplicate records
-	 */
-	UNION_ALL("union all"),
+    /**
+     * Unite the two {@link ResultProviderQuery}'s allowing duplicate records
+     */
+    UNION_ALL("union all"),
 
-	/**
-	 * Remove all records encountered in the second {@link ResultProviderQuery}
-	 * from the first {@link ResultProviderQuery}
-	 */
-	EXCEPT("except"),
+    /**
+     * Remove all records encountered in the second {@link ResultProviderQuery}
+     * from the first {@link ResultProviderQuery}
+     */
+    EXCEPT("except"),
 
-	/**
-	 * Retain all records encountered in both {@link ResultProviderQuery}'s
-	 */
-	INTERSECT("intersect");
+    /**
+     * Retain all records encountered in both {@link ResultProviderQuery}'s
+     */
+    INTERSECT("intersect");
 
-	private final String sql;
+    private final String sql;
 
-	private CombineOperator(String sql) {
-		this.sql = sql;
-	}
+    private CombineOperator(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		if (this == EXCEPT) {
-			if (Configuration.getInstance().getDialect() == SQLDialect.ORACLE) {
-				return "minus";
-			}
-		}
+    public String toSQL() {
+        if (this == EXCEPT) {
+            if (Configuration.getInstance().getDialect() == SQLDialect.ORACLE) {
+                return "minus";
+            }
+        }
 
-		return sql;
-	}
+        return sql;
+    }
 }

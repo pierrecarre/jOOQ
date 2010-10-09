@@ -38,8 +38,8 @@ package org.jooq;
  */
 public interface NamedTypeProviderQueryPart<T> extends NamedQueryPart {
 
-	/**
-	 * @return The type of this object
-	 */
-	Class<? extends T> getType();
+    /**
+     * @return The type of this object
+     */
+    Class<? extends T> getType();
 }

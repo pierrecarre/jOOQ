@@ -39,13 +39,13 @@ import java.util.List;
  * @author Lukas Eder
  */
 public interface CombinedCondition extends Condition {
-	/**
-	 * @return The combine operator
-	 */
-	Operator getOperator();
+    /**
+     * @return The combine operator
+     */
+    Operator getOperator();
 
-	/**
-	 * @return The combined conditions
-	 */
-	List<Condition> getConditions();
+    /**
+     * @return The combined conditions
+     */
+    List<Condition> getConditions();
 }

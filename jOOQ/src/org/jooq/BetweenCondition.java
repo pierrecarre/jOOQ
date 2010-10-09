@@ -38,13 +38,13 @@ package org.jooq;
  */
 public interface BetweenCondition<T> extends FieldCondition<T> {
 
-	/**
-	 * @return The lower bound of the interval
-	 */
-	T getMinValue();
+    /**
+     * @return The lower bound of the interval
+     */
+    T getMinValue();
 
-	/**
-	 * @return The upper bound of the interval
-	 */
-	T getMaxValue();
+    /**
+     * @return The upper bound of the interval
+     */
+    T getMaxValue();
 }

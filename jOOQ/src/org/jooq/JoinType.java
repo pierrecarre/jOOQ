@@ -37,19 +37,19 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum JoinType {
-	JOIN("join"),
-	LEFT_JOIN("left join"),
-	LEFT_OUTER_JOIN("left outer join"),
-	RIGHT_JOIN("right join"),
-	RIGHT_OUTER_JOIN("right outer join");
+    JOIN("join"),
+    LEFT_JOIN("left join"),
+    LEFT_OUTER_JOIN("left outer join"),
+    RIGHT_JOIN("right join"),
+    RIGHT_OUTER_JOIN("right outer join");
 
-	private final String sql;
+    private final String sql;
 
-	private JoinType(String sql) {
-		this.sql = sql;
-	}
+    private JoinType(String sql) {
+        this.sql = sql;
+    }
 
-	public final String toSQL() {
-		return sql;
-	}
+    public final String toSQL() {
+        return sql;
+    }
 }

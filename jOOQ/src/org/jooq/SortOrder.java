@@ -38,23 +38,23 @@ package org.jooq;
  */
 public enum SortOrder {
 
-	/**
-	 * Ascending sort order
-	 */
-	ASC("asc"),
+    /**
+     * Ascending sort order
+     */
+    ASC("asc"),
 
-	/**
-	 * Descending sort order
-	 */
-	DESC("desc");
+    /**
+     * Descending sort order
+     */
+    DESC("desc");
 
-	private final String sql;
+    private final String sql;
 
-	private SortOrder(String sql) {
-		this.sql = sql;
-	}
+    private SortOrder(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		return sql;
-	}
+    public String toSQL() {
+        return sql;
+    }
 }

@@ -40,41 +40,36 @@ import java.util.Map;
  */
 public interface StoreQuery<R extends Record> extends Query {
 
-	/**
-	 * @return The table that the data is stored into
-	 */
-	Table<R> getInto();
+    /**
+     * @return The table that the data is stored into
+     */
+    Table<R> getInto();
 
-	/**
-	 * @return A mapping of fields and values that are stored by the query
-	 */
-	Map<Field<?>, ?> getValues();
+    /**
+     * @return A mapping of fields and values that are stored by the query
+     */
+    Map<Field<?>, ?> getValues();
 
-	/**
-	 * Add values to the store statement
-	 *
-	 * @param record
-	 *            The record holding values that are stored by the query
-	 */
-	void setRecord(R record);
+    /**
+     * Add values to the store statement
+     *
+     * @param record The record holding values that are stored by the query
+     */
+    void setRecord(R record);
 
-	/**
-	 * Add a value to the store statement
-	 *
-	 * @param <T>
-	 *            The value type
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
-	 */
-	<T> void addValue(Field<T> field, T value);
+    /**
+     * Add a value to the store statement
+     *
+     * @param <T> The value type
+     * @param field The field
+     * @param value The value
+     */
+    <T> void addValue(Field<T> field, T value);
 
-	/**
-	 * Add values to the store statement
-	 *
-	 * @param values
-	 *            A mapping of fields and values that are stored by the query
-	 */
-	void addValues(Map<Field<?>, ?> values);
+    /**
+     * Add values to the store statement
+     *
+     * @param values A mapping of fields and values that are stored by the query
+     */
+    void addValues(Map<Field<?>, ?> values);
 }

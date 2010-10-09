@@ -30,9 +30,9 @@
  */
 package org.jooq;
 
-
 /**
- * A common interface for tables whose records can be stored back to the database again.
+ * A common interface for tables whose records can be stored back to the
+ * database again.
  *
  * @author Lukas Eder
  */

@@ -37,22 +37,22 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum Comparator {
-	EQUALS("="),
-	NOT_EQUALS("<>"),
-	LESS("<"),
-	LESS_OR_EQUAL("<="),
-	GREATER(">"),
-	GREATER_OR_EQUAL(">="),
-	LIKE("like"),
-	NOT_LIKE("not like");
+    EQUALS("="),
+    NOT_EQUALS("<>"),
+    LESS("<"),
+    LESS_OR_EQUAL("<="),
+    GREATER(">"),
+    GREATER_OR_EQUAL(">="),
+    LIKE("like"),
+    NOT_LIKE("not like");
 
-	private final String sql;
+    private final String sql;
 
-	private Comparator(String sql) {
-		this.sql = sql;
-	}
+    private Comparator(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		return sql;
-	}
+    public String toSQL() {
+        return sql;
+    }
 }

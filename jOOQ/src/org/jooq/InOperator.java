@@ -37,23 +37,23 @@ package org.jooq;
  */
 public enum InOperator {
 
-	/**
-	 * IN
-	 */
-	IN("in"),
+    /**
+     * IN
+     */
+    IN("in"),
 
-	/**
-	 * NOT IN
-	 */
-	NOT_IN("not in");
+    /**
+     * NOT IN
+     */
+    NOT_IN("not in");
 
-	private final String sql;
+    private final String sql;
 
-	private InOperator(String sql) {
-		this.sql = sql;
-	}
+    private InOperator(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		return sql;
-	}
+    public String toSQL() {
+        return sql;
+    }
 }

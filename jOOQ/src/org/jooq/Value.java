@@ -37,31 +37,30 @@ package org.jooq;
  */
 public interface Value<T> {
 
-	/**
-	 * @return The wrapped value
-	 */
-	T getValue();
+    /**
+     * @return The wrapped value
+     */
+    T getValue();
 
-	/**
-	 * Get the wrapped value or a default value if the wrapped value is
-	 * <code>null</code>.
-	 *
-	 * @param defaultValue
-	 *            The default value if the wrapped value is <code>null</code>.
-	 * @return The wrapped value.
-	 */
-	T getValue(T defaultValue);
+    /**
+     * Get the wrapped value or a default value if the wrapped value is
+     * <code>null</code>.
+     *
+     * @param defaultValue The default value if the wrapped value is
+     *            <code>null</code>.
+     * @return The wrapped value.
+     */
+    T getValue(T defaultValue);
 
-	/**
-	 * Set the wrapped value.
-	 *
-	 * @param value
-	 *            The new wrapped value.
-	 */
-	void setValue(T value);
+    /**
+     * Set the wrapped value.
+     *
+     * @param value The new wrapped value.
+     */
+    void setValue(T value);
 
-	/**
-	 * @return Whether this value has been changed since the record was loaded.
-	 */
-	boolean isChanged();
+    /**
+     * @return Whether this value has been changed since the record was loaded.
+     */
+    boolean isChanged();
 }

@@ -43,43 +43,43 @@ import java.util.Collection;
  */
 public interface SimpleSelectOrderByStep<R extends Record> extends QueryProvider<SimpleSelectQuery<R>> {
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SimpleSelectOrderByStep<R> orderBy(Field<?>... fields);
+    /**
+     * Add an order by clause to the query.
+     */
+    SimpleSelectOrderByStep<R> orderBy(Field<?>... fields);
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields);
+    /**
+     * Add an order by clause to the query.
+     */
+    SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields);
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order);
+    /**
+     * Add an order by clause to the query.
+     */
+    SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order);
 
-	/**
-	 * Combine with other selects
-	 */
-	SimpleSelect<R> union(SimpleSelect<R> select);
+    /**
+     * Combine with other selects
+     */
+    SimpleSelect<R> union(SimpleSelect<R> select);
 
-	/**
-	 * Combine with other selects
-	 */
-	SimpleSelect<R> unionAll(SimpleSelect<R> select);
+    /**
+     * Combine with other selects
+     */
+    SimpleSelect<R> unionAll(SimpleSelect<R> select);
 
-	/**
-	 * Combine with other selects
-	 */
-	SimpleSelect<R> except(SimpleSelect<R> select);
+    /**
+     * Combine with other selects
+     */
+    SimpleSelect<R> except(SimpleSelect<R> select);
 
-	/**
-	 * Combine with other selects
-	 */
-	SimpleSelect<R> intersect(SimpleSelect<R> select);
+    /**
+     * Combine with other selects
+     */
+    SimpleSelect<R> intersect(SimpleSelect<R> select);
 
-	/**
-	 * Return this as a {@link SimpleSelect} object
-	 */
-	SimpleSelect<R> getSelect();
+    /**
+     * Return this as a {@link SimpleSelect} object
+     */
+    SimpleSelect<R> getSelect();
 }

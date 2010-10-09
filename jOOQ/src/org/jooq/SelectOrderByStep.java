@@ -43,43 +43,43 @@ import java.util.Collection;
  */
 public interface SelectOrderByStep extends QueryProvider<SelectQuery> {
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SelectOrderByStep orderBy(Field<?>... fields);
+    /**
+     * Add an order by clause to the query.
+     */
+    SelectOrderByStep orderBy(Field<?>... fields);
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SelectOrderByStep orderBy(Collection<Field<?>> fields);
+    /**
+     * Add an order by clause to the query.
+     */
+    SelectOrderByStep orderBy(Collection<Field<?>> fields);
 
-	/**
-	 * Add an order by clause to the query.
-	 */
-	SelectOrderByStep orderBy(Field<?> field, SortOrder order);
+    /**
+     * Add an order by clause to the query.
+     */
+    SelectOrderByStep orderBy(Field<?> field, SortOrder order);
 
-	/**
-	 * Combine with other selects
-	 */
-	Select union(Select select);
+    /**
+     * Combine with other selects
+     */
+    Select union(Select select);
 
-	/**
-	 * Combine with other selects
-	 */
-	Select unionAll(Select select);
+    /**
+     * Combine with other selects
+     */
+    Select unionAll(Select select);
 
-	/**
-	 * Combine with other selects
-	 */
-	Select except(Select select);
+    /**
+     * Combine with other selects
+     */
+    Select except(Select select);
 
-	/**
-	 * Combine with other selects
-	 */
-	Select intersect(Select select);
+    /**
+     * Combine with other selects
+     */
+    Select intersect(Select select);
 
-	/**
-	 * Return this as a {@link Select} object
-	 */
-	Select getSelect();
+    /**
+     * Return this as a {@link Select} object
+     */
+    Select getSelect();
 }

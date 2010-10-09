@@ -41,28 +41,24 @@ import java.util.Map;
  */
 public interface OrderByFieldList extends FieldList {
 
-	/**
-	 * Adds a field to the field list, specifying the corresponding sort order
-	 *
-	 * @param field
-	 *            The sort field
-	 * @param order
-	 *            The sort order
-	 */
-	void add(Field<?> field, SortOrder order);
+    /**
+     * Adds a field to the field list, specifying the corresponding sort order
+     *
+     * @param field The sort field
+     * @param order The sort order
+     */
+    void add(Field<?> field, SortOrder order);
 
-	/**
-	 * Adds fields to the field list, specifying the corresponding sort orders
-	 *
-	 * @param fields
-	 *            The sort fields
-	 * @param orders
-	 *            The sort orders
-	 */
-	void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders);
+    /**
+     * Adds fields to the field list, specifying the corresponding sort orders
+     *
+     * @param fields The sort fields
+     * @param orders The sort orders
+     */
+    void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders);
 
-	/**
-	 * @return Get an associative map of fields and their respective ordering
-	 */
-	Map<Field<?>, SortOrder> getOrdering();
+    /**
+     * @return Get an associative map of fields and their respective ordering
+     */
+    Map<Field<?>, SortOrder> getOrdering();
 }

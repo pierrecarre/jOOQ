@@ -42,63 +42,61 @@ import org.jooq.impl.Create;
  */
 public interface ConditionProvider {
 
-	/**
-	 * Adds new conditions to the update query, connecting it to existing
-	 * conditions with the and operator.
-	 *
-	 * @param conditions
-	 *            The condition
-	 */
-	void addConditions(Condition... conditions);
+    /**
+     * Adds new conditions to the update query, connecting it to existing
+     * conditions with the and operator.
+     *
+     * @param conditions The condition
+     */
+    void addConditions(Condition... conditions);
 
-	/**
-	 * Adds new conditions to the update query, connecting it to existing
-	 * conditions with the and operator.
-	 *
-	 * @param conditions
-	 *            The condition
-	 */
-	void addConditions(Collection<Condition> conditions);
+    /**
+     * Adds new conditions to the update query, connecting it to existing
+     * conditions with the and operator.
+     *
+     * @param conditions The condition
+     */
+    void addConditions(Collection<Condition> conditions);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link Create#compareCondition(Field, Object)}
-	 */
-	<T> void addCompareCondition(Field<T> field, T value);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link Create#compareCondition(Field, Object)}
+     */
+    <T> void addCompareCondition(Field<T> field, T value);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link QueryFactory#createCompareCondition(Field, Object, Comparator))}
-	 */
-	<T> void addCompareCondition(Field<T> field, T value, Comparator comparator);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link QueryFactory#createCompareCondition(Field, Object, Comparator))}
+     */
+    <T> void addCompareCondition(Field<T> field, T value, Comparator comparator);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link QueryFactory#createCompareCondition(Field, null, EQUALS))}
-	 */
-	void addNullCondition(Field<?> field);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link QueryFactory#createCompareCondition(Field, null, EQUALS))}
+     */
+    void addNullCondition(Field<?> field);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link QueryFactory#createCompareCondition(Field, null, NOT_EQUALS))}
-	 */
-	void addNotNullCondition(Field<?> field);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link QueryFactory#createCompareCondition(Field, null, NOT_EQUALS))}
+     */
+    void addNotNullCondition(Field<?> field);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link Create#inCondition(Field, Collection)}
-	 */
-	<T> void addInCondition(Field<T> field, Collection<T> values);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link Create#inCondition(Field, Collection)}
+     */
+    <T> void addInCondition(Field<T> field, Collection<T> values);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link Create#inCondition(Field, Object...)}
-	 */
-	<T> void addInCondition(Field<T> field, T... values);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link Create#inCondition(Field, Object...)}
+     */
+    <T> void addInCondition(Field<T> field, T... values);
 
-	/**
-	 * Shortcut for calling {@link #addConditions(Condition)} with argument
-	 * {@link Create#betweenCondition(Field, Object, Object)}
-	 */
-	<T> void addBetweenCondition(Field<T> field, T minValue, T maxValue);
+    /**
+     * Shortcut for calling {@link #addConditions(Condition)} with argument
+     * {@link Create#betweenCondition(Field, Object, Object)}
+     */
+    <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue);
 }

@@ -38,8 +38,8 @@ package org.jooq;
  */
 public interface ExistsCondition extends Condition {
 
-	/**
-	 * @return The operator used in the condition
-	 */
-	ExistsOperator getOperator();
+    /**
+     * @return The operator used in the condition
+     */
+    ExistsOperator getOperator();
 }

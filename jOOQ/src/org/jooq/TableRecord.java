@@ -37,8 +37,8 @@ package org.jooq;
  */
 public interface TableRecord<R extends Record> extends Record {
 
-	/**
-	 * The table from which this record was read
-	 */
-	Table<R> getTable();
+    /**
+     * The table from which this record was read
+     */
+    Table<R> getTable();
 }

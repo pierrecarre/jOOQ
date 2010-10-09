@@ -30,7 +30,6 @@
  */
 package org.jooq;
 
-
 /**
  * A simple select query that provides Records from a single table, with no
  * joins allowed.

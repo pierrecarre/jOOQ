@@ -39,34 +39,34 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum SQLDialect {
-	/**
-	 * The standard SQL dialect.
-	 */
-	SQL99,
+    /**
+     * The standard SQL dialect.
+     */
+    SQL99,
 
-	/**
-	 * The MySQL dialect
-	 */
-	MYSQL,
+    /**
+     * The MySQL dialect
+     */
+    MYSQL,
 
-	/**
-	 * The Oracle dialect
-	 */
-	ORACLE,
+    /**
+     * The Oracle dialect
+     */
+    ORACLE,
 
-	/**
-	 * The Microsoft SQL dialect
-	 */
-	MSSQL,
+    /**
+     * The Microsoft SQL dialect
+     */
+    MSSQL,
 
-	/**
-	 * The PostGres dialect
-	 */
-	POSTGRES,
+    /**
+     * The PostGres dialect
+     */
+    POSTGRES,
 
-	/**
-	 * The Hypersonic SQL dialect
-	 */
-	HSQLDB;
+    /**
+     * The Hypersonic SQL dialect
+     */
+    HSQLDB;
 
 }

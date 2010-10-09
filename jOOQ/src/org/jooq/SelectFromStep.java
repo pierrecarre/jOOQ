@@ -43,13 +43,13 @@ import java.util.Collection;
  */
 public interface SelectFromStep extends SelectJoinStep {
 
-	/**
-	 * Add tables to the query and proceed to the next step
-	 */
-	SelectJoinStep from(Table<?>... table);
+    /**
+     * Add tables to the query and proceed to the next step
+     */
+    SelectJoinStep from(Table<?>... table);
 
-	/**
-	 * Add select fields to the query and proceed to the next step
-	 */
-	SelectJoinStep from(Collection<Table<?>> tables);
+    /**
+     * Add select fields to the query and proceed to the next step
+     */
+    SelectJoinStep from(Collection<Table<?>> tables);
 }

@@ -32,7 +32,6 @@ package org.jooq;
 
 import java.util.List;
 
-
 /**
  * A common interface for objects (tables, records) that can be updated or
  * deleted using their primary keys.
@@ -41,9 +40,9 @@ import java.util.List;
  */
 public interface Updatable<R extends Record> {
 
-	/**
-	 * @return All fields the table's primary key consists of. This will at
-	 *         least contain one {@link TableField}.
-	 */
-	List<TableField<R, ?>> getPrimaryKey();
+    /**
+     * @return All fields the table's primary key consists of. This will at
+     *         least contain one {@link TableField}.
+     */
+    List<TableField<R, ?>> getPrimaryKey();
 }

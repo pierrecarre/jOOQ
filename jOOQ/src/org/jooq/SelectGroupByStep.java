@@ -44,13 +44,13 @@ import java.util.Collection;
  */
 public interface SelectGroupByStep extends SelectOrderByStep {
 
-	/**
-	 * Add grouping to the query and proceed to the next step
-	 */
-	SelectHavingStep groupBy(Field<?>... fields);
+    /**
+     * Add grouping to the query and proceed to the next step
+     */
+    SelectHavingStep groupBy(Field<?>... fields);
 
-	/**
-	 * Add grouping to the query and proceed to the next step
-	 */
-	SelectHavingStep groupBy(Collection<Field<?>> fields);
+    /**
+     * Add grouping to the query and proceed to the next step
+     */
+    SelectHavingStep groupBy(Collection<Field<?>> fields);
 }

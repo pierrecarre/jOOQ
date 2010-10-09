@@ -37,12 +37,12 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum Operator {
-	/**
-	 * The and operator
-	 */
-	AND,
-	/**
-	 * The or operator
-	 */
-	OR;
+    /**
+     * The and operator
+     */
+    AND,
+    /**
+     * The or operator
+     */
+    OR;
 }

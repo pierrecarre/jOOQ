@@ -43,13 +43,13 @@ import java.util.Collection;
  */
 public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrderByStep<R> {
 
-	/**
-	 * Add conditions to the query and proceed to the next step
-	 */
-	SimpleSelectOrderByStep<R> where(Condition... conditions);
+    /**
+     * Add conditions to the query and proceed to the next step
+     */
+    SimpleSelectOrderByStep<R> where(Condition... conditions);
 
-	/**
-	 * Add conditions to the query and proceed to the next step
-	 */
-	SimpleSelectOrderByStep<R> where(Collection<Condition> conditions);
+    /**
+     * Add conditions to the query and proceed to the next step
+     */
+    SimpleSelectOrderByStep<R> where(Collection<Condition> conditions);
 }

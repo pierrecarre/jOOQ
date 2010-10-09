@@ -40,8 +40,8 @@ import java.util.Set;
  */
 public interface InCondition<T> extends FieldCondition<T> {
 
-	/**
-	 * @return The set of values to compare the field with
-	 */
-	Set<T> getValues();
+    /**
+     * @return The set of values to compare the field with
+     */
+    Set<T> getValues();
 }

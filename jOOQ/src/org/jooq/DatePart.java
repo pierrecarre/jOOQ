@@ -39,43 +39,43 @@ package org.jooq;
  */
 public enum DatePart {
 
-	/**
-	 * The year
-	 */
-	YEAR("year"),
+    /**
+     * The year
+     */
+    YEAR("year"),
 
-	/**
-	 * The month
-	 */
-	MONTH("month"),
+    /**
+     * The month
+     */
+    MONTH("month"),
 
-	/**
-	 * The day
-	 */
-	DAY("day"),
+    /**
+     * The day
+     */
+    DAY("day"),
 
-	/**
-	 * The hour
-	 */
-	HOUR("hour"),
+    /**
+     * The hour
+     */
+    HOUR("hour"),
 
-	/**
-	 * The minute
-	 */
-	MINUTE("minute"),
+    /**
+     * The minute
+     */
+    MINUTE("minute"),
 
-	/**
-	 * The second
-	 */
-	SECOND("second");
+    /**
+     * The second
+     */
+    SECOND("second");
 
-	private final String sql;
+    private final String sql;
 
-	private DatePart(String sql) {
-		this.sql = sql;
-	}
+    private DatePart(String sql) {
+        this.sql = sql;
+    }
 
-	public String toSQL() {
-		return sql;
-	}
+    public String toSQL() {
+        return sql;
+    }
 }

@@ -40,25 +40,23 @@ import java.util.List;
  */
 public interface StoredProcedure extends StoredObject {
 
-	/**
-	 * A list of OUT parameters passed to the stored procedure as argument.
-	 *
-	 * This list contains all parameters that are either OUT or INOUT in their
-	 * respective order of appearance in {@link #getParameters()}.
-	 *
-	 * @return The list of out parameters
-	 * @see {@link #getParameters()}
-	 */
-	List<Parameter<?>> getOutParameters();
+    /**
+     * A list of OUT parameters passed to the stored procedure as argument. This
+     * list contains all parameters that are either OUT or INOUT in their
+     * respective order of appearance in {@link #getParameters()}.
+     *
+     * @return The list of out parameters
+     * @see {@link #getParameters()}
+     */
+    List<Parameter<?>> getOutParameters();
 
-	/**
-	 * A list of IN parameters passed to the stored procedure as argument.
-	 *
-	 * This list contains all parameters that are either IN or INOUT in their
-	 * respective order of appearance in {@link #getParameters()}.
-	 *
-	 * @return The list of in parameters
-	 * @see {@link #getParameters()}
-	 */
-	List<Parameter<?>> getInParameters();
+    /**
+     * A list of IN parameters passed to the stored procedure as argument. This
+     * list contains all parameters that are either IN or INOUT in their
+     * respective order of appearance in {@link #getParameters()}.
+     *
+     * @return The list of in parameters
+     * @see {@link #getParameters()}
+     */
+    List<Parameter<?>> getInParameters();
 }

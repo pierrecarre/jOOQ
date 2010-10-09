@@ -43,13 +43,13 @@ import java.util.Collection;
  */
 public interface SimpleSelectStep<R extends Record> extends SimpleSelectWhereStep<R> {
 
-	/**
-	 * Add select fields to the query and proceed to the next step
-	 */
-	SimpleSelectWhereStep<R> select(Field<?>... fields);
+    /**
+     * Add select fields to the query and proceed to the next step
+     */
+    SimpleSelectWhereStep<R> select(Field<?>... fields);
 
-	/**
-	 * Add select fields to the query and proceed to the next step
-	 */
-	SimpleSelectWhereStep<R> select(Collection<Field<?>> fields);
+    /**
+     * Add select fields to the query and proceed to the next step
+     */
+    SimpleSelectWhereStep<R> select(Collection<Field<?>> fields);
 }

@@ -32,23 +32,23 @@ package org.jooq;
 
 public interface FieldProvider {
 
-	/**
-	 * Get a specific field from this field provider.
-	 * <p>
-	 * Usually, this will return the field itself. However, if this is an aliased
-	 * table, the field will be aliased accordingly.
-	 * 
-	 * @param <T> The generic field type
-	 * @param field The field to fetch
-	 * @return The field itself or an aliased field
-	 */
-	<T> Field<T> getField(Field<T> field);
+    /**
+     * Get a specific field from this field provider.
+     * <p>
+     * Usually, this will return the field itself. However, if this is an
+     * aliased table, the field will be aliased accordingly.
+     *
+     * @param <T> The generic field type
+     * @param field The field to fetch
+     * @return The field itself or an aliased field
+     */
+    <T> Field<T> getField(Field<T> field);
 
-	/**
-	 * Get a specific field from this field provider.
-	 * 
-	 * @param name The field to fetch
-	 * @return The field with the given name
-	 */
-	Field<?> getField(String name);
+    /**
+     * Get a specific field from this field provider.
+     *
+     * @param name The field to fetch
+     * @return The field with the given name
+     */
+    Field<?> getField(String name);
 }

@@ -40,26 +40,26 @@ import java.sql.SQLException;
  */
 public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRecord<R> {
 
-	/**
-	 * The table from which this record was read
-	 */
-	@Override
-	UpdatableTable<R> getTable();
+    /**
+     * The table from which this record was read
+     */
+    @Override
+    UpdatableTable<R> getTable();
 
-	/**
-	 * Store this record back to the database.
-	 * <p>
-	 * If the primary key was loaded, this results in an update statement.
-	 * Otherwise, an insert statement is executed.
-	 *
-	 * @throws SQLException
-	 */
-	void store(Connection con) throws SQLException;
+    /**
+     * Store this record back to the database.
+     * <p>
+     * If the primary key was loaded, this results in an update statement.
+     * Otherwise, an insert statement is executed.
+     *
+     * @throws SQLException
+     */
+    void store(Connection con) throws SQLException;
 
-	/**
-	 * Deletes this record from the database.
-	 *
-	 * @throws SQLException
-	 */
-	void delete(Connection con) throws SQLException;
+    /**
+     * Deletes this record from the database.
+     *
+     * @throws SQLException
+     */
+    void delete(Connection con) throws SQLException;
 }

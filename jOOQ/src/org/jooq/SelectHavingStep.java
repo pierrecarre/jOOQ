@@ -44,13 +44,13 @@ import java.util.Collection;
  */
 public interface SelectHavingStep extends SelectOrderByStep {
 
-	/**
-	 * Add a having clause to the query and proceed to the next step
-	 */
-	SelectOrderByStep having(Condition... conditions);
+    /**
+     * Add a having clause to the query and proceed to the next step
+     */
+    SelectOrderByStep having(Condition... conditions);
 
-	/**
-	 * Add a having clause to the query and proceed to the next step
-	 */
-	SelectOrderByStep having(Collection<Condition> conditions);
+    /**
+     * Add a having clause to the query and proceed to the next step
+     */
+    SelectOrderByStep having(Collection<Condition> conditions);
 }

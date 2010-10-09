@@ -32,33 +32,33 @@ package org.jooq;
 
 /**
  * A model for a result set limitation for select queries
- * 
+ *
  * @author Lukas Eder
  */
 public interface Limit extends QueryPart {
 
-	/**
-	 * @return The lower bound (smallest ROWNUM, inclusive) starting from 1
-	 *         returned by the select
-	 */
-	int getLowerBound();
+    /**
+     * @return The lower bound (smallest ROWNUM, inclusive) starting from 1
+     *         returned by the select
+     */
+    int getLowerBound();
 
-	/**
-	 * @return The upper bound (highest ROWNUM, exclusive) returned by the
-	 *         select
-	 */
-	int getUpperBound();
+    /**
+     * @return The upper bound (highest ROWNUM, exclusive) returned by the
+     *         select
+     */
+    int getUpperBound();
 
-	/**
-	 * @return The number of rows returned by the select =
-	 *         {@link #getUpperBound()} - {@link #getLowerBound()} + 1
-	 */
-	int getNumberOfRows();
+    /**
+     * @return The number of rows returned by the select =
+     *         {@link #getUpperBound()} - {@link #getLowerBound()} + 1
+     */
+    int getNumberOfRows();
 
-	/**
-	 * @return Whether this limit applies to the select. It doesn't apply, when
-	 *         {@link #getLowerBound()} == 1 and {@link #getUpperBound()} ==
-	 *         {@link Integer#MAX_VALUE}
-	 */
-	boolean isApplicable();
+    /**
+     * @return Whether this limit applies to the select. It doesn't apply, when
+     *         {@link #getLowerBound()} == 1 and {@link #getUpperBound()} ==
+     *         {@link Integer#MAX_VALUE}
+     */
+    boolean isApplicable();
 }

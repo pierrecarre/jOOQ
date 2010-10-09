@@ -37,8 +37,8 @@ package org.jooq;
  */
 public interface QueryProvider<Q extends Query> {
 
-	/**
-	 * Reveal the inner representation of this Select statement.
-	 */
-	Q getQuery();
+    /**
+     * Reveal the inner representation of this Select statement.
+     */
+    Q getQuery();
 }

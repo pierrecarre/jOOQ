@@ -38,13 +38,13 @@ package org.jooq;
  */
 public interface StoredFunction<T> extends StoredObject {
 
-	/**
-	 * @return The function's return value
-	 */
-	T getReturnValue();
+    /**
+     * @return The function's return value
+     */
+    T getReturnValue();
 
-	/**
-	 * @return The stored function represented as a {@link Field}
-	 */
-	Field<T> getFunction();
+    /**
+     * @return The stored function represented as a {@link Field}
+     */
+    Field<T> getFunction();
 }

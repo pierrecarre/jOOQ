@@ -38,8 +38,8 @@ package org.jooq;
  */
 public interface TableField<R extends Record, T> extends Field<T> {
 
-	/**
-	 * @return The table this field is contained in
-	 */
-	Table<R> getTable();
+    /**
+     * @return The table this field is contained in
+     */
+    Table<R> getTable();
 }

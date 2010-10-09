@@ -38,52 +38,52 @@ package org.jooq;
  */
 public class Configuration {
 
-	private static final Configuration INSTANCE = new Configuration();
-	private SQLDialect dialect;
+    private static final Configuration INSTANCE = new Configuration();
+    private SQLDialect                 dialect;
 
-	public static Configuration getInstance() {
-		return INSTANCE;
-	}
+    public static Configuration getInstance() {
+        return INSTANCE;
+    }
 
-	/**
-	 * The used SQL dialect. This can be set externally using JVM flag
-	 * -Dorg.jooq.sql-dialect. If no dialect is provided,
-	 * {@link SQLDialect#SQL99} is used.
-	 *
-	 * @return The used {@link SQLDialect}
-	 * @see SQLDialect
-	 * @throws SQLDialectNotSupportedException
-	 *             if dialect configured in -Dorg.jooq.sql-dialect is unknown
-	 */
-	public SQLDialect getDialect() throws SQLDialectNotSupportedException {
-		if (dialect == null) {
-			String dialectName = System.getProperty("org.jooq.sql-dialect");
+    /**
+     * The used SQL dialect. This can be set externally using JVM flag
+     * -Dorg.jooq.sql-dialect. If no dialect is provided,
+     * {@link SQLDialect#SQL99} is used.
+     *
+     * @return The used {@link SQLDialect}
+     * @see SQLDialect
+     * @throws SQLDialectNotSupportedException if dialect configured in
+     *             -Dorg.jooq.sql-dialect is unknown
+     */
+    public SQLDialect getDialect() throws SQLDialectNotSupportedException {
+        if (dialect == null) {
+            String dialectName = System.getProperty("org.jooq.sql-dialect");
 
-			if (dialectName != null) {
-				try {
-					dialect = SQLDialect.valueOf(dialectName);
-				} catch (IllegalArgumentException ignore) {
-					throw new SQLDialectNotSupportedException("Unknown dialect : " + dialectName);
-				}
-			}
+            if (dialectName != null) {
+                try {
+                    dialect = SQLDialect.valueOf(dialectName);
+                }
+                catch (IllegalArgumentException ignore) {
+                    throw new SQLDialectNotSupportedException("Unknown dialect : " + dialectName);
+                }
+            }
 
-			if (dialect == null) {
-				dialect = SQLDialect.SQL99;
-			}
-		}
-		return dialect;
-	}
+            if (dialect == null) {
+                dialect = SQLDialect.SQL99;
+            }
+        }
+        return dialect;
+    }
 
-	/**
-	 * Set a new dialect to the configuration
-	 *
-	 * @param dialect The new dialect
-	 * @throws SQLDialectNotSupportedException if dialect is not supported
-	 */
-	public void setDialect(SQLDialect dialect) throws SQLDialectNotSupportedException {
-		this.dialect = dialect;
-	}
+    /**
+     * Set a new dialect to the configuration
+     *
+     * @param dialect The new dialect
+     * @throws SQLDialectNotSupportedException if dialect is not supported
+     */
+    public void setDialect(SQLDialect dialect) throws SQLDialectNotSupportedException {
+        this.dialect = dialect;
+    }
 
-	private Configuration() {
-	}
+    private Configuration() {}
 }

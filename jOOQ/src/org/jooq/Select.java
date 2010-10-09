@@ -30,7 +30,6 @@
  */
 package org.jooq;
 
-
 /**
  * A simpler version of the {@link SelectQuery}
  * <p>

@@ -39,14 +39,14 @@ import java.io.Serializable;
  */
 public interface RecordMetaData extends Serializable {
 
-	/**
-	 * @return The fields contained in the result table
-	 */
-	FieldList getFields();
+    /**
+     * @return The fields contained in the result table
+     */
+    FieldList getFields();
 
-	/**
-	 * @return The tables from which this record is read
-	 */
-	TableList getTables();
+    /**
+     * @return The tables from which this record is read
+     */
+    TableList getTables();
 
 }

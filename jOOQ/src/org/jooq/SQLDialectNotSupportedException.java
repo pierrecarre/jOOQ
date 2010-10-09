@@ -39,21 +39,21 @@ package org.jooq;
  */
 public class SQLDialectNotSupportedException extends RuntimeException {
 
-	private static final long serialVersionUID = 8119718690889460970L;
+    private static final long serialVersionUID = 8119718690889460970L;
 
-	public SQLDialectNotSupportedException() {
-		super();
-	}
+    public SQLDialectNotSupportedException() {
+        super();
+    }
 
-	public SQLDialectNotSupportedException(String message) {
-		super(message);
-	}
+    public SQLDialectNotSupportedException(String message) {
+        super(message);
+    }
 
-	public SQLDialectNotSupportedException(Throwable cause) {
-		super(cause);
-	}
+    public SQLDialectNotSupportedException(Throwable cause) {
+        super(cause);
+    }
 
-	public SQLDialectNotSupportedException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public SQLDialectNotSupportedException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

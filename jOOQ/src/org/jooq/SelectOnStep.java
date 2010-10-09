@@ -42,8 +42,8 @@ package org.jooq;
  */
 public interface SelectOnStep {
 
-	/**
-	 * Provide join conditions and proceed to the next step
-	 */
-	SelectJoinStep on(Condition... conditions);
+    /**
+     * Provide join conditions and proceed to the next step
+     */
+    SelectJoinStep on(Condition... conditions);
 }

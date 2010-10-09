@@ -40,56 +40,42 @@ package org.jooq;
  */
 public interface Record extends RecordMetaData {
 
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @return The value of a field contained in this record
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
-	 */
-	<T> T getValue(Field<T> field) throws IllegalArgumentException;
+    /**
+     * @param <T> The generic field parameter
+     * @param field The field
+     * @return The value of a field contained in this record
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    <T> T getValue(Field<T> field) throws IllegalArgumentException;
 
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param defaultValue
-	 *            The default value instead of <code>null</code>
-	 *
-	 * @return The value of a field contained in this record, or defaultValue,
-	 *         if <code>null</code>
-	 * @throws IllegalArgumentException
-	 *             If the argument field is not contained in
-	 *             {@link #getFields()}
-	 */
-	<T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
+    /**
+     * @param <T> The generic field parameter
+     * @param field The field
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue, if
+     *         <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
 
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
-	 */
-	<T> void setValue(Field<T> field, T value);
+    /**
+     * @param <T> The generic field parameter
+     * @param field The field
+     * @param value The value
+     */
+    <T> void setValue(Field<T> field, T value);
 
-	/**
-	 * @param <T>
-	 *            The generic field parameter
-	 * @param field
-	 *            The field
-	 * @param value
-	 *            The value
-	 */
-	<T> void setValue(Field<T> field, Value<T> value);
+    /**
+     * @param <T> The generic field parameter
+     * @param field The field
+     * @param value The value
+     */
+    <T> void setValue(Field<T> field, Value<T> value);
 
-	/**
-	 * @return Whether any values have been changed since the record was loaded.
-	 */
-	boolean hasChangedValues();
+    /**
+     * @return Whether any values have been changed since the record was loaded.
+     */
+    boolean hasChangedValues();
 }

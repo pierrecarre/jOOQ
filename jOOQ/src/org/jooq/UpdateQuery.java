@@ -31,7 +31,6 @@
 
 package org.jooq;
 
-
 /**
  * A query for data updating
  *

@@ -32,17 +32,16 @@
 package org.jooq;
 
 /**
- * A common interface for query parts that have a name.
- *
- * All {@link NamedQueryPart}s are have a lexicographic case-independent natural
+ * A common interface for query parts that have a name. All
+ * {@link NamedQueryPart}s are have a lexicographic case-independent natural
  * order.
  *
  * @author Lukas Eder
  */
 public interface NamedQueryPart extends QueryPart, Comparable<NamedQueryPart> {
 
-	/**
-	 * @return The name of this query part
-	 */
-	String getName();
+    /**
+     * @return The name of this query part
+     */
+    String getName();
 }

@@ -42,70 +42,65 @@ import java.sql.SQLException;
  */
 public interface QueryPart extends Serializable {
 
-	/**
-	 * Transform this object into SQL, such that it can be used as a reference.
-	 * This always results in calling {@link #toSQLReference(false)}
-	 *
-	 * @return SQL representation of this QueryPart
-	 * @see {@link #toSQLReference(boolean)}
-	 */
-	String toSQLReference();
+    /**
+     * Transform this object into SQL, such that it can be used as a reference.
+     * This always results in calling {@link #toSQLReference(false)}
+     *
+     * @return SQL representation of this QueryPart
+     * @see {@link #toSQLReference(boolean)}
+     */
+    String toSQLReference();
 
-	/**
-	 * Transform this object into SQL, such that it can be used as a reference.
-	 *
-	 * @param inlineParameters
-	 *            if set to true, all parameters are inlined, not replaced by
-	 *            "?"
-	 * @return SQL representation of this QueryPart
-	 */
-	String toSQLReference(boolean inlineParameters);
+    /**
+     * Transform this object into SQL, such that it can be used as a reference.
+     *
+     * @param inlineParameters if set to true, all parameters are inlined, not
+     *            replaced by "?"
+     * @return SQL representation of this QueryPart
+     */
+    String toSQLReference(boolean inlineParameters);
 
-	/**
-	 * Transform this object into SQL, such that it can be used as a
-	 * declaration. Usually, this is the same as calling
-	 * {@link #toSQLReference()}. This always results in calling {@link
-	 * #toSQLDeclaration(false)}
-	 *
-	 * @return SQL representation of this QueryPart
-	 * @see {@link #toSQLReference(boolean)}
-	 */
-	String toSQLDeclaration();
+    /**
+     * Transform this object into SQL, such that it can be used as a
+     * declaration. Usually, this is the same as calling
+     * {@link #toSQLReference()}. This always results in calling
+     * {@link #toSQLDeclaration(false)}
+     *
+     * @return SQL representation of this QueryPart
+     * @see {@link #toSQLReference(boolean)}
+     */
+    String toSQLDeclaration();
 
-	/**
-	 * Transform this object into SQL, such that it can be used as a
-	 * declaration. Usually, this is the same as calling
-	 * {@link #toSQLReference(boolean)}
-	 *
-	 * @param inlineParameters
-	 *            if set to true, all parameters are inlined, not replaced by
-	 *            "?"
-	 * @return SQL representation of this QueryPart
-	 */
-	String toSQLDeclaration(boolean inlineParameters);
+    /**
+     * Transform this object into SQL, such that it can be used as a
+     * declaration. Usually, this is the same as calling
+     * {@link #toSQLReference(boolean)}
+     *
+     * @param inlineParameters if set to true, all parameters are inlined, not
+     *            replaced by "?"
+     * @return SQL representation of this QueryPart
+     */
+    String toSQLDeclaration(boolean inlineParameters);
 
-	/**
-	 * Bind all parameters of this QueryPart to a PreparedStatement. This always
-	 * results in calling {@link #bind(stmt, 1)}
-	 *
-	 * @param stmt
-	 *            The statement to bind values to
-	 * @return The index of the next binding variable
-	 * @throws SQLException
-	 * @see {@link {@link #bind(PreparedStatement, int)}
-	 */
-	int bind(PreparedStatement stmt) throws SQLException;
+    /**
+     * Bind all parameters of this QueryPart to a PreparedStatement. This always
+     * results in calling {@link #bind(stmt, 1)}
+     *
+     * @param stmt The statement to bind values to
+     * @return The index of the next binding variable
+     * @throws SQLException
+     * @see {@link {@link #bind(PreparedStatement, int)}
+     */
+    int bind(PreparedStatement stmt) throws SQLException;
 
-	/**
-	 * Bind all parameters of this QueryPart to a PreparedStatement.
-	 *
-	 * @param stmt
-	 *            The statement to bind values to
-	 * @param initialIndex
-	 *            The index of the next binding variable
-	 * @return The index of the next binding variable
-	 * @throws SQLException
-	 */
-	int bind(PreparedStatement stmt, int initialIndex) throws SQLException;
+    /**
+     * Bind all parameters of this QueryPart to a PreparedStatement.
+     *
+     * @param stmt The statement to bind values to
+     * @param initialIndex The index of the next binding variable
+     * @return The index of the next binding variable
+     * @throws SQLException
+     */
+    int bind(PreparedStatement stmt, int initialIndex) throws SQLException;
 
 }

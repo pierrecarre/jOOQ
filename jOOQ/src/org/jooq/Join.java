@@ -38,18 +38,18 @@ package org.jooq;
  */
 public interface Join extends QueryPart {
 
-	/**
-	 * @return The type of join. If null, natural join is used
-	 */
-	JoinType getType();
+    /**
+     * @return The type of join. If null, natural join is used
+     */
+    JoinType getType();
 
-	/**
-	 * @return The joined table
-	 */
-	Table<?> getTable();
+    /**
+     * @return The joined table
+     */
+    Table<?> getTable();
 
-	/**
-	 * @return The join condition. If null, natural join is used
-	 */
-	Condition getCondition();
+    /**
+     * @return The join condition. If null, natural join is used
+     */
+    Condition getCondition();
 }

@@ -43,13 +43,13 @@ import java.util.Collection;
  */
 public interface SelectWhereStep extends SelectGroupByStep {
 
-	/**
-	 * Add conditions to the query and proceed to the next step
-	 */
-	SelectGroupByStep where(Condition... conditions);
+    /**
+     * Add conditions to the query and proceed to the next step
+     */
+    SelectGroupByStep where(Condition... conditions);
 
-	/**
-	 * Add conditions to the query and proceed to the next step
-	 */
-	SelectGroupByStep where(Collection<Condition> conditions);
+    /**
+     * Add conditions to the query and proceed to the next step
+     */
+    SelectGroupByStep where(Collection<Condition> conditions);
 }
