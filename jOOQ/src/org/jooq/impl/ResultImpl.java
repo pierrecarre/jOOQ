@@ -38,8 +38,8 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.FieldProvider;
 import org.jooq.Record;
-import org.jooq.RecordMetaData;
 import org.jooq.Result;
 
 /**
@@ -50,19 +50,29 @@ class ResultImpl<R extends Record> implements Result<R> {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 6416154375799578362L;
+    private static final long   serialVersionUID = 6416154375799578362L;
 
-    private final RecordMetaData meta;
-    private final List<R>        records;
+    private final FieldProvider fields;
+    private final List<R>       records;
 
-    ResultImpl(RecordMetaData meta) {
-        this.meta = meta;
+    ResultImpl(FieldProvider fields) {
+        this.fields = fields;
         this.records = new ArrayList<R>();
     }
 
     @Override
     public FieldList getFields() {
-        return meta.getFields();
+        return fields.getFields();
+    }
+
+    @Override
+    public <T> Field<T> getField(Field<T> field) {
+        return fields.getField(field);
+    }
+
+    @Override
+    public Field<?> getField(String name) {
+        return fields.getField(name);
     }
 
     @Override
@@ -103,7 +113,7 @@ class ResultImpl<R extends Record> implements Result<R> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getClass().getSimpleName() + " [query=" + meta + "]\n");
+        sb.append(getClass().getSimpleName() + "\n");
         sb.append("Records:\n");
 
         int i = 0;

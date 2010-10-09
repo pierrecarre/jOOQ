@@ -4,7 +4,7 @@
 package org.jooq.util.postgres.information_schema.tables.records;
 
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
@@ -145,9 +145,9 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 
 	/**
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a RecordMetaData descriptor
+	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public KeyColumnUsageRecord(RecordMetaData metaData) {
+	public KeyColumnUsageRecord(FieldProvider metaData) {
 		this();
 	}
 

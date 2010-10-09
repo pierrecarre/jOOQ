@@ -36,7 +36,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider, RecordMetaData {
+public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider {
 
     /**
      * Get the fields from this table.

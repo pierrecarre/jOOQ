@@ -46,12 +46,12 @@ import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.FieldProvider;
 import org.jooq.Join;
 import org.jooq.JoinList;
 import org.jooq.Limit;
 import org.jooq.OrderByFieldList;
 import org.jooq.Record;
-import org.jooq.RecordMetaData;
 import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SortOrder;
@@ -210,11 +210,6 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         return getSelect0();
     }
 
-    @Override
-    public final FieldList getFields() {
-        return getSelect();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public final Class<? extends R> getRecordType() {
@@ -238,14 +233,14 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
 
         try {
             rs = statement.executeQuery();
-            result = new ResultImpl<R>(this);
+            result = new ResultImpl<R>(getSelect());
 
             while (rs.next()) {
                 R record = null;
 
                 Class<? extends R> recordType = getRecordType();
                 try {
-                    record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
+                    record = recordType.getConstructor(FieldProvider.class).newInstance(result);
                 }
                 catch (Exception e) {
                     throw new IllegalStateException("Cannot instanciate record type : " + recordType);

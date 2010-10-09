@@ -51,4 +51,9 @@ public interface FieldProvider {
      * @return The field with the given name
      */
     Field<?> getField(String name);
+
+    /**
+     * @return All available fields
+     */
+    FieldList getFields();
 }

@@ -38,7 +38,7 @@ package org.jooq;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Record extends RecordMetaData {
+public interface Record extends FieldProvider {
 
     /**
      * @param <T> The generic field parameter

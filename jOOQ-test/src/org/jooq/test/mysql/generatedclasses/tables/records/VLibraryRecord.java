@@ -4,7 +4,7 @@
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
@@ -49,9 +49,9 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 
 	/**
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a RecordMetaData descriptor
+	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public VLibraryRecord(RecordMetaData metaData) {
+	public VLibraryRecord(FieldProvider fields) {
 		this();
 	}
 

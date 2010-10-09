@@ -6,7 +6,7 @@ package org.jooq.test.oracle.generatedclasses.tables.records;
 
 import java.sql.Date;
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 
@@ -90,7 +90,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> {
 		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
-	public TAuthorRecord(RecordMetaData metaData) {
+	public TAuthorRecord(FieldProvider metaData) {
 		super(TAuthor.T_AUTHOR);
 	}
 }

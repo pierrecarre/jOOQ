@@ -39,7 +39,7 @@ import java.util.List;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Result<R extends Record> extends RecordMetaData, Iterable<R> {
+public interface Result<R extends Record> extends FieldProvider, Iterable<R> {
 
     /**
      * @return The resulting records

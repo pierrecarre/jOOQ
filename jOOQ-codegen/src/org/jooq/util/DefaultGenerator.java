@@ -40,8 +40,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.FieldProvider;
 import org.jooq.Parameter;
-import org.jooq.RecordMetaData;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.TableField;
 import org.jooq.impl.Create;
@@ -227,9 +227,9 @@ public class DefaultGenerator implements Generator {
 			out.println();
 			out.println("\t/**");
 			out.println("\t * This constructor has no effect, as a {@link TableFieldImpl} will always");
-			out.println("\t * use its underlying table as a RecordMetaData descriptor");
+			out.println("\t * use its underlying table as a FieldProvider descriptor");
 			out.println("\t */");
-			out.println("\tpublic " + table.getJavaClassName("Record") + "(RecordMetaData metaData) {");
+			out.println("\tpublic " + table.getJavaClassName("Record") + "(FieldProvider fields) {");
 			out.println("\t\tthis();");
 			out.println("\t}");
 			out.println();
@@ -243,7 +243,7 @@ public class DefaultGenerator implements Generator {
 
 			out.println("\t}");
 			out.printImport(TableFieldImpl.class);
-			out.printImport(RecordMetaData.class);
+			out.printImport(FieldProvider.class);
 
 			out.println("}");
 			out.close();

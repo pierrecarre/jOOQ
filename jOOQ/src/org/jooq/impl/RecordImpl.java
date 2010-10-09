@@ -36,8 +36,8 @@ import java.util.Map;
 
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.FieldProvider;
 import org.jooq.Record;
-import org.jooq.RecordMetaData;
 import org.jooq.Value;
 
 /**
@@ -50,21 +50,31 @@ public class RecordImpl implements Record {
      */
     private static final long             serialVersionUID = -6052512608911220404L;
 
-    private final RecordMetaData          metaData;
+    private final FieldProvider           fields;
     private final Map<Field<?>, Value<?>> values;
 
-    public RecordImpl(RecordMetaData metaData) {
-        this.metaData = metaData;
+    public RecordImpl(FieldProvider fields) {
+        this.fields = fields;
         this.values = new LinkedHashMap<Field<?>, Value<?>>();
     }
 
-    RecordMetaData getMetaData() {
-        return metaData;
+    FieldProvider getMetaData() {
+        return fields;
     }
 
     @Override
     public final FieldList getFields() {
-        return metaData.getFields();
+        return fields.getFields();
+    }
+
+    @Override
+    public <T> Field<T> getField(Field<T> field) {
+        return fields.getField(field);
+    }
+
+    @Override
+    public Field<?> getField(String name) {
+        return fields.getField(name);
     }
 
     @SuppressWarnings("unchecked")

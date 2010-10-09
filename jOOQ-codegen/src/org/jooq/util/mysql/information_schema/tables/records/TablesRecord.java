@@ -6,7 +6,7 @@ package org.jooq.util.mysql.information_schema.tables.records;
 
 import java.sql.Timestamp;
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.Tables;
@@ -315,9 +315,9 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 
 	/**
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a RecordMetaData descriptor
+	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public TablesRecord(RecordMetaData metaData) {
+	public TablesRecord(FieldProvider metaData) {
 		this();
 	}
 

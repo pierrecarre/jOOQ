@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Create;
 import org.jooq.impl.TableFieldImpl;
@@ -90,9 +90,9 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a RecordMetaData descriptor
+	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public TBookRecord(RecordMetaData metaData) {
+	public TBookRecord(FieldProvider metaData) {
 		this();
 	}
 

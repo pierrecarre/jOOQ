@@ -4,7 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.XUnused;
 
@@ -74,7 +74,7 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 		return getValue(XUnused.NAME_REF);
 	}
 
-	public XUnusedRecord(RecordMetaData metaData) {
+	public XUnusedRecord(FieldProvider metaData) {
 		super(XUnused.X_UNUSED);
 	}
 }

@@ -40,8 +40,7 @@ import java.util.Collection;
 public interface ResultProviderSelectQuery<Q extends ResultProviderSelectQuery<Q, R>, R extends Record>
 extends ResultProviderQuery<R>,
         ConditionProvider,
-        QueryProvider<Q>,
-        RecordMetaData {
+        QueryProvider<Q> {
 
     /**
      * Combine this SelectQuery with another one, using the

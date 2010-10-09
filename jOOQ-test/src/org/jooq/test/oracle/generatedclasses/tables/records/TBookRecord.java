@@ -4,7 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
-import org.jooq.RecordMetaData;
+import org.jooq.FieldProvider;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
@@ -60,7 +60,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> {
 		return getValue(TBook.TITLE);
 	}
 
-	public TBookRecord(RecordMetaData metaData) {
+	public TBookRecord(FieldProvider metaData) {
 		super(TBook.T_BOOK);
 	}
 }

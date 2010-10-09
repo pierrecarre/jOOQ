@@ -67,4 +67,9 @@ class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList
 
         return null;
     }
+
+    @Override
+    public FieldList getFields() {
+        return this;
+    }
 }
