@@ -233,7 +233,6 @@ implements ResultProviderSelectQuery<Q, R> {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected final int execute(PreparedStatement statement) throws SQLException {
 		ResultSet rs = null;
@@ -249,14 +248,11 @@ implements ResultProviderSelectQuery<Q, R> {
 				try {
 					record = recordType.getConstructor(RecordMetaData.class).newInstance(result);
 				} catch (Exception e) {
-					record = (R) new RecordImpl(result);
+					throw new IllegalStateException("Cannot instanciate record type : " + recordType);
 				}
 
-				for (Field<?> f : getSelect()) {
-					Field<Object> field = (Field<Object>) f;
-					Object value = FieldTypeHelper.getFromResultSet(rs, f);
-
-					record.setValue(field, new ValueImpl<Object>(value));
+				for (Field<?> field : getSelect()) {
+					setValue(record, field, rs);
 				}
 
 				result.addRecord(record);
@@ -268,6 +264,14 @@ implements ResultProviderSelectQuery<Q, R> {
 		}
 
 		return result.getNumberOfRecords();
+	}
+
+	/**
+	 * Utility method to prevent unnecessary unchecked conversions
+	 */
+	private <T> void setValue(Record record, Field<T> field, ResultSet rs) throws SQLException {
+		T value = FieldTypeHelper.getFromResultSet(rs, field);
+		record.setValue(field, new ValueImpl<T>(value));
 	}
 
 	@Override
