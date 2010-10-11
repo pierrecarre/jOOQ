@@ -85,7 +85,10 @@ public class PostgresDatabase extends AbstractDatabase {
 			String tableName = record.getValue(ConstraintColumnUsage.TABLE_NAME);
 			String columnName = record.getValue(ConstraintColumnUsage.COLUMN_NAME);
 
-			relations.addPrimaryKey(key, getTable(tableName).getColumn(columnName));
+			TableDefinition table = getTable(tableName);
+			if (table != null) {
+			    relations.addPrimaryKey(key, table.getColumn(columnName));
+			}
 		}
 	}
 
@@ -122,11 +125,16 @@ public class PostgresDatabase extends AbstractDatabase {
 			String referencedTableName = record.getValue(ccuTableName);
 			String referencedColumnName = record.getValue(ccuColumnName);
 
-			ColumnDefinition referencingColumn = getTable(referencingTableName).getColumn(referencingColumnName);
-			ColumnDefinition referencedColumn = getTable(referencedTableName).getColumn(referencedColumnName);
+			TableDefinition referencingTable = getTable(referencingTableName);
+			TableDefinition referencedTable = getTable(referencedTableName);
 
-			String primaryKey = relations.getPrimaryKeyName(referencedColumn);
-			relations.addForeignKey(key, primaryKey, referencingColumn);
+			if (referencingTable != null && referencedTable != null) {
+			    ColumnDefinition referencingColumn = referencingTable.getColumn(referencingColumnName);
+			    ColumnDefinition referencedColumn = referencedTable.getColumn(referencedColumnName);
+
+			    String primaryKey = relations.getPrimaryKeyName(referencedColumn);
+			    relations.addForeignKey(key, primaryKey, referencingColumn);
+			}
 		}
 	}
 
