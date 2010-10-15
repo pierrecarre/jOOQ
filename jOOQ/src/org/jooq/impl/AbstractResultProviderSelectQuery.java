@@ -103,7 +103,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     abstract Q createNew(Table<R> from);
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
         result = getSelect0().bind(stmt, result);
@@ -118,7 +118,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
+    public final String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("select ");
@@ -163,7 +163,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public void addSelect(Collection<Field<?>> fields) {
+    public final void addSelect(Collection<Field<?>> fields) {
         getSelect0().addAll(fields);
     }
 
@@ -178,7 +178,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public void addLimit(int lowerBound, int numberOfRows) {
+    public final void addLimit(int lowerBound, int numberOfRows) {
         limit.setLowerBound(lowerBound);
         limit.setNumberOfRows(numberOfRows);
     }
@@ -188,7 +188,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public FieldList getSelect() {
+    public final FieldList getSelect() {
         if (getSelect0().isEmpty()) {
             FieldList result = new SelectFieldListImpl();
 
@@ -217,7 +217,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public TableList getTables() {
+    public final TableList getTables() {
         TableList result = new TableListImpl(getFrom());
 
         for (Join join : getJoin()) {
@@ -263,7 +263,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     /**
      * Utility method to prevent unnecessary unchecked conversions
      */
-    private <T> void setValue(Record record, Field<T> field, ResultSet rs) throws SQLException {
+    private final <T> void setValue(Record record, Field<T> field, ResultSet rs) throws SQLException {
         T value = FieldTypeHelper.getFromResultSet(rs, field);
         record.setValue(field, new ValueImpl<T>(value));
     }
@@ -314,7 +314,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public void addOrderBy(OrderByFieldList fields) {
+    public final void addOrderBy(OrderByFieldList fields) {
         for (Field<?> field : fields) {
             addOrderBy(field, fields.getOrdering().get(field));
         }
@@ -379,7 +379,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
 
     @SuppressWarnings("unchecked")
     @Override
-    public Q getQuery() {
+    public final Q getQuery() {
         return (Q) this;
     }
 
@@ -394,37 +394,37 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+    public final <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
         condition.addBetweenCondition(field, minValue, maxValue);
     }
 
     @Override
-    public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+    public final <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
         condition.addCompareCondition(field, value, comparator);
     }
 
     @Override
-    public <T> void addCompareCondition(Field<T> field, T value) {
+    public final <T> void addCompareCondition(Field<T> field, T value) {
         condition.addCompareCondition(field, value);
     }
 
     @Override
-    public void addNullCondition(Field<?> field) {
+    public final void addNullCondition(Field<?> field) {
         condition.addNullCondition(field);
     }
 
     @Override
-    public void addNotNullCondition(Field<?> field) {
+    public final void addNotNullCondition(Field<?> field) {
         condition.addNotNullCondition(field);
     }
 
     @Override
-    public <T> void addInCondition(Field<T> field, Collection<T> values) {
+    public final <T> void addInCondition(Field<T> field, Collection<T> values) {
         condition.addInCondition(field, values);
     }
 
     @Override
-    public <T> void addInCondition(Field<T> field, T... values) {
+    public final <T> void addInCondition(Field<T> field, T... values) {
         condition.addInCondition(field, values);
     }
 
@@ -445,7 +445,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         return asTable(CombineOperator.UNION, getQuery());
     }
 
-    private Table<R> asTable(CombineOperator operator, Q... queries) {
+    private final Table<R> asTable(CombineOperator operator, Q... queries) {
         Table<R> result = new SelectQueryAsTable<R>(operator, queries);
 
         // Some dialects require derived tables to provide an alias

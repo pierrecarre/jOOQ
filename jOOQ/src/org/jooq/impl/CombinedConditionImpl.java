@@ -72,7 +72,7 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
         init(operator, conditions);
     }
 
-    private void init(Operator operator, Collection<Condition> conditions) {
+    private final void init(Operator operator, Collection<Condition> conditions) {
         for (Condition condition : conditions) {
             if (condition instanceof CombinedCondition) {
                 CombinedCondition combinedCondition = (CombinedCondition) condition;
@@ -90,7 +90,7 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
         for (Condition condition : getConditions()) {
@@ -101,17 +101,17 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
     }
 
     @Override
-    public List<Condition> getConditions() {
+    public final List<Condition> getConditions() {
         return conditions;
     }
 
     @Override
-    public Operator getOperator() {
+    public final Operator getOperator() {
         return operator;
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
+    public final String toSQLReference(boolean inlineParameters) {
         if (getConditions().isEmpty()) {
             return TRUE_CONDITION.toSQLReference(inlineParameters);
         }

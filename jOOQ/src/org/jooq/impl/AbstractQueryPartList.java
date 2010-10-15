@@ -69,7 +69,7 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
     }
 
     @Override
-    public void add(int index, T element) {
+    public final void add(int index, T element) {
         wrappedList.add(index, element);
     }
 
@@ -117,16 +117,22 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
         return sb.toString();
     }
 
+    /**
+     * Subclasses may override this method
+     */
     protected String toSQLReference(T queryPart, boolean inlineParameters) {
         return queryPart.toSQLReference(inlineParameters);
     }
 
+    /**
+     * Subclasses may override this method
+     */
     protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
         return queryPart.toSQLDeclaration(inlineParameters);
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
         for (T queryPart : this) {
@@ -141,10 +147,16 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
         return bind(stmt, 1);
     }
 
-    protected String toSQLEmptyList() {
+    /**
+     * Subclasses may override this method
+     */
+     protected String toSQLEmptyList() {
         throw new IllegalStateException("This list does not support generating SQL from empty lists : " + getClass());
     }
 
+    /**
+     * Subclasses may override this method
+     */
     protected String getListSeparator() {
         return ",";
     }

@@ -65,7 +65,7 @@ class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondit
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
         bind(stmt, result++, getField(), getMinValue());
@@ -80,17 +80,17 @@ class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondit
     }
 
     @Override
-    public T getMinValue() {
+    public final T getMinValue() {
         return minValue;
     }
 
     @Override
-    public Field<T> getField() {
+    public final Field<T> getField() {
         return field;
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
+    public final String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getField().toSQLReference(inlineParameters));

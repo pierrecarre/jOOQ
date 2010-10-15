@@ -47,12 +47,12 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     AbstractCondition() {}
 
     @Override
-    public CombinedCondition and(Condition other) {
+    public final CombinedCondition and(Condition other) {
         return Create.combinedCondition(this, other);
     }
 
     @Override
-    public CombinedCondition or(Condition other) {
+    public final CombinedCondition or(Condition other) {
         return Create.combinedCondition(Operator.OR, this, other);
     }
 }

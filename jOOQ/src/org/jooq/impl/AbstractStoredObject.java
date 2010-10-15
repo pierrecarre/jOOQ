@@ -121,7 +121,7 @@ abstract class AbstractStoredObject extends AbstractNamedQueryPart implements St
         return inValues;
     }
 
-    protected <T> void setValue(Parameter<T> parameter, T value) {
+    protected final <T> void setValue(Parameter<T> parameter, T value) {
         inValues.put(parameter, value);
     }
 
