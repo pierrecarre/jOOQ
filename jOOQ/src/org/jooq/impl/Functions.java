@@ -107,7 +107,7 @@ public final class Functions {
     /**
      * Get the count(*) function
      */
-    public static <T> Field<Integer> count() {
+    public static Field<Integer> count() {
         return new CountFunctionImpl();
     }
 
@@ -163,7 +163,7 @@ public final class Functions {
     /**
      * Get the rpad(field, length) function
      */
-    public static Field<String> rpad(Field<String> field, Field<Integer> length) {
+    public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new StringFunction("rpad", field, length);
     }
 
@@ -177,7 +177,7 @@ public final class Functions {
     /**
      * Get the rpad(field, length, c) function
      */
-    public static Field<String> rpad(Field<String> field, Field<Integer> length, Field<String> c) {
+    public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> c) {
         return new StringFunction("rpad", field, length, c);
     }
 
@@ -191,7 +191,7 @@ public final class Functions {
     /**
      * Get the rpad(field, length) function
      */
-    public static Field<String> lpad(Field<String> field, Field<Integer> length) {
+    public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new StringFunction("lpad", field, length);
     }
 
@@ -205,7 +205,7 @@ public final class Functions {
     /**
      * Get the rpad(field, length, c) function
      */
-    public static Field<String> lpad(Field<String> field, Field<Integer> length, Field<String> c) {
+    public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> c) {
         return new StringFunction("lpad", field, length, c);
     }
 
@@ -403,7 +403,7 @@ public final class Functions {
      * <p>
      * This translates into any dialect
      */
-    public static Field<Integer> extract(Field<?> field, DatePart datePart) throws SQLDialectNotSupportedException {
+    public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) throws SQLDialectNotSupportedException {
         switch (Configuration.getInstance().getDialect()) {
             case MYSQL: // No break
             case POSTGRES:
