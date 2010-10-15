@@ -45,13 +45,8 @@ class PlainSQLCondition extends AbstractCondition {
     PlainSQLCondition(String sql, Object[] bindings) {
         this.sql = sql;
         this.bindings = (bindings == null) ? new Object[0] : bindings;
-
-        // This comparison is a bit awkward, and probably not very precise...
-        if (StringUtils.countMatches(sql, "?") != this.bindings.length) {
-            throw new IllegalArgumentException(
-                "The number of bind variables must match the number of bindings. " +
-                "SQL = [" + sql + "], bindings.length = " + bindings.length);
-        }
+        
+        PlainSQLField.checkArguments(sql, bindings);
     }
 
     @Override

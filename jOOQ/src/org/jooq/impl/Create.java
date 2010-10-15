@@ -67,6 +67,44 @@ import org.jooq.UpdateQuery;
 public final class Create {
 
     /**
+     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex proprietary functions. There must not be any binding
+     * variables contained in the SQL
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
+     * </pre></code>
+     *
+     * @param sql The SQL
+     * @return A field wrapping the plain SQL
+     */
+    public static Field<?> plainSQLField(String sql) {
+        return plainSQLField(sql, new Object[0]);
+    }
+
+    /**
+     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex proprietary functions. There must be as many binding
+     * variables contained in the SQL, as passed in the bindings parameter
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
+     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
+     *
+     * @param sql The SQL
+     * @return A field wrapping the plain SQL
+     */
+    public static Field<?> plainSQLField(String sql, Object... bindings) {
+        return new PlainSQLField(sql, bindings);
+    }
+
+    /**
      * Create a new condition holding plain SQL. There must not be any binding
      * variables contained in the SQL
      * <p>
@@ -83,7 +121,7 @@ public final class Create {
     }
 
     /**
-     * Create a new condition holding plain SQL. There must be as binding
+     * Create a new condition holding plain SQL. There must be as many binding
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Example:
