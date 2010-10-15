@@ -7,7 +7,7 @@ package org.jooq.test.oracle.generatedclasses.tables.records;
 import java.sql.Date;
 
 import org.jooq.FieldProvider;
-import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 
 
@@ -16,7 +16,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
  *
  * An entity holding authors of books
  */
-public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> {
+public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 
 	private static final long serialVersionUID = 1L;
 

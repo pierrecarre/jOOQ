@@ -128,7 +128,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
 	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public XUnusedRecord(FieldProvider metaData) {
+	public XUnusedRecord(FieldProvider fields) {
 		this();
 	}
 

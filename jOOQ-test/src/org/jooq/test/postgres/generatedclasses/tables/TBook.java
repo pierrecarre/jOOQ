@@ -56,6 +56,21 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>("title", String.class, T_BOOK);
 
 	/**
+	 * An uncommented item
+	 */
+	public static final TableField<TBookRecord, Integer> PUBLISHED_IN = new TableFieldImpl<TBookRecord, Integer>("published_in", Integer.class, T_BOOK);
+
+	/**
+	 * An uncommented item
+	 */
+	public static final TableField<TBookRecord, String> CONTENT_TEXT = new TableFieldImpl<TBookRecord, String>("content_text", String.class, T_BOOK);
+
+	/**
+	 * An uncommented item
+	 */
+	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>("content_pdf", byte[].class, T_BOOK);
+
+	/**
 	 * No further instances allowed
 	 */
 	private TBook() {

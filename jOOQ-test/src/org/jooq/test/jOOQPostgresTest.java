@@ -116,6 +116,16 @@ public class jOOQPostgresTest extends jOOQAbstractTest<TAuthorRecord, TBookRecor
     }
 
     @Override
+    protected TableField<TBookRecord, String> getTBook_CONTENT_TEXT() {
+        return TBook.CONTENT_TEXT;
+    }
+
+    @Override
+    protected TableField<TBookRecord, byte[]> getTBook_CONTENT_PDF() {
+        return TBook.CONTENT_PDF;
+    }
+
+    @Override
     protected Table<VLibraryRecord> getVLibrary() {
         return VLibrary.V_LIBRARY;
     }

@@ -6,7 +6,7 @@ package org.jooq.test.oracle.generatedclasses.tables;
 
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.oracle.generatedclasses.OdsTest;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
 
@@ -16,7 +16,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
  *
  * An entity holding books
  */
-public class TBook extends TableImpl<TBookRecord> {
+public class TBook extends UpdatableTableImpl<TBookRecord> {
 
 	private static final long serialVersionUID = 1L;
 

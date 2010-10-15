@@ -73,7 +73,7 @@ import org.junit.Test;
 /**
  * @author Lukas Eder
  */
-public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends TableRecord<B>, L extends TableRecord<L>> {
+public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends UpdatableRecord<B>, L extends TableRecord<L>> {
 
     protected Connection connection;
 
@@ -195,6 +195,23 @@ public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends Table
     }
 
     @Test
+    public final void testBlobAndClob() throws Exception {
+        B book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
+
+        assertTrue(book.getValue(getTBook_CONTENT_TEXT()).contains("doublethink"));
+        assertEquals(null, book.getValue(getTBook_CONTENT_PDF()));
+
+        book.setValue(getTBook_CONTENT_TEXT(), "Blah blah");
+        book.setValue(getTBook_CONTENT_PDF(), "Blah blah".getBytes());
+        book.store(connection);
+
+        book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
+
+        assertEquals("Blah blah", book.getValue(getTBook_CONTENT_TEXT()));
+        assertEquals("Blah blah", new String(book.getValue(getTBook_CONTENT_PDF())));
+    }
+
+    @Test
     public final void testManager() throws Exception {
         List<A> select = Manager.select(connection, getTAuthor());
         assertEquals(2, select.size());
@@ -242,7 +259,7 @@ public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends Table
         Result<B> result = q.getResult();
 
         // Modify and store the original record
-		UpdatableRecord<B> record = (UpdatableRecord<B>) result.getRecord(0);
+		UpdatableRecord<B> record = result.getRecord(0);
         Integer id = record.getValue(getTBook_ID());
 		record.setValue(getTBook_TITLE(), "1985");
 		record.store(connection);
@@ -252,7 +269,7 @@ public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends Table
 		q.addCompareCondition(getTBook_ID(), id);
 		q.execute(connection);
 		result = q.getResult();
-        record = (UpdatableRecord<B>) result.getRecord(0);
+        record = result.getRecord(0);
 
 		assertEquals(id, record.getValue(getTBook_ID()));
 		assertEquals("1985", record.getValue(getTBook_TITLE()));
@@ -277,6 +294,8 @@ public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends Table
 	protected abstract TableField<B, Integer> getTBook_ID();
 	protected abstract TableField<B, Integer> getTBook_AUTHOR_ID();
 	protected abstract TableField<B, String> getTBook_TITLE();
+	protected abstract TableField<B, String> getTBook_CONTENT_TEXT();
+	protected abstract TableField<B, byte[]> getTBook_CONTENT_PDF();
 	protected abstract Table<L> getVLibrary();
 	protected abstract TableField<L, String> getVLibrary_TITLE();
 	protected abstract TableField<L, String> getVLibrary_AUTHOR();

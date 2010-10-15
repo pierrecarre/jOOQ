@@ -116,7 +116,7 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
 	 * use its underlying table as a FieldProvider descriptor
 	 */
-	public TAuthorRecord(FieldProvider metaData) {
+	public TAuthorRecord(FieldProvider fields) {
 		this();
 	}
 

@@ -105,6 +105,34 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	}
 
 	/**
+	 * Some textual content of the book
+	 */
+	public void setContentText(String value) {
+		setValue(TBook.CONTENT_TEXT, value);
+	}
+
+	/**
+	 * Some textual content of the book
+	 */
+	public String getContentText() {
+		return getValue(TBook.CONTENT_TEXT);
+	}
+
+	/**
+	 * Some binary content of the book
+	 */
+	public void setContentPdf(byte[] value) {
+		setValue(TBook.CONTENT_PDF, value);
+	}
+
+	/**
+	 * Some binary content of the book
+	 */
+	public byte[] getContentPdf() {
+		return getValue(TBook.CONTENT_PDF);
+	}
+
+	/**
 	 * This constructor has no effect, as a {@link TableFieldImpl} will always
 	 * use its underlying table as a FieldProvider descriptor
 	 */

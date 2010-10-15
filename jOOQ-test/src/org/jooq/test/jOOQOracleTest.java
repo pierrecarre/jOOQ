@@ -116,6 +116,16 @@ public class jOOQOracleTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord,
     }
 
     @Override
+    protected TableField<TBookRecord, String> getTBook_CONTENT_TEXT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<TBookRecord, byte[]> getTBook_CONTENT_PDF() {
+        return null;
+    }
+
+    @Override
     protected Table<VLibraryRecord> getVLibrary() {
         return VLibrary.V_LIBRARY;
     }
