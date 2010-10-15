@@ -100,6 +100,10 @@ public abstract class jOOQAbstractTest<A extends TableRecord<A>, B extends Table
 
                 // All other errors
                 System.out.println("Error while executing : " + sql.trim());
+                System.out.println();
+                System.out.println();
+                e.printStackTrace();
+
                 System.exit(-1);
             } finally {
                 if (stmt != null) {
