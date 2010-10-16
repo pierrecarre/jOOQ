@@ -38,8 +38,4 @@ package org.jooq;
  */
 public interface SubQueryCondition<T> extends FieldCondition<T> {
 
-    /**
-     * @return The operator used in the condition
-     */
-    SubQueryOperator getOperator();
 }

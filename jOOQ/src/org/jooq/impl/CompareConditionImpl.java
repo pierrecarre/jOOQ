@@ -67,8 +67,8 @@ class CompareConditionImpl<T> extends AbstractCondition implements CompareCondit
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        if (getValue() != null) {
-            bind(stmt, initialIndex, getField(), getValue());
+        if (value != null) {
+            bind(stmt, initialIndex, field, value);
             return initialIndex + 1;
         }
         else {
@@ -77,33 +77,18 @@ class CompareConditionImpl<T> extends AbstractCondition implements CompareCondit
     }
 
     @Override
-    public Comparator getComparator() {
-        return comparator;
-    }
-
-    @Override
-    public T getValue() {
-        return value;
-    }
-
-    @Override
-    public Field<T> getField() {
-        return field;
-    }
-
-    @Override
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getField().toSQLReference(inlineParameters));
+        sb.append(field.toSQLReference(inlineParameters));
         sb.append(" ");
-        if (getValue() != null) {
-            sb.append(getComparator().toSQL());
+        if (value != null) {
+            sb.append(comparator.toSQL());
             sb.append(" ");
-            sb.append(FieldTypeHelper.toSQL(getValue(), inlineParameters, getField()));
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
         }
         else {
-            switch (getComparator()) {
+            switch (comparator) {
                 case EQUALS:
                     sb.append("is null");
                     break;
@@ -112,7 +97,7 @@ class CompareConditionImpl<T> extends AbstractCondition implements CompareCondit
                     break;
 
                 default:
-                    throw new IllegalStateException("Cannot compare null with " + getComparator());
+                    throw new IllegalStateException("Cannot compare null with " + comparator);
             }
         }
 

@@ -37,13 +37,5 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface CompareCondition<T> extends FieldCondition<T> {
-    /**
-     * @return The compare operator to compare the field with
-     */
-    Comparator getComparator();
 
-    /**
-     * @return The value to compare the field with
-     */
-    T getValue();
 }

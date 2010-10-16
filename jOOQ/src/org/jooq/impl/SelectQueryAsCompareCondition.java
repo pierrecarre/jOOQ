@@ -57,17 +57,12 @@ class SelectQueryAsCompareCondition<T> extends AbstractCondition implements Comp
     }
 
     @Override
-    public Field<T> getField() {
-        return field;
-    }
-
-    @Override
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(field.toSQLReference(inlineParameters));
         sb.append(" ");
-        sb.append(getComparator().toSQL());
+        sb.append(Comparator.EQUALS.toSQL());
         sb.append(" (");
         sb.append(query.toSQLReference(inlineParameters));
         sb.append(")");
@@ -80,15 +75,4 @@ class SelectQueryAsCompareCondition<T> extends AbstractCondition implements Comp
         initialIndex = field.bind(stmt, initialIndex);
         return query.bind(stmt, initialIndex);
     }
-
-    @Override
-    public Comparator getComparator() {
-        return Comparator.EQUALS;
-    }
-
-    @Override
-    public T getValue() {
-        throw new UnsupportedOperationException("Cannot retrieve values of ResultProviderQueryAsCompareCondition");
-    }
-
 }

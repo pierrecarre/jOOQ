@@ -37,8 +37,5 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface FieldCondition<T> extends Condition {
-    /**
-     * @return The field to compare values with
-     */
-    Field<T> getField();
+
 }

@@ -66,31 +66,21 @@ class JoinConditionImpl<T> extends AbstractCondition implements JoinCondition<T>
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        result = getField1().bind(stmt, result);
-        result = getField2().bind(stmt, result);
+        result = field1.bind(stmt, result);
+        result = field2.bind(stmt, result);
 
         return result;
-    }
-
-    @Override
-    public Field<T> getField1() {
-        return field1;
-    }
-
-    @Override
-    public Field<T> getField2() {
-        return field2;
     }
 
     @Override
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getField1().toSQLReference(inlineParameters));
+        sb.append(field1.toSQLReference(inlineParameters));
         sb.append(" ");
         sb.append(comparator.toSQL());
         sb.append(" ");
-        sb.append(getField2().toSQLReference(inlineParameters));
+        sb.append(field2.toSQLReference(inlineParameters));
 
         return sb.toString();
     }

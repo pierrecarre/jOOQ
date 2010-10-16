@@ -37,13 +37,5 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface JoinCondition<T> extends Condition {
-    /**
-     * @return The left field of the join condition
-     */
-    Field<T> getField1();
 
-    /**
-     * @return The right field of the join condition
-     */
-    Field<T> getField2();
 }

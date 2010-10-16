@@ -74,28 +74,18 @@ class InConditionImpl<T> extends AbstractCondition implements InCondition<T> {
     }
 
     @Override
-    public Set<T> getValues() {
-        return values;
-    }
-
-    @Override
-    public Field<T> getField() {
-        return field;
-    }
-
-    @Override
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getField().toSQLReference(inlineParameters));
+        sb.append(field.toSQLReference(inlineParameters));
         sb.append(" ");
         sb.append(operator.toSQL());
         sb.append(" (");
 
         String separator = "";
-        for (T value : getValues()) {
+        for (T value : values) {
             sb.append(separator);
-            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, getField()));
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
             separator = ", ";
         }
 

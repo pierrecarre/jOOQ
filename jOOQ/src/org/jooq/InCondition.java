@@ -31,7 +31,6 @@
 
 package org.jooq;
 
-import java.util.Set;
 
 /**
  * A condition comparing a field with a set of values
@@ -40,8 +39,4 @@ import java.util.Set;
  */
 public interface InCondition<T> extends FieldCondition<T> {
 
-    /**
-     * @return The set of values to compare the field with
-     */
-    Set<T> getValues();
 }

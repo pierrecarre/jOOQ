@@ -59,11 +59,6 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements Sub
     }
 
     @Override
-    public Field<T> getField() {
-        return field;
-    }
-
-    @Override
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
@@ -81,10 +76,5 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements Sub
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         initialIndex = field.bind(stmt, initialIndex);
         return query.bind(stmt, initialIndex);
-    }
-
-    @Override
-    public SubQueryOperator getOperator() {
-        return operator;
     }
 }

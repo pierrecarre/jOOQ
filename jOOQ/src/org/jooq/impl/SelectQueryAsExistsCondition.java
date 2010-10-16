@@ -71,9 +71,4 @@ class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCo
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         return query.bind(stmt, initialIndex);
     }
-
-    @Override
-    public ExistsOperator getOperator() {
-        return operator;
-    }
 }
