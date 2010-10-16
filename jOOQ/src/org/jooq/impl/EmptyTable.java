@@ -33,8 +33,8 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 
-import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -42,19 +42,18 @@ import org.jooq.Record;
 class EmptyTable extends TableImpl<Record> {
 
     private static final long      serialVersionUID = -7492790780048090156L;
-    public static final EmptyTable EMPTY_TABLE      = new EmptyTable();
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) {
         return initialIndex;
     }
 
-    private EmptyTable() {
-        super(getDummyTable());
+    private EmptyTable(SQLDialect dialect) {
+        super(dialect, getDummyTable(dialect));
     }
 
-    private static String getDummyTable() {
-        switch (Configuration.getInstance().getDialect()) {
+    private static String getDummyTable(SQLDialect dialect) {
+        switch (dialect) {
             case HSQLDB:
                 return "INFORMATION_SCHEMA.SYSTEM_USERS";
             case POSTGRES:
@@ -62,5 +61,9 @@ class EmptyTable extends TableImpl<Record> {
             default:
                 return "dual";
         }
+    }
+
+    static EmptyTable getInstance(SQLDialect dialect) {
+        return new EmptyTable(dialect);
     }
 }

@@ -33,6 +33,7 @@ package org.jooq.impl;
 
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -43,14 +44,14 @@ class CountFunctionImpl extends FunctionImpl<Integer> {
 
     private final boolean     distinct;
 
-    CountFunctionImpl() {
-        super("count", Integer.class);
+    CountFunctionImpl(SQLDialect dialect) {
+        super(dialect, "count", Integer.class);
 
         this.distinct = false;
     }
 
-    CountFunctionImpl(Field<?> field, boolean distinct) {
-        super("count", Integer.class, field);
+    CountFunctionImpl(SQLDialect dialect, Field<?> field, boolean distinct) {
+        super(dialect, "count", Integer.class, field);
 
         this.distinct = distinct;
     }

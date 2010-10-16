@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -41,28 +42,28 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>("ID", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.ORACLE, "ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>("NAME", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.ORACLE, "NAME", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>("ID_REF", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.ORACLE, "ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>("NAME_REF", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.ORACLE, "NAME_REF", String.class, X_UNUSED);
 
 	/**
 	 * No further instances allowed
 	 */
 	private XUnused() {
-		super("X_UNUSED", OdsTest.ODS_TEST);
+		super(SQLDialect.ORACLE, "X_UNUSED", OdsTest.ODS_TEST);
 	}
 
 }

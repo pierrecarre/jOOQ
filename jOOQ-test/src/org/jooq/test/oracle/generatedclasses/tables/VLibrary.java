@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,18 +40,18 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<VLibraryRecord, String> AUTHOR = new TableFieldImpl<VLibraryRecord, String>("AUTHOR", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> AUTHOR = new TableFieldImpl<VLibraryRecord, String>(SQLDialect.ORACLE, "AUTHOR", String.class, V_LIBRARY);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<VLibraryRecord, String> TITLE = new TableFieldImpl<VLibraryRecord, String>("TITLE", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> TITLE = new TableFieldImpl<VLibraryRecord, String>(SQLDialect.ORACLE, "TITLE", String.class, V_LIBRARY);
 
 	/**
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("V_LIBRARY", OdsTest.ODS_TEST);
+		super(SQLDialect.ORACLE, "V_LIBRARY", OdsTest.ODS_TEST);
 	}
 
 }

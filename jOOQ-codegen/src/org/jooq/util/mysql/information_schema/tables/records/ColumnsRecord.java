@@ -5,6 +5,7 @@ package org.jooq.util.mysql.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.Columns;
@@ -292,6 +293,6 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 	}
 
 	public ColumnsRecord() {
-		super(Columns.COLUMNS);
+		super(SQLDialect.MYSQL, Columns.COLUMNS);
 	}
 }

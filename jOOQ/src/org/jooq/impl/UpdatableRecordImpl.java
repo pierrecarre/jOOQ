@@ -38,6 +38,7 @@ import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
+import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
@@ -59,8 +60,8 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
      */
     private static final long serialVersionUID = -1012420583600561579L;
 
-    public UpdatableRecordImpl(UpdatableTable<R> table) {
-        super(table);
+    public UpdatableRecordImpl(SQLDialect dialect, UpdatableTable<R> table) {
+        super(dialect, table);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
 
     @SuppressWarnings("unchecked")
     private final void storeInsert(Connection con) throws SQLException {
-        InsertQuery<R> insert = Create.insertQuery(getTable());
+        InsertQuery<R> insert = create().insertQuery(getTable());
 
         for (Field<?> field : getFields()) {
             addValue(insert, (TableField<R, ?>)field);
@@ -112,7 +113,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
 
     @SuppressWarnings("unchecked")
     private final void storeUpdate(Connection con) throws SQLException {
-        UpdateQuery<R> update = Create.updateQuery(getTable());
+        UpdateQuery<R> update = create().updateQuery(getTable());
 
         for (Field<?> field : getFields()) {
             if (getValue0(field).isChanged()) {
@@ -129,7 +130,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
 
     @Override
     public final void delete(Connection con) throws SQLException {
-        DeleteQuery<R> delete = Create.deleteQuery(getTable());
+        DeleteQuery<R> delete = create().deleteQuery(getTable());
 
         for (Field<?> field : getPrimaryKey()) {
             addCondition(delete, field);
@@ -140,7 +141,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
 
     @Override
     public void refresh(Connection con) throws SQLException {
-        SimpleSelectQuery<R> select = Create.selectQuery(getTable());
+        SimpleSelectQuery<R> select = create().selectQuery(getTable());
 
         for (Field<?> field : getPrimaryKey()) {
             addCondition(select, field);

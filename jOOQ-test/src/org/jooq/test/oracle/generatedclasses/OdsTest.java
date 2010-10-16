@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -23,6 +24,6 @@ public class OdsTest extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private OdsTest() {
-		super("ODS_TEST");
+		super(SQLDialect.ORACLE, "ODS_TEST");
 	}
 }

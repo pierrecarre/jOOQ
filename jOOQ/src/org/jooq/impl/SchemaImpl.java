@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 
 /**
@@ -43,8 +44,8 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
 
     private static final long serialVersionUID = -8101463810207566546L;
 
-    public SchemaImpl(String name) {
-        super(name);
+    public SchemaImpl(SQLDialect dialect, String name) {
+        super(dialect, name);
     }
 
     @Override

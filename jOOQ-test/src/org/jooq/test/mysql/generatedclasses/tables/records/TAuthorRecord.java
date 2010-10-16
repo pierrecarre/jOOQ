@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.Create;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
@@ -51,7 +51,7 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 	 * PRIMARY KEY
 	 */
 	public List<TBookRecord> getTBooks(Connection connection) throws SQLException {
-		SimpleSelectQuery<TBookRecord> q = Create.selectQuery(TBook.T_BOOK);
+		SimpleSelectQuery<TBookRecord> q = create().selectQuery(TBook.T_BOOK);
 		q.addCompareCondition(TBook.AUTHOR_ID, getValue(TAuthor.ID));
 		q.execute(connection);
 
@@ -123,6 +123,6 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 	}
 
 	public TAuthorRecord() {
-		super(TAuthor.T_AUTHOR);
+		super(SQLDialect.MYSQL, TAuthor.T_AUTHOR);
 	}
 }

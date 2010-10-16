@@ -38,6 +38,7 @@ import org.jooq.AliasProvider;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -49,14 +50,14 @@ class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, Ali
     private final AliasProviderImpl<Table<R>> aliasProvider;
     private FieldList                         aliasedFields;
 
-    TableAlias(Table<R> table, String alias) {
-        this(table, alias, false);
+    TableAlias(SQLDialect dialect, Table<R> table, String alias) {
+        this(dialect, table, alias, false);
     }
 
-    TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
-        super(alias, table.getSchema());
+    TableAlias(SQLDialect dialect, Table<R> table, String alias, boolean wrapInParentheses) {
+        super(dialect, alias, table.getSchema());
 
-        this.aliasProvider = new AliasProviderImpl<Table<R>>(table, alias, wrapInParentheses);
+        this.aliasProvider = new AliasProviderImpl<Table<R>>(dialect, table, alias, wrapInParentheses);
     }
 
     @Override
@@ -82,7 +83,7 @@ class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, Ali
     @Override
     public FieldList getFields() {
         if (aliasedFields == null) {
-            aliasedFields = new FieldListImpl();
+            aliasedFields = new FieldListImpl(getDialect());
 
             for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
                 registerTableField(field);
@@ -97,7 +98,7 @@ class TableAlias<R extends Record> extends TableImpl<R> implements Table<R>, Ali
      */
     private <T> void registerTableField(Field<T> field) {
         // Instanciating a TableFieldImpl will add the field to this
-        new TableFieldImpl<R, T>(field.getName(), field.getType(), this);
+        new TableFieldImpl<R, T>(getDialect(), field.getName(), field.getType(), this);
     }
 
     @Override

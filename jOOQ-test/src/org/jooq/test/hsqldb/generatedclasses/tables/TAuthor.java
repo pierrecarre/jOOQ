@@ -6,6 +6,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 
 import java.sql.Date;
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -43,33 +44,33 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>("ID", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.HSQLDB, "ID", Integer.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>("FIRST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.HSQLDB, "FIRST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>("LAST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.HSQLDB, "LAST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>(SQLDialect.HSQLDB, "DATE_OF_BIRTH", Date.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.HSQLDB, "YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("T_AUTHOR", Public.PUBLIC);
+		super(SQLDialect.HSQLDB, "T_AUTHOR", Public.PUBLIC);
 	}
 
 	/*

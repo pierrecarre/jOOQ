@@ -33,7 +33,7 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.impl.Create;
+import org.jooq.impl.Factory;
 
 /**
  * A common interface for all objects holding conditions (e.g. queries)
@@ -60,7 +60,7 @@ public interface ConditionProvider {
 
     /**
      * Shortcut for calling {@link #addConditions(Condition)} with argument
-     * {@link Create#compareCondition(Field, Object)}
+     * {@link Factory#compareCondition(Field, Object)}
      */
     <T> void addCompareCondition(Field<T> field, T value);
 
@@ -84,19 +84,19 @@ public interface ConditionProvider {
 
     /**
      * Shortcut for calling {@link #addConditions(Condition)} with argument
-     * {@link Create#inCondition(Field, Collection)}
+     * {@link Factory#inCondition(Field, Collection)}
      */
     <T> void addInCondition(Field<T> field, Collection<T> values);
 
     /**
      * Shortcut for calling {@link #addConditions(Condition)} with argument
-     * {@link Create#inCondition(Field, Object...)}
+     * {@link Factory#inCondition(Field, Object...)}
      */
     <T> void addInCondition(Field<T> field, T... values);
 
     /**
      * Shortcut for calling {@link #addConditions(Condition)} with argument
-     * {@link Create#betweenCondition(Field, Object, Object)}
+     * {@link Factory#betweenCondition(Field, Object, Object)}
      */
     <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue);
 }

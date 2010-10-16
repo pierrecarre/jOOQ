@@ -4,6 +4,7 @@
 package org.jooq.util.oracle.sys.tables;
 
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -27,27 +28,27 @@ public class AllColComments extends TableImpl<Record> {
 	/**
 	 * Owner of the object
 	 */
-	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>("OWNER", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> OWNER = new TableFieldImpl<Record, String>(SQLDialect.ORACLE, "OWNER", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Name of the object
 	 */
-	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>("TABLE_NAME", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> TABLE_NAME = new TableFieldImpl<Record, String>(SQLDialect.ORACLE, "TABLE_NAME", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Name of the column
 	 */
-	public static final TableField<Record, String> COLUMN_NAME = new TableFieldImpl<Record, String>("COLUMN_NAME", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> COLUMN_NAME = new TableFieldImpl<Record, String>(SQLDialect.ORACLE, "COLUMN_NAME", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * Comment on the column
 	 */
-	public static final TableField<Record, String> COMMENTS = new TableFieldImpl<Record, String>("COMMENTS", String.class, ALL_COL_COMMENTS);
+	public static final TableField<Record, String> COMMENTS = new TableFieldImpl<Record, String>(SQLDialect.ORACLE, "COMMENTS", String.class, ALL_COL_COMMENTS);
 
 	/**
 	 * No further instances allowed
 	 */
 	private AllColComments() {
-		super("ALL_COL_COMMENTS", Sys.SYS);
+		super(SQLDialect.ORACLE, "ALL_COL_COMMENTS", Sys.SYS);
 	}
 }

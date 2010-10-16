@@ -33,6 +33,8 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.SQLDialect;
+
 class PlainSQLField extends FieldImpl<Object> {
 
     /**
@@ -42,8 +44,8 @@ class PlainSQLField extends FieldImpl<Object> {
     private final String      sql;
     private final Object[]    bindings;
 
-    PlainSQLField(String sql, Object[] bindings) {
-        super("", Object.class);
+    PlainSQLField(SQLDialect dialect, String sql, Object[] bindings) {
+        super(dialect, "", Object.class);
 
         this.sql = sql;
         this.bindings = (bindings == null) ? new Object[0] : bindings;

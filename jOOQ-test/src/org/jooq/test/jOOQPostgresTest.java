@@ -35,10 +35,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
-import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.Factory;
 import org.jooq.test.postgres.generatedclasses.tables.TAuthor;
 import org.jooq.test.postgres.generatedclasses.tables.TBook;
 import org.jooq.test.postgres.generatedclasses.tables.VLibrary;
@@ -54,11 +54,14 @@ public class jOOQPostgresTest extends jOOQAbstractTest<TAuthorRecord, TBookRecor
 
 	@Override
 	protected Connection getConnection() throws Exception {
-		Configuration.getInstance().setDialect(SQLDialect.POSTGRES);
-
 		Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection ("jdbc:postgresql:postgres", "postgres", "password");
 	}
+
+    @Override
+    protected Factory create() throws Exception {
+        return new Factory(getConnection(), SQLDialect.POSTGRES);
+    }
 
 	@Override
 	protected String getCreateScript() {

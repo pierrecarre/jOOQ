@@ -4,6 +4,7 @@
 package org.jooq.test.hsqldb.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -41,34 +42,34 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>("ID", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.HSQLDB, "ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>("NAME", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.HSQLDB, "NAME", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>("ID_REF", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.HSQLDB, "ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
-	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>("NAME_REF", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.HSQLDB, "NAME_REF", String.class, X_UNUSED);
 
 	/**
 	 * No further instances allowed
 	 */
 	private XUnused() {
-		super("X_UNUSED", Public.PUBLIC);
+		super(SQLDialect.HSQLDB, "X_UNUSED", Public.PUBLIC);
 	}
 
 	/*

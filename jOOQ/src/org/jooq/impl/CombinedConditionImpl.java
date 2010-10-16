@@ -42,6 +42,7 @@ import java.util.List;
 import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.Operator;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -53,7 +54,9 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
     private final Operator        operator;
     private final List<Condition> conditions;
 
-    CombinedConditionImpl(Operator operator, Collection<Condition> conditions) {
+    CombinedConditionImpl(SQLDialect dialect, Operator operator, Collection<Condition> conditions) {
+        super(dialect);
+
         if (operator == null) {
             throw new IllegalArgumentException("The argument 'operator' must not be null");
         }

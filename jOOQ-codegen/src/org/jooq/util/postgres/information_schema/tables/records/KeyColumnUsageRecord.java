@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
@@ -152,6 +153,6 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 	}
 
 	public KeyColumnUsageRecord() {
-		super(KeyColumnUsage.KEY_COLUMN_USAGE);
+		super(SQLDialect.POSTGRES, KeyColumnUsage.KEY_COLUMN_USAGE);
 	}
 }

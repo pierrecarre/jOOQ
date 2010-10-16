@@ -5,6 +5,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
@@ -56,6 +57,6 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 	}
 
 	public VLibraryRecord() {
-		super(VLibrary.V_LIBRARY);
+		super(SQLDialect.MYSQL, VLibrary.V_LIBRARY);
 	}
 }

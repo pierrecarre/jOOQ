@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -41,7 +42,9 @@ abstract class AbstractNamedQueryPart extends AbstractQueryPart implements Named
     private static final long serialVersionUID = -4496974591205380167L;
     private final String      name;
 
-    AbstractNamedQueryPart(String name) {
+    AbstractNamedQueryPart(SQLDialect dialect, String name) {
+        super(dialect);
+
         this.name = name;
     }
 

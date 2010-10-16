@@ -31,9 +31,6 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.impl.Create.compareCondition;
-import static org.jooq.impl.Create.joinCondition;
-import static org.jooq.impl.Create.selectQuery;
 import static org.jooq.util.oracle.sys.tables.AllConsColumns.ALL_CONS_COLUMNS;
 import static org.jooq.util.oracle.sys.tables.AllConstraints.ALL_CONSTRAINTS;
 
@@ -66,7 +63,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 	protected PrimaryKeyDefinition getPrimaryKey1() throws SQLException {
 		PrimaryKeyDefinition definition = null;
 
-		SelectQuery q = selectQuery();
+		SelectQuery q = create().selectQuery();
 		q.addFrom(ALL_CONS_COLUMNS);
 		q.addJoin(ALL_CONSTRAINTS,
 				AllConsColumns.CONSTRAINT_NAME,
@@ -107,24 +104,24 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 		Field<String> referencingColumn = cc1.getField(AllConsColumns.COLUMN_NAME).as("referencing_column");
 		Field<String> referencedColumn = cc2.getField(AllConsColumns.COLUMN_NAME).as("referenced_column");
 
-		SelectQuery inner = selectQuery();
+		SelectQuery inner = create().selectQuery();
 		inner.addFrom(ALL_CONS_COLUMNS);
 		inner.addJoin(ALL_CONSTRAINTS, AllConsColumns.CONSTRAINT_NAME, AllConstraints.CONSTRAINT_NAME);
 		inner.addSelect(AllConstraints.CONSTRAINT_NAME);
 		inner.addConditions(
-				compareCondition(AllConstraints.CONSTRAINT_TYPE, "R"),
-				compareCondition(AllConsColumns.OWNER, getSchemaName()),
-				compareCondition(AllConsColumns.TABLE_NAME, getTableName()),
-				compareCondition(AllConsColumns.COLUMN_NAME, getName()));
+		    create().compareCondition(AllConstraints.CONSTRAINT_TYPE, "R"),
+		    create().compareCondition(AllConsColumns.OWNER, getSchemaName()),
+		    create().compareCondition(AllConsColumns.TABLE_NAME, getTableName()),
+		    create().compareCondition(AllConsColumns.COLUMN_NAME, getName()));
 
-		SelectQuery q = selectQuery();
+		SelectQuery q = create().selectQuery();
 		q.addFrom(ALL_CONSTRAINTS);
 		q.addSelect(constraint, referencingColumn, referencedTable, referencedColumn);
 		q.addJoin(cc1,
-				joinCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.CONSTRAINT_NAME));
+		    create().joinCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.CONSTRAINT_NAME));
 		q.addJoin(cc2,
-				joinCondition(cc2.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.R_CONSTRAINT_NAME),
-				joinCondition(cc2.getField(AllConsColumns.POSITION), cc1.getField(AllConsColumns.POSITION)));
+		    create().joinCondition(cc2.getField(AllConsColumns.CONSTRAINT_NAME), AllConstraints.R_CONSTRAINT_NAME),
+		    create().joinCondition(cc2.getField(AllConsColumns.POSITION), cc1.getField(AllConsColumns.POSITION)));
 		q.addConditions(inner.asCompareCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME)));
 
 		q.execute(getConnection());

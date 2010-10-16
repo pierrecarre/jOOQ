@@ -43,6 +43,7 @@ import org.jooq.FieldCondition;
 import org.jooq.InCondition;
 import org.jooq.JoinCondition;
 import org.jooq.ResultProviderSelectQuery;
+import org.jooq.SQLDialect;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
@@ -53,8 +54,8 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     private static final long serialVersionUID = 5589200289715501493L;
 
-    FieldImpl(String name, Class<? extends T> type) {
-        super(name, type);
+    FieldImpl(SQLDialect dialect, String name, Class<? extends T> type) {
+        super(dialect, name, type);
     }
 
     @Override
@@ -73,37 +74,37 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public Field<T> as(String alias) {
-        return new FieldAlias<T>(this, alias);
+        return new FieldAlias<T>(getDialect(), this, alias);
     }
 
     @Override
     public CompareCondition<T> isNull() {
-        return Create.nullCondition(this);
+        return create().nullCondition(this);
     }
 
     @Override
     public CompareCondition<T> isNotNull() {
-        return Create.notNullCondition(this);
+        return create().notNullCondition(this);
     }
 
     @Override
     public CompareCondition<T> like(T value) {
-        return Create.compareCondition(this, value, Comparator.LIKE);
+        return create().compareCondition(this, value, Comparator.LIKE);
     }
 
     @Override
     public CompareCondition<T> notLike(T value) {
-        return Create.compareCondition(this, value, Comparator.NOT_LIKE);
+        return create().compareCondition(this, value, Comparator.NOT_LIKE);
     }
 
     @Override
     public InCondition<T> in(T... values) {
-        return Create.inCondition(this, values);
+        return create().inCondition(this, values);
     }
 
     @Override
     public InCondition<T> in(Collection<T> values) {
-        return Create.inCondition(this, values);
+        return create().inCondition(this, values);
     }
 
     @Override
@@ -113,12 +114,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public InCondition<T> notIn(T... values) {
-        return Create.notInCondition(this, values);
+        return create().notInCondition(this, values);
     }
 
     @Override
     public InCondition<T> notIn(Collection<T> values) {
-        return Create.notInCondition(this, values);
+        return create().notInCondition(this, values);
     }
 
     @Override
@@ -128,17 +129,17 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public BetweenCondition<T> between(T minValue, T maxValue) {
-        return Create.betweenCondition(this, minValue, maxValue);
+        return create().betweenCondition(this, minValue, maxValue);
     }
 
     @Override
     public CompareCondition<T> equal(T value) {
-        return Create.compareCondition(this, value);
+        return create().compareCondition(this, value);
     }
 
     @Override
     public JoinCondition<T> equal(Field<T> field) {
-        return Create.joinCondition(this, field);
+        return create().joinCondition(this, field);
     }
 
     @Override
@@ -163,12 +164,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public CompareCondition<T> notEqual(T value) {
-        return Create.compareCondition(this, value, Comparator.NOT_EQUALS);
+        return create().compareCondition(this, value, Comparator.NOT_EQUALS);
     }
 
     @Override
     public JoinCondition<T> notEqual(Field<T> field) {
-        return Create.joinCondition(this, field, Comparator.NOT_EQUALS);
+        return create().joinCondition(this, field, Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -193,12 +194,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public CompareCondition<T> lessThan(T value) {
-        return Create.compareCondition(this, value, Comparator.LESS);
+        return create().compareCondition(this, value, Comparator.LESS);
     }
 
     @Override
     public JoinCondition<T> lessThan(Field<T> field) {
-        return Create.joinCondition(this, field, Comparator.LESS);
+        return create().joinCondition(this, field, Comparator.LESS);
     }
 
     @Override
@@ -223,12 +224,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public CompareCondition<T> lessOrEqual(T value) {
-        return Create.compareCondition(this, value, Comparator.LESS_OR_EQUAL);
+        return create().compareCondition(this, value, Comparator.LESS_OR_EQUAL);
     }
 
     @Override
     public JoinCondition<T> lessOrEqual(Field<T> field) {
-        return Create.joinCondition(this, field, Comparator.LESS_OR_EQUAL);
+        return create().joinCondition(this, field, Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -253,12 +254,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public CompareCondition<T> greaterThan(T value) {
-        return Create.compareCondition(this, value, Comparator.GREATER);
+        return create().compareCondition(this, value, Comparator.GREATER);
     }
 
     @Override
     public JoinCondition<T> greaterThan(Field<T> field) {
-        return Create.joinCondition(this, field, Comparator.GREATER);
+        return create().joinCondition(this, field, Comparator.GREATER);
     }
 
     @Override
@@ -283,12 +284,12 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
 
     @Override
     public CompareCondition<T> greaterOrEqual(T value) {
-        return Create.compareCondition(this, value, Comparator.GREATER_OR_EQUAL);
+        return create().compareCondition(this, value, Comparator.GREATER_OR_EQUAL);
     }
 
     @Override
     public JoinCondition<T> greaterOrEqual(Field<T> field) {
-        return Create.joinCondition(this, field, Comparator.GREATER_OR_EQUAL);
+        return create().joinCondition(this, field, Comparator.GREATER_OR_EQUAL);
     }
 
     @Override

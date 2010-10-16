@@ -39,6 +39,7 @@ import java.sql.SQLException;
 import org.jooq.Condition;
 import org.jooq.Join;
 import org.jooq.JoinType;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -52,8 +53,10 @@ class JoinImpl extends AbstractQueryPart implements Join {
     private final ConditionProviderImpl condition;
     private final JoinType              type;
 
-    JoinImpl(Table<?> table, JoinType type, Condition... conditions) {
-        this.condition = new ConditionProviderImpl();
+    JoinImpl(SQLDialect dialect, Table<?> table, JoinType type, Condition... conditions) {
+        super(dialect);
+
+        this.condition = new ConditionProviderImpl(dialect);
 
         this.table = table;
         this.condition.addConditions(conditions);

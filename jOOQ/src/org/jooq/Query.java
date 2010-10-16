@@ -79,4 +79,26 @@ public interface Query extends QueryPart, Serializable {
      * @see {@link #execute(Connection)}
      */
     int execute(Connection connection) throws SQLException;
+
+    /**
+     * Execute the query, if it has been created with a properly configured
+     * factory
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li> {@link SelectQuery} : the number of resulting records</li>
+     *         <li> {@link UpdateQuery} : the number of updated records</li>
+     *         <li> {@link InsertQuery} : the number of inserted records</li>
+     *         <li> {@link DeleteQuery} : the number of deleted records</li>
+     *         </ul>
+     * @throws SQLException
+     * @see {@link #execute(Connection)}
+     */
+    int execute() throws SQLException;
+
+    /**
+     * Retrieve the underlying configuration of this query
+     */
+    Configuration getConfiguration();
 }

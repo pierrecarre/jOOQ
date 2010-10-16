@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.ResultProviderQuery;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -47,7 +48,9 @@ class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCo
     private final ResultProviderQuery<?> query;
     private final ExistsOperator         operator;
 
-    SelectQueryAsExistsCondition(ResultProviderQuery<?> query, ExistsOperator operator) {
+    SelectQueryAsExistsCondition(SQLDialect dialect, ResultProviderQuery<?> query, ExistsOperator operator) {
+        super(dialect);
+
         this.query = query;
         this.operator = operator;
     }

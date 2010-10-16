@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -52,7 +53,9 @@ class CompareConditionImpl<T> extends AbstractCondition implements CompareCondit
     private final T           value;
     private final Comparator  comparator;
 
-    CompareConditionImpl(Field<T> field, T value, Comparator comparator) {
+    CompareConditionImpl(SQLDialect dialect, Field<T> field, T value, Comparator comparator) {
+        super(dialect);
+
         if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {
             throw new IllegalArgumentException("Cannot compare null with " + comparator);
         }

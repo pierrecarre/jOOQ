@@ -42,9 +42,9 @@ import java.util.Set;
 
 import org.jooq.FieldProvider;
 import org.jooq.Parameter;
+import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.TableField;
-import org.jooq.impl.Create;
 import org.jooq.impl.ParameterImpl;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.StoredFunctionImpl;
@@ -104,8 +104,9 @@ public class DefaultGenerator implements Generator {
 
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
+			out.printImport(SQLDialect.class);
 			out.println("\tprivate " + schema.getJavaClassName() + "() {");
-			out.println("\t\tsuper(\"" + schema.getName() + "\");");
+			out.println("\t\tsuper(SQLDialect." + database.getDialect().name() + ", \"" + schema.getName() + "\");");
 			out.println("\t}");
 
 			out.println("}");
@@ -166,7 +167,8 @@ public class DefaultGenerator implements Generator {
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
 			out.println("\tprivate " + table.getJavaClassName() + "() {");
-			out.println("\t\tsuper(\"" + table.getName() + "\", " + schema.getJavaClassName() + "." + schema.getNameUC() + ");");
+			out.printImport(SQLDialect.class);
+			out.println("\t\tsuper(SQLDialect." + database.getDialect().name() + ", \"" + table.getName() + "\", " + schema.getJavaClassName() + "." + schema.getNameUC() + ");");
 
 			if (database.generateRelations()) {
 				Set<String> primaryKeys = new HashSet<String>();
@@ -235,7 +237,8 @@ public class DefaultGenerator implements Generator {
 			out.println();
 			out.println("\tpublic " + table.getJavaClassName("Record") + "() {");
 
-			out.print("\t\tsuper(");
+            out.printImport(SQLDialect.class);
+			out.print("\t\tsuper(SQLDialect." + database.getDialect().name() + ", ");
 			out.print(table.getJavaClassName());
 			out.print(".");
 			out.print(table.getNameUC());
@@ -277,7 +280,8 @@ public class DefaultGenerator implements Generator {
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
 			out.println("\tpublic " + procedure.getJavaClassName() + "() {");
-			out.println("\t\tsuper(\"" + procedure.getName() + "\");");
+            out.printImport(SQLDialect.class);
+			out.println("\t\tsuper(SQLDialect." + database.getDialect().name() + ", \"" + procedure.getName() + "\");");
 			out.println();
 
 			for (ColumnDefinition parameter : procedure.getAllParameters()) {
@@ -346,7 +350,8 @@ public class DefaultGenerator implements Generator {
 			out.println();
 			printNoFurtherInstancesAllowedJavadoc(out);
 			out.println("\tpublic " + function.getJavaClassName() + "() {");
-			out.println("\t\tsuper(\"" + function.getName() + "\", " + function.getReturnType() + ".class);");
+            out.printImport(SQLDialect.class);
+			out.println("\t\tsuper(SQLDialect." + database.getDialect().name() + ", \"" + function.getName() + "\", " + function.getReturnType() + ".class);");
 			out.println();
 
 			for (ColumnDefinition parameter : function.getInParameters()) {
@@ -424,7 +429,7 @@ public class DefaultGenerator implements Generator {
 					}
 					out.println("(Connection connection) throws SQLException {");
 
-					out.print("\t\tSimpleSelectQuery<" + referencing.getJavaClassName("Record") + "> q = Create.selectQuery(");
+					out.print("\t\tSimpleSelectQuery<" + referencing.getJavaClassName("Record") + "> q = create().selectQuery(");
 					out.print(referencing.getJavaClassName());
 					out.print(".");
 					out.print(referencing.getNameUC());
@@ -449,7 +454,6 @@ public class DefaultGenerator implements Generator {
 
 					out.printImport(tablePackage + "." + referencing.getJavaClassName());
 					out.printImport(SimpleSelectQuery.class);
-					out.printImport(Create.class);
 					out.printImport(Connection.class);
 					out.printImport(SQLException.class);
 					out.printImport(List.class);
@@ -466,7 +470,7 @@ public class DefaultGenerator implements Generator {
 				out.print(referenced.getJavaClassName());
 				out.println("(Connection connection) throws SQLException {");
 
-				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = Create.selectQuery(");
+				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = create().selectQuery(");
 				out.print(referenced.getJavaClassName());
 				out.print(".");
 				out.print(referenced.getNameUC());
@@ -493,7 +497,6 @@ public class DefaultGenerator implements Generator {
 
 				out.printImport(tablePackage + "." + referenced.getJavaClassName());
 				out.printImport(SimpleSelectQuery.class);
-				out.printImport(Create.class);
 				out.printImport(Connection.class);
 				out.printImport(SQLException.class);
 				out.printImport(List.class);
@@ -531,11 +534,13 @@ public class DefaultGenerator implements Generator {
 				genericPrefix + column.getType() + "> " +
 				column.getNameUC() + columnDisambiguationSuffix +
 				" = new " + concreteMemberType
-				+ genericPrefix + column.getType() + ">(\""
-				+ column.getName() + "\", " +
+				+ genericPrefix + column.getType() + ">(SQLDialect."
+				+ column.getDatabase().getDialect().name()
+				+ ", \"" + column.getName() + "\", " +
 				column.getType() + ".class" +
 				(table instanceof TableDefinition ? ", " + table.getNameUC() : "") +
 				");");
+		out.printImport(SQLDialect.class);
 		out.printImport(declaredMemberClass);
 		out.printImport(concreteMemberClass);
 		out.printImport(column.getTypeClass());

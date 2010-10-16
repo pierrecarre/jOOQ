@@ -4,6 +4,7 @@
 package org.jooq.test.postgres.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -41,34 +42,34 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>("id", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.POSTGRES, "id", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>("name", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.POSTGRES, "name", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [id_ref, name_ref] REFERENCES x_unused [id, name]
 	 */
-	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>("id_ref", Integer.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.POSTGRES, "id_ref", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [id_ref, name_ref] REFERENCES x_unused [id, name]
 	 */
-	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>("name_ref", String.class, X_UNUSED);
+	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.POSTGRES, "name_ref", String.class, X_UNUSED);
 
 	/**
 	 * No further instances allowed
 	 */
 	private XUnused() {
-		super("x_unused", Public.PUBLIC);
+		super(SQLDialect.POSTGRES, "x_unused", Public.PUBLIC);
 	}
 
 	/*

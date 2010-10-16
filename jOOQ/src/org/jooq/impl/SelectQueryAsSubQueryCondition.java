@@ -36,6 +36,7 @@ import java.sql.SQLException;
 
 import org.jooq.Field;
 import org.jooq.ResultProviderQuery;
+import org.jooq.SQLDialect;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
@@ -49,7 +50,9 @@ class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements Sub
     private final Field<T>               field;
     private final SubQueryOperator       operator;
 
-    SelectQueryAsSubQueryCondition(ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
+    SelectQueryAsSubQueryCondition(SQLDialect dialect, ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
+        super(dialect);
+
         this.query = query;
         this.field = field;
         this.operator = operator;

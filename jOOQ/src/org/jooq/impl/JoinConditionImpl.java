@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.JoinCondition;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -49,11 +50,13 @@ class JoinConditionImpl<T> extends AbstractCondition implements JoinCondition<T>
     private final Field<T>    field2;
     private final Comparator  comparator;
 
-    JoinConditionImpl(Field<T> field1, Field<T> field2) {
-        this(field1, field2, Comparator.EQUALS);
+    JoinConditionImpl(SQLDialect dialect, Field<T> field1, Field<T> field2) {
+        this(dialect, field1, field2, Comparator.EQUALS);
     }
 
-    JoinConditionImpl(Field<T> field1, Field<T> field2, Comparator comparator) {
+    JoinConditionImpl(SQLDialect dialect, Field<T> field1, Field<T> field2, Comparator comparator) {
+        super(dialect);
+
         this.field1 = field1;
         this.field2 = field2;
         this.comparator = comparator;

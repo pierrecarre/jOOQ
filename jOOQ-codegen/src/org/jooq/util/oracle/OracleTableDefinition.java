@@ -31,9 +31,6 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.impl.Create.compareCondition;
-import static org.jooq.impl.Create.joinCondition;
-import static org.jooq.impl.Create.selectQuery;
 import static org.jooq.util.oracle.sys.tables.AllColComments.ALL_COL_COMMENTS;
 import static org.jooq.util.oracle.sys.tables.AllTabCols.ALL_TAB_COLS;
 
@@ -64,14 +61,14 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 	public List<ColumnDefinition> getColumns0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		SelectQuery q = selectQuery();
+		SelectQuery q = create().selectQuery();
 		q.addFrom(ALL_TAB_COLS);
 		q.addFrom(ALL_COL_COMMENTS);
 		q.addConditions(
-				joinCondition(AllTabCols.TABLE_NAME, AllColComments.TABLE_NAME),
-				joinCondition(AllTabCols.COLUMN_NAME, AllColComments.COLUMN_NAME),
-				compareCondition(AllTabCols.OWNER, getSchemaName()),
-				compareCondition(AllTabCols.TABLE_NAME, getName()));
+		    create().joinCondition(AllTabCols.TABLE_NAME, AllColComments.TABLE_NAME),
+		    create().joinCondition(AllTabCols.COLUMN_NAME, AllColComments.COLUMN_NAME),
+		    create().compareCondition(AllTabCols.OWNER, getSchemaName()),
+		    create().compareCondition(AllTabCols.TABLE_NAME, getName()));
 		q.addOrderBy(AllTabCols.COLUMN_ID);
 
 		q.execute(getConnection());

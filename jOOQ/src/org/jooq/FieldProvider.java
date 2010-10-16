@@ -56,4 +56,9 @@ public interface FieldProvider {
      * @return All available fields
      */
     FieldList getFields();
+
+    /**
+     * @return The dialect of the underlying implementation
+     */
+    SQLDialect getDialect();
 }

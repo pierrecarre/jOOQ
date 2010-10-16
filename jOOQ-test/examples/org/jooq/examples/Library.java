@@ -35,21 +35,23 @@ import static org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import org.jooq.Comparator;
-import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.Create;
+import org.jooq.impl.Factory;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 
 public class Library {
+
+    private static Factory create() throws Exception {
+        return new Factory(getConnection(), SQLDialect.MYSQL);
+    }
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("First run...");
@@ -65,8 +67,6 @@ public class Library {
 	}
 
 	protected static Connection getConnection() throws Exception {
-		Configuration.getInstance().setDialect(SQLDialect.MYSQL);
-
 		Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection ("jdbc:mysql://localhost/test", "root", "");
 	}
@@ -74,9 +74,9 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void firstRun(Connection c) throws SQLException {
+	public static void firstRun(Connection c) throws Exception {
 		// Create the query
-		SelectQuery q = Create.selectQuery();
+		SelectQuery q = create().selectQuery();
 		q.addFrom(T_AUTHOR);
 		q.addJoin(T_BOOK, TAuthor.ID, TBook.AUTHOR_ID);
 		q.addCompareCondition(TAuthor.YEAR_OF_BIRTH, 1920, Comparator.GREATER);
@@ -102,8 +102,8 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void secondRun(Connection c) throws SQLException {
-		SelectQuery q = Create.select()
+	public static void secondRun(Connection c) throws Exception {
+		SelectQuery q = create().select()
 			.from(T_AUTHOR)
 			.join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
@@ -129,8 +129,8 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void thirdRun(Connection c) throws SQLException {
-		SimpleSelectQuery<TAuthorRecord> q = Create.select(T_AUTHOR)
+	public static void thirdRun(Connection c) throws Exception {
+		SimpleSelectQuery<TAuthorRecord> q = create().select(T_AUTHOR)
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
 			.orderBy(TAuthor.LAST_NAME).getQuery();
 

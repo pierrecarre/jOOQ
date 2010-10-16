@@ -4,6 +4,7 @@
 package org.jooq.test.mysql.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -43,40 +44,40 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>("ID", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.MYSQL, "ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 * 
 	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
-	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>("AUTHOR_ID", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.MYSQL, "AUTHOR_ID", Integer.class, T_BOOK);
 
 	/**
 	 * The book's title
 	 */
-	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>("TITLE", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>(SQLDialect.MYSQL, "TITLE", String.class, T_BOOK);
 
 	/**
 	 * The year the book was published in
 	 */
-	public static final TableField<TBookRecord, Integer> PUBLISHED_IN = new TableFieldImpl<TBookRecord, Integer>("PUBLISHED_IN", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> PUBLISHED_IN = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.MYSQL, "PUBLISHED_IN", Integer.class, T_BOOK);
 
 	/**
 	 * Some textual content of the book
 	 */
-	public static final TableField<TBookRecord, String> CONTENT_TEXT = new TableFieldImpl<TBookRecord, String>("CONTENT_TEXT", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> CONTENT_TEXT = new TableFieldImpl<TBookRecord, String>(SQLDialect.MYSQL, "CONTENT_TEXT", String.class, T_BOOK);
 
 	/**
 	 * Some binary content of the book
 	 */
-	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>("CONTENT_PDF", byte[].class, T_BOOK);
+	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>(SQLDialect.MYSQL, "CONTENT_PDF", byte[].class, T_BOOK);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("t_book", Test.TEST);
+		super(SQLDialect.MYSQL, "t_book", Test.TEST);
 	}
 
 	/*

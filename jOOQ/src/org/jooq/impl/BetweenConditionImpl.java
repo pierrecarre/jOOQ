@@ -36,6 +36,7 @@ import java.sql.SQLException;
 
 import org.jooq.BetweenCondition;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -48,7 +49,9 @@ class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondit
     private final T           minValue;
     private final T           maxValue;
 
-    BetweenConditionImpl(Field<T> field, T minValue, T maxValue) {
+    BetweenConditionImpl(SQLDialect dialect, Field<T> field, T minValue, T maxValue) {
+        super(dialect);
+
         if (field == null) {
             throw new IllegalArgumentException("The argument 'field' must not be null");
         }

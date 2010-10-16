@@ -6,6 +6,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 
 import java.sql.Date;
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -45,33 +46,33 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>("ID", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.MYSQL, "ID", Integer.class, T_AUTHOR);
 
 	/**
 	 * The author's first name
 	 */
-	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>("FIRST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.MYSQL, "FIRST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's last name
 	 */
-	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>("LAST_NAME", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.MYSQL, "LAST_NAME", String.class, T_AUTHOR);
 
 	/**
 	 * The author's date of birth
 	 */
-	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>("DATE_OF_BIRTH", Date.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>(SQLDialect.MYSQL, "DATE_OF_BIRTH", Date.class, T_AUTHOR);
 
 	/**
 	 * The author's year of birth
 	 */
-	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>("YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.MYSQL, "YEAR_OF_BIRTH", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("t_author", Test.TEST);
+		super(SQLDialect.MYSQL, "t_author", Test.TEST);
 	}
 
 	/*

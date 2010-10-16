@@ -3,6 +3,7 @@
  */
 package org.jooq.util.oracle.sys;
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -22,6 +23,6 @@ public class Sys extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Sys() {
-		super("SYS");
+		super(SQLDialect.ORACLE, "SYS");
 	}
 }

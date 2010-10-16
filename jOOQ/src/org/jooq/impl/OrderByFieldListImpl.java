@@ -41,6 +41,7 @@ import java.util.Map;
 
 import org.jooq.Field;
 import org.jooq.OrderByFieldList;
+import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 
 /**
@@ -52,12 +53,12 @@ class OrderByFieldListImpl extends FieldListImpl implements OrderByFieldList {
 
     private final Map<Field<?>, SortOrder> ordering;
 
-    OrderByFieldListImpl() {
-        this(new ArrayList<Field<?>>());
+    OrderByFieldListImpl(SQLDialect dialect) {
+        this(dialect, new ArrayList<Field<?>>());
     }
 
-    OrderByFieldListImpl(List<Field<?>> wrappedList) {
-        super(wrappedList);
+    OrderByFieldListImpl(SQLDialect dialect, List<Field<?>> wrappedList) {
+        super(dialect, wrappedList);
 
         this.ordering = new HashMap<Field<?>, SortOrder>();
     }

@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.TableField;
 import org.jooq.UpdatableTable;
@@ -53,8 +54,8 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
 
     private final List<TableField<R, ?>> primaryKey;
 
-    public UpdatableTableImpl(String name, Schema schema) {
-        super(name, schema);
+    public UpdatableTableImpl(SQLDialect dialect, String name, Schema schema) {
+        super(dialect, name, schema);
 
         this.primaryKey = new ArrayList<TableField<R, ?>>();
     }

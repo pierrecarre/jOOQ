@@ -35,6 +35,7 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.FieldList;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -43,12 +44,12 @@ class FieldListImpl extends AbstractQueryPartList<Field<?>> implements FieldList
 
     private static final long serialVersionUID = -6911012275707591576L;
 
-    FieldListImpl() {
-        super();
+    FieldListImpl(SQLDialect dialect) {
+        super(dialect);
     }
 
-    FieldListImpl(List<Field<?>> wrappedList) {
-        super(wrappedList);
+    FieldListImpl(SQLDialect dialect, List<Field<?>> wrappedList) {
+        super(dialect, wrappedList);
     }
 
     @SuppressWarnings("unchecked")

@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 
@@ -44,8 +45,8 @@ public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements
 
     private final Table<R>    table;
 
-    public TableFieldImpl(String name, Class<? extends T> type, Table<R> table) {
-        super(name, type);
+    public TableFieldImpl(SQLDialect dialect, String name, Class<? extends T> type, Table<R> table) {
+        super(dialect, name, type);
 
         this.table = table;
         this.table.getFields().add(this);

@@ -42,6 +42,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -52,7 +53,9 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     private Condition         condition;
 
-    ConditionProviderImpl() {}
+    ConditionProviderImpl(SQLDialect dialect) {
+        super(dialect);
+    }
 
     Condition getWhere() {
         if (condition == null) {
@@ -76,51 +79,51 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
                 c = conditions.iterator().next();
             }
             else {
-                c = Create.combinedCondition(conditions);
+                c = create().combinedCondition(conditions);
             }
 
             if (getWhere() == TRUE_CONDITION) {
                 condition = c;
             }
             else {
-                condition = Create.combinedCondition(getWhere(), c);
+                condition = create().combinedCondition(getWhere(), c);
             }
         }
     }
 
     @Override
     public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
-        addConditions(Create.betweenCondition(field, minValue, maxValue));
+        addConditions(create().betweenCondition(field, minValue, maxValue));
     }
 
     @Override
     public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
-        addConditions(Create.compareCondition(field, value, comparator));
+        addConditions(create().compareCondition(field, value, comparator));
     }
 
     @Override
     public <T> void addCompareCondition(Field<T> field, T value) {
-        addConditions(Create.compareCondition(field, value));
+        addConditions(create().compareCondition(field, value));
     }
 
     @Override
     public void addNullCondition(Field<?> field) {
-        addConditions(Create.nullCondition(field));
+        addConditions(create().nullCondition(field));
     }
 
     @Override
     public void addNotNullCondition(Field<?> field) {
-        addConditions(Create.notNullCondition(field));
+        addConditions(create().notNullCondition(field));
     }
 
     @Override
     public <T> void addInCondition(Field<T> field, Collection<T> values) {
-        addConditions(Create.inCondition(field, values));
+        addConditions(create().inCondition(field, values));
     }
 
     @Override
     public <T> void addInCondition(Field<T> field, T... values) {
-        addConditions(Create.inCondition(field, values));
+        addConditions(create().inCondition(field, values));
     }
 
     @Override

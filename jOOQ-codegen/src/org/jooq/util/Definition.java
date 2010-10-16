@@ -31,6 +31,8 @@
 
 package org.jooq.util;
 
+import org.jooq.impl.Factory;
+
 /**
  * A general interface defining any database object, such as tables, views,
  * stored procedures, etc.
@@ -39,53 +41,62 @@ package org.jooq.util;
  */
 public interface Definition {
 
-	/**
-	 * @return A reference to the Database context
-	 */
-	Database getDatabase();
+    /**
+     * @return A reference to the Database context
+     */
+    Database getDatabase();
 
-	/**
-	 * @return The schema of this object
-	 */
-	String getSchemaName();
+    /**
+     * @return The schema of this object
+     */
+    String getSchemaName();
 
-	/**
-	 * @return The name of this object, e.g. [my_table]
-	 */
-	String getName();
+    /**
+     * @return The name of this object, e.g. [my_table]
+     */
+    String getName();
 
-	/**
-	 * @return The name of this object in upper case letters, e.g. [MY_TABLE]
-	 */
-	String getNameUC();
+    /**
+     * @return The name of this object in upper case letters, e.g. [MY_TABLE]
+     */
+    String getNameUC();
 
-	/**
-	 * @return The comment of this object
-	 */
-	String getComment();
+    /**
+     * @return The comment of this object
+     */
+    String getComment();
 
-	/**
-	 * @return The Java class name representing this object, e.g. [MyTable]
-	 */
-	String getJavaClassName();
+    /**
+     * @return The Java class name representing this object, e.g. [MyTable]
+     */
+    String getJavaClassName();
 
-	/**
-	 * @return The Java class name representing this object, e.g. [MyTableSuffix]
-	 */
-	String getJavaClassName(String suffix);
+    /**
+     * @return The Java class name representing this object, e.g.
+     *         [MyTableSuffix]
+     */
+    String getJavaClassName(String suffix);
 
-	/**
-	 * @return The Java class file name representing this object, e.g. [MyTable.java]
-	 */
-	String getFileName();
+    /**
+     * @return The Java class file name representing this object, e.g.
+     *         [MyTable.java]
+     */
+    String getFileName();
 
-	/**
-	 * @return The Java class file name representing this object, e.g. [MyTableSuffix.java]
-	 */
-	String getFileName(String suffix);
+    /**
+     * @return The Java class file name representing this object, e.g.
+     *         [MyTableSuffix.java]
+     */
+    String getFileName(String suffix);
 
-	/**
-	 * @return A qualified name for this object
-	 */
-	String getQualifiedName();
+    /**
+     * @return A qualified name for this object
+     */
+    String getQualifiedName();
+
+    /**
+     * @return The factory for this definition's database
+     */
+    Factory create();
+
 }

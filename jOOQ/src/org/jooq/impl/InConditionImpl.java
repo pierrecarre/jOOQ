@@ -38,6 +38,7 @@ import java.util.Set;
 import org.jooq.Field;
 import org.jooq.InCondition;
 import org.jooq.InOperator;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -49,11 +50,13 @@ class InConditionImpl<T> extends AbstractCondition implements InCondition<T> {
     private final Set<T>      values;
     private final InOperator  operator;
 
-    InConditionImpl(Field<T> field, Set<T> values) {
-        this(field, values, InOperator.IN);
+    InConditionImpl(SQLDialect dialect, Field<T> field, Set<T> values) {
+        this(dialect, field, values, InOperator.IN);
     }
 
-    InConditionImpl(Field<T> field, Set<T> values, InOperator operator) {
+    InConditionImpl(SQLDialect dialect, Field<T> field, Set<T> values, InOperator operator) {
+        super(dialect);
+
         this.field = field;
         this.values = values;
         this.operator = operator;

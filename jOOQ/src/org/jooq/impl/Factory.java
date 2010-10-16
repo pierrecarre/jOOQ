@@ -31,15 +31,19 @@
 
 package org.jooq.impl;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+
+import javax.sql.DataSource;
 
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InCondition;
@@ -50,6 +54,7 @@ import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
@@ -64,7 +69,105 @@ import org.jooq.UpdateQuery;
  *
  * @author Lukas Eder
  */
-public final class Create {
+public final class Factory implements Configuration {
+
+    private final transient Connection connection;
+    private final transient DataSource dataSource;
+    private final SQLDialect           dialect;
+
+    /**
+     * Create a factory with default settings and no connection / datasource
+     * configured
+     */
+    public Factory() {
+        this(SQLDialect.SQL99);
+    }
+
+    /**
+     * Create a factory with connection configured
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public Factory(Connection connection) {
+        this(connection, SQLDialect.SQL99);
+    }
+
+    /**
+     * Create a factory with data source configured
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     */
+    public Factory(DataSource dataSource) {
+        this(dataSource, SQLDialect.SQL99);
+    }
+
+    /**
+     * Create a factory with no connection / datasource configured
+     *
+     * @param dialect The dialect to use with objects created from this factory
+     */
+    public Factory(SQLDialect dialect) {
+        this((Connection) null, SQLDialect.SQL99);
+    }
+
+    /**
+     * Create a factory with connection and dialect configured
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     * @param dialect The dialect to use with objects created from this factory
+     */
+    public Factory(Connection connection, SQLDialect dialect) {
+        this.connection = connection;
+        this.dataSource = null;
+        this.dialect = dialect;
+    }
+
+    /**
+     * Create a factory with data source and dialect configured
+     *
+     * @param dataSource The data source to use with objects created from this
+     *            factory
+     * @param dialect The dialect to use with objects created from this factory
+     */
+    public Factory(DataSource dataSource, SQLDialect dialect) {
+        this.connection = null;
+        this.dataSource = dataSource;
+        this.dialect = dialect;
+    }
+
+    /**
+     * Retrieve the function factory with this factory's configuration
+     */
+    public FunctionFactory functions() {
+        return new FunctionFactory(getDialect());
+    }
+
+    /**
+     * Retrieve the configured dialect
+     */
+    @Override
+    public SQLDialect getDialect() {
+        return dialect;
+    }
+
+    /**
+     * Retrieve the configured connection
+     */
+    @Override
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /**
+     * Retrieve the configured data source
+     */
+    @Override
+    public DataSource getDataSource() {
+        return dataSource;
+    }
 
     /**
      * A PlainSQLField is a field that can contain user-defined plain SQL,
@@ -81,7 +184,7 @@ public final class Create {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      */
-    public static Field<?> plainSQLField(String sql) {
+    public Field<?> plainSQLField(String sql) {
         return plainSQLField(sql, new Object[0]);
     }
 
@@ -100,8 +203,8 @@ public final class Create {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      */
-    public static Field<?> plainSQLField(String sql, Object... bindings) {
-        return new PlainSQLField(sql, bindings);
+    public Field<?> plainSQLField(String sql, Object... bindings) {
+        return new PlainSQLField(dialect, sql, bindings);
     }
 
     /**
@@ -116,7 +219,7 @@ public final class Create {
      * @param sql The SQL
      * @return A condition wrapping the plain SQL
      */
-    public static Condition plainSQLCondition(String sql) {
+    public Condition plainSQLCondition(String sql) {
         return plainSQLCondition(sql, new Object[0]);
     }
 
@@ -134,36 +237,36 @@ public final class Create {
      * @param bindings The bindings
      * @return A condition wrapping the plain SQL
      */
-    public static Condition plainSQLCondition(String sql, Object... bindings) {
-        return new PlainSQLCondition(sql, bindings);
+    public Condition plainSQLCondition(String sql, Object... bindings) {
+        return new PlainSQLCondition(dialect, sql, bindings);
     }
 
     /**
      * Combine a list of conditions with the {@link Operator#AND} operator
      */
-    public static CombinedCondition combinedCondition(Condition... conditions) {
+    public CombinedCondition combinedCondition(Condition... conditions) {
         return combinedCondition(Operator.AND, conditions);
     }
 
     /**
      * Combine a collection of conditions with the {@link Operator#AND} operator
      */
-    public static CombinedCondition combinedCondition(Collection<Condition> conditions) {
+    public CombinedCondition combinedCondition(Collection<Condition> conditions) {
         return combinedCondition(Operator.AND, conditions);
     }
 
     /**
      * Combine a list of conditions with any operator
      */
-    public static CombinedCondition combinedCondition(Operator operator, Condition... conditions) {
+    public CombinedCondition combinedCondition(Operator operator, Condition... conditions) {
         return combinedCondition(operator, Arrays.asList(conditions));
     }
 
     /**
      * Combine a collection of conditions with any operator
      */
-    public static CombinedCondition combinedCondition(Operator operator, Collection<Condition> conditions) {
-        return new CombinedConditionImpl(operator, conditions);
+    public CombinedCondition combinedCondition(Operator operator, Collection<Condition> conditions) {
+        return new CombinedConditionImpl(dialect, operator, conditions);
     }
 
     /**
@@ -175,8 +278,8 @@ public final class Create {
      * @param maxValue The upper bound
      * @return A {@link BetweenCondition}
      */
-    public static <T> BetweenCondition<T> betweenCondition(Field<T> field, T minValue, T maxValue) {
-        return new BetweenConditionImpl<T>(field, minValue, maxValue);
+    public <T> BetweenCondition<T> betweenCondition(Field<T> field, T minValue, T maxValue) {
+        return new BetweenConditionImpl<T>(dialect, field, minValue, maxValue);
     }
 
     /**
@@ -187,7 +290,7 @@ public final class Create {
      * @param values The accepted values
      * @return An {@link InCondition}
      */
-    public static <T> InCondition<T> inCondition(Field<T> field, T... values) {
+    public <T> InCondition<T> inCondition(Field<T> field, T... values) {
         return inCondition(field, Arrays.asList(values));
     }
 
@@ -199,8 +302,8 @@ public final class Create {
      * @param values The excluded values
      * @return An {@link InCondition}
      */
-    public static <T> InCondition<T> notInCondition(Field<T> field, Collection<T> values) {
-        return new InConditionImpl<T>(field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
+    public <T> InCondition<T> notInCondition(Field<T> field, Collection<T> values) {
+        return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
     }
 
     /**
@@ -211,7 +314,7 @@ public final class Create {
      * @param values The excluded values
      * @return An {@link InCondition}
      */
-    public static <T> InCondition<T> notInCondition(Field<T> field, T... values) {
+    public <T> InCondition<T> notInCondition(Field<T> field, T... values) {
         return notInCondition(field, Arrays.asList(values));
     }
 
@@ -223,8 +326,8 @@ public final class Create {
      * @param values The accepted values
      * @return An {@link InCondition}
      */
-    public static <T> InCondition<T> inCondition(Field<T> field, Collection<T> values) {
-        return new InConditionImpl<T>(field, new LinkedHashSet<T>(values));
+    public <T> InCondition<T> inCondition(Field<T> field, Collection<T> values) {
+        return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values));
     }
 
     /**
@@ -236,7 +339,7 @@ public final class Create {
      * @param value The accepted value
      * @return A {@link CompareCondition}
      */
-    public static <T> CompareCondition<T> compareCondition(Field<T> field, T value) {
+    public <T> CompareCondition<T> compareCondition(Field<T> field, T value) {
         return compareCondition(field, value, Comparator.EQUALS);
     }
 
@@ -249,8 +352,8 @@ public final class Create {
      * @param comparator The comparator
      * @return A {@link CompareCondition}
      */
-    public static <T> CompareCondition<T> compareCondition(Field<T> field, T value, Comparator comparator) {
-        return new CompareConditionImpl<T>(field, value, comparator);
+    public <T> CompareCondition<T> compareCondition(Field<T> field, T value, Comparator comparator) {
+        return new CompareConditionImpl<T>(dialect, field, value, comparator);
     }
 
     /**
@@ -260,7 +363,7 @@ public final class Create {
      * @param field The field to compare to null
      * @return A {@link CompareCondition}
      */
-    public static <T> CompareCondition<T> nullCondition(Field<T> field) {
+    public <T> CompareCondition<T> nullCondition(Field<T> field) {
         return compareCondition(field, null, Comparator.EQUALS);
     }
 
@@ -271,7 +374,7 @@ public final class Create {
      * @param field The field to compare to null
      * @return A {@link CompareCondition}
      */
-    public static <T> CompareCondition<T> notNullCondition(Field<T> field) {
+    public <T> CompareCondition<T> notNullCondition(Field<T> field) {
         return compareCondition(field, null, Comparator.NOT_EQUALS);
     }
 
@@ -283,7 +386,7 @@ public final class Create {
      * @param field2 The second field
      * @return A {@link JoinCondition}
      */
-    public static <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2) {
+    public <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2) {
         return joinCondition(field1, field2, Comparator.EQUALS);
     }
 
@@ -296,8 +399,8 @@ public final class Create {
      * @param comparator The comparator to compare the two fields with
      * @return A {@link JoinCondition}
      */
-    public static <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
-        return new JoinConditionImpl<T>(field1, field2);
+    public <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
+        return new JoinConditionImpl<T>(dialect, field1, field2);
     }
 
     /**
@@ -306,8 +409,8 @@ public final class Create {
      * @param into The table to insert data into
      * @return The new {@link InsertQuery}
      */
-    public static <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
-        return new InsertQueryImpl<R>(into);
+    public <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
+        return new InsertQueryImpl<R>(this, into);
     }
 
     /**
@@ -316,8 +419,8 @@ public final class Create {
      * @param table The table to update data into
      * @return The new {@link UpdateQuery}
      */
-    public static <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table) {
-        return new UpdateQueryImpl<R>(table);
+    public <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table) {
+        return new UpdateQueryImpl<R>(this, table);
     }
 
     /**
@@ -326,43 +429,43 @@ public final class Create {
      * @param table The table to delete data from
      * @return The new {@link DeleteQuery}
      */
-    public static <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
-        return new DeleteQueryImpl<R>(table);
+    public <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
+        return new DeleteQueryImpl<R>(this, table);
     }
 
     /**
      * Create a new {@link Select}
      */
-    public static Select select() {
-        return new SelectImpl();
+    public Select select() {
+        return new SelectImpl(this);
     }
 
     /**
      * Create a new {@link Select}
      */
-    public static <R extends Record> SimpleSelect<R> select(Table<R> table) {
-        return new SimpleSelectImpl<R>(table);
+    public <R extends Record> SimpleSelect<R> select(Table<R> table) {
+        return new SimpleSelectImpl<R>(this, table);
     }
 
     /**
      * Create a new {@link Select}
      */
-    public static SelectFromStep select(Field<?>... fields) {
-        return new SelectImpl().select(fields);
+    public SelectFromStep select(Field<?>... fields) {
+        return new SelectImpl(this).select(fields);
     }
 
     /**
      * Create a new {@link Select}
      */
-    public static SelectFromStep select(Collection<Field<?>> fields) {
-        return new SelectImpl().select(fields);
+    public SelectFromStep select(Collection<Field<?>> fields) {
+        return new SelectImpl(this).select(fields);
     }
 
     /**
      * Create a new {@link SelectQuery}
      */
-    public static SelectQuery selectQuery() {
-        return new SelectQueryImpl();
+    public SelectQuery selectQuery() {
+        return new SelectQueryImpl(this);
     }
 
     /**
@@ -371,8 +474,8 @@ public final class Create {
      * @param table The table to select data from
      * @return The new {@link SelectQuery}
      */
-    public static <R extends Record> SimpleSelectQuery<R> selectQuery(Table<R> table) {
-        return new SimpleSelectQueryImpl<R>(table);
+    public <R extends Record> SimpleSelectQuery<R> selectQuery(Table<R> table) {
+        return new SimpleSelectQueryImpl<R>(this, table);
     }
 
     /**
@@ -384,7 +487,7 @@ public final class Create {
      * @param field2 The second field of the join condition
      * @return A new {@link Join} part
      */
-    public static <T> Join join(Table<?> table, Field<T> field1, Field<T> field2) {
+    public <T> Join join(Table<?> table, Field<T> field1, Field<T> field2) {
         return join(table, JoinType.JOIN, field1, field2);
     }
 
@@ -395,7 +498,7 @@ public final class Create {
      * @param conditions Any number of conditions
      * @return A new {@link Join} part
      */
-    public static Join join(Table<?> table, Condition... conditions) {
+    public Join join(Table<?> table, Condition... conditions) {
         return join(table, JoinType.JOIN, conditions);
     }
 
@@ -409,7 +512,7 @@ public final class Create {
      * @param field2 The second field of the join condition
      * @return A new {@link Join} part
      */
-    public static <T> Join join(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
+    public <T> Join join(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
         return join(table, type, joinCondition(field1, field2));
     }
 
@@ -421,12 +524,7 @@ public final class Create {
      * @param conditions Any number of conditions
      * @return A new {@link Join} part
      */
-    public static Join join(Table<?> table, JoinType type, Condition... conditions) {
-        return new JoinImpl(table, type, conditions);
+    public Join join(Table<?> table, JoinType type, Condition... conditions) {
+        return new JoinImpl(dialect, table, type, conditions);
     }
-
-    /**
-     * No instances
-     */
-    private Create() {}
 }

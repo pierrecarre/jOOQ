@@ -35,10 +35,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
-import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.Factory;
 import org.jooq.test.hsqldb.generatedclasses.tables.TAuthor;
 import org.jooq.test.hsqldb.generatedclasses.tables.TBook;
 import org.jooq.test.hsqldb.generatedclasses.tables.VLibrary;
@@ -54,13 +54,16 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord,
 
 	@Override
 	protected Connection getConnection() throws Exception {
-		Configuration.getInstance().setDialect(SQLDialect.HSQLDB);
-
 		Class.forName("org.hsqldb.jdbcDriver");
 		return DriverManager.getConnection ("jdbc:hsqldb:hsql://localhost", "sa", "");
 	}
 
 	@Override
+    protected Factory create() throws Exception {
+        return new Factory(getConnection(), SQLDialect.HSQLDB);
+    }
+
+    @Override
 	protected String getCreateScript() {
 		return "/org/jooq/test/hsqldb/create.sql";
 	}

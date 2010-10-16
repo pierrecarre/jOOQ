@@ -34,6 +34,7 @@ package org.jooq.impl;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -43,8 +44,8 @@ class ExtractFunctionImpl extends FunctionImpl<Integer> {
     private static final long serialVersionUID = 3748640920856031034L;
     private final DatePart    datePart;
 
-    ExtractFunctionImpl(Field<?> field, DatePart datePart) {
-        super("extract", Integer.class, field);
+    ExtractFunctionImpl(SQLDialect dialect, Field<?> field, DatePart datePart) {
+        super(dialect, "extract", Integer.class, field);
 
         this.datePart = datePart;
     }

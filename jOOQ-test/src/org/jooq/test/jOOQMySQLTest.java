@@ -39,10 +39,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
-import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.Factory;
 import org.jooq.test.mysql.generatedclasses.functions.FAuthorExists;
 import org.jooq.test.mysql.generatedclasses.procedures.PAuthorExists;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
@@ -61,11 +61,14 @@ public class jOOQMySQLTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord, 
 
 	@Override
 	protected Connection getConnection() throws Exception {
-		Configuration.getInstance().setDialect(SQLDialect.MYSQL);
-
 		Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection ("jdbc:mysql://localhost/test", "root", "");
 	}
+
+    @Override
+    protected Factory create() throws Exception {
+        return new Factory(getConnection(), SQLDialect.MYSQL);
+    }
 
 	@Override
 	protected String getCreateScript() {

@@ -4,6 +4,7 @@
 package org.jooq.util.hsqldb.information_schema.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,43 +40,43 @@ public class ConstraintColumnUsage extends TableImpl<ConstraintColumnUsageRecord
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("TABLE_CATALOG", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "TABLE_CATALOG", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("TABLE_SCHEMA", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "TABLE_SCHEMA", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("TABLE_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "TABLE_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> COLUMN_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("COLUMN_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> COLUMN_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "COLUMN_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("CONSTRAINT_CATALOG", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "CONSTRAINT_CATALOG", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("CONSTRAINT_SCHEMA", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "CONSTRAINT_SCHEMA", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("CONSTRAINT_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.HSQLDB, "CONSTRAINT_NAME", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * No further instances allowed
 	 */
 	private ConstraintColumnUsage() {
-		super("CONSTRAINT_COLUMN_USAGE", InformationSchema.INFORMATION_SCHEMA);
+		super(SQLDialect.HSQLDB, "CONSTRAINT_COLUMN_USAGE", InformationSchema.INFORMATION_SCHEMA);
 	}
 
 }

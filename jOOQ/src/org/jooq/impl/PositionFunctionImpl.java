@@ -33,6 +33,7 @@ package org.jooq.impl;
 
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -42,8 +43,8 @@ class PositionFunctionImpl extends IntegerFunction {
     private static final long   serialVersionUID = 3544690069533526544L;
     private final Field<String> search;
 
-    PositionFunctionImpl(Field<String> search, Field<String> in) {
-        super("position", in);
+    PositionFunctionImpl(SQLDialect dialect, Field<String> search, Field<String> in) {
+        super(dialect, "position", in);
 
         this.search = search;
     }

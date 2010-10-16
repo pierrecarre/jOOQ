@@ -4,6 +4,7 @@
 package org.jooq.util.postgres.information_schema.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,43 +40,43 @@ public class ConstraintColumnUsage extends TableImpl<ConstraintColumnUsageRecord
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "table_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_schema", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "table_schema", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("table_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> TABLE_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "table_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> COLUMN_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("column_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> COLUMN_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "column_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_CATALOG = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "constraint_catalog", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_schema", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_SCHEMA = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "constraint_schema", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>("constraint_name", String.class, CONSTRAINT_COLUMN_USAGE);
+	public static final TableField<ConstraintColumnUsageRecord, String> CONSTRAINT_NAME = new TableFieldImpl<ConstraintColumnUsageRecord, String>(SQLDialect.POSTGRES, "constraint_name", String.class, CONSTRAINT_COLUMN_USAGE);
 
 	/**
 	 * No further instances allowed
 	 */
 	private ConstraintColumnUsage() {
-		super("constraint_column_usage", InformationSchema.INFORMATION_SCHEMA);
+		super(SQLDialect.POSTGRES, "constraint_column_usage", InformationSchema.INFORMATION_SCHEMA);
 	}
 
 }

@@ -41,6 +41,7 @@ import org.jooq.FieldList;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -58,6 +59,11 @@ class ResultImpl<R extends Record> implements Result<R> {
     ResultImpl(FieldProvider fields) {
         this.fields = fields;
         this.records = new ArrayList<R>();
+    }
+
+    @Override
+    public SQLDialect getDialect() {
+        return fields.getDialect();
     }
 
     @Override

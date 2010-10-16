@@ -39,6 +39,7 @@ import java.util.List;
 
 import org.jooq.QueryPart;
 import org.jooq.QueryPartList;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -47,12 +48,15 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList      = new ArrayList<T>();
+    private final SQLDialect  dialect;
 
-    AbstractQueryPartList() {
-        this(null);
+    AbstractQueryPartList(SQLDialect dialect) {
+        this(dialect, null);
     }
 
-    AbstractQueryPartList(List<? extends T> wrappedList) {
+    AbstractQueryPartList(SQLDialect dialect, List<? extends T> wrappedList) {
+        this.dialect = dialect;
+
         if (wrappedList != null) {
             addAll(wrappedList);
         }
@@ -150,7 +154,7 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
     /**
      * Subclasses may override this method
      */
-     protected String toSQLEmptyList() {
+    protected String toSQLEmptyList() {
         throw new IllegalStateException("This list does not support generating SQL from empty lists : " + getClass());
     }
 
@@ -159,5 +163,10 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
      */
     protected String getListSeparator() {
         return ",";
+    }
+
+    @Override
+    public final SQLDialect getDialect() {
+        return dialect;
     }
 }

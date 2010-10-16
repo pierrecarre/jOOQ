@@ -31,6 +31,8 @@
 
 package org.jooq.impl;
 
+import org.jooq.SQLDialect;
+
 /**
  * @author Lukas Eder
  */
@@ -38,7 +40,9 @@ class SelectFieldListImpl extends FieldListImpl {
 
     private static final long serialVersionUID = 8850104968428500798L;
 
-    SelectFieldListImpl() {}
+    SelectFieldListImpl(SQLDialect dialect) {
+        super(dialect);
+    }
 
     @Override
     protected String toSQLEmptyList() {

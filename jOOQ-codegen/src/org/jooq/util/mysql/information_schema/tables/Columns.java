@@ -4,6 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,103 +40,103 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_CATALOG = new TableFieldImpl<ColumnsRecord, String>("TABLE_CATALOG", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "TABLE_CATALOG", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("TABLE_SCHEMA", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "TABLE_SCHEMA", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_NAME = new TableFieldImpl<ColumnsRecord, String>("TABLE_NAME", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "TABLE_NAME", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_NAME = new TableFieldImpl<ColumnsRecord, String>("COLUMN_NAME", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLUMN_NAME", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>("ORDINAL_POSITION", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "ORDINAL_POSITION", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_DEFAULT = new TableFieldImpl<ColumnsRecord, String>("COLUMN_DEFAULT", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_DEFAULT = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLUMN_DEFAULT", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_NULLABLE = new TableFieldImpl<ColumnsRecord, String>("IS_NULLABLE", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_NULLABLE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "IS_NULLABLE", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DATA_TYPE = new TableFieldImpl<ColumnsRecord, String>("DATA_TYPE", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DATA_TYPE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "DATA_TYPE", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("CHARACTER_MAXIMUM_LENGTH", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "CHARACTER_MAXIMUM_LENGTH", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("CHARACTER_OCTET_LENGTH", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "CHARACTER_OCTET_LENGTH", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>("NUMERIC_PRECISION", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "NUMERIC_PRECISION", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>("NUMERIC_SCALE", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "NUMERIC_SCALE", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<ColumnsRecord, String>("CHARACTER_SET_NAME", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "CHARACTER_SET_NAME", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLLATION_NAME = new TableFieldImpl<ColumnsRecord, String>("COLLATION_NAME", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLLATION_NAME", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_TYPE = new TableFieldImpl<ColumnsRecord, String>("COLUMN_TYPE", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_TYPE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLUMN_TYPE", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_KEY = new TableFieldImpl<ColumnsRecord, String>("COLUMN_KEY", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_KEY = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLUMN_KEY", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> EXTRA = new TableFieldImpl<ColumnsRecord, String>("EXTRA", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> EXTRA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "EXTRA", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> PRIVILEGES = new TableFieldImpl<ColumnsRecord, String>("PRIVILEGES", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> PRIVILEGES = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "PRIVILEGES", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_COMMENT = new TableFieldImpl<ColumnsRecord, String>("COLUMN_COMMENT", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_COMMENT = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.MYSQL, "COLUMN_COMMENT", String.class, COLUMNS);
 
 	/**
 	 * No further instances allowed
 	 */
 	private Columns() {
-		super("COLUMNS", InformationSchema.INFORMATION_SCHEMA);
+		super(SQLDialect.MYSQL, "COLUMNS", InformationSchema.INFORMATION_SCHEMA);
 	}
 
 }

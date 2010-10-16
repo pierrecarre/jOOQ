@@ -35,17 +35,13 @@ import static org.jooq.CombineOperator.INTERSECT;
 import static org.jooq.CombineOperator.UNION;
 import static org.jooq.CombineOperator.UNION_ALL;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 
-import javax.sql.DataSource;
-
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.JoinType;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectGroupByStep;
@@ -66,7 +62,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SelectImpl extends AbstractDelegatingQueryPart implements
+class SelectImpl extends AbstractDelegatingResultProviderQuery<Record> implements
 
     // Cascading interface implementations for Select behaviour
     Select, SelectStep, SelectFromStep, SelectJoinStep,
@@ -93,12 +89,12 @@ class SelectImpl extends AbstractDelegatingQueryPart implements
      */
     private transient JoinType joinType;
 
-    SelectImpl() {
-        this(new SelectQueryImpl());
+    SelectImpl(Configuration configuration) {
+        this(configuration, new SelectQueryImpl(configuration));
     }
 
-    SelectImpl(SelectQuery query) {
-        super(query);
+    SelectImpl(Configuration configuration, SelectQuery query) {
+        super(configuration.getDialect(), query);
 
         this.query = query;
     }
@@ -171,42 +167,27 @@ class SelectImpl extends AbstractDelegatingQueryPart implements
 
     @Override
     public Select union(Select select) {
-        return new SelectImpl(query.combine(UNION, select.getQuery()));
+        return new SelectImpl(getConfiguration(), query.combine(UNION, select.getQuery()));
     }
 
     @Override
     public Select unionAll(Select select) {
-        return new SelectImpl(query.combine(UNION_ALL, select.getQuery()));
+        return new SelectImpl(getConfiguration(), query.combine(UNION_ALL, select.getQuery()));
     }
 
     @Override
     public Select except(Select select) {
-        return new SelectImpl(query.combine(EXCEPT, select.getQuery()));
+        return new SelectImpl(getConfiguration(), query.combine(EXCEPT, select.getQuery()));
     }
 
     @Override
     public Select intersect(Select select) {
-        return new SelectImpl(query.combine(INTERSECT, select.getQuery()));
+        return new SelectImpl(getConfiguration(), query.combine(INTERSECT, select.getQuery()));
     }
 
     @Override
     public SelectQuery getQuery() {
         return query;
-    }
-
-    @Override
-    public Result<Record> getResult() {
-        return query.getResult();
-    }
-
-    @Override
-    public int execute(DataSource source) throws SQLException {
-        return query.execute(source);
-    }
-
-    @Override
-    public int execute(Connection connection) throws SQLException {
-        return query.execute(connection);
     }
 
     @Override
@@ -223,7 +204,7 @@ class SelectImpl extends AbstractDelegatingQueryPart implements
 
     @Override
     public SelectJoinStep on(Condition... conditions) {
-        query.addJoin(new JoinImpl(join, joinType, conditions));
+        query.addJoin(new JoinImpl(getDialect(), join, joinType, conditions));
         join = null;
         joinType = null;
         return this;

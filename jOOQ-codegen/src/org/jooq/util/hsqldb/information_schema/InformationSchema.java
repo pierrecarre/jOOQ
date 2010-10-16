@@ -4,6 +4,7 @@
 package org.jooq.util.hsqldb.information_schema;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -23,6 +24,6 @@ public class InformationSchema extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private InformationSchema() {
-		super("INFORMATION_SCHEMA");
+		super(SQLDialect.HSQLDB, "INFORMATION_SCHEMA");
 	}
 }

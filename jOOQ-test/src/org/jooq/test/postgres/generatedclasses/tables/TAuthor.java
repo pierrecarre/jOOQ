@@ -6,6 +6,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 
 import java.sql.Date;
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -43,33 +44,33 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>("id", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.POSTGRES, "id", Integer.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>("first_name", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> FIRST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.POSTGRES, "first_name", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>("last_name", String.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, String> LAST_NAME = new TableFieldImpl<TAuthorRecord, String>(SQLDialect.POSTGRES, "last_name", String.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>("date_of_birth", Date.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Date> DATE_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Date>(SQLDialect.POSTGRES, "date_of_birth", Date.class, T_AUTHOR);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>("year_of_birth", Integer.class, T_AUTHOR);
+	public static final TableField<TAuthorRecord, Integer> YEAR_OF_BIRTH = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.POSTGRES, "year_of_birth", Integer.class, T_AUTHOR);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("t_author", Public.PUBLIC);
+		super(SQLDialect.POSTGRES, "t_author", Public.PUBLIC);
 	}
 
 	/*

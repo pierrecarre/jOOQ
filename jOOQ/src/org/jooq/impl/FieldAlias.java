@@ -36,6 +36,7 @@ import java.sql.SQLException;
 
 import org.jooq.AliasProvider;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -45,14 +46,14 @@ class FieldAlias<T> extends FieldImpl<T> implements Field<T>, AliasProvider<Fiel
     private static final long                 serialVersionUID = -85277321749681553L;
     private final AliasProviderImpl<Field<T>> aliasProvider;
 
-    FieldAlias(Field<T> field, String alias) {
-        this(field, alias, false);
+    FieldAlias(SQLDialect dialect, Field<T> field, String alias) {
+        this(dialect, field, alias, false);
     }
 
-    FieldAlias(Field<T> field, String alias, boolean wrapInParentheses) {
-        super(alias, field.getType());
+    FieldAlias(SQLDialect dialect, Field<T> field, String alias, boolean wrapInParentheses) {
+        super(dialect, alias, field.getType());
 
-        this.aliasProvider = new AliasProviderImpl<Field<T>>(field, alias, wrapInParentheses);
+        this.aliasProvider = new AliasProviderImpl<Field<T>>(dialect, field, alias, wrapInParentheses);
     }
 
     @Override

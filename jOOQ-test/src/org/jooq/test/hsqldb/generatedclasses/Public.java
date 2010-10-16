@@ -4,6 +4,7 @@
 package org.jooq.test.hsqldb.generatedclasses;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -23,6 +24,6 @@ public class Public extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Public() {
-		super("PUBLIC");
+		super(SQLDialect.HSQLDB, "PUBLIC");
 	}
 }

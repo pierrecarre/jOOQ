@@ -35,6 +35,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.jooq.SQLDialect;
+import org.jooq.impl.Factory;
+
 /**
  * A general database model.
  *
@@ -127,4 +130,14 @@ public interface Database {
 	 * Whether foreign key relations should be resolved
 	 */
 	void setGenerateRelations(boolean generateRelations);
+
+	/**
+	 * Get the dialect for this database
+	 */
+	SQLDialect getDialect();
+
+    /**
+     * Create the factory for this database
+     */
+	Factory create();
 }

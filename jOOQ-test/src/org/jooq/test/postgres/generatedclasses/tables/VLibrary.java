@@ -4,6 +4,7 @@
 package org.jooq.test.postgres.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,18 +40,18 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<VLibraryRecord, String> AUTHOR = new TableFieldImpl<VLibraryRecord, String>("author", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> AUTHOR = new TableFieldImpl<VLibraryRecord, String>(SQLDialect.POSTGRES, "author", String.class, V_LIBRARY);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<VLibraryRecord, String> TITLE = new TableFieldImpl<VLibraryRecord, String>("title", String.class, V_LIBRARY);
+	public static final TableField<VLibraryRecord, String> TITLE = new TableFieldImpl<VLibraryRecord, String>(SQLDialect.POSTGRES, "title", String.class, V_LIBRARY);
 
 	/**
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("v_library", Public.PUBLIC);
+		super(SQLDialect.POSTGRES, "v_library", Public.PUBLIC);
 	}
 
 }

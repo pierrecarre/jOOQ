@@ -4,6 +4,7 @@
 package org.jooq.util.mysql.mysql;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -23,6 +24,6 @@ public class Mysql extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Mysql() {
-		super("mysql");
+		super(SQLDialect.MYSQL, "mysql");
 	}
 }

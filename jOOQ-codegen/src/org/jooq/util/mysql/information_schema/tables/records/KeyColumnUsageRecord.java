@@ -5,6 +5,7 @@ package org.jooq.util.mysql.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
@@ -194,6 +195,6 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 	}
 
 	public KeyColumnUsageRecord() {
-		super(KeyColumnUsage.KEY_COLUMN_USAGE);
+		super(SQLDialect.MYSQL, KeyColumnUsage.KEY_COLUMN_USAGE);
 	}
 }

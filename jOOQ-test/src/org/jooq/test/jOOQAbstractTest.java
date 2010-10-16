@@ -48,7 +48,6 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.jooq.Comparator;
-import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -63,8 +62,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
-import org.jooq.impl.Create;
-import org.jooq.impl.Functions;
+import org.jooq.impl.Factory;
 import org.jooq.impl.Manager;
 import org.jooq.impl.StringUtils;
 import org.junit.After;
@@ -130,10 +128,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testSelectSimpleQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
-        Field<Integer> f1 = Functions.constant(1).as("f1");
-        Field<Double> f2 = Functions.constant(2d).as("f2");
-        Field<String> f3 = Functions.constant("test").as("f3");
+        SelectQuery q = create().selectQuery();
+        Field<Integer> f1 = create().functions().constant(1).as("f1");
+        Field<Double> f2 = create().functions().constant(2d).as("f2");
+        Field<String> f3 = create().functions().constant("test").as("f3");
 
         q.addSelect(f1);
         q.addSelect(f2);
@@ -161,7 +159,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testSelectQuery() throws Exception {
-        SimpleSelectQuery<A> q = Create.selectQuery(getTAuthor());
+        SimpleSelectQuery<A> q = create().selectQuery(getTAuthor());
         q.addSelect(getTAuthor().getFields());
         q.addOrderBy(getTAuthor_LAST_NAME());
 
@@ -180,7 +178,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testInsertUpdateDelete() throws Exception {
-        InsertQuery<A> i = Create.insertQuery(getTAuthor());
+        InsertQuery<A> i = create().insertQuery(getTAuthor());
         i.addValue(getTAuthor_ID(), 100);
         i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
         i.addValue(getTAuthor_LAST_NAME(), "Hesse");
@@ -188,12 +186,12 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
         assertEquals(1, i.execute(connection));
 
-        UpdateQuery<A> u = Create.updateQuery(getTAuthor());
+        UpdateQuery<A> u = create().updateQuery(getTAuthor());
         u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
         u.addCompareCondition(getTAuthor_ID(), 100);
         assertEquals(1, u.execute(connection));
 
-        DeleteQuery<A> d = Create.deleteQuery(getTAuthor());
+        DeleteQuery<A> d = create().deleteQuery(getTAuthor());
         d.addCompareCondition(getTAuthor_ID(), 100);
         assertEquals(1, d.execute(connection));
     }
@@ -236,7 +234,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testReferentials() throws Exception {
-        SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
+        SimpleSelectQuery<B> q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result<B> result = q.getResult();
@@ -263,7 +261,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         catch (SQLException expected) {}
 
         // Fetch the original record
-        SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
+        SimpleSelectQuery<B> q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result<B> result = q.getResult();
@@ -278,7 +276,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         record.store(connection);
 
         // Fetch the modified record
-        q = Create.selectQuery(getTBook());
+        q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_ID(), id);
         q.execute(connection);
         result = q.getResult();
@@ -332,10 +330,12 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     protected abstract TableField<L, String> getVLibrary_AUTHOR();
 
+    protected abstract Factory create() throws Exception;
+
     @Test
     public final void testCombinedSelectQuery() throws Exception {
-        SelectQuery q1 = Create.selectQuery();
-        SelectQuery q2 = Create.selectQuery();
+        SelectQuery q1 = create().selectQuery();
+        SelectQuery q2 = create().selectQuery();
 
         q1.addFrom(getTBook());
         q2.addFrom(getTBook());
@@ -352,7 +352,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     @Test
     public final void testJoinQuery() throws Exception {
         // Oracle ordering behaviour is a bit different, so exclude "1984"
-        SimpleSelectQuery<L> q1 = Create.selectQuery(getVLibrary());
+        SimpleSelectQuery<L> q1 = create().selectQuery(getVLibrary());
         q1.addOrderBy(getVLibrary_TITLE());
         q1.addCompareCondition(getVLibrary_TITLE(), "1984", Comparator.NOT_EQUALS);
 
@@ -363,11 +363,11 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Integer> b_authorID = b.getField(getTBook_AUTHOR_ID());
         Field<String> b_title = b.getField(getTBook_TITLE());
 
-        SelectQuery q2 = Create.selectQuery();
+        SelectQuery q2 = create().selectQuery();
         q2.addFrom(a);
         q2.addJoin(b, b_authorID, a_authorID);
         q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
-        q2.addOrderBy(Functions.lower(b_title));
+        q2.addOrderBy(create().functions().lower(b_title));
 
         int rows1 = q1.execute(connection);
         int rows2 = q2.execute(connection);
@@ -390,18 +390,18 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testFunction3() throws Exception {
-        SelectQuery q1 = Create.selectQuery();
-        Field<Timestamp> now = Functions.currentTimestamp();
+        SelectQuery q1 = create().selectQuery();
+        Field<Timestamp> now = create().functions().currentTimestamp();
         Field<Timestamp> ts = now.as("ts");
-        Field<Date> date = Functions.currentDate().as("d");
-        Field<Time> time = Functions.currentTime().as("t");
+        Field<Date> date = create().functions().currentDate().as("d");
+        Field<Time> time = create().functions().currentTime().as("t");
 
-        Field<Integer> year = Functions.extract(now, DatePart.YEAR).as("y");
-        Field<Integer> month = Functions.extract(now, DatePart.MONTH).as("m");
-        Field<Integer> day = Functions.extract(now, DatePart.DAY).as("dd");
-        Field<Integer> hour = Functions.extract(now, DatePart.HOUR).as("h");
-        Field<Integer> minute = Functions.extract(now, DatePart.MINUTE).as("mn");
-        Field<Integer> second = Functions.extract(now, DatePart.SECOND).as("sec");
+        Field<Integer> year = create().functions().extract(now, DatePart.YEAR).as("y");
+        Field<Integer> month = create().functions().extract(now, DatePart.MONTH).as("m");
+        Field<Integer> day = create().functions().extract(now, DatePart.DAY).as("dd");
+        Field<Integer> hour = create().functions().extract(now, DatePart.HOUR).as("h");
+        Field<Integer> minute = create().functions().extract(now, DatePart.MINUTE).as("mn");
+        Field<Integer> second = create().functions().extract(now, DatePart.SECOND).as("sec");
 
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
         q1.execute(connection);
@@ -414,7 +414,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         // Weird behaviour in postgres
         // See also interesting thread:
         // http://archives.postgresql.org/pgsql-jdbc/2010-09/msg00037.php
-        if (Configuration.getInstance().getDialect() != SQLDialect.POSTGRES) {
+        if (create().getDialect() != SQLDialect.POSTGRES) {
             assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
         }
 
@@ -428,11 +428,11 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testFunction4() throws Exception {
-        SelectQuery q = Create.selectQuery();
-        Field<String> constant = Functions.constant("abc");
-        Field<Integer> charLength = Functions.charLength(constant).as("len");
-        Field<Integer> bitLength = Functions.bitLength(constant).as("bitlen");
-        Field<Integer> octetLength = Functions.octetLength(constant).as("octetlen");
+        SelectQuery q = create().selectQuery();
+        Field<String> constant = create().functions().constant("abc");
+        Field<Integer> charLength = create().functions().charLength(constant).as("len");
+        Field<Integer> bitLength = create().functions().bitLength(constant).as("bitlen");
+        Field<Integer> octetLength = create().functions().octetLength(constant).as("octetlen");
 
         q.addSelect(charLength, bitLength, octetLength);
         q.execute(connection);
@@ -441,7 +441,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
         assertEquals(Integer.valueOf(3), record.getValue(charLength));
 
-        switch (Configuration.getInstance().getDialect()) {
+        switch (create().getDialect()) {
             case HSQLDB:
                 // HSQLDB uses Java-style characters (16 bit)
                 assertEquals(Integer.valueOf(48), record.getValue(bitLength));
@@ -456,10 +456,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testFunction5() throws Exception {
-        SimpleSelectQuery<L> q = Create.selectQuery(getVLibrary());
+        SimpleSelectQuery<L> q = create().selectQuery(getVLibrary());
 
-        Field<String> o = Functions.constant("o");
-        Field<Integer> position = Functions.position(getVLibrary_AUTHOR(), o).as("p");
+        Field<String> o = create().functions().constant("o");
+        Field<Integer> position = create().functions().position(getVLibrary_AUTHOR(), o).as("p");
         q.addSelect(getVLibrary_AUTHOR());
         q.addSelect(position);
         q.addOrderBy(getVLibrary_AUTHOR(), ASC);

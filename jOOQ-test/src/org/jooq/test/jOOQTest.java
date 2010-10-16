@@ -34,7 +34,6 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
-import static org.jooq.impl.Create.select;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import static org.jooq.test.Data.FIELD_DATE1;
@@ -68,8 +67,7 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
-import org.jooq.impl.Create;
-import org.jooq.impl.Functions;
+import org.jooq.impl.Factory;
 import org.jooq.test.Data.Table1Record;
 import org.jooq.test.Data.Table2Record;
 import org.junit.After;
@@ -85,11 +83,13 @@ public class jOOQTest {
 
     private Mockery context;
     private PreparedStatement statement;
+    private Factory create;
 
     @Before
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
+        create = new Factory();
     }
 
     @After
@@ -121,7 +121,7 @@ public class jOOQTest {
 
     @Test
     public final void testEmptyCombinedCondition() throws Exception {
-        CombinedCondition c = Create.combinedCondition();
+        CombinedCondition c = create.combinedCondition();
         assertEquals("1 = 1", c.toSQLReference());
 
         int i = c.bind(statement);
@@ -130,7 +130,7 @@ public class jOOQTest {
 
     @Test
     public final void testSingleCombinedCondition() throws Exception {
-        CombinedCondition c = Create.combinedCondition(TRUE_CONDITION);
+        CombinedCondition c = create.combinedCondition(TRUE_CONDITION);
         assertEquals(TRUE_CONDITION.toSQLReference(true), c.toSQLReference(true));
         assertEquals(TRUE_CONDITION.toSQLReference(false), c.toSQLReference(false));
 
@@ -226,11 +226,11 @@ public class jOOQTest {
 
     @Test
     public final void testPlainSQLCondition() throws Exception {
-        Condition c1 = Create.plainSQLCondition("TABLE1.ID = 10");
-        Condition c2 = Create.plainSQLCondition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
+        Condition c1 = create.plainSQLCondition("TABLE1.ID = 10");
+        Condition c2 = create.plainSQLCondition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
 
         try {
-            Create.plainSQLCondition("ABC", "ABC");
+            create.plainSQLCondition("ABC", "ABC");
             Assert.fail("Binding mismatch");
         } catch (Exception expected) {}
 
@@ -252,11 +252,11 @@ public class jOOQTest {
 
     @Test
     public final void testPlainSQLField() throws Exception {
-        Field<?> f1 = Create.plainSQLField("DECODE(TABLE1.ID, 1, 'a', 'b')");
-        Field<?> f2 = Create.plainSQLField("DECODE(TABLE1.ID, 1, ?, ?)", "a", "b");
+        Field<?> f1 = create.plainSQLField("DECODE(TABLE1.ID, 1, 'a', 'b')");
+        Field<?> f2 = create.plainSQLField("DECODE(TABLE1.ID, 1, ?, ?)", "a", "b");
 
         try {
-            Create.plainSQLField("ABC", "ABC");
+            create.plainSQLField("ABC", "ABC");
             Assert.fail("Binding mismatch");
         } catch (Exception expected) {}
 
@@ -295,7 +295,7 @@ public class jOOQTest {
 
     @Test
     public final void testNullFunction() throws Exception {
-        Field<?> f = Functions.NULL();
+        Field<?> f = create.functions().NULL();
         assertEquals("null", f.toSQLReference(true));
         assertEquals("null", f.toSQLReference(false));
 
@@ -305,21 +305,21 @@ public class jOOQTest {
 
     @Test
     public final void testConstantFunction() throws Exception {
-        Field<Integer> f1 = Functions.constant(Integer.valueOf(1));
+        Field<Integer> f1 = create.functions().constant(Integer.valueOf(1));
         assertEquals(Integer.class, f1.getType());
         assertEquals("'1'", f1.toSQLReference(true));
         assertEquals("'1'", f1.toSQLReference(false));
         assertEquals("'1'", f1.toSQLDeclaration(true));
         assertEquals("'1'", f1.toSQLDeclaration(false));
 
-        Field<String> f2 = Functions.constant("test");
+        Field<String> f2 = create.functions().constant("test");
         assertEquals(String.class, f2.getType());
         assertEquals("'test'", f2.toSQLReference(true));
         assertEquals("'test'", f2.toSQLReference(false));
         assertEquals("'test'", f2.toSQLDeclaration(true));
         assertEquals("'test'", f2.toSQLDeclaration(false));
 
-        Field<Integer> f3 = Functions.constant(Integer.valueOf(1)).as("value");
+        Field<Integer> f3 = create.functions().constant(Integer.valueOf(1)).as("value");
         assertEquals(Integer.class, f3.getType());
         assertEquals("value", f3.toSQLReference(true));
         assertEquals("value", f3.toSQLReference(false));
@@ -338,7 +338,7 @@ public class jOOQTest {
 
     @Test
     public final void testArithmeticFunctions() throws Exception {
-        Field<Integer> sum1 = Functions.sum(FIELD_ID1);
+        Field<Integer> sum1 = create.functions().sum(FIELD_ID1);
         assertEquals(Integer.class, sum1.getType());
         assertEquals("sum(TABLE1.ID1)", sum1.toSQLReference(true));
         assertEquals("sum(TABLE1.ID1)", sum1.toSQLReference(false));
@@ -346,7 +346,7 @@ public class jOOQTest {
         assertEquals("sum(TABLE1.ID1)", sum1.toSQLDeclaration(false));
         assertEquals(1, sum1.bind(statement));
 
-        Field<Integer> sum2 = Functions.sum(FIELD_ID1).as("value");
+        Field<Integer> sum2 = create.functions().sum(FIELD_ID1).as("value");
         assertEquals(Integer.class, sum2.getType());
         assertEquals("value", sum2.toSQLReference(true));
         assertEquals("value", sum2.toSQLReference(false));
@@ -354,7 +354,7 @@ public class jOOQTest {
         assertEquals("sum(TABLE1.ID1) value", sum2.toSQLDeclaration(false));
         assertEquals(1, sum2.bind(statement));
 
-        Field<Double> avg1 = Functions.avg(FIELD_ID1);
+        Field<Double> avg1 = create.functions().avg(FIELD_ID1);
         assertEquals(Double.class, avg1.getType());
         assertEquals("avg(TABLE1.ID1)", avg1.toSQLReference(true));
         assertEquals("avg(TABLE1.ID1)", avg1.toSQLReference(false));
@@ -362,7 +362,7 @@ public class jOOQTest {
         assertEquals("avg(TABLE1.ID1)", avg1.toSQLDeclaration(false));
         assertEquals(1, avg1.bind(statement));
 
-        Field<Double> avg2 = Functions.avg(FIELD_ID1).as("value");
+        Field<Double> avg2 = create.functions().avg(FIELD_ID1).as("value");
         assertEquals(Double.class, avg2.getType());
         assertEquals("value", avg2.toSQLReference(true));
         assertEquals("value", avg2.toSQLReference(false));
@@ -370,7 +370,7 @@ public class jOOQTest {
         assertEquals("avg(TABLE1.ID1) value", avg2.toSQLDeclaration(false));
         assertEquals(1, avg2.bind(statement));
 
-        Field<Integer> min1 = Functions.min(FIELD_ID1);
+        Field<Integer> min1 = create.functions().min(FIELD_ID1);
         assertEquals(Integer.class, min1.getType());
         assertEquals("min(TABLE1.ID1)", min1.toSQLReference(true));
         assertEquals("min(TABLE1.ID1)", min1.toSQLReference(false));
@@ -378,7 +378,7 @@ public class jOOQTest {
         assertEquals("min(TABLE1.ID1)", min1.toSQLDeclaration(false));
         assertEquals(1, min1.bind(statement));
 
-        Field<Integer> min2 = Functions.min(FIELD_ID1).as("value");
+        Field<Integer> min2 = create.functions().min(FIELD_ID1).as("value");
         assertEquals(Integer.class, min2.getType());
         assertEquals("value", min2.toSQLReference(true));
         assertEquals("value", min2.toSQLReference(false));
@@ -386,7 +386,7 @@ public class jOOQTest {
         assertEquals("min(TABLE1.ID1) value", min2.toSQLDeclaration(false));
         assertEquals(1, min2.bind(statement));
 
-        Field<Integer> max1 = Functions.max(FIELD_ID1);
+        Field<Integer> max1 = create.functions().max(FIELD_ID1);
         assertEquals(Integer.class, max1.getType());
         assertEquals("max(TABLE1.ID1)", max1.toSQLReference(true));
         assertEquals("max(TABLE1.ID1)", max1.toSQLReference(false));
@@ -394,7 +394,7 @@ public class jOOQTest {
         assertEquals("max(TABLE1.ID1)", max1.toSQLDeclaration(false));
         assertEquals(1, max1.bind(statement));
 
-        Field<Integer> max2 = Functions.max(FIELD_ID1).as("value");
+        Field<Integer> max2 = create.functions().max(FIELD_ID1).as("value");
         assertEquals(Integer.class, max2.getType());
         assertEquals("value", max2.toSQLReference(true));
         assertEquals("value", max2.toSQLReference(false));
@@ -402,7 +402,7 @@ public class jOOQTest {
         assertEquals("max(TABLE1.ID1) value", max2.toSQLDeclaration(false));
         assertEquals(1, max2.bind(statement));
 
-        Field<Integer> count1 = Functions.count();
+        Field<Integer> count1 = create.functions().count();
         assertEquals(Integer.class, count1.getType());
         assertEquals("count(*)", count1.toSQLReference(true));
         assertEquals("count(*)", count1.toSQLReference(false));
@@ -410,7 +410,7 @@ public class jOOQTest {
         assertEquals("count(*)", count1.toSQLDeclaration(false));
         assertEquals(1, count1.bind(statement));
 
-        Field<Integer> count1a = Functions.count().as("cnt");
+        Field<Integer> count1a = create.functions().count().as("cnt");
         assertEquals(Integer.class, count1a.getType());
         assertEquals("cnt", count1a.toSQLReference(true));
         assertEquals("cnt", count1a.toSQLReference(false));
@@ -418,7 +418,7 @@ public class jOOQTest {
         assertEquals("count(*) cnt", count1a.toSQLDeclaration(false));
         assertEquals(1, count1a.bind(statement));
 
-        Field<Integer> count2 = Functions.count(FIELD_ID1);
+        Field<Integer> count2 = create.functions().count(FIELD_ID1);
         assertEquals(Integer.class, count2.getType());
         assertEquals("count(TABLE1.ID1)", count2.toSQLReference(true));
         assertEquals("count(TABLE1.ID1)", count2.toSQLReference(false));
@@ -426,7 +426,7 @@ public class jOOQTest {
         assertEquals("count(TABLE1.ID1)", count2.toSQLDeclaration(false));
         assertEquals(1, count2.bind(statement));
 
-        Field<Integer> count2a = Functions.count(FIELD_ID1).as("cnt");
+        Field<Integer> count2a = create.functions().count(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count2a.getType());
         assertEquals("cnt", count2a.toSQLReference(true));
         assertEquals("cnt", count2a.toSQLReference(false));
@@ -434,7 +434,7 @@ public class jOOQTest {
         assertEquals("count(TABLE1.ID1) cnt", count2a.toSQLDeclaration(false));
         assertEquals(1, count2a.bind(statement));
 
-        Field<Integer> count3 = Functions.countDistinct(FIELD_ID1);
+        Field<Integer> count3 = create.functions().countDistinct(FIELD_ID1);
         assertEquals(Integer.class, count3.getType());
         assertEquals("count(distinct TABLE1.ID1)", count3.toSQLReference(true));
         assertEquals("count(distinct TABLE1.ID1)", count3.toSQLReference(false));
@@ -442,7 +442,7 @@ public class jOOQTest {
         assertEquals("count(distinct TABLE1.ID1)", count3.toSQLDeclaration(false));
         assertEquals(1, count3.bind(statement));
 
-        Field<Integer> count3a = Functions.countDistinct(FIELD_ID1).as("cnt");
+        Field<Integer> count3a = create.functions().countDistinct(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count3a.getType());
         assertEquals("cnt", count3a.toSQLReference(true));
         assertEquals("cnt", count3a.toSQLReference(false));
@@ -453,13 +453,13 @@ public class jOOQTest {
 
     @Test(expected = IllegalStateException.class)
     public final void testEmptyInsertQuery() throws Exception {
-        InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
+        InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
         q.toSQLReference();
     }
 
     @Test
     public final void testInsertQuery1() throws Exception {
-        InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
+        InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
         q.addValue(FIELD_ID1, 10);
         assertEquals("insert into TABLE1 (ID1) values (10)", q.toSQLReference(true));
@@ -477,7 +477,7 @@ public class jOOQTest {
 
     @Test
     public final void testInsertQuery2() throws Exception {
-        InsertQuery<Table1Record> q = Create.insertQuery(TABLE1);
+        InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
@@ -499,13 +499,13 @@ public class jOOQTest {
 
     @Test(expected = IllegalStateException.class)
     public final void testEmptyUpdateQuery() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
         q.toSQLReference();
     }
 
     @Test
     public final void testUpdateQuery1() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
 
         q.addValue(FIELD_ID1, 10);
         assertEquals("update TABLE1 set ID1 = 10", q.toSQLReference(true));
@@ -523,7 +523,7 @@ public class jOOQTest {
 
     @Test
     public final void testUpdateQuery2() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
 
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
@@ -543,7 +543,7 @@ public class jOOQTest {
 
     @Test
     public final void testUpdateQuery3() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
         CompareCondition<Integer> c = FIELD_ID1.equal(10);
 
         q.addValue(FIELD_ID1, 10);
@@ -566,7 +566,7 @@ public class jOOQTest {
 
     @Test
     public final void testUpdateQuery4() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
         CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
         CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -592,7 +592,7 @@ public class jOOQTest {
 
     @Test
     public final void testUpdateQuery5() throws Exception {
-        UpdateQuery<Table1Record> q = Create.updateQuery(TABLE1);
+        UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
         CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
         CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -621,7 +621,7 @@ public class jOOQTest {
 
     @Test
     public final void testDeleteQuery1() throws Exception {
-        DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
+        DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
 
         assertEquals("delete from TABLE1", q.toSQLReference(true));
         assertEquals("delete from TABLE1", q.toSQLReference(false));
@@ -629,7 +629,7 @@ public class jOOQTest {
 
     @Test
     public final void testDeleteQuery2() throws Exception {
-        DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
+        DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
 
         q.addConditions(FALSE_CONDITION);
         assertEquals("delete from TABLE1 where 1 = 0", q.toSQLReference(true));
@@ -638,7 +638,7 @@ public class jOOQTest {
 
     @Test
     public final void testDeleteQuery3() throws Exception {
-        DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
+        DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
         CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
         CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -660,7 +660,7 @@ public class jOOQTest {
 
     @Test
     public final void testDeleteQuery4() throws Exception {
-        DeleteQuery<Table1Record> q = Create.deleteQuery(TABLE1);
+        DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
         CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
         CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -685,8 +685,8 @@ public class jOOQTest {
 
     @Test
     public final void testConditionalSelectQuery1() throws Exception {
-        SelectQuery q = Create.selectQuery();
-        Select s = select();
+        SelectQuery q = create.selectQuery();
+        Select s = create.select();
 
         assertEquals("select * from dual", q.toSQLReference(true));
         assertEquals("select * from dual", q.toSQLReference(false));
@@ -695,28 +695,28 @@ public class jOOQTest {
 
     @Test
     public final void testConditionalSelectQuery2() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
         q.addConditions(FALSE_CONDITION);
         assertEquals("select * from dual where 1 = 0", q.toSQLReference(true));
         assertEquals("select * from dual where 1 = 0", q.toSQLReference(false));
-        assertEquals(q, select().where(FALSE_CONDITION).getQuery());
+        assertEquals(q, create.select().where(FALSE_CONDITION).getQuery());
     }
 
     @Test
     public final void testConditionalSelectQuery3() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
         q.addConditions(FALSE_CONDITION);
         q.addConditions(TRUE_CONDITION);
         assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQLReference(true));
         assertEquals("select * from dual where (1 = 0 and 1 = 1)", q.toSQLReference(false));
-        assertEquals(q, select().where(FALSE_CONDITION.and(TRUE_CONDITION)).getQuery());
+        assertEquals(q, create.select().where(FALSE_CONDITION.and(TRUE_CONDITION)).getQuery());
     }
 
     @Test
     public final void testConditionalSelectQuery4() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
         CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
 
@@ -725,7 +725,7 @@ public class jOOQTest {
         q.addConditions(c2, c1);
         assertEquals("select * from dual where (TABLE1.ID1 = 10 and TABLE1.ID1 = 20 and TABLE1.ID1 = 20 and TABLE1.ID1 = 10)", q.toSQLReference(true));
         assertEquals("select * from dual where (TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ? and TABLE1.ID1 = ?)", q.toSQLReference(false));
-        assertEquals(q, select().where(c1.and(c2).and(c2.and(c1))).getQuery());
+        assertEquals(q, create.select().where(c1.and(c2).and(c2.and(c1))).getQuery());
 
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 10);
@@ -742,15 +742,15 @@ public class jOOQTest {
 
     @Test
     public final void testConditionalSelectQuery5() throws Exception {
-        SelectQuery q = Create.selectQuery();
-        Condition c1 = Create.plainSQLCondition("TABLE1.ID1 = ?", "10");
-        Condition c2 = Create.plainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
+        SelectQuery q = create.selectQuery();
+        Condition c1 = create.plainSQLCondition("TABLE1.ID1 = ?", "10");
+        Condition c2 = create.plainSQLCondition("TABLE2.ID2 = 20 or TABLE2.ID2 = ?", 30);
 
         q.addConditions(c1);
         q.addConditions(c2);
         assertEquals("select * from dual where ((TABLE1.ID1 = '10') and (TABLE2.ID2 = 20 or TABLE2.ID2 = 30))", q.toSQLReference(true));
         assertEquals("select * from dual where ((TABLE1.ID1 = ?) and (TABLE2.ID2 = 20 or TABLE2.ID2 = ?))", q.toSQLReference(false));
-        assertEquals(q, select().where(c1, c2).getQuery());
+        assertEquals(q, create.select().where(c1, c2).getQuery());
 
         context.checking(new Expectations() {{
             oneOf(statement).setString(1, "10");
@@ -765,14 +765,14 @@ public class jOOQTest {
 
     @Test
     public final void testProductSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addFrom(TABLE2);
         q.addFrom(TABLE3);
         assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(true));
         assertEquals("select * from TABLE1, TABLE2, TABLE3", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1, TABLE2, TABLE3).getQuery());
+        assertEquals(q, create.select().from(TABLE1, TABLE2, TABLE3).getQuery());
 
         int i = q.bind(statement);
         assertEquals(1, i);
@@ -780,13 +780,13 @@ public class jOOQTest {
 
     @Test
     public final void testJoinSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addJoin(TABLE2);
         assertEquals("select * from TABLE1 join TABLE2", q.toSQLReference(true));
         assertEquals("select * from TABLE1 join TABLE2", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1).join(TABLE2).on().getQuery());
+        assertEquals(q, create.select().from(TABLE1).join(TABLE2).on().getQuery());
 
         int i = q.bind(statement);
         assertEquals(1, i);
@@ -794,18 +794,18 @@ public class jOOQTest {
 
     @Test
     public final void testJoinOnConditionSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
         q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
 
         assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
         assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1).join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
+        assertEquals(q, create.select().from(TABLE1).join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
         q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
         assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(true));
         assertEquals("select * from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1)
+        assertEquals(q, create.select().from(TABLE1)
                                       .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
                                       .join(TABLE3).on(FIELD_ID2.equal(FIELD_ID3)).getQuery());
 
@@ -815,7 +815,7 @@ public class jOOQTest {
 
     @Test
     public final void testJoinComplexSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addJoin(TABLE2,
@@ -824,7 +824,7 @@ public class jOOQTest {
                 FIELD_ID2.in(1, 2, 3));
         assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3))", q.toSQLReference(true));
         assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?))", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1)
+        assertEquals(q, create.select().from(TABLE1)
                                 .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)
                                              .and(FIELD_ID1.equal(1))
                                              .and(FIELD_ID2.in(1, 2, 3))).getQuery());
@@ -832,7 +832,7 @@ public class jOOQTest {
         q.addJoin(TABLE3, FIELD_ID2, FIELD_ID3);
         assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = 1 and TABLE2.ID2 in (1, 2, 3)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(true));
         assertEquals("select * from TABLE1 join TABLE2 on (TABLE1.ID1 = TABLE2.ID2 and TABLE1.ID1 = ? and TABLE2.ID2 in (?, ?, ?)) join TABLE3 on TABLE2.ID2 = TABLE3.ID3", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1)
+        assertEquals(q, create.select().from(TABLE1)
                                 .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)
                                             .and(FIELD_ID1.equal(1))
                                             .and(FIELD_ID2.in(1, 2, 3)))
@@ -856,13 +856,13 @@ public class jOOQTest {
         Table<Table1Record> t1 = TABLE1.as("t1");
         Table<Table1Record> t2 = TABLE1.as("t2");
 
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         q.addFrom(t1);
         q.addJoin(t2, t1.getField(FIELD_ID1), t2.getField(FIELD_ID1));
 
         assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(true));
         assertEquals("select * from TABLE1 t1 join TABLE1 t2 on t1.ID1 = t2.ID1", q.toSQLReference(false));
-        assertEquals(q, select().from(t1)
+        assertEquals(q, create.select().from(t1)
                                 .join(t2).on(t1.getField(FIELD_ID1).equal(
                                              t2.getField(FIELD_ID1))).getQuery());
 
@@ -872,14 +872,14 @@ public class jOOQTest {
 
     @Test
     public final void testJoinTypeSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
-        Join j = Create.join(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
+        Join j = create.join(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
 
         q.addJoin(j);
         assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
         assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1).leftOuterJoin(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
+        assertEquals(q, create.select().from(TABLE1).leftOuterJoin(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
         int i = q.bind(statement);
         assertEquals(1, i);
@@ -887,23 +887,23 @@ public class jOOQTest {
 
     @Test
     public final void testGroupSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
 
         q.addGroupBy(FIELD_ID1);
         assertEquals("select * from TABLE1 group by TABLE1.ID1", q.toSQLReference(true));
         assertEquals("select * from TABLE1 group by TABLE1.ID1", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1).groupBy(FIELD_ID1).getQuery());
+        assertEquals(q, create.select().from(TABLE1).groupBy(FIELD_ID1).getQuery());
 
         q.addGroupBy(FIELD_ID2, FIELD_ID3);
         assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(true));
         assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1).groupBy(FIELD_ID1, FIELD_ID2, FIELD_ID3).getQuery());
+        assertEquals(q, create.select().from(TABLE1).groupBy(FIELD_ID1, FIELD_ID2, FIELD_ID3).getQuery());
 
         q.addHaving(FIELD_ID1.equal(1));
         assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = 1", q.toSQLReference(true));
         assertEquals("select * from TABLE1 group by TABLE1.ID1, TABLE2.ID2, TABLE3.ID3 having TABLE1.ID1 = ?", q.toSQLReference(false));
-        assertEquals(q, select().from(TABLE1)
+        assertEquals(q, create.select().from(TABLE1)
                                   .groupBy(FIELD_ID1, FIELD_ID2, FIELD_ID3)
                                   .having(FIELD_ID1.equal(1)).getQuery());
 
@@ -919,17 +919,17 @@ public class jOOQTest {
 
     @Test
     public final void testOrderSelectQuery() throws Exception {
-        SimpleSelectQuery<Table1Record> q = Create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table1Record> q = create.selectQuery(TABLE1);
 
         q.addOrderBy(FIELD_ID1);
         assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(true));
         assertEquals("select * from TABLE1 order by TABLE1.ID1", q.toSQLReference(false));
-        assertEquals(q, select(TABLE1).orderBy(FIELD_ID1).getQuery());
+        assertEquals(q, create.select(TABLE1).orderBy(FIELD_ID1).getQuery());
 
         q.addOrderBy(FIELD_ID2, SortOrder.DESC);
         assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(true));
         assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.toSQLReference(false));
-        assertEquals(q, select(TABLE1)
+        assertEquals(q, create.select(TABLE1)
                                 .orderBy(FIELD_ID1)
                                 .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
 
@@ -939,7 +939,7 @@ public class jOOQTest {
 
     @Test
     public final void testCompleteSelectQuery() throws Exception {
-        SelectQuery q = Create.selectQuery();
+        SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
         q.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
         q.addSelect(FIELD_ID1, FIELD_ID2);
@@ -950,7 +950,7 @@ public class jOOQTest {
 
         assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = 1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(true));
         assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = ? order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.toSQLReference(false));
-        assertEquals(q, select(FIELD_ID1, FIELD_ID2)
+        assertEquals(q, create.select(FIELD_ID1, FIELD_ID2)
                           .from(TABLE1)
                           .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
                           .groupBy(FIELD_ID1, FIELD_ID2)
@@ -1002,8 +1002,8 @@ public class jOOQTest {
     }
 
     private SelectQuery createCombinedSelectQuery() {
-        SelectQuery q1 = Create.selectQuery();
-        SelectQuery q2 = Create.selectQuery();
+        SelectQuery q1 = create.selectQuery();
+        SelectQuery q2 = create.selectQuery();
 
         q1.addFrom(TABLE1);
         q2.addFrom(TABLE1);
@@ -1017,17 +1017,17 @@ public class jOOQTest {
     }
 
     private Select createCombinedSelect() {
-        Select q1 = select().from(TABLE1).where(FIELD_ID1.equal(1)).getSelect();
-        Select q2 = select().from(TABLE1).where(FIELD_ID1.equal(2)).getSelect();
+        Select q1 = create.select().from(TABLE1).where(FIELD_ID1.equal(1)).getSelect();
+        Select q2 = create.select().from(TABLE1).where(FIELD_ID1.equal(2)).getSelect();
 
         return q1.union(q2).orderBy(FIELD_ID1).getSelect();
     }
 
     @Test
     public final void testInnerSelect1() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table1Record> q2 = Create.selectQuery(q1.asTable().as("inner_temp_table"));
-        SimpleSelectQuery<Table1Record> q3 = Create.selectQuery(q2.asTable().as("outer_temp_table"));
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table1Record> q2 = create.selectQuery(q1.asTable().as("inner_temp_table"));
+        SimpleSelectQuery<Table1Record> q3 = create.selectQuery(q2.asTable().as("outer_temp_table"));
 
         assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(true));
         assertEquals("select * from (select * from TABLE1) inner_temp_table", q2.toSQLReference(false));
@@ -1038,8 +1038,8 @@ public class jOOQTest {
 
     @Test
     public final void testInnerSelect2() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table2Record> q2 = create.selectQuery(TABLE2);
 
         q1.addSelect(FIELD_ID1.as("inner_id1"));
         q2.addSelect(FIELD_ID2.as("outer_id2"));
@@ -1051,8 +1051,8 @@ public class jOOQTest {
 
     @Test
     public final void testInnerSelect3() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table2Record> q2 = create.selectQuery(TABLE2);
 
         q2.addSelect(FIELD_ID2);
         q1.addConditions(FIELD_ID1.in(q2));
@@ -1063,8 +1063,8 @@ public class jOOQTest {
 
     @Test
     public final void testInnerSelect4() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table2Record> q2 = create.selectQuery(TABLE2);
 
         q2.addSelect(FIELD_ID2);
         q1.addConditions(FIELD_ID1.equal(q2));
@@ -1075,8 +1075,8 @@ public class jOOQTest {
 
     @Test
     public final void testInnerSelect5() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table2Record> q2 = create.selectQuery(TABLE2);
 
         q2.addSelect(FIELD_ID2);
         q1.addConditions(FIELD_ID1.greaterThanAny(q2));
@@ -1087,8 +1087,8 @@ public class jOOQTest {
 
     @Test
     public final void testInnerSelect6() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = Create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table2Record> q2 = Create.selectQuery(TABLE2);
+        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SimpleSelectQuery<Table2Record> q2 = create.selectQuery(TABLE2);
 
         q2.addSelect(FIELD_ID2);
         q1.addConditions(q2.asExistsCondition());

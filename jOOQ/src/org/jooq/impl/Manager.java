@@ -52,6 +52,8 @@ import org.jooq.UpdateQuery;
  */
 public final class Manager {
 
+    private static Factory Create = new Factory();
+
     public static <R extends Record> List<R> select(Connection connection, Table<R> table) throws SQLException {
         return select0(connection, Create.select(table));
     }

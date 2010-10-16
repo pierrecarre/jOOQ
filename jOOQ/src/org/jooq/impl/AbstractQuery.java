@@ -37,6 +37,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.jooq.Configuration;
 import org.jooq.Query;
 import org.jooq.Record;
 
@@ -45,9 +46,29 @@ import org.jooq.Record;
  */
 abstract class AbstractQuery<R extends Record> extends AbstractQueryPart implements Query {
 
-    private static final long serialVersionUID = -8046199737354507547L;
+    private static final long    serialVersionUID = -8046199737354507547L;
+    private transient Connection connection;
+    private transient DataSource dataSource;
 
-    AbstractQuery() {}
+    AbstractQuery(Configuration configuration) {
+        super(configuration.getDialect());
+
+        this.dataSource = configuration.getDataSource();
+        this.connection = configuration.getConnection();
+    }
+
+    @Override
+    public final int execute() throws SQLException {
+        if (connection != null) {
+            return execute(connection);
+        }
+        else if (dataSource != null) {
+            return execute(dataSource);
+        }
+        else {
+            throw new SQLException("Cannot execute query. No Connection or DataSource configured");
+        }
+    }
 
     @Override
     public final int execute(DataSource source) throws SQLException {
@@ -65,6 +86,19 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
         }
         finally {
             SQLUtils.safeClose(statement);
+        }
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        if (connection != null) {
+            return new Factory(connection, getDialect());
+        }
+        else if (dataSource != null) {
+            return new Factory(dataSource, getDialect());
+        }
+        else {
+            return new Factory(getDialect());
         }
     }
 

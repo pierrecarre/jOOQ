@@ -33,6 +33,7 @@ package org.jooq.impl;
 import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.Operator;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -44,15 +45,17 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
      */
     private static final long serialVersionUID = -6683692251799468624L;
 
-    AbstractCondition() {}
+    AbstractCondition(SQLDialect dialect) {
+        super(dialect);
+    }
 
     @Override
     public final CombinedCondition and(Condition other) {
-        return Create.combinedCondition(this, other);
+        return create().combinedCondition(this, other);
     }
 
     @Override
     public final CombinedCondition or(Condition other) {
-        return Create.combinedCondition(Operator.OR, this, other);
+        return create().combinedCondition(Operator.OR, this, other);
     }
 }

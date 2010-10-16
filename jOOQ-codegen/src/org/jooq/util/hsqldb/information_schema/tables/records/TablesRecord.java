@@ -5,6 +5,7 @@ package org.jooq.util.hsqldb.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.hsqldb.information_schema.tables.Tables;
@@ -194,6 +195,6 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	}
 
 	public TablesRecord() {
-		super(Tables.TABLES);
+		super(SQLDialect.HSQLDB, Tables.TABLES);
 	}
 }

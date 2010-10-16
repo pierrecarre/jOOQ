@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -49,15 +50,15 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
     private final Schema      schema;
     private final FieldList   fields;
 
-    public TableImpl(String name) {
-        this(name, (Schema) null);
+    public TableImpl(SQLDialect dialect, String name) {
+        this(dialect, name, (Schema) null);
     }
 
-    public TableImpl(String name, Schema schema) {
-        super(name);
+    public TableImpl(SQLDialect dialect, String name, Schema schema) {
+        super(dialect, name);
 
         this.schema = schema;
-        this.fields = new FieldListImpl();
+        this.fields = new FieldListImpl(dialect);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
 
     @Override
     public Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias);
+        return new TableAlias<R>(getDialect(), this, alias);
     }
 
     /**

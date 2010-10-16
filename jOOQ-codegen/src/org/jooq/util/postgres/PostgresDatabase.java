@@ -43,9 +43,10 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.Create;
+import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
@@ -66,7 +67,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery query = Create.select()
+		SelectQuery query = create().select()
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
 			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
@@ -99,7 +100,7 @@ public class PostgresDatabase extends AbstractDatabase {
 		Field<String> ccuTableName = ConstraintColumnUsage.TABLE_NAME.as("ccu_table_name");
 		Field<String> ccuColumnName = ConstraintColumnUsage.COLUMN_NAME.as("ccu_column_name");
 
-		SelectQuery query = Create.select(
+		SelectQuery query = create().select(
 			TableConstraints.CONSTRAINT_NAME,
 			kcuTableName, kcuColumnName,
 			ccuTableName, ccuColumnName)
@@ -142,7 +143,7 @@ public class PostgresDatabase extends AbstractDatabase {
 	protected List<TableDefinition> getTables0() throws SQLException {
 		List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SimpleSelectQuery<TablesRecord> q = Create.selectQuery(TABLES);
+		SimpleSelectQuery<TablesRecord> q = create().selectQuery(TABLES);
 		q.addCompareCondition(Tables.TABLE_SCHEMA, getSchemaName());
 		q.addOrderBy(Tables.TABLE_NAME);
 		q.execute(getConnection());
@@ -170,4 +171,9 @@ public class PostgresDatabase extends AbstractDatabase {
 
 		return result;
 	}
+
+    @Override
+    public Factory create() {
+        return new Factory(getConnection(), SQLDialect.POSTGRES);
+    }
 }

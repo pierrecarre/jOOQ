@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 
 /**
@@ -48,7 +49,9 @@ class SelectQueryAsCompareCondition<T> extends AbstractCondition implements Comp
     private final SelectQuery query;
     private final Field<T>    field;
 
-    SelectQueryAsCompareCondition(SelectQuery query, Field<T> field) {
+    SelectQueryAsCompareCondition(SQLDialect dialect, SelectQuery query, Field<T> field) {
+        super(dialect);
+
         this.query = query;
         this.field = field;
     }

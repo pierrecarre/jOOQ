@@ -35,10 +35,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
-import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.Factory;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
@@ -54,11 +54,14 @@ public class jOOQOracleTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord,
 
 	@Override
 	protected Connection getConnection() throws Exception {
-		Configuration.getInstance().setDialect(SQLDialect.ORACLE);
-
 		Class.forName("oracle.jdbc.OracleDriver");
 		return DriverManager.getConnection ("jdbc:oracle:thin:@rhea:1521:RD_DEV", "ODS_TEST", "ODS_TEST");
 	}
+
+    @Override
+    protected Factory create() throws Exception {
+        return new Factory(getConnection(), SQLDialect.ORACLE);
+    }
 
 	@Override
 	protected String getCreateScript() {

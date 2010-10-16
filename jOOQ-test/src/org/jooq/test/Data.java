@@ -33,6 +33,7 @@ package org.jooq.test;
 
 import java.sql.Date;
 
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
@@ -44,50 +45,50 @@ import org.jooq.impl.TableRecordImpl;
  */
 @SuppressWarnings("serial")
 public final class Data {
-	public static final Table<Table1Record> TABLE1 = new TableImpl<Table1Record>("TABLE1") {
+	public static final Table<Table1Record> TABLE1 = new TableImpl<Table1Record>(SQLDialect.SQL99, "TABLE1") {
 		@Override
 		public Class<Table1Record> getRecordType() {
 			return Table1Record.class;
 		}
 	};
-	public static final Table<Table2Record> TABLE2 = new TableImpl<Table2Record>("TABLE2"){
+	public static final Table<Table2Record> TABLE2 = new TableImpl<Table2Record>(SQLDialect.SQL99, "TABLE2"){
 		@Override
 		public Class<Table2Record> getRecordType() {
 			return Table2Record.class;
 		}
 	};
-	public static final Table<Table3Record> TABLE3 = new TableImpl<Table3Record>("TABLE3") {
+	public static final Table<Table3Record> TABLE3 = new TableImpl<Table3Record>(SQLDialect.SQL99, "TABLE3") {
 		@Override
 		public Class<Table3Record> getRecordType() {
 			return Table3Record.class;
 		}
 	};
 
-	public static final TableField<Table1Record, Integer> FIELD_ID1 = new TableFieldImpl<Table1Record, Integer>("ID1", Integer.class, TABLE1);
-	public static final TableField<Table2Record, Integer> FIELD_ID2 = new TableFieldImpl<Table2Record, Integer>("ID2", Integer.class, TABLE2);
-	public static final TableField<Table3Record, Integer> FIELD_ID3 = new TableFieldImpl<Table3Record, Integer>("ID3", Integer.class, TABLE3);
+	public static final TableField<Table1Record, Integer> FIELD_ID1 = new TableFieldImpl<Table1Record, Integer>(SQLDialect.SQL99, "ID1", Integer.class, TABLE1);
+	public static final TableField<Table2Record, Integer> FIELD_ID2 = new TableFieldImpl<Table2Record, Integer>(SQLDialect.SQL99, "ID2", Integer.class, TABLE2);
+	public static final TableField<Table3Record, Integer> FIELD_ID3 = new TableFieldImpl<Table3Record, Integer>(SQLDialect.SQL99, "ID3", Integer.class, TABLE3);
 
-	public static final TableField<Table1Record, String> FIELD_NAME1 = new TableFieldImpl<Table1Record, String>("NAME1", String.class, TABLE1);
-	public static final TableField<Table2Record, String> FIELD_NAME2 = new TableFieldImpl<Table2Record, String>("NAME2", String.class, TABLE2);
-	public static final TableField<Table3Record, String> FIELD_NAME3 = new TableFieldImpl<Table3Record, String>("NAME3", String.class, TABLE3);
+	public static final TableField<Table1Record, String> FIELD_NAME1 = new TableFieldImpl<Table1Record, String>(SQLDialect.SQL99, "NAME1", String.class, TABLE1);
+	public static final TableField<Table2Record, String> FIELD_NAME2 = new TableFieldImpl<Table2Record, String>(SQLDialect.SQL99, "NAME2", String.class, TABLE2);
+	public static final TableField<Table3Record, String> FIELD_NAME3 = new TableFieldImpl<Table3Record, String>(SQLDialect.SQL99, "NAME3", String.class, TABLE3);
 
-	public static final TableField<Table1Record, Date> FIELD_DATE1 = new TableFieldImpl<Table1Record, Date>("DATE1", Date.class, TABLE1);
-	public static final TableField<Table2Record, Date> FIELD_DATE2 = new TableFieldImpl<Table2Record, Date>("DATE2", Date.class, TABLE2);
-	public static final TableField<Table3Record, Date> FIELD_DATE3 = new TableFieldImpl<Table3Record, Date>("DATE3", Date.class, TABLE3);
+	public static final TableField<Table1Record, Date> FIELD_DATE1 = new TableFieldImpl<Table1Record, Date>(SQLDialect.SQL99, "DATE1", Date.class, TABLE1);
+	public static final TableField<Table2Record, Date> FIELD_DATE2 = new TableFieldImpl<Table2Record, Date>(SQLDialect.SQL99, "DATE2", Date.class, TABLE2);
+	public static final TableField<Table3Record, Date> FIELD_DATE3 = new TableFieldImpl<Table3Record, Date>(SQLDialect.SQL99, "DATE3", Date.class, TABLE3);
 
 	public static class Table1Record extends TableRecordImpl<Table1Record> {
 		public Table1Record() {
-			super(TABLE1);
+			super(SQLDialect.SQL99, TABLE1);
 		}
 	}
 	public static class Table2Record extends TableRecordImpl<Table2Record> {
 		public Table2Record() {
-			super(TABLE2);
+			super(SQLDialect.SQL99, TABLE2);
 		}
 	}
 	public static class Table3Record extends TableRecordImpl<Table3Record> {
 		public Table3Record() {
-			super(TABLE3);
+			super(SQLDialect.SQL99, TABLE3);
 		}
 	}
 

@@ -5,6 +5,7 @@ package org.jooq.test.mysql.generatedclasses.functions;
 
 
 import org.jooq.Parameter;
+import org.jooq.SQLDialect;
 import org.jooq.impl.ParameterImpl;
 import org.jooq.impl.StoredFunctionImpl;
 
@@ -22,13 +23,13 @@ public class FAuthorExists extends StoredFunctionImpl<Byte> {
 	/**
 	 * An uncommented item
 	 */
-	public static final Parameter<String> AUTHOR_NAME = new ParameterImpl<String>("author_name", String.class);
+	public static final Parameter<String> AUTHOR_NAME = new ParameterImpl<String>(SQLDialect.MYSQL, "author_name", String.class);
 
 	/**
 	 * No further instances allowed
 	 */
 	public FAuthorExists() {
-		super("f_author_exists", Byte.class);
+		super(SQLDialect.MYSQL, "f_author_exists", Byte.class);
 
 		addInParameter(AUTHOR_NAME);
 	}

@@ -7,6 +7,7 @@ package org.jooq.util.mysql.mysql.tables.records;
 import java.sql.Timestamp;
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.mysql.tables.Proc;
@@ -310,6 +311,6 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 	}
 
 	public ProcRecord() {
-		super(Proc.PROC);
+		super(SQLDialect.MYSQL, Proc.PROC);
 	}
 }

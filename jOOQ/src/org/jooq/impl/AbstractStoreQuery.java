@@ -37,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
@@ -58,13 +59,15 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     private final Table<R>                      into;
     private final Map<TableField<R, ?>, Object> values;
 
-    AbstractStoreQuery(Table<R> into) {
+    AbstractStoreQuery(Configuration configuration, Table<R> into) {
+        super(configuration);
+
         this.into = into;
         this.values = new LinkedHashMap<TableField<R, ?>, Object>();
     }
 
-    AbstractStoreQuery(Table<R> into, R record) {
-        this(into);
+    AbstractStoreQuery(Configuration configuration, Table<R> into, R record) {
+        this(configuration, into);
 
         setRecord(record);
     }

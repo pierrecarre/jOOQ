@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -41,23 +42,23 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * The book ID
 	 */
-	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>("ID", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.ORACLE, "ID", Integer.class, T_BOOK);
 
 	/**
 	 * The author ID in entity 'author'
 	 */
-	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>("AUTHOR_ID", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.ORACLE, "AUTHOR_ID", Integer.class, T_BOOK);
 
 	/**
 	 * The book's title
 	 */
-	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>("TITLE", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>(SQLDialect.ORACLE, "TITLE", String.class, T_BOOK);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("T_BOOK", OdsTest.ODS_TEST);
+		super(SQLDialect.ORACLE, "T_BOOK", OdsTest.ODS_TEST);
 	}
 
 }

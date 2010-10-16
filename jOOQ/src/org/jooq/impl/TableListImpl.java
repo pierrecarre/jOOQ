@@ -31,10 +31,9 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
-
 import java.util.List;
 
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableList;
 
@@ -45,16 +44,16 @@ class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList
 
     private static final long serialVersionUID = -8545559185481762229L;
 
-    TableListImpl() {
-        super();
+    TableListImpl(SQLDialect dialect) {
+        super(dialect);
     }
 
-    TableListImpl(List<? extends Table<?>> wrappedList) {
-        super(wrappedList);
+    TableListImpl(SQLDialect dialect, List<? extends Table<?>> wrappedList) {
+        super(dialect, wrappedList);
     }
 
     @Override
     protected String toSQLEmptyList() {
-        return EMPTY_TABLE.toSQLReference();
+        return EmptyTable.getInstance(getDialect()).toSQLReference();
     }
 }

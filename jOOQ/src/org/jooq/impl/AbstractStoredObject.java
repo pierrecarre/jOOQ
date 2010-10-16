@@ -40,7 +40,9 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.jooq.Configuration;
 import org.jooq.Parameter;
+import org.jooq.SQLDialect;
 import org.jooq.StoredObject;
 
 /**
@@ -53,11 +55,21 @@ abstract class AbstractStoredObject extends AbstractNamedQueryPart implements St
     private final List<Parameter<?>>        inParameters;
     private final Map<Parameter<?>, Object> inValues;
 
-    AbstractStoredObject(String name) {
-        super(name);
+    AbstractStoredObject(SQLDialect dialect, String name) {
+        super(dialect, name);
 
         this.inParameters = new ArrayList<Parameter<?>>();
         this.inValues = new HashMap<Parameter<?>, Object>();
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return new Factory(getDialect());
+    }
+
+    @Override
+    public final int execute() throws SQLException {
+        throw new SQLException("Cannot execute query. No Connection or DataSource configured");
     }
 
     @Override

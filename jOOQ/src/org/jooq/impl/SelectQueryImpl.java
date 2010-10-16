@@ -36,6 +36,7 @@ import java.util.Collection;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Join;
 import org.jooq.JoinType;
@@ -50,17 +51,17 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
 
     private static final long serialVersionUID = 1555503854543561285L;
 
-    SelectQueryImpl() {
-        this(null);
+    SelectQueryImpl(Configuration configuration) {
+        this(configuration, null);
     }
 
-    SelectQueryImpl(Table<Record> from) {
-        super(from);
+    SelectQueryImpl(Configuration configuration, Table<Record> from) {
+        super(configuration, from);
     }
 
     @Override
     final SelectQuery newSelect(Table<Record> from) {
-        return new SelectQueryImpl(from);
+        return new SelectQueryImpl(getConfiguration(), from);
     }
 
     @Override
@@ -90,7 +91,7 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
 
     @Override
     public final <T> void addHaving(Field<T> field, T value, Comparator comparator) {
-        addHaving(Create.compareCondition(field, value, comparator));
+        addHaving(create().compareCondition(field, value, comparator));
     }
 
     @Override
@@ -110,21 +111,21 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
 
     @Override
     public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
-        addJoin(Create.join(table, field1, field2));
+        addJoin(create().join(table, field1, field2));
     }
 
     @Override
     public final void addJoin(Table<?> table, Condition... conditions) {
-        addJoin(Create.join(table, conditions));
+        addJoin(create().join(table, conditions));
     }
 
     @Override
     public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
-        addJoin(Create.join(table, type, field1, field2));
+        addJoin(create().join(table, type, field1, field2));
     }
 
     @Override
     public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
-        addJoin(Create.join(table, type, conditions));
+        addJoin(create().join(table, type, conditions));
     }
 }

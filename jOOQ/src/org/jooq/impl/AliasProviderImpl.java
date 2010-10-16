@@ -35,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.AliasProvider;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -46,12 +47,12 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
     private final String      alias;
     private final boolean     wrapInParentheses;
 
-    AliasProviderImpl(T aliasProvider, String alias) {
-        this(aliasProvider, alias, false);
+    AliasProviderImpl(SQLDialect dialect, T aliasProvider, String alias) {
+        this(dialect, aliasProvider, alias, false);
     }
 
-    AliasProviderImpl(T aliasProvider, String alias, boolean wrapInParentheses) {
-        super(alias);
+    AliasProviderImpl(SQLDialect dialect, T aliasProvider, String alias, boolean wrapInParentheses) {
+        super(dialect, alias);
 
         this.aliasProvider = aliasProvider;
         this.alias = alias;

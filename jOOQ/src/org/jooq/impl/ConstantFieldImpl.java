@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -41,8 +42,8 @@ class ConstantFieldImpl<T> extends FieldImpl<T> implements Field<T> {
     private static final long serialVersionUID = 6807729087019209084L;
 
     @SuppressWarnings("unchecked")
-    ConstantFieldImpl(T value) {
-        super(value.toString(), (Class<? extends T>) value.getClass());
+    ConstantFieldImpl(SQLDialect dialect, T value) {
+        super(dialect, value.toString(), (Class<? extends T>) value.getClass());
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,62 +28,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
+import java.sql.Connection;
+
+import javax.sql.DataSource;
+
 /**
- * The configuration
+ * The Configuration holds data about sql dialects, connections and data sources
  *
  * @author Lukas Eder
  */
-public class Configuration {
-
-    private static final Configuration INSTANCE = new Configuration();
-    private SQLDialect                 dialect;
-
-    public static Configuration getInstance() {
-        return INSTANCE;
-    }
+public interface Configuration {
 
     /**
-     * The used SQL dialect. This can be set externally using JVM flag
-     * -Dorg.jooq.sql-dialect. If no dialect is provided,
-     * {@link SQLDialect#SQL99} is used.
-     *
-     * @return The used {@link SQLDialect}
-     * @see SQLDialect
-     * @throws SQLDialectNotSupportedException if dialect configured in
-     *             -Dorg.jooq.sql-dialect is unknown
+     * Retrieve the configured dialect
      */
-    public SQLDialect getDialect() throws SQLDialectNotSupportedException {
-        if (dialect == null) {
-            String dialectName = System.getProperty("org.jooq.sql-dialect");
-
-            if (dialectName != null) {
-                try {
-                    dialect = SQLDialect.valueOf(dialectName);
-                }
-                catch (IllegalArgumentException ignore) {
-                    throw new SQLDialectNotSupportedException("Unknown dialect : " + dialectName);
-                }
-            }
-
-            if (dialect == null) {
-                dialect = SQLDialect.SQL99;
-            }
-        }
-        return dialect;
-    }
+    SQLDialect getDialect();
 
     /**
-     * Set a new dialect to the configuration
-     *
-     * @param dialect The new dialect
-     * @throws SQLDialectNotSupportedException if dialect is not supported
+     * Retrieve the configured connection
      */
-    public void setDialect(SQLDialect dialect) throws SQLDialectNotSupportedException {
-        this.dialect = dialect;
-    }
+    Connection getConnection();
 
-    private Configuration() {}
+    /**
+     * Retrieve the configured data source
+     */
+    DataSource getDataSource();
+
 }

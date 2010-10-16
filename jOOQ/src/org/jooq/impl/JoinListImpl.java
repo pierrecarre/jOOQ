@@ -35,6 +35,7 @@ import java.util.List;
 
 import org.jooq.Join;
 import org.jooq.JoinList;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -43,12 +44,12 @@ class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
 
     private static final long serialVersionUID = -8180029905491753071L;
 
-    JoinListImpl() {
-        super();
+    JoinListImpl(SQLDialect dialect) {
+        super(dialect);
     }
 
-    JoinListImpl(List<Join> wrappedList) {
-        super(wrappedList);
+    JoinListImpl(SQLDialect dialect, List<Join> wrappedList) {
+        super(dialect, wrappedList);
     }
 
     @Override

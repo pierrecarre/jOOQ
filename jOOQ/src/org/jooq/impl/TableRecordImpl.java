@@ -30,7 +30,9 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
@@ -46,8 +48,8 @@ public class TableRecordImpl<R extends Record> extends RecordImpl implements Tab
      */
     private static final long serialVersionUID = -4613985511514503387L;
 
-    public TableRecordImpl(Table<R> table) {
-        super(table);
+    public TableRecordImpl(SQLDialect dialect, Table<R> table) {
+        super(dialect, table);
     }
 
     @SuppressWarnings("unchecked")
@@ -55,5 +57,14 @@ public class TableRecordImpl<R extends Record> extends RecordImpl implements Tab
     public Table<R> getTable() {
         // We can be sure about that cast, as this is the only possibility
         return (Table<R>) getMetaData();
+    }
+
+    @Override
+    public final Configuration getConfiguration() {
+        return new Factory(getDialect());
+    }
+
+    protected final Factory create() {
+        return new Factory(getDialect());
     }
 }

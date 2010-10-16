@@ -39,6 +39,7 @@ import java.util.Collection;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -54,9 +55,11 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements Dele
     private final Table<R>              table;
     private final ConditionProviderImpl condition;
 
-    DeleteQueryImpl(Table<R> table) {
+    DeleteQueryImpl(Configuration configuration, Table<R> table) {
+        super(configuration);
+
         this.table = table;
-        this.condition = new ConditionProviderImpl();
+        this.condition = new ConditionProviderImpl(configuration.getDialect());
     }
 
     @Override

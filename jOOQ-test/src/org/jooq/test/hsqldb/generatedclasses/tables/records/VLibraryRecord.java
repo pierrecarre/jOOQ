@@ -5,6 +5,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.hsqldb.generatedclasses.tables.VLibrary;
@@ -54,6 +55,6 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 	}
 
 	public VLibraryRecord() {
-		super(VLibrary.V_LIBRARY);
+		super(SQLDialect.HSQLDB, VLibrary.V_LIBRARY);
 	}
 }

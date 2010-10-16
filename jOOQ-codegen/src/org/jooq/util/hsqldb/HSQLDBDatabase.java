@@ -43,8 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
-import org.jooq.impl.Create;
+import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
@@ -63,7 +64,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery query = Create.select()
+		SelectQuery query = create().select()
 			.from(TABLE_CONSTRAINTS)
 			.join(CONSTRAINT_COLUMN_USAGE)
 			.on(TableConstraints.CONSTRAINT_NAME.equal(ConstraintColumnUsage.CONSTRAINT_NAME))
@@ -91,7 +92,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SelectQuery query = Create.select()
+		SelectQuery query = create().select()
 			.from(CONSTRAINT_COLUMN_USAGE)
 			.join(KEY_COLUMN_USAGE)
 			.on(ConstraintColumnUsage.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
@@ -159,4 +160,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
 		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
 		return result;
 	}
+
+    @Override
+    public Factory create() {
+        return new Factory(getConnection(), SQLDialect.HSQLDB);
+    }
 }

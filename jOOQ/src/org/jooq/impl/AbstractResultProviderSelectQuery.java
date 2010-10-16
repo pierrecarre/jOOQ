@@ -53,6 +53,7 @@ import org.jooq.OrderByFieldList;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;
+import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
@@ -80,19 +81,22 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     private final OrderByFieldList      orderBy;
     private final LimitImpl             limit;
 
-    AbstractResultProviderSelectQuery() {
-        this(null);
+    AbstractResultProviderSelectQuery(Configuration configuration) {
+        this(configuration, null);
     }
 
-    AbstractResultProviderSelectQuery(Table<R> from) {
-        this.select = new SelectFieldListImpl();
-        this.from = new TableListImpl();
-        this.join = new JoinListImpl();
-        this.condition = new ConditionProviderImpl();
-        this.groupBy = new FieldListImpl();
-        this.having = new ConditionProviderImpl();
-        this.orderBy = new OrderByFieldListImpl();
-        this.limit = new LimitImpl();
+    AbstractResultProviderSelectQuery(Configuration configuration, Table<R> from) {
+        super(configuration);
+        final SQLDialect dialect = configuration.getDialect();
+
+        this.select = new SelectFieldListImpl(dialect);
+        this.from = new TableListImpl(dialect);
+        this.join = new JoinListImpl(dialect);
+        this.condition = new ConditionProviderImpl(dialect);
+        this.groupBy = new FieldListImpl(dialect);
+        this.having = new ConditionProviderImpl(dialect);
+        this.orderBy = new OrderByFieldListImpl(dialect);
+        this.limit = new LimitImpl(dialect);
 
         if (from != null) {
             this.from.add(from);
@@ -189,7 +193,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     @Override
     public final FieldList getSelect() {
         if (getSelect0().isEmpty()) {
-            FieldList result = new SelectFieldListImpl();
+            FieldList result = new SelectFieldListImpl(getDialect());
 
             for (Table<?> table : getFrom()) {
                 for (Field<?> field : table.getFields()) {
@@ -227,7 +231,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
 
     @Override
     public final TableList getTables() {
-        TableList result = new TableListImpl(getFrom());
+        TableList result = new TableListImpl(getDialect(), getFrom());
 
         for (Join join : getJoin()) {
             result.add(join.getTable());
@@ -333,7 +337,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
         }
 
-        return new SelectQueryAsField<T>(this, (Class<? extends T>) getSelect().get(0).getType());
+        return new SelectQueryAsField<T>(getDialect(), this, (Class<? extends T>) getSelect().get(0).getType());
     }
 
     @Override
@@ -357,7 +361,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
         }
 
-        return new SelectQueryAsSubQueryCondition<T>(this, field, operator);
+        return new SelectQueryAsSubQueryCondition<T>(getDialect(), this, field, operator);
     }
 
     @Override
@@ -375,7 +379,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
         }
 
-        return new SelectQueryAsExistsCondition(this, operator);
+        return new SelectQueryAsExistsCondition(getDialect(), this, operator);
     }
 
     @SuppressWarnings("unchecked")
@@ -447,10 +451,10 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     private final Table<R> asTable(CombineOperator operator, Q... queries) {
-        Table<R> result = new SelectQueryAsTable<R>(operator, queries);
+        Table<R> result = new SelectQueryAsTable<R>(getDialect(), operator, queries);
 
         // Some dialects require derived tables to provide an alias
-        switch (Configuration.getInstance().getDialect()) {
+        switch (getDialect()) {
             case MYSQL:
             case POSTGRES:
                 result = result.as("gen_" + (int) (Math.random() * 1000000));

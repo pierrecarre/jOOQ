@@ -40,6 +40,7 @@ import org.jooq.CombineOperator;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.ResultProviderSelectQuery;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 
 /**
@@ -51,12 +52,12 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
     private final List<ResultProviderSelectQuery<?, R>> queries;
     private final CombineOperator                       operator;
 
-    SelectQueryAsTable(ResultProviderSelectQuery<?, R>... query) {
-        this(CombineOperator.UNION, query);
+    SelectQueryAsTable(SQLDialect dialect, ResultProviderSelectQuery<?, R>... query) {
+        this(dialect, CombineOperator.UNION, query);
     }
 
-    SelectQueryAsTable(CombineOperator operator, ResultProviderSelectQuery<?, R>... query) {
-        super("");
+    SelectQueryAsTable(SQLDialect dialect, CombineOperator operator, ResultProviderSelectQuery<?, R>... query) {
+        super(dialect, "");
 
         this.operator = operator;
         this.queries = Arrays.asList(query);
@@ -64,7 +65,7 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
 
     @Override
     public Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias, true);
+        return new TableAlias<R>(getDialect(), this, alias, true);
     }
 
     @Override
@@ -102,7 +103,7 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
                 sb.append(query.toSQLReference(inlineParameters));
                 sb.append(")");
 
-                connector = " " + operator.toSQL() + " ";
+                connector = " " + operator.toSQL(getDialect()) + " ";
             }
             sb.append(")");
 

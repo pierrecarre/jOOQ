@@ -7,6 +7,7 @@ package org.jooq.util.mysql.information_schema.tables.records;
 import java.sql.Timestamp;
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.Tables;
@@ -322,6 +323,6 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	}
 
 	public TablesRecord() {
-		super(Tables.TABLES);
+		super(SQLDialect.MYSQL, Tables.TABLES);
 	}
 }

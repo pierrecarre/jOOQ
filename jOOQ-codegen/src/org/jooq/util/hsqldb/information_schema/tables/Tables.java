@@ -4,6 +4,7 @@
 package org.jooq.util.hsqldb.information_schema.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,68 +40,68 @@ public class Tables extends TableImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> TABLE_CATALOG = new TableFieldImpl<TablesRecord, String>("TABLE_CATALOG", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_CATALOG = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "TABLE_CATALOG", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> TABLE_SCHEMA = new TableFieldImpl<TablesRecord, String>("TABLE_SCHEMA", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_SCHEMA = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "TABLE_SCHEMA", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> TABLE_NAME = new TableFieldImpl<TablesRecord, String>("TABLE_NAME", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_NAME = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "TABLE_NAME", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> TABLE_TYPE = new TableFieldImpl<TablesRecord, String>("TABLE_TYPE", String.class, TABLES);
+	public static final TableField<TablesRecord, String> TABLE_TYPE = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "TABLE_TYPE", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> SELF_REFERENCING_COLUMN_NAME = new TableFieldImpl<TablesRecord, String>("SELF_REFERENCING_COLUMN_NAME", String.class, TABLES);
+	public static final TableField<TablesRecord, String> SELF_REFERENCING_COLUMN_NAME = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "SELF_REFERENCING_COLUMN_NAME", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> REFERENCE_GENERATION = new TableFieldImpl<TablesRecord, String>("REFERENCE_GENERATION", String.class, TABLES);
+	public static final TableField<TablesRecord, String> REFERENCE_GENERATION = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "REFERENCE_GENERATION", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_CATALOG = new TableFieldImpl<TablesRecord, String>("USER_DEFINED_TYPE_CATALOG", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_CATALOG = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "USER_DEFINED_TYPE_CATALOG", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_SCHEMA = new TableFieldImpl<TablesRecord, String>("USER_DEFINED_TYPE_SCHEMA", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_SCHEMA = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "USER_DEFINED_TYPE_SCHEMA", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_NAME = new TableFieldImpl<TablesRecord, String>("USER_DEFINED_TYPE_NAME", String.class, TABLES);
+	public static final TableField<TablesRecord, String> USER_DEFINED_TYPE_NAME = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "USER_DEFINED_TYPE_NAME", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> IS_INSERTABLE_INTO = new TableFieldImpl<TablesRecord, String>("IS_INSERTABLE_INTO", String.class, TABLES);
+	public static final TableField<TablesRecord, String> IS_INSERTABLE_INTO = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "IS_INSERTABLE_INTO", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> IS_TYPED = new TableFieldImpl<TablesRecord, String>("IS_TYPED", String.class, TABLES);
+	public static final TableField<TablesRecord, String> IS_TYPED = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "IS_TYPED", String.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, String> COMMIT_ACTION = new TableFieldImpl<TablesRecord, String>("COMMIT_ACTION", String.class, TABLES);
+	public static final TableField<TablesRecord, String> COMMIT_ACTION = new TableFieldImpl<TablesRecord, String>(SQLDialect.HSQLDB, "COMMIT_ACTION", String.class, TABLES);
 
 	/**
 	 * No further instances allowed
 	 */
 	private Tables() {
-		super("TABLES", InformationSchema.INFORMATION_SCHEMA);
+		super(SQLDialect.HSQLDB, "TABLES", InformationSchema.INFORMATION_SCHEMA);
 	}
 
 }

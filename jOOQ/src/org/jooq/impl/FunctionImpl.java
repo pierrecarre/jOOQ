@@ -36,9 +36,9 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -49,8 +49,8 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
 
     private final List<NamedQueryPart> arguments;
 
-    FunctionImpl(String name, Class<? extends T> type, NamedQueryPart... arguments) {
-        super(name, type);
+    FunctionImpl(SQLDialect dialect, String name, Class<? extends T> type, NamedQueryPart... arguments) {
+        super(dialect, name, type);
 
         this.arguments = Arrays.asList(arguments);
     }
@@ -81,7 +81,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
     }
 
     private String getArgumentListDelimiterStart() {
-        switch (Configuration.getInstance().getDialect()) {
+        switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
             case POSTGRES:
@@ -97,7 +97,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
     }
 
     private String getArgumentListDelimiterEnd() {
-        switch (Configuration.getInstance().getDialect()) {
+        switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
             case POSTGRES:

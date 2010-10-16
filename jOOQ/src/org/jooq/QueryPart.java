@@ -103,4 +103,10 @@ public interface QueryPart extends Serializable {
      */
     int bind(PreparedStatement stmt, int initialIndex) throws SQLException;
 
+    /**
+     * Reproduce the SQL dialect this QueryPart was created with
+     *
+     * @return The SQL dialect
+     */
+    SQLDialect getDialect();
 }

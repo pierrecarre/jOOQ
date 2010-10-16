@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Parameter;
+import org.jooq.SQLDialect;
 import org.jooq.StoredProcedure;
 
 /**
@@ -54,8 +55,9 @@ public class StoredProcedureImpl extends AbstractStoredObject implements StoredP
 
     private Map<Parameter<?>, Object> results;
 
-    public StoredProcedureImpl(String name) {
-        super(name);
+    public StoredProcedureImpl(SQLDialect dialect, String name) {
+        super(dialect, name);
+
         this.allParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
     }

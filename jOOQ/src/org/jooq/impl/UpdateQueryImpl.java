@@ -39,6 +39,7 @@ import java.util.Collection;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -52,16 +53,16 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     private static final long           serialVersionUID = -660460731970074719L;
     private final ConditionProviderImpl condition;
 
-    UpdateQueryImpl(Table<R> table) {
-        super(table);
+    UpdateQueryImpl(Configuration configuration, Table<R> table) {
+        super(configuration, table);
 
-        this.condition = new ConditionProviderImpl();
+        this.condition = new ConditionProviderImpl(configuration.getDialect());
     }
 
-    UpdateQueryImpl(Table<R> table, R record) {
-        super(table, record);
+    UpdateQueryImpl(Configuration configuration, Table<R> table, R record) {
+        super(configuration, table, record);
 
-        this.condition = new ConditionProviderImpl();
+        this.condition = new ConditionProviderImpl(configuration.getDialect());
     }
 
     @Override

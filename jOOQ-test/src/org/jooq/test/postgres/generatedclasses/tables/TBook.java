@@ -4,6 +4,7 @@
 package org.jooq.test.postgres.generatedclasses.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
@@ -41,40 +42,40 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>("id", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.POSTGRES, "id", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
 	 */
-	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>("author_id", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.POSTGRES, "author_id", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>("title", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> TITLE = new TableFieldImpl<TBookRecord, String>(SQLDialect.POSTGRES, "title", String.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TBookRecord, Integer> PUBLISHED_IN = new TableFieldImpl<TBookRecord, Integer>("published_in", Integer.class, T_BOOK);
+	public static final TableField<TBookRecord, Integer> PUBLISHED_IN = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.POSTGRES, "published_in", Integer.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TBookRecord, String> CONTENT_TEXT = new TableFieldImpl<TBookRecord, String>("content_text", String.class, T_BOOK);
+	public static final TableField<TBookRecord, String> CONTENT_TEXT = new TableFieldImpl<TBookRecord, String>(SQLDialect.POSTGRES, "content_text", String.class, T_BOOK);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>("content_pdf", byte[].class, T_BOOK);
+	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>(SQLDialect.POSTGRES, "content_pdf", byte[].class, T_BOOK);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("t_book", Public.PUBLIC);
+		super(SQLDialect.POSTGRES, "t_book", Public.PUBLIC);
 	}
 
 	/*

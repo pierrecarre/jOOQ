@@ -38,6 +38,7 @@ import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Value;
 
 /**
@@ -50,11 +51,18 @@ public class RecordImpl implements Record {
      */
     private static final long       serialVersionUID = -6052512608911220404L;
 
+    private final SQLDialect        dialect;
     private final FieldProvider     fields;
     private Map<Field<?>, Value<?>> values;
 
-    public RecordImpl(FieldProvider fields) {
+    public RecordImpl(SQLDialect dialect, FieldProvider fields) {
+        this.dialect = dialect;
         this.fields = fields;
+    }
+
+    @Override
+    public SQLDialect getDialect() {
+        return dialect;
     }
 
     FieldProvider getMetaData() {

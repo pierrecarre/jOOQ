@@ -30,20 +30,30 @@
  */
 package org.jooq.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.QueryPart;
+import javax.sql.DataSource;
 
-abstract class AbstractDelegatingQueryPart extends AbstractQueryPart {
+import org.jooq.Configuration;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.ResultProviderQuery;
+import org.jooq.SQLDialect;
+
+abstract class AbstractDelegatingResultProviderQuery<R extends Record> extends AbstractQueryPart implements
+    ResultProviderQuery<R> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 3382400928803573548L;
-    private final QueryPart   delegate;
+    private static final long            serialVersionUID = 3382400928803573548L;
+    private final ResultProviderQuery<R> delegate;
 
-    AbstractDelegatingQueryPart(QueryPart delegate) {
+    AbstractDelegatingResultProviderQuery(SQLDialect dialect, ResultProviderQuery<R> delegate) {
+        super(dialect);
+
         this.delegate = delegate;
     }
 
@@ -60,5 +70,30 @@ abstract class AbstractDelegatingQueryPart extends AbstractQueryPart {
     @Override
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         return delegate.bind(stmt, initialIndex);
+    }
+
+    @Override
+    public final Result<R> getResult() {
+        return delegate.getResult();
+    }
+
+    @Override
+    public final int execute() throws SQLException {
+        return delegate.execute();
+    }
+
+    @Override
+    public final int execute(DataSource source) throws SQLException {
+        return delegate.execute(source);
+    }
+
+    @Override
+    public final int execute(Connection connection) throws SQLException {
+        return delegate.execute(connection);
+    }
+
+    @Override
+    public final Configuration getConfiguration() {
+        return delegate.getConfiguration();
     }
 }

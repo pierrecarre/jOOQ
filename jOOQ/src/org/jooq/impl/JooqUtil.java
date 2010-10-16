@@ -43,15 +43,20 @@ final class JooqUtil {
     /**
      * Create a new record
      */
+    @SuppressWarnings("unchecked")
     static <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
-        try {
-            return type.getConstructor(FieldProvider.class).newInstance(provider);
+        if (type == RecordImpl.class) {
+            return (R) new RecordImpl(provider.getDialect(), provider);
         }
-        catch (Exception e) {
-            throw new IllegalStateException(
-                "Record type does not provide a constructor with signature Record(FieldProvider) : " + type
-                    + ". Exception : " + e.getMessage());
+        else {
+            try {
+                return type.getConstructor(FieldProvider.class).newInstance(provider);
+            }
+            catch (Exception e) {
+                throw new IllegalStateException(
+                    "Record type does not provide a constructor with signature Record(FieldProvider) : " + type
+                        + ". Exception : " + e.getMessage());
+            }
         }
-
     }
 }

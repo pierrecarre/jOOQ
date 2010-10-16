@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
@@ -152,6 +153,6 @@ public class TableConstraintsRecord extends TableRecordImpl<TableConstraintsReco
 	}
 
 	public TableConstraintsRecord() {
-		super(TableConstraints.TABLE_CONSTRAINTS);
+		super(SQLDialect.POSTGRES, TableConstraints.TABLE_CONSTRAINTS);
 	}
 }

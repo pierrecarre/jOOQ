@@ -5,6 +5,7 @@ package org.jooq.util.postgres.information_schema.tables.records;
 
 
 import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.ConstraintColumnUsage;
@@ -124,6 +125,6 @@ public class ConstraintColumnUsageRecord extends TableRecordImpl<ConstraintColum
 	}
 
 	public ConstraintColumnUsageRecord() {
-		super(ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
+		super(SQLDialect.POSTGRES, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
 	}
 }

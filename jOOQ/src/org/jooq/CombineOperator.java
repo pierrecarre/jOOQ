@@ -66,9 +66,9 @@ public enum CombineOperator {
         this.sql = sql;
     }
 
-    public String toSQL() {
+    public String toSQL(SQLDialect dialect) {
         if (this == EXCEPT) {
-            if (Configuration.getInstance().getDialect() == SQLDialect.ORACLE) {
+            if (dialect == SQLDialect.ORACLE) {
                 return "minus";
             }
         }

@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.NamedTypeProviderQueryPart;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -45,8 +46,8 @@ abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryP
     private static final long        serialVersionUID = -9087742153758783482L;
     private final Class<? extends T> type;
 
-    AbstractNamedTypeProviderQueryPart(String name, Class<? extends T> type) {
-        super(name);
+    AbstractNamedTypeProviderQueryPart(SQLDialect dialect, String name, Class<? extends T> type) {
+        super(dialect, name);
 
         this.type = type;
     }

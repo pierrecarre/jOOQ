@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 
 import org.jooq.Condition;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -53,5 +54,7 @@ public class FalseCondition extends AbstractCondition implements Condition {
         return "1 = 0";
     }
 
-    private FalseCondition() {}
+    private FalseCondition() {
+        super(SQLDialect.SQL99);
+    }
 }

@@ -4,6 +4,7 @@
 package org.jooq.test.mysql.generatedclasses;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -23,6 +24,6 @@ public class Test extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Test() {
-		super("test");
+		super(SQLDialect.MYSQL, "test");
 	}
 }

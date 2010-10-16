@@ -35,16 +35,12 @@ import static org.jooq.CombineOperator.INTERSECT;
 import static org.jooq.CombineOperator.UNION;
 import static org.jooq.CombineOperator.UNION_ALL;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collection;
 
-import javax.sql.DataSource;
-
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelect;
@@ -61,7 +57,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class SimpleSelectImpl<R extends Record> extends AbstractDelegatingQueryPart implements
+class SimpleSelectImpl<R extends Record> extends AbstractDelegatingResultProviderQuery<R> implements
 
     // Cascading interface implementations for SimpleSelect behaviour
     SimpleSelect<R>, SimpleSelectStep<R>,
@@ -77,16 +73,16 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingQueryPart imp
      */
     private final SimpleSelectQuery<R> query;
 
-    SimpleSelectImpl() {
-        this(new SimpleSelectQueryImpl<R>());
+    SimpleSelectImpl(Configuration configuration) {
+        this(configuration, new SimpleSelectQueryImpl<R>(configuration));
     }
 
-    SimpleSelectImpl(Table<R> table) {
-        this(new SimpleSelectQueryImpl<R>(table));
+    SimpleSelectImpl(Configuration configuration, Table<R> table) {
+        this(configuration, new SimpleSelectQueryImpl<R>(configuration, table));
     }
 
-    SimpleSelectImpl(SimpleSelectQuery<R> query) {
-        super(query);
+    SimpleSelectImpl(Configuration configuration, SimpleSelectQuery<R> query) {
+        super(configuration.getDialect(), query);
 
         this.query = query;
     }
@@ -135,42 +131,27 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingQueryPart imp
 
     @Override
     public SimpleSelect<R> union(SimpleSelect<R> select) {
-        return new SimpleSelectImpl<R>(query.combine(UNION, select.getQuery()));
+        return new SimpleSelectImpl<R>(query.getConfiguration(), query.combine(UNION, select.getQuery()));
     }
 
     @Override
     public SimpleSelect<R> unionAll(SimpleSelect<R> select) {
-        return new SimpleSelectImpl<R>(query.combine(UNION_ALL, select.getQuery()));
+        return new SimpleSelectImpl<R>(query.getConfiguration(), query.combine(UNION_ALL, select.getQuery()));
     }
 
     @Override
     public SimpleSelect<R> except(SimpleSelect<R> select) {
-        return new SimpleSelectImpl<R>(query.combine(EXCEPT, select.getQuery()));
+        return new SimpleSelectImpl<R>(query.getConfiguration(), query.combine(EXCEPT, select.getQuery()));
     }
 
     @Override
     public SimpleSelect<R> intersect(SimpleSelect<R> select) {
-        return new SimpleSelectImpl<R>(query.combine(INTERSECT, select.getQuery()));
+        return new SimpleSelectImpl<R>(query.getConfiguration(), query.combine(INTERSECT, select.getQuery()));
     }
 
     @Override
     public SimpleSelectQuery<R> getQuery() {
         return query;
-    }
-
-    @Override
-    public Result<R> getResult() {
-        return query.getResult();
-    }
-
-    @Override
-    public int execute(DataSource source) throws SQLException {
-        return query.execute(source);
-    }
-
-    @Override
-    public int execute(Connection connection) throws SQLException {
-        return query.execute(connection);
     }
 
     @Override

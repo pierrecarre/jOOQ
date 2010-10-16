@@ -36,6 +36,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.SQLDialect;
+
 /**
  * A base implementation for all types of databases.
  *
@@ -55,6 +57,11 @@ public abstract class AbstractDatabase implements Database {
 	private Relations relations;
 
 	@Override
+    public final SQLDialect getDialect() {
+        return create().getDialect();
+    }
+
+    @Override
 	public final void setConnection(Connection connection) {
 		this.connection = connection;
 	}

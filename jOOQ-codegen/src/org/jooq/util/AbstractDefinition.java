@@ -33,6 +33,8 @@ package org.jooq.util;
 
 import java.sql.Connection;
 
+import org.jooq.impl.Factory;
+
 /**
  * A base implementation for any type of definition.
  *
@@ -137,5 +139,10 @@ public abstract class AbstractDefinition implements Definition {
 	@Override
 	public int hashCode() {
 		return getQualifiedName().hashCode();
+	}
+
+	@Override
+    public final Factory create() {
+	    return database.create();
 	}
 }

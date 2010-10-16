@@ -30,6 +30,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
@@ -43,16 +44,16 @@ class SimpleSelectQueryImpl<R extends Record>
      */
     private static final long serialVersionUID = 3200508777418108686L;
 
-    SimpleSelectQueryImpl() {
-        this(null);
+    SimpleSelectQueryImpl(Configuration configuration) {
+        this(configuration, null);
     }
 
-    SimpleSelectQueryImpl(Table<R> from) {
-        super(from);
+    SimpleSelectQueryImpl(Configuration configuration, Table<R> from) {
+        super(configuration, from);
     }
 
     @Override
     final SimpleSelectQuery<R> newSelect(Table<R> from) {
-        return new SimpleSelectQueryImpl<R>(from);
+        return new SimpleSelectQueryImpl<R>(getConfiguration(), from);
     }
 }

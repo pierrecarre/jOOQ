@@ -4,6 +4,7 @@
 package org.jooq.util.postgres.information_schema.tables;
 
 
+import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -39,228 +40,228 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_CATALOG = new TableFieldImpl<ColumnsRecord, String>("table_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "table_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("table_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "table_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> TABLE_NAME = new TableFieldImpl<ColumnsRecord, String>("table_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> TABLE_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "table_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_NAME = new TableFieldImpl<ColumnsRecord, String>("column_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "column_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>("ordinal_position", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "ordinal_position", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLUMN_DEFAULT = new TableFieldImpl<ColumnsRecord, String>("column_default", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLUMN_DEFAULT = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "column_default", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_NULLABLE = new TableFieldImpl<ColumnsRecord, String>("is_nullable", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_NULLABLE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "is_nullable", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DATA_TYPE = new TableFieldImpl<ColumnsRecord, String>("data_type", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DATA_TYPE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "data_type", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("character_maximum_length", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "character_maximum_length", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>("character_octet_length", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "character_octet_length", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>("numeric_precision", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "numeric_precision", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION_RADIX = new TableFieldImpl<ColumnsRecord, Integer>("numeric_precision_radix", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION_RADIX = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "numeric_precision_radix", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>("numeric_scale", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "numeric_scale", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> DATETIME_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>("datetime_precision", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> DATETIME_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "datetime_precision", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> INTERVAL_TYPE = new TableFieldImpl<ColumnsRecord, String>("interval_type", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> INTERVAL_TYPE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "interval_type", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> INTERVAL_PRECISION = new TableFieldImpl<ColumnsRecord, String>("interval_precision", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> INTERVAL_PRECISION = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "interval_precision", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> CHARACTER_SET_CATALOG = new TableFieldImpl<ColumnsRecord, String>("character_set_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "character_set_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> CHARACTER_SET_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("character_set_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "character_set_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<ColumnsRecord, String>("character_set_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> CHARACTER_SET_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "character_set_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLLATION_CATALOG = new TableFieldImpl<ColumnsRecord, String>("collation_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "collation_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLLATION_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("collation_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "collation_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> COLLATION_NAME = new TableFieldImpl<ColumnsRecord, String>("collation_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> COLLATION_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "collation_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DOMAIN_CATALOG = new TableFieldImpl<ColumnsRecord, String>("domain_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "domain_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DOMAIN_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("domain_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "domain_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DOMAIN_NAME = new TableFieldImpl<ColumnsRecord, String>("domain_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DOMAIN_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "domain_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> UDT_CATALOG = new TableFieldImpl<ColumnsRecord, String>("udt_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "udt_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> UDT_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("udt_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "udt_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> UDT_NAME = new TableFieldImpl<ColumnsRecord, String>("udt_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> UDT_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "udt_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> SCOPE_CATALOG = new TableFieldImpl<ColumnsRecord, String>("scope_catalog", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_CATALOG = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "scope_catalog", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> SCOPE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>("scope_schema", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_SCHEMA = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "scope_schema", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> SCOPE_NAME = new TableFieldImpl<ColumnsRecord, String>("scope_name", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> SCOPE_NAME = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "scope_name", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> MAXIMUM_CARDINALITY = new TableFieldImpl<ColumnsRecord, Integer>("maximum_cardinality", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Integer> MAXIMUM_CARDINALITY = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.POSTGRES, "maximum_cardinality", Integer.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> DTD_IDENTIFIER = new TableFieldImpl<ColumnsRecord, String>("dtd_identifier", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> DTD_IDENTIFIER = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "dtd_identifier", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_SELF_REFERENCING = new TableFieldImpl<ColumnsRecord, String>("is_self_referencing", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_SELF_REFERENCING = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "is_self_referencing", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_IDENTITY = new TableFieldImpl<ColumnsRecord, String>("is_identity", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_IDENTITY = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "is_identity", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_GENERATION = new TableFieldImpl<ColumnsRecord, String>("identity_generation", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_GENERATION = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_generation", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_START = new TableFieldImpl<ColumnsRecord, String>("identity_start", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_START = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_start", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_INCREMENT = new TableFieldImpl<ColumnsRecord, String>("identity_increment", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_INCREMENT = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_increment", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_MAXIMUM = new TableFieldImpl<ColumnsRecord, String>("identity_maximum", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_MAXIMUM = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_maximum", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_MINIMUM = new TableFieldImpl<ColumnsRecord, String>("identity_minimum", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_MINIMUM = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_minimum", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IDENTITY_CYCLE = new TableFieldImpl<ColumnsRecord, String>("identity_cycle", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IDENTITY_CYCLE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "identity_cycle", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_GENERATED = new TableFieldImpl<ColumnsRecord, String>("is_generated", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_GENERATED = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "is_generated", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> GENERATION_EXPRESSION = new TableFieldImpl<ColumnsRecord, String>("generation_expression", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> GENERATION_EXPRESSION = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "generation_expression", String.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, String> IS_UPDATABLE = new TableFieldImpl<ColumnsRecord, String>("is_updatable", String.class, COLUMNS);
+	public static final TableField<ColumnsRecord, String> IS_UPDATABLE = new TableFieldImpl<ColumnsRecord, String>(SQLDialect.POSTGRES, "is_updatable", String.class, COLUMNS);
 
 	/**
 	 * No further instances allowed
 	 */
 	private Columns() {
-		super("columns", InformationSchema.INFORMATION_SCHEMA);
+		super(SQLDialect.POSTGRES, "columns", InformationSchema.INFORMATION_SCHEMA);
 	}
 
 }

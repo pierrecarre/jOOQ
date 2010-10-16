@@ -32,6 +32,7 @@
 package org.jooq.impl;
 
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -40,7 +41,7 @@ class StringFunction extends FunctionImpl<String> {
 
     private static final long serialVersionUID = 615059858963131774L;
 
-    StringFunction(String name, Field<?>... fields) {
-        super(name, String.class, fields);
+    StringFunction(SQLDialect dialect, String name, Field<?>... fields) {
+        super(dialect, name, String.class, fields);
     }
 }

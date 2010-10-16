@@ -33,8 +33,8 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.Configuration;
 import org.jooq.Limit;
+import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 
 /**
@@ -49,7 +49,9 @@ class LimitImpl extends AbstractQueryPart implements Limit {
     private int               lowerBound;
     private int               numberOfRows;
 
-    LimitImpl() {
+    LimitImpl(SQLDialect dialect) {
+        super(dialect);
+
         lowerBound = 1;
 
         // such that getUpperBound() == Integer.MAX_VALUE
@@ -60,7 +62,7 @@ class LimitImpl extends AbstractQueryPart implements Limit {
     public final String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        switch (Configuration.getInstance().getDialect()) {
+        switch (getDialect()) {
             case MYSQL: {
                 sb.append("limit ");
                 sb.append(getLowerBound());

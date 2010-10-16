@@ -33,6 +33,8 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.SQLDialect;
+
 class PlainSQLCondition extends AbstractCondition {
 
     /**
@@ -42,10 +44,12 @@ class PlainSQLCondition extends AbstractCondition {
     private final String      sql;
     private final Object[]    bindings;
 
-    PlainSQLCondition(String sql, Object[] bindings) {
+    PlainSQLCondition(SQLDialect dialect, String sql, Object[] bindings) {
+        super(dialect);
+
         this.sql = sql;
         this.bindings = (bindings == null) ? new Object[0] : bindings;
-        
+
         PlainSQLField.checkArguments(sql, bindings);
     }
 
