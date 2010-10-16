@@ -35,9 +35,6 @@ import static org.jooq.impl.EmptyTable.EMPTY_TABLE;
 
 import java.util.List;
 
-import org.jooq.Field;
-import org.jooq.FieldList;
-import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableList;
 
@@ -59,50 +56,5 @@ class TableListImpl extends AbstractQueryPartList<Table<?>> implements TableList
     @Override
     protected String toSQLEmptyList() {
         return EMPTY_TABLE.toSQLReference();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> Field<T> getField(Field<T> field) {
-        return (Field<T>) getField(field.getName());
-    }
-
-    @Override
-    public Field<?> getField(String name) {
-        for (Table<?> table : this) {
-            Field<?> result = table.getField(name);
-
-            if (result != null) {
-                return result;
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public FieldList getFields() {
-        FieldList result = new FieldListImpl();
-
-        for (Table<?> table : this) {
-            result.addAll(table.getFields());
-        }
-
-        return result;
-    }
-
-    @Override
-    public Class<? extends Record> getRecordType() {
-        if (size() == 1) {
-            return get(0).getRecordType();
-        }
-        else {
-            return RecordImpl.class;
-        }
-    }
-
-    @Override
-    public Record newRecord() {
-        return JooqUtil.newRecord(getRecordType(), getFields());
     }
 }

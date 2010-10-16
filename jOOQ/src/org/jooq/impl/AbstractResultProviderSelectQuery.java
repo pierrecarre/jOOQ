@@ -212,7 +212,12 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     @SuppressWarnings("unchecked")
     @Override
     public final Class<? extends R> getRecordType() {
-        return (Class<? extends R>) getTables().getRecordType();
+        if (getTables().size() == 1) {
+            return (Class<? extends R>) getTables().get(0).getRecordType();
+        }
+        else {
+            return (Class<? extends R>) RecordImpl.class;
+        }
     }
 
     @Override
