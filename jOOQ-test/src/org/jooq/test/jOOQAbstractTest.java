@@ -469,5 +469,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
         assertEquals(Integer.valueOf(3), r1.getValue(position));
         assertEquals(Integer.valueOf(5), r2.getValue(position));
+
+        // Implicit check on the rownum function in oracle dialect
+        L library = create().manager().selectAny(getVLibrary());
+        assertTrue(library != null);
     }
 }

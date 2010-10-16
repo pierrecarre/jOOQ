@@ -40,10 +40,12 @@ import java.util.Collection;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryProvider;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelect;
+import org.jooq.SimpleSelectLimitStep;
 import org.jooq.SimpleSelectOrderByStep;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.SimpleSelectStep;
@@ -61,7 +63,8 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingResultProvide
 
     // Cascading interface implementations for SimpleSelect behaviour
     SimpleSelect<R>, SimpleSelectStep<R>,
-    SimpleSelectWhereStep<R>, SimpleSelectOrderByStep<R> {
+    SimpleSelectWhereStep<R>, SimpleSelectOrderByStep<R>,
+    SimpleSelectLimitStep<R> {
 
     /**
      * Generated UID
@@ -130,6 +133,18 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingResultProvide
     }
 
     @Override
+    public QueryProvider<SimpleSelectQuery<R>> limit(int numberOfRows) {
+        query.addLimit(numberOfRows);
+        return this;
+    }
+
+    @Override
+    public QueryProvider<SimpleSelectQuery<R>> limit(int lowerBound, int numberOfRows) {
+        query.addLimit(lowerBound, numberOfRows);
+        return this;
+    }
+
+   @Override
     public SimpleSelect<R> union(SimpleSelect<R> select) {
         return new SimpleSelectImpl<R>(query.getConfiguration(), query.combine(UNION, select.getQuery()));
     }

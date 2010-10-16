@@ -30,51 +30,37 @@
  */
 package org.jooq;
 
-import java.util.Collection;
-
 /**
- * The order by clause step in a {@link SimpleSelect} query
+ * The limit clause in a {@link SimpleSelect} query
  * <p>
- * This is the step in query construction, where you can add a order by clause
- * to a query. This step is optional. you can proceed to the optional
- * {@link SimpleSelectLimitStep}.
+ * This is the final step in query construction, where you can add a limit
+ * clause to a query. This step is optional. You cannot proceed any further from
+ * this clause
  *
  * @author Lukas Eder
  */
-public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectLimitStep<R> {
+public interface SimpleSelectLimitStep<R extends Record> extends QueryProvider<SimpleSelectQuery<R>> {
 
     /**
-     * Add an order by clause to the query.
+     * Limit the results of this select
+     * <p>
+     * This is the same as calling {@link #limit(int, int)} with lowerBound =
+     * 1
+     *
+     * @param numberOfRows The number of rows to return
      */
-    SimpleSelectOrderByStep<R> orderBy(Field<?>... fields);
+    QueryProvider<SimpleSelectQuery<R>> limit(int numberOfRows);
 
     /**
-     * Add an order by clause to the query.
+     * Limit the results of this select
+     *
+     * @param lowerBound The lowest rownum starting at 1
+     * @param numberOfRows The number of rows to return
      */
-    SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields);
+    QueryProvider<SimpleSelectQuery<R>> limit(int lowerBound, int numberOfRows);
 
     /**
-     * Add an order by clause to the query.
+     * Return this as a {@link SimpleSelect} object
      */
-    SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> union(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> unionAll(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> except(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> intersect(SimpleSelect<R> select);
+    SimpleSelect<R> getSelect();
 }

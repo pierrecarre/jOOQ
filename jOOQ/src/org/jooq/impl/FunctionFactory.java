@@ -79,6 +79,13 @@ public final class FunctionFactory {
     }
 
     /**
+     * Retrieve the rownum pseudo-field
+     */
+    public Field<Integer> rownum() {
+        return new FieldImpl<Integer>(getDialect(), "rownum", Integer.class);
+    }
+
+    /**
      * Get the sum over a numeric field: sum(field)
      */
     public <T extends Number> Field<T> sum(Field<T> field) {

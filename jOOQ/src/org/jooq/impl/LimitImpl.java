@@ -63,13 +63,21 @@ class LimitImpl extends AbstractQueryPart implements Limit {
         StringBuilder sb = new StringBuilder();
 
         switch (getDialect()) {
-            case MYSQL: {
+            case MYSQL:
                 sb.append("limit ");
                 sb.append(getLowerBound());
                 sb.append(", ");
                 sb.append(getNumberOfRows());
                 break;
-            }
+
+            case HSQLDB: // No break
+            case POSTGRES:
+                sb.append("limit ");
+                sb.append(getLowerBound());
+                sb.append(" offset ");
+                sb.append(getNumberOfRows());
+                break;
+
             default:
                 throw new SQLDialectNotSupportedException("LIMIT not supported");
         }

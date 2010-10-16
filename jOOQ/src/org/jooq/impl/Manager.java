@@ -35,11 +35,13 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.DeleteQuery;
+import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
+import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.SimpleSelect;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdateQuery;
 
@@ -63,19 +65,19 @@ public final class Manager {
         return select.getResult().getRecords();
     }
 
-    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+    public <R extends Record, T> List<R> select(Table<R> table, Field<T> field, T value) throws SQLException {
         SimpleSelect<R> select = factory.select(table).where(field.equal(value)).getSelect();
         select.execute();
         return select.getResult().getRecords();
     }
 
-    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, T... values) throws SQLException {
+    public <R extends Record, T> List<R> select(Table<R> table, Field<T> field, T... values) throws SQLException {
         SimpleSelect<R> select = factory.select(table).where(field.in(values)).getSelect();
         select.execute();
         return select.getResult().getRecords();
     }
 
-    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
+    public <R extends Record, T> List<R> select(Table<R> table, Field<T> field, Collection<T> values) throws SQLException {
         SimpleSelect<R> select = factory.select(table).where(field.in(values)).getSelect();
         select.execute();
         return select.getResult().getRecords();
@@ -85,8 +87,25 @@ public final class Manager {
         return filterOne(select(table));
     }
 
-    public <R extends Record, T> R selectOne(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+    public <R extends Record, T> R selectOne(Table<R> table, Field<T> field, T value) throws SQLException {
         return filterOne(select(table, field, value));
+    }
+
+    public <R extends Record> R selectAny(Table<R> table) throws SQLException {
+        switch (factory.getDialect()) {
+            case HSQLDB: // No break
+            case MYSQL:  // No break
+            case POSTGRES:
+                SimpleSelectQuery<R> select = factory.select(table).limit(1).getQuery();
+                select.execute();
+                return filterOne(select.getResult().getRecords());
+
+            case ORACLE:
+                return filterOne(select(table, factory.functions().rownum(), 1));
+
+            default:
+                throw new SQLDialectNotSupportedException("This operation is not supported by dialect " + factory.getDialect());
+        }
     }
 
     public <R extends TableRecord<R>> int insert(Table<R> table, R record) throws SQLException {
@@ -101,21 +120,21 @@ public final class Manager {
         return update.execute();
     }
 
-    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, Field<T> field, T value) throws SQLException {
         UpdateQuery<R> update = factory.updateQuery(table);
         update.addCompareCondition(field, value);
         update.setRecord(record);
         return update.execute();
     }
 
-    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, T... values) throws SQLException {
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, Field<T> field, T... values) throws SQLException {
         UpdateQuery<R> update = factory.updateQuery(table);
         update.addInCondition(field, values);
         update.setRecord(record);
         return update.execute();
     }
 
-    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, Collection<T> values) throws SQLException {
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, Field<T> field, Collection<T> values) throws SQLException {
         UpdateQuery<R> update = factory.updateQuery(table);
         update.addInCondition(field, values);
         update.setRecord(record);
@@ -126,7 +145,7 @@ public final class Manager {
         return filterUpdateOne(update(table, record));
     }
 
-    public <R extends TableRecord<R>, T> int updateOne(Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
+    public <R extends TableRecord<R>, T> int updateOne(Table<R> table, R record, Field<T> field, T value) throws SQLException {
         return filterUpdateOne(update(table, record, field, value));
     }
 
@@ -134,19 +153,19 @@ public final class Manager {
         return factory.deleteQuery(table).execute();
     }
 
-    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, Field<T> field, T value) throws SQLException {
         DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addCompareCondition(field, value);
         return delete.execute();
     }
 
-    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, T... values) throws SQLException {
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, Field<T> field, T... values) throws SQLException {
         DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addInCondition(field, values);
         return delete.execute();
     }
 
-    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, Field<T> field, Collection<T> values) throws SQLException {
         DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addInCondition(field, values);
         return delete.execute();
@@ -156,7 +175,7 @@ public final class Manager {
         return filterDeleteOne(factory.deleteQuery(table).execute());
     }
 
-    public <R extends TableRecord<R>, T> int deleteOne(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+    public <R extends TableRecord<R>, T> int deleteOne(Table<R> table, Field<T> field, T value) throws SQLException {
         DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addCompareCondition(field, value);
         return filterDeleteOne(delete.execute());
