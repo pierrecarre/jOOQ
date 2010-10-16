@@ -133,7 +133,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this = field</code>
      */
-    JoinCondition<T> equal(Field<T> field);
+    Condition equal(Field<T> field);
 
     /**
      * @return <code>this = (ResultProviderSelectQuery<?, ?> ...)</code>
@@ -163,7 +163,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this != field</code>
      */
-    JoinCondition<T> notEqual(Field<T> field);
+    Condition notEqual(Field<T> field);
 
     /**
      * @return <code>this != (ResultProviderSelectQuery<?, ?> ...)</code>
@@ -193,7 +193,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this < field</code>
      */
-    JoinCondition<T> lessThan(Field<T> field);
+    Condition lessThan(Field<T> field);
 
     /**
      * @return <code>this < (ResultProviderSelectQuery<?, ?> ...)</code>
@@ -223,7 +223,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this <= field</code>
      */
-    JoinCondition<T> lessOrEqual(Field<T> field);
+    Condition lessOrEqual(Field<T> field);
 
     /**
      * @return <code>this <= (ResultProviderSelectQuery<?, ?> ...)</code>
@@ -253,7 +253,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this > field</code>
      */
-    JoinCondition<T> greaterThan(Field<T> field);
+    Condition greaterThan(Field<T> field);
 
     /**
      * @return <code>this > (ResultProviderSelectQuery<?, ?> ...)</code>
@@ -283,7 +283,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this >= field</code>
      */
-    JoinCondition<T> greaterOrEqual(Field<T> field);
+    Condition greaterOrEqual(Field<T> field);
 
     /**
      * @return <code>this >= (ResultProviderSelectQuery<?, ?> ...)</code>

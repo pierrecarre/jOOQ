@@ -50,7 +50,6 @@ import org.jooq.InCondition;
 import org.jooq.InOperator;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
-import org.jooq.JoinCondition;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
@@ -393,7 +392,7 @@ public final class Factory implements Configuration {
      * @param field2 The second field
      * @return A {@link JoinCondition}
      */
-    public <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2) {
+    public <T> Condition joinCondition(Field<T> field1, Field<T> field2) {
         return joinCondition(field1, field2, Comparator.EQUALS);
     }
 
@@ -406,7 +405,7 @@ public final class Factory implements Configuration {
      * @param comparator The comparator to compare the two fields with
      * @return A {@link JoinCondition}
      */
-    public <T> JoinCondition<T> joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
+    public <T> Condition joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
         return new JoinConditionImpl<T>(dialect, field1, field2);
     }
 

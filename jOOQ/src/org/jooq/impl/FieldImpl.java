@@ -38,10 +38,10 @@ import java.util.Collection;
 import org.jooq.BetweenCondition;
 import org.jooq.Comparator;
 import org.jooq.CompareCondition;
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.FieldCondition;
 import org.jooq.InCondition;
-import org.jooq.JoinCondition;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SubQueryCondition;
@@ -138,7 +138,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> equal(Field<T> field) {
+    public Condition equal(Field<T> field) {
         return create().joinCondition(this, field);
     }
 
@@ -168,7 +168,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> notEqual(Field<T> field) {
+    public Condition notEqual(Field<T> field) {
         return create().joinCondition(this, field, Comparator.NOT_EQUALS);
     }
 
@@ -198,7 +198,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> lessThan(Field<T> field) {
+    public Condition lessThan(Field<T> field) {
         return create().joinCondition(this, field, Comparator.LESS);
     }
 
@@ -228,7 +228,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> lessOrEqual(Field<T> field) {
+    public Condition lessOrEqual(Field<T> field) {
         return create().joinCondition(this, field, Comparator.LESS_OR_EQUAL);
     }
 
@@ -258,7 +258,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> greaterThan(Field<T> field) {
+    public Condition greaterThan(Field<T> field) {
         return create().joinCondition(this, field, Comparator.GREATER);
     }
 
@@ -288,7 +288,7 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public JoinCondition<T> greaterOrEqual(Field<T> field) {
+    public Condition greaterOrEqual(Field<T> field) {
         return create().joinCondition(this, field, Comparator.GREATER_OR_EQUAL);
     }
 
