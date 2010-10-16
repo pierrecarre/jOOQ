@@ -39,7 +39,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.Factory;
@@ -178,27 +182,21 @@ public class jOOQMySQLTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord, 
 
     @Test
     public final void testFunction2() throws Exception {
-        // TODO
-        // StoredFunctions cannot be integrated with Functions yet, because
-        // Functions expect fields as parameters, whereas StoredFunctions expect
-        // constant values
+		FAuthorExists function1 = new FAuthorExists();
+		function1.setAuthorName("Paulo");
+		Field<Byte> f1 = function1.asField();
 
+		FAuthorExists function2 = new FAuthorExists();
+		function2.setAuthorName("Shakespeare");
+		Field<Byte> f2 = function2.asField();
 
-//		FAuthorExists function1 = new FAuthorExists();
-//		function1.setAuthorName("Paulo");
-//		Function<Byte> f1 = function1.getFunction();
-//
-//		FAuthorExists function2 = new FAuthorExists();
-//		function2.setAuthorName("Shakespeare");
-//		Function<Byte> f2 = function2.getFunction();
-//
-//		SelectQuery q = QueryFactory.createSelectQuery();
-//		q.addSelect(f1, f2);
-//		q.execute(connection);
-//		Result result = q.getResult();
-//
-//		assertEquals(1, result.getNumberOfRecords());
-//		assertEquals(1, (int) result.getRecord(0).getValue(f1));
-//		assertEquals(0, (int) result.getRecord(0).getValue(f2));
+		SelectQuery q = create().selectQuery();
+		q.addSelect(f1, f2);
+		q.execute();
+		Result<Record> result = q.getResult();
+
+		assertEquals(1, result.getNumberOfRecords());
+		assertEquals(1, (int) result.getRecord(0).getValue(f1));
+		assertEquals(0, (int) result.getRecord(0).getValue(f2));
     }
 }

@@ -35,9 +35,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.NamedQueryPart;
 import org.jooq.Parameter;
 import org.jooq.SQLDialect;
 import org.jooq.StoredFunction;
@@ -65,9 +67,9 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
     }
 
     @Override
-    public Field<T> getFunction() {
+    public Field<T> asField() {
         if (function == null) {
-            function = new FunctionImpl<T>(getDialect(), getName(), type, getParameters().toArray(new Parameter[0]));
+            function = new FunctionImpl<T>(getDialect(), getName(), type, getInValueParts().toArray(new NamedQueryPart[0]));
         }
 
         return function;
@@ -94,7 +96,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 
             rs = statement.executeQuery();
             if (rs.next()) {
-                result = FieldTypeHelper.getFromResultSet(rs, getFunction());
+                result = FieldTypeHelper.getFromResultSet(rs, asField());
             }
 
             return 0;
@@ -107,5 +109,15 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
     @Override
     public List<Parameter<?>> getParameters() {
         return getInParameters();
+    }
+
+    private List<? extends NamedQueryPart> getInValueParts() {
+        List<NamedQueryPart> list = new ArrayList<NamedQueryPart>();
+
+        for (Object o : getInValues().values()) {
+            list.add(create().functions().constant(o));
+        }
+
+        return list;
     }
 }
