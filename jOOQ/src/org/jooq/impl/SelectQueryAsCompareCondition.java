@@ -35,7 +35,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Comparator;
-import org.jooq.CompareCondition;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
@@ -43,7 +42,7 @@ import org.jooq.SelectQuery;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsCompareCondition<T> extends AbstractCondition implements CompareCondition<T> {
+class SelectQueryAsCompareCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -3125318907657091582L;
     private final SelectQuery query;

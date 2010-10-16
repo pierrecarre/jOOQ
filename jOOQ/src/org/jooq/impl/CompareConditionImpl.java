@@ -38,14 +38,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Comparator;
-import org.jooq.CompareCondition;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class CompareConditionImpl<T> extends AbstractCondition implements CompareCondition<T> {
+class CompareConditionImpl<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -6456616674773879690L;
 

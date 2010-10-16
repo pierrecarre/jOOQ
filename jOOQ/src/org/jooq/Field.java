@@ -67,22 +67,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this is null</code>
      */
-    CompareCondition<T> isNull();
+    Condition isNull();
 
     /**
      * @return <code>this is not null</code>
      */
-    CompareCondition<T> isNotNull();
+    Condition isNotNull();
 
     /**
      * @return <code>this like value</code>
      */
-    CompareCondition<T> like(T value);
+    Condition like(T value);
 
     /**
      * @return <code>this not like value</code>
      */
-    CompareCondition<T> notLike(T value);
+    Condition notLike(T value);
 
     /**
      * @return <code>this in (values...)</code>
@@ -128,7 +128,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this = value</code>
      */
-    CompareCondition<T> equal(T value);
+    Condition equal(T value);
 
     /**
      * @return <code>this = field</code>
@@ -158,7 +158,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this != value</code>
      */
-    CompareCondition<T> notEqual(T value);
+    Condition notEqual(T value);
 
     /**
      * @return <code>this != field</code>
@@ -188,7 +188,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this < value</code>
      */
-    CompareCondition<T> lessThan(T value);
+    Condition lessThan(T value);
 
     /**
      * @return <code>this < field</code>
@@ -218,7 +218,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this <= value</code>
      */
-    CompareCondition<T> lessOrEqual(T value);
+    Condition lessOrEqual(T value);
 
     /**
      * @return <code>this <= field</code>
@@ -248,7 +248,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this > value</code>
      */
-    CompareCondition<T> greaterThan(T value);
+    Condition greaterThan(T value);
 
     /**
      * @return <code>this > field</code>
@@ -278,7 +278,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this >= value</code>
      */
-    CompareCondition<T> greaterOrEqual(T value);
+    Condition greaterOrEqual(T value);
 
     /**
      * @return <code>this >= field</code>

@@ -41,7 +41,6 @@ import javax.sql.DataSource;
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
-import org.jooq.CompareCondition;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
@@ -345,7 +344,7 @@ public final class Factory implements Configuration {
      * @param value The accepted value
      * @return A {@link CompareCondition}
      */
-    public <T> CompareCondition<T> compareCondition(Field<T> field, T value) {
+    public <T> Condition compareCondition(Field<T> field, T value) {
         return compareCondition(field, value, Comparator.EQUALS);
     }
 
@@ -358,7 +357,7 @@ public final class Factory implements Configuration {
      * @param comparator The comparator
      * @return A {@link CompareCondition}
      */
-    public <T> CompareCondition<T> compareCondition(Field<T> field, T value, Comparator comparator) {
+    public <T> Condition compareCondition(Field<T> field, T value, Comparator comparator) {
         return new CompareConditionImpl<T>(dialect, field, value, comparator);
     }
 
@@ -369,7 +368,7 @@ public final class Factory implements Configuration {
      * @param field The field to compare to null
      * @return A {@link CompareCondition}
      */
-    public <T> CompareCondition<T> nullCondition(Field<T> field) {
+    public <T> Condition nullCondition(Field<T> field) {
         return compareCondition(field, null, Comparator.EQUALS);
     }
 
@@ -380,7 +379,7 @@ public final class Factory implements Configuration {
      * @param field The field to compare to null
      * @return A {@link CompareCondition}
      */
-    public <T> CompareCondition<T> notNullCondition(Field<T> field) {
+    public <T> Condition notNullCondition(Field<T> field) {
         return compareCondition(field, null, Comparator.NOT_EQUALS);
     }
 

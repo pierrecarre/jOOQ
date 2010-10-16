@@ -56,7 +56,6 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
-import org.jooq.CompareCondition;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -142,10 +141,10 @@ public class jOOQTest {
 
     @Test
     public final void testMultipleCombinedCondition() throws Exception {
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID2.equal(20);
-        CompareCondition<Integer> c3 = FIELD_ID1.equal(30);
-        CompareCondition<Integer> c4 = FIELD_ID2.equal(40);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID2.equal(20);
+        Condition c3 = FIELD_ID1.equal(30);
+        Condition c4 = FIELD_ID2.equal(40);
 
         CombinedCondition c = c1.and(c2).or(c3.and(c4));
         assertEquals("((TABLE1.ID1 = 10 and TABLE2.ID2 = 20) or (TABLE1.ID1 = 30 and TABLE2.ID2 = 40))", c.toSQLReference(true));
@@ -212,7 +211,7 @@ public class jOOQTest {
 
     @Test
     public final void testCompareCondition() throws Exception {
-        CompareCondition<Integer> c = FIELD_ID1.equal(10);
+        Condition c = FIELD_ID1.equal(10);
         assertEquals("TABLE1.ID1 = 10", c.toSQLReference(true));
         assertEquals("TABLE1.ID1 = ?", c.toSQLReference(false));
 
@@ -280,11 +279,11 @@ public class jOOQTest {
 
     @Test
     public final void testIsNullCondition() throws Exception {
-        CompareCondition<Integer> c1 = FIELD_ID1.isNull();
+        Condition c1 = FIELD_ID1.isNull();
         assertEquals("TABLE1.ID1 is null", c1.toSQLReference(true));
         assertEquals("TABLE1.ID1 is null", c1.toSQLReference(false));
 
-        CompareCondition<Integer> c2 = FIELD_ID1.isNotNull();
+        Condition c2 = FIELD_ID1.isNotNull();
         assertEquals("TABLE1.ID1 is not null", c2.toSQLReference(true));
         assertEquals("TABLE1.ID1 is not null", c2.toSQLReference(false));
 
@@ -546,7 +545,7 @@ public class jOOQTest {
     @Test
     public final void testUpdateQuery3() throws Exception {
         UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
-        CompareCondition<Integer> c = FIELD_ID1.equal(10);
+        Condition c = FIELD_ID1.equal(10);
 
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
@@ -569,8 +568,8 @@ public class jOOQTest {
     @Test
     public final void testUpdateQuery4() throws Exception {
         UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID1.equal(20);
 
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
@@ -595,8 +594,8 @@ public class jOOQTest {
     @Test
     public final void testUpdateQuery5() throws Exception {
         UpdateQuery<Table1Record> q = create.updateQuery(TABLE1);
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID1.equal(20);
 
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
@@ -641,8 +640,8 @@ public class jOOQTest {
     @Test
     public final void testDeleteQuery3() throws Exception {
         DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID1.equal(20);
 
         q.addConditions(c1);
         q.addConditions(c2);
@@ -663,8 +662,8 @@ public class jOOQTest {
     @Test
     public final void testDeleteQuery4() throws Exception {
         DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID1.equal(20);
 
         q.addConditions(c1);
         q.addConditions(c2);
@@ -719,8 +718,8 @@ public class jOOQTest {
     @Test
     public final void testConditionalSelectQuery4() throws Exception {
         SelectQuery q = create.selectQuery();
-        CompareCondition<Integer> c1 = FIELD_ID1.equal(10);
-        CompareCondition<Integer> c2 = FIELD_ID1.equal(20);
+        Condition c1 = FIELD_ID1.equal(10);
+        Condition c2 = FIELD_ID1.equal(20);
 
         q.addConditions(c1);
         q.addConditions(c2);
