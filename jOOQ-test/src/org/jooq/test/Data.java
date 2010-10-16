@@ -33,6 +33,7 @@ package org.jooq.test;
 
 import java.sql.Date;
 
+import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -77,18 +78,18 @@ public final class Data {
 	public static final TableField<Table3Record, Date> FIELD_DATE3 = new TableFieldImpl<Table3Record, Date>(SQLDialect.SQL99, "DATE3", Date.class, TABLE3);
 
 	public static class Table1Record extends TableRecordImpl<Table1Record> {
-		public Table1Record() {
-			super(SQLDialect.SQL99, TABLE1);
+		public Table1Record(Configuration configuration) {
+	        super(configuration, TABLE1);
 		}
 	}
 	public static class Table2Record extends TableRecordImpl<Table2Record> {
-		public Table2Record() {
-			super(SQLDialect.SQL99, TABLE2);
+		public Table2Record(Configuration configuration) {
+	        super(configuration, TABLE2);
 		}
 	}
 	public static class Table3Record extends TableRecordImpl<Table3Record> {
-		public Table3Record() {
-			super(SQLDialect.SQL99, TABLE3);
+		public Table3Record(Configuration configuration) {
+	        super(configuration, TABLE3);
 		}
 	}
 

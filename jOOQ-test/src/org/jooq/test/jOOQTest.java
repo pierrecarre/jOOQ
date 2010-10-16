@@ -48,6 +48,8 @@ import static org.jooq.test.Data.TABLE3;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 
+import javax.sql.DataSource;
+
 import junit.framework.Assert;
 
 import org.jmock.Expectations;
@@ -89,7 +91,7 @@ public class jOOQTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = new Factory();
+        create = new Factory((DataSource) null);
     }
 
     @After

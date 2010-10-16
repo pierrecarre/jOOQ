@@ -4,8 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
 
@@ -45,7 +44,7 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 		return getValue(VLibrary.TITLE);
 	}
 
-	public VLibraryRecord(FieldProvider metaData) {
-		super(SQLDialect.ORACLE, VLibrary.V_LIBRARY);
+	public VLibraryRecord(Configuration configuration) {
+        super(configuration, VLibrary.V_LIBRARY);
 	}
 }

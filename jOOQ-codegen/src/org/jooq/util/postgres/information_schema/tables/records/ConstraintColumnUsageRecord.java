@@ -4,9 +4,7 @@
 package org.jooq.util.postgres.information_schema.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.ConstraintColumnUsage;
 
@@ -116,15 +114,7 @@ public class ConstraintColumnUsageRecord extends TableRecordImpl<ConstraintColum
 		return getValue(ConstraintColumnUsage.CONSTRAINT_NAME);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public ConstraintColumnUsageRecord(FieldProvider metaData) {
-		this();
-	}
-
-	public ConstraintColumnUsageRecord() {
-		super(SQLDialect.POSTGRES, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
+	public ConstraintColumnUsageRecord(Configuration configuration) {
+        super(configuration, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
 	}
 }

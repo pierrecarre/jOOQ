@@ -71,7 +71,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		    create().compareCondition(AllTabCols.TABLE_NAME, getName()));
 		q.addOrderBy(AllTabCols.COLUMN_ID);
 
-		q.execute(getConnection());
+		q.execute();
 		for (Record record : q.getResult()) {
 			String name = record.getValue(AllTabCols.COLUMN_NAME);
 			int position = record.getValue(AllTabCols.COLUMN_ID).intValue();

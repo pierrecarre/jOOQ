@@ -74,7 +74,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.addConditions(create().compareCondition(TABLE_NAME, getName()));
 		q.addOrderBy(ORDINAL_POSITION);
 
-		q.execute(getConnection());
+		q.execute();
 		for (ColumnsRecord record : q.getResult()) {
 			String name = record.getColumnName();
 			int position = record.getOrdinalPosition();

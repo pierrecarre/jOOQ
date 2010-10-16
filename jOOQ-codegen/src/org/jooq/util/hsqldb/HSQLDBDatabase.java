@@ -77,7 +77,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
-		query.execute(getConnection());
+		query.execute();
 		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String tableName = record.getValue(ConstraintColumnUsage.TABLE_NAME);
@@ -107,7 +107,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
-		query.execute(getConnection());
+		query.execute();
 		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String referencingTableName = record.getValue(KeyColumnUsage.TABLE_NAME);

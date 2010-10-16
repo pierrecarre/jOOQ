@@ -6,9 +6,7 @@ package org.jooq.util.mysql.mysql.tables.records;
 
 import java.sql.Timestamp;
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.mysql.tables.Proc;
 
@@ -302,15 +300,7 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 		return getValue(Proc.BODY_UTF8);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public ProcRecord(FieldProvider metaData) {
-		this();
-	}
-
-	public ProcRecord() {
-		super(SQLDialect.MYSQL, Proc.PROC);
+	public ProcRecord(Configuration configuration) {
+        super(configuration, Proc.PROC);
 	}
 }

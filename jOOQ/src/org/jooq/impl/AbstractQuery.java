@@ -70,13 +70,11 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
         }
     }
 
-    @Override
-    public final int execute(DataSource source) throws SQLException {
+    final int execute(DataSource source) throws SQLException {
         return execute(source.getConnection());
     }
 
-    @Override
-    public final int execute(Connection connection) throws SQLException {
+    final int execute(Connection connection) throws SQLException {
         PreparedStatement statement = null;
 
         try {

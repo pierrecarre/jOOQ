@@ -30,7 +30,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -52,114 +51,126 @@ import org.jooq.UpdateQuery;
  */
 public final class Manager {
 
-    private static Factory Create = new Factory();
+    private transient Factory factory;
 
-    public static <R extends Record> List<R> select(Connection connection, Table<R> table) throws SQLException {
-        return select0(connection, Create.select(table));
+    Manager(Factory factory) {
+        this.factory = factory;
     }
 
-    public static <R extends Record, T> List<R> select(Connection connection, Table<R> table, TableField<R, T> field, T value) throws SQLException {
-        return select0(connection, Create.select(table).where(field.equal(value)).getSelect());
+    public <R extends Record> List<R> select(Table<R> table) throws SQLException {
+        SimpleSelect<R> select = factory.select(table);
+        select.execute();
+        return select.getResult().getRecords();
     }
 
-    public static <R extends Record, T> List<R> select(Connection connection, Table<R> table, TableField<R, T> field, T... values) throws SQLException {
-        return select0(connection, Create.select(table).where(field.in(values)).getSelect());
+    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+        SimpleSelect<R> select = factory.select(table).where(field.equal(value)).getSelect();
+        select.execute();
+        return select.getResult().getRecords();
     }
 
-    public static <R extends Record, T> List<R> select(Connection connection, Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
-        return select0(connection, Create.select(table).where(field.in(values)).getSelect());
+    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, T... values) throws SQLException {
+        SimpleSelect<R> select = factory.select(table).where(field.in(values)).getSelect();
+        select.execute();
+        return select.getResult().getRecords();
     }
 
-    public static <R extends Record> R selectOne(Connection connection, Table<R> table) throws SQLException {
-        return filterOne(select(connection, table));
+    public <R extends Record, T> List<R> select(Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
+        SimpleSelect<R> select = factory.select(table).where(field.in(values)).getSelect();
+        select.execute();
+        return select.getResult().getRecords();
     }
 
-    public static <R extends Record, T> R selectOne(Connection connection, Table<R> table, TableField<R, T> field, T value) throws SQLException {
-        return filterOne(select(connection, table, field, value));
+    public <R extends Record> R selectOne(Table<R> table) throws SQLException {
+        return filterOne(select(table));
     }
 
-    public static <R extends TableRecord<R>> int insert(Connection connection, Table<R> table, R record) throws SQLException {
-        InsertQuery<R> insert = Create.insertQuery(table);
+    public <R extends Record, T> R selectOne(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+        return filterOne(select(table, field, value));
+    }
+
+    public <R extends TableRecord<R>> int insert(Table<R> table, R record) throws SQLException {
+        InsertQuery<R> insert = factory.insertQuery(table);
         insert.setRecord(record);
-        return insert.execute(connection);
+        return insert.execute();
     }
 
-    public static <R extends TableRecord<R>> int update(Connection connection, Table<R> table, R record) throws SQLException {
-        UpdateQuery<R> update = Create.updateQuery(table);
+    public <R extends TableRecord<R>> int update(Table<R> table, R record) throws SQLException {
+        UpdateQuery<R> update = factory.updateQuery(table);
         update.setRecord(record);
-        return update.execute(connection);
+        return update.execute();
     }
 
-    public static <R extends TableRecord<R>, T> int update(Connection connection, Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
-        UpdateQuery<R> update = Create.updateQuery(table);
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
+        UpdateQuery<R> update = factory.updateQuery(table);
         update.addCompareCondition(field, value);
         update.setRecord(record);
-        return update.execute(connection);
+        return update.execute();
     }
 
-    public static <R extends TableRecord<R>, T> int update(Connection connection, Table<R> table, R record, TableField<R, T> field, T... values) throws SQLException {
-        UpdateQuery<R> update = Create.updateQuery(table);
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, T... values) throws SQLException {
+        UpdateQuery<R> update = factory.updateQuery(table);
         update.addInCondition(field, values);
         update.setRecord(record);
-        return update.execute(connection);
+        return update.execute();
     }
 
-    public static <R extends TableRecord<R>, T> int update(Connection connection, Table<R> table, R record, TableField<R, T> field, Collection<T> values) throws SQLException {
-        UpdateQuery<R> update = Create.updateQuery(table);
+    public <R extends TableRecord<R>, T> int update(Table<R> table, R record, TableField<R, T> field, Collection<T> values) throws SQLException {
+        UpdateQuery<R> update = factory.updateQuery(table);
         update.addInCondition(field, values);
         update.setRecord(record);
-        return update.execute(connection);
+        return update.execute();
     }
 
-    public static <R extends TableRecord<R>> int updateOne(Connection connection, Table<R> table, R record) throws SQLException {
-        return filterUpdateOne(update(connection, table, record));
+    public <R extends TableRecord<R>> int updateOne(Table<R> table, R record) throws SQLException {
+        return filterUpdateOne(update(table, record));
     }
 
-    public static <R extends TableRecord<R>, T> int updateOne(Connection connection, Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
-        return filterUpdateOne(update(connection, table, record, field, value));
+    public <R extends TableRecord<R>, T> int updateOne(Table<R> table, R record, TableField<R, T> field, T value) throws SQLException {
+        return filterUpdateOne(update(table, record, field, value));
     }
 
-    public static <R extends TableRecord<R>> int delete(Connection connection, Table<R> table) throws SQLException {
-        return Create.deleteQuery(table).execute(connection);
+    public <R extends TableRecord<R>> int delete(Table<R> table) throws SQLException {
+        return factory.deleteQuery(table).execute();
     }
 
-    public static <R extends TableRecord<R>, T> int delete(Connection connection, Table<R> table, TableField<R, T> field, T value) throws SQLException {
-        DeleteQuery<R> delete = Create.deleteQuery(table);
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+        DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addCompareCondition(field, value);
-        return delete.execute(connection);
+        return delete.execute();
     }
 
-    public static <R extends TableRecord<R>, T> int delete(Connection connection, Table<R> table, TableField<R, T> field, T... values) throws SQLException {
-        DeleteQuery<R> delete = Create.deleteQuery(table);
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, T... values) throws SQLException {
+        DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addInCondition(field, values);
-        return delete.execute(connection);
+        return delete.execute();
     }
 
-    public static <R extends TableRecord<R>, T> int delete(Connection connection, Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
-        DeleteQuery<R> delete = Create.deleteQuery(table);
+    public <R extends TableRecord<R>, T> int delete(Table<R> table, TableField<R, T> field, Collection<T> values) throws SQLException {
+        DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addInCondition(field, values);
-        return delete.execute(connection);
+        return delete.execute();
     }
 
-    public static <R extends TableRecord<R>> int deleteOne(Connection connection, Table<R> table) throws SQLException {
-        return filterDeleteOne(Create.deleteQuery(table).execute(connection));
+    public <R extends TableRecord<R>> int deleteOne(Table<R> table) throws SQLException {
+        return filterDeleteOne(factory.deleteQuery(table).execute());
     }
 
-    public static <R extends TableRecord<R>, T> int deleteOne(Connection connection, Table<R> table, TableField<R, T> field, T value) throws SQLException {
-        DeleteQuery<R> delete = Create.deleteQuery(table);
+    public <R extends TableRecord<R>, T> int deleteOne(Table<R> table, TableField<R, T> field, T value) throws SQLException {
+        DeleteQuery<R> delete = factory.deleteQuery(table);
         delete.addCompareCondition(field, value);
-        return filterDeleteOne(delete.execute(connection));
+        return filterDeleteOne(delete.execute());
     }
 
-    private static int filterDeleteOne(int i) throws SQLException {
+    private int filterDeleteOne(int i) throws SQLException {
         return filterOne(i, "deleted");
     }
 
-    private static int filterUpdateOne(int i) throws SQLException {
+    private int filterUpdateOne(int i) throws SQLException {
         return filterOne(i, "updated");
     }
 
-    private static int filterOne(int i, String action) throws SQLException {
+    private int filterOne(int i, String action) throws SQLException {
         if (i <= 1) {
             return i;
         }
@@ -168,7 +179,7 @@ public final class Manager {
         }
     }
 
-    private static <R extends Record> R filterOne(List<R> list) throws SQLException {
+    private <R extends Record> R filterOne(List<R> list) throws SQLException {
         if (list.size() == 0) {
             return null;
         }
@@ -179,12 +190,4 @@ public final class Manager {
             throw new SQLException("Too many rows returned : " + list.size());
         }
     }
-
-    private static <R extends Record> List<R> select0(Connection connection, SimpleSelect<R> select)
-        throws SQLException {
-        select.execute(connection);
-        return select.getResult().getRecords();
-    }
-
-    private Manager() {}
 }

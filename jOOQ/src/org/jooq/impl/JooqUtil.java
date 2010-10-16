@@ -30,6 +30,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Configuration;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 
@@ -44,13 +45,13 @@ final class JooqUtil {
      * Create a new record
      */
     @SuppressWarnings("unchecked")
-    static <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
+    static <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         if (type == RecordImpl.class) {
-            return (R) new RecordImpl(provider.getDialect(), provider);
+            return (R) new RecordImpl(provider);
         }
         else {
             try {
-                return type.getConstructor(FieldProvider.class).newInstance(provider);
+                return type.getConstructor(Configuration.class).newInstance(configuration);
             }
             catch (Exception e) {
                 throw new IllegalStateException(

@@ -47,4 +47,10 @@ public interface RecordTypeProvider<R extends Record> {
      * will be of type {@link #getRecordType()}
      */
     R newRecord();
+
+    /**
+     * Create a new record for this record type provider. The returned record
+     * will be of type {@link #getRecordType()}
+     */
+    R newRecord(Configuration configuration);
 }

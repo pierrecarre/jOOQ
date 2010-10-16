@@ -34,6 +34,7 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
@@ -112,6 +113,11 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
 
     @Override
     public final R newRecord() {
-        return JooqUtil.newRecord(getRecordType(), this);
+        return newRecord(new Factory(getDialect()));
+    }
+
+    @Override
+    public final R newRecord(Configuration configuration) {
+        return JooqUtil.newRecord(getRecordType(), this, configuration);
     }
 }

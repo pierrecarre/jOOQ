@@ -63,7 +63,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 		q.addCompareCondition(Columns.TABLE_SCHEMA, getSchemaName());
 		q.addCompareCondition(Columns.TABLE_NAME, getName());
 		q.addOrderBy(Columns.ORDINAL_POSITION);
-		q.execute(getConnection());
+		q.execute();
 
 		for (ColumnsRecord record : q.getResult()) {
 			String name = record.getColumnName();

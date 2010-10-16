@@ -31,7 +31,11 @@
 
 package org.jooq;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 /**
  * A common interface for stored procedures and stored functions. These objects
@@ -40,7 +44,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface StoredObject extends Query, NamedQueryPart {
+public interface StoredObject extends NamedQueryPart {
 
     /**
      * @return The name of the stored procedure or function
@@ -52,5 +56,15 @@ public interface StoredObject extends Query, NamedQueryPart {
      * @return A list of parameters passed to the stored object as argument
      */
     List<Parameter<?>> getParameters();
+
+    /**
+     * Execute the stored object on a data source
+     */
+    int execute(DataSource source) throws SQLException;
+
+    /**
+     * Execute the stored object on a connection
+     */
+    int execute(Connection connection) throws SQLException;
 
 }

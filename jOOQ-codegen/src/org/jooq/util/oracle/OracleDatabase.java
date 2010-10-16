@@ -75,7 +75,7 @@ public class OracleDatabase extends AbstractDatabase {
 		    create().compareCondition(OWNER, getSchemaName()),
 		    create().compareCondition(TABLE_NAME, "%$%", NOT_LIKE)); // Exclude weird oracle binary objects
 		q.addOrderBy(TABLE_NAME);
-		q.execute(getConnection());
+		q.execute();
 
 		for (Record record : q.getResult()) {
 			String name = record.getValue(TABLE_NAME);

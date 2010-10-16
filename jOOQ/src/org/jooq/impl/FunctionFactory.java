@@ -65,16 +65,9 @@ public final class FunctionFactory {
     private final SQLDialect dialect;
 
     /**
-     * Get the functions factory with the default dialect
-     */
-    public FunctionFactory() {
-        this(SQLDialect.SQL99);
-    }
-
-    /**
      * Get the functions factory with a specific dialect.
      */
-    public FunctionFactory(SQLDialect dialect) {
+    FunctionFactory(SQLDialect dialect) {
         this.dialect = dialect;
     }
 

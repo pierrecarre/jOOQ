@@ -34,13 +34,12 @@ package org.jooq.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jooq.FieldProvider;
+import org.jooq.Configuration;
 import org.jooq.Parameter;
 import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
@@ -227,26 +226,16 @@ public class DefaultGenerator implements Generator {
 			}
 
 			out.println();
-			out.println("\t/**");
-			out.println("\t * This constructor has no effect, as a {@link TableFieldImpl} will always");
-			out.println("\t * use its underlying table as a FieldProvider descriptor");
-			out.println("\t */");
-			out.println("\tpublic " + table.getJavaClassName("Record") + "(FieldProvider fields) {");
-			out.println("\t\tthis();");
-			out.println("\t}");
-			out.println();
-			out.println("\tpublic " + table.getJavaClassName("Record") + "() {");
+			out.println("\tpublic " + table.getJavaClassName("Record") + "(Configuration configuration) {");
 
-            out.printImport(SQLDialect.class);
-			out.print("\t\tsuper(SQLDialect." + database.getDialect().name() + ", ");
+			out.print("\t\tsuper(configuration, ");
 			out.print(table.getJavaClassName());
 			out.print(".");
 			out.print(table.getNameUC());
 			out.println(");");
 
 			out.println("\t}");
-			out.printImport(TableFieldImpl.class);
-			out.printImport(FieldProvider.class);
+			out.printImport(Configuration.class);
 
 			out.println("}");
 			out.close();
@@ -427,7 +416,7 @@ public class DefaultGenerator implements Generator {
 					if (!referencing.getJavaClassName().endsWith("s")) {
 						out.print("s");
 					}
-					out.println("(Connection connection) throws SQLException {");
+					out.println("() throws SQLException {");
 
 					out.print("\t\tSimpleSelectQuery<" + referencing.getJavaClassName("Record") + "> q = create().selectQuery(");
 					out.print(referencing.getJavaClassName());
@@ -447,14 +436,13 @@ public class DefaultGenerator implements Generator {
 						out.println("));");
 					}
 
-					out.println("\t\tq.execute(connection);");
+					out.println("\t\tq.execute();");
 					out.println();
 					out.println("\t\treturn q.getResult().getRecords();");
 					out.println("\t}");
 
 					out.printImport(tablePackage + "." + referencing.getJavaClassName());
 					out.printImport(SimpleSelectQuery.class);
-					out.printImport(Connection.class);
 					out.printImport(SQLException.class);
 					out.printImport(List.class);
 				}
@@ -468,7 +456,7 @@ public class DefaultGenerator implements Generator {
 				out.print(referenced.getJavaClassName("Record"));
 				out.print(" get");
 				out.print(referenced.getJavaClassName());
-				out.println("(Connection connection) throws SQLException {");
+				out.println("() throws SQLException {");
 
 				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = create().selectQuery(");
 				out.print(referenced.getJavaClassName());
@@ -488,7 +476,7 @@ public class DefaultGenerator implements Generator {
 					out.println("));");
 				}
 
-				out.println("\t\tq.execute(connection);");
+				out.println("\t\tq.execute();");
 				out.println();
 				out.println("\t\tList<" + referenced.getJavaClassName("Record") + "> result = q.getResult().getRecords();");
 				out.println("\t\treturn result.size() == 1 ? result.get(0) : null;");
@@ -497,7 +485,6 @@ public class DefaultGenerator implements Generator {
 
 				out.printImport(tablePackage + "." + referenced.getJavaClassName());
 				out.printImport(SimpleSelectQuery.class);
-				out.printImport(Connection.class);
 				out.printImport(SQLException.class);
 				out.printImport(List.class);
 			}

@@ -4,9 +4,7 @@
 package org.jooq.test.hsqldb.generatedclasses.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.hsqldb.generatedclasses.tables.VLibrary;
 
@@ -46,15 +44,7 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 		return getValue(VLibrary.TITLE);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public VLibraryRecord(FieldProvider fields) {
-		this();
-	}
-
-	public VLibraryRecord() {
-		super(SQLDialect.HSQLDB, VLibrary.V_LIBRARY);
+	public VLibraryRecord(Configuration configuration) {
+		super(configuration, VLibrary.V_LIBRARY);
 	}
 }

@@ -226,7 +226,12 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
 
     @Override
     public R newRecord() {
-        return JooqUtil.newRecord(getRecordType(), getSelect());
+        return newRecord(getConfiguration());
+    }
+
+    @Override
+    public R newRecord(Configuration configuration) {
+        return JooqUtil.newRecord(getRecordType(), getSelect(), configuration);
     }
 
     @Override

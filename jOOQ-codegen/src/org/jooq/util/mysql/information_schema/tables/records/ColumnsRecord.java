@@ -4,9 +4,7 @@
 package org.jooq.util.mysql.information_schema.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.mysql.information_schema.tables.Columns;
 
@@ -284,15 +282,7 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 		return getValue(Columns.COLUMN_COMMENT);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public ColumnsRecord(FieldProvider metaData) {
-		this();
-	}
-
-	public ColumnsRecord() {
-		super(SQLDialect.MYSQL, Columns.COLUMNS);
+	public ColumnsRecord(Configuration configuration) {
+        super(configuration, Columns.COLUMNS);
 	}
 }

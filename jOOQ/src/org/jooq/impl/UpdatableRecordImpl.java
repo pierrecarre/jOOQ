@@ -30,15 +30,14 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.ConditionProvider;
+import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.SQLDialect;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
@@ -60,8 +59,8 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
      */
     private static final long serialVersionUID = -1012420583600561579L;
 
-    public UpdatableRecordImpl(SQLDialect dialect, UpdatableTable<R> table) {
-        super(dialect, table);
+    public UpdatableRecordImpl(Configuration configuration, UpdatableTable<R> table) {
+        super(configuration, table);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
     }
 
     @Override
-    public final void store(Connection con) throws SQLException {
+    public final void store() throws SQLException {
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : getPrimaryKey()) {
@@ -93,26 +92,26 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
         }
 
         if (executeUpdate) {
-            storeUpdate(con);
+            storeUpdate();
         }
         else {
-            storeInsert(con);
+            storeInsert();
         }
     }
 
     @SuppressWarnings("unchecked")
-    private final void storeInsert(Connection con) throws SQLException {
+    private final void storeInsert() throws SQLException {
         InsertQuery<R> insert = create().insertQuery(getTable());
 
         for (Field<?> field : getFields()) {
             addValue(insert, (TableField<R, ?>)field);
         }
 
-        insert.execute(con);
+        insert.execute();
     }
 
     @SuppressWarnings("unchecked")
-    private final void storeUpdate(Connection con) throws SQLException {
+    private final void storeUpdate() throws SQLException {
         UpdateQuery<R> update = create().updateQuery(getTable());
 
         for (Field<?> field : getFields()) {
@@ -125,29 +124,29 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
             addCondition(update, field);
         }
 
-        update.execute(con);
+        update.execute();
     }
 
     @Override
-    public final void delete(Connection con) throws SQLException {
+    public final void delete() throws SQLException {
         DeleteQuery<R> delete = create().deleteQuery(getTable());
 
         for (Field<?> field : getPrimaryKey()) {
             addCondition(delete, field);
         }
 
-        delete.execute(con);
+        delete.execute();
     }
 
     @Override
-    public void refresh(Connection con) throws SQLException {
+    public final void refresh() throws SQLException {
         SimpleSelectQuery<R> select = create().selectQuery(getTable());
 
         for (Field<?> field : getPrimaryKey()) {
             addCondition(select, field);
         }
 
-        if (select.execute(con) == 1) {
+        if (select.execute() == 1) {
             RecordImpl record = (RecordImpl) select.getResult().getRecord(0);
 
             for (Field<?> field : getFields()) {

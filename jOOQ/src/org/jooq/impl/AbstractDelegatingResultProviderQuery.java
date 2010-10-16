@@ -30,11 +30,8 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import org.jooq.Configuration;
 import org.jooq.Record;
@@ -80,16 +77,6 @@ abstract class AbstractDelegatingResultProviderQuery<R extends Record> extends A
     @Override
     public final int execute() throws SQLException {
         return delegate.execute();
-    }
-
-    @Override
-    public final int execute(DataSource source) throws SQLException {
-        return delegate.execute(source);
-    }
-
-    @Override
-    public final int execute(Connection connection) throws SQLException {
-        return delegate.execute(connection);
     }
 
     @Override

@@ -80,7 +80,7 @@ public class PostgresDatabase extends AbstractDatabase {
 			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
-		query.execute(getConnection());
+		query.execute();
 		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String tableName = record.getValue(ConstraintColumnUsage.TABLE_NAME);
@@ -118,7 +118,7 @@ public class PostgresDatabase extends AbstractDatabase {
 			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
 			.getQuery();
 
-		query.execute(getConnection());
+		query.execute();
 		for (Record record : query.getResult()) {
 			String key = record.getValue(TableConstraints.CONSTRAINT_NAME);
 			String referencingTableName = record.getValue(kcuTableName);
@@ -146,7 +146,7 @@ public class PostgresDatabase extends AbstractDatabase {
 		SimpleSelectQuery<TablesRecord> q = create().selectQuery(TABLES);
 		q.addCompareCondition(Tables.TABLE_SCHEMA, getSchemaName());
 		q.addOrderBy(Tables.TABLE_NAME);
-		q.execute(getConnection());
+		q.execute();
 
 		for (TablesRecord record : q.getResult()) {
 			String name = record.getTableName();

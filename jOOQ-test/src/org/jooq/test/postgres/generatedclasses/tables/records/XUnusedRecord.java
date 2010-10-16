@@ -4,14 +4,11 @@
 package org.jooq.test.postgres.generatedclasses.tables.records;
 
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.XUnused;
 
@@ -46,11 +43,11 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public List<XUnusedRecord> getXUnuseds(Connection connection) throws SQLException {
+	public List<XUnusedRecord> getXUnuseds() throws SQLException {
 		SimpleSelectQuery<XUnusedRecord> q = create().selectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
 		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
-		q.execute(connection);
+		q.execute();
 
 		return q.getResult().getRecords();
 	}
@@ -96,11 +93,11 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	 * 
 	 * FOREIGN KEY [id_ref, name_ref] REFERENCES x_unused [id, name]
 	 */
-	public XUnusedRecord getXUnused(Connection connection) throws SQLException {
+	public XUnusedRecord getXUnused() throws SQLException {
 		SimpleSelectQuery<XUnusedRecord> q = create().selectQuery(XUnused.X_UNUSED);
 		q.addCompareCondition(XUnused.ID, getValue(XUnused.ID_REF));
 		q.addCompareCondition(XUnused.NAME, getValue(XUnused.NAME_REF));
-		q.execute(connection);
+		q.execute();
 
 		List<XUnusedRecord> result = q.getResult().getRecords();
 		return result.size() == 1 ? result.get(0) : null;
@@ -124,15 +121,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 		return getValue(XUnused.NAME_REF);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public XUnusedRecord(FieldProvider fields) {
-		this();
-	}
-
-	public XUnusedRecord() {
-		super(SQLDialect.POSTGRES, XUnused.X_UNUSED);
+	public XUnusedRecord(Configuration configuration) {
+		super(configuration, XUnused.X_UNUSED);
 	}
 }

@@ -4,15 +4,12 @@
 package org.jooq.test.postgres.generatedclasses.tables.records;
 
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TAuthor;
 import org.jooq.test.postgres.generatedclasses.tables.TBook;
@@ -48,10 +45,10 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public List<TBookRecord> getTBooks(Connection connection) throws SQLException {
+	public List<TBookRecord> getTBooks() throws SQLException {
 		SimpleSelectQuery<TBookRecord> q = create().selectQuery(TBook.T_BOOK);
 		q.addCompareCondition(TBook.AUTHOR_ID, getValue(TAuthor.ID));
-		q.execute(connection);
+		q.execute();
 
 		return q.getResult().getRecords();
 	}
@@ -112,15 +109,7 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public TAuthorRecord(FieldProvider fields) {
-		this();
-	}
-
-	public TAuthorRecord() {
-		super(SQLDialect.POSTGRES, TAuthor.T_AUTHOR);
+	public TAuthorRecord(Configuration configuration) {
+		super(configuration, TAuthor.T_AUTHOR);
 	}
 }

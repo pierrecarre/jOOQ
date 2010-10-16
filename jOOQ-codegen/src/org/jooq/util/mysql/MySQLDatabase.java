@@ -70,7 +70,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
-		q.execute(getConnection());
+		q.execute();
 
 		for (KeyColumnUsageRecord record : q.getResult()) {
 			String key = record.getConstraintName();
@@ -91,7 +91,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
 		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
 		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
-		q.execute(getConnection());
+		q.execute();
 
 		for (KeyColumnUsageRecord record : q.getResult()) {
 			String key = record.getConstraintName();
@@ -122,7 +122,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		q.addSelect(TABLE_COMMENT);
 		q.addConditions(create().compareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addOrderBy(TABLE_NAME);
-		q.execute(getConnection());
+		q.execute();
 
 		for (TablesRecord record : q.getResult()) {
 			String name = record.getTableName();
@@ -172,7 +172,7 @@ public class MySQLDatabase extends AbstractDatabase {
 		SimpleSelectQuery<ProcRecord> q = create().selectQuery(PROC);
 		q.addConditions(create().compareCondition(DB, getSchemaName()));
 		q.addConditions(create().compareCondition(TYPE, type));
-		q.execute(getConnection());
+		q.execute();
 
 		return q.getResult();
 	}

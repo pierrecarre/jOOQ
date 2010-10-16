@@ -72,7 +72,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 		q.addCompareCondition(AllConsColumns.OWNER, getSchemaName());
 		q.addCompareCondition(AllConsColumns.TABLE_NAME, getTableName());
 		q.addCompareCondition(AllConsColumns.COLUMN_NAME, getName());
-		q.execute(getConnection());
+		q.execute();
 
 		if (q.getResult().getNumberOfRecords() > 0) {
 			definition = new DefaultPrimaryKeyDefinition(getDatabase(), q.getResult().getValue(0, AllConsColumns.CONSTRAINT_NAME));
@@ -124,7 +124,7 @@ public class OracleColumnDefinition extends DefaultColumnDefinition {
 		    create().joinCondition(cc2.getField(AllConsColumns.POSITION), cc1.getField(AllConsColumns.POSITION)));
 		q.addConditions(inner.asCompareCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME)));
 
-		q.execute(getConnection());
+		q.execute();
 
 		for (Record record : q.getResult()) {
 			if (definition == null) {

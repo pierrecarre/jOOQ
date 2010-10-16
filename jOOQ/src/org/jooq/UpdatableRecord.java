@@ -30,7 +30,6 @@
  */
 package org.jooq;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -54,19 +53,19 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      *
      * @throws SQLException
      */
-    void store(Connection con) throws SQLException;
+    void store() throws SQLException;
 
     /**
      * Deletes this record from the database.
      *
      * @throws SQLException
      */
-    void delete(Connection con) throws SQLException;
+    void delete() throws SQLException;
 
     /**
      * Refresh this record from the database.
      *
      * @throws SQLException
      */
-    void refresh(Connection con) throws SQLException;
+    void refresh() throws SQLException;
 }

@@ -4,14 +4,11 @@
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -67,10 +64,10 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	 * 
 	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
 	 */
-	public TAuthorRecord getTAuthor(Connection connection) throws SQLException {
+	public TAuthorRecord getTAuthor() throws SQLException {
 		SimpleSelectQuery<TAuthorRecord> q = create().selectQuery(TAuthor.T_AUTHOR);
 		q.addCompareCondition(TAuthor.ID, getValue(TBook.AUTHOR_ID));
-		q.execute(connection);
+		q.execute();
 
 		List<TAuthorRecord> result = q.getResult().getRecords();
 		return result.size() == 1 ? result.get(0) : null;
@@ -132,15 +129,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 		return getValue(TBook.CONTENT_PDF);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public TBookRecord(FieldProvider fields) {
-		this();
-	}
-
-	public TBookRecord() {
-		super(SQLDialect.MYSQL, TBook.T_BOOK);
+	public TBookRecord(Configuration configuration) {
+		super(configuration, TBook.T_BOOK);
 	}
 }

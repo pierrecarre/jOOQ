@@ -4,9 +4,7 @@
 package org.jooq.util.hsqldb.information_schema.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.hsqldb.information_schema.tables.Tables;
 
@@ -186,15 +184,7 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 		return getValue(Tables.COMMIT_ACTION);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public TablesRecord(FieldProvider metaData) {
-		this();
-	}
-
-	public TablesRecord() {
-		super(SQLDialect.HSQLDB, Tables.TABLES);
+	public TablesRecord(Configuration configuration) {
+        super(configuration, Tables.TABLES);
 	}
 }

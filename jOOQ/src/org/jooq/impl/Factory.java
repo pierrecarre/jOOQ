@@ -79,7 +79,7 @@ public final class Factory implements Configuration {
      * Create a factory with default settings and no connection / datasource
      * configured
      */
-    public Factory() {
+    Factory() {
         this(SQLDialect.SQL99);
     }
 
@@ -108,7 +108,7 @@ public final class Factory implements Configuration {
      *
      * @param dialect The dialect to use with objects created from this factory
      */
-    public Factory(SQLDialect dialect) {
+    Factory(SQLDialect dialect) {
         this((Connection) null, SQLDialect.SQL99);
     }
 
@@ -143,6 +143,13 @@ public final class Factory implements Configuration {
      */
     public FunctionFactory functions() {
         return new FunctionFactory(getDialect());
+    }
+
+    /**
+     * Retrieve the persistence manager with this factory's configuration
+     */
+    public Manager manager() {
+        return new Manager(this);
     }
 
     /**

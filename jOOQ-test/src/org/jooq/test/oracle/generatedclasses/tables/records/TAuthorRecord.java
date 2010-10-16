@@ -6,8 +6,7 @@ package org.jooq.test.oracle.generatedclasses.tables.records;
 
 import java.sql.Date;
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 
@@ -91,7 +90,7 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 		return getValue(TAuthor.YEAR_OF_BIRTH);
 	}
 
-	public TAuthorRecord(FieldProvider metaData) {
-		super(SQLDialect.ORACLE, TAuthor.T_AUTHOR);
+	public TAuthorRecord(Configuration configuration) {
+        super(configuration, TAuthor.T_AUTHOR);
 	}
 }

@@ -4,8 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
+import org.jooq.Configuration;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
@@ -61,7 +60,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 		return getValue(TBook.TITLE);
 	}
 
-	public TBookRecord(FieldProvider metaData) {
-		super(SQLDialect.ORACLE, TBook.T_BOOK);
+	public TBookRecord(Configuration configuration) {
+        super(configuration, TBook.T_BOOK);
 	}
 }

@@ -55,15 +55,15 @@ public class Library {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("First run...");
-		firstRun(getConnection());
+		firstRun();
 
 		System.out.println();
 		System.out.println("Second run...");
-		secondRun(getConnection());
+		secondRun();
 
 		System.out.println();
 		System.out.println("Third run...");
-		thirdRun(getConnection());
+		thirdRun();
 	}
 
 	protected static Connection getConnection() throws Exception {
@@ -74,7 +74,7 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void firstRun(Connection c) throws Exception {
+	public static void firstRun() throws Exception {
 		// Create the query
 		SelectQuery q = create().selectQuery();
 		q.addFrom(T_AUTHOR);
@@ -83,7 +83,7 @@ public class Library {
 		q.addOrderBy(TBook.TITLE);
 
 		// Execute the query and fetch the results
-		q.execute(c);
+		q.execute();
 		Result<?> result = q.getResult();
 
 		// Loop over the resulting records
@@ -102,7 +102,7 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void secondRun(Connection c) throws Exception {
+	public static void secondRun() throws Exception {
 		SelectQuery q = create().select()
 			.from(T_AUTHOR)
 			.join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
@@ -110,7 +110,7 @@ public class Library {
 			.orderBy(TBook.TITLE).getQuery();
 
 		// Execute the query and fetch the results
-		q.execute(c);
+		q.execute();
 		Result<?> result = q.getResult();
 
 		// Loop over the resulting records
@@ -129,13 +129,13 @@ public class Library {
 	/**
 	 * Run this code providing your own database connection.
 	 */
-	public static void thirdRun(Connection c) throws Exception {
+	public static void thirdRun() throws Exception {
 		SimpleSelectQuery<TAuthorRecord> q = create().select(T_AUTHOR)
 			.where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920))
 			.orderBy(TAuthor.LAST_NAME).getQuery();
 
 		// Execute the query and fetch the results
-		q.execute(c);
+		q.execute();
 		Result<TAuthorRecord> result = q.getResult();
 
 		// Loop over the resulting records

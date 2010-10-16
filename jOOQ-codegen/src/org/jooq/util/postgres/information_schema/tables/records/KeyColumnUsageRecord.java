@@ -4,9 +4,7 @@
 package org.jooq.util.postgres.information_schema.tables.records;
 
 
-import org.jooq.FieldProvider;
-import org.jooq.SQLDialect;
-import org.jooq.impl.TableFieldImpl;
+import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
 
@@ -144,15 +142,7 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 		return getValue(KeyColumnUsage.POSITION_IN_UNIQUE_CONSTRAINT);
 	}
 
-	/**
-	 * This constructor has no effect, as a {@link TableFieldImpl} will always
-	 * use its underlying table as a FieldProvider descriptor
-	 */
-	public KeyColumnUsageRecord(FieldProvider metaData) {
-		this();
-	}
-
-	public KeyColumnUsageRecord() {
-		super(SQLDialect.POSTGRES, KeyColumnUsage.KEY_COLUMN_USAGE);
+	public KeyColumnUsageRecord(Configuration configuration) {
+        super(configuration, KeyColumnUsage.KEY_COLUMN_USAGE);
 	}
 }

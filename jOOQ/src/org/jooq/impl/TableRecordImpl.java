@@ -32,7 +32,6 @@ package org.jooq.impl;
 
 import org.jooq.Configuration;
 import org.jooq.Record;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
@@ -46,10 +45,13 @@ public class TableRecordImpl<R extends Record> extends RecordImpl implements Tab
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4613985511514503387L;
+    private static final long       serialVersionUID = -4613985511514503387L;
+    private transient Configuration configuration;
 
-    public TableRecordImpl(SQLDialect dialect, Table<R> table) {
-        super(dialect, table);
+    public TableRecordImpl(Configuration configuration, Table<R> table) {
+        super(table);
+
+        this.configuration = configuration;
     }
 
     @SuppressWarnings("unchecked")
@@ -61,10 +63,18 @@ public class TableRecordImpl<R extends Record> extends RecordImpl implements Tab
 
     @Override
     public final Configuration getConfiguration() {
-        return new Factory(getDialect());
+        return configuration;
     }
 
     protected final Factory create() {
-        return new Factory(getDialect());
+        if (configuration.getConnection() != null) {
+            return new Factory(configuration.getConnection(), configuration.getDialect());
+        }
+        else if (configuration.getDataSource() != null) {
+            return new Factory(configuration.getDataSource(), configuration.getDialect());
+        }
+        else {
+            return new Factory(configuration.getDialect());
+        }
     }
 }

@@ -63,7 +63,6 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.Factory;
-import org.jooq.impl.Manager;
 import org.jooq.impl.StringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -137,7 +136,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q.addSelect(f2);
         q.addSelect(f3);
 
-        int i = q.execute(connection);
+        int i = q.execute();
         Result<?> result = q.getResult();
 
         assertEquals(1, i);
@@ -163,7 +162,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q.addSelect(getTAuthor().getFields());
         q.addOrderBy(getTAuthor_LAST_NAME());
 
-        int rows = q.execute(connection);
+        int rows = q.execute();
         Result<A> result = q.getResult();
 
         assertEquals(2, rows);
@@ -184,30 +183,30 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         i.addValue(getTAuthor_LAST_NAME(), "Hesse");
         i.addValue(getTAuthor_DATE_OF_BIRTH(), new Date(System.currentTimeMillis()));
         i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
-        assertEquals(1, i.execute(connection));
+        assertEquals(1, i.execute());
 
         UpdateQuery<A> u = create().updateQuery(getTAuthor());
         u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
         u.addCompareCondition(getTAuthor_ID(), 100);
-        assertEquals(1, u.execute(connection));
+        assertEquals(1, u.execute());
 
         DeleteQuery<A> d = create().deleteQuery(getTAuthor());
         d.addCompareCondition(getTAuthor_ID(), 100);
-        assertEquals(1, d.execute(connection));
+        assertEquals(1, d.execute());
     }
 
     @Test
     public final void testBlobAndClob() throws Exception {
-        B book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
+        B book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
 
         assertTrue(book.getValue(getTBook_CONTENT_TEXT()).contains("doublethink"));
         assertEquals(null, book.getValue(getTBook_CONTENT_PDF()));
 
         book.setValue(getTBook_CONTENT_TEXT(), "Blah blah");
         book.setValue(getTBook_CONTENT_PDF(), "Blah blah".getBytes());
-        book.store(connection);
+        book.store();
 
-        book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
+        book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
 
         assertEquals("Blah blah", book.getValue(getTBook_CONTENT_TEXT()));
         assertEquals("Blah blah", new String(book.getValue(getTBook_CONTENT_PDF())));
@@ -215,20 +214,20 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testManager() throws Exception {
-        List<A> select = Manager.select(connection, getTAuthor());
+        List<A> select = create().manager().select(getTAuthor());
         assertEquals(2, select.size());
 
-        select = Manager.select(connection, getTAuthor(), getTAuthor_FIRST_NAME(), "Paulo");
+        select = create().manager().select(getTAuthor(), getTAuthor_FIRST_NAME(), "Paulo");
         assertEquals(1, select.size());
         assertEquals("Paulo", select.get(0).getValue(getTAuthor_FIRST_NAME()));
 
         try {
-            Manager.selectOne(connection, getTAuthor());
+            create().manager().selectOne(getTAuthor());
             fail();
         }
         catch (Exception expected) {}
 
-        A selectOne = Manager.selectOne(connection, getTAuthor(), getTAuthor_FIRST_NAME(), "Paulo");
+        A selectOne = create().manager().selectOne(getTAuthor(), getTAuthor_FIRST_NAME(), "Paulo");
         assertEquals("Paulo", selectOne.getValue(getTAuthor_FIRST_NAME()));
     }
 
@@ -236,18 +235,18 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testReferentials() throws Exception {
         SimpleSelectQuery<B> q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
-        q.execute(connection);
+        q.execute();
         Result<B> result = q.getResult();
 
         B book = result.getRecord(0);
-        Method getTAuthor = book.getClass().getMethod("getTAuthor", Connection.class);
+        Method getTAuthor = book.getClass().getMethod("getTAuthor");
 
-        Record author = (Record) getTAuthor.invoke(book, connection);
+        Record author = (Record) getTAuthor.invoke(book);
         assertEquals("Orwell", author.getValue(getTAuthor_LAST_NAME()));
 
-        Method getTBooks = author.getClass().getMethod("getTBooks", Connection.class);
+        Method getTBooks = author.getClass().getMethod("getTBooks");
 
-        List<?> books = (List<?>) getTBooks.invoke(author, connection);
+        List<?> books = (List<?>) getTBooks.invoke(author);
 
         assertEquals(2, books.size());
     }
@@ -256,34 +255,34 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testORMapper() throws Exception {
         B book = getTBook().newRecord();
         try {
-            book.refresh(connection);
+            book.refresh();
         }
         catch (SQLException expected) {}
 
         // Fetch the original record
         SimpleSelectQuery<B> q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
-        q.execute(connection);
+        q.execute();
         Result<B> result = q.getResult();
 
         // Another copy of the original record
-        book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
+        book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
 
         // Modify and store the original record
         UpdatableRecord<B> record = result.getRecord(0);
         Integer id = record.getValue(getTBook_ID());
         record.setValue(getTBook_TITLE(), "1985");
-        record.store(connection);
+        record.store();
 
         // Fetch the modified record
         q = create().selectQuery(getTBook());
         q.addCompareCondition(getTBook_ID(), id);
-        q.execute(connection);
+        q.execute();
         result = q.getResult();
         record = result.getRecord(0);
 
         // Refresh the other copy of the original record
-        book.refresh(connection);
+        book.refresh();
 
         assertEquals(id, record.getValue(getTBook_ID()));
         assertEquals("1985", record.getValue(getTBook_TITLE()));
@@ -291,10 +290,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals("1985", book.getValue(getTBook_TITLE()));
 
         // Delete the modified record
-        record.delete(connection);
+        record.delete();
 
         // Fetch the remaining records
-        q.execute(connection);
+        q.execute();
         result = q.getResult();
 
         assertEquals(0, result.getNumberOfRecords());
@@ -345,7 +344,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
         SelectQuery combine = q1.combine(q2);
 
-        int rows = combine.execute(connection);
+        int rows = combine.execute();
         assertEquals(3, rows);
     }
 
@@ -369,8 +368,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
         q2.addOrderBy(create().functions().lower(b_title));
 
-        int rows1 = q1.execute(connection);
-        int rows2 = q2.execute(connection);
+        int rows1 = q1.execute();
+        int rows2 = q2.execute();
 
         assertEquals(3, rows1);
         assertEquals(3, rows2);
@@ -404,7 +403,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Integer> second = create().functions().extract(now, DatePart.SECOND).as("sec");
 
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
-        q1.execute(connection);
+        q1.execute();
 
         Record record = q1.getResult().getRecord(0);
         String timestamp = record.getValue(ts).toString().replaceFirst("\\.\\d+$", "");
@@ -435,7 +434,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Integer> octetLength = create().functions().octetLength(constant).as("octetlen");
 
         q.addSelect(charLength, bitLength, octetLength);
-        q.execute(connection);
+        q.execute();
 
         Record record = q.getResult().getRecord(0);
 
@@ -464,7 +463,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q.addSelect(position);
         q.addOrderBy(getVLibrary_AUTHOR(), ASC);
 
-        q.execute(connection);
+        q.execute();
         Record r1 = q.getResult().getRecord(1); // George Orwell
         Record r2 = q.getResult().getRecord(2); // Paulo Coelho
 
