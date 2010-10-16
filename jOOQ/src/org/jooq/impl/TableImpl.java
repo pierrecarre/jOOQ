@@ -81,7 +81,7 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
     }
 
     @Override
-    public Schema getSchema() {
+    public final Schema getSchema() {
         return schema;
     }
 
@@ -107,5 +107,10 @@ public class TableImpl<R extends Record> extends AbstractNamedQueryPart implemen
     @Override
     public Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
+    }
+
+    @Override
+    public final R newRecord() {
+        return JooqUtil.newRecord(getRecordType(), this);
     }
 }

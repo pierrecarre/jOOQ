@@ -48,14 +48,13 @@ public class RecordImpl implements Record {
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -6052512608911220404L;
+    private static final long       serialVersionUID = -6052512608911220404L;
 
-    private final FieldProvider           fields;
-    private final Map<Field<?>, Value<?>> values;
+    private final FieldProvider     fields;
+    private Map<Field<?>, Value<?>> values;
 
     public RecordImpl(FieldProvider fields) {
         this.fields = fields;
-        this.values = new LinkedHashMap<Field<?>, Value<?>>();
     }
 
     FieldProvider getMetaData() {
@@ -79,11 +78,23 @@ public class RecordImpl implements Record {
 
     @SuppressWarnings("unchecked")
     protected final <T> Value<T> getValue0(Field<T> field) {
-        if (!values.containsKey(field)) {
+        if (!getValues().containsKey(field)) {
             throw new IllegalArgumentException("Field " + field + " is not contained in Record");
         }
 
-        return (Value<T>) values.get(field);
+        return (Value<T>) getValues().get(field);
+    }
+
+    private final Map<Field<?>, Value<?>> getValues() {
+        if (values == null) {
+            values = new LinkedHashMap<Field<?>, Value<?>>();
+
+            for (Field<?> field : fields.getFields()) {
+                values.put(field, new ValueImpl<Object>(null));
+            }
+        }
+
+        return values;
     }
 
     @Override
@@ -103,12 +114,12 @@ public class RecordImpl implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, Value<T> value) {
-        values.put(field, value);
+        getValues().put(field, value);
     }
 
     @Override
     public final boolean hasChangedValues() {
-        for (Value<?> value : values.values()) {
+        for (Value<?> value : getValues().values()) {
             if (value.isChanged()) {
                 return true;
             }
@@ -119,6 +130,6 @@ public class RecordImpl implements Record {
 
     @Override
     public final String toString() {
-        return getClass().getSimpleName() + " [values=" + values + "]";
+        return getClass().getSimpleName() + " [values=" + getValues() + "]";
     }
 }

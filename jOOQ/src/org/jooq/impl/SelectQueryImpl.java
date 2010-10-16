@@ -59,7 +59,7 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
     }
 
     @Override
-    final SelectQuery createNew(Table<Record> from) {
+    final SelectQuery newSelect(Table<Record> from) {
         return new SelectQueryImpl(from);
     }
 

@@ -46,7 +46,6 @@ import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
-import org.jooq.FieldProvider;
 import org.jooq.Join;
 import org.jooq.JoinList;
 import org.jooq.Limit;
@@ -100,7 +99,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         }
     }
 
-    abstract Q createNew(Table<R> from);
+    abstract Q newSelect(Table<R> from);
 
     @Override
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
@@ -217,6 +216,11 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
+    public R newRecord() {
+        return JooqUtil.newRecord(getRecordType(), getSelect());
+    }
+
+    @Override
     public final TableList getTables() {
         TableList result = new TableListImpl(getFrom());
 
@@ -236,15 +240,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
             result = new ResultImpl<R>(getSelect());
 
             while (rs.next()) {
-                R record = null;
-
-                Class<? extends R> recordType = getRecordType();
-                try {
-                    record = recordType.getConstructor(FieldProvider.class).newInstance(result);
-                }
-                catch (Exception e) {
-                    throw new IllegalStateException("Cannot instanciate record type : " + recordType);
-                }
+                R record = newRecord();
 
                 for (Field<?> field : getSelect()) {
                     setValue(record, field, rs);
@@ -436,7 +432,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     @SuppressWarnings("unchecked")
     @Override
     public final Q combine(CombineOperator operator, Q other) {
-        return createNew(asTable(operator, getQuery(), other));
+        return newSelect(asTable(operator, getQuery(), other));
     }
 
     @SuppressWarnings("unchecked")

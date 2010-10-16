@@ -28,45 +28,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import org.jooq.FieldProvider;
+import org.jooq.Record;
 
 /**
- * A common interface for records that can be stored back to the database again.
+ * General jooq utilities
  *
  * @author Lukas Eder
  */
-public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRecord<R> {
+final class JooqUtil {
 
     /**
-     * The table from which this record was read
+     * Create a new record
      */
-    @Override
-    UpdatableTable<R> getTable();
+    static <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
+        try {
+            return type.getConstructor(FieldProvider.class).newInstance(provider);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException(
+                "Record type does not provide a constructor with signature Record(FieldProvider) : " + type
+                    + ". Exception : " + e.getMessage());
+        }
 
-    /**
-     * Store this record back to the database.
-     * <p>
-     * If the primary key was loaded, this results in an update statement.
-     * Otherwise, an insert statement is executed.
-     *
-     * @throws SQLException
-     */
-    void store(Connection con) throws SQLException;
-
-    /**
-     * Deletes this record from the database.
-     *
-     * @throws SQLException
-     */
-    void delete(Connection con) throws SQLException;
-
-    /**
-     * Refresh this record from the database.
-     *
-     * @throws SQLException
-     */
-    void refresh(Connection con) throws SQLException;
+    }
 }

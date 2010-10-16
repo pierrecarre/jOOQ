@@ -30,43 +30,21 @@
  */
 package org.jooq;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 /**
- * A common interface for records that can be stored back to the database again.
+ * An interface for all objects that can provide a record type
  *
  * @author Lukas Eder
  */
-public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRecord<R> {
+public interface RecordTypeProvider<R extends Record> {
 
     /**
-     * The table from which this record was read
+     * @return The record type produced by this record type provider
      */
-    @Override
-    UpdatableTable<R> getTable();
+    Class<? extends R> getRecordType();
 
     /**
-     * Store this record back to the database.
-     * <p>
-     * If the primary key was loaded, this results in an update statement.
-     * Otherwise, an insert statement is executed.
-     *
-     * @throws SQLException
+     * Create a new record for this record type provider. The returned record
+     * will be of type {@link #getRecordType()}
      */
-    void store(Connection con) throws SQLException;
-
-    /**
-     * Deletes this record from the database.
-     *
-     * @throws SQLException
-     */
-    void delete(Connection con) throws SQLException;
-
-    /**
-     * Refresh this record from the database.
-     *
-     * @throws SQLException
-     */
-    void refresh(Connection con) throws SQLException;
+    R newRecord();
 }

@@ -40,6 +40,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -88,10 +89,11 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         for (String sql : allSQL.split("/")) {
             try {
                 if (!StringUtils.isBlank(sql)) {
-                	stmt = connection.createStatement();
-                	stmt.execute(sql.trim());
+                    stmt = connection.createStatement();
+                    stmt.execute(sql.trim());
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 // There is no DROP TABLE IF EXISTS statement in Oracle, so this
                 // error is expected
                 if (e.getMessage().contains("ORA-00942")) {
@@ -105,7 +107,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
                 e.printStackTrace();
 
                 System.exit(-1);
-            } finally {
+            }
+            finally {
                 if (stmt != null) {
                     stmt.close();
                 }
@@ -114,6 +117,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     }
 
     protected abstract Connection getConnection() throws Exception;
+
     protected abstract String getCreateScript();
 
     @After
@@ -176,22 +180,22 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testInsertUpdateDelete() throws Exception {
-    	InsertQuery<A> i = Create.insertQuery(getTAuthor());
-    	i.addValue(getTAuthor_ID(), 100);
-    	i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
-    	i.addValue(getTAuthor_LAST_NAME(), "Hesse");
-    	i.addValue(getTAuthor_DATE_OF_BIRTH(), new Date(System.currentTimeMillis()));
-    	i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
-    	assertEquals(1, i.execute(connection));
+        InsertQuery<A> i = Create.insertQuery(getTAuthor());
+        i.addValue(getTAuthor_ID(), 100);
+        i.addValue(getTAuthor_FIRST_NAME(), "Hermann");
+        i.addValue(getTAuthor_LAST_NAME(), "Hesse");
+        i.addValue(getTAuthor_DATE_OF_BIRTH(), new Date(System.currentTimeMillis()));
+        i.addValue(getTAuthor_YEAR_OF_BIRTH(), 2010);
+        assertEquals(1, i.execute(connection));
 
-    	UpdateQuery<A> u = Create.updateQuery(getTAuthor());
-    	u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
-    	u.addCompareCondition(getTAuthor_ID(), 100);
-    	assertEquals(1, u.execute(connection));
+        UpdateQuery<A> u = Create.updateQuery(getTAuthor());
+        u.addValue(getTAuthor_FIRST_NAME(), "Hermie");
+        u.addCompareCondition(getTAuthor_ID(), 100);
+        assertEquals(1, u.execute(connection));
 
-    	DeleteQuery<A> d = Create.deleteQuery(getTAuthor());
-    	d.addCompareCondition(getTAuthor_ID(), 100);
-    	assertEquals(1, d.execute(connection));
+        DeleteQuery<A> d = Create.deleteQuery(getTAuthor());
+        d.addCompareCondition(getTAuthor_ID(), 100);
+        assertEquals(1, d.execute(connection));
     }
 
     @Test
@@ -223,7 +227,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         try {
             Manager.selectOne(connection, getTAuthor());
             fail();
-        } catch (Exception expected) {}
+        }
+        catch (Exception expected) {}
 
         A selectOne = Manager.selectOne(connection, getTAuthor(), getTAuthor_FIRST_NAME(), "Paulo");
         assertEquals("Paulo", selectOne.getValue(getTAuthor_FIRST_NAME()));
@@ -231,7 +236,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testReferentials() throws Exception {
-    	SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
+        SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result<B> result = q.getResult();
@@ -244,69 +249,96 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
         Method getTBooks = author.getClass().getMethod("getTBooks", Connection.class);
 
-		List<?> books = (List<?>) getTBooks.invoke(author, connection);
+        List<?> books = (List<?>) getTBooks.invoke(author, connection);
 
         assertEquals(2, books.size());
     }
 
-	@Test
+    @Test
     public final void testORMapper() throws Exception {
+        B book = getTBook().newRecord();
+        try {
+            book.refresh(connection);
+        }
+        catch (SQLException expected) {}
 
-    	// Fetch the original record
-    	SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
+        // Fetch the original record
+        SimpleSelectQuery<B> q = Create.selectQuery(getTBook());
         q.addCompareCondition(getTBook_TITLE(), "1984");
         q.execute(connection);
         Result<B> result = q.getResult();
 
-        // Modify and store the original record
-		UpdatableRecord<B> record = result.getRecord(0);
-        Integer id = record.getValue(getTBook_ID());
-		record.setValue(getTBook_TITLE(), "1985");
-		record.store(connection);
+        // Another copy of the original record
+        book = Manager.selectOne(connection, getTBook(), getTBook_TITLE(), "1984");
 
-		// Fetch the modified record
-		q = Create.selectQuery(getTBook());
-		q.addCompareCondition(getTBook_ID(), id);
-		q.execute(connection);
-		result = q.getResult();
+        // Modify and store the original record
+        UpdatableRecord<B> record = result.getRecord(0);
+        Integer id = record.getValue(getTBook_ID());
+        record.setValue(getTBook_TITLE(), "1985");
+        record.store(connection);
+
+        // Fetch the modified record
+        q = Create.selectQuery(getTBook());
+        q.addCompareCondition(getTBook_ID(), id);
+        q.execute(connection);
+        result = q.getResult();
         record = result.getRecord(0);
 
-		assertEquals(id, record.getValue(getTBook_ID()));
-		assertEquals("1985", record.getValue(getTBook_TITLE()));
+        // Refresh the other copy of the original record
+        book.refresh(connection);
 
-		// Delete the modified record
-		record.delete(connection);
+        assertEquals(id, record.getValue(getTBook_ID()));
+        assertEquals("1985", record.getValue(getTBook_TITLE()));
+        assertEquals(id, book.getValue(getTBook_ID()));
+        assertEquals("1985", book.getValue(getTBook_TITLE()));
 
-		// Fetch the remaining records
-		q.execute(connection);
-		result = q.getResult();
+        // Delete the modified record
+        record.delete(connection);
 
-		assertEquals(0, result.getNumberOfRecords());
+        // Fetch the remaining records
+        q.execute(connection);
+        result = q.getResult();
+
+        assertEquals(0, result.getNumberOfRecords());
     }
 
-	protected abstract Table<A> getTAuthor();
-	protected abstract TableField<A, String> getTAuthor_LAST_NAME();
-	protected abstract TableField<A, String> getTAuthor_FIRST_NAME();
-	protected abstract TableField<A, Date> getTAuthor_DATE_OF_BIRTH();
-	protected abstract TableField<A, Integer> getTAuthor_YEAR_OF_BIRTH();
-	protected abstract TableField<A, Integer> getTAuthor_ID() ;
-	protected abstract Table<B> getTBook();
-	protected abstract TableField<B, Integer> getTBook_ID();
-	protected abstract TableField<B, Integer> getTBook_AUTHOR_ID();
-	protected abstract TableField<B, String> getTBook_TITLE();
-	protected abstract TableField<B, String> getTBook_CONTENT_TEXT();
-	protected abstract TableField<B, byte[]> getTBook_CONTENT_PDF();
-	protected abstract Table<L> getVLibrary();
-	protected abstract TableField<L, String> getVLibrary_TITLE();
-	protected abstract TableField<L, String> getVLibrary_AUTHOR();
+    protected abstract Table<A> getTAuthor();
 
-	@Test
+    protected abstract TableField<A, String> getTAuthor_LAST_NAME();
+
+    protected abstract TableField<A, String> getTAuthor_FIRST_NAME();
+
+    protected abstract TableField<A, Date> getTAuthor_DATE_OF_BIRTH();
+
+    protected abstract TableField<A, Integer> getTAuthor_YEAR_OF_BIRTH();
+
+    protected abstract TableField<A, Integer> getTAuthor_ID();
+
+    protected abstract Table<B> getTBook();
+
+    protected abstract TableField<B, Integer> getTBook_ID();
+
+    protected abstract TableField<B, Integer> getTBook_AUTHOR_ID();
+
+    protected abstract TableField<B, String> getTBook_TITLE();
+
+    protected abstract TableField<B, String> getTBook_CONTENT_TEXT();
+
+    protected abstract TableField<B, byte[]> getTBook_CONTENT_PDF();
+
+    protected abstract Table<L> getVLibrary();
+
+    protected abstract TableField<L, String> getVLibrary_TITLE();
+
+    protected abstract TableField<L, String> getVLibrary_AUTHOR();
+
+    @Test
     public final void testCombinedSelectQuery() throws Exception {
-    	SelectQuery q1 = Create.selectQuery();
-    	SelectQuery q2 = Create.selectQuery();
+        SelectQuery q1 = Create.selectQuery();
+        SelectQuery q2 = Create.selectQuery();
 
-		q1.addFrom(getTBook());
-    	q2.addFrom(getTBook());
+        q1.addFrom(getTBook());
+        q2.addFrom(getTBook());
 
         q1.addCompareCondition(getTBook_AUTHOR_ID(), 1);
         q2.addCompareCondition(getTBook_TITLE(), "Brida");
@@ -319,8 +351,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testJoinQuery() throws Exception {
-   	 	// Oracle ordering behaviour is a bit different, so exclude "1984"
-    	SimpleSelectQuery<L> q1 = Create.selectQuery(getVLibrary());
+        // Oracle ordering behaviour is a bit different, so exclude "1984"
+        SimpleSelectQuery<L> q1 = Create.selectQuery(getVLibrary());
         q1.addOrderBy(getVLibrary_TITLE());
         q1.addCompareCondition(getVLibrary_TITLE(), "1984", Comparator.NOT_EQUALS);
 
@@ -331,10 +363,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Integer> b_authorID = b.getField(getTBook_AUTHOR_ID());
         Field<String> b_title = b.getField(getTBook_TITLE());
 
-		SelectQuery q2 = Create.selectQuery();
-		q2.addFrom(a);
-		q2.addJoin(b, b_authorID, a_authorID);
-		q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
+        SelectQuery q2 = Create.selectQuery();
+        q2.addFrom(a);
+        q2.addJoin(b, b_authorID, a_authorID);
+        q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
         q2.addOrderBy(Functions.lower(b_title));
 
         int rows1 = q1.execute(connection);
@@ -380,9 +412,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals(timestamp.split(" ")[0], record.getValue(date).toString());
 
         // Weird behaviour in postgres
-        // See also interesting thread: http://archives.postgresql.org/pgsql-jdbc/2010-09/msg00037.php
+        // See also interesting thread:
+        // http://archives.postgresql.org/pgsql-jdbc/2010-09/msg00037.php
         if (Configuration.getInstance().getDialect() != SQLDialect.POSTGRES) {
-        	assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
+            assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
         }
 
         assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[0]), record.getValue(year));
@@ -409,21 +442,21 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals(Integer.valueOf(3), record.getValue(charLength));
 
         switch (Configuration.getInstance().getDialect()) {
-        case HSQLDB:
-        	// HSQLDB uses Java-style characters (16 bit)
-        	assertEquals(Integer.valueOf(48), record.getValue(bitLength));
-        	assertEquals(Integer.valueOf(6), record.getValue(octetLength));
-        	break;
-        default:
-        	assertEquals(Integer.valueOf(24), record.getValue(bitLength));
-        	assertEquals(Integer.valueOf(3), record.getValue(octetLength));
-        	break;
+            case HSQLDB:
+                // HSQLDB uses Java-style characters (16 bit)
+                assertEquals(Integer.valueOf(48), record.getValue(bitLength));
+                assertEquals(Integer.valueOf(6), record.getValue(octetLength));
+                break;
+            default:
+                assertEquals(Integer.valueOf(24), record.getValue(bitLength));
+                assertEquals(Integer.valueOf(3), record.getValue(octetLength));
+                break;
         }
     }
 
     @Test
     public final void testFunction5() throws Exception {
-    	SimpleSelectQuery<L> q = Create.selectQuery(getVLibrary());
+        SimpleSelectQuery<L> q = Create.selectQuery(getVLibrary());
 
         Field<String> o = Functions.constant("o");
         Field<Integer> position = Functions.position(getVLibrary_AUTHOR(), o).as("p");

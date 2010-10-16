@@ -52,7 +52,7 @@ class SimpleSelectQueryImpl<R extends Record>
     }
 
     @Override
-    final SimpleSelectQuery<R> createNew(Table<R> from) {
+    final SimpleSelectQuery<R> newSelect(Table<R> from) {
         return new SimpleSelectQueryImpl<R>(from);
     }
 }

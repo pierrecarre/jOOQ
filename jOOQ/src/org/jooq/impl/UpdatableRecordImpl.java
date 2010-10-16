@@ -38,12 +38,14 @@ import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
+import org.jooq.Value;
 
 /**
  * A record implementation for a record holding a primary key
@@ -134,6 +136,31 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
         }
 
         delete.execute(con);
+    }
+
+    @Override
+    public void refresh(Connection con) throws SQLException {
+        SimpleSelectQuery<R> select = Create.selectQuery(getTable());
+
+        for (Field<?> field : getPrimaryKey()) {
+            addCondition(select, field);
+        }
+
+        if (select.execute(con) == 1) {
+            RecordImpl record = (RecordImpl) select.getResult().getRecord(0);
+
+            for (Field<?> field : getFields()) {
+                setValue0(field, record.getValue0(field));
+            }
+        } else {
+            throw new SQLException("Exactly one row expected for refresh. Record does not exist in database.");
+        }
+    }
+
+    // Those generics... go figure...
+    @SuppressWarnings("unchecked")
+    private <T> void setValue0(Field<T> field, Value<?> value) {
+        setValue(field, (Value<T>) value);
     }
 
     /**

@@ -40,7 +40,8 @@ import java.util.Collection;
 public interface ResultProviderSelectQuery<Q extends ResultProviderSelectQuery<Q, R>, R extends Record>
 extends ResultProviderQuery<R>,
         ConditionProvider,
-        QueryProvider<Q> {
+        QueryProvider<Q>,
+        RecordTypeProvider<R> {
 
     /**
      * Combine this SelectQuery with another one, using the
@@ -215,9 +216,4 @@ extends ResultProviderQuery<R>,
      * All tables from which this query selects (from and join parts)
      */
     TableList getTables();
-
-    /**
-     * The record type returned by this query
-     */
-    Class<? extends R> getRecordType();
 }
