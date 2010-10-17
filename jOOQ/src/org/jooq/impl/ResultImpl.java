@@ -61,56 +61,56 @@ class ResultImpl<R extends Record> implements Result<R> {
     }
 
     @Override
-    public FieldList getFields() {
+    public final FieldList getFields() {
         return fields.getFields();
     }
 
     @Override
-    public <T> Field<T> getField(Field<T> field) {
+    public final <T> Field<T> getField(Field<T> field) {
         return fields.getField(field);
     }
 
     @Override
-    public Field<?> getField(String name) {
+    public final Field<?> getField(String name) {
         return fields.getField(name);
     }
 
     @Override
-    public int getNumberOfRecords() {
+    public final int getNumberOfRecords() {
         return records.size();
     }
 
     @Override
-    public List<R> getRecords() {
+    public final List<R> getRecords() {
         return Collections.unmodifiableList(records);
     }
 
     @Override
-    public R getRecord(int index) throws IndexOutOfBoundsException {
+    public final R getRecord(int index) throws IndexOutOfBoundsException {
         return records.get(index);
     }
 
     @Override
-    public <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
+    public final <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
         return getRecord(index).getValue(field);
     }
 
     @Override
-    public <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException {
+    public final <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException {
         return getRecord(index).getValue(field, defaultValue);
     }
 
     @Override
-    public Iterator<R> iterator() {
+    public final Iterator<R> iterator() {
         return records.iterator();
     }
 
-    void addRecord(R record) {
+    final void addRecord(R record) {
         records.add(record);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getClass().getSimpleName() + "\n");
