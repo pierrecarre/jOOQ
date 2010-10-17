@@ -33,27 +33,26 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Join;
-import org.jooq.JoinList;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class JoinListImpl extends AbstractQueryPartList<Join> implements JoinList {
+class TableList extends AbstractQueryPartList<Table<?>> {
 
-    private static final long serialVersionUID = -8180029905491753071L;
+    private static final long serialVersionUID = -8545559185481762229L;
 
-    JoinListImpl(SQLDialect dialect) {
+    TableList(SQLDialect dialect) {
         super(dialect);
     }
 
-    JoinListImpl(SQLDialect dialect, List<Join> wrappedList) {
+    TableList(SQLDialect dialect, List<? extends Table<?>> wrappedList) {
         super(dialect, wrappedList);
     }
 
     @Override
-    protected String getListSeparator() {
-        return "";
+    protected String toSQLEmptyList() {
+        return EmptyTable.getInstance(getDialect()).toSQLReference();
     }
 }

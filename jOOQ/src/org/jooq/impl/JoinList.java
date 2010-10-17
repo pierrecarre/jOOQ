@@ -29,14 +29,30 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
+import java.util.List;
+
+import org.jooq.Join;
+import org.jooq.SQLDialect;
 
 /**
- * A typed list of tables
- *
  * @author Lukas Eder
  */
-public interface TableList extends QueryPartList<Table<?>> {
+class JoinList extends AbstractQueryPartList<Join> {
 
+    private static final long serialVersionUID = -8180029905491753071L;
+
+    JoinList(SQLDialect dialect) {
+        super(dialect);
+    }
+
+    JoinList(SQLDialect dialect, List<Join> wrappedList) {
+        super(dialect, wrappedList);
+    }
+
+    @Override
+    protected String getListSeparator() {
+        return "";
+    }
 }

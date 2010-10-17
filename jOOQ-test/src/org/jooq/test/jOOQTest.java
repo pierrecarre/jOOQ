@@ -32,7 +32,6 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.impl.FalseCondition.FALSE_CONDITION;
 import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
@@ -955,10 +954,6 @@ public class jOOQTest {
                           .having(FIELD_ID1.equal(1))
                           .orderBy(FIELD_ID1, SortOrder.ASC)
                           .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
-
-        assertTrue(q.getTables().contains(TABLE1));
-        assertTrue(q.getTables().contains(TABLE2));
-        assertEquals(2, q.getTables().size());
 
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 1);

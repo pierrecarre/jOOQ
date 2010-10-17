@@ -211,9 +211,4 @@ extends ResultProviderQuery<R>,
      * All fields selected in this query
      */
     FieldList getSelect();
-
-    /**
-     * All tables from which this query selects (from and join parts)
-     */
-    TableList getTables();
 }

@@ -46,7 +46,6 @@ import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Join;
-import org.jooq.JoinList;
 import org.jooq.Limit;
 import org.jooq.OrderByFieldList;
 import org.jooq.Record;
@@ -56,7 +55,6 @@ import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.SubQueryOperator;
 import org.jooq.Table;
-import org.jooq.TableList;
 
 /**
  * @author Lukas Eder
@@ -88,8 +86,8 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         final SQLDialect dialect = configuration.getDialect();
 
         this.select = new SelectFieldListImpl(dialect);
-        this.from = new TableListImpl(dialect);
-        this.join = new JoinListImpl(dialect);
+        this.from = new TableList(dialect);
+        this.join = new JoinList(dialect);
         this.condition = new ConditionProviderImpl(dialect);
         this.groupBy = new FieldListImpl(dialect);
         this.having = new ConditionProviderImpl(dialect);
@@ -232,9 +230,8 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         return JooqUtil.newRecord(getRecordType(), getSelect(), configuration);
     }
 
-    @Override
-    public final TableList getTables() {
-        TableList result = new TableListImpl(getDialect(), getFrom());
+    TableList getTables() {
+        TableList result = new TableList(getDialect(), getFrom());
 
         for (Join join : getJoin()) {
             result.add(join.getTable());
