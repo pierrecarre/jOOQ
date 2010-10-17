@@ -29,13 +29,48 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
+
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.FieldProvider;
+import org.jooq.SQLDialect;
 
 /**
- * A typed list of fields
- *
  * @author Lukas Eder
  */
-public interface FieldList extends QueryPartList<Field<?>>, FieldProvider {
+class FieldList extends AbstractQueryPartList<Field<?>> implements FieldProvider {
 
+    private static final long serialVersionUID = -6911012275707591576L;
+
+    FieldList(SQLDialect dialect) {
+        super(dialect);
+    }
+
+    FieldList(SQLDialect dialect, List<Field<?>> wrappedList) {
+        super(dialect, wrappedList);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> Field<T> getField(Field<T> field) {
+        return (Field<T>) getField(field.getName());
+    }
+
+    @Override
+    public final Field<?> getField(String name) {
+        for (Field<?> f : this) {
+            if (f.getName() == name) {
+                return f;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public FieldList getFields() {
+        return this;
+    }
 }

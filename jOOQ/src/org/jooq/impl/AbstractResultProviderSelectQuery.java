@@ -44,7 +44,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.Join;
 import org.jooq.Limit;
 import org.jooq.Record;
@@ -88,7 +87,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         this.from = new TableList(dialect);
         this.join = new JoinList(dialect);
         this.condition = new ConditionProviderImpl(dialect);
-        this.groupBy = new FieldListImpl(dialect);
+        this.groupBy = new FieldList(dialect);
         this.having = new ConditionProviderImpl(dialect);
         this.orderBy = new OrderByFieldList(dialect);
         this.limit = new LimitImpl(dialect);

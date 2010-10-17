@@ -33,7 +33,6 @@ package org.jooq.impl;
 import org.jooq.AliasProvider;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;

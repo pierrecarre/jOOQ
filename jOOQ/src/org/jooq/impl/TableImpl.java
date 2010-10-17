@@ -34,7 +34,6 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -46,7 +45,7 @@ import org.jooq.Table;
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     private static final long   serialVersionUID = 261033315221985068L;
-    private final FieldListImpl fields;
+    private final FieldList fields;
 
     public TableImpl(SQLDialect dialect, String name) {
         this(dialect, name, (Schema) null);
@@ -55,7 +54,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     public TableImpl(SQLDialect dialect, String name, Schema schema) {
         super(dialect, name, schema);
 
-        this.fields = new FieldListImpl(dialect);
+        this.fields = new FieldList(dialect);
     }
 
     @Override

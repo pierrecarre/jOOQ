@@ -36,7 +36,6 @@ import java.sql.SQLException;
 
 import org.jooq.AliasProvider;
 import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -83,7 +82,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> implements AliasProv
     @Override
     public FieldList getFieldList() {
         if (aliasedFields == null) {
-            aliasedFields = new FieldListImpl(getDialect());
+            aliasedFields = new FieldList(getDialect());
 
             for (Field<?> field : aliasProvider.getAliasProvider().getFields()) {
                 registerTableField(field);

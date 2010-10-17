@@ -32,10 +32,10 @@
 package org.jooq.impl;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Value;
@@ -62,7 +62,7 @@ public class RecordImpl implements Record {
     }
 
     @Override
-    public final FieldList getFields() {
+    public final List<Field<?>> getFields() {
         return fields.getFields();
     }
 

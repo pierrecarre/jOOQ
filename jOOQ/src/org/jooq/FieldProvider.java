@@ -30,6 +30,8 @@
  */
 package org.jooq;
 
+import java.util.List;
+
 public interface FieldProvider {
 
     /**
@@ -55,5 +57,5 @@ public interface FieldProvider {
     /**
      * @return All available fields
      */
-    FieldList getFields();
+    List<Field<?>> getFields();
 }

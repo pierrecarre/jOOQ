@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.CombineOperator;
-import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
@@ -70,7 +69,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     protected FieldList getFieldList() {
-        return queries.get(0).getSelect();
+        return new FieldList(getDialect(), queries.get(0).getSelect());
     }
 
     @Override

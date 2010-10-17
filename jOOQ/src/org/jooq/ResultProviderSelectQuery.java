@@ -31,6 +31,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A common interface for {@link SelectQuery} and {@link SimpleSelectQuery}
@@ -203,5 +204,5 @@ extends ResultProviderQuery<R>,
     /**
      * All fields selected in this query
      */
-    FieldList getSelect();
+    List<Field<?>> getSelect();
 }

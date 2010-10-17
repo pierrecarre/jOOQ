@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.FieldList;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -61,7 +60,7 @@ class ResultImpl<R extends Record> implements Result<R> {
     }
 
     @Override
-    public final FieldList getFields() {
+    public final List<Field<?>> getFields() {
         return fields.getFields();
     }
 
