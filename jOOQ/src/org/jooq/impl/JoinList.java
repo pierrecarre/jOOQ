@@ -33,7 +33,6 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Join;
 import org.jooq.SQLDialect;
 
 /**

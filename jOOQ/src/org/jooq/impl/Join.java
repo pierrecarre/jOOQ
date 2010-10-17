@@ -37,7 +37,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Condition;
-import org.jooq.Join;
 import org.jooq.JoinType;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -45,7 +44,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class JoinImpl extends AbstractQueryPart implements Join {
+class Join extends AbstractQueryPart {
 
     private static final long           serialVersionUID = 2275930365728978050L;
 
@@ -53,7 +52,7 @@ class JoinImpl extends AbstractQueryPart implements Join {
     private final ConditionProviderImpl condition;
     private final JoinType              type;
 
-    JoinImpl(SQLDialect dialect, Table<?> table, JoinType type, Condition... conditions) {
+    Join(SQLDialect dialect, Table<?> table, JoinType type, Condition... conditions) {
         super(dialect);
 
         this.condition = new ConditionProviderImpl(dialect);
@@ -75,17 +74,14 @@ class JoinImpl extends AbstractQueryPart implements Join {
         return result;
     }
 
-    @Override
     public Condition getCondition() {
         return condition.getWhere();
     }
 
-    @Override
     public Table<?> getTable() {
         return table;
     }
 
-    @Override
     public JoinType getType() {
         return type;
     }

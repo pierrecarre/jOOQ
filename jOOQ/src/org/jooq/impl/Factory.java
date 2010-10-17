@@ -45,7 +45,6 @@ import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InOperator;
 import org.jooq.InsertQuery;
-import org.jooq.Join;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
@@ -527,6 +526,6 @@ public final class Factory implements Configuration {
      * @return A new {@link Join} part
      */
     public Join join(Table<?> table, JoinType type, Condition... conditions) {
-        return new JoinImpl(dialect, table, type, conditions);
+        return new Join(dialect, table, type, conditions);
     }
 }

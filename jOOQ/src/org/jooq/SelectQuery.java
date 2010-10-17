@@ -93,13 +93,6 @@ public interface SelectQuery extends ResultProviderSelectQuery<SelectQuery, Reco
     <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2);
 
     /**
-     * Joins the existing table product to join object
-     *
-     * @param join The join object
-     */
-    void addJoin(Join join);
-
-    /**
      * Adds grouping fields
      *
      * @param fields The grouping fields

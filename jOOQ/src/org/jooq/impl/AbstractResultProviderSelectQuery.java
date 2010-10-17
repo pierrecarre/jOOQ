@@ -44,7 +44,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
-import org.jooq.Join;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;

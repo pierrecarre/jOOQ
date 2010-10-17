@@ -38,7 +38,6 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.Join;
 import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
@@ -105,27 +104,22 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
     }
 
     @Override
-    public void addJoin(Join join) {
-        getJoin().add(join);
-    }
-
-    @Override
     public final <T> void addJoin(Table<?> table, Field<T> field1, Field<T> field2) {
-        addJoin(create().join(table, field1, field2));
+        getJoin().add(create().join(table, field1, field2));
     }
 
     @Override
     public final void addJoin(Table<?> table, Condition... conditions) {
-        addJoin(create().join(table, conditions));
+        getJoin().add(create().join(table, conditions));
     }
 
     @Override
     public final <T> void addJoin(Table<?> table, JoinType type, Field<T> field1, Field<T> field2) {
-        addJoin(create().join(table, type, field1, field2));
+        getJoin().add(create().join(table, type, field1, field2));
     }
 
     @Override
     public final void addJoin(Table<?> table, JoinType type, Condition... conditions) {
-        addJoin(create().join(table, type, conditions));
+        getJoin().add(create().join(table, type, conditions));
     }
 }

@@ -57,7 +57,6 @@ import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.Join;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
@@ -871,9 +870,7 @@ public class jOOQTest {
     public final void testJoinTypeSelectQuery() throws Exception {
         SelectQuery q = create.selectQuery();
         q.addFrom(TABLE1);
-        Join j = create.join(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
-
-        q.addJoin(j);
+        q.addJoin(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1, FIELD_ID2);
         assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(true));
         assertEquals("select * from TABLE1 left outer join TABLE2 on TABLE1.ID1 = TABLE2.ID2", q.toSQLReference(false));
         assertEquals(q, create.select().from(TABLE1).leftOuterJoin(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());

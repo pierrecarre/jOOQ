@@ -204,7 +204,7 @@ class SelectImpl extends AbstractDelegatingResultProviderQuery<Record> implement
 
     @Override
     public SelectJoinStep on(Condition... conditions) {
-        query.addJoin(new JoinImpl(getDialect(), join, joinType, conditions));
+        query.addJoin(join, joinType, conditions);
         join = null;
         joinType = null;
         return this;
