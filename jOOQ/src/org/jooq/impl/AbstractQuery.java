@@ -88,7 +88,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
-    public Configuration getConfiguration() {
+    public final Configuration getConfiguration() {
         if (connection != null) {
             return new Factory(connection, getDialect());
         }
