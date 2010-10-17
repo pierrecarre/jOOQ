@@ -219,16 +219,16 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public R newRecord() {
+    public final R newRecord() {
         return newRecord(getConfiguration());
     }
 
     @Override
-    public R newRecord(Configuration configuration) {
+    public final R newRecord(Configuration configuration) {
         return JooqUtil.newRecord(getRecordType(), getSelect(), configuration);
     }
 
-    TableList getTables() {
+    final TableList getTables() {
         TableList result = new TableList(getDialect(), getFrom());
 
         for (Join join : getJoin()) {
