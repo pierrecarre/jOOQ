@@ -30,7 +30,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.Operator;
 import org.jooq.SQLDialect;
@@ -50,12 +49,12 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
-    public final CombinedCondition and(Condition other) {
+    public final Condition and(Condition other) {
         return create().combinedCondition(this, other);
     }
 
     @Override
-    public final CombinedCondition or(Condition other) {
+    public final Condition or(Condition other) {
         return create().combinedCondition(Operator.OR, this, other);
     }
 }

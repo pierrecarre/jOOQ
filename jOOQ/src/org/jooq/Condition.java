@@ -45,7 +45,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
-    CombinedCondition and(Condition other);
+    Condition and(Condition other);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -54,5 +54,5 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
-    CombinedCondition or(Condition other);
+    Condition or(Condition other);
 }

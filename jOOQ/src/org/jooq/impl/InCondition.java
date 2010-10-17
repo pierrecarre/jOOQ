@@ -29,23 +29,67 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Set;
+
+import org.jooq.Field;
+import org.jooq.InOperator;
+import org.jooq.SQLDialect;
 
 /**
- * A condition combining other conditions using an Operator
- *
  * @author Lukas Eder
  */
-public interface CombinedCondition extends Condition {
-    /**
-     * @return The combine operator
-     */
-    Operator getOperator();
+class InCondition<T> extends AbstractCondition {
 
-    /**
-     * @return The combined conditions
-     */
-    List<Condition> getConditions();
+    private static final long serialVersionUID = -1653924248576930761L;
+    private final Field<T>    field;
+    private final Set<T>      values;
+    private final InOperator  operator;
+
+    InCondition(SQLDialect dialect, Field<T> field, Set<T> values) {
+        this(dialect, field, values, InOperator.IN);
+    }
+
+    InCondition(SQLDialect dialect, Field<T> field, Set<T> values, InOperator operator) {
+        super(dialect);
+
+        this.field = field;
+        this.values = values;
+        this.operator = operator;
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
+
+        for (T value : values) {
+            bind(stmt, result++, field, value);
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(operator.toSQL());
+        sb.append(" (");
+
+        String separator = "";
+        for (T value : values) {
+            sb.append(separator);
+            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            separator = ", ";
+        }
+
+        sb.append(")");
+
+        return sb.toString();
+    }
 }

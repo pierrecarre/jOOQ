@@ -40,7 +40,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class BetweenConditionImpl<T> extends AbstractCondition {
+class BetweenCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -4666251100802237878L;
 
@@ -48,7 +48,7 @@ class BetweenConditionImpl<T> extends AbstractCondition {
     private final T           minValue;
     private final T           maxValue;
 
-    BetweenConditionImpl(SQLDialect dialect, Field<T> field, T minValue, T maxValue) {
+    BetweenCondition(SQLDialect dialect, Field<T> field, T minValue, T maxValue) {
         super(dialect);
 
         if (field == null) {

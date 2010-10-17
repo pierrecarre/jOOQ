@@ -44,7 +44,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class CompareConditionImpl<T> extends AbstractCondition {
+class CompareCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -6456616674773879690L;
 
@@ -52,7 +52,7 @@ class CompareConditionImpl<T> extends AbstractCondition {
     private final T           value;
     private final Comparator  comparator;
 
-    CompareConditionImpl(SQLDialect dialect, Field<T> field, T value, Comparator comparator) {
+    CompareCondition(SQLDialect dialect, Field<T> field, T value, Comparator comparator) {
         super(dialect);
 
         if (value == null && comparator != EQUALS && comparator != NOT_EQUALS) {

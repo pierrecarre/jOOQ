@@ -54,7 +54,6 @@ import junit.framework.Assert;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -120,7 +119,7 @@ public class jOOQTest {
 
     @Test
     public final void testEmptyCombinedCondition() throws Exception {
-        CombinedCondition c = create.combinedCondition();
+        Condition c = create.combinedCondition();
         assertEquals("1 = 1", c.toSQLReference());
 
         int i = c.bind(statement);
@@ -129,7 +128,7 @@ public class jOOQTest {
 
     @Test
     public final void testSingleCombinedCondition() throws Exception {
-        CombinedCondition c = create.combinedCondition(TRUE_CONDITION);
+        Condition c = create.combinedCondition(TRUE_CONDITION);
         assertEquals(TRUE_CONDITION.toSQLReference(true), c.toSQLReference(true));
         assertEquals(TRUE_CONDITION.toSQLReference(false), c.toSQLReference(false));
 
@@ -144,7 +143,7 @@ public class jOOQTest {
         Condition c3 = FIELD_ID1.equal(30);
         Condition c4 = FIELD_ID2.equal(40);
 
-        CombinedCondition c = c1.and(c2).or(c3.and(c4));
+        Condition c = c1.and(c2).or(c3.and(c4));
         assertEquals("((TABLE1.ID1 = 10 and TABLE2.ID2 = 20) or (TABLE1.ID1 = 30 and TABLE2.ID2 = 40))", c.toSQLReference(true));
         assertEquals("((TABLE1.ID1 = ? and TABLE2.ID2 = ?) or (TABLE1.ID1 = ? and TABLE2.ID2 = ?))", c.toSQLReference(false));
 

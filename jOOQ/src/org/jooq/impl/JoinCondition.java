@@ -29,13 +29,58 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import org.jooq.Comparator;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
- * A condition comparing values with a field
- *
  * @author Lukas Eder
  */
-public interface FieldCondition<T> extends Condition {
+class JoinCondition<T> extends AbstractCondition {
 
+    private static final long serialVersionUID = -747240442279619486L;
+
+    private final Field<T>    field1;
+    private final Field<T>    field2;
+    private final Comparator  comparator;
+
+    JoinCondition(SQLDialect dialect, Field<T> field1, Field<T> field2) {
+        this(dialect, field1, field2, Comparator.EQUALS);
+    }
+
+    JoinCondition(SQLDialect dialect, Field<T> field1, Field<T> field2, Comparator comparator) {
+        super(dialect);
+
+        this.field1 = field1;
+        this.field2 = field2;
+        this.comparator = comparator;
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
+
+        result = field1.bind(stmt, result);
+        result = field2.bind(stmt, result);
+
+        return result;
+    }
+
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(field1.toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(comparator.toSQL());
+        sb.append(" ");
+        sb.append(field2.toSQLReference(inlineParameters));
+
+        return sb.toString();
+    }
 }

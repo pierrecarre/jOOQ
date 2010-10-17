@@ -33,13 +33,12 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 
-import org.jooq.Condition;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-public class TrueCondition extends AbstractCondition implements Condition {
+public class TrueCondition extends AbstractCondition {
 
     private static final long         serialVersionUID = 775364624704563687L;
     public static final TrueCondition TRUE_CONDITION   = new TrueCondition();

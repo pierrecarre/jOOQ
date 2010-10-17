@@ -38,7 +38,6 @@ import java.util.LinkedHashSet;
 
 import javax.sql.DataSource;
 
-import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -247,29 +246,29 @@ public final class Factory implements Configuration {
     /**
      * Combine a list of conditions with the {@link Operator#AND} operator
      */
-    public CombinedCondition combinedCondition(Condition... conditions) {
+    public Condition combinedCondition(Condition... conditions) {
         return combinedCondition(Operator.AND, conditions);
     }
 
     /**
      * Combine a collection of conditions with the {@link Operator#AND} operator
      */
-    public CombinedCondition combinedCondition(Collection<Condition> conditions) {
+    public Condition combinedCondition(Collection<Condition> conditions) {
         return combinedCondition(Operator.AND, conditions);
     }
 
     /**
      * Combine a list of conditions with any operator
      */
-    public CombinedCondition combinedCondition(Operator operator, Condition... conditions) {
+    public Condition combinedCondition(Operator operator, Condition... conditions) {
         return combinedCondition(operator, Arrays.asList(conditions));
     }
 
     /**
      * Combine a collection of conditions with any operator
      */
-    public CombinedCondition combinedCondition(Operator operator, Collection<Condition> conditions) {
-        return new CombinedConditionImpl(dialect, operator, conditions);
+    public Condition combinedCondition(Operator operator, Collection<Condition> conditions) {
+        return new CombinedCondition(dialect, operator, conditions);
     }
 
     /**
@@ -282,7 +281,7 @@ public final class Factory implements Configuration {
      * @return A {@link BetweenCondition}
      */
     public <T> Condition betweenCondition(Field<T> field, T minValue, T maxValue) {
-        return new BetweenConditionImpl<T>(dialect, field, minValue, maxValue);
+        return new BetweenCondition<T>(dialect, field, minValue, maxValue);
     }
 
     /**
@@ -306,7 +305,7 @@ public final class Factory implements Configuration {
      * @return An {@link InCondition}
      */
     public <T> Condition notInCondition(Field<T> field, Collection<T> values) {
-        return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
+        return new InCondition<T>(dialect, field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
     }
 
     /**
@@ -330,7 +329,7 @@ public final class Factory implements Configuration {
      * @return An {@link InCondition}
      */
     public <T> Condition inCondition(Field<T> field, Collection<T> values) {
-        return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values));
+        return new InCondition<T>(dialect, field, new LinkedHashSet<T>(values));
     }
 
     /**
@@ -356,7 +355,7 @@ public final class Factory implements Configuration {
      * @return A {@link CompareCondition}
      */
     public <T> Condition compareCondition(Field<T> field, T value, Comparator comparator) {
-        return new CompareConditionImpl<T>(dialect, field, value, comparator);
+        return new CompareCondition<T>(dialect, field, value, comparator);
     }
 
     /**
@@ -403,7 +402,7 @@ public final class Factory implements Configuration {
      * @return A {@link JoinCondition}
      */
     public <T> Condition joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
-        return new JoinConditionImpl<T>(dialect, field1, field2);
+        return new JoinCondition<T>(dialect, field1, field2);
     }
 
     /**

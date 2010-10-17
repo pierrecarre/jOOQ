@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.Operator;
 import org.jooq.SQLDialect;
@@ -47,14 +46,14 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class CombinedConditionImpl extends AbstractCondition implements CombinedCondition {
+class CombinedCondition extends AbstractCondition {
 
     private static final long     serialVersionUID = -7373293246207052549L;
 
     private final Operator        operator;
     private final List<Condition> conditions;
 
-    CombinedConditionImpl(SQLDialect dialect, Operator operator, Collection<Condition> conditions) {
+    CombinedCondition(SQLDialect dialect, Operator operator, Collection<Condition> conditions) {
         super(dialect);
 
         if (operator == null) {
@@ -79,8 +78,8 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
         for (Condition condition : conditions) {
             if (condition instanceof CombinedCondition) {
                 CombinedCondition combinedCondition = (CombinedCondition) condition;
-                if (combinedCondition.getOperator() == operator) {
-                    this.conditions.addAll(combinedCondition.getConditions());
+                if (combinedCondition.operator == operator) {
+                    this.conditions.addAll(combinedCondition.conditions);
                 }
                 else {
                     this.conditions.add(condition);
@@ -96,7 +95,7 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        for (Condition condition : getConditions()) {
+        for (Condition condition : conditions) {
             result = condition.bind(stmt, result);
         }
 
@@ -104,34 +103,24 @@ class CombinedConditionImpl extends AbstractCondition implements CombinedConditi
     }
 
     @Override
-    public final List<Condition> getConditions() {
-        return conditions;
-    }
-
-    @Override
-    public final Operator getOperator() {
-        return operator;
-    }
-
-    @Override
     public final String toSQLReference(boolean inlineParameters) {
-        if (getConditions().isEmpty()) {
+        if (conditions.isEmpty()) {
             return TRUE_CONDITION.toSQLReference(inlineParameters);
         }
 
-        if (getConditions().size() == 1) {
+        if (conditions.size() == 1) {
             return conditions.get(0).toSQLReference(inlineParameters);
         }
 
         StringBuilder sb = new StringBuilder();
-        String operator = " " + getOperator().name().toLowerCase() + " ";
+        String operatorName = " " + operator.name().toLowerCase() + " ";
         String separator = "";
 
         sb.append("(");
-        for (Condition condition : getConditions()) {
+        for (Condition condition : conditions) {
             sb.append(separator);
             sb.append(condition.toSQLReference(inlineParameters));
-            separator = operator;
+            separator = operatorName;
         }
         sb.append(")");
 

@@ -33,13 +33,12 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 
-import org.jooq.Condition;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-public class FalseCondition extends AbstractCondition implements Condition {
+public class FalseCondition extends AbstractCondition {
 
     private static final long          serialVersionUID = -3972466479081463547L;
     public static final FalseCondition FALSE_CONDITION  = new FalseCondition();
