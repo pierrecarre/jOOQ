@@ -59,7 +59,7 @@ class Function<T> extends FieldImpl<T> {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getName());
-        sb.append(getArgumentListDelimiterStart());
+        sb.append(getArgumentListDelimiterStart(inlineParameters));
 
         String separator = "";
         if (arguments.isEmpty()) {
@@ -74,19 +74,19 @@ class Function<T> extends FieldImpl<T> {
             }
         }
 
-        sb.append(getArgumentListDelimiterEnd());
+        sb.append(getArgumentListDelimiterEnd(inlineParameters));
 
         return sb.toString();
     }
 
-    private final String getArgumentListDelimiterStart() {
+    private final String getArgumentListDelimiterStart(boolean inlineParameters) {
         switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
             case POSTGRES:
 
                 // Oracle empty argument lists do not have parentheses ()
-                if (arguments.isEmpty()) {
+                if (arguments.isEmpty() && StringUtils.isBlank(toSQLEmptyFields(inlineParameters))) {
                     return "";
                 }
         }
@@ -95,14 +95,14 @@ class Function<T> extends FieldImpl<T> {
         return "(";
     }
 
-    private final String getArgumentListDelimiterEnd() {
+    private final String getArgumentListDelimiterEnd(boolean inlineParameters) {
         switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
             case POSTGRES:
 
                 // Oracle empty argument lists do not have parentheses ()
-                if (arguments.isEmpty()) {
+                if (arguments.isEmpty() && StringUtils.isBlank(toSQLEmptyFields(inlineParameters))) {
                     return "";
                 }
         }

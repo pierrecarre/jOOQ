@@ -176,6 +176,20 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     }
 
     @Test
+    public final void testGrouping() throws Exception {
+        Field<Integer> count = create().functions().count().as("c");
+        SelectQuery q = create().select(getTBook_AUTHOR_ID(), count).from(getTBook()).groupBy(getTBook_AUTHOR_ID()).getQuery();
+
+        int rows = q.execute();
+        Result<Record> result = q.getResult();
+
+        assertEquals(2, rows);
+        assertEquals(2, result.getNumberOfRecords());
+        assertEquals(2, (int) result.getRecord(0).getValue(count));
+        assertEquals(2, (int) result.getRecord(1).getValue(count));
+    }
+
+    @Test
     public final void testInsertUpdateDelete() throws Exception {
         InsertQuery<A> i = create().insertQuery(getTAuthor());
         i.addValue(getTAuthor_ID(), 100);
