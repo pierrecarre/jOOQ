@@ -28,39 +28,68 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-/**
- * A wrapper for a value in a {@link Record}
- *
- * @author Lukas Eder
- */
-public interface Value<T> {
 
-    /**
-     * @return The wrapped value
-     */
-    T getValue();
+class Value<T> {
 
-    /**
-     * Get the wrapped value or a default value if the wrapped value is
-     * <code>null</code>.
-     *
-     * @param defaultValue The default value if the wrapped value is
-     *            <code>null</code>.
-     * @return The wrapped value.
-     */
-    T getValue(T defaultValue);
+    private T       value;
+    private boolean isChanged;
 
-    /**
-     * Set the wrapped value.
-     *
-     * @param value The new wrapped value.
-     */
-    void setValue(T value);
+    Value(T value) {
+        this.value = value;
+    }
 
-    /**
-     * @return Whether this value has been changed since the record was loaded.
-     */
-    boolean isChanged();
+    public T getValue() {
+        return value;
+    }
+
+    public T getValue(T defaultValue) {
+        return value != null ? value : defaultValue;
+    }
+
+    public void setValue(T value) {
+        if (this.value == null) {
+            this.isChanged = value != null;
+        }
+
+        else {
+            this.isChanged = !this.value.equals(value);
+        }
+
+        this.value = value;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Value<?>) {
+            Value<?> other = (Value<?>) obj;
+
+            if (value == null) {
+                return other.getValue() == null;
+            }
+
+            return value.equals(other.getValue());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        if (value == null) {
+            return 0;
+        }
+
+        return value.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ValueImpl [" + value + "]";
+    }
 }

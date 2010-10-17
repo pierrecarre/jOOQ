@@ -68,13 +68,6 @@ public interface Record extends FieldProvider {
     <T> void setValue(Field<T> field, T value);
 
     /**
-     * @param <T> The generic field parameter
-     * @param field The field
-     * @param value The value
-     */
-    <T> void setValue(Field<T> field, Value<T> value);
-
-    /**
      * @return Whether any values have been changed since the record was loaded.
      */
     boolean hasChangedValues();

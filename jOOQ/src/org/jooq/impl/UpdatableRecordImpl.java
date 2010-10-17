@@ -45,7 +45,6 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
-import org.jooq.Value;
 
 /**
  * A record implementation for a record holding a primary key

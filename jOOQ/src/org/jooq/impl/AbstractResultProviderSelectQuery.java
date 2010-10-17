@@ -250,7 +250,8 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
                 R record = newRecord();
 
                 for (int i = 0; i < fields.size(); i++) {
-                    setValue(record, fields.get(i), i + 1, rs);
+                    // All Records extends RecordImpl, so this cast is safe
+                    setValue((RecordImpl) record, fields.get(i), i + 1, rs);
                 }
 
                 result.addRecord(record);
@@ -266,9 +267,9 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     /**
      * Utility method to prevent unnecessary unchecked conversions
      */
-    private final <T> void setValue(Record record, Field<T> field, int index, ResultSet rs) throws SQLException {
+    private final <T> void setValue(RecordImpl record, Field<T> field, int index, ResultSet rs) throws SQLException {
         T value = FieldTypeHelper.getFromResultSet(rs, field.getType(), index);
-        record.setValue(field, new ValueImpl<T>(value));
+        record.setValue(field, new Value<T>(value));
     }
 
     @Override

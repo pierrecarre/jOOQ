@@ -38,7 +38,6 @@ import java.util.Map;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
-import org.jooq.Value;
 
 /**
  * @author Lukas Eder
@@ -90,7 +89,7 @@ public class RecordImpl implements Record {
             values = new LinkedHashMap<Field<?>, Value<?>>();
 
             for (Field<?> field : fields.getFields()) {
-                values.put(field, new ValueImpl<Object>(null));
+                values.put(field, new Value<Object>(null));
             }
         }
 
@@ -112,8 +111,7 @@ public class RecordImpl implements Record {
         getValue0(field).setValue(value);
     }
 
-    @Override
-    public final <T> void setValue(Field<T> field, Value<T> value) {
+    final <T> void setValue(Field<T> field, Value<T> value) {
         getValues().put(field, value);
     }
 
