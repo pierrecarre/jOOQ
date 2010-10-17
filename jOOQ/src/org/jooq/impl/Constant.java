@@ -31,33 +31,23 @@
 
 package org.jooq.impl;
 
-import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.NamedQueryPart;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class ExtractFunctionImpl extends FunctionImpl<Integer> {
+class Constant<T> extends FieldImpl<T> implements Field<T> {
 
-    private static final long serialVersionUID = 3748640920856031034L;
-    private final DatePart    datePart;
+    private static final long serialVersionUID = 6807729087019209084L;
 
-    ExtractFunctionImpl(SQLDialect dialect, Field<?> field, DatePart datePart) {
-        super(dialect, "extract", Integer.class, field);
-
-        this.datePart = datePart;
+    @SuppressWarnings("unchecked")
+    Constant(SQLDialect dialect, T value) {
+        super(dialect, value.toString(), (Class<? extends T>) value.getClass());
     }
 
     @Override
-    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(datePart.toSQL());
-        sb.append(" from ");
-        sb.append(super.toSQLField(field, inlineParameters));
-
-        return sb.toString();
+    public final String toSQLReference(boolean inlineParameters) {
+        return "'" + super.toSQLReference(inlineParameters) + "'";
     }
 }

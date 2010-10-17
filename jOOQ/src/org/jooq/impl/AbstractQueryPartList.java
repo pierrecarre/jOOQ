@@ -38,13 +38,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.QueryPart;
-import org.jooq.QueryPartList;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPartList<T> {
+abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPart {
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList      = new ArrayList<T>();

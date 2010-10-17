@@ -69,7 +69,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
     @Override
     public Field<T> asField() {
         if (function == null) {
-            function = new FunctionImpl<T>(getDialect(), getName(), type, getInValueParts().toArray(new NamedQueryPart[0]));
+            function = new Function<T>(getDialect(), getName(), type, getInValueParts().toArray(new NamedQueryPart[0]));
         }
 
         return function;

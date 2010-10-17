@@ -37,7 +37,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class IntegerFunction extends FunctionImpl<Integer> {
+class IntegerFunction extends Function<Integer> {
 
     private static final long serialVersionUID = -3122391719303988827L;
 

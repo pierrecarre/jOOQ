@@ -31,6 +31,7 @@
 
 package org.jooq.impl;
 
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
 import org.jooq.SQLDialect;
@@ -38,37 +39,25 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class CountFunctionImpl extends FunctionImpl<Integer> {
+class Extract extends Function<Integer> {
 
-    private static final long serialVersionUID = 4685583105296376461L;
+    private static final long serialVersionUID = 3748640920856031034L;
+    private final DatePart    datePart;
 
-    private final boolean     distinct;
+    Extract(SQLDialect dialect, Field<?> field, DatePart datePart) {
+        super(dialect, "extract", Integer.class, field);
 
-    CountFunctionImpl(SQLDialect dialect) {
-        super(dialect, "count", Integer.class);
-
-        this.distinct = false;
-    }
-
-    CountFunctionImpl(SQLDialect dialect, Field<?> field, boolean distinct) {
-        super(dialect, "count", Integer.class, field);
-
-        this.distinct = distinct;
+        this.datePart = datePart;
     }
 
     @Override
-    protected String toSQLEmptyFields(boolean inlineParameters) {
-        return "*";
-    }
+    protected final String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-    @Override
-    protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-        String result = super.toSQLField(field, inlineParameters);
+        sb.append(datePart.toSQL());
+        sb.append(" from ");
+        sb.append(super.toSQLField(field, inlineParameters));
 
-        if (distinct) {
-            result = "distinct " + result;
-        }
-
-        return result;
+        return sb.toString();
     }
 }

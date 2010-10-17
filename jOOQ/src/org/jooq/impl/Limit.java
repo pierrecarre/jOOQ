@@ -33,14 +33,13 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.Limit;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
  */
-class LimitImpl extends AbstractQueryPart implements Limit {
+class Limit extends AbstractQueryPart {
 
     /**
      * Generated UID
@@ -49,7 +48,7 @@ class LimitImpl extends AbstractQueryPart implements Limit {
     private int               lowerBound;
     private int               numberOfRows;
 
-    LimitImpl(SQLDialect dialect) {
+    Limit(SQLDialect dialect) {
         super(dialect);
 
         lowerBound = 1;
@@ -90,22 +89,18 @@ class LimitImpl extends AbstractQueryPart implements Limit {
         return initialIndex;
     }
 
-    @Override
     public final int getLowerBound() {
         return lowerBound;
     }
 
-    @Override
     public final int getUpperBound() {
         return lowerBound + numberOfRows + 1;
     }
 
-    @Override
     public final int getNumberOfRows() {
         return numberOfRows;
     }
 
-    @Override
     public final boolean isApplicable() {
         return getLowerBound() != 1 || getUpperBound() != Integer.MAX_VALUE;
     }

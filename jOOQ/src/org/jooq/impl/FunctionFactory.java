@@ -50,7 +50,7 @@ import org.jooq.SQLDialectNotSupportedException;
  * remain valid even after you switched databases.
  * <p>
  * If your function is not available in this API, try creating your own
- * {@link FunctionImpl} or use {@link PlainSQLField}
+ * {@link Function} or use {@link PlainSQLField}
  * <p>
  * If by any chance a function is not supported in your current SQL dialect, a
  * {@link SQLDialectNotSupportedException} is thrown before executing the SQL
@@ -89,98 +89,98 @@ public final class FunctionFactory {
      * Get the sum over a numeric field: sum(field)
      */
     public <T extends Number> Field<T> sum(Field<T> field) {
-        return new FunctionImpl<T>(getDialect(), "sum", field.getType(), field);
+        return new Function<T>(getDialect(), "sum", field.getType(), field);
     }
 
     /**
      * Get the average over a numeric field: avg(field)
      */
     public <T extends Number> Field<Double> avg(Field<T> field) {
-        return new FunctionImpl<Double>(getDialect(), "avg", Double.class, field);
+        return new Function<Double>(getDialect(), "avg", Double.class, field);
     }
 
     /**
      * Get the absolute value of a numeric field: abs(field)
      */
     public <T extends Number> Field<T> abs(Field<T> field) {
-        return new FunctionImpl<T>(getDialect(), "abs", field.getType(), field);
+        return new Function<T>(getDialect(), "abs", field.getType(), field);
     }
 
     /**
      * Get rounded value of a numeric field: round(field)
      */
     public <T extends Number> Field<T> round(Field<T> field) {
-        return new FunctionImpl<T>(getDialect(), "round", field.getType(), field);
+        return new Function<T>(getDialect(), "round", field.getType(), field);
     }
 
     /**
      * Get the min value over a numeric field: min(field)
      */
     public <T> Field<T> min(Field<T> field) {
-        return new FunctionImpl<T>(getDialect(), "min", field.getType(), field);
+        return new Function<T>(getDialect(), "min", field.getType(), field);
     }
 
     /**
      * Get the max value over a numeric field: max(field)
      */
     public <T> Field<T> max(Field<T> field) {
-        return new FunctionImpl<T>(getDialect(), "max", field.getType(), field);
+        return new Function<T>(getDialect(), "max", field.getType(), field);
     }
 
     /**
      * Get the count(*) function
      */
     public Field<Integer> count() {
-        return new CountFunctionImpl(getDialect());
+        return new Count(getDialect());
     }
 
     /**
      * Get the count(field) function
      */
     public Field<Integer> count(Field<?> field) {
-        return new CountFunctionImpl(getDialect(), field, false);
+        return new Count(getDialect(), field, false);
     }
 
     /**
      * Get the count(distinct field) function
      */
     public Field<Integer> countDistinct(Field<?> field) {
-        return new CountFunctionImpl(getDialect(), field, true);
+        return new Count(getDialect(), field, true);
     }
 
     /**
      * Get the upper(field) function
      */
     public Field<String> upper(Field<String> field) {
-        return new FunctionImpl<String>(getDialect(), "upper", field.getType(), field);
+        return new Function<String>(getDialect(), "upper", field.getType(), field);
     }
 
     /**
      * Get the lower(field) function
      */
     public Field<String> lower(Field<String> field) {
-        return new FunctionImpl<String>(getDialect(), "lower", field.getType(), field);
+        return new Function<String>(getDialect(), "lower", field.getType(), field);
     }
 
     /**
      * Get the trim(field) function
      */
     public Field<String> trim(Field<String> field) {
-        return new FunctionImpl<String>(getDialect(), "trim", field.getType(), field);
+        return new Function<String>(getDialect(), "trim", field.getType(), field);
     }
 
     /**
      * Get the rtrim(field) function
      */
     public Field<String> rtrim(Field<String> field) {
-        return new FunctionImpl<String>(getDialect(), "rtrim", field.getType(), field);
+        return new Function<String>(getDialect(), "rtrim", field.getType(), field);
     }
 
     /**
      * Get the ltrim(field) function
      */
     public Field<String> ltrim(Field<String> field) {
-        return new FunctionImpl<String>(getDialect(), "ltrim", field.getType(), field);
+        return new Function<String>(getDialect(), "ltrim", field.getType(), field);
     }
 
     /**
@@ -331,10 +331,10 @@ public final class FunctionFactory {
     public Field<Date> currentDate() throws SQLDialectNotSupportedException {
         switch (getDialect()) {
             case ORACLE:
-                return new FunctionImpl<Date>(getDialect(), "sysdate", Date.class);
+                return new Function<Date>(getDialect(), "sysdate", Date.class);
         }
 
-        return new FunctionImpl<Date>(getDialect(), "current_date", Date.class);
+        return new Function<Date>(getDialect(), "current_date", Date.class);
     }
 
     /**
@@ -345,10 +345,10 @@ public final class FunctionFactory {
     public Field<Time> currentTime() throws SQLDialectNotSupportedException {
         switch (getDialect()) {
             case ORACLE:
-                return new FunctionImpl<Time>(getDialect(), "sysdate", Time.class);
+                return new Function<Time>(getDialect(), "sysdate", Time.class);
         }
 
-        return new FunctionImpl<Time>(getDialect(), "current_time", Time.class);
+        return new Function<Time>(getDialect(), "current_time", Time.class);
     }
 
     /**
@@ -359,10 +359,10 @@ public final class FunctionFactory {
     public Field<Timestamp> currentTimestamp() {
         switch (getDialect()) {
             case ORACLE:
-                return new FunctionImpl<Timestamp>(getDialect(), "sysdate", Timestamp.class);
+                return new Function<Timestamp>(getDialect(), "sysdate", Timestamp.class);
         }
 
-        return new FunctionImpl<Timestamp>(getDialect(), "current_timestamp", Timestamp.class);
+        return new Function<Timestamp>(getDialect(), "current_timestamp", Timestamp.class);
     }
 
     /**
@@ -432,7 +432,7 @@ public final class FunctionFactory {
             case MYSQL: // No break
             case POSTGRES:
             case HSQLDB:
-                return new ExtractFunctionImpl(getDialect(), field, datePart);
+                return new Extract(getDialect(), field, datePart);
             case ORACLE:
                 switch (datePart) {
                     case YEAR:
@@ -496,7 +496,7 @@ public final class FunctionFactory {
             throw new IllegalArgumentException("Argument 'value' must not be null");
         }
 
-        return new ConstantFieldImpl<T>(getDialect(), value);
+        return new Constant<T>(getDialect(), value);
     }
 
     /**

@@ -36,20 +36,19 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Field;
 import org.jooq.NamedQueryPart;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
+class Function<T> extends FieldImpl<T> {
 
     private static final long          serialVersionUID = 347252741712134044L;
 
     private final List<NamedQueryPart> arguments;
 
-    FunctionImpl(SQLDialect dialect, String name, Class<? extends T> type, NamedQueryPart... arguments) {
+    Function(SQLDialect dialect, String name, Class<? extends T> type, NamedQueryPart... arguments) {
         super(dialect, name, type);
 
         this.arguments = Arrays.asList(arguments);
@@ -80,7 +79,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
         return sb.toString();
     }
 
-    private String getArgumentListDelimiterStart() {
+    private final String getArgumentListDelimiterStart() {
         switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
@@ -96,7 +95,7 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
         return "(";
     }
 
-    private String getArgumentListDelimiterEnd() {
+    private final String getArgumentListDelimiterEnd() {
         switch (getDialect()) {
             case ORACLE: // No break
             case HSQLDB: // No break
@@ -112,10 +111,20 @@ class FunctionImpl<T> extends FieldImpl<T> implements Field<T> {
         return ")";
     }
 
+    /**
+     * Render the argument field. This renders the field directly, by default.
+     * Subclasses may override this method, if needed (e.g. to render
+     * count(distinct [field])
+     */
     protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
         return field.toSQLReference(inlineParameters);
     }
 
+    /**
+     * Render the expression, when no fields are passed to the function. This
+     * returns nothing by default. Subclasses may override this method, if
+     * needed (e.g. to return * for count(*))
+     */
     protected String toSQLEmptyFields(boolean inlineParameters) {
         return "";
     }

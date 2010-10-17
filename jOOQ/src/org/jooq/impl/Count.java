@@ -29,16 +29,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
-import java.util.List;
+import org.jooq.Field;
+import org.jooq.NamedQueryPart;
+import org.jooq.SQLDialect;
 
 /**
- * A common interface for lists composed of query parts. These lists are
- * decorated with QueryPart behaviour themselves.
- *
  * @author Lukas Eder
  */
-public interface QueryPartList<T extends QueryPart> extends List<T>, QueryPart {
+class Count extends Function<Integer> {
 
+    private static final long serialVersionUID = 4685583105296376461L;
+
+    private final boolean     distinct;
+
+    Count(SQLDialect dialect) {
+        super(dialect, "count", Integer.class);
+
+        this.distinct = false;
+    }
+
+    Count(SQLDialect dialect, Field<?> field, boolean distinct) {
+        super(dialect, "count", Integer.class, field);
+
+        this.distinct = distinct;
+    }
+
+    @Override
+    protected final String toSQLEmptyFields(boolean inlineParameters) {
+        return "*";
+    }
+
+    @Override
+    protected final String toSQLField(NamedQueryPart field, boolean inlineParameters) {
+        String result = super.toSQLField(field, inlineParameters);
+
+        if (distinct) {
+            result = "distinct " + result;
+        }
+
+        return result;
+    }
 }
