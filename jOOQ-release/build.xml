@@ -70,9 +70,7 @@
 
 			<javac 
 				srcdir="${dir.workspace}/@{project}/src"
-				destdir="${dir.target}/@{project}/bin"
-				source="1.5"
-				target="1.5">
+				destdir="${dir.target}/@{project}/bin">
 				
 				<classpath>
 					<fileset dir="${dir.release}/latest">
