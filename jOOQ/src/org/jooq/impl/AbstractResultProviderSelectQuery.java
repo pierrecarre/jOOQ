@@ -47,7 +47,6 @@ import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Join;
 import org.jooq.Limit;
-import org.jooq.OrderByFieldList;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;
@@ -85,13 +84,13 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         super(configuration);
         final SQLDialect dialect = configuration.getDialect();
 
-        this.select = new SelectFieldListImpl(dialect);
+        this.select = new SelectFieldList(dialect);
         this.from = new TableList(dialect);
         this.join = new JoinList(dialect);
         this.condition = new ConditionProviderImpl(dialect);
         this.groupBy = new FieldListImpl(dialect);
         this.having = new ConditionProviderImpl(dialect);
-        this.orderBy = new OrderByFieldListImpl(dialect);
+        this.orderBy = new OrderByFieldList(dialect);
         this.limit = new LimitImpl(dialect);
 
         if (from != null) {
@@ -189,7 +188,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     @Override
     public final FieldList getSelect() {
         if (getSelect0().isEmpty()) {
-            FieldList result = new SelectFieldListImpl(getDialect());
+            FieldList result = new SelectFieldList(getDialect());
 
             for (Table<?> table : getFrom()) {
                 for (Field<?> field : table.getFields()) {
@@ -315,13 +314,6 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     public final void addOrderBy(Collection<Field<?>> fields) {
         for (Field<?> field : fields) {
             addOrderBy(field, null);
-        }
-    }
-
-    @Override
-    public final void addOrderBy(OrderByFieldList fields) {
-        for (Field<?> field : fields) {
-            addOrderBy(field, fields.getOrdering().get(field));
         }
     }
 

@@ -36,11 +36,11 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class SelectFieldListImpl extends FieldListImpl {
+class SelectFieldList extends FieldListImpl {
 
     private static final long serialVersionUID = 8850104968428500798L;
 
-    SelectFieldListImpl(SQLDialect dialect) {
+    SelectFieldList(SQLDialect dialect) {
         super(dialect);
     }
 

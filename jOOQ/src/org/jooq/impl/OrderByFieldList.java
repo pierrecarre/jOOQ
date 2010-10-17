@@ -29,36 +29,55 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.impl;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.jooq.Field;
+import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
+
 /**
- * A field list used for fields in a query's order by clause
- *
  * @author Lukas Eder
  */
-public interface OrderByFieldList extends FieldList {
+class OrderByFieldList extends FieldListImpl {
 
-    /**
-     * Adds a field to the field list, specifying the corresponding sort order
-     *
-     * @param field The sort field
-     * @param order The sort order
-     */
-    void add(Field<?> field, SortOrder order);
+    private static final long              serialVersionUID = -1825164005148183725L;
 
-    /**
-     * Adds fields to the field list, specifying the corresponding sort orders
-     *
-     * @param fields The sort fields
-     * @param orders The sort orders
-     */
-    void addAll(Collection<Field<?>> fields, Collection<SortOrder> orders);
+    private final Map<Field<?>, SortOrder> ordering;
 
-    /**
-     * @return Get an associative map of fields and their respective ordering
-     */
-    Map<Field<?>, SortOrder> getOrdering();
+    OrderByFieldList(SQLDialect dialect) {
+        this(dialect, new ArrayList<Field<?>>());
+    }
+
+    OrderByFieldList(SQLDialect dialect, List<Field<?>> wrappedList) {
+        super(dialect, wrappedList);
+
+        this.ordering = new HashMap<Field<?>, SortOrder>();
+    }
+
+    void add(Field<?> field, SortOrder order) {
+        add(field);
+
+        if (order != null) {
+            ordering.put(field, order);
+        }
+    }
+
+    @Override
+    protected String toSQLReference(Field<?> field, boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(super.toSQLReference(field, inlineParameters));
+
+        if (ordering.get(field) != null) {
+            sb.append(" ");
+            sb.append(ordering.get(field).toSQL());
+        }
+
+        return sb.toString();
+    }
 }

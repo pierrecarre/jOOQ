@@ -175,13 +175,6 @@ extends ResultProviderQuery<R>,
     void addOrderBy(Collection<Field<?>> fields);
 
     /**
-     * Adds ordering fields
-     *
-     * @param fields The ordering fields
-     */
-    void addOrderBy(OrderByFieldList fields);
-
-    /**
      * Adds an ordering field
      *
      * @param field The ordering field
