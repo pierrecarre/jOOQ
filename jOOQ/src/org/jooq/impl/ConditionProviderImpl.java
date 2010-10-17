@@ -57,7 +57,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
         super(dialect);
     }
 
-    Condition getWhere() {
+    final Condition getWhere() {
         if (condition == null) {
             return TRUE_CONDITION;
         }
@@ -66,12 +66,12 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public void addConditions(Condition... conditions) {
+    public final void addConditions(Condition... conditions) {
         addConditions(Arrays.asList(conditions));
     }
 
     @Override
-    public void addConditions(Collection<Condition> conditions) {
+    public final void addConditions(Collection<Condition> conditions) {
         if (!conditions.isEmpty()) {
             Condition c;
 
@@ -92,47 +92,47 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
+    public final <T> void addBetweenCondition(Field<T> field, T minValue, T maxValue) {
         addConditions(create().betweenCondition(field, minValue, maxValue));
     }
 
     @Override
-    public <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
+    public final <T> void addCompareCondition(Field<T> field, T value, Comparator comparator) {
         addConditions(create().compareCondition(field, value, comparator));
     }
 
     @Override
-    public <T> void addCompareCondition(Field<T> field, T value) {
+    public final <T> void addCompareCondition(Field<T> field, T value) {
         addConditions(create().compareCondition(field, value));
     }
 
     @Override
-    public void addNullCondition(Field<?> field) {
+    public final void addNullCondition(Field<?> field) {
         addConditions(create().nullCondition(field));
     }
 
     @Override
-    public void addNotNullCondition(Field<?> field) {
+    public final void addNotNullCondition(Field<?> field) {
         addConditions(create().notNullCondition(field));
     }
 
     @Override
-    public <T> void addInCondition(Field<T> field, Collection<T> values) {
+    public final <T> void addInCondition(Field<T> field, Collection<T> values) {
         addConditions(create().inCondition(field, values));
     }
 
     @Override
-    public <T> void addInCondition(Field<T> field, T... values) {
+    public final <T> void addInCondition(Field<T> field, T... values) {
         addConditions(create().inCondition(field, values));
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         return getWhere().bind(stmt, initialIndex);
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
+    public final String toSQLReference(boolean inlineParameters) {
         return getWhere().toSQLReference(inlineParameters);
     }
 }
