@@ -31,17 +31,21 @@
 
 package org.jooq;
 
-
 /**
  * A table to be used in queries
  *
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider,
-    RecordTypeProvider<R> {
+public interface Table<R extends Record> extends NamedQueryPart, AliasProvider<Table<R>>, FieldProvider {
 
     /**
      * @return The table's schema
      */
     Schema getSchema();
+
+    /**
+     * @return The record type produced by this table
+     */
+    Class<? extends R> getRecordType();
+
 }

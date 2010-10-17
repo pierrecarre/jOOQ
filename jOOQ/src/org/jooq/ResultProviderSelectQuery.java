@@ -41,8 +41,7 @@ import java.util.List;
 public interface ResultProviderSelectQuery<Q extends ResultProviderSelectQuery<Q, R>, R extends Record>
 extends ResultProviderQuery<R>,
         ConditionProvider,
-        QueryProvider<Q>,
-        RecordTypeProvider<R> {
+        QueryProvider<Q> {
 
     /**
      * Combine this SelectQuery with another one, using the
@@ -205,4 +204,10 @@ extends ResultProviderQuery<R>,
      * All fields selected in this query
      */
     List<Field<?>> getSelect();
+
+    /**
+     * @return The record type produced by this query
+     */
+    Class<? extends R> getRecordType();
+
 }

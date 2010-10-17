@@ -31,7 +31,6 @@
 package org.jooq.impl;
 
 import org.jooq.AliasProvider;
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
@@ -74,16 +73,6 @@ abstract class AbstractTable<R extends Record> extends AbstractNamedQueryPart im
     @Override
     public final Field<?> getField(String name) {
         return getFields().getField(name);
-    }
-
-    @Override
-    public final R newRecord() {
-        return newRecord(new Factory(getDialect()));
-    }
-
-    @Override
-    public final R newRecord(Configuration configuration) {
-        return JooqUtil.newRecord(getRecordType(), this, configuration);
     }
 
     /**

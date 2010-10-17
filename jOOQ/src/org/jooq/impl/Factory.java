@@ -528,4 +528,16 @@ public final class Factory implements Configuration {
     public Join join(Table<?> table, JoinType type, Condition... conditions) {
         return new Join(dialect, table, type, conditions);
     }
+
+    /**
+     * Create a new {@link Record} that can be inserted into the corresponding
+     * table.
+     *
+     * @param <R> The generic record type
+     * @param table The table holding records of type <R>
+     * @return The new record
+     */
+    public <R extends Record> R newRecord(Table<R> table) {
+        return JooqUtil.newRecord(table.getRecordType(), table, this);
+    }
 }

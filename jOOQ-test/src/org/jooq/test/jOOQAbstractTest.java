@@ -267,7 +267,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testORMapper() throws Exception {
-        B book = getTBook().newRecord();
+        B book = create().newRecord(getTBook());
         try {
             book.refresh();
         }

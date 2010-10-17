@@ -206,7 +206,6 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     public final Class<? extends R> getRecordType() {
         if (getTables().size() == 1) {
             return (Class<? extends R>) getTables().get(0).getRecordType();
@@ -214,16 +213,6 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         else {
             return (Class<? extends R>) RecordImpl.class;
         }
-    }
-
-    @Override
-    public final R newRecord() {
-        return newRecord(getConfiguration());
-    }
-
-    @Override
-    public final R newRecord(Configuration configuration) {
-        return JooqUtil.newRecord(getRecordType(), getSelect(), configuration);
     }
 
     final TableList getTables() {
@@ -242,12 +231,13 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
 
         try {
             FieldList fields = getSelect();
+            Class<? extends R> type = getRecordType();
 
             rs = statement.executeQuery();
             result = new ResultImpl<R>(fields);
 
             while (rs.next()) {
-                R record = newRecord();
+                R record = JooqUtil.newRecord(type, fields, getConfiguration());
 
                 for (int i = 0; i < fields.size(); i++) {
                     // All Records extends RecordImpl, so this cast is safe
