@@ -87,37 +87,37 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this in (values...)</code>
      */
-    InCondition<T> in(T... values);
+    Condition in(T... values);
 
     /**
      * @return <code>this in (select...)</code>
      */
-    SubQueryCondition<T> in(ResultProviderSelectQuery<?, ?> query);
+    Condition in(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this not in (values...)</code>
      */
-    InCondition<T> notIn(Collection<T> values);
+    Condition notIn(Collection<T> values);
 
     /**
      * @return <code>this not in (values...)</code>
      */
-    InCondition<T> notIn(T... values);
+    Condition notIn(T... values);
 
     /**
      * @return <code>this not in (select...)</code>
      */
-    SubQueryCondition<T> notIn(ResultProviderSelectQuery<?, ?> query);
+    Condition notIn(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this in (values...)</code>
      */
-    InCondition<T> in(Collection<T> values);
+    Condition in(Collection<T> values);
 
     /**
      * @return <code>this between minValue and maxValue</code>
      */
-    BetweenCondition<T> between(T minValue, T maxValue);
+    Condition between(T minValue, T maxValue);
 
     /**
      * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
@@ -138,22 +138,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this = (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> equal(ResultProviderSelectQuery<?, ?> query);
+    Condition equal(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this = any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> equalAny(ResultProviderSelectQuery<?, ?> query);
+    Condition equalAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this = some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> equalSome(ResultProviderSelectQuery<?, ?> query);
+    Condition equalSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this = all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> equalAll(ResultProviderSelectQuery<?, ?> query);
+    Condition equalAll(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this != value</code>
@@ -168,22 +168,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this != (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> notEqual(ResultProviderSelectQuery<?, ?> query);
+    Condition notEqual(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this != any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> notEqualAny(ResultProviderSelectQuery<?, ?> query);
+    Condition notEqualAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this != some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> notEqualSome(ResultProviderSelectQuery<?, ?> query);
+    Condition notEqualSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this != all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> notEqualAll(ResultProviderSelectQuery<?, ?> query);
+    Condition notEqualAll(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this < value</code>
@@ -198,22 +198,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this < (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessThan(ResultProviderSelectQuery<?, ?> query);
+    Condition lessThan(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this < any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessThanAny(ResultProviderSelectQuery<?, ?> query);
+    Condition lessThanAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this < some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessThanSome(ResultProviderSelectQuery<?, ?> query);
+    Condition lessThanSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this < all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessThanAll(ResultProviderSelectQuery<?, ?> query);
+    Condition lessThanAll(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this <= value</code>
@@ -228,22 +228,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this <= (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessOrEqual(ResultProviderSelectQuery<?, ?> query);
+    Condition lessOrEqual(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this <= any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessOrEqualToAny(ResultProviderSelectQuery<?, ?> query);
+    Condition lessOrEqualToAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this <= some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessOrEqualToSome(ResultProviderSelectQuery<?, ?> query);
+    Condition lessOrEqualToSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this <= all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> lessOrEqualToAll(ResultProviderSelectQuery<?, ?> query);
+    Condition lessOrEqualToAll(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this > value</code>
@@ -258,22 +258,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this > (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterThan(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterThan(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this > any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterThanAny(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterThanAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this > some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterThanSome(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterThanSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this > all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterThanAll(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterThanAll(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this >= value</code>
@@ -288,21 +288,21 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * @return <code>this >= (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterOrEqual(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterOrEqual(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this >= any (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterOrEqualAny(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterOrEqualAny(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this >= some (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterOrEqualSome(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterOrEqualSome(ResultProviderSelectQuery<?, ?> query);
 
     /**
      * @return <code>this >= all (ResultProviderSelectQuery<?, ?> ...)</code>
      */
-    FieldCondition<T> greaterOrEqualAll(ResultProviderSelectQuery<?, ?> query);
+    Condition greaterOrEqualAll(ResultProviderSelectQuery<?, ?> query);
 
 }

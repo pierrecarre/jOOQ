@@ -35,15 +35,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import org.jooq.BetweenCondition;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.FieldCondition;
-import org.jooq.InCondition;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
-import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
 /**
@@ -97,37 +93,37 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public InCondition<T> in(T... values) {
+    public Condition in(T... values) {
         return create().inCondition(this, values);
     }
 
     @Override
-    public InCondition<T> in(Collection<T> values) {
+    public Condition in(Collection<T> values) {
         return create().inCondition(this, values);
     }
 
     @Override
-    public SubQueryCondition<T> in(ResultProviderSelectQuery<?, ?> query) {
+    public Condition in(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asInCondition(this);
     }
 
     @Override
-    public InCondition<T> notIn(T... values) {
+    public Condition notIn(T... values) {
         return create().notInCondition(this, values);
     }
 
     @Override
-    public InCondition<T> notIn(Collection<T> values) {
+    public Condition notIn(Collection<T> values) {
         return create().notInCondition(this, values);
     }
 
     @Override
-    public SubQueryCondition<T> notIn(ResultProviderSelectQuery<?, ?> query) {
+    public Condition notIn(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asNotInCondition(this);
     }
 
     @Override
-    public BetweenCondition<T> between(T minValue, T maxValue) {
+    public Condition between(T minValue, T maxValue) {
         return create().betweenCondition(this, minValue, maxValue);
     }
 
@@ -142,22 +138,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> equal(ResultProviderSelectQuery<?, ?> query) {
+    public Condition equal(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asCompareCondition(this);
     }
 
     @Override
-    public FieldCondition<T> equalAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition equalAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_ANY);
     }
 
     @Override
-    public FieldCondition<T> equalSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition equalSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_SOME);
     }
 
     @Override
-    public FieldCondition<T> equalAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition equalAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.EQUALS_ALL);
     }
 
@@ -172,22 +168,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> notEqual(ResultProviderSelectQuery<?, ?> query) {
+    public Condition notEqual(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS);
     }
 
     @Override
-    public FieldCondition<T> notEqualAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition notEqualAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_ALL);
     }
 
     @Override
-    public FieldCondition<T> notEqualSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition notEqualSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_SOME);
     }
 
     @Override
-    public FieldCondition<T> notEqualAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition notEqualAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.NOT_EQUALS_ALL);
     }
 
@@ -202,22 +198,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> lessThan(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessThan(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS);
     }
 
     @Override
-    public FieldCondition<T> lessThanAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessThanAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_ANY);
     }
 
     @Override
-    public FieldCondition<T> lessThanSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessThanSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_SOME);
     }
 
     @Override
-    public FieldCondition<T> lessThanAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessThanAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_THAN_ALL);
     }
 
@@ -232,22 +228,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> lessOrEqual(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessOrEqual(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL);
     }
 
     @Override
-    public FieldCondition<T> lessOrEqualToAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessOrEqualToAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_ANY);
     }
 
     @Override
-    public FieldCondition<T> lessOrEqualToSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessOrEqualToSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_SOME);
     }
 
     @Override
-    public FieldCondition<T> lessOrEqualToAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition lessOrEqualToAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.LESS_OR_EQUAL_TO_ALL);
     }
 
@@ -262,22 +258,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> greaterThan(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterThan(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER);
     }
 
     @Override
-    public FieldCondition<T> greaterThanAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterThanAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_ANY);
     }
 
     @Override
-    public FieldCondition<T> greaterThanSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterThanSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_SOME);
     }
 
     @Override
-    public FieldCondition<T> greaterThanAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterThanAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_THAN_ALL);
     }
 
@@ -292,22 +288,22 @@ class FieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Fiel
     }
 
     @Override
-    public FieldCondition<T> greaterOrEqual(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterOrEqual(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL);
     }
 
     @Override
-    public FieldCondition<T> greaterOrEqualAny(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterOrEqualAny(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_ANY);
     }
 
     @Override
-    public FieldCondition<T> greaterOrEqualSome(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterOrEqualSome(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_SOME);
     }
 
     @Override
-    public FieldCondition<T> greaterOrEqualAll(ResultProviderSelectQuery<?, ?> query) {
+    public Condition greaterOrEqualAll(ResultProviderSelectQuery<?, ?> query) {
         return query.getQuery().asSubQueryCondition(this, SubQueryOperator.GREATER_OR_EQUAL_TO_ALL);
     }
 }

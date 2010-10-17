@@ -34,14 +34,13 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.BetweenCondition;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class BetweenConditionImpl<T> extends AbstractCondition implements BetweenCondition<T> {
+class BetweenConditionImpl<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -4666251100802237878L;
 

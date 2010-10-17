@@ -42,7 +42,6 @@ import org.jooq.CombineOperator;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.Field;
 import org.jooq.FieldList;
@@ -55,7 +54,6 @@ import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 import org.jooq.Table;
 import org.jooq.TableList;
@@ -346,40 +344,40 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     }
 
     @Override
-    public final <T> SubQueryCondition<T> asInCondition(Field<T> field) {
+    public final Condition asInCondition(Field<?> field) {
         return asSubQueryCondition(field, SubQueryOperator.IN);
     }
 
     @Override
-    public final <T> SubQueryCondition<T> asNotInCondition(Field<T> field) {
+    public final Condition asNotInCondition(Field<?> field) {
         return asSubQueryCondition(field, SubQueryOperator.NOT_IN);
     }
 
     @Override
-    public final <T> SubQueryCondition<T> asCompareCondition(Field<T> field) {
+    public final Condition asCompareCondition(Field<?> field) {
         return asSubQueryCondition(field, SubQueryOperator.EQUALS);
     }
 
     @Override
-    public final <T> SubQueryCondition<T> asSubQueryCondition(Field<T> field, SubQueryOperator operator) {
+    public final Condition asSubQueryCondition(Field<?> field, SubQueryOperator operator) {
         if (getSelect().size() != 1) {
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
         }
 
-        return new SelectQueryAsSubQueryCondition<T>(getDialect(), this, field, operator);
+        return new SelectQueryAsSubQueryCondition(getDialect(), this, field, operator);
     }
 
     @Override
-    public final ExistsCondition asExistsCondition() {
+    public final Condition asExistsCondition() {
         return asExistsCondition(ExistsOperator.EXISTS);
     }
 
     @Override
-    public final ExistsCondition asNotExistsCondition() {
+    public final Condition asNotExistsCondition() {
         return asExistsCondition(ExistsOperator.NOT_EXISTS);
     }
 
-    private final ExistsCondition asExistsCondition(ExistsOperator operator) {
+    private final Condition asExistsCondition(ExistsOperator operator) {
         if (getSelect().size() != 1) {
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as an InCondition");
         }

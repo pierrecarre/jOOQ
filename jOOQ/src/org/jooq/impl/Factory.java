@@ -38,14 +38,12 @@ import java.util.LinkedHashSet;
 
 import javax.sql.DataSource;
 
-import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
-import org.jooq.InCondition;
 import org.jooq.InOperator;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
@@ -283,7 +281,7 @@ public final class Factory implements Configuration {
      * @param maxValue The upper bound
      * @return A {@link BetweenCondition}
      */
-    public <T> BetweenCondition<T> betweenCondition(Field<T> field, T minValue, T maxValue) {
+    public <T> Condition betweenCondition(Field<T> field, T minValue, T maxValue) {
         return new BetweenConditionImpl<T>(dialect, field, minValue, maxValue);
     }
 
@@ -295,7 +293,7 @@ public final class Factory implements Configuration {
      * @param values The accepted values
      * @return An {@link InCondition}
      */
-    public <T> InCondition<T> inCondition(Field<T> field, T... values) {
+    public <T> Condition inCondition(Field<T> field, T... values) {
         return inCondition(field, Arrays.asList(values));
     }
 
@@ -307,7 +305,7 @@ public final class Factory implements Configuration {
      * @param values The excluded values
      * @return An {@link InCondition}
      */
-    public <T> InCondition<T> notInCondition(Field<T> field, Collection<T> values) {
+    public <T> Condition notInCondition(Field<T> field, Collection<T> values) {
         return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values), InOperator.NOT_IN);
     }
 
@@ -319,7 +317,7 @@ public final class Factory implements Configuration {
      * @param values The excluded values
      * @return An {@link InCondition}
      */
-    public <T> InCondition<T> notInCondition(Field<T> field, T... values) {
+    public <T> Condition notInCondition(Field<T> field, T... values) {
         return notInCondition(field, Arrays.asList(values));
     }
 
@@ -331,7 +329,7 @@ public final class Factory implements Configuration {
      * @param values The accepted values
      * @return An {@link InCondition}
      */
-    public <T> InCondition<T> inCondition(Field<T> field, Collection<T> values) {
+    public <T> Condition inCondition(Field<T> field, Collection<T> values) {
         return new InConditionImpl<T>(dialect, field, new LinkedHashSet<T>(values));
     }
 

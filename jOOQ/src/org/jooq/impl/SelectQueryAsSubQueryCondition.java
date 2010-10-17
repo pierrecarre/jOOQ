@@ -37,20 +37,19 @@ import java.sql.SQLException;
 import org.jooq.Field;
 import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
-import org.jooq.SubQueryCondition;
 import org.jooq.SubQueryOperator;
 
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsSubQueryCondition<T> extends AbstractCondition implements SubQueryCondition<T> {
+class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
     private static final long            serialVersionUID = -402776705884329740L;
     private final ResultProviderQuery<?> query;
-    private final Field<T>               field;
+    private final Field<?>               field;
     private final SubQueryOperator       operator;
 
-    SelectQueryAsSubQueryCondition(SQLDialect dialect, ResultProviderQuery<?> query, Field<T> field, SubQueryOperator operator) {
+    SelectQueryAsSubQueryCondition(SQLDialect dialect, ResultProviderQuery<?> query, Field<?> field, SubQueryOperator operator) {
         super(dialect);
 
         this.query = query;

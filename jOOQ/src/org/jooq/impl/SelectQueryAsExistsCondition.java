@@ -34,7 +34,6 @@ package org.jooq.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.ExistsCondition;
 import org.jooq.ExistsOperator;
 import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
@@ -42,7 +41,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsExistsCondition extends AbstractCondition implements ExistsCondition {
+class SelectQueryAsExistsCondition extends AbstractCondition {
 
     private static final long            serialVersionUID = 5678338161136603292L;
     private final ResultProviderQuery<?> query;

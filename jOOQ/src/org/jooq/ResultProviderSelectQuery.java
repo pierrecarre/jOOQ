@@ -91,7 +91,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    <T> SubQueryCondition<T> asInCondition(Field<T> field);
+    Condition asInCondition(Field<?> field);
 
     /**
      * Use this query for NOT IN conditions.
@@ -102,7 +102,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    <T> SubQueryCondition<T> asNotInCondition(Field<T> field);
+    Condition asNotInCondition(Field<?> field);
 
     /**
      * Use this query for EQUALS conditions.
@@ -113,7 +113,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    <T> SubQueryCondition<T> asCompareCondition(Field<T> field);
+    Condition asCompareCondition(Field<?> field);
 
     /**
      * This method is useful for things like
@@ -122,7 +122,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    <T> SubQueryCondition<T> asSubQueryCondition(Field<T> field, SubQueryOperator operator);
+    Condition asSubQueryCondition(Field<?> field, SubQueryOperator operator);
 
     /**
      * Use this query for EXISTS conditions.
@@ -133,7 +133,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    ExistsCondition asExistsCondition();
+    Condition asExistsCondition();
 
     /**
      * Use this query for NOT EXISTS conditions.
@@ -144,7 +144,7 @@ extends ResultProviderQuery<R>,
      * @param field The field to compare this query's results with
      * @return This result provider as a InCondition object
      */
-    ExistsCondition asNotExistsCondition();
+    Condition asNotExistsCondition();
 
     /**
      * Add a list of select fields

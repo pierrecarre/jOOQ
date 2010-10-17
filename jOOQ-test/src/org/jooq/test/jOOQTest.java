@@ -54,12 +54,10 @@ import junit.framework.Assert;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.jooq.BetweenCondition;
 import org.jooq.CombinedCondition;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
-import org.jooq.InCondition;
 import org.jooq.InsertQuery;
 import org.jooq.Join;
 import org.jooq.Select;
@@ -177,7 +175,7 @@ public class jOOQTest {
 
     @Test
     public final void testBetweenCondition() throws Exception {
-        BetweenCondition<Integer> c = FIELD_ID1.between(1, 10);
+        Condition c = FIELD_ID1.between(1, 10);
         assertEquals("TABLE1.ID1 between 1 and 10", c.toSQLReference(true));
         assertEquals("TABLE1.ID1 between ? and ?", c.toSQLReference(false));
 
@@ -194,7 +192,7 @@ public class jOOQTest {
 
     @Test
     public final void testInCondition() throws Exception {
-        InCondition<Integer> c = FIELD_ID1.in(1, 10);
+        Condition c = FIELD_ID1.in(1, 10);
         assertEquals("TABLE1.ID1 in (1, 10)", c.toSQLReference(true));
         assertEquals("TABLE1.ID1 in (?, ?)", c.toSQLReference(false));
 

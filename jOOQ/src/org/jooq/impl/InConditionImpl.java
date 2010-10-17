@@ -36,14 +36,13 @@ import java.sql.SQLException;
 import java.util.Set;
 
 import org.jooq.Field;
-import org.jooq.InCondition;
 import org.jooq.InOperator;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class InConditionImpl<T> extends AbstractCondition implements InCondition<T> {
+class InConditionImpl<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -1653924248576930761L;
     private final Field<T>    field;
