@@ -31,8 +31,6 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 
@@ -42,11 +40,6 @@ import org.jooq.SQLDialect;
 class EmptyTable extends TableImpl<Record> {
 
     private static final long      serialVersionUID = -7492790780048090156L;
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) {
-        return initialIndex;
-    }
 
     private EmptyTable(SQLDialect dialect) {
         super(dialect, getDummyTable(dialect));

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,67 +28,70 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
+import org.jooq.AliasProvider;
+import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.FieldList;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 
-/**
- * @author Lukas Eder
- */
-public class TableImpl<R extends Record> extends AbstractTable<R> {
+abstract class AbstractTable<R extends Record> extends AbstractNamedQueryPart implements Table<R> {
 
-    private static final long   serialVersionUID = 261033315221985068L;
-    private final FieldListImpl fields;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 3155496238969274871L;
+    private final Schema      schema;
 
-    public TableImpl(SQLDialect dialect, String name) {
-        this(dialect, name, (Schema) null);
+    AbstractTable(SQLDialect dialect, String name) {
+        this(dialect, name, null);
     }
 
-    public TableImpl(SQLDialect dialect, String name, Schema schema) {
-        super(dialect, name, schema);
+    AbstractTable(SQLDialect dialect, String name, Schema schema) {
+        super(dialect, name);
 
-        this.fields = new FieldListImpl(dialect);
-    }
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return initialIndex;
+        this.schema = schema;
     }
 
     @Override
-    protected FieldList getFieldList() {
-        return fields;
+    public final Schema getSchema() {
+        return schema;
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
-        if (getSchema() != null) {
-            return getSchema().getName() + "." + getName();
-        }
-
-        return getName();
+    public final FieldList getFields() {
+        return getFieldList();
     }
 
     @Override
-    public Table<R> as(String alias) {
-        return new TableAlias<R>(getDialect(), this, alias);
+    public final <T> Field<T> getField(Field<T> field) {
+        return getFields().getField(field);
+    }
+
+    @Override
+    public final Field<?> getField(String name) {
+        return getFields().getField(name);
+    }
+
+    @Override
+    public final R newRecord() {
+        return newRecord(new Factory(getDialect()));
+    }
+
+    @Override
+    public final R newRecord(Configuration configuration) {
+        return JooqUtil.newRecord(getRecordType(), this, configuration);
     }
 
     /**
-     * Subclasses must override this method if they use the generic type
-     * parameter <R> for other types than {@link Record}
+     * Subclasses should override this method to provide the set of fields
+     * contained in the concrete table implementation. For example, a
+     * {@link TableAlias} contains aliased fields of its {@link AliasProvider}
+     * table.
      */
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class<? extends R> getRecordType() {
-        return (Class<? extends R>) RecordImpl.class;
-    }
+    protected abstract FieldList getFieldList();
 }

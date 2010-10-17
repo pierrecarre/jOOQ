@@ -46,7 +46,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table<R> {
+class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
     private static final long                           serialVersionUID = 6272398035926615668L;
     private final List<ResultProviderSelectQuery<?, R>> queries;
@@ -69,7 +69,7 @@ class SelectQueryAsTable<R extends Record> extends TableImpl<R> implements Table
     }
 
     @Override
-    public FieldList getFields() {
+    protected FieldList getFieldList() {
         return queries.get(0).getSelect();
     }
 
