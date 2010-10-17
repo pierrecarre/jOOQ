@@ -46,6 +46,7 @@ import org.jooq.impl.Factory;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
 public class Library {
 
@@ -145,7 +146,11 @@ public class Library {
 			String firstName = record.getFirstName();
 			String lastName = record.getLastName();
 
-			System.out.println("Author : " + firstName + " " + lastName);
+			System.out.println("Author : " + firstName + " " + lastName + " wrote : ");
+
+			for (TBookRecord book : record.getTBooks()) {
+			    System.out.println("  Book : " + book.getTitle());
+			}
 		}
 	}
 }
