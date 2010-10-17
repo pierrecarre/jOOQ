@@ -96,7 +96,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
 
             rs = statement.executeQuery();
             if (rs.next()) {
-                result = FieldTypeHelper.getFromResultSet(rs, asField());
+                result = FieldTypeHelper.getFromResultSet(rs, type, 1);
             }
 
             return 0;

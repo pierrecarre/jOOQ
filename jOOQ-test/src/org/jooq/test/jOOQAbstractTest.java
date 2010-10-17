@@ -443,9 +443,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testFunction4() throws Exception {
         SelectQuery q = create().selectQuery();
         Field<String> constant = create().functions().constant("abc");
-        Field<Integer> charLength = create().functions().charLength(constant).as("len");
-        Field<Integer> bitLength = create().functions().bitLength(constant).as("bitlen");
-        Field<Integer> octetLength = create().functions().octetLength(constant).as("octetlen");
+        Field<Integer> charLength = create().functions().charLength(constant);
+        Field<Integer> bitLength = create().functions().bitLength(constant);
+        Field<Integer> octetLength = create().functions().octetLength(constant);
 
         q.addSelect(charLength, bitLength, octetLength);
         q.execute();
@@ -471,8 +471,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testFunction5() throws Exception {
         SimpleSelectQuery<L> q = create().selectQuery(getVLibrary());
 
-        Field<String> o = create().functions().constant("o");
-        Field<Integer> position = create().functions().position(getVLibrary_AUTHOR(), o).as("p");
+        Field<Integer> position = create().functions().position(getVLibrary_AUTHOR(), "o").as("p");
         q.addSelect(getVLibrary_AUTHOR());
         q.addSelect(position);
         q.addOrderBy(getVLibrary_AUTHOR(), ASC);

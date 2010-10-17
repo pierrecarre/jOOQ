@@ -242,14 +242,16 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         ResultSet rs = null;
 
         try {
+            FieldList fields = getSelect();
+
             rs = statement.executeQuery();
-            result = new ResultImpl<R>(getSelect());
+            result = new ResultImpl<R>(fields);
 
             while (rs.next()) {
                 R record = newRecord();
 
-                for (Field<?> field : getSelect()) {
-                    setValue(record, field, rs);
+                for (int i = 0; i < fields.size(); i++) {
+                    setValue(record, fields.get(i), i + 1, rs);
                 }
 
                 result.addRecord(record);
@@ -265,8 +267,8 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     /**
      * Utility method to prevent unnecessary unchecked conversions
      */
-    private final <T> void setValue(Record record, Field<T> field, ResultSet rs) throws SQLException {
-        T value = FieldTypeHelper.getFromResultSet(rs, field);
+    private final <T> void setValue(Record record, Field<T> field, int index, ResultSet rs) throws SQLException {
+        T value = FieldTypeHelper.getFromResultSet(rs, field.getType(), index);
         record.setValue(field, new ValueImpl<T>(value));
     }
 

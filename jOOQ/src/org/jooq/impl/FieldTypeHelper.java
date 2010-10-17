@@ -43,7 +43,6 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 
-import org.jooq.Field;
 import org.jooq.NamedTypeProviderQueryPart;
 
 /**
@@ -125,67 +124,55 @@ final class FieldTypeHelper {
         return "?";
     }
 
-    public static <T> T getFromResultSet(ResultSet rs, Field<T> field) throws SQLException {
-        // Try fetching fully qualified field name (or alias)
-        try {
-            return getFromResultSet(rs, field.getType(), field.toSQLReference());
-        }
-
-        // If that didn't work, use the unqualified field name itself
-        catch (Exception e) {
-            return getFromResultSet(rs, field.getType(), field.getName());
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    public static <T> T getFromResultSet(ResultSet rs, Class<? extends T> type, String fieldName) throws SQLException {
+    public static <T> T getFromResultSet(ResultSet rs, Class<? extends T> type, int index) throws SQLException {
         if (type == Blob.class) {
-            return (T) rs.getBlob(fieldName);
+            return (T) rs.getBlob(index);
         }
         else if (type == Boolean.class) {
-            return (T) Boolean.valueOf(rs.getBoolean(fieldName));
+            return (T) Boolean.valueOf(rs.getBoolean(index));
         }
         else if (type == BigDecimal.class) {
-            return (T) rs.getBigDecimal(fieldName);
+            return (T) rs.getBigDecimal(index);
         }
         else if (type == Byte.class) {
-            return (T) Byte.valueOf(rs.getByte(fieldName));
+            return (T) Byte.valueOf(rs.getByte(index));
         }
         else if (type == byte[].class) {
-            return (T) rs.getBytes(fieldName);
+            return (T) rs.getBytes(index);
         }
         else if (type == Clob.class) {
-            return (T) rs.getClob(fieldName);
+            return (T) rs.getClob(index);
         }
         else if (type == Date.class) {
-            return (T) rs.getDate(fieldName);
+            return (T) rs.getDate(index);
         }
         else if (type == Double.class) {
-            return (T) Double.valueOf(rs.getDouble(fieldName));
+            return (T) Double.valueOf(rs.getDouble(index));
         }
         else if (type == Float.class) {
-            return (T) Float.valueOf(rs.getFloat(fieldName));
+            return (T) Float.valueOf(rs.getFloat(index));
         }
         else if (type == Integer.class) {
-            return (T) Integer.valueOf(rs.getInt(fieldName));
+            return (T) Integer.valueOf(rs.getInt(index));
         }
         else if (type == Long.class) {
-            return (T) Long.valueOf(rs.getLong(fieldName));
+            return (T) Long.valueOf(rs.getLong(index));
         }
         else if (type == Short.class) {
-            return (T) Short.valueOf(rs.getShort(fieldName));
+            return (T) Short.valueOf(rs.getShort(index));
         }
         else if (type == String.class) {
-            return (T) rs.getString(fieldName);
+            return (T) rs.getString(index);
         }
         else if (type == Time.class) {
-            return (T) rs.getTime(fieldName);
+            return (T) rs.getTime(index);
         }
         else if (type == Timestamp.class) {
-            return (T) rs.getTimestamp(fieldName);
+            return (T) rs.getTimestamp(index);
         }
         else {
-            return (T) rs.getObject(fieldName);
+            return (T) rs.getObject(index);
         }
     }
 
