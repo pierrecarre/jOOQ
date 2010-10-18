@@ -68,6 +68,9 @@ public class GenerationTool {
 
 		if (in == null) {
 			System.err.println("Cannot find " + args[0]);
+			System.err.println("-----------");
+			System.err.println("Please be sure it is located on the classpath and qualified as a classpath location.");
+			System.err.println("If it is located at the current working directory, try adding a '/' to the path");
 			error();
 		}
 
