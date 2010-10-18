@@ -414,7 +414,10 @@ public class DefaultGenerator implements Generator {
 
 				    // #69 - Should resolve this issue more thoroughly.
 				    if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
-				        continue;
+	                    System.err.println("Foreign key " + foreignKey.getName() + " does not match its primary key!");
+	                    System.err.println("No code is generated for this key. See trac tickets #64 and #69");
+
+	                    continue;
 				    }
 
 					TableDefinition referencing = foreignKey.getKeyTableDefinition();
@@ -467,7 +470,8 @@ public class DefaultGenerator implements Generator {
 
                 // #69 - Should resolve this issue more thoroughly.
                 if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
-                    // Ignore
+                    System.err.println("Foreign key " + foreignKey.getName() + " does not match its primary key!");
+                    System.err.println("No code is generated for this key. See trac tickets #64 and #69");
                 } else {
 
                     TableDefinition referenced = foreignKey.getReferencedTableDefinition();
