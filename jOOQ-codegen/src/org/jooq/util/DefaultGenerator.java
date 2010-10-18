@@ -407,6 +407,16 @@ public class DefaultGenerator implements Generator {
 			PrimaryKeyDefinition primaryKey = column.getPrimaryKey();
 			if (primaryKey != null && out.printOnlyOnce(primaryKey)) {
 				for (ForeignKeyDefinition foreignKey : primaryKey.getForeignKeys()) {
+
+				    // #64 - If the foreign key does not match the referenced key, it
+				    // is most likely because it references a non-primary unique key
+				    // Skip code generation for this foreign key
+
+				    // #69 - Should resolve this issue more thoroughly.
+				    if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
+				        continue;
+				    }
+
 					TableDefinition referencing = foreignKey.getKeyTableDefinition();
 					printFieldJavaDoc(out, null, column);
 					out.print("\tpublic List<");
@@ -450,43 +460,54 @@ public class DefaultGenerator implements Generator {
 
 			ForeignKeyDefinition foreignKey = column.getForeignKey();
 			if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
-				TableDefinition referenced = foreignKey.getReferencedTableDefinition();
-				printFieldJavaDoc(out, null, column);
-				out.print("\tpublic ");
-				out.print(referenced.getJavaClassName("Record"));
-				out.print(" get");
-				out.print(referenced.getJavaClassName());
-				out.println("() throws SQLException {");
 
-				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = create().selectQuery(");
-				out.print(referenced.getJavaClassName());
-				out.print(".");
-				out.print(referenced.getNameUC());
-				out.println(");");
+                // #64 - If the foreign key does not match the referenced key, it
+                // is most likely because it references a non-primary unique key
+                // Skip code generation for this foreign key
 
-				for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
-					out.print("\t\tq.addCompareCondition(");
-					out.print(referenced.getJavaClassName());
-					out.print(".");
-					out.print(foreignKey.getReferencedColumnNames().get(i).toUpperCase());
-					out.print(", getValue(");
-					out.print(table.getJavaClassName());
-					out.print(".");
-					out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
-					out.println("));");
-				}
+                // #69 - Should resolve this issue more thoroughly.
+                if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
+                    // Ignore
+                } else {
 
-				out.println("\t\tq.execute();");
-				out.println();
-				out.println("\t\tList<" + referenced.getJavaClassName("Record") + "> result = q.getResult().getRecords();");
-				out.println("\t\treturn result.size() == 1 ? result.get(0) : null;");
+                    TableDefinition referenced = foreignKey.getReferencedTableDefinition();
+    				printFieldJavaDoc(out, null, column);
+    				out.print("\tpublic ");
+    				out.print(referenced.getJavaClassName("Record"));
+    				out.print(" get");
+    				out.print(referenced.getJavaClassName());
+    				out.println("() throws SQLException {");
 
-				out.println("\t}");
+    				out.print("\t\tSimpleSelectQuery<" + referenced.getJavaClassName("Record") + "> q = create().selectQuery(");
+    				out.print(referenced.getJavaClassName());
+    				out.print(".");
+    				out.print(referenced.getNameUC());
+    				out.println(");");
 
-				out.printImport(tablePackage + "." + referenced.getJavaClassName());
-				out.printImport(SimpleSelectQuery.class);
-				out.printImport(SQLException.class);
-				out.printImport(List.class);
+    				for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
+    					out.print("\t\tq.addCompareCondition(");
+    					out.print(referenced.getJavaClassName());
+    					out.print(".");
+    					out.print(foreignKey.getReferencedColumnNames().get(i).toUpperCase());
+    					out.print(", getValue(");
+    					out.print(table.getJavaClassName());
+    					out.print(".");
+    					out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
+    					out.println("));");
+    				}
+
+    				out.println("\t\tq.execute();");
+    				out.println();
+    				out.println("\t\tList<" + referenced.getJavaClassName("Record") + "> result = q.getResult().getRecords();");
+    				out.println("\t\treturn result.size() == 1 ? result.get(0) : null;");
+
+    				out.println("\t}");
+
+    				out.printImport(tablePackage + "." + referenced.getJavaClassName());
+    				out.printImport(SimpleSelectQuery.class);
+    				out.printImport(SQLException.class);
+    				out.printImport(List.class);
+                }
 			}
 		}
 

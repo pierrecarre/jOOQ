@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS t_author CASCADE
 /
 DROP TABLE IF EXISTS x_unused CASCADE
 /
+DROP TABLE IF EXISTS x_unused_2 CASCADE
+/
 
 CREATE TABLE t_author (
   id INTEGER NOT NULL PRIMARY KEY,
@@ -57,7 +59,7 @@ ALTER TABLE t_book
 /
 
 CREATE TABLE x_unused (
-	id INTEGER NOT NULL,
+	id INTEGER NOT NULL UNIQUE,
 	name VARCHAR(10) NOT NULL,
 	id_ref INTEGER,
 	name_ref VARCHAR(10)
@@ -73,6 +75,21 @@ ALTER TABLE x_unused
   ADD CONSTRAINT unused_self_ref
   FOREIGN KEY (id_ref, name_ref)
   REFERENCES x_unused (id, name)
+/
+
+CREATE TABLE x_unused_2 (
+    id INTEGER NOT NULL,
+    unused_id INTEGER
+);
+/
+
+ALTER TABLE x_unused_2
+  ADD PRIMARY KEY (id)
+/
+ALTER TABLE x_unused_2
+  ADD CONSTRAINT unused_2_unused_ref
+  FOREIGN KEY (unused_id)
+  REFERENCES x_unused (id)
 /
 
 CREATE OR REPLACE VIEW v_library (author, title) AS

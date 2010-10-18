@@ -2,6 +2,8 @@ DROP TABLE t_book
 /
 DROP TABLE t_author
 /
+DROP TABLE x_unused_2
+/
 DROP TABLE x_unused
 /
 
@@ -57,7 +59,7 @@ ALTER TABLE t_book
 /
 
 CREATE TABLE x_unused (
-	id NUMBER(7) NOT NULL,
+	id NUMBER(7) NOT NULL UNIQUE,
 	name VARCHAR(10) NOT NULL,
 	id_ref NUMBER(7),
 	name_ref VARCHAR(10)
