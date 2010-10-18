@@ -47,6 +47,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.jooq.CombineOperator;
 import org.jooq.Comparator;
 import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
@@ -356,7 +357,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q1.addCompareCondition(getTBook_AUTHOR_ID(), 1);
         q2.addCompareCondition(getTBook_TITLE(), "Brida");
 
-        SelectQuery combine = q1.combine(q2);
+        // Use union all because of clob's
+        SelectQuery combine = q1.combine(CombineOperator.UNION_ALL, q2);
 
         int rows = combine.execute();
         assertEquals(3, rows);
