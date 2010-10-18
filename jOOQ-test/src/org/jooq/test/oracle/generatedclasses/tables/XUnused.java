@@ -7,7 +7,7 @@ package org.jooq.test.oracle.generatedclasses.tables;
 import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.oracle.generatedclasses.OdsTest;
 import org.jooq.test.oracle.generatedclasses.tables.records.XUnusedRecord;
 
@@ -17,7 +17,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.XUnusedRecord;
  *
  * An unused table in the same schema.
  */
-public class XUnused extends TableImpl<XUnusedRecord> {
+public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,21 +41,29 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<XUnusedRecord, Integer> ID = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.ORACLE, "ID", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<XUnusedRecord, String> NAME = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.ORACLE, "NAME", String.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.ORACLE, "ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.ORACLE, "NAME_REF", String.class, X_UNUSED);
 
@@ -64,6 +72,14 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	 */
 	private XUnused() {
 		super(SQLDialect.ORACLE, "X_UNUSED", OdsTest.ODS_TEST);
+	}
+
+	/*
+	 * static initialiser
+	 */
+	static {
+		X_UNUSED.addToPrimaryKey(ID);
+		X_UNUSED.addToPrimaryKey(NAME);
 	}
 
 }

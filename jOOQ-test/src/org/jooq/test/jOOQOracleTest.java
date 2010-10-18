@@ -120,12 +120,12 @@ public class jOOQOracleTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord,
 
     @Override
     protected TableField<TBookRecord, String> getTBook_CONTENT_TEXT() {
-        return null;
+        return TBook.CONTENT_TEXT;
     }
 
     @Override
     protected TableField<TBookRecord, byte[]> getTBook_CONTENT_PDF() {
-        return null;
+        return TBook.CONTENT_PDF;
     }
 
     @Override

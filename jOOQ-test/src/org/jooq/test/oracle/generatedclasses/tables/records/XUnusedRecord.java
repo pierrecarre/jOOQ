@@ -4,8 +4,12 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.jooq.Configuration;
-import org.jooq.impl.TableRecordImpl;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.XUnused;
 
 
@@ -14,12 +18,14 @@ import org.jooq.test.oracle.generatedclasses.tables.XUnused;
  *
  * An unused table in the same schema.
  */
-public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
+public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(XUnused.ID, value);
@@ -27,6 +33,8 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(XUnused.ID);
@@ -34,6 +42,22 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public List<XUnusedRecord> getXUnuseds() throws SQLException {
+		SimpleSelectQuery<XUnusedRecord> q = create().selectQuery(XUnused.X_UNUSED);
+		q.addCompareCondition(XUnused.ID_REF, getValue(XUnused.ID));
+		q.addCompareCondition(XUnused.NAME_REF, getValue(XUnused.NAME));
+		q.execute();
+
+		return q.getResult().getRecords();
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setName(String value) {
 		setValue(XUnused.NAME, value);
@@ -41,6 +65,8 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
 	 */
 	public String getName() {
 		return getValue(XUnused.NAME);
@@ -48,6 +74,8 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -55,6 +83,8 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -62,6 +92,8 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -69,12 +101,14 @@ public class XUnusedRecord extends TableRecordImpl<XUnusedRecord> {
 
 	/**
 	 * An uncommented item
+	 * 
+	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);
 	}
 
 	public XUnusedRecord(Configuration configuration) {
-        super(configuration, XUnused.X_UNUSED);
+		super(configuration, XUnused.X_UNUSED);
 	}
 }

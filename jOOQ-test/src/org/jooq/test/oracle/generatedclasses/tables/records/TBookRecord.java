@@ -4,8 +4,13 @@
 package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.jooq.Configuration;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
 
@@ -20,6 +25,8 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * The book ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TBook.ID, value);
@@ -27,6 +34,8 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * The book ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TBook.ID);
@@ -34,6 +43,8 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -41,9 +52,25 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);
+	}
+
+	/**
+	 * The author ID in entity 'author'
+	 * 
+	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 */
+	public TAuthorRecord getTAuthor() throws SQLException {
+		SimpleSelectQuery<TAuthorRecord> q = create().selectQuery(TAuthor.T_AUTHOR);
+		q.addCompareCondition(TAuthor.ID, getValue(TBook.AUTHOR_ID));
+		q.execute();
+
+		List<TAuthorRecord> result = q.getResult().getRecords();
+		return result.size() == 1 ? result.get(0) : null;
 	}
 
 	/**
@@ -60,7 +87,49 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 		return getValue(TBook.TITLE);
 	}
 
+	/**
+	 * The year the book was published in
+	 */
+	public void setPublishedIn(Integer value) {
+		setValue(TBook.PUBLISHED_IN, value);
+	}
+
+	/**
+	 * The year the book was published in
+	 */
+	public Integer getPublishedIn() {
+		return getValue(TBook.PUBLISHED_IN);
+	}
+
+	/**
+	 * Some textual content of the book
+	 */
+	public void setContentText(String value) {
+		setValue(TBook.CONTENT_TEXT, value);
+	}
+
+	/**
+	 * Some textual content of the book
+	 */
+	public String getContentText() {
+		return getValue(TBook.CONTENT_TEXT);
+	}
+
+	/**
+	 * Some binary content of the book
+	 */
+	public void setContentPdf(byte[] value) {
+		setValue(TBook.CONTENT_PDF, value);
+	}
+
+	/**
+	 * Some binary content of the book
+	 */
+	public byte[] getContentPdf() {
+		return getValue(TBook.CONTENT_PDF);
+	}
+
 	public TBookRecord(Configuration configuration) {
-        super(configuration, TBook.T_BOOK);
+		super(configuration, TBook.T_BOOK);
 	}
 }

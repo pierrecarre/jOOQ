@@ -45,6 +45,6 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> {
 	}
 
 	public VLibraryRecord(Configuration configuration) {
-        super(configuration, VLibrary.V_LIBRARY);
+		super(configuration, VLibrary.V_LIBRARY);
 	}
 }

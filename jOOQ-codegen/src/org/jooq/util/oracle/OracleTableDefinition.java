@@ -45,6 +45,7 @@ import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataType;
 import org.jooq.util.Database;
+import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.oracle.sys.tables.AllColComments;
 import org.jooq.util.oracle.sys.tables.AllTabCols;
 
@@ -88,8 +89,8 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 				System.out.println("Unsupported datatype : " + dataType);
 			}
 
-			OracleColumnDefinition table = new OracleColumnDefinition(getDatabase(), getName(), name, position, type, comment);
-			result.add(table);
+			DefaultColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);
+			result.add(column);
 		}
 
 		return result;

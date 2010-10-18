@@ -5,10 +5,14 @@ package org.jooq.test.oracle.generatedclasses.tables.records;
 
 
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
 
 import org.jooq.Configuration;
+import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
+import org.jooq.test.oracle.generatedclasses.tables.TBook;
 
 
 /**
@@ -22,6 +26,8 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 
 	/**
 	 * The author ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
 		setValue(TAuthor.ID, value);
@@ -29,9 +35,24 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 
 	/**
 	 * The author ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public Integer getId() {
 		return getValue(TAuthor.ID);
+	}
+
+	/**
+	 * The author ID
+	 * 
+	 * PRIMARY KEY
+	 */
+	public List<TBookRecord> getTBooks() throws SQLException {
+		SimpleSelectQuery<TBookRecord> q = create().selectQuery(TBook.T_BOOK);
+		q.addCompareCondition(TBook.AUTHOR_ID, getValue(TAuthor.ID));
+		q.execute();
+
+		return q.getResult().getRecords();
 	}
 
 	/**
@@ -91,6 +112,6 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> {
 	}
 
 	public TAuthorRecord(Configuration configuration) {
-        super(configuration, TAuthor.T_AUTHOR);
+		super(configuration, TAuthor.T_AUTHOR);
 	}
 }

@@ -43,6 +43,8 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 
 	/**
 	 * The author ID
+	 * 
+	 * PRIMARY KEY
 	 */
 	public static final TableField<TAuthorRecord, Integer> ID = new TableFieldImpl<TAuthorRecord, Integer>(SQLDialect.ORACLE, "ID", Integer.class, T_AUTHOR);
 
@@ -71,6 +73,13 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	 */
 	private TAuthor() {
 		super(SQLDialect.ORACLE, "T_AUTHOR", OdsTest.ODS_TEST);
+	}
+
+	/*
+	 * static initialiser
+	 */
+	static {
+		T_AUTHOR.addToPrimaryKey(ID);
 	}
 
 }
