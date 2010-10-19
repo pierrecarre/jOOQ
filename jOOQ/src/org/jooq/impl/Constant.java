@@ -48,6 +48,7 @@ class Constant<T> extends FieldImpl<T> implements Field<T> {
 
     @Override
     public final String toSQLReference(boolean inlineParameters) {
-        return "'" + super.toSQLReference(inlineParameters) + "'";
+        // See various tickets proposing improvement to this behaviour:
+        return FieldTypeHelper.toSQL(getName(), true, String.class);
     }
 }
