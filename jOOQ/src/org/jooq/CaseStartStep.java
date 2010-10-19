@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,42 +28,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq;
 
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
-import org.jooq.SQLDialect;
+import org.jooq.impl.FunctionFactory;
 
 /**
+ * The SQL case statement.
+ * <p>
+ * This construct can be used to create expressions of the type <code><pre>
+ * CASE x WHEN 1 THEN 'one'
+ *        WHEN 2 THEN 'two'
+ *        ELSE        'three'
+ * END
+ * </pre></code> or of the type <code><pre>
+ * CASE WHEN x &lt; 1  THEN 'one'
+ *      WHEN x &gt;= 2 THEN 'two'
+ *      ELSE            'three'
+ * END
+ * </pre></code> Instances of Case are created through the
+ * {@link FunctionFactory#decode()} method
+ *
  * @author Lukas Eder
  */
-class SelectQueryAsField<T> extends FieldImpl<T> {
+public interface CaseStartStep {
 
-    private static final long            serialVersionUID = 3463144434073231750L;
-    private final ResultProviderQuery<?> query;
+    <V> CaseValueStep<V> value(V value);
+    <V> CaseValueStep<V> value(Field<V> value);
 
-    SelectQueryAsField(SQLDialect dialect, ResultProviderQuery<?> query, Class<? extends T> type) {
-        super(dialect, "", type);
-
-        this.query = query;
-    }
-
-    @Override
-    public Field<T> as(String alias) {
-        return new FieldAlias<T>(getDialect(), this, alias, true);
-    }
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
-    }
-
-    @Override
-    public String toSQLReference(boolean inlineParameters) {
-        return query.toSQLReference(inlineParameters);
-    }
+    <T> CaseConditionStep<T> when(Condition condition, T result);
+    <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
 }

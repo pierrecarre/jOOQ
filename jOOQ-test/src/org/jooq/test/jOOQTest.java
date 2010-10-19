@@ -53,6 +53,10 @@ import junit.framework.Assert;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.jooq.CaseConditionStep;
+import org.jooq.CaseStartStep;
+import org.jooq.CaseValueStep;
+import org.jooq.CaseWhenStep;
 import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
@@ -290,6 +294,67 @@ public class jOOQTest {
     }
 
     @Test
+    public final void testCaseValueFunction() throws Exception {
+        CaseStartStep decode = create.functions().decode();
+        CaseValueStep<Integer> value = decode.value(FIELD_ID1);
+        CaseWhenStep<Integer, String> c = value.when(1, "one");
+
+        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.toSQLReference(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.toSQLDeclaration(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.toSQLDeclaration(false));
+
+        c.otherwise("nothing");
+        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.toSQLReference(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.toSQLDeclaration(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.toSQLDeclaration(false));
+
+        c.when(2, "two").when(3, "three");
+        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.toSQLReference(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.toSQLDeclaration(true));
+        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.toSQLDeclaration(false));
+
+        int i = c.bind(statement);
+        assertEquals(1, i);
+    }
+
+    @Test
+    public final void testCaseConditionFunction() throws Exception {
+        CaseStartStep decode = create.functions().decode();
+        CaseConditionStep<String> c = decode.when(FIELD_ID1.equal(1), "one");
+
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.toSQLReference(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' end", c.toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.toSQLDeclaration(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' end", c.toSQLDeclaration(false));
+
+        c.otherwise("nothing");
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' else 'nothing' end", c.toSQLReference(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' else 'nothing' end", c.toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' else 'nothing' end", c.toSQLDeclaration(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' else 'nothing' end", c.toSQLDeclaration(false));
+
+        c.when(FIELD_ID1.equal(2), "two").when(FIELD_ID1.equal(3), "three");
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' when TABLE1.ID1 = 2 then 'two' when TABLE1.ID1 = 3 then 'three' else 'nothing' end", c.toSQLReference(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' when TABLE1.ID1 = ? then 'two' when TABLE1.ID1 = ? then 'three' else 'nothing' end", c.toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = 1 then 'one' when TABLE1.ID1 = 2 then 'two' when TABLE1.ID1 = 3 then 'three' else 'nothing' end", c.toSQLDeclaration(true));
+        assertEquals("case when TABLE1.ID1 = ? then 'one' when TABLE1.ID1 = ? then 'two' when TABLE1.ID1 = ? then 'three' else 'nothing' end", c.toSQLDeclaration(false));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 2);
+            oneOf(statement).setInt(3, 3);
+        }});
+
+        int i = c.bind(statement);
+        assertEquals(4, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
     public final void testNullFunction() throws Exception {
         Field<?> f = create.functions().NULL();
         assertEquals("null", f.toSQLReference(true));
@@ -303,24 +368,24 @@ public class jOOQTest {
     public final void testConstantFunction() throws Exception {
         Field<Integer> f1 = create.functions().constant(Integer.valueOf(1));
         assertEquals(Integer.class, f1.getType());
-        assertEquals("'1'", f1.toSQLReference(true));
-        assertEquals("'1'", f1.toSQLReference(false));
-        assertEquals("'1'", f1.toSQLDeclaration(true));
-        assertEquals("'1'", f1.toSQLDeclaration(false));
+        assertEquals("1", f1.toSQLReference(true));
+        assertEquals("1", f1.toSQLReference(false));
+        assertEquals("1", f1.toSQLDeclaration(true));
+        assertEquals("1", f1.toSQLDeclaration(false));
 
-        Field<String> f2 = create.functions().constant("test");
+        Field<String> f2 = create.functions().constant("test's");
         assertEquals(String.class, f2.getType());
-        assertEquals("'test'", f2.toSQLReference(true));
-        assertEquals("'test'", f2.toSQLReference(false));
-        assertEquals("'test'", f2.toSQLDeclaration(true));
-        assertEquals("'test'", f2.toSQLDeclaration(false));
+        assertEquals("'test''s'", f2.toSQLReference(true));
+        assertEquals("'test''s'", f2.toSQLReference(false));
+        assertEquals("'test''s'", f2.toSQLDeclaration(true));
+        assertEquals("'test''s'", f2.toSQLDeclaration(false));
 
         Field<Integer> f3 = create.functions().constant(Integer.valueOf(1)).as("value");
         assertEquals(Integer.class, f3.getType());
         assertEquals("value", f3.toSQLReference(true));
         assertEquals("value", f3.toSQLReference(false));
-        assertEquals("'1' value", f3.toSQLDeclaration(true));
-        assertEquals("'1' value", f3.toSQLDeclaration(false));
+        assertEquals("1 value", f3.toSQLDeclaration(true));
+        assertEquals("1 value", f3.toSQLDeclaration(false));
 
         int i = f1.bind(statement);
         assertEquals(1, i);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,42 +28,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
+import org.jooq.CaseValueStep;
+import org.jooq.CaseWhenStep;
 import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
 
-/**
- * @author Lukas Eder
- */
-class SelectQueryAsField<T> extends FieldImpl<T> {
+class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
-    private static final long            serialVersionUID = 3463144434073231750L;
-    private final ResultProviderQuery<?> query;
+    private final SQLDialect dialect;
+    private final Field<V> value;
 
-    SelectQueryAsField(SQLDialect dialect, ResultProviderQuery<?> query, Class<? extends T> type) {
-        super(dialect, "", type);
+    CaseValueStepImpl(SQLDialect dialect, Field<V> value) {
+        this.dialect = dialect;
+        this.value = value;
+    }
 
-        this.query = query;
+    private <Z> Field<Z> constant(Z value) {
+        return new FunctionFactory(dialect).constant(value);
     }
 
     @Override
-    public Field<T> as(String alias) {
-        return new FieldAlias<T>(getDialect(), this, alias, true);
+    public <T> CaseWhenStep<V, T> when(V compareValue, T result) {
+        return when(constant(compareValue), constant(result));
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
+    public <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
+        return when(constant(compareValue), result);
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
-        return query.toSQLReference(inlineParameters);
+    public <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
+        return when(compareValue, constant(result));
+    }
+
+    @Override
+    public <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
+        return new CaseWhenStepImpl<V, T>(dialect, "", result.getType(), value, compareValue, result);
     }
 }

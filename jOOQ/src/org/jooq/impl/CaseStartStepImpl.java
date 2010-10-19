@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,42 +28,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
+import org.jooq.CaseConditionStep;
+import org.jooq.CaseStartStep;
+import org.jooq.CaseValueStep;
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
 
-/**
- * @author Lukas Eder
- */
-class SelectQueryAsField<T> extends FieldImpl<T> {
+class CaseStartStepImpl implements CaseStartStep {
 
-    private static final long            serialVersionUID = 3463144434073231750L;
-    private final ResultProviderQuery<?> query;
+    private final SQLDialect dialect;
 
-    SelectQueryAsField(SQLDialect dialect, ResultProviderQuery<?> query, Class<? extends T> type) {
-        super(dialect, "", type);
+    CaseStartStepImpl(SQLDialect dialect) {
+        this.dialect = dialect;
+    }
 
-        this.query = query;
+    private <Z> Field<Z> constant(Z value) {
+        return new FunctionFactory(dialect).constant(value);
     }
 
     @Override
-    public Field<T> as(String alias) {
-        return new FieldAlias<T>(getDialect(), this, alias, true);
+    public final <V> CaseValueStep<V> value(V value) {
+        return value(constant(value));
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
+    public final <V> CaseValueStep<V> value(Field<V> value) {
+        return new CaseValueStepImpl<V>(dialect, value);
     }
 
     @Override
-    public String toSQLReference(boolean inlineParameters) {
-        return query.toSQLReference(inlineParameters);
+    public final <T> CaseConditionStep<T> when(Condition condition, T result) {
+        return when(condition, constant(result));
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
+        return new CaseConditionStepImpl<T>(dialect, "", result.getType(), condition, result);
     }
 }

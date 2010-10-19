@@ -334,6 +334,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     protected abstract TableField<B, String> getTBook_TITLE();
 
+    protected abstract TableField<B, Integer> getTBook_PUBLISHED_IN();
+
     protected abstract TableField<B, String> getTBook_CONTENT_TEXT();
 
     protected abstract TableField<B, byte[]> getTBook_CONTENT_PDF();
@@ -488,5 +490,34 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         // Implicit check on the rownum function in oracle dialect
         L library = create().manager().selectAny(getVLibrary());
         assertTrue(library != null);
+    }
+
+    @Test
+    public final void testCaseStatement() throws Exception {
+        Field<String> case1 = create().functions().decode()
+            .value(getTBook_PUBLISHED_IN()).when(0, "ancient book").as("case1");
+        Field<String> case2 = create().functions().decode()
+            .when(getTBook_PUBLISHED_IN().equal(1948), "probably orwell")
+            .when(getTBook_PUBLISHED_IN().equal(1988), "probably coelho")
+            .otherwise("don't know").as("case2");
+
+        SelectQuery query = create().selectQuery();
+        query.addSelect(case1, case2);
+        query.addFrom(getTBook());
+        query.addOrderBy(getTBook_PUBLISHED_IN());
+        query.execute();
+
+        Result<Record> result = query.getResult();
+        assertEquals(null, result.getValue(0, case1));
+        assertEquals(null, result.getValue(1, case1));
+        assertEquals(null, result.getValue(2, case1));
+        assertEquals(null, result.getValue(3, case1));
+
+        // Note: trims are necessary, as certain databases use
+        // CHAR datatype here, not VARCHAR
+        assertEquals("don't know", result.getValue(0, case2).trim());
+        assertEquals("probably orwell", result.getValue(1, case2).trim());
+        assertEquals("probably coelho", result.getValue(2, case2).trim());
+        assertEquals("don't know", result.getValue(3, case2).trim());
     }
 }

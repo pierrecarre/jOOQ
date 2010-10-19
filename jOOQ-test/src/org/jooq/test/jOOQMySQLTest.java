@@ -130,6 +130,11 @@ public class jOOQMySQLTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord, 
     }
 
     @Override
+    protected TableField<TBookRecord, Integer> getTBook_PUBLISHED_IN() {
+        return TBook.PUBLISHED_IN;
+    }
+
+    @Override
     protected TableField<TBookRecord, String> getTBook_CONTENT_TEXT() {
         return TBook.CONTENT_TEXT;
     }

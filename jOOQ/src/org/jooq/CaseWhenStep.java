@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,42 +28,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq;
 
-package org.jooq.impl;
+public interface CaseWhenStep<V, T> extends Field<T> {
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+    CaseWhenStep<V, T> when(V compareValue, T result);
+    CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
-import org.jooq.Field;
-import org.jooq.ResultProviderQuery;
-import org.jooq.SQLDialect;
+    CaseWhenStep<V, T> when(Field<V> compareValue, T result);
+    CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 
-/**
- * @author Lukas Eder
- */
-class SelectQueryAsField<T> extends FieldImpl<T> {
-
-    private static final long            serialVersionUID = 3463144434073231750L;
-    private final ResultProviderQuery<?> query;
-
-    SelectQueryAsField(SQLDialect dialect, ResultProviderQuery<?> query, Class<? extends T> type) {
-        super(dialect, "", type);
-
-        this.query = query;
-    }
-
-    @Override
-    public Field<T> as(String alias) {
-        return new FieldAlias<T>(getDialect(), this, alias, true);
-    }
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
-    }
-
-    @Override
-    public String toSQLReference(boolean inlineParameters) {
-        return query.toSQLReference(inlineParameters);
-    }
+    Field<T> otherwise(T result);
+    Field<T> otherwise(Field<T> result);
 }
