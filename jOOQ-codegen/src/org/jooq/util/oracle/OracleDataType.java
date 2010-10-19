@@ -60,6 +60,7 @@ public enum OracleDataType {
 
 	DATE(Date.class),
 	TIMESTAMP(Timestamp.class),
+	TIMESTAMP6(Timestamp.class),
 	TIMESTAMP6WITHTIMEZONE(Timestamp.class);
 
 	private final Class<?> type;
