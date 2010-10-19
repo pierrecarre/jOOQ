@@ -77,6 +77,21 @@ ALTER TABLE x_unused
   REFERENCES x_unused (id, name)
 /
 
+
+CREATE TABLE x_unused_2 (
+  id NUMBER(7) NOT NULL,
+  unused_id NUMBER(7)
+)
+/
+ALTER TABLE x_unused_2
+  ADD PRIMARY KEY (id)
+/
+ALTER TABLE x_unused_2
+  ADD CONSTRAINT unused_2_unused_ref
+  FOREIGN KEY (unused_id)
+  REFERENCES x_unused (id)
+/
+
 CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title
 FROM t_author a JOIN t_book b ON b.author_id = a.id
