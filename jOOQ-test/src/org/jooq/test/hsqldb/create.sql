@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS t_book;
 /
 DROP TABLE IF EXISTS t_author;
 /
+DROP TABLE IF EXISTS x_unused_2;
+/
 DROP TABLE IF EXISTS x_unused;
 /
 DROP PROCEDURE IF EXISTS p_author_exists;
