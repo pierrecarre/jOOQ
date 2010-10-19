@@ -30,11 +30,52 @@
  */
 package org.jooq;
 
+/**
+ * The final step in creating a case statement of the type <code><pre>
+ * CASE WHEN x &lt; 1  THEN 'one'
+ *      WHEN x &gt;= 2 THEN 'two'
+ *      ELSE            'three'
+ * END
+ * </pre></code>
+ *
+ * @author Lukas Eder
+ * @see Case
+ */
 public interface CaseConditionStep<T> extends Field<T> {
 
+    /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
     CaseConditionStep<T> when(Condition condition, T result);
+
+    /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
     CaseConditionStep<T> when(Condition condition, Field<T> result);
 
+    /**
+     * Add an else clause to the already constructed case statement
+     *
+     * @param result The result value if no other value matches the case
+     * @return The resulting field from case statement construction
+     */
     Field<T> otherwise(T result);
+
+    /**
+     * Add an else clause to the already constructed case statement
+     *
+     * @param result The result value if no other value matches the case
+     * @return The resulting field from case statement construction
+     */
     Field<T> otherwise(Field<T> result);
 }

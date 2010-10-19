@@ -54,7 +54,7 @@ import junit.framework.Assert;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jooq.CaseConditionStep;
-import org.jooq.CaseStartStep;
+import org.jooq.Case;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Condition;
@@ -295,7 +295,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseValueFunction() throws Exception {
-        CaseStartStep decode = create.functions().decode();
+        Case decode = create.functions().decode();
         CaseValueStep<Integer> value = decode.value(FIELD_ID1);
         CaseWhenStep<Integer, String> c = value.when(1, "one");
 
@@ -322,7 +322,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseConditionFunction() throws Exception {
-        CaseStartStep decode = create.functions().decode();
+        Case decode = create.functions().decode();
         CaseConditionStep<String> c = decode.when(FIELD_ID1.equal(1), "one");
 
         assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.toSQLReference(true));

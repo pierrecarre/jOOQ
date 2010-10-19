@@ -30,11 +30,64 @@
  */
 package org.jooq;
 
+/**
+ * An intermediary step in creating a case statement of the type <code><pre>
+ * CASE x WHEN 1 THEN 'one'
+ *        WHEN 2 THEN 'two'
+ *        ELSE        'three'
+ * END
+ * </pre></code>
+ *
+ * @author Lukas Eder
+ * @see Case
+ */
 public interface CaseValueStep<V> {
 
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param <T> The generic result field type parameter
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     <T> CaseWhenStep<V, T> when(V compareValue, T result);
+
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param <T> The generic result field type parameter
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param <T> The generic result field type parameter
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result);
+
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param <T> The generic result field type parameter
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 }

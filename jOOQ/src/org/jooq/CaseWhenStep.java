@@ -30,14 +30,76 @@
  */
 package org.jooq;
 
+/**
+ * The final step in creating a case statement of the type <code><pre>
+ * CASE x WHEN 1 THEN 'one'
+ *        WHEN 2 THEN 'two'
+ *        ELSE        'three'
+ * END
+ * </pre></code>
+ *
+ * @author Lukas Eder
+ * @see Case
+ */
 public interface CaseWhenStep<V, T> extends Field<T> {
 
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     CaseWhenStep<V, T> when(V compareValue, T result);
+
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     CaseWhenStep<V, T> when(Field<V> compareValue, T result);
+
+    /**
+     * Compare a value to the already constructed case statement, return result
+     * if values are equal.
+     *
+     * @param compareValue The value to compare with the already constructed
+     *            case statement
+     * @param result The result value if values are equal
+     * @return An intermediary step for case statement construction
+     */
     CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 
+    /**
+     * Add an else clause to the already constructed case statement
+     *
+     * @param result The result value if no other value matches the case
+     * @return The resulting field from case statement construction
+     */
     Field<T> otherwise(T result);
+
+    /**
+     * Add an else clause to the already constructed case statement
+     *
+     * @param result The result value if no other value matches the case
+     * @return The resulting field from case statement construction
+     */
     Field<T> otherwise(Field<T> result);
 }

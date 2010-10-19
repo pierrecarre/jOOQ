@@ -35,71 +35,78 @@ import org.jooq.impl.FunctionFactory;
 /**
  * The SQL case statement.
  * <p>
- * This field can be used to render case statements such as <code><pre>
+ * This construct can be used to create expressions of the type <code><pre>
  * CASE x WHEN 1 THEN 'one'
  *        WHEN 2 THEN 'two'
  *        ELSE        'three'
  * END
- * </pre></code> Instances of Case are created through
- * {@link FunctionFactory#decode(Field, Field)} methods
+ * </pre></code> or of the type <code><pre>
+ * CASE WHEN x &lt; 1  THEN 'one'
+ *      WHEN x &gt;= 2 THEN 'two'
+ *      ELSE            'three'
+ * END
+ * </pre></code> Instances of Case are created through the
+ * {@link FunctionFactory#decode()} method
  *
  * @author Lukas Eder
  */
-public interface Case<T, V> extends Field<T> {
+public interface Case {
 
     /**
-     * Add 'when' element to case expression
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
      *
-     * @param compareValue The value to compare the case structure with
-     * @param result The result if the case structure equals compareValue
-     * @return The case structure itself to add more conditions
+     * @param <V> The generic value type parameter
+     * @param value The value to do the case statement on
+     * @return An intermediary step for case statement construction
      */
-    Case<T, V> when(Field<V> compareValue, Field<T> result);
+    <V> CaseValueStep<V> value(V value);
 
     /**
-     * Add 'when' element to case expression
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
      *
-     * @param compareValue The value to compare the case structure with
-     * @param result The result if the case structure equals compareValue
-     * @return The case structure itself to add more conditions
+     * @param <V> The generic value type parameter
+     * @param value The value to do the case statement on
+     * @return An intermediary step for case statement construction
      */
-    Case<T, V> when(V compareValue, Field<T> result);
+    <V> CaseValueStep<V> value(Field<V> value);
 
     /**
-     * Add 'when' element to case expression
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code> Instances of Case are created through the
      *
-     * @param compareValue The value to compare the case structure with
-     * @param result The result if the case structure equals compareValue
-     * @return The case structure itself to add more conditions
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
      */
-    Case<T, V> when(Field<V> compareValue, T result);
+    <T> CaseConditionStep<T> when(Condition condition, T result);
 
     /**
-     * Add 'when' element to case expression
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code> Instances of Case are created through the
      *
-     * @param compareValue The value to compare the case structure with
-     * @param result The result if the case structure equals compareValue
-     * @return The case structure itself to add more conditions
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
      */
-    Case<T, V> when(V compareValue, T result);
-
-    /**
-     * Add 'else' element to case expression
-     *
-     * @param result The result if there was no matching value yet in the case
-     *            structure
-     * @return The case structure itself as a field. No more conditions can be
-     *         added
-     */
-    Field<T> otherwise(Field<T> result);
-
-    /**
-     * Add 'else' element to case expression
-     *
-     * @param result The result if there was no matching value yet in the case
-     *            structure
-     * @return The case structure itself as a field. No more conditions can be
-     *         added
-     */
-    Field<T> otherwise(T result);
+    <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
 }

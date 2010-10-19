@@ -35,7 +35,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.CaseStartStep;
+import org.jooq.Case;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -508,12 +508,12 @@ public final class FunctionFactory {
     }
 
     /**
-     * Initialse a {@link CaseStartStep} statement. Decode is used as a method
+     * Initialse a {@link Case} statement. Decode is used as a method
      * name to avoid name clashes with Java's reserved literal "case"
      *
-     * @see CaseStartStep
+     * @see Case
      */
-    public CaseStartStep decode() {
-        return new CaseStartStepImpl(getDialect());
+    public Case decode() {
+        return new CaseImpl(getDialect());
     }
 }

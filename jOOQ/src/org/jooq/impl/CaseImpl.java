@@ -28,33 +28,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import org.jooq.impl.FunctionFactory;
+import org.jooq.CaseConditionStep;
+import org.jooq.Case;
+import org.jooq.CaseValueStep;
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
-/**
- * The SQL case statement.
- * <p>
- * This construct can be used to create expressions of the type <code><pre>
- * CASE x WHEN 1 THEN 'one'
- *        WHEN 2 THEN 'two'
- *        ELSE        'three'
- * END
- * </pre></code> or of the type <code><pre>
- * CASE WHEN x &lt; 1  THEN 'one'
- *      WHEN x &gt;= 2 THEN 'two'
- *      ELSE            'three'
- * END
- * </pre></code> Instances of Case are created through the
- * {@link FunctionFactory#decode()} method
- *
- * @author Lukas Eder
- */
-public interface CaseStartStep {
+class CaseImpl implements Case {
 
-    <V> CaseValueStep<V> value(V value);
-    <V> CaseValueStep<V> value(Field<V> value);
+    private final SQLDialect dialect;
 
-    <T> CaseConditionStep<T> when(Condition condition, T result);
-    <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
+    CaseImpl(SQLDialect dialect) {
+        this.dialect = dialect;
+    }
+
+    private <Z> Field<Z> constant(Z value) {
+        return new FunctionFactory(dialect).constant(value);
+    }
+
+    @Override
+    public final <V> CaseValueStep<V> value(V value) {
+        return value(constant(value));
+    }
+
+    @Override
+    public final <V> CaseValueStep<V> value(Field<V> value) {
+        return new CaseValueStepImpl<V>(dialect, value);
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Condition condition, T result) {
+        return when(condition, constant(result));
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
+        return new CaseConditionStepImpl<T>(dialect, "", result.getType(), condition, result);
+    }
 }
