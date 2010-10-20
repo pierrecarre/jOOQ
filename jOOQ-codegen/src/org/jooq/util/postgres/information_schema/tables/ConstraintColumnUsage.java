@@ -27,14 +27,14 @@ public class ConstraintColumnUsage extends TableImpl<ConstraintColumnUsageRecord
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<ConstraintColumnUsageRecord> RECORD_TYPE = ConstraintColumnUsageRecord.class;
+	private static final Class<ConstraintColumnUsageRecord> __RECORD_TYPE = ConstraintColumnUsageRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<ConstraintColumnUsageRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

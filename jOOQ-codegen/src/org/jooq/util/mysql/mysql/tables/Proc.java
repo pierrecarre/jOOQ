@@ -31,14 +31,14 @@ public class Proc extends TableImpl<ProcRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<ProcRecord> RECORD_TYPE = ProcRecord.class;
+	private static final Class<ProcRecord> __RECORD_TYPE = ProcRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<ProcRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

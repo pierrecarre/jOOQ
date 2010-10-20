@@ -27,14 +27,14 @@ public class KeyColumnUsage extends TableImpl<KeyColumnUsageRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<KeyColumnUsageRecord> RECORD_TYPE = KeyColumnUsageRecord.class;
+	private static final Class<KeyColumnUsageRecord> __RECORD_TYPE = KeyColumnUsageRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<KeyColumnUsageRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

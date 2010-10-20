@@ -148,14 +148,14 @@ public class DefaultGenerator implements Generator {
 			out.println("\t/**");
 			out.println("\t * The class holding records for this table");
 			out.println("\t */");
-			out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
+			out.println("\tprivate static final Class<" + table.getJavaClassName("Record") + "> __RECORD_TYPE = " + table.getJavaClassName("Record") + ".class;");
 			out.println();
 			out.println("\t/**");
 			out.println("\t * The class holding records for this table");
 			out.println("\t */");
 			printOverride(out);
 			out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
-			out.println("\t\treturn RECORD_TYPE;");
+			out.println("\t\treturn __RECORD_TYPE;");
 			out.println("\t}");
 			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
 

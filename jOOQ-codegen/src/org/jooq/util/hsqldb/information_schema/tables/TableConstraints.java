@@ -27,14 +27,14 @@ public class TableConstraints extends TableImpl<TableConstraintsRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<TableConstraintsRecord> RECORD_TYPE = TableConstraintsRecord.class;
+	private static final Class<TableConstraintsRecord> __RECORD_TYPE = TableConstraintsRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<TableConstraintsRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

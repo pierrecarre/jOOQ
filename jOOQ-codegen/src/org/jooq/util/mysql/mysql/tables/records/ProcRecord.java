@@ -301,6 +301,6 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 	}
 
 	public ProcRecord(Configuration configuration) {
-        super(configuration, Proc.PROC);
+		super(configuration, Proc.PROC);
 	}
 }

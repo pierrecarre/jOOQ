@@ -29,14 +29,14 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<TBookRecord> RECORD_TYPE = TBookRecord.class;
+	private static final Class<TBookRecord> __RECORD_TYPE = TBookRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<TBookRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

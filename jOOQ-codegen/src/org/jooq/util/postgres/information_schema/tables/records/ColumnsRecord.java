@@ -633,6 +633,6 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 	}
 
 	public ColumnsRecord(Configuration configuration) {
-        super(configuration, Columns.COLUMNS);
+		super(configuration, Columns.COLUMNS);
 	}
 }

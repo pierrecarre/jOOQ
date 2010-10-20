@@ -29,14 +29,14 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<VLibraryRecord> RECORD_TYPE = VLibraryRecord.class;
+	private static final Class<VLibraryRecord> __RECORD_TYPE = VLibraryRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<VLibraryRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

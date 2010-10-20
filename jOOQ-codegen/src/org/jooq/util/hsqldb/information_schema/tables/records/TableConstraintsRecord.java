@@ -143,6 +143,6 @@ public class TableConstraintsRecord extends TableRecordImpl<TableConstraintsReco
 	}
 
 	public TableConstraintsRecord(Configuration configuration) {
-        super(configuration, TableConstraints.TABLE_CONSTRAINTS);
+		super(configuration, TableConstraints.TABLE_CONSTRAINTS);
 	}
 }

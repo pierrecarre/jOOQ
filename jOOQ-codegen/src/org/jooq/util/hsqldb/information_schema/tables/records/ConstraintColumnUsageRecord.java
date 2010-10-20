@@ -115,6 +115,6 @@ public class ConstraintColumnUsageRecord extends TableRecordImpl<ConstraintColum
 	}
 
 	public ConstraintColumnUsageRecord(Configuration configuration) {
-        super(configuration, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
+		super(configuration, ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE);
 	}
 }

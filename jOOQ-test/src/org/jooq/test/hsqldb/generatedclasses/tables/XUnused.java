@@ -27,14 +27,14 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<XUnusedRecord> RECORD_TYPE = XUnusedRecord.class;
+	private static final Class<XUnusedRecord> __RECORD_TYPE = XUnusedRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<XUnusedRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

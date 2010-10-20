@@ -27,14 +27,14 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<ColumnsRecord> RECORD_TYPE = ColumnsRecord.class;
+	private static final Class<ColumnsRecord> __RECORD_TYPE = ColumnsRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<ColumnsRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**

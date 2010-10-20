@@ -185,6 +185,6 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	}
 
 	public TablesRecord(Configuration configuration) {
-        super(configuration, Tables.TABLES);
+		super(configuration, Tables.TABLES);
 	}
 }

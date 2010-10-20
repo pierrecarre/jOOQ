@@ -185,6 +185,6 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 	}
 
 	public KeyColumnUsageRecord(Configuration configuration) {
-        super(configuration, KeyColumnUsage.KEY_COLUMN_USAGE);
+		super(configuration, KeyColumnUsage.KEY_COLUMN_USAGE);
 	}
 }
