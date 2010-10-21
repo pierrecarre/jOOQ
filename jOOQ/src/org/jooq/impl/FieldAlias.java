@@ -41,7 +41,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class FieldAlias<T> extends FieldImpl<T> implements AliasProvider<Field<T>> {
+class FieldAlias<T> extends AbstractField<T> implements AliasProvider<Field<T>> {
 
     private static final long                 serialVersionUID = -85277321749681553L;
     private final AliasProviderImpl<Field<T>> aliasProvider;

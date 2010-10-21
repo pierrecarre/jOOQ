@@ -41,7 +41,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class SelectQueryAsField<T> extends FieldImpl<T> {
+class SelectQueryAsField<T> extends AbstractField<T> {
 
     private static final long            serialVersionUID = 3463144434073231750L;
     private final ResultProviderQuery<?> query;

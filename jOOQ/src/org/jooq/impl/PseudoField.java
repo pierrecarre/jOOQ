@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
@@ -35,53 +36,24 @@ import java.sql.SQLException;
 
 import org.jooq.SQLDialect;
 
-class PlainSQLField extends AbstractField<Object> {
+/**
+ * @author Lukas Eder
+ */
+class PseudoField<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6937002867156868761L;
-    private final String      sql;
-    private final Object[]    bindings;
+    private static final long serialVersionUID = 5589200289715501493L;
 
-    PlainSQLField(SQLDialect dialect, String sql, Object[] bindings) {
-        super(dialect, "", Object.class);
-
-        this.sql = sql;
-        this.bindings = (bindings == null) ? new Object[0] : bindings;
-
-        checkArguments(sql, bindings);
-    }
-
-    static void checkArguments(String sql, Object[] bindings) {
-        // This comparison is a bit awkward, and probably not very precise...
-        if (StringUtils.countMatches(sql, "?") != bindings.length) {
-            throw new IllegalArgumentException(
-                "The number of bind variables must match the number of bindings. " +
-                "SQL = [" + sql + "], bindings.length = " + bindings.length);
-        }
+    PseudoField(SQLDialect dialect, String name, Class<? extends T> type) {
+        super(dialect, name, type);
     }
 
     @Override
-    public final String toSQLReference(boolean inlineParameters) {
-        String result = sql;
-
-        if (inlineParameters) {
-            for (Object binding : bindings) {
-                result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(binding, inlineParameters));
-            }
-        }
-
-        return result;
-    }
-
-    @Override
-    public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        for (Object binding : bindings) {
-            Class<?> type = (binding == null) ? Object.class : binding.getClass();
-            bind(stmt, initialIndex++, type, binding);
-        }
-
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         return initialIndex;
+    }
+
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        return getName();
     }
 }

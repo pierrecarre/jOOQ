@@ -83,7 +83,7 @@ public final class FunctionFactory {
      * Retrieve the rownum pseudo-field
      */
     public Field<Integer> rownum() {
-        return new FieldImpl<Integer>(getDialect(), "rownum", Integer.class);
+        return new PseudoField<Integer>(getDialect(), "rownum", Integer.class);
     }
 
     /**
@@ -504,7 +504,7 @@ public final class FunctionFactory {
      * Get the null field
      */
     public Field<?> NULL() {
-        return new FieldImpl<Object>(getDialect(), "null", Object.class);
+        return new PseudoField<Object>(getDialect(), "null", Object.class);
     }
 
     /**

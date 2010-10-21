@@ -39,7 +39,7 @@ import org.jooq.CaseWhenStep;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 
-class CaseWhenStepImpl<V, T> extends FieldImpl<T> implements CaseWhenStep<V, T> {
+class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
 
     /**
      * Generated UID

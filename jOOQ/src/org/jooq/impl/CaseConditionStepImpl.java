@@ -40,7 +40,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 
-class CaseConditionStepImpl<T> extends FieldImpl<T> implements CaseConditionStep<T> {
+class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
 
     /**
      * Generated UID

@@ -42,7 +42,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class Function<T> extends FieldImpl<T> {
+class Function<T> extends AbstractField<T> {
 
     private static final long          serialVersionUID = 347252741712134044L;
 
@@ -131,7 +131,7 @@ class Function<T> extends FieldImpl<T> {
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = super.bind(stmt, initialIndex);
+        int result = initialIndex;
 
         for (NamedQueryPart field : getFields()) {
             result = field.bind(stmt, result);

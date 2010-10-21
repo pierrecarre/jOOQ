@@ -31,13 +31,15 @@
 
 package org.jooq.impl;
 
-import org.jooq.Field;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class Constant<T> extends FieldImpl<T> implements Field<T> {
+class Constant<T> extends AbstractField<T> {
 
     private static final long serialVersionUID = 6807729087019209084L;
 
@@ -50,5 +52,10 @@ class Constant<T> extends FieldImpl<T> implements Field<T> {
     public final String toSQLReference(boolean inlineParameters) {
         // See various tickets proposing improvement to this behaviour:
         return FieldTypeHelper.toSQL(getName(), true, this);
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return initialIndex;
     }
 }

@@ -31,6 +31,9 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -39,7 +42,7 @@ import org.jooq.TableField;
 /**
  * @author Lukas Eder
  */
-public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements TableField<R, T> {
+public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
 
     private static final long serialVersionUID = -2211214195583539735L;
 
@@ -63,8 +66,13 @@ public class TableFieldImpl<R extends Record, T> extends FieldImpl<T> implements
 
         sb.append(table.toSQLReference(inlineParameters));
         sb.append(".");
-        sb.append(super.toSQLReference(inlineParameters));
+        sb.append(getName());
 
         return sb.toString();
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return initialIndex;
     }
 }
