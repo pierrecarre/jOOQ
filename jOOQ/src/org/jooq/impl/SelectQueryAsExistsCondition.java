@@ -60,7 +60,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
         sb.append(operator.toSQL());
         sb.append(" (");
-        sb.append(query.toSQLReference(inlineParameters));
+        sb.append(query.getQueryPart().toSQLReference(inlineParameters));
         sb.append(")");
 
         return sb.toString();
@@ -68,6 +68,6 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
+        return query.getQueryPart().bind(stmt, initialIndex);
     }
 }

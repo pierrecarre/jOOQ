@@ -104,15 +104,15 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = value.bind(stmt, initialIndex);
+        int result = value.getQueryPart().bind(stmt, initialIndex);
 
         for (int i = 0; i < compareValues.size(); i++) {
-            result = compareValues.get(i).bind(stmt, result);
-            result = results.get(i).bind(stmt, result);
+            result = compareValues.get(i).getQueryPart().bind(stmt, result);
+            result = results.get(i).getQueryPart().bind(stmt, result);
         }
 
         if (otherwise != null) {
-            result = otherwise.bind(stmt, result);
+            result = otherwise.getQueryPart().bind(stmt, result);
         }
         return result;
     }
@@ -121,18 +121,18 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
         sb.append("case ");
-        sb.append(value.toSQLReference(inlineParameters));
+        sb.append(value.getQueryPart().toSQLReference(inlineParameters));
 
         for (int i = 0; i < compareValues.size(); i++) {
             sb.append(" when ");
-            sb.append(compareValues.get(i).toSQLReference(inlineParameters));
+            sb.append(compareValues.get(i).getQueryPart().toSQLReference(inlineParameters));
             sb.append(" then ");
-            sb.append(results.get(i).toSQLReference(inlineParameters));
+            sb.append(results.get(i).getQueryPart().toSQLReference(inlineParameters));
         }
 
         if (otherwise != null) {
             sb.append(" else ");
-            sb.append(otherwise.toSQLReference(inlineParameters));
+            sb.append(otherwise.getQueryPart().toSQLReference(inlineParameters));
         }
 
         sb.append(" end");

@@ -34,7 +34,7 @@ package org.jooq;
 /**
  * @author Lukas Eder
  */
-public interface AliasProvider<T extends AliasProvider<T>> extends QueryPart {
+public interface AliasProvider<T extends AliasProvider<T>> extends QueryPartProvider {
 
     /**
      * Get an aliased QueryPart. An aliased QueryPart should render SQL as

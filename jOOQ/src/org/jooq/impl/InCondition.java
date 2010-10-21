@@ -76,7 +76,7 @@ class InCondition<T> extends AbstractCondition {
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(field.getQueryPart().toSQLReference(inlineParameters));
         sb.append(" ");
         sb.append(operator.toSQL());
         sb.append(" (");

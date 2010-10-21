@@ -66,8 +66,8 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements Dele
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        result = getFrom().bind(stmt, result);
-        result = getWhere().bind(stmt, result);
+        result = getFrom().getQueryPart().bind(stmt, result);
+        result = getWhere().getQueryPart().bind(stmt, result);
 
         return result;
     }
@@ -130,11 +130,11 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery<R> implements Dele
         StringBuilder sb = new StringBuilder();
 
         sb.append("delete from ");
-        sb.append(getFrom().toSQLReference(inlineParameters));
+        sb.append(getFrom().getQueryPart().toSQLReference(inlineParameters));
 
         if (getWhere() != TRUE_CONDITION) {
             sb.append(" where ");
-            sb.append(getWhere().toSQLReference(inlineParameters));
+            sb.append(getWhere().getQueryPart().toSQLReference(inlineParameters));
         }
 
         return sb.toString();

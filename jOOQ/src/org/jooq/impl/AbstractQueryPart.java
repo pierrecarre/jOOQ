@@ -42,15 +42,21 @@ import java.sql.Timestamp;
 
 import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartProvider;
 import org.jooq.SQLDialect;
 
-abstract class AbstractQueryPart implements QueryPart {
+abstract class AbstractQueryPart implements QueryPart, QueryPartProvider {
 
     private static final long serialVersionUID = 2078114876079493107L;
     private final SQLDialect  dialect;
 
     AbstractQueryPart(SQLDialect dialect) {
         this.dialect = dialect;
+    }
+
+    @Override
+    public final QueryPart getQueryPart() {
+        return this;
     }
 
     @Override

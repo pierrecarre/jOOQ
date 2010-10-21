@@ -61,7 +61,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         StringBuilder sb = new StringBuilder();
 
         sb.append("insert into ");
-        sb.append(getInto().toSQLReference(inlineParameters));
+        sb.append(getInto().getQueryPart().toSQLReference(inlineParameters));
         sb.append(" (");
 
         String separator1 = "";

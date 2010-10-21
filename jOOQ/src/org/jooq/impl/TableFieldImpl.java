@@ -64,7 +64,7 @@ public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implem
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(table.toSQLReference(inlineParameters));
+        sb.append(table.getQueryPart().toSQLReference(inlineParameters));
         sb.append(".");
         sb.append(getName());
 

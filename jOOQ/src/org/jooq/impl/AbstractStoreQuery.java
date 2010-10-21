@@ -114,9 +114,9 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        result = getInto().bind(stmt, result);
+        result = getInto().getQueryPart().bind(stmt, result);
         for (Field<?> field : getValues0().keySet()) {
-            result = field.bind(stmt, result);
+            result = field.getQueryPart().bind(stmt, result);
             bind(stmt, result++, field, getValues0().get(field));
         }
 

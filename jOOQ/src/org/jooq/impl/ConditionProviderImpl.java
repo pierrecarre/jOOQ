@@ -128,11 +128,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     @Override
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return getWhere().bind(stmt, initialIndex);
+        return getWhere().getQueryPart().bind(stmt, initialIndex);
     }
 
     @Override
     public final String toSQLReference(boolean inlineParameters) {
-        return getWhere().toSQLReference(inlineParameters);
+        return getWhere().getQueryPart().toSQLReference(inlineParameters);
     }
 }

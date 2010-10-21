@@ -80,7 +80,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         for (ResultProviderSelectQuery<?, R> query : queries) {
-            initialIndex = query.bind(stmt, initialIndex);
+            initialIndex = query.getQueryPart().bind(stmt, initialIndex);
         }
 
         return initialIndex;
@@ -89,7 +89,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     @Override
     public String toSQLReference(boolean inlineParameters) {
         if (queries.size() == 1) {
-            return queries.get(0).toSQLReference(inlineParameters);
+            return queries.get(0).getQueryPart().toSQLReference(inlineParameters);
         }
         else {
             StringBuilder sb = new StringBuilder();
@@ -99,7 +99,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
             for (ResultProviderSelectQuery<?, R> query : queries) {
                 sb.append(connector);
                 sb.append("(");
-                sb.append(query.toSQLReference(inlineParameters));
+                sb.append(query.getQueryPart().toSQLReference(inlineParameters));
                 sb.append(")");
 
                 connector = " " + operator.toSQL(getDialect()) + " ";

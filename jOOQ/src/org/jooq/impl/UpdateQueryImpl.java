@@ -133,7 +133,7 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         StringBuilder sb = new StringBuilder();
 
         sb.append("update ");
-        sb.append(getInto().toSQLReference(inlineParameters));
+        sb.append(getInto().getQueryPart().toSQLReference(inlineParameters));
         sb.append(" set ");
 
         String separator = "";
@@ -149,7 +149,7 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
         if (getWhere() != TRUE_CONDITION) {
             sb.append(" where ");
-            sb.append(getWhere().toSQLReference(inlineParameters));
+            sb.append(getWhere().getQueryPart().toSQLReference(inlineParameters));
         }
 
         return sb.toString();

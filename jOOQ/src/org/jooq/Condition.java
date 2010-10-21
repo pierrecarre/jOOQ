@@ -36,7 +36,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Condition extends QueryPart {
+public interface Condition extends QueryPartProvider {
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}

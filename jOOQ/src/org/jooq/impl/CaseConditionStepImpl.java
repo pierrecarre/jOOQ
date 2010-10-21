@@ -95,12 +95,12 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         int result = initialIndex;
 
         for (int i = 0; i < conditions.size(); i++) {
-            result = conditions.get(i).bind(stmt, result);
-            result = results.get(i).bind(stmt, result);
+            result = conditions.get(i).getQueryPart().bind(stmt, result);
+            result = results.get(i).getQueryPart().bind(stmt, result);
         }
 
         if (otherwise != null) {
-            result = otherwise.bind(stmt, result);
+            result = otherwise.getQueryPart().bind(stmt, result);
         }
         return result;
     }
@@ -112,14 +112,14 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
 
         for (int i = 0; i < conditions.size(); i++) {
             sb.append(" when ");
-            sb.append(conditions.get(i).toSQLReference(inlineParameters));
+            sb.append(conditions.get(i).getQueryPart().toSQLReference(inlineParameters));
             sb.append(" then ");
-            sb.append(results.get(i).toSQLReference(inlineParameters));
+            sb.append(results.get(i).getQueryPart().toSQLReference(inlineParameters));
         }
 
         if (otherwise != null) {
             sb.append(" else ");
-            sb.append(otherwise.toSQLReference(inlineParameters));
+            sb.append(otherwise.getQueryPart().toSQLReference(inlineParameters));
         }
 
         sb.append(" end");

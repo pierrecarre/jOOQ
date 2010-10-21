@@ -117,7 +117,7 @@ class Function<T> extends AbstractField<T> {
      * count(distinct [field])
      */
     protected String toSQLField(NamedQueryPart field, boolean inlineParameters) {
-        return field.toSQLReference(inlineParameters);
+        return field.getQueryPart().toSQLReference(inlineParameters);
     }
 
     /**
@@ -134,7 +134,7 @@ class Function<T> extends AbstractField<T> {
         int result = initialIndex;
 
         for (NamedQueryPart field : getFields()) {
-            result = field.bind(stmt, result);
+            result = field.getQueryPart().bind(stmt, result);
         }
 
         return result;

@@ -38,12 +38,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.QueryPart;
+import org.jooq.QueryPartProvider;
 import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T> implements QueryPart {
+abstract class AbstractQueryPartList<T extends QueryPartProvider> extends AbstractList<T> implements QueryPart, QueryPartProvider {
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList      = new ArrayList<T>();
@@ -59,6 +60,11 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
         if (wrappedList != null) {
             addAll(wrappedList);
         }
+    }
+
+    @Override
+    public final QueryPart getQueryPart() {
+        return this;
     }
 
     @Override
@@ -124,14 +130,14 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
      * Subclasses may override this method
      */
     protected String toSQLReference(T queryPart, boolean inlineParameters) {
-        return queryPart.toSQLReference(inlineParameters);
+        return queryPart.getQueryPart().toSQLReference(inlineParameters);
     }
 
     /**
      * Subclasses may override this method
      */
     protected String toSQLDeclaration(T queryPart, boolean inlineParameters) {
-        return queryPart.toSQLDeclaration(inlineParameters);
+        return queryPart.getQueryPart().toSQLDeclaration(inlineParameters);
     }
 
     @Override
@@ -139,7 +145,7 @@ abstract class AbstractQueryPartList<T extends QueryPart> extends AbstractList<T
         int result = initialIndex;
 
         for (T queryPart : this) {
-            result = queryPart.bind(stmt, result);
+            result = queryPart.getQueryPart().bind(stmt, result);
         }
 
         return result;

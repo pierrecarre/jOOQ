@@ -76,7 +76,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
             sb.append("(");
         }
 
-        sb.append(aliasProvider.toSQLDeclaration(inlineParameters));
+        sb.append(aliasProvider.getQueryPart().toSQLDeclaration(inlineParameters));
 
         if (wrapInParentheses) {
             sb.append(")");
@@ -90,7 +90,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
 
     @Override
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return aliasProvider.bind(stmt, initialIndex);
+        return aliasProvider.getQueryPart().bind(stmt, initialIndex);
     }
 
     @Override

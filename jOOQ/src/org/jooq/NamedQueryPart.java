@@ -38,7 +38,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface NamedQueryPart extends QueryPart, Comparable<NamedQueryPart> {
+public interface NamedQueryPart extends QueryPartProvider, Comparable<NamedQueryPart> {
 
     /**
      * @return The name of this query part

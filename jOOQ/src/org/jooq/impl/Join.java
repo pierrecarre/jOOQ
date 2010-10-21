@@ -66,9 +66,9 @@ class Join extends AbstractQueryPart {
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        result = getTable().bind(stmt, result);
+        result = getTable().getQueryPart().bind(stmt, result);
         if (getCondition() != null) {
-            result = getCondition().bind(stmt, result);
+            result = getCondition().getQueryPart().bind(stmt, result);
         }
 
         return result;
@@ -103,20 +103,20 @@ class Join extends AbstractQueryPart {
         sb.append(" ");
 
         if (renderAsDeclaration) {
-            sb.append(getTable().toSQLDeclaration(inlineParameters));
+            sb.append(getTable().getQueryPart().toSQLDeclaration(inlineParameters));
         }
         else {
-            sb.append(getTable().toSQLReference(inlineParameters));
+            sb.append(getTable().getQueryPart().toSQLReference(inlineParameters));
         }
 
         if (getCondition() != TRUE_CONDITION) {
             sb.append(" on ");
 
             if (renderAsDeclaration) {
-                sb.append(getCondition().toSQLDeclaration(inlineParameters));
+                sb.append(getCondition().getQueryPart().toSQLDeclaration(inlineParameters));
             }
             else {
-                sb.append(getCondition().toSQLReference(inlineParameters));
+                sb.append(getCondition().getQueryPart().toSQLReference(inlineParameters));
             }
         }
 

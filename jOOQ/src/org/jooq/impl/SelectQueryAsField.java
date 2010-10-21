@@ -59,11 +59,11 @@ class SelectQueryAsField<T> extends AbstractField<T> {
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return query.bind(stmt, initialIndex);
+        return query.getQueryPart().bind(stmt, initialIndex);
     }
 
     @Override
     public String toSQLReference(boolean inlineParameters) {
-        return query.toSQLReference(inlineParameters);
+        return query.getQueryPart().toSQLReference(inlineParameters);
     }
 }

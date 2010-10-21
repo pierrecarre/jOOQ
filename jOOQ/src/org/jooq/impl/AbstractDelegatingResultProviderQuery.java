@@ -56,17 +56,17 @@ abstract class AbstractDelegatingResultProviderQuery<R extends Record> extends A
 
     @Override
     public final String toSQLDeclaration(boolean inlineParameters) {
-        return delegate.toSQLDeclaration(inlineParameters);
+        return delegate.getQueryPart().toSQLDeclaration(inlineParameters);
     }
 
     @Override
     public final String toSQLReference(boolean inlineParameters) {
-        return delegate.toSQLReference(inlineParameters);
+        return delegate.getQueryPart().toSQLReference(inlineParameters);
     }
 
     @Override
     public final int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return delegate.bind(stmt, initialIndex);
+        return delegate.getQueryPart().bind(stmt, initialIndex);
     }
 
     @Override

@@ -80,7 +80,7 @@ class BetweenCondition<T> extends AbstractCondition {
     public final String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(field.getQueryPart().toSQLReference(inlineParameters));
         sb.append(" between ");
         sb.append(FieldTypeHelper.toSQL(minValue, inlineParameters, field));
         sb.append(" and ");

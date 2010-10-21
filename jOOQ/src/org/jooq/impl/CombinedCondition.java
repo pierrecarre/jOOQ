@@ -96,7 +96,7 @@ class CombinedCondition extends AbstractCondition {
         int result = initialIndex;
 
         for (Condition condition : conditions) {
-            result = condition.bind(stmt, result);
+            result = condition.getQueryPart().bind(stmt, result);
         }
 
         return result;
@@ -109,7 +109,7 @@ class CombinedCondition extends AbstractCondition {
         }
 
         if (conditions.size() == 1) {
-            return conditions.get(0).toSQLReference(inlineParameters);
+            return conditions.get(0).getQueryPart().toSQLReference(inlineParameters);
         }
 
         StringBuilder sb = new StringBuilder();
@@ -119,7 +119,7 @@ class CombinedCondition extends AbstractCondition {
         sb.append("(");
         for (Condition condition : conditions) {
             sb.append(separator);
-            sb.append(condition.toSQLReference(inlineParameters));
+            sb.append(condition.getQueryPart().toSQLReference(inlineParameters));
             separator = operatorName;
         }
         sb.append(")");

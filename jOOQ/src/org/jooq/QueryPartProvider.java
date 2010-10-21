@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,59 +28,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import org.jooq.Comparator;
-import org.jooq.Field;
-import org.jooq.SQLDialect;
+package org.jooq;
 
 /**
+ * This interface provides an indirection to {@link QueryPart}
+ * <p>
+ * All {@link QueryPartProvider} implementations are actually also
+ * {@link QueryPart}. But in order not to pollute the declared method space, the
+ * {@link QueryPart} interface is not exposed to client code
+ *
  * @author Lukas Eder
  */
-class JoinCondition<T> extends AbstractCondition {
+public interface QueryPartProvider {
 
-    private static final long serialVersionUID = -747240442279619486L;
-
-    private final Field<T>    field1;
-    private final Field<T>    field2;
-    private final Comparator  comparator;
-
-    JoinCondition(SQLDialect dialect, Field<T> field1, Field<T> field2) {
-        this(dialect, field1, field2, Comparator.EQUALS);
-    }
-
-    JoinCondition(SQLDialect dialect, Field<T> field1, Field<T> field2, Comparator comparator) {
-        super(dialect);
-
-        this.field1 = field1;
-        this.field2 = field2;
-        this.comparator = comparator;
-    }
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        result = field1.getQueryPart().bind(stmt, result);
-        result = field2.getQueryPart().bind(stmt, result);
-
-        return result;
-    }
-
-    @Override
-    public String toSQLReference(boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(field1.getQueryPart().toSQLReference(inlineParameters));
-        sb.append(" ");
-        sb.append(comparator.toSQL());
-        sb.append(" ");
-        sb.append(field2.getQueryPart().toSQLReference(inlineParameters));
-
-        return sb.toString();
-    }
+    /**
+     * Return this {@link QueryPartProvider} as a {@link QueryPart}
+     */
+    QueryPart getQueryPart();
 }

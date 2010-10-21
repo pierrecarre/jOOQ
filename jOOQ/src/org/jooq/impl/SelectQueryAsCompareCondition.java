@@ -59,11 +59,11 @@ class SelectQueryAsCompareCondition<T> extends AbstractCondition {
     public String toSQLReference(boolean inlineParameters) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(field.toSQLReference(inlineParameters));
+        sb.append(field.getQueryPart().toSQLReference(inlineParameters));
         sb.append(" ");
         sb.append(Comparator.EQUALS.toSQL());
         sb.append(" (");
-        sb.append(query.toSQLReference(inlineParameters));
+        sb.append(query.getQueryPart().toSQLReference(inlineParameters));
         sb.append(")");
 
         return sb.toString();
@@ -71,7 +71,7 @@ class SelectQueryAsCompareCondition<T> extends AbstractCondition {
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        initialIndex = field.bind(stmt, initialIndex);
-        return query.bind(stmt, initialIndex);
+        initialIndex = field.getQueryPart().bind(stmt, initialIndex);
+        return query.getQueryPart().bind(stmt, initialIndex);
     }
 }

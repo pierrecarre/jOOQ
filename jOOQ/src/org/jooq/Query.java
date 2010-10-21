@@ -40,7 +40,7 @@ import java.sql.SQLException;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart, Serializable {
+public interface Query extends QueryPartProvider, Serializable {
 
     /**
      * Execute the query, if it has been created with a properly configured
