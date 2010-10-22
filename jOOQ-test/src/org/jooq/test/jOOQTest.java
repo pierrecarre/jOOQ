@@ -300,24 +300,36 @@ public class jOOQTest {
         CaseWhenStep<Integer, String> c = value.when(1, "one");
 
         assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when ? then ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case TABLE1.ID1 when ? then ? end", c.getQueryPart().toSQLDeclaration(false));
 
         c.otherwise("nothing");
         assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when ? then ? else ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case TABLE1.ID1 when ? then ? else ? end", c.getQueryPart().toSQLDeclaration(false));
 
         c.when(2, "two").when(3, "three");
         assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case TABLE1.ID1 when ? then ? when ? then ? when ? then ? else ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case TABLE1.ID1 when 1 then 'one' when 2 then 'two' when 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case TABLE1.ID1 when ? then ? when ? then ? when ? then ? else ? end", c.getQueryPart().toSQLDeclaration(false));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setString(2, "one");
+            oneOf(statement).setInt(3, 2);
+            oneOf(statement).setString(4, "two");
+            oneOf(statement).setInt(5, 3);
+            oneOf(statement).setString(6, "three");
+            oneOf(statement).setString(7, "nothing");
+        }});
 
         int i = c.getQueryPart().bind(statement);
-        assertEquals(1, i);
+        assertEquals(8, i);
+
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -326,30 +338,34 @@ public class jOOQTest {
         CaseConditionStep<String> c = decode.when(FIELD_ID1.equal(1), "one");
 
         assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? end", c.getQueryPart().toSQLDeclaration(false));
 
         c.otherwise("nothing");
         assertEquals("case when TABLE1.ID1 = 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' else 'nothing' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? else ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case when TABLE1.ID1 = 1 then 'one' else 'nothing' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' else 'nothing' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? else ? end", c.getQueryPart().toSQLDeclaration(false));
 
         c.when(FIELD_ID1.equal(2), "two").when(FIELD_ID1.equal(3), "three");
         assertEquals("case when TABLE1.ID1 = 1 then 'one' when TABLE1.ID1 = 2 then 'two' when TABLE1.ID1 = 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLReference(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' when TABLE1.ID1 = ? then 'two' when TABLE1.ID1 = ? then 'three' else 'nothing' end", c.getQueryPart().toSQLReference(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? when TABLE1.ID1 = ? then ? when TABLE1.ID1 = ? then ? else ? end", c.getQueryPart().toSQLReference(false));
         assertEquals("case when TABLE1.ID1 = 1 then 'one' when TABLE1.ID1 = 2 then 'two' when TABLE1.ID1 = 3 then 'three' else 'nothing' end", c.getQueryPart().toSQLDeclaration(true));
-        assertEquals("case when TABLE1.ID1 = ? then 'one' when TABLE1.ID1 = ? then 'two' when TABLE1.ID1 = ? then 'three' else 'nothing' end", c.getQueryPart().toSQLDeclaration(false));
+        assertEquals("case when TABLE1.ID1 = ? then ? when TABLE1.ID1 = ? then ? when TABLE1.ID1 = ? then ? else ? end", c.getQueryPart().toSQLDeclaration(false));
 
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 1);
-            oneOf(statement).setInt(2, 2);
-            oneOf(statement).setInt(3, 3);
+            oneOf(statement).setString(2, "one");
+            oneOf(statement).setInt(3, 2);
+            oneOf(statement).setString(4, "two");
+            oneOf(statement).setInt(5, 3);
+            oneOf(statement).setString(6, "three");
+            oneOf(statement).setString(7, "nothing");
         }});
 
         int i = c.getQueryPart().bind(statement);
-        assertEquals(4, i);
+        assertEquals(8, i);
 
         context.assertIsSatisfied();
     }
@@ -369,32 +385,32 @@ public class jOOQTest {
         Field<Integer> f1 = create.functions().constant(Integer.valueOf(1));
         assertEquals(Integer.class, f1.getType());
         assertEquals("1", f1.getQueryPart().toSQLReference(true));
-        assertEquals("1", f1.getQueryPart().toSQLReference(false));
+        assertEquals("?", f1.getQueryPart().toSQLReference(false));
         assertEquals("1", f1.getQueryPart().toSQLDeclaration(true));
-        assertEquals("1", f1.getQueryPart().toSQLDeclaration(false));
+        assertEquals("?", f1.getQueryPart().toSQLDeclaration(false));
 
         Field<String> f2 = create.functions().constant("test's");
         assertEquals(String.class, f2.getType());
         assertEquals("'test''s'", f2.getQueryPart().toSQLReference(true));
-        assertEquals("'test''s'", f2.getQueryPart().toSQLReference(false));
+        assertEquals("?", f2.getQueryPart().toSQLReference(false));
         assertEquals("'test''s'", f2.getQueryPart().toSQLDeclaration(true));
-        assertEquals("'test''s'", f2.getQueryPart().toSQLDeclaration(false));
+        assertEquals("?", f2.getQueryPart().toSQLDeclaration(false));
 
         Field<Integer> f3 = create.functions().constant(Integer.valueOf(1)).as("value");
         assertEquals(Integer.class, f3.getType());
         assertEquals("value", f3.getQueryPart().toSQLReference(true));
         assertEquals("value", f3.getQueryPart().toSQLReference(false));
         assertEquals("1 value", f3.getQueryPart().toSQLDeclaration(true));
-        assertEquals("1 value", f3.getQueryPart().toSQLDeclaration(false));
+        assertEquals("? value", f3.getQueryPart().toSQLDeclaration(false));
 
-        int i = f1.getQueryPart().bind(statement);
-        assertEquals(1, i);
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+        }});
 
-        int j = f2.getQueryPart().bind(statement);
-        assertEquals(1, j);
+        int i = f3.getQueryPart().bind(statement);
+        assertEquals(2, i);
 
-        int k = f3.getQueryPart().bind(statement);
-        assertEquals(1, k);
+        context.assertIsSatisfied();
     }
 
     @Test

@@ -42,20 +42,23 @@ import org.jooq.SQLDialect;
 class Constant<T> extends AbstractField<T> {
 
     private static final long serialVersionUID = 6807729087019209084L;
+    private final T           value;
 
     @SuppressWarnings("unchecked")
     Constant(SQLDialect dialect, T value) {
         super(dialect, value.toString(), (Class<? extends T>) value.getClass());
+
+        this.value = value;
     }
 
     @Override
     public final String toSQLReference(boolean inlineParameters) {
-        // See various tickets proposing improvement to this behaviour:
-        return FieldTypeHelper.toSQL(getName(), true, this);
+        return FieldTypeHelper.toSQL(getName(), inlineParameters, this);
     }
 
     @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        return initialIndex;
+        bind(stmt, initialIndex, this, value);
+        return initialIndex + 1;
     }
 }
