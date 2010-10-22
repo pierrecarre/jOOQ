@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.hsqldb;
+package org.jooq.util.mysql;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -38,53 +38,63 @@ import java.sql.Timestamp;
 
 /**
  * @author Lukas Eder
- * @see http://hsqldb.org/doc/guide/ch09.html#datatypes-section
  */
-public enum HSQLDBDataType {
+public enum MySQLDataType {
 
-	INT(Integer.class),
-	INTEGER(Integer.class),
+    BOOLEAN(Boolean.class),
+    BOOL(Boolean.class),
+	BIT(Boolean.class),
+
 	TINYINT(Byte.class),
 	SMALLINT(Short.class),
+	INT(Integer.class),
+	MEDIUMINT(Integer.class),
+	INTEGER(Integer.class),
 	BIGINT(Long.class),
 
-	DOUBLE(Double.class),
-	DOUBLEPRECISION(Double.class),
 	FLOAT(Float.class),
-	REAL(Float.class),
-
-	VARCHAR(String.class),
-	VARCHARIGNORECASE(String.class),
-	CHAR(String.class),
-	CHARACTER(String.class),
-	CHARACTERVARYING(String.class), // Undocumented
-	LONGVARCHAR(String.class),
-
-	DATE(Date.class),
-	TIME(Time.class),
-	DATETIME(Timestamp.class),
-	TIMESTAMP(Timestamp.class),
-
+	DOUBLE(Double.class),
 	DECIMAL(BigDecimal.class),
-	NUMERIC(BigDecimal.class),
+	DEC(BigDecimal.class),
 
-	BIT(Boolean.class),
-	BOOLEAN(Boolean.class),
+	TEXT(String.class),
+	VARCHAR(String.class),
+	CHAR(String.class),
+	MEDIUMTEXT(String.class),
+	LONGTEXT(String.class),
+	ENUM(String.class),
+	SET(String.class),
 
 	BINARY(byte[].class),
 	VARBINARY(byte[].class),
-	LONGVARBINARY(byte[].class),
+	TINYBLOB(byte[].class),
+	BLOB(byte[].class),
+	MEDIUMBLOB(byte[].class),
+	LONGBLOB(byte[].class),
 
-	OTHER(Object.class),
-	OBJECT(Object.class);
+	DATE(Date.class),
+	TIME(Time.class),
+	TIMESTAMP(Timestamp.class),
+	DATETIME(Timestamp.class),
+	YEAR(Date.class);
 
 	private final Class<?> type;
 
-	private HSQLDBDataType(Class<?> type) {
+	private MySQLDataType(Class<?> type) {
 		this.type = type;
 	}
 
 	public Class<?> getType() {
 		return type;
 	}
+
+    public static MySQLDataType getType(Class<?> type) {
+        for (MySQLDataType value : values()) {
+            if (value.getType().equals(type)) {
+                return value;
+            }
+        }
+
+        return null;
+    }
 }

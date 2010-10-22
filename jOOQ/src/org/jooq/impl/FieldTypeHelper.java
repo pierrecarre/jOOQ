@@ -44,6 +44,12 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 
 import org.jooq.NamedTypeProviderQueryPart;
+import org.jooq.SQLDialect;
+import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.util.hsqldb.HSQLDBDataType;
+import org.jooq.util.mysql.MySQLDataType;
+import org.jooq.util.oracle.OracleDataType;
+import org.jooq.util.postgres.PostgresDataType;
 
 /**
  * @author Lukas Eder
@@ -288,6 +294,39 @@ final class FieldTypeHelper {
             return Types.OTHER;
         }
     }
+
+    public static String getDialectSQLType(SQLDialect dialect, NamedTypeProviderQueryPart<?> field) {
+        return getDialectSQLType(dialect, field.getType());
+    }
+
+    public static String getDialectSQLType(SQLDialect dialect, Class<?> type) {
+        Enum<?> result = null;
+
+        switch (dialect) {
+            case HSQLDB:
+                result = HSQLDBDataType.getType(type);
+                break;
+            case MYSQL:
+                result = MySQLDataType.getType(type);
+                break;
+            case ORACLE:
+                result = OracleDataType.getType(type);
+                break;
+            case POSTGRES:
+                result = PostgresDataType.getType(type);
+                break;
+
+            default:
+                throw new SQLDialectNotSupportedException("This method is not yet implemented for dialect " + dialect);
+        }
+
+        if (result == null) {
+            throw new SQLDialectNotSupportedException(type + " cannot be mapped to any type in dialect " + dialect);
+        }
+
+        return String.valueOf(result);
+    }
+
 
     private FieldTypeHelper() {}
 }

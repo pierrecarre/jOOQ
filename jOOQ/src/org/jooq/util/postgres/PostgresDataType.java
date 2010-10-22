@@ -29,83 +29,86 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.oracle;
+package org.jooq.util.postgres;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
  * @author Lukas Eder
+ *
+ * @see http://www.postgresql.org/docs/8.4/interactive/datatype.html
  */
-public enum OracleDataType {
+public enum PostgresDataType {
 
-	NUMBER(BigDecimal.class),
+	BIGINT(Long.class),
+	INT8(Long.class),
+	BIGSERIAL(Long.class),
+	SERIAL8(Long.class),
 
-	CHAR(String.class),
-	NCHAR(String.class),
+	TEXT(String.class),
 	VARCHAR(String.class),
-	VARCHAR2(String.class),
-	NVARCHAR(String.class),
-	NVARCHAR2(String.class),
-	LONG(String.class),
-	CLOB(String.class),
-	NCLOB(String.class),
+	BIT(String.class),
+	BITVARYING(String.class),
+	VARBIT(String.class),
+	CHARACTERVARYING(String.class),
+	CHARACTER(String.class),
+	CHAR(String.class),
 
-	RAW(byte[].class),
-	LONGRAW(byte[].class),
-	BLOB(byte[].class),
-	BFILE(byte[].class),
+	BOOLEAN(Boolean.class),
+	BOOL(Boolean.class),
+
+	BYTEA(byte[].class),
+
+	DOUBLEPRECISION(Double.class),
+	FLOAT8(Double.class),
+
+	INT(Integer.class),
+	INTEGER(Integer.class),
+	INT4(Integer.class),
+	SERIAL(Integer.class),
+	SERIAL4(Integer.class),
+
+	NUMERIC(BigDecimal.class),
+	MONEY(BigDecimal.class),
+
+	REAL(Float.class),
+	FLOAT4(Float.class),
+
+	SMALLINT(Short.class),
+	INT2(Short.class),
 
 	DATE(Date.class),
+	TIME(Time.class),
+	TIMEWITHOUTTIMEZONE(Time.class),
+	TIMEWITHTIMEZONE(Time.class),
+	TIMETZ(Time.class),
 	TIMESTAMP(Timestamp.class),
-	TIMESTAMP6(Timestamp.class),
-	TIMESTAMP6WITHTIMEZONE(Timestamp.class);
+	TIMESTAMPWITHOUTTIMEZONE(Timestamp.class),
+	TIMESTAMPWITHTIMEZONE(Timestamp.class),
+	TIMESTAMPTZ(Timestamp.class)
+
+	;
 
 	private final Class<?> type;
 
-    private OracleDataType(Class<?> type) {
-      this.type = type;
-    }
-
-    public Class<?> getType() {
-    	return type;
-    }
-    
-	public Class<?> getType(int precision, int scale) {
-		if (this == NUMBER && precision != 0) {
-
-			// Integer numbers
-			if (scale == 0) {
-				
-				// if (precision == 1) {
-				//     Booleans could have precision == 1, but that's a tough guess
-				// }
-				if (precision < String.valueOf(Byte.MAX_VALUE).length()) {
-					return Byte.class;
-				}
-				if (precision < String.valueOf(Short.MAX_VALUE).length()) {
-					return Short.class;
-				}
-				if (precision < String.valueOf(Integer.MAX_VALUE).length()) {
-					return Integer.class;
-				}
-				if (precision < String.valueOf(Long.MAX_VALUE).length()) {
-					return Long.class;
-				}
-				
-				// Default integer number
-				return BigInteger.class;
-			} 
-			
-			// Real numbers should not be represented as float or double
-			else {
-				return BigDecimal.class;
-			}
-		}
-		
-		// If no precise type could be guessed, take the default
-		return getType();
+	private PostgresDataType(Class<?> type) {
+		this.type = type;
 	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
+    public static PostgresDataType getType(Class<?> type) {
+        for (PostgresDataType value : values()) {
+            if (value.getType().equals(type)) {
+                return value;
+            }
+        }
+
+        return null;
+    }
 }

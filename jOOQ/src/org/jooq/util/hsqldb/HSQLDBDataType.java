@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.util.mysql;
+package org.jooq.util.hsqldb;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -38,53 +38,63 @@ import java.sql.Timestamp;
 
 /**
  * @author Lukas Eder
+ * @see http://hsqldb.org/doc/guide/ch09.html#datatypes-section
  */
-public enum MySQLDataType {
+public enum HSQLDBDataType {
 
-	BIT(Boolean.class),
-	BOOL(Boolean.class),
-	BOOLEAN(Boolean.class),
-
-	TINYINT(Byte.class),
-	SMALLINT(Short.class),
-	MEDIUMINT(Integer.class),
 	INT(Integer.class),
 	INTEGER(Integer.class),
-	BIGINT(Integer.class),
+	TINYINT(Byte.class),
+	SMALLINT(Short.class),
+	BIGINT(Long.class),
 
-	FLOAT(Float.class),
 	DOUBLE(Double.class),
-	DEC(BigDecimal.class),
-	DECIMAL(BigDecimal.class),
+	DOUBLEPRECISION(Double.class),
+	FLOAT(Float.class),
+	REAL(Float.class),
 
-	CHAR(String.class),
+	LONGVARCHAR(String.class),
 	VARCHAR(String.class),
-	TEXT(String.class),
-	MEDIUMTEXT(String.class),
-	LONGTEXT(String.class),
-	ENUM(String.class),
-	SET(String.class),
-
-	BINARY(byte[].class),
-	VARBINARY(byte[].class),
-	TINYBLOB(byte[].class),
-	BLOB(byte[].class),
-	MEDIUMBLOB(byte[].class),
-	LONGBLOB(byte[].class),
+	VARCHARIGNORECASE(String.class),
+	CHAR(String.class),
+	CHARACTER(String.class),
+	CHARACTERVARYING(String.class), // Undocumented
 
 	DATE(Date.class),
 	TIME(Time.class),
-	DATETIME(Timestamp.class),
 	TIMESTAMP(Timestamp.class),
-	YEAR(Date.class);
+	DATETIME(Timestamp.class),
+
+	DECIMAL(BigDecimal.class),
+	NUMERIC(BigDecimal.class),
+
+	BOOLEAN(Boolean.class),
+	BIT(Boolean.class),
+
+	LONGVARBINARY(byte[].class),
+	VARBINARY(byte[].class),
+	BINARY(byte[].class),
+
+	OTHER(Object.class),
+	OBJECT(Object.class);
 
 	private final Class<?> type;
 
-	private MySQLDataType(Class<?> type) {
+	private HSQLDBDataType(Class<?> type) {
 		this.type = type;
 	}
 
 	public Class<?> getType() {
 		return type;
+	}
+
+	public static HSQLDBDataType getType(Class<?> type) {
+	    for (HSQLDBDataType value : values()) {
+	        if (value.getType().equals(type)) {
+	            return value;
+	        }
+	    }
+
+	    return null;
 	}
 }

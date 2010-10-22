@@ -53,7 +53,16 @@ class Constant<T> extends AbstractField<T> {
 
     @Override
     public final String toSQLReference(boolean inlineParameters) {
-        return FieldTypeHelper.toSQL(getName(), inlineParameters, this);
+        switch (getDialect()) {
+
+            // HSQLDB cannot detect the type of a bound constant. It must be cast
+            case HSQLDB:
+                return "CAST(? as " + FieldTypeHelper.getDialectSQLType(getDialect(), this) + ")";
+
+            // Most RDBMS can handle constants as typeless literals
+            default:
+                return FieldTypeHelper.toSQL(getName(), inlineParameters, this);
+        }
     }
 
     @Override
