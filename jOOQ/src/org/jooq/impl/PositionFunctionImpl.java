@@ -31,6 +31,9 @@
 
 package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
 import org.jooq.SQLDialect;
@@ -58,5 +61,11 @@ class PositionFunctionImpl extends IntegerFunction {
         sb.append(super.toSQLField(field, inlineParameters));
 
         return sb.toString();
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = search.getQueryPart().bind(stmt, initialIndex);
+        return super.bind(stmt, result);
     }
 }

@@ -133,14 +133,10 @@ class Function<T> extends AbstractField<T> {
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 
-        for (NamedQueryPart field : getFields()) {
+        for (NamedQueryPart field : arguments) {
             result = field.getQueryPart().bind(stmt, result);
         }
 
         return result;
-    }
-
-    protected final List<NamedQueryPart> getFields() {
-        return arguments;
     }
 }
