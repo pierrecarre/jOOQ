@@ -2,6 +2,38 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.4.2
+=================================================================
+
+Various bugfixes and minor improvements
+
+Features
+--------
+#66 - Add support for CASE or DECODE expression
+
+API changes
+-----------
+#77 - Functions should not extend FieldImpl, but a new 
+      AbstractField
+#78 - QueryPart pollutes declared method space of its 
+      implementations. Hide it by indirection
+
+Bugfixes
+--------
+#64 - Code generation fails when foreign key references a unique 
+      key that is not the primary key. Code generation for these
+      cases is omitted
+#67 - When loading properties files, a leading / seems to be 
+      mandatory. This is preventing users from correctly setting
+      up jOOQ the first time
+#70 - Add support for Oracle datatype TIMESTAMP(6)
+#72 - Name clashes in generated Tables
+#75 - Constant does not bind its values.
+#76 - Constant should not render strings all the time
+#79 - Constants are not properly escaped
+#80 - Position function does not bind any variables
+#81 - Add cast function to Constants in HSQL
+
 Version 1.4.1
 =================================================================
 
