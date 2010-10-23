@@ -80,6 +80,13 @@ public abstract class AbstractDefinition implements Definition {
 
 			// Uppercase first letter of a word
 			if (word.length() > 0) {
+
+			    // #82 - If a word starts with a digit, prevail the
+			    // underscore to prevent naming clashes
+			    if (Character.isDigit(word.charAt(0))) {
+			        result.append("_");
+			    }
+
 				result.append(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
 			}
 

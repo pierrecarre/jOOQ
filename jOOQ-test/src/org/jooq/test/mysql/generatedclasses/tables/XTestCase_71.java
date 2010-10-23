@@ -9,7 +9,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
-import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase71Record;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record;
 
 
 /**
@@ -17,25 +17,25 @@ import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase71Record;
  *
  * An unused table in the same schema.
  */
-public class XTestCase71 extends UpdatableTableImpl<XTestCase71Record> {
+public class XTestCase_71 extends UpdatableTableImpl<XTestCase_71Record> {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The singleton instance of x_test_case_71
 	 */
-	public static final XTestCase71 X_TEST_CASE_71 = new XTestCase71();
+	public static final XTestCase_71 X_TEST_CASE_71 = new XTestCase_71();
 
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<XTestCase71Record> __RECORD_TYPE = XTestCase71Record.class;
+	private static final Class<XTestCase_71Record> __RECORD_TYPE = XTestCase_71Record.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
-	public Class<XTestCase71Record> getRecordType() {
+	public Class<XTestCase_71Record> getRecordType() {
 		return __RECORD_TYPE;
 	}
 
@@ -44,19 +44,19 @@ public class XTestCase71 extends UpdatableTableImpl<XTestCase71Record> {
 	 * 
 	 * PRIMARY KEY
 	 */
-	public static final TableField<XTestCase71Record, Integer> ID = new TableFieldImpl<XTestCase71Record, Integer>(SQLDialect.MYSQL, "ID", Integer.class, X_TEST_CASE_71);
+	public static final TableField<XTestCase_71Record, Integer> ID = new TableFieldImpl<XTestCase_71Record, Integer>(SQLDialect.MYSQL, "ID", Integer.class, X_TEST_CASE_71);
 
 	/**
 	 * An uncommented item
 	 * 
 	 * FOREIGN KEY [test.x_test_case_71.TEST_CASE_64_69_ID] REFERENCES x_test_case_64_69 [test.x_test_case_64_69.ID]
 	 */
-	public static final TableField<XTestCase71Record, Integer> TEST_CASE_64_69_ID = new TableFieldImpl<XTestCase71Record, Integer>(SQLDialect.MYSQL, "TEST_CASE_64_69_ID", Integer.class, X_TEST_CASE_71);
+	public static final TableField<XTestCase_71Record, Integer> TEST_CASE_64_69_ID = new TableFieldImpl<XTestCase_71Record, Integer>(SQLDialect.MYSQL, "TEST_CASE_64_69_ID", Integer.class, X_TEST_CASE_71);
 
 	/**
 	 * No further instances allowed
 	 */
-	private XTestCase71() {
+	private XTestCase_71() {
 		super(SQLDialect.MYSQL, "x_test_case_71", Test.TEST);
 	}
 

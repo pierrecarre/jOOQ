@@ -10,8 +10,8 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.test.mysql.generatedclasses.tables.XTestCase6469;
-import org.jooq.test.mysql.generatedclasses.tables.XTestCase71;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
 
 
 /**
@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XTestCase71;
  *
  * An unused table in the same schema.
  */
-public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record> {
+public class XTestCase_64_69Record extends UpdatableRecordImpl<XTestCase_64_69Record> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record
 	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
-		setValue(XTestCase6469.ID, value);
+		setValue(XTestCase_64_69.ID, value);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record
 	 * PRIMARY KEY
 	 */
 	public Integer getId() {
-		return getValue(XTestCase6469.ID);
+		return getValue(XTestCase_64_69.ID);
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record
 	 * 
 	 * PRIMARY KEY
 	 */
-	public List<XTestCase71Record> getXTestCase71s() throws SQLException {
-		SimpleSelectQuery<XTestCase71Record> q = create().selectQuery(XTestCase71.X_TEST_CASE_71);
-		q.addCompareCondition(XTestCase71.TEST_CASE_64_69_ID, getValue(XTestCase6469.ID));
+	public List<XTestCase_71Record> getXTestCase_71s() throws SQLException {
+		SimpleSelectQuery<XTestCase_71Record> q = create().selectQuery(XTestCase_71.X_TEST_CASE_71);
+		q.addCompareCondition(XTestCase_71.TEST_CASE_64_69_ID, getValue(XTestCase_64_69.ID));
 		q.execute();
 
 		return q.getResult().getRecords();
@@ -60,7 +60,7 @@ public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record
 	 * FOREIGN KEY [test.x_test_case_64_69.UNUSED_ID] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public void setUnusedId(Integer value) {
-		setValue(XTestCase6469.UNUSED_ID, value);
+		setValue(XTestCase_64_69.UNUSED_ID, value);
 	}
 
 	/**
@@ -69,10 +69,10 @@ public class XTestCase6469Record extends UpdatableRecordImpl<XTestCase6469Record
 	 * FOREIGN KEY [test.x_test_case_64_69.UNUSED_ID] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public Integer getUnusedId() {
-		return getValue(XTestCase6469.UNUSED_ID);
+		return getValue(XTestCase_64_69.UNUSED_ID);
 	}
 
-	public XTestCase6469Record(Configuration configuration) {
-		super(configuration, XTestCase6469.X_TEST_CASE_64_69);
+	public XTestCase_64_69Record(Configuration configuration) {
+		super(configuration, XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 }

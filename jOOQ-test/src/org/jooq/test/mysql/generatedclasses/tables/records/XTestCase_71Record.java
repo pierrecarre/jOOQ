@@ -10,8 +10,8 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.test.mysql.generatedclasses.tables.XTestCase6469;
-import org.jooq.test.mysql.generatedclasses.tables.XTestCase71;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
 
 
 /**
@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XTestCase71;
  *
  * An unused table in the same schema.
  */
-public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
+public class XTestCase_71Record extends UpdatableRecordImpl<XTestCase_71Record> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
 	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
-		setValue(XTestCase71.ID, value);
+		setValue(XTestCase_71.ID, value);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
 	 * PRIMARY KEY
 	 */
 	public Integer getId() {
-		return getValue(XTestCase71.ID);
+		return getValue(XTestCase_71.ID);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
 	 * 
 	 * FOREIGN KEY [test.x_test_case_71.TEST_CASE_64_69_ID] REFERENCES x_test_case_64_69 [test.x_test_case_64_69.ID]
 	 */
-	public void setTestCase6469Id(Integer value) {
-		setValue(XTestCase71.TEST_CASE_64_69_ID, value);
+	public void setTestCase_64_69Id(Integer value) {
+		setValue(XTestCase_71.TEST_CASE_64_69_ID, value);
 	}
 
 	/**
@@ -55,8 +55,8 @@ public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
 	 * 
 	 * FOREIGN KEY [test.x_test_case_71.TEST_CASE_64_69_ID] REFERENCES x_test_case_64_69 [test.x_test_case_64_69.ID]
 	 */
-	public Integer getTestCase6469Id() {
-		return getValue(XTestCase71.TEST_CASE_64_69_ID);
+	public Integer getTestCase_64_69Id() {
+		return getValue(XTestCase_71.TEST_CASE_64_69_ID);
 	}
 
 	/**
@@ -64,16 +64,16 @@ public class XTestCase71Record extends UpdatableRecordImpl<XTestCase71Record> {
 	 * 
 	 * FOREIGN KEY [test.x_test_case_71.TEST_CASE_64_69_ID] REFERENCES x_test_case_64_69 [test.x_test_case_64_69.ID]
 	 */
-	public XTestCase6469Record getXTestCase6469() throws SQLException {
-		SimpleSelectQuery<XTestCase6469Record> q = create().selectQuery(XTestCase6469.X_TEST_CASE_64_69);
-		q.addCompareCondition(XTestCase6469.ID, getValue(XTestCase71.TEST_CASE_64_69_ID));
+	public XTestCase_64_69Record getXTestCase_64_69() throws SQLException {
+		SimpleSelectQuery<XTestCase_64_69Record> q = create().selectQuery(XTestCase_64_69.X_TEST_CASE_64_69);
+		q.addCompareCondition(XTestCase_64_69.ID, getValue(XTestCase_71.TEST_CASE_64_69_ID));
 		q.execute();
 
-		List<XTestCase6469Record> result = q.getResult().getRecords();
+		List<XTestCase_64_69Record> result = q.getResult().getRecords();
 		return result.size() == 1 ? result.get(0) : null;
 	}
 
-	public XTestCase71Record(Configuration configuration) {
-		super(configuration, XTestCase71.X_TEST_CASE_71);
+	public XTestCase_71Record(Configuration configuration) {
+		super(configuration, XTestCase_71.X_TEST_CASE_71);
 	}
 }
