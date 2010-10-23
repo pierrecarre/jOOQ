@@ -47,7 +47,7 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
+	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.POSTGRES, "author_id", Integer.class, T_BOOK);
 

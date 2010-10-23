@@ -47,7 +47,7 @@ public interface ForeignKeyDefinition extends Definition {
 	/**
 	 * @return The list of columns making up the foreign key.
 	 */
-	List<String>  getKeyColumnNames();
+	List<ColumnDefinition>  getKeyColumns();
 
 	/**
 	 * @return The name of the referenced table.
@@ -62,5 +62,5 @@ public interface ForeignKeyDefinition extends Definition {
 	/**
 	 * @return The list of columns referenced by this foreign key
 	 */
-	List<String> getReferencedColumnNames();
+	List<ColumnDefinition> getReferencedColumns();
 }

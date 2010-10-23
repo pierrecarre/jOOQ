@@ -73,7 +73,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -82,7 +82,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -91,7 +91,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
 	 */
 	public XUnusedRecord getXUnused() throws SQLException {
 		SimpleSelectQuery<XUnusedRecord> q = create().selectQuery(XUnused.X_UNUSED);
@@ -106,7 +106,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -115,7 +115,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);

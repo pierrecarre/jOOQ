@@ -36,18 +36,18 @@ import java.util.List;
 public class DefaultPrimaryKeyDefinition extends AbstractDefinition implements PrimaryKeyDefinition {
 
 	private final List<ForeignKeyDefinition> foreignKeys;
-	private final List<String> keyColumnNames;
+	private final List<ColumnDefinition> keyColumns;
 
 	public DefaultPrimaryKeyDefinition(Database database, String name) {
 		super(database, name, null);
 
 		this.foreignKeys = new ArrayList<ForeignKeyDefinition>();
-		this.keyColumnNames = new ArrayList<String>();
+		this.keyColumns = new ArrayList<ColumnDefinition>();
 	}
 
 	@Override
-	public List<String> getKeyColumnNames() {
-		return keyColumnNames;
+	public List<ColumnDefinition> getKeyColumns() {
+		return keyColumns;
 	}
 
 	@Override

@@ -56,14 +56,14 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.MYSQL, "ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.MYSQL, "NAME_REF", String.class, X_UNUSED);
 

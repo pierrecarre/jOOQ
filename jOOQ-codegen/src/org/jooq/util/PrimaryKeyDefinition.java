@@ -42,7 +42,7 @@ public interface PrimaryKeyDefinition extends Definition {
 	/**
 	 * @return The list of columns making up the primary key.
 	 */
-	List<String> getKeyColumnNames();
+	List<ColumnDefinition> getKeyColumns();
 
 	/**
 	 * @return The foreign keys referencing this primary key

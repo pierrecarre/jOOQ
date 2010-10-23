@@ -108,7 +108,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 				definition = new DefaultPrimaryKeyDefinition(getDatabase(), primaryKey);
 
 				for (ColumnDefinition c : primaryKeyToColumns.get(primaryKey)) {
-					definition.getKeyColumnNames().add(c.getName());
+					definition.getKeyColumns().add(c);
 				}
 
 				Set<String> list = primaryKeyToForeignKeys.get(primaryKey);
@@ -143,13 +143,13 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 							primaryKeyToTable.get(primaryKey));
 
 					for (ColumnDefinition c : foreignKeyToColumns.get(foreignKey)) {
-						definition.getKeyColumnNames().add(c.getName());
+						definition.getKeyColumns().add(c);
 					}
 
 					Set<ColumnDefinition> list = primaryKeyToColumns.get(primaryKey);
 					if (list != null) {
 						for (ColumnDefinition c : list) {
-							definition.getReferencedColumnNames().add(c.getName());
+							definition.getReferencedColumns().add(c);
 						}
 					}
 				}

@@ -178,8 +178,8 @@ public class DefaultGenerator implements Generator {
 					if (primaryKey != null && !primaryKeys.contains(primaryKey.getNameUC())) {
 						primaryKeys.add(primaryKey.getNameUC());
 
-						for (String c : primaryKey.getKeyColumnNames()) {
-							String statement = table.getNameUC() + ".addToPrimaryKey(" + c.toUpperCase() + ");";
+						for (ColumnDefinition c : primaryKey.getKeyColumns()) {
+							String statement = table.getNameUC() + ".addToPrimaryKey(" + c.getName().toUpperCase() + ");";
 							out.printStaticInitialisationStatement(statement);
 						}
 					}
@@ -406,18 +406,35 @@ public class DefaultGenerator implements Generator {
 		if (column.getDatabase().generateRelations()) {
 			PrimaryKeyDefinition primaryKey = column.getPrimaryKey();
 			if (primaryKey != null && out.printOnlyOnce(primaryKey)) {
-				for (ForeignKeyDefinition foreignKey : primaryKey.getForeignKeys()) {
+				foreignKeyLoop: for (ForeignKeyDefinition foreignKey : primaryKey.getForeignKeys()) {
 
 				    // #64 - If the foreign key does not match the referenced key, it
 				    // is most likely because it references a non-primary unique key
 				    // Skip code generation for this foreign key
 
 				    // #69 - Should resolve this issue more thoroughly.
-				    if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
-	                    System.err.println("Foreign key " + foreignKey.getName() + " does not match its primary key!");
-	                    System.err.println("No code is generated for this key. See trac tickets #64 and #69");
+				    if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
+	                    System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key!");
+	                    System.err.println("ERROR: No code is generated for this key. See trac tickets #64 and #69");
 
-	                    continue;
+	                    continue foreignKeyLoop;
+				    }
+
+				    // #71 - If the foreign key type does not match the referenced
+				    // key type, generating this code would produce compilation
+				    // errors. Skip code generation for this foreign key
+
+				    // #73 - This is also an acceptable workaround for another issue.
+				    for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
+				        Class<?> foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
+				        Class<?> primaryType = primaryKey.getKeyColumns().get(i).getTypeClass();
+
+				        if (foreignType != primaryType) {
+	                        System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
+	                        System.err.println("ERROR: No code is generated for this key. See trac tickets #71 and #73");
+
+				            continue foreignKeyLoop;
+				        }
 				    }
 
 					TableDefinition referencing = foreignKey.getKeyTableDefinition();
@@ -437,15 +454,15 @@ public class DefaultGenerator implements Generator {
 					out.print(referencing.getNameUC());
 					out.println(");");
 
-					for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
+					for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
 						out.print("\t\tq.addCompareCondition(");
 						out.print(referencing.getJavaClassName());
 						out.print(".");
-						out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
+						out.print(foreignKey.getKeyColumns().get(i).getName().toUpperCase());
 						out.print(", getValue(");
 						out.print(table.getJavaClassName());
 						out.print(".");
-						out.print(primaryKey.getKeyColumnNames().get(i).toUpperCase());
+						out.print(primaryKey.getKeyColumns().get(i).getName().toUpperCase());
 						out.println("));");
 					}
 
@@ -463,17 +480,40 @@ public class DefaultGenerator implements Generator {
 
 			ForeignKeyDefinition foreignKey = column.getForeignKey();
 			if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
+			    boolean skipGeneration = false;
 
                 // #64 - If the foreign key does not match the referenced key, it
                 // is most likely because it references a non-primary unique key
                 // Skip code generation for this foreign key
 
                 // #69 - Should resolve this issue more thoroughly.
-                if (foreignKey.getReferencedColumnNames().size() != foreignKey.getKeyColumnNames().size()) {
-                    System.err.println("Foreign key " + foreignKey.getName() + " does not match its primary key!");
-                    System.err.println("No code is generated for this key. See trac tickets #64 and #69");
-                } else {
+                if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
+                    System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key!");
+                    System.err.println("ERROR: No code is generated for this key. See trac tickets #64 and #69");
 
+                    skipGeneration = true;
+                }
+
+                // #71 - If the foreign key type does not match the referenced
+                // key type, generating this code would produce compilation
+                // errors. Skip code generation for this foreign key
+
+                // #73 - This is also an acceptable workaround for another issue.
+                if (!skipGeneration) {
+                    for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
+                        Class<?> foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
+                        Class<?> primaryType = foreignKey.getReferencedColumns().get(i).getTypeClass();
+
+                        if (foreignType != primaryType) {
+                            System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
+                            System.err.println("ERROR: No code is generated for this key. See trac tickets #71 and #73");
+
+                            skipGeneration = true;
+                        }
+                    }
+                }
+
+                if (!skipGeneration) {
                     TableDefinition referenced = foreignKey.getReferencedTableDefinition();
     				printFieldJavaDoc(out, null, column);
     				out.print("\tpublic ");
@@ -488,15 +528,15 @@ public class DefaultGenerator implements Generator {
     				out.print(referenced.getNameUC());
     				out.println(");");
 
-    				for (int i = 0; i < foreignKey.getReferencedColumnNames().size(); i++) {
+    				for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
     					out.print("\t\tq.addCompareCondition(");
     					out.print(referenced.getJavaClassName());
     					out.print(".");
-    					out.print(foreignKey.getReferencedColumnNames().get(i).toUpperCase());
+    					out.print(foreignKey.getReferencedColumns().get(i).getName().toUpperCase());
     					out.print(", getValue(");
     					out.print(table.getJavaClassName());
     					out.print(".");
-    					out.print(foreignKey.getKeyColumnNames().get(i).toUpperCase());
+    					out.print(foreignKey.getKeyColumns().get(i).getName().toUpperCase());
     					out.println("));");
     				}
 
@@ -592,11 +632,11 @@ public class DefaultGenerator implements Generator {
 		if (foreignKey != null) {
 		    out.println("\t * ");
 		    out.print("\t * FOREIGN KEY ");
-		    out.print(foreignKey.getKeyColumnNames().toString());
+		    out.print(foreignKey.getKeyColumns().toString());
 		    out.print(" REFERENCES ");
 		    out.print(foreignKey.getReferencedTableName());
 		    out.print(" ");
-		    out.print(foreignKey.getReferencedColumnNames().toString());
+		    out.print(foreignKey.getReferencedColumns().toString());
 		    out.println();
 		}
 

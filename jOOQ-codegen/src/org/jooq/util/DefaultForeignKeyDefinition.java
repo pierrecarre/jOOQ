@@ -35,16 +35,16 @@ import java.util.List;
 
 public class DefaultForeignKeyDefinition extends AbstractDefinition implements ForeignKeyDefinition {
 
-	private final List<String> keyColumnNames;
-	private final List<String> referencedColumnNames;
+	private final List<ColumnDefinition> keyColumns;
+	private final List<ColumnDefinition> referencedColumns;
 	private final String referencingTableName;
 	private final String referencedTableName;
 
 	public DefaultForeignKeyDefinition(Database database, String name, String referencingTableName, String referencedTableName) {
 		super(database, name, null);
 
-		this.keyColumnNames = new ArrayList<String>();
-		this.referencedColumnNames = new ArrayList<String>();
+		this.keyColumns = new ArrayList<ColumnDefinition>();
+		this.referencedColumns = new ArrayList<ColumnDefinition>();
 		this.referencingTableName = referencingTableName;
 		this.referencedTableName = referencedTableName;
 	}
@@ -55,8 +55,8 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 	}
 
 	@Override
-	public List<String> getKeyColumnNames() {
-		return keyColumnNames;
+	public List<ColumnDefinition> getKeyColumns() {
+		return keyColumns;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 	}
 
 	@Override
-	public List<String> getReferencedColumnNames() {
-		return referencedColumnNames;
+	public List<ColumnDefinition> getReferencedColumns() {
+		return referencedColumns;
 	}
 }

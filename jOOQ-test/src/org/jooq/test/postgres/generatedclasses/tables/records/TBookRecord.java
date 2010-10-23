@@ -42,7 +42,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
+	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public void setAuthorId(Integer value) {
 		setValue(TBook.AUTHOR_ID, value);
@@ -51,7 +51,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
+	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public Integer getAuthorId() {
 		return getValue(TBook.AUTHOR_ID);
@@ -60,7 +60,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [author_id] REFERENCES t_author [id]
+	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public TAuthorRecord getTAuthor() throws SQLException {
 		SimpleSelectQuery<TAuthorRecord> q = create().selectQuery(TAuthor.T_AUTHOR);

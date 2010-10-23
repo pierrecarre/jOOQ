@@ -2,7 +2,9 @@ DROP TABLE IF EXISTS t_book;
 /
 DROP TABLE IF EXISTS t_author;
 /
-DROP TABLE IF EXISTS x_unused_2;
+DROP TABLE IF EXISTS x_test_case_71
+/
+DROP TABLE IF EXISTS x_test_case_64_69
 /
 DROP TABLE IF EXISTS x_unused;
 /
@@ -46,12 +48,21 @@ CREATE TABLE x_unused (
   COMMENT = 'An unused table in the same schema.';
 /
 
-CREATE TABLE x_unused_2 (
+CREATE TABLE x_test_case_64_69 (
 	ID INT NOT NULL AUTO_INCREMENT,
 	UNUSED_ID INT,
 	PRIMARY KEY(ID),
 	INDEX (UNUSED_ID),
 	FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
+) ENGINE = InnoDB
+  COMMENT = 'An unused table in the same schema.';
+/
+
+CREATE TABLE x_test_case_71 (
+	ID INT NOT NULL AUTO_INCREMENT,
+	TEST_CASE_64_69_ID INT,
+	PRIMARY KEY(ID),
+	FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /

@@ -2,7 +2,9 @@ DROP TABLE t_book
 /
 DROP TABLE t_author
 /
-DROP TABLE x_unused_2
+DROP TABLE x_test_case_71
+/
+DROP TABLE x_test_case_64_69
 /
 DROP TABLE x_unused
 /
@@ -78,18 +80,33 @@ ALTER TABLE x_unused
 /
 
 
-CREATE TABLE x_unused_2 (
+CREATE TABLE x_test_case_64_69 (
   id NUMBER(7) NOT NULL,
   unused_id NUMBER(7)
 )
 /
-ALTER TABLE x_unused_2
+ALTER TABLE x_test_case_64_69
   ADD PRIMARY KEY (id)
 /
-ALTER TABLE x_unused_2
-  ADD CONSTRAINT unused_2_unused_ref
+ALTER TABLE x_test_case_64_69
+  ADD CONSTRAINT x_test_case_64_69_ref
   FOREIGN KEY (unused_id)
   REFERENCES x_unused (id)
+/
+
+CREATE TABLE x_test_case_71 (
+	id NUMBER(7) NOT NULL,
+	test_case_64_69_id NUMBER(4)
+);
+/
+
+ALTER TABLE x_test_case_71
+  ADD PRIMARY KEY (id)
+/
+ALTER TABLE x_test_case_71
+  ADD CONSTRAINT x_test_case_71_ref
+  FOREIGN KEY (test_case_64_69_id)
+  REFERENCES x_test_case_64_69 (id)
 /
 
 CREATE OR REPLACE VIEW v_library (author, title) AS

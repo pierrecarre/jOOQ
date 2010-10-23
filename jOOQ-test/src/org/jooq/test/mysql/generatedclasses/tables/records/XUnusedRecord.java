@@ -75,7 +75,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public void setIdRef(Integer value) {
 		setValue(XUnused.ID_REF, value);
@@ -84,7 +84,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public Integer getIdRef() {
 		return getValue(XUnused.ID_REF);
@@ -93,7 +93,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public XUnusedRecord getXUnused() throws SQLException {
 		SimpleSelectQuery<XUnusedRecord> q = create().selectQuery(XUnused.X_UNUSED);
@@ -108,7 +108,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public void setNameRef(String value) {
 		setValue(XUnused.NAME_REF, value);
@@ -117,7 +117,7 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES x_unused [ID, NAME]
+	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF] REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
 	 */
 	public String getNameRef() {
 		return getValue(XUnused.NAME_REF);

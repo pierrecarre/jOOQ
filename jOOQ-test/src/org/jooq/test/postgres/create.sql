@@ -2,9 +2,11 @@ DROP TABLE IF EXISTS t_book CASCADE
 /
 DROP TABLE IF EXISTS t_author CASCADE
 /
-DROP TABLE IF EXISTS x_unused CASCADE
+DROP TABLE IF EXISTS x_test_case_71 CASCADE
 /
-DROP TABLE IF EXISTS x_unused_2 CASCADE
+DROP TABLE IF EXISTS x_test_case_64_69 CASCADE
+/
+DROP TABLE IF EXISTS x_unused CASCADE
 /
 
 CREATE TABLE t_author (
@@ -77,19 +79,34 @@ ALTER TABLE x_unused
   REFERENCES x_unused (id, name)
 /
 
-CREATE TABLE x_unused_2 (
+CREATE TABLE x_test_case_64_69 (
     id INTEGER NOT NULL,
     unused_id INTEGER
 );
 /
 
-ALTER TABLE x_unused_2
+ALTER TABLE x_test_case_64_69
   ADD PRIMARY KEY (id)
 /
-ALTER TABLE x_unused_2
-  ADD CONSTRAINT unused_2_unused_ref
+ALTER TABLE x_test_case_64_69
+  ADD CONSTRAINT x_test_case_64_69_ref
   FOREIGN KEY (unused_id)
   REFERENCES x_unused (id)
+/
+
+CREATE TABLE x_test_case_71 (
+	id INTEGER NOT NULL,
+	test_case_64_69_id SMALLINT
+);
+/
+
+ALTER TABLE x_test_case_71
+  ADD PRIMARY KEY (id)
+/
+ALTER TABLE x_test_case_71
+  ADD CONSTRAINT x_test_case_71_ref
+  FOREIGN KEY (test_case_64_69_id)
+  REFERENCES x_test_case_64_69 (id)
 /
 
 CREATE OR REPLACE VIEW v_library (author, title) AS

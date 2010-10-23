@@ -54,14 +54,14 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [id_ref, name_ref] REFERENCES x_unused [id, name]
+	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref] REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
 	 */
 	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.POSTGRES, "id_ref", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [id_ref, name_ref] REFERENCES x_unused [id, name]
+	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref] REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
 	 */
 	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.POSTGRES, "name_ref", String.class, X_UNUSED);
 

@@ -47,7 +47,7 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 * FOREIGN KEY [PUBLIC.T_BOOK.AUTHOR_ID] REFERENCES T_AUTHOR [PUBLIC.T_AUTHOR.ID]
 	 */
 	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.HSQLDB, "AUTHOR_ID", Integer.class, T_BOOK);
 

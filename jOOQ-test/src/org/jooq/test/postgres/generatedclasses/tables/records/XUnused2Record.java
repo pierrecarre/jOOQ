@@ -36,8 +36,6 @@ public class XUnused2Record extends UpdatableRecordImpl<XUnused2Record> {
 
 	/**
 	 * An uncommented item
-	 * 
-	 * FOREIGN KEY [unused_id] REFERENCES x_unused [id, name]
 	 */
 	public void setUnusedId(Integer value) {
 		setValue(XUnused2.UNUSED_ID, value);
@@ -45,8 +43,6 @@ public class XUnused2Record extends UpdatableRecordImpl<XUnused2Record> {
 
 	/**
 	 * An uncommented item
-	 * 
-	 * FOREIGN KEY [unused_id] REFERENCES x_unused [id, name]
 	 */
 	public Integer getUnusedId() {
 		return getValue(XUnused2.UNUSED_ID);

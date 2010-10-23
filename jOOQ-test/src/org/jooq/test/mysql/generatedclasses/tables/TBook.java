@@ -49,7 +49,7 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * The author ID in entity 'author'
 	 * 
-	 * FOREIGN KEY [AUTHOR_ID] REFERENCES t_author [ID]
+	 * FOREIGN KEY [test.t_book.AUTHOR_ID] REFERENCES t_author [test.t_author.ID]
 	 */
 	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.MYSQL, "AUTHOR_ID", Integer.class, T_BOOK);
 

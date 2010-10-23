@@ -46,8 +46,6 @@ public class XUnused2 extends UpdatableTableImpl<XUnused2Record> {
 
 	/**
 	 * An uncommented item
-	 * 
-	 * FOREIGN KEY [unused_id] REFERENCES x_unused [id, name]
 	 */
 	public static final TableField<XUnused2Record, Integer> UNUSED_ID = new TableFieldImpl<XUnused2Record, Integer>(SQLDialect.POSTGRES, "unused_id", Integer.class, X_UNUSED_2);
 
