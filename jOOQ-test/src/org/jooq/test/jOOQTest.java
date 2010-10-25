@@ -61,6 +61,7 @@ import org.jooq.Condition;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
+import org.jooq.InsertSelectQuery;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
@@ -570,6 +571,29 @@ public class jOOQTest {
 
         int i = q.getQueryPart().bind(statement);
         assertEquals(4, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public final void testInsertSelect1() throws Exception {
+        InsertSelectQuery q = create.insertQuery(TABLE1, create.selectQuery());
+
+        assertEquals("insert into TABLE1 select * from dual", q.getQueryPart().toSQLReference(true));
+        assertEquals("insert into TABLE1 select * from dual", q.getQueryPart().toSQLReference(false));
+
+        q = create.insertQuery(TABLE1, create.select(create.functions().constant(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")).getQuery());
+
+        assertEquals("insert into TABLE1 select 1, TABLE1.NAME1 from TABLE1 where TABLE1.NAME1 = 'abc'", q.getQueryPart().toSQLReference(true));
+        assertEquals("insert into TABLE1 select ?, TABLE1.NAME1 from TABLE1 where TABLE1.NAME1 = ?", q.getQueryPart().toSQLReference(false));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setString(2, "abc");
+        }});
+
+        int i = q.getQueryPart().bind(statement);
+        assertEquals(3, i);
 
         context.assertIsSatisfied();
     }

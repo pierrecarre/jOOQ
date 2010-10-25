@@ -28,39 +28,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-/**
- * A query storing objects to the database. This is either an insert or an
- * update query.
- *
- * @author Lukas Eder
- */
-public interface StoreQuery<R extends TableRecord<R>> extends Query {
+import org.jooq.Configuration;
+import org.jooq.InsertSelectQuery;
+import org.jooq.Record;
+import org.jooq.ResultProviderQuery;
+import org.jooq.Table;
 
-    /**
-     * Add values to the store statement
-     *
-     * @param record The record holding values that are stored by the query
-     */
-    void setRecord(R record);
+class InsertSelectQueryImpl extends AbstractQuery<Record> implements InsertSelectQuery {
 
     /**
-     * Add a value to the store statement
-     *
-     * @param <T> The value type
-     * @param field The field
-     * @param value The value
+     * Generated UID
      */
-    <T> void addValue(TableField<R, T> field, T value);
+    private static final long            serialVersionUID = -1540775270159018516L;
+    private final Table<?>               into;
+    private final ResultProviderQuery<?> select;
 
-    /**
-     * Add a value to the store statement
-     *
-     * @param <T> The value type
-     * @param field The field
-     * @param value The value
-     */
-    <T> void addValue(TableField<R, T> field, Field<T> value);
+    public InsertSelectQueryImpl(Configuration configuration, Table<?> into, ResultProviderQuery<?> select) {
+        super(configuration);
+
+        this.into = into;
+        this.select = select;
+    }
+
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("insert into ");
+        sb.append(into.getQueryPart().toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(select.getQueryPart().toSQLReference(inlineParameters));
+
+        return sb.toString();
+    }
+
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        int result = initialIndex;
+
+        result = into.getQueryPart().bind(stmt, result);
+        result = select.getQueryPart().bind(stmt, result);
+
+        return result;
+    }
+
 }

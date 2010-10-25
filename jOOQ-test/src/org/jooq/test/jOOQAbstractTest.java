@@ -53,6 +53,7 @@ import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
+import org.jooq.InsertSelectQuery;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -208,6 +209,23 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         DeleteQuery<A> d = create().deleteQuery(getTAuthor());
         d.addCompareCondition(getTAuthor_ID(), 100);
         assertEquals(1, d.execute());
+    }
+
+    @Test
+    public final void testInsertSelect() throws Exception {
+        InsertSelectQuery i = create().insertQuery(getTAuthor(), create().select(
+            create().functions().constant(1000),
+            create().functions().constant("Lukas"),
+            create().functions().constant("Eder"),
+            create().functions().constant(new Date(363589200000L)),
+            create().functions().constant(1981)).getQuery());
+
+        i.execute();
+
+        A author = create().manager().selectOne(getTAuthor(), getTAuthor_FIRST_NAME(), "Lukas");
+        assertEquals("Lukas", author.getValue(getTAuthor_FIRST_NAME()));
+        assertEquals("Eder", author.getValue(getTAuthor_LAST_NAME()));
+        assertEquals(Integer.valueOf(1981), author.getValue(getTAuthor_YEAR_OF_BIRTH()));
     }
 
     @Test

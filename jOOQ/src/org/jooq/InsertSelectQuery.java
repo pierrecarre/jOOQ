@@ -30,37 +30,17 @@
  */
 package org.jooq;
 
-
 /**
- * A query storing objects to the database. This is either an insert or an
- * update query.
+ * A query of the type
+ *
+ * <pre>
+ * <code>
+ * INSERT INTO [x] SELECT ...
+ * </code>
+ * </pre>
  *
  * @author Lukas Eder
  */
-public interface StoreQuery<R extends TableRecord<R>> extends Query {
+public interface InsertSelectQuery extends Query {
 
-    /**
-     * Add values to the store statement
-     *
-     * @param record The record holding values that are stored by the query
-     */
-    void setRecord(R record);
-
-    /**
-     * Add a value to the store statement
-     *
-     * @param <T> The value type
-     * @param field The field
-     * @param value The value
-     */
-    <T> void addValue(TableField<R, T> field, T value);
-
-    /**
-     * Add a value to the store statement
-     *
-     * @param <T> The value type
-     * @param field The field
-     * @param value The value
-     */
-    <T> void addValue(TableField<R, T> field, Field<T> value);
 }

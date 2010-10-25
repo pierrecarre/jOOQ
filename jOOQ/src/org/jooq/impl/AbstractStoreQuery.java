@@ -96,6 +96,11 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     }
 
     @Override
+    public <T> void addValue(TableField<R, T> field, Field<T> value) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
     public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
         int result = initialIndex;
 

@@ -45,9 +45,11 @@ import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InOperator;
 import org.jooq.InsertQuery;
+import org.jooq.InsertSelectQuery;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
+import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
@@ -412,6 +414,17 @@ public final class Factory implements Configuration {
      */
     public <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
         return new InsertQueryImpl<R>(this, into);
+    }
+
+    /**
+     * Create a new {@link InsertSelectQuery}
+     *
+     * @param into The table to insert data into
+     * @param select The select statement to select data from
+     * @return The new {@link InsertSelectQuery}
+     */
+    public InsertSelectQuery insertQuery(Table<?> into, ResultProviderQuery<?> select) {
+        return new InsertSelectQueryImpl(this, into, select);
     }
 
     /**
