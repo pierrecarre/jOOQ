@@ -2,6 +2,21 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.4.3
+=================================================================
+
+Some more bugfixes
+
+Bugfixes
+--------
+
+#71 - Generated code does not compile, when foreign key and 
+      primary key have a data type mismatch
+#73 - In Oracle generated code, multi-field foreign keys may 
+      generated bad relations code
+#82 - Conversion of literals to camelcase fails if numbers are
+      involved
+
 Version 1.4.2
 =================================================================
 
