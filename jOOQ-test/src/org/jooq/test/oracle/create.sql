@@ -97,7 +97,7 @@ ALTER TABLE x_test_case_64_69
 CREATE TABLE x_test_case_71 (
 	id NUMBER(7) NOT NULL,
 	test_case_64_69_id NUMBER(4)
-);
+)
 /
 
 ALTER TABLE x_test_case_71

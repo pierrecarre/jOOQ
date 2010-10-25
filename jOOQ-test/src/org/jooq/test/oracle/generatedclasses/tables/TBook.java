@@ -29,14 +29,14 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<TBookRecord> RECORD_TYPE = TBookRecord.class;
+	private static final Class<TBookRecord> __RECORD_TYPE = TBookRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<TBookRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	/**
 	 * The author ID in entity 'author'
 	 * 
-	 * FOREIGN KEY [AUTHOR_ID] REFERENCES T_AUTHOR [ID]
+	 * FOREIGN KEY [ODS_TEST.T_BOOK.AUTHOR_ID] REFERENCES T_AUTHOR [ODS_TEST.T_AUTHOR.ID]
 	 */
 	public static final TableField<TBookRecord, Integer> AUTHOR_ID = new TableFieldImpl<TBookRecord, Integer>(SQLDialect.ORACLE, "AUTHOR_ID", Integer.class, T_BOOK);
 

@@ -29,14 +29,14 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<XUnusedRecord> RECORD_TYPE = XUnusedRecord.class;
+	private static final Class<XUnusedRecord> __RECORD_TYPE = XUnusedRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<XUnusedRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**
@@ -56,14 +56,14 @@ public class XUnused extends UpdatableTableImpl<XUnusedRecord> {
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [ODS_TEST.X_UNUSED.ID_REF, ODS_TEST.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [ODS_TEST.X_UNUSED.ID, ODS_TEST.X_UNUSED.NAME]
 	 */
 	public static final TableField<XUnusedRecord, Integer> ID_REF = new TableFieldImpl<XUnusedRecord, Integer>(SQLDialect.ORACLE, "ID_REF", Integer.class, X_UNUSED);
 
 	/**
 	 * An uncommented item
 	 * 
-	 * FOREIGN KEY [ID_REF, NAME_REF] REFERENCES X_UNUSED [ID, NAME]
+	 * FOREIGN KEY [ODS_TEST.X_UNUSED.ID_REF, ODS_TEST.X_UNUSED.NAME_REF] REFERENCES X_UNUSED [ODS_TEST.X_UNUSED.ID, ODS_TEST.X_UNUSED.NAME]
 	 */
 	public static final TableField<XUnusedRecord, String> NAME_REF = new TableFieldImpl<XUnusedRecord, String>(SQLDialect.ORACLE, "NAME_REF", String.class, X_UNUSED);
 

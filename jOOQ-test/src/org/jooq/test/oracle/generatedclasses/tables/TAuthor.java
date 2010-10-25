@@ -31,14 +31,14 @@ public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
 	/**
 	 * The class holding records for this table
 	 */
-	private static final Class<TAuthorRecord> RECORD_TYPE = TAuthorRecord.class;
+	private static final Class<TAuthorRecord> __RECORD_TYPE = TAuthorRecord.class;
 
 	/**
 	 * The class holding records for this table
 	 */
 	@Override
 	public Class<TAuthorRecord> getRecordType() {
-		return RECORD_TYPE;
+		return __RECORD_TYPE;
 	}
 
 	/**
