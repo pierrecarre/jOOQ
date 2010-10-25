@@ -30,7 +30,6 @@
  */
 package org.jooq;
 
-import java.util.Map;
 
 /**
  * A query storing objects to the database. This is either an insert or an
@@ -39,16 +38,6 @@ import java.util.Map;
  * @author Lukas Eder
  */
 public interface StoreQuery<R extends TableRecord<R>> extends Query {
-
-    /**
-     * @return The table that the data is stored into
-     */
-    Table<R> getInto();
-
-    /**
-     * @return A mapping of fields and values that are stored by the query
-     */
-    Map<TableField<R, ?>, ?> getValues();
 
     /**
      * Add values to the store statement
@@ -65,11 +54,4 @@ public interface StoreQuery<R extends TableRecord<R>> extends Query {
      * @param value The value
      */
     <T> void addValue(TableField<R, T> field, T value);
-
-    /**
-     * Add values to the store statement
-     *
-     * @param values A mapping of fields and values that are stored by the query
-     */
-    void addValues(Map<TableField<R, ?>, ?> values);
 }

@@ -32,10 +32,8 @@ package org.jooq.impl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -72,17 +70,11 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
         setRecord(record);
     }
 
-    @Override
-    public final Table<R> getInto() {
+    final Table<R> getInto() {
         return into;
     }
 
-    @Override
-    public final Map<TableField<R, ?>, ?> getValues() {
-        return Collections.unmodifiableMap(getValues0());
-    }
-
-    protected final Map<TableField<R, ?>, Object> getValues0() {
+    final Map<TableField<R, ?>, Object> getValues0() {
         return values;
     }
 
@@ -101,13 +93,6 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     @Override
     public final <T> void addValue(TableField<R, T> field, T value) {
         getValues0().put(field, value);
-    }
-
-    @Override
-    public final void addValues(Map<TableField<R, ?>, ?> values) {
-        for (Entry<TableField<R, ?>, ?> value : values.entrySet()) {
-            getValues0().put(value.getKey(), value.getValue());
-        }
     }
 
     @Override
