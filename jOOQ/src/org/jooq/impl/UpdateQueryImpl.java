@@ -36,6 +36,7 @@ import static org.jooq.impl.TrueCondition.TRUE_CONDITION;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Map.Entry;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -137,13 +138,11 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         sb.append(" set ");
 
         String separator = "";
-        for (Field<?> field : getValues0().keySet()) {
-            Object value = getValues0().get(field);
-
+        for (Entry<Field<?>, Field<?>> entry : getValues0().entrySet()) {
             sb.append(separator);
-            sb.append(field.getName());
+            sb.append(entry.getKey().getName());
             sb.append(" = ");
-            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            sb.append(entry.getValue().getQueryPart().toSQLReference(inlineParameters));
             separator = ", ";
         }
 

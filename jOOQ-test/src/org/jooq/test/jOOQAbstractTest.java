@@ -229,6 +229,17 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     }
 
     @Test
+    public final void testUpdateSelect() throws Exception {
+        Table<A> a1 = getTAuthor().as("a1");
+        Table<A> a2 = getTAuthor().as("a2");
+        Field<String> f1 = a1.getField(getTAuthor_FIRST_NAME());
+        Field<String> f2 = a2.getField(getTAuthor_LAST_NAME());
+
+        UpdateQuery<A> u = create().updateQuery(a1);
+        u.addValue(f1, create().select(f2).from(a2).where(f1.equal(f2)).getQuery().<String>asField());
+    }
+
+    @Test
     public final void testBlobAndClob() throws Exception {
         B book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
 

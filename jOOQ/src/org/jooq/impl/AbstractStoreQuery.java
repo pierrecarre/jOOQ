@@ -34,12 +34,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.TableRecord;
 
 /**
@@ -52,16 +52,16 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     /**
      * Generated UID
      */
-    private static final long                   serialVersionUID = 6864591335823160569L;
+    private static final long             serialVersionUID = 6864591335823160569L;
 
-    private final Table<R>                      into;
-    private final Map<TableField<R, ?>, Object> values;
+    private final Table<R>                into;
+    private final Map<Field<?>, Field<?>> values;
 
     AbstractStoreQuery(Configuration configuration, Table<R> into) {
         super(configuration);
 
         this.into = into;
-        this.values = new LinkedHashMap<TableField<R, ?>, Object>();
+        this.values = new LinkedHashMap<Field<?>, Field<?>>();
     }
 
     AbstractStoreQuery(Configuration configuration, Table<R> into, R record) {
@@ -74,30 +74,29 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
         return into;
     }
 
-    final Map<TableField<R, ?>, Object> getValues0() {
+    final Map<Field<?>, Field<?>> getValues0() {
         return values;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void setRecord(R record) {
         for (Field<?> field : record.getFields()) {
-            if (!(field instanceof TableField)) {
-                throw new IllegalArgumentException("Cannot provide non-tablefields");
-            }
-
-            getValues0().put((TableField<R, ?>)field, record.getValue(field));
+            addValue(record, field);
         }
     }
 
-    @Override
-    public final <T> void addValue(TableField<R, T> field, T value) {
-        getValues0().put(field, value);
+    final <T> void addValue(R record, Field<T> field) {
+        addValue(field, record.getValue(field));
     }
 
     @Override
-    public <T> void addValue(TableField<R, T> field, Field<T> value) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public final <T> void addValue(Field<T> field, T value) {
+        addValue(field, functions().constant(value));
+    }
+
+    @Override
+    public final <T> void addValue(Field<T> field, Field<T> value) {
+        values.put(field, value);
     }
 
     @Override
@@ -105,9 +104,10 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
         int result = initialIndex;
 
         result = getInto().getQueryPart().bind(stmt, result);
-        for (Field<?> field : getValues0().keySet()) {
-            result = field.getQueryPart().bind(stmt, result);
-            bind(stmt, result++, field, getValues0().get(field));
+
+        for (Entry<Field<?>, Field<?>> entry : getValues0().entrySet()) {
+            result = entry.getKey().getQueryPart().bind(stmt, result);
+            result = entry.getValue().getQueryPart().bind(stmt, result);
         }
 
         return result;

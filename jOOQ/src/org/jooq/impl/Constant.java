@@ -61,7 +61,7 @@ class Constant<T> extends AbstractField<T> {
 
             // Most RDBMS can handle constants as typeless literals
             default:
-                return FieldTypeHelper.toSQL(getName(), inlineParameters, this);
+                return FieldTypeHelper.toSQL(value, inlineParameters, this);
         }
     }
 

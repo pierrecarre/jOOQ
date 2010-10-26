@@ -53,7 +53,7 @@ public interface StoreQuery<R extends TableRecord<R>> extends Query {
      * @param field The field
      * @param value The value
      */
-    <T> void addValue(TableField<R, T> field, T value);
+    <T> void addValue(Field<T> field, T value);
 
     /**
      * Add a value to the store statement
@@ -62,5 +62,5 @@ public interface StoreQuery<R extends TableRecord<R>> extends Query {
      * @param field The field
      * @param value The value
      */
-    <T> void addValue(TableField<R, T> field, Field<T> value);
+    <T> void addValue(Field<T> field, Field<T> value);
 }

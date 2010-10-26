@@ -577,6 +577,25 @@ public class jOOQTest {
 
     @Test
     public final void testInsertSelect1() throws Exception {
+        InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
+
+        q.addValue(FIELD_ID1, create.functions().round(create.functions().constant(10)));
+        q.addValue(FIELD_NAME1, create.select(FIELD_NAME1).from(TABLE1).where(FIELD_ID1.equal(1)).getQuery().<String>asField());
+        assertEquals("insert into TABLE1 (ID1, NAME1) values (round(10), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = 1)", q.getQueryPart().toSQLReference(true));
+        assertEquals("insert into TABLE1 (ID1, NAME1) values (round(?), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = ?)", q.getQueryPart().toSQLReference(false));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 10);
+            oneOf(statement).setInt(2, 1);
+        }});
+
+        int i = q.getQueryPart().bind(statement);
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    public final void testInsertSelect2() throws Exception {
         InsertSelectQuery q = create.insertQuery(TABLE1, create.selectQuery());
 
         assertEquals("insert into TABLE1 select * from dual", q.getQueryPart().toSQLReference(true));

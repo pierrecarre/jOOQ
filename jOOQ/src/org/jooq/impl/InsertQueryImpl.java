@@ -31,6 +31,8 @@
 
 package org.jooq.impl;
 
+import java.util.Map.Entry;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
@@ -74,11 +76,9 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         sb.append(") values (");
 
         String separator2 = "";
-        for (Field<?> field : getValues0().keySet()) {
-            Object value = getValues0().get(field);
-
+        for (Entry<Field<?>, Field<?>> entry : getValues0().entrySet()) {
             sb.append(separator2);
-            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            sb.append(entry.getValue().getQueryPart().toSQLReference(inlineParameters));
             separator2 = ", ";
         }
         sb.append(")");
