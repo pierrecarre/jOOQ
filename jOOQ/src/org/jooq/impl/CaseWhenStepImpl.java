@@ -63,10 +63,6 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         when(compareValue, result);
     }
 
-    private <Z> Field<Z> constant(Z value) {
-        return new FunctionFactory(getDialect()).constant(value);
-    }
-
     @Override
     public Field<T> otherwise(T result) {
         return otherwise(constant(result));

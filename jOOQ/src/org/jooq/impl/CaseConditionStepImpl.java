@@ -61,10 +61,6 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         when(condition, result);
     }
 
-    private <Z> Field<Z> constant(Z value) {
-        return new FunctionFactory(getDialect()).constant(value);
-    }
-
     @Override
     public CaseConditionStep<T> when(Condition condition, T result) {
         return when(condition, constant(result));

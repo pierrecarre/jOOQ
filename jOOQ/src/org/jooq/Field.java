@@ -60,6 +60,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Override
     Field<T> as(String alias);
 
+    // ------------------------------------------------------------------------
+    // Convenience methods
+    // ------------------------------------------------------------------------
+
     /**
      * Create an ascending sort field from this
      *
@@ -74,9 +78,45 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     SortField<T> descending();
 
-    // ------------------------------------------------------------------------
-    // Convenience methods
-    // ------------------------------------------------------------------------
+    /**
+     * @return an arithmetic expression adding this to value
+     */
+    Field<T> add(Number value);
+
+    /**
+     * @return an arithmetic expression adding this to value
+     */
+    Field<T> add(Field<? extends Number> value);
+
+    /**
+     * @return an arithmetic expression subtracting value from this
+     */
+    Field<T> subtract(Number value);
+
+    /**
+     * @return an arithmetic expression subtracting value from this
+     */
+    Field<T> subtract(Field<? extends Number> value);
+
+    /**
+     * @return an arithmetic expression multiplying this with value
+     */
+    Field<T> multiply(Number value);
+
+    /**
+     * @return an arithmetic expression multiplying this with value
+     */
+    Field<T> multiply(Field<? extends Number> value);
+
+    /**
+     * @return an arithmetic expression dividing this by value
+     */
+    Field<T> divide(Number value);
+
+    /**
+     * @return an arithmetic expression dividing this by value
+     */
+    Field<T> divide(Field<? extends Number> value);
 
     /**
      * @return <code>this is null</code>

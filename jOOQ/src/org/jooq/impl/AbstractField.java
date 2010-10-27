@@ -56,6 +56,10 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return new FieldAlias<T>(getDialect(), this, alias);
     }
 
+    // ------------------------------------------------------------------------
+    // Convenience methods
+    // ------------------------------------------------------------------------
+
     @Override
     public final SortField<T> ascending() {
         return new SortFieldImpl<T>(getDialect(), this, SortOrder.ASC);
@@ -66,9 +70,53 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return new SortFieldImpl<T>(getDialect(), this, SortOrder.DESC);
     }
 
-    // ------------------------------------------------------------------------
-    // Convenience methods
-    // ------------------------------------------------------------------------
+    @Override
+    public final Field<T> add(Number value) {
+        return add(constant(value));
+    }
+
+    /**
+     * This default implementation is known to be overridden by
+     * {@link ArithmeticExpression} to generate neater expressions
+     */
+    @Override
+    public Field<T> add(Field<? extends Number> value) {
+        return new ArithmeticExpression<T>(getDialect(), this, value, ArithmeticOperator.ADD);
+    }
+
+    @Override
+    public final Field<T> subtract(Number value) {
+        return subtract(constant(value));
+    }
+
+    @Override
+    public final Field<T> subtract(Field<? extends Number> value) {
+        return new ArithmeticExpression<T>(getDialect(), this, value, ArithmeticOperator.SUBTRACT);
+    }
+
+    @Override
+    public final Field<T> multiply(Number value) {
+        return multiply(constant(value));
+    }
+
+    /**
+     * This default implementation is known to be overridden by
+     * {@link ArithmeticExpression} to generate neater expressions
+     */
+    @Override
+    public Field<T> multiply(Field<? extends Number> value) {
+        return new ArithmeticExpression<T>(getDialect(), this, value, ArithmeticOperator.MULTIPLY);
+    }
+
+    @Override
+    public final Field<T> divide(Number value) {
+        return divide(constant(value));
+    }
+
+    @Override
+    public final Field<T> divide(Field<? extends Number> value) {
+        return new ArithmeticExpression<T>(getDialect(), this, value, ArithmeticOperator.DIVIDE);
+    }
 
     @Override
     public final Condition isNull() {

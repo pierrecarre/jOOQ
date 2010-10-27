@@ -434,6 +434,36 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     }
 
     @Test
+    public final void testArithmeticExpressions() throws Exception {
+        Field<Integer> f1 = create().functions().constant(1).add(2).add(3).divide(2);
+        Field<Integer> f2 = create().functions().constant(10).divide(5).add(create().functions().constant(3).subtract(2));
+
+        SelectQuery q1 = create().selectQuery();
+        q1.addSelect(f1, f2);
+        q1.execute();
+
+        Result<?> result = q1.getResult();
+        assertEquals(1, result.getNumberOfRecords());
+        assertEquals(Integer.valueOf(3), result.getValue(0, f1));
+        assertEquals(Integer.valueOf(3), result.getValue(0, f2));
+
+
+        Field<Integer> f3 = getTBook_PUBLISHED_IN().add(3).divide(7);
+        Field<Integer> f4 = getTBook_PUBLISHED_IN().subtract(4).multiply(8);
+
+        SelectQuery q2 = create().selectQuery();
+        q2.addSelect(f3);
+        q2.addSelect(f4);
+        q2.addFrom(getTBook());
+        q2.addConditions(getTBook_TITLE().equal("1984"));
+        q2.execute();
+
+        result = q2.getResult();
+        assertEquals(Integer.valueOf((1948 + 3) / 7), result.getValue(0, f3));
+        assertEquals(Integer.valueOf((1948 - 4) * 8), result.getValue(0, f4));
+    }
+
+    @Test
     public final void testFunction3() throws Exception {
         SelectQuery q1 = create().selectQuery();
         Field<Timestamp> now = create().functions().currentTimestamp();

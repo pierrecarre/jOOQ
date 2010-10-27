@@ -414,6 +414,146 @@ public class jOOQTest {
     }
 
     @Test
+    public final void testArithmeticSumExpressions() throws Exception {
+        Field<Integer> sum1 = FIELD_ID1.add(FIELD_ID1).add(1).add(2);
+        assertEquals(Integer.class, sum1.getType());
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + 1 + 2)", sum1.getQueryPart().toSQLReference(true));
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + ? + ?)", sum1.getQueryPart().toSQLReference(false));
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + 1 + 2)", sum1.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + ? + ?)", sum1.getQueryPart().toSQLDeclaration(false));
+
+        Field<Integer> sum2 = sum1.as("s");
+        assertEquals(Integer.class, sum2.getType());
+        assertEquals("s", sum2.getQueryPart().toSQLReference(true));
+        assertEquals("s", sum2.getQueryPart().toSQLReference(false));
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + 1 + 2) s", sum2.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(TABLE1.ID1 + TABLE1.ID1 + ? + ?) s", sum2.getQueryPart().toSQLDeclaration(false));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 2);
+        }});
+
+        int i = sum2.getQueryPart().bind(statement);
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public final void testArithmeticDifferenceExpressions() throws Exception {
+        Field<Integer> difference1 = FIELD_ID1.subtract(FIELD_ID1).subtract(1).subtract(2);
+        assertEquals(Integer.class, difference1.getType());
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - 1) - 2)", difference1.getQueryPart().toSQLReference(true));
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - ?) - ?)", difference1.getQueryPart().toSQLReference(false));
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - 1) - 2)", difference1.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - ?) - ?)", difference1.getQueryPart().toSQLDeclaration(false));
+
+        Field<Integer> difference2 = difference1.as("d");
+        assertEquals(Integer.class, difference2.getType());
+        assertEquals("d", difference2.getQueryPart().toSQLReference(true));
+        assertEquals("d", difference2.getQueryPart().toSQLReference(false));
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - 1) - 2) d", difference2.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(((TABLE1.ID1 - TABLE1.ID1) - ?) - ?) d", difference2.getQueryPart().toSQLDeclaration(false));
+
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 2);
+        }});
+
+        int i = difference2.getQueryPart().bind(statement);
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public final void testArithmeticProductExpressions() throws Exception {
+        Field<Integer> product1 = FIELD_ID1.multiply(FIELD_ID1).multiply(1).multiply(2);
+        assertEquals(Integer.class, product1.getType());
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * 1 * 2)", product1.getQueryPart().toSQLReference(true));
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * ? * ?)", product1.getQueryPart().toSQLReference(false));
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * 1 * 2)", product1.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * ? * ?)", product1.getQueryPart().toSQLDeclaration(false));
+
+        Field<Integer> product2 = product1.as("p");
+        assertEquals(Integer.class, product2.getType());
+        assertEquals("p", product2.getQueryPart().toSQLReference(true));
+        assertEquals("p", product2.getQueryPart().toSQLReference(false));
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * 1 * 2) p", product2.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(TABLE1.ID1 * TABLE1.ID1 * ? * ?) p", product2.getQueryPart().toSQLDeclaration(false));
+
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 2);
+        }});
+
+        int i = product2.getQueryPart().bind(statement);
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public final void testArithmeticDivisionExpressions() throws Exception {
+        Field<Integer> division1 = FIELD_ID1.divide(FIELD_ID1).divide(1).divide(2);
+        assertEquals(Integer.class, division1.getType());
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / 1) / 2)", division1.getQueryPart().toSQLReference(true));
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / ?) / ?)", division1.getQueryPart().toSQLReference(false));
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / 1) / 2)", division1.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / ?) / ?)", division1.getQueryPart().toSQLDeclaration(false));
+
+        Field<Integer> division2 = division1.as("d");
+        assertEquals(Integer.class, division2.getType());
+        assertEquals("d", division2.getQueryPart().toSQLReference(true));
+        assertEquals("d", division2.getQueryPart().toSQLReference(false));
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / 1) / 2) d", division2.getQueryPart().toSQLDeclaration(true));
+        assertEquals("(((TABLE1.ID1 / TABLE1.ID1) / ?) / ?) d", division2.getQueryPart().toSQLDeclaration(false));
+
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setInt(2, 2);
+        }});
+
+        int i = division2.getQueryPart().bind(statement);
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public final void testArithmeticExpressions() {
+        Field<? extends Number> f;
+
+        f = FIELD_ID1.add(1).subtract(2).add(3);
+        assertEquals("(((TABLE1.ID1 + 1) - 2) + 3)", f.getQueryPart().toSQLReference(true));
+        assertEquals("(((TABLE1.ID1 + ?) - ?) + ?)", f.getQueryPart().toSQLReference(false));
+
+        f = FIELD_ID1.add(1).add(2).subtract(3);
+        assertEquals("((TABLE1.ID1 + 1 + 2) - 3)", f.getQueryPart().toSQLReference(true));
+        assertEquals("((TABLE1.ID1 + ? + ?) - ?)", f.getQueryPart().toSQLReference(false));
+
+        f = FIELD_ID1.add(1).subtract(create.functions().constant(2).add(3));
+        assertEquals("((TABLE1.ID1 + 1) - (2 + 3))", f.getQueryPart().toSQLReference(true));
+        assertEquals("((TABLE1.ID1 + ?) - (? + ?))", f.getQueryPart().toSQLReference(false));
+
+        f = FIELD_ID1.multiply(1).divide(2).multiply(3);
+        assertEquals("(((TABLE1.ID1 * 1) / 2) * 3)", f.getQueryPart().toSQLReference(true));
+        assertEquals("(((TABLE1.ID1 * ?) / ?) * ?)", f.getQueryPart().toSQLReference(false));
+
+        f = FIELD_ID1.multiply(1).multiply(2).divide(3);
+        assertEquals("((TABLE1.ID1 * 1 * 2) / 3)", f.getQueryPart().toSQLReference(true));
+        assertEquals("((TABLE1.ID1 * ? * ?) / ?)", f.getQueryPart().toSQLReference(false));
+
+        f = FIELD_ID1.multiply(1).divide(create.functions().constant(2).multiply(3));
+        assertEquals("((TABLE1.ID1 * 1) / (2 * 3))", f.getQueryPart().toSQLReference(true));
+        assertEquals("((TABLE1.ID1 * ?) / (? * ?))", f.getQueryPart().toSQLReference(false));
+    }
+
+    @Test
     public final void testArithmeticFunctions() throws Exception {
         Field<Integer> sum1 = create.functions().sum(FIELD_ID1);
         assertEquals(Integer.class, sum1.getType());

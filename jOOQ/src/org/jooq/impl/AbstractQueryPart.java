@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.Field;
 import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartProvider;
@@ -166,6 +167,10 @@ abstract class AbstractQueryPart implements QueryPart, QueryPartProvider {
     @Override
     public final SQLDialect getDialect() {
         return dialect;
+    }
+
+    final <T> Field<T> constant(T value) {
+        return functions().constant(value);
     }
 
     final FunctionFactory functions() {
