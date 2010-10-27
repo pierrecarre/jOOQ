@@ -219,100 +219,142 @@ public final class FunctionFactory {
 
     /**
      * Get the rpad(field, length) function
+     *
+     * @deprecated - Use {@link Field#rpad(Field)} instead
      */
+    @Deprecated
     public Field<String> rpad(Field<String> field, Field<? extends Number> length) {
-        return new StringFunction(getDialect(), "rpad", field, length);
+        return field.rpad(length);
     }
 
     /**
      * Get the rpad(field, length) function
+     *
+     * @deprecated - Use {@link Field#rpad(int)} instead
      */
+    @Deprecated
     public Field<String> rpad(Field<String> field, int length) {
-        return rpad(field, constant(length));
+        return field.rpad(length);
     }
 
     /**
      * Get the rpad(field, length, c) function
+     *
+     * @deprecated - Use {@link Field#rpad(Field, Field)} instead
      */
+    @Deprecated
     public Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> c) {
-        return new StringFunction(getDialect(), "rpad", field, length, c);
+        return field.rpad(length, c);
     }
 
     /**
      * Get the rpad(field, length, c) function
+     *
+     * @deprecated - Use {@link Field#rpad(int, char)} instead
      */
+    @Deprecated
     public Field<String> rpad(Field<String> field, int length, char c) {
-        return rpad(field, constant(length), constant("" + c));
+        return field.rpad(length, c);
     }
 
     /**
      * Get the rpad(field, length) function
+     *
+     * @deprecated - Use {@link Field#lpad(Field)} instead
      */
+    @Deprecated
     public Field<String> lpad(Field<String> field, Field<? extends Number> length) {
-        return new StringFunction(getDialect(), "lpad", field, length);
+        return field.lpad(length);
     }
 
     /**
      * Get the rpad(field, length) function
+     *
+     * @deprecated - Use {@link Field#lpad(int)} instead
      */
+    @Deprecated
     public Field<String> lpad(Field<String> field, int length) {
-        return lpad(field, constant(length));
+        return field.lpad(length);
     }
 
     /**
      * Get the rpad(field, length, c) function
+     *
+     * @deprecated - Use {@link Field#lpad(Field, Field)} instead
      */
+    @Deprecated
     public Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> c) {
-        return new StringFunction(getDialect(), "lpad", field, length, c);
+        return field.lpad(length, c);
     }
 
     /**
      * Get the rpad(field, length, c) function
+     *
+     * @deprecated - Use {@link Field#lpad(int, char)} instead
      */
+    @Deprecated
     public Field<String> lpad(Field<String> field, int length, char c) {
-        return lpad(field, constant(length), constant("" + c));
+        return field.lpad(length, c);
     }
 
     /**
      * Get the replace(in, search) function
+     *
+     * @deprecated - Use {@link Field#replace(Field)} instead
      */
+    @Deprecated
     public Field<String> replace(Field<String> in, Field<String> search) {
-        return new StringFunction(getDialect(), "replace", in, search);
+        return in.replace(search);
     }
 
     /**
      * Get the replace(in, search) function
+     *
+     * @deprecated - Use {@link Field#replace(String)} instead
      */
+    @Deprecated
     public Field<String> replace(Field<String> in, String search) {
-        return replace(in, constant(search));
+        return in.replace(search);
     }
 
     /**
      * Get the replace(in, search, replace) function
+     *
+     * @deprecated - Use {@link Field#replace(Field, Field)} instead
      */
+    @Deprecated
     public Field<String> replace(Field<String> in, Field<String> search, Field<String> replace) {
-        return new StringFunction(getDialect(), "replace", in, search, replace);
+        return in.replace(search, replace);
     }
 
     /**
      * Get the replace(in, search, replace) function
+     *
+     * @deprecated - Use {@link Field#replace(String, String)} instead
      */
+    @Deprecated
     public Field<String> replace(Field<String> in, String search, String replace) {
-        return replace(in, constant(search), constant(replace));
+        return in.replace(search, replace);
     }
 
     /**
      * Get the ascii(field) function
+     *
+     * @deprecated - Use {@link Field#ascii()} instead
      */
+    @Deprecated
     public Field<Integer> ascii(Field<String> field) {
-        return new IntegerFunction(getDialect(), "ascii", field);
+        return field.ascii();
     }
 
     /**
      * Get the concatenate(field[, field, ...]) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#concatenate(Field...)} instead
      */
+    @Deprecated
     public Field<String> concatenate(Field<String>... fields) {
         switch (getDialect()) {
             case MYSQL:
@@ -326,35 +368,25 @@ public final class FunctionFactory {
      * Get the substring(field, startingPosition) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#substring(int)} instead
      */
+    @Deprecated
     public Field<String> substring(Field<String> field, int startingPosition) {
-        return substring(field, startingPosition, -1);
+        return field.substring(startingPosition);
     }
 
     /**
      * Get the substring(field, startingPosition, length) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#substring(int, int)} instead
      */
+    @Deprecated
     public Field<String> substring(Field<String> field, int startingPosition, int length)
         throws SQLDialectNotSupportedException {
-        Field<Integer> startingPositionConstant = constant(startingPosition);
-        Field<Integer> lengthConstant = constant(length);
-
-        String functionName = "substring";
-
-        switch (getDialect()) {
-            case ORACLE:
-                functionName = "substr";
-                break;
-        }
-
-        if (length == -1) {
-            return new StringFunction(getDialect(), functionName, field, startingPositionConstant);
-        }
-        else {
-            return new StringFunction(getDialect(), functionName, field, startingPositionConstant, lengthConstant);
-        }
+        return field.substring(startingPosition, length);
     }
 
     /**
@@ -429,7 +461,10 @@ public final class FunctionFactory {
      * Get the char_length(field) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#charLength()} instead
      */
+    @Deprecated
     public Field<Integer> charLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
@@ -443,7 +478,10 @@ public final class FunctionFactory {
      * Get the bit_length(field) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#bitLength()} instead
      */
+    @Deprecated
     public Field<Integer> bitLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
@@ -457,7 +495,10 @@ public final class FunctionFactory {
      * Get the octet_length(field) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#octetLength()} instead
      */
+    @Deprecated
     public Field<Integer> octetLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
@@ -471,6 +512,7 @@ public final class FunctionFactory {
      * Get the extract(field, datePart) function
      * <p>
      * This translates into any dialect
+     *
      * @deprecated - Use {@link Field#extract(DatePart)} instead
      */
     @Deprecated

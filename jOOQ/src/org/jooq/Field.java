@@ -189,6 +189,66 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<String> ltrim();
 
     /**
+     * Get the rpad(field, length) function
+     */
+    Field<String> rpad(Field<? extends Number> length);
+
+    /**
+     * Get the rpad(field, length) function
+     */
+    Field<String> rpad(int length);
+
+    /**
+     * Get the rpad(field, length, c) function
+     */
+    Field<String> rpad(Field<? extends Number> length, Field<String> c);
+
+    /**
+     * Get the rpad(field, length, c) function
+     */
+    Field<String> rpad(int length, char c);
+
+    /**
+     * Get the rpad(field, length) function
+     */
+    Field<String> lpad(Field<? extends Number> length);
+
+    /**
+     * Get the rpad(field, length) function
+     */
+    Field<String> lpad(int length);
+
+    /**
+     * Get the rpad(field, length, c) function
+     */
+    Field<String> lpad(Field<? extends Number> length, Field<String> c);
+
+    /**
+     * Get the rpad(field, length, c) function
+     */
+    Field<String> lpad(int length, char c);
+
+    /**
+     * Get the replace(in, search) function
+     */
+    Field<String> replace(Field<String> search);
+
+    /**
+     * Get the replace(in, search) function
+     */
+    Field<String> replace(String search);
+
+    /**
+     * Get the replace(in, search, replace) function
+     */
+    Field<String> replace(Field<String> search, Field<String> replace);
+
+    /**
+     * Get the replace(in, search, replace) function
+     */
+    Field<String> replace(String search, String replace);
+
+    /**
      * Get the position(in, search) function
      * <p>
      * This translates into any dialect
@@ -201,6 +261,32 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This translates into any dialect
      */
     Field<Integer> position(Field<String> search);
+
+    /**
+     * Get the ascii(field) function
+     */
+    Field<Integer> ascii();
+
+    /**
+     * Get the concatenate(field[, field, ...]) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<String> concatenate(Field<String>... fields);
+
+    /**
+     * Get the substring(field, startingPosition) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<String> substring(int startingPosition);
+
+    /**
+     * Get the substring(field, startingPosition, length) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<String> substring(int startingPosition, int length) throws SQLDialectNotSupportedException;
 
     /**
      * Get the char_length(field) function

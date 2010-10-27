@@ -178,6 +178,66 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public Field<String> rpad(Field<? extends Number> length) {
+        return new StringFunction(getDialect(), "rpad", this, length);
+    }
+
+    @Override
+    public Field<String> rpad(int length) {
+        return rpad(constant(length));
+    }
+
+    @Override
+    public Field<String> rpad(Field<? extends Number> length, Field<String> c) {
+        return new StringFunction(getDialect(), "rpad", this, length, c);
+    }
+
+    @Override
+    public Field<String> rpad(int length, char c) {
+        return rpad(constant(length), constant("" + c));
+    }
+
+    @Override
+    public Field<String> lpad(Field<? extends Number> length) {
+        return new StringFunction(getDialect(), "lpad", this, length);
+    }
+
+    @Override
+    public Field<String> lpad(int length) {
+        return lpad(constant(length));
+    }
+
+    @Override
+    public Field<String> lpad(Field<? extends Number> length, Field<String> c) {
+        return new StringFunction(getDialect(), "lpad", this, length, c);
+    }
+
+    @Override
+    public Field<String> lpad(int length, char c) {
+        return lpad(constant(length), constant("" + c));
+    }
+
+    @Override
+    public Field<String> replace(Field<String> search) {
+        return new StringFunction(getDialect(), "replace", this, search);
+    }
+
+    @Override
+    public Field<String> replace(String search) {
+        return replace(constant(search));
+    }
+
+    @Override
+    public Field<String> replace(Field<String> search, Field<String> replace) {
+        return new StringFunction(getDialect(), "replace", this, search, replace);
+    }
+
+    @Override
+    public Field<String> replace(String search, String replace) {
+        return replace(constant(search), constant(replace));
+    }
+
+    @Override
     public final Field<Integer> position(String search) throws SQLDialectNotSupportedException {
         return position(constant(search));
     }
@@ -196,6 +256,47 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
             default:
                 throw new SQLDialectNotSupportedException("position not supported");
+        }
+    }
+
+    @Override
+    public final Field<Integer> ascii() {
+        return new IntegerFunction(getDialect(), "ascii", this);
+    }
+
+    @Override
+    public final Field<String> concatenate(Field<String>... fields) {
+        switch (getDialect()) {
+            case MYSQL:
+                return new StringFunction(getDialect(), "concat", fields);
+        }
+
+        return new StringFunction(getDialect(), "concatenate", fields);
+    }
+
+    @Override
+    public final Field<String> substring(int startingPosition) {
+        return substring(startingPosition, -1);
+    }
+
+    @Override
+    public final Field<String> substring(int startingPosition, int length) throws SQLDialectNotSupportedException {
+        Field<Integer> startingPositionConstant = constant(startingPosition);
+        Field<Integer> lengthConstant = constant(length);
+
+        String functionName = "substring";
+
+        switch (getDialect()) {
+            case ORACLE:
+                functionName = "substr";
+                break;
+        }
+
+        if (length == -1) {
+            return new StringFunction(getDialect(), functionName, this, startingPositionConstant);
+        }
+        else {
+            return new StringFunction(getDialect(), functionName, this, startingPositionConstant, lengthConstant);
         }
     }
 
@@ -230,8 +331,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Field<Integer> extract(DatePart datePart)
-        throws SQLDialectNotSupportedException {
+    public final Field<Integer> extract(DatePart datePart) throws SQLDialectNotSupportedException {
         switch (getDialect()) {
             case MYSQL: // No break
             case POSTGRES:

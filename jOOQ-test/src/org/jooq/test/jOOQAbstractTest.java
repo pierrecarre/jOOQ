@@ -505,9 +505,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testFunction4() throws Exception {
         SelectQuery q = create().selectQuery();
         Field<String> constant = create().constant("abc");
-        Field<Integer> charLength = create().functions().charLength(constant);
-        Field<Integer> bitLength = create().functions().bitLength(constant);
-        Field<Integer> octetLength = create().functions().octetLength(constant);
+        Field<Integer> charLength = constant.charLength();
+        Field<Integer> bitLength = constant.bitLength();
+        Field<Integer> octetLength = constant.octetLength();
 
         q.addSelect(charLength, bitLength, octetLength);
         q.execute();
