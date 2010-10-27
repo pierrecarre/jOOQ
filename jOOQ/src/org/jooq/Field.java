@@ -163,6 +163,31 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     Field<T> min();
 
+    /**
+     * Get the upper(field) function
+     */
+    Field<String> upper();
+
+    /**
+     * Get the lower(field) function
+     */
+    Field<String> lower();
+
+    /**
+     * Get the trim(field) function
+     */
+    Field<String> trim();
+
+    /**
+     * Get the rtrim(field) function
+     */
+    Field<String> rtrim();
+
+    /**
+     * Get the ltrim(field) function
+     */
+    Field<String> ltrim();
+
     // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------

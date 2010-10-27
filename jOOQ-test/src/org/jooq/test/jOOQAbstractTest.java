@@ -412,7 +412,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         q2.addFrom(a);
         q2.addJoin(b, b_authorID, a_authorID);
         q2.addCompareCondition(b_title, "1984", Comparator.NOT_EQUALS);
-        q2.addOrderBy(create().functions().lower(b_title));
+        q2.addOrderBy(b_title.lower());
 
         int rows1 = q1.execute();
         int rows2 = q2.execute();

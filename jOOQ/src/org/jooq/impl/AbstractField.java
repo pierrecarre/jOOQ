@@ -150,6 +150,31 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return new Function<T>(getDialect(), "min", getType(), this);
     }
 
+    @Override
+    public final Field<String> upper() {
+        return new Function<String>(getDialect(), "upper", String.class, this);
+    }
+
+    @Override
+    public final Field<String> lower() {
+        return new Function<String>(getDialect(), "lower", String.class, this);
+    }
+
+    @Override
+    public Field<String> trim() {
+        return new Function<String>(getDialect(), "trim", String.class, this);
+    }
+
+    @Override
+    public Field<String> rtrim() {
+        return new Function<String>(getDialect(), "rtrim", String.class, this);
+    }
+
+    @Override
+    public Field<String> ltrim() {
+        return new Function<String>(getDialect(), "ltrim", String.class, this);
+    }
+
     // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------

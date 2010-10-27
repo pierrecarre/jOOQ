@@ -169,37 +169,50 @@ public final class FunctionFactory {
 
     /**
      * Get the upper(field) function
+     *
+     * @deprecated - Use {@link Field#upper()} instead
      */
+    @Deprecated
     public Field<String> upper(Field<String> field) {
-        return new Function<String>(getDialect(), "upper", field.getType(), field);
+        return field.upper();
     }
 
     /**
      * Get the lower(field) function
+     *
+     * @deprecated - Use {@link Field#lower()} instead
      */
+    @Deprecated
     public Field<String> lower(Field<String> field) {
-        return new Function<String>(getDialect(), "lower", field.getType(), field);
+        return field.lower();
     }
 
     /**
      * Get the trim(field) function
+     *
+     * @deprecated - Use {@link Field#trim()} instead
      */
+    @Deprecated
     public Field<String> trim(Field<String> field) {
-        return new Function<String>(getDialect(), "trim", field.getType(), field);
+        return field.trim();
     }
 
     /**
      * Get the rtrim(field) function
+     * @deprecated - Use {@link Field#rtrim()} instead
      */
+    @Deprecated
     public Field<String> rtrim(Field<String> field) {
-        return new Function<String>(getDialect(), "rtrim", field.getType(), field);
+        return field.rtrim();
     }
 
     /**
      * Get the ltrim(field) function
+     * @deprecated - Use {@link Field#ltrim()} instead
      */
+    @Deprecated
     public Field<String> ltrim(Field<String> field) {
-        return new Function<String>(getDialect(), "ltrim", field.getType(), field);
+        return field.ltrim();
     }
 
     /**
