@@ -91,7 +91,7 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
-        addValue(field, functions().constant(value));
+        addValue(field, constant(value));
     }
 
     @Override

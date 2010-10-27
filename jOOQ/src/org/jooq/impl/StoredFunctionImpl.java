@@ -115,7 +115,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
         List<NamedQueryPart> list = new ArrayList<NamedQueryPart>();
 
         for (Object o : getInValues().values()) {
-            list.add(create().functions().constant(o));
+            list.add(create().constant(o));
         }
 
         return list;

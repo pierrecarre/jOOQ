@@ -81,7 +81,10 @@ public final class FunctionFactory {
 
     /**
      * Retrieve the rownum pseudo-field
+     *
+     * @deprecated - Use {@link Factory#rownum()} instead
      */
+    @Deprecated
     public Field<Integer> rownum() {
         return new PseudoField<Integer>(getDialect(), "rownum", Integer.class);
     }
@@ -116,37 +119,52 @@ public final class FunctionFactory {
 
     /**
      * Get the min value over a numeric field: min(field)
+     *
+     * @deprecated - Use {@link Field#min()} instead
      */
+    @Deprecated
     public <T> Field<T> min(Field<T> field) {
-        return new Function<T>(getDialect(), "min", field.getType(), field);
+        return field.min();
     }
 
     /**
      * Get the max value over a numeric field: max(field)
+     *
+     * @deprecated - Use {@link Field#max()} instead
      */
+    @Deprecated
     public <T> Field<T> max(Field<T> field) {
-        return new Function<T>(getDialect(), "max", field.getType(), field);
+        return field.max();
     }
 
     /**
      * Get the count(*) function
+     *
+     * @deprecated - Use {@link Factory#count()} instead
      */
+    @Deprecated
     public Field<Integer> count() {
         return new Count(getDialect());
     }
 
     /**
      * Get the count(field) function
+     *
+     * @deprecated - Use {@link Field#count()} instead
      */
+    @Deprecated
     public Field<Integer> count(Field<?> field) {
-        return new Count(getDialect(), field, false);
+        return field.count();
     }
 
     /**
      * Get the count(distinct field) function
+     *
+     * @deprecated - Use {@link Field#countDistinct()} instead
      */
+    @Deprecated
     public Field<Integer> countDistinct(Field<?> field) {
-        return new Count(getDialect(), field, true);
+        return field.countDistinct();
     }
 
     /**
@@ -328,7 +346,10 @@ public final class FunctionFactory {
      * Get the current_date() function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Factory#currentDate()} instead
      */
+    @Deprecated
     public Field<Date> currentDate() throws SQLDialectNotSupportedException {
         switch (getDialect()) {
             case ORACLE:
@@ -342,7 +363,10 @@ public final class FunctionFactory {
      * Get the current_time() function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Factory#currentTime()} instead
      */
+    @Deprecated
     public Field<Time> currentTime() throws SQLDialectNotSupportedException {
         switch (getDialect()) {
             case ORACLE:
@@ -356,7 +380,10 @@ public final class FunctionFactory {
      * Get the current_timestamp() function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Factory#currentTimestamp()} instead
      */
+    @Deprecated
     public Field<Timestamp> currentTimestamp() {
         switch (getDialect()) {
             case ORACLE:
@@ -370,7 +397,10 @@ public final class FunctionFactory {
      * Get the current_user() function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Factory#currentUser()} instead
      */
+    @Deprecated
     public Field<String> currentUser() {
         switch (getDialect()) {
             case ORACLE:
@@ -385,7 +415,7 @@ public final class FunctionFactory {
      * <p>
      * This translates into any dialect
      */
-    public Field<Integer> charLength(Field<?> field) {
+    public Field<Integer> charLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
                 return new IntegerFunction(getDialect(), "length", field);
@@ -399,7 +429,7 @@ public final class FunctionFactory {
      * <p>
      * This translates into any dialect
      */
-    public Field<Integer> bitLength(Field<?> field) {
+    public Field<Integer> bitLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
                 return new IntegerFunction(getDialect(), "8 * lengthb", field);
@@ -413,7 +443,7 @@ public final class FunctionFactory {
      * <p>
      * This translates into any dialect
      */
-    public Field<Integer> octetLength(Field<?> field) {
+    public Field<Integer> octetLength(Field<String> field) {
         switch (getDialect()) {
             case ORACLE:
                 return new IntegerFunction(getDialect(), "lengthb", field);
@@ -491,7 +521,10 @@ public final class FunctionFactory {
 
     /**
      * Get a constant value
+     *
+     * @deprecated - Use {@link Factory#constant(Object)} instead
      */
+    @Deprecated
     public <T> Field<T> constant(T value) {
         if (value == null) {
             throw new IllegalArgumentException("Argument 'value' must not be null");
@@ -508,11 +541,13 @@ public final class FunctionFactory {
     }
 
     /**
-     * Initialse a {@link Case} statement. Decode is used as a method
-     * name to avoid name clashes with Java's reserved literal "case"
+     * Initialse a {@link Case} statement. Decode is used as a method name to
+     * avoid name clashes with Java's reserved literal "case"
      *
      * @see Case
+     * @deprecated - Use {@link Factory#decode()} instead
      */
+    @Deprecated
     public Case decode() {
         return new CaseImpl(getDialect());
     }

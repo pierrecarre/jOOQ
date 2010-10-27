@@ -129,9 +129,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     @Test
     public final void testSelectSimpleQuery() throws Exception {
         SelectQuery q = create().selectQuery();
-        Field<Integer> f1 = create().functions().constant(1).as("f1");
-        Field<Double> f2 = create().functions().constant(2d).as("f2");
-        Field<String> f3 = create().functions().constant("test").as("f3");
+        Field<Integer> f1 = create().constant(1).as("f1");
+        Field<Double> f2 = create().constant(2d).as("f2");
+        Field<String> f3 = create().constant("test").as("f3");
 
         q.addSelect(f1);
         q.addSelect(f2);
@@ -178,7 +178,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testGrouping() throws Exception {
-        Field<Integer> count = create().functions().count().as("c");
+        Field<Integer> count = create().count().as("c");
         SelectQuery q = create().select(getTBook_AUTHOR_ID(), count).from(getTBook()).groupBy(getTBook_AUTHOR_ID()).getQuery();
 
         int rows = q.execute();
@@ -213,11 +213,11 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     @Test
     public final void testInsertSelect() throws Exception {
         InsertSelectQuery i = create().insertQuery(getTAuthor(), create().select(
-            create().functions().constant(1000),
-            create().functions().constant("Lukas"),
-            create().functions().constant("Eder"),
-            create().functions().constant(new Date(363589200000L)),
-            create().functions().constant(1981)).getQuery());
+            create().constant(1000),
+            create().constant("Lukas"),
+            create().constant("Eder"),
+            create().constant(new Date(363589200000L)),
+            create().constant(1981)).getQuery());
 
         i.execute();
 
@@ -435,8 +435,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testArithmeticExpressions() throws Exception {
-        Field<Integer> f1 = create().functions().constant(1).add(2).add(3).divide(2);
-        Field<Integer> f2 = create().functions().constant(10).divide(5).add(create().functions().constant(3).subtract(2));
+        Field<Integer> f1 = create().constant(1).add(2).add(3).divide(2);
+        Field<Integer> f2 = create().constant(10).divide(5).add(create().constant(3).subtract(2));
 
         SelectQuery q1 = create().selectQuery();
         q1.addSelect(f1, f2);
@@ -466,10 +466,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     @Test
     public final void testFunction3() throws Exception {
         SelectQuery q1 = create().selectQuery();
-        Field<Timestamp> now = create().functions().currentTimestamp();
+        Field<Timestamp> now = create().currentTimestamp();
         Field<Timestamp> ts = now.as("ts");
-        Field<Date> date = create().functions().currentDate().as("d");
-        Field<Time> time = create().functions().currentTime().as("t");
+        Field<Date> date = create().currentDate().as("d");
+        Field<Time> time = create().currentTime().as("t");
 
         Field<Integer> year = create().functions().extract(now, DatePart.YEAR).as("y");
         Field<Integer> month = create().functions().extract(now, DatePart.MONTH).as("m");
@@ -504,7 +504,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     @Test
     public final void testFunction4() throws Exception {
         SelectQuery q = create().selectQuery();
-        Field<String> constant = create().functions().constant("abc");
+        Field<String> constant = create().constant("abc");
         Field<Integer> charLength = create().functions().charLength(constant);
         Field<Integer> bitLength = create().functions().bitLength(constant);
         Field<Integer> octetLength = create().functions().octetLength(constant);
@@ -552,9 +552,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testCaseStatement() throws Exception {
-        Field<String> case1 = create().functions().decode()
+        Field<String> case1 = create().decode()
             .value(getTBook_PUBLISHED_IN()).when(0, "ancient book").as("case1");
-        Field<String> case2 = create().functions().decode()
+        Field<String> case2 = create().decode()
             .when(getTBook_PUBLISHED_IN().equal(1948), "probably orwell")
             .when(getTBook_PUBLISHED_IN().equal(1988), "probably coelho")
             .otherwise("don't know").as("case2");

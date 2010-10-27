@@ -46,7 +46,7 @@ class CaseValueStepImpl<V> implements CaseValueStep<V> {
     }
 
     private <Z> Field<Z> constant(Z value) {
-        return new FunctionFactory(dialect).constant(value);
+        return new Factory(dialect).constant(value);
     }
 
     @Override

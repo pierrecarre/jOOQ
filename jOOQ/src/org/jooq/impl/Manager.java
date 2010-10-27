@@ -101,7 +101,7 @@ public final class Manager {
                 return filterOne(select.getResult().getRecords());
 
             case ORACLE:
-                return filterOne(select(table, factory.functions().rownum(), 1));
+                return filterOne(select(table, factory.rownum(), 1));
 
             default:
                 throw new SQLDialectNotSupportedException("This operation is not supported by dialect " + factory.getDialect());

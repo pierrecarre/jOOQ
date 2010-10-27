@@ -170,7 +170,7 @@ abstract class AbstractQueryPart implements QueryPart, QueryPartProvider {
     }
 
     final <T> Field<T> constant(T value) {
-        return functions().constant(value);
+        return create().constant(value);
     }
 
     final FunctionFactory functions() {

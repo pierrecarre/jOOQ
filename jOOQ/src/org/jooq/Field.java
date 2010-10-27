@@ -33,12 +33,19 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.impl.Factory;
+
 /**
  * A field used in tables and conditions
  *
  * @author Lukas Eder
  */
 public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<Field<T>> {
+
+    // ------------------------------------------------------------------------
+    // API
+    // ------------------------------------------------------------------------
+
     /**
      * @return The name of the field
      */
@@ -60,8 +67,14 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Override
     Field<T> as(String alias);
 
+    /**
+     * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
+     */
+    @Override
+    boolean equals(Object other);
+
     // ------------------------------------------------------------------------
-    // Convenience methods
+    // Conversion of field into a sort field
     // ------------------------------------------------------------------------
 
     /**
@@ -77,6 +90,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return This field as a descending sort field
      */
     SortField<T> descending();
+
+    // ------------------------------------------------------------------------
+    // Arithmetic expressions
+    // ------------------------------------------------------------------------
 
     /**
      * @return an arithmetic expression adding this to value
@@ -117,6 +134,38 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return an arithmetic expression dividing this by value
      */
     Field<T> divide(Field<? extends Number> value);
+
+    // ------------------------------------------------------------------------
+    // Functions created from this field
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the count(field) function
+     *
+     * @see Factory#count()
+     */
+    Field<Integer> count();
+
+    /**
+     * Get the count(distinct field) function
+     *
+     * @see Factory#count()
+     */
+    Field<Integer> countDistinct();
+
+    /**
+     * Get the max value over a field: max(field)
+     */
+    Field<T> max();
+
+    /**
+     * Get the min value over a field: min(field)
+     */
+    Field<T> min();
+
+    // ------------------------------------------------------------------------
+    // Conditions created from this field
+    // ------------------------------------------------------------------------
 
     /**
      * @return <code>this is null</code>
@@ -172,12 +221,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return <code>this between minValue and maxValue</code>
      */
     Condition between(T minValue, T maxValue);
-
-    /**
-     * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
-     */
-    @Override
-    boolean equals(Object other);
 
     /**
      * @return <code>this = value</code>

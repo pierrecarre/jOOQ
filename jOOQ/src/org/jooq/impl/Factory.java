@@ -32,12 +32,16 @@
 package org.jooq.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import javax.sql.DataSource;
 
+import org.jooq.Case;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -51,6 +55,7 @@ import org.jooq.Operator;
 import org.jooq.Record;
 import org.jooq.ResultProviderQuery;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Select;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectQuery;
@@ -105,7 +110,7 @@ public final class Factory implements Configuration {
      * @param dialect The dialect to use with objects created from this factory
      */
     Factory(SQLDialect dialect) {
-        this((Connection) null, SQLDialect.SQL99);
+        this((Connection) null, dialect);
     }
 
     /**
@@ -552,5 +557,99 @@ public final class Factory implements Configuration {
      */
     public <R extends Record> R newRecord(Table<R> table) {
         return JooqUtil.newRecord(table.getRecordType(), table, this);
+    }
+
+    /**
+     * Initialse a {@link Case} statement. Decode is used as a method name to
+     * avoid name clashes with Java's reserved literal "case"
+     *
+     * @see Case
+     */
+    public Case decode() {
+        return new CaseImpl(getDialect());
+    }
+
+    /**
+     * Get a constant value
+     */
+    public <T> Field<T> constant(T value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Argument 'value' must not be null");
+        }
+
+        return new Constant<T>(getDialect(), value);
+    }
+
+    /**
+     * Retrieve the rownum pseudo-field
+     */
+    public Field<Integer> rownum() {
+        return new PseudoField<Integer>(getDialect(), "rownum", Integer.class);
+    }
+
+    /**
+     * Get the count(*) function
+     *
+     * @see Field#count()
+     * @see Field#countDistinct()
+     */
+    public Field<Integer> count() {
+        return new Count(getDialect());
+    }
+
+    /**
+     * Get the current_date() function
+     * <p>
+     * This translates into any dialect
+     */
+    public Field<Date> currentDate() throws SQLDialectNotSupportedException {
+        switch (getDialect()) {
+            case ORACLE:
+                return new Function<Date>(getDialect(), "sysdate", Date.class);
+        }
+
+        return new Function<Date>(getDialect(), "current_date", Date.class);
+    }
+
+    /**
+     * Get the current_time() function
+     * <p>
+     * This translates into any dialect
+     */
+    public Field<Time> currentTime() throws SQLDialectNotSupportedException {
+        switch (getDialect()) {
+            case ORACLE:
+                return new Function<Time>(getDialect(), "sysdate", Time.class);
+        }
+
+        return new Function<Time>(getDialect(), "current_time", Time.class);
+    }
+
+    /**
+     * Get the current_timestamp() function
+     * <p>
+     * This translates into any dialect
+     */
+    public Field<Timestamp> currentTimestamp() {
+        switch (getDialect()) {
+            case ORACLE:
+                return new Function<Timestamp>(getDialect(), "sysdate", Timestamp.class);
+        }
+
+        return new Function<Timestamp>(getDialect(), "current_timestamp", Timestamp.class);
+    }
+
+    /**
+     * Get the current_user() function
+     * <p>
+     * This translates into any dialect
+     */
+    public Field<String> currentUser() {
+        switch (getDialect()) {
+            case ORACLE:
+                return new StringFunction(getDialect(), "user");
+        }
+
+        return new StringFunction(getDialect(), "current_user");
     }
 }

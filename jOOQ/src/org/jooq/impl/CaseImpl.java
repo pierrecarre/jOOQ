@@ -30,8 +30,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.CaseConditionStep;
 import org.jooq.Case;
+import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -46,7 +46,7 @@ class CaseImpl implements Case {
     }
 
     private <Z> Field<Z> constant(Z value) {
-        return new FunctionFactory(dialect).constant(value);
+        return new Factory(dialect).constant(value);
     }
 
     @Override

@@ -51,13 +51,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         super(dialect, name, type);
     }
 
+    // ------------------------------------------------------------------------
+    // API
+    // ------------------------------------------------------------------------
+
     @Override
     public Field<T> as(String alias) {
         return new FieldAlias<T>(getDialect(), this, alias);
     }
 
     // ------------------------------------------------------------------------
-    // Convenience methods
+    // Conversion of field into a sort field
     // ------------------------------------------------------------------------
 
     @Override
@@ -69,6 +73,10 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     public final SortField<T> descending() {
         return new SortFieldImpl<T>(getDialect(), this, SortOrder.DESC);
     }
+
+    // ------------------------------------------------------------------------
+    // Arithmetic expressions
+    // ------------------------------------------------------------------------
 
     @Override
     public final Field<T> add(Number value) {
@@ -117,6 +125,34 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     public final Field<T> divide(Field<? extends Number> value) {
         return new ArithmeticExpression<T>(getDialect(), this, value, ArithmeticOperator.DIVIDE);
     }
+
+    // ------------------------------------------------------------------------
+    // Functions created from this field
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Field<Integer> count() {
+        return new Count(getDialect(), this, false);
+    }
+
+    @Override
+    public final Field<Integer> countDistinct() {
+        return new Count(getDialect(), this, true);
+    }
+
+    @Override
+    public final Field<T> max() {
+        return new Function<T>(getDialect(), "max", getType(), this);
+    }
+
+    @Override
+    public final Field<T> min() {
+        return new Function<T>(getDialect(), "min", getType(), this);
+    }
+
+    // ------------------------------------------------------------------------
+    // Conditions created from this field
+    // ------------------------------------------------------------------------
 
     @Override
     public final Condition isNull() {

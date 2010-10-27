@@ -295,7 +295,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseValueFunction() throws Exception {
-        Case decode = create.functions().decode();
+        Case decode = create.decode();
         CaseValueStep<Integer> value = decode.value(FIELD_ID1);
         CaseWhenStep<Integer, String> c = value.when(1, "one");
 
@@ -334,7 +334,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseConditionFunction() throws Exception {
-        Case decode = create.functions().decode();
+        Case decode = create.decode();
         CaseConditionStep<String> c = decode.when(FIELD_ID1.equal(1), "one");
 
         assertEquals("case when TABLE1.ID1 = 1 then 'one' end", c.getQueryPart().toSQLReference(true));
@@ -382,21 +382,21 @@ public class jOOQTest {
 
     @Test
     public final void testConstantFunction() throws Exception {
-        Field<Integer> f1 = create.functions().constant(Integer.valueOf(1));
+        Field<Integer> f1 = create.constant(Integer.valueOf(1));
         assertEquals(Integer.class, f1.getType());
         assertEquals("1", f1.getQueryPart().toSQLReference(true));
         assertEquals("?", f1.getQueryPart().toSQLReference(false));
         assertEquals("1", f1.getQueryPart().toSQLDeclaration(true));
         assertEquals("?", f1.getQueryPart().toSQLDeclaration(false));
 
-        Field<String> f2 = create.functions().constant("test's");
+        Field<String> f2 = create.constant("test's");
         assertEquals(String.class, f2.getType());
         assertEquals("'test''s'", f2.getQueryPart().toSQLReference(true));
         assertEquals("?", f2.getQueryPart().toSQLReference(false));
         assertEquals("'test''s'", f2.getQueryPart().toSQLDeclaration(true));
         assertEquals("?", f2.getQueryPart().toSQLDeclaration(false));
 
-        Field<Integer> f3 = create.functions().constant(Integer.valueOf(1)).as("value");
+        Field<Integer> f3 = create.constant(Integer.valueOf(1)).as("value");
         assertEquals(Integer.class, f3.getType());
         assertEquals("value", f3.getQueryPart().toSQLReference(true));
         assertEquals("value", f3.getQueryPart().toSQLReference(false));
@@ -536,7 +536,7 @@ public class jOOQTest {
         assertEquals("((TABLE1.ID1 + 1 + 2) - 3)", f.getQueryPart().toSQLReference(true));
         assertEquals("((TABLE1.ID1 + ? + ?) - ?)", f.getQueryPart().toSQLReference(false));
 
-        f = FIELD_ID1.add(1).subtract(create.functions().constant(2).add(3));
+        f = FIELD_ID1.add(1).subtract(create.constant(2).add(3));
         assertEquals("((TABLE1.ID1 + 1) - (2 + 3))", f.getQueryPart().toSQLReference(true));
         assertEquals("((TABLE1.ID1 + ?) - (? + ?))", f.getQueryPart().toSQLReference(false));
 
@@ -548,7 +548,7 @@ public class jOOQTest {
         assertEquals("((TABLE1.ID1 * 1 * 2) / 3)", f.getQueryPart().toSQLReference(true));
         assertEquals("((TABLE1.ID1 * ? * ?) / ?)", f.getQueryPart().toSQLReference(false));
 
-        f = FIELD_ID1.multiply(1).divide(create.functions().constant(2).multiply(3));
+        f = FIELD_ID1.multiply(1).divide(create.constant(2).multiply(3));
         assertEquals("((TABLE1.ID1 * 1) / (2 * 3))", f.getQueryPart().toSQLReference(true));
         assertEquals("((TABLE1.ID1 * ?) / (? * ?))", f.getQueryPart().toSQLReference(false));
     }
@@ -587,7 +587,7 @@ public class jOOQTest {
         assertEquals("avg(TABLE1.ID1) value", avg2.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, avg2.getQueryPart().bind(statement));
 
-        Field<Integer> min1 = create.functions().min(FIELD_ID1);
+        Field<Integer> min1 = FIELD_ID1.min();
         assertEquals(Integer.class, min1.getType());
         assertEquals("min(TABLE1.ID1)", min1.getQueryPart().toSQLReference(true));
         assertEquals("min(TABLE1.ID1)", min1.getQueryPart().toSQLReference(false));
@@ -595,7 +595,7 @@ public class jOOQTest {
         assertEquals("min(TABLE1.ID1)", min1.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, min1.getQueryPart().bind(statement));
 
-        Field<Integer> min2 = create.functions().min(FIELD_ID1).as("value");
+        Field<Integer> min2 = FIELD_ID1.min().as("value");
         assertEquals(Integer.class, min2.getType());
         assertEquals("value", min2.getQueryPart().toSQLReference(true));
         assertEquals("value", min2.getQueryPart().toSQLReference(false));
@@ -603,7 +603,7 @@ public class jOOQTest {
         assertEquals("min(TABLE1.ID1) value", min2.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, min2.getQueryPart().bind(statement));
 
-        Field<Integer> max1 = create.functions().max(FIELD_ID1);
+        Field<Integer> max1 = FIELD_ID1.max();
         assertEquals(Integer.class, max1.getType());
         assertEquals("max(TABLE1.ID1)", max1.getQueryPart().toSQLReference(true));
         assertEquals("max(TABLE1.ID1)", max1.getQueryPart().toSQLReference(false));
@@ -611,7 +611,7 @@ public class jOOQTest {
         assertEquals("max(TABLE1.ID1)", max1.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, max1.getQueryPart().bind(statement));
 
-        Field<Integer> max2 = create.functions().max(FIELD_ID1).as("value");
+        Field<Integer> max2 = FIELD_ID1.max().as("value");
         assertEquals(Integer.class, max2.getType());
         assertEquals("value", max2.getQueryPart().toSQLReference(true));
         assertEquals("value", max2.getQueryPart().toSQLReference(false));
@@ -619,7 +619,7 @@ public class jOOQTest {
         assertEquals("max(TABLE1.ID1) value", max2.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, max2.getQueryPart().bind(statement));
 
-        Field<Integer> count1 = create.functions().count();
+        Field<Integer> count1 = create.count();
         assertEquals(Integer.class, count1.getType());
         assertEquals("count(*)", count1.getQueryPart().toSQLReference(true));
         assertEquals("count(*)", count1.getQueryPart().toSQLReference(false));
@@ -627,7 +627,7 @@ public class jOOQTest {
         assertEquals("count(*)", count1.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, count1.getQueryPart().bind(statement));
 
-        Field<Integer> count1a = create.functions().count().as("cnt");
+        Field<Integer> count1a = create.count().as("cnt");
         assertEquals(Integer.class, count1a.getType());
         assertEquals("cnt", count1a.getQueryPart().toSQLReference(true));
         assertEquals("cnt", count1a.getQueryPart().toSQLReference(false));
@@ -635,7 +635,7 @@ public class jOOQTest {
         assertEquals("count(*) cnt", count1a.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, count1a.getQueryPart().bind(statement));
 
-        Field<Integer> count2 = create.functions().count(FIELD_ID1);
+        Field<Integer> count2 = FIELD_ID1.count();
         assertEquals(Integer.class, count2.getType());
         assertEquals("count(TABLE1.ID1)", count2.getQueryPart().toSQLReference(true));
         assertEquals("count(TABLE1.ID1)", count2.getQueryPart().toSQLReference(false));
@@ -643,7 +643,7 @@ public class jOOQTest {
         assertEquals("count(TABLE1.ID1)", count2.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, count2.getQueryPart().bind(statement));
 
-        Field<Integer> count2a = create.functions().count(FIELD_ID1).as("cnt");
+        Field<Integer> count2a = FIELD_ID1.count().as("cnt");
         assertEquals(Integer.class, count2a.getType());
         assertEquals("cnt", count2a.getQueryPart().toSQLReference(true));
         assertEquals("cnt", count2a.getQueryPart().toSQLReference(false));
@@ -651,7 +651,7 @@ public class jOOQTest {
         assertEquals("count(TABLE1.ID1) cnt", count2a.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, count2a.getQueryPart().bind(statement));
 
-        Field<Integer> count3 = create.functions().countDistinct(FIELD_ID1);
+        Field<Integer> count3 = FIELD_ID1.countDistinct();
         assertEquals(Integer.class, count3.getType());
         assertEquals("count(distinct TABLE1.ID1)", count3.getQueryPart().toSQLReference(true));
         assertEquals("count(distinct TABLE1.ID1)", count3.getQueryPart().toSQLReference(false));
@@ -659,7 +659,7 @@ public class jOOQTest {
         assertEquals("count(distinct TABLE1.ID1)", count3.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, count3.getQueryPart().bind(statement));
 
-        Field<Integer> count3a = create.functions().countDistinct(FIELD_ID1).as("cnt");
+        Field<Integer> count3a = FIELD_ID1.countDistinct().as("cnt");
         assertEquals(Integer.class, count3a.getType());
         assertEquals("cnt", count3a.getQueryPart().toSQLReference(true));
         assertEquals("cnt", count3a.getQueryPart().toSQLReference(false));
@@ -718,7 +718,7 @@ public class jOOQTest {
     public final void testInsertSelect1() throws Exception {
         InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
-        q.addValue(FIELD_ID1, create.functions().round(create.functions().constant(10)));
+        q.addValue(FIELD_ID1, create.functions().round(create.constant(10)));
         q.addValue(FIELD_NAME1, create.select(FIELD_NAME1).from(TABLE1).where(FIELD_ID1.equal(1)).getQuery().<String>asField());
         assertEquals("insert into TABLE1 (ID1, NAME1) values (round(10), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = 1)", q.getQueryPart().toSQLReference(true));
         assertEquals("insert into TABLE1 (ID1, NAME1) values (round(?), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = ?)", q.getQueryPart().toSQLReference(false));
@@ -740,7 +740,7 @@ public class jOOQTest {
         assertEquals("insert into TABLE1 select * from dual", q.getQueryPart().toSQLReference(true));
         assertEquals("insert into TABLE1 select * from dual", q.getQueryPart().toSQLReference(false));
 
-        q = create.insertQuery(TABLE1, create.select(create.functions().constant(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")).getQuery());
+        q = create.insertQuery(TABLE1, create.select(create.constant(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")).getQuery());
 
         assertEquals("insert into TABLE1 select 1, TABLE1.NAME1 from TABLE1 where TABLE1.NAME1 = 'abc'", q.getQueryPart().toSQLReference(true));
         assertEquals("insert into TABLE1 select ?, TABLE1.NAME1 from TABLE1 where TABLE1.NAME1 = ?", q.getQueryPart().toSQLReference(false));
