@@ -471,12 +471,12 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Date> date = create().currentDate().as("d");
         Field<Time> time = create().currentTime().as("t");
 
-        Field<Integer> year = create().functions().extract(now, DatePart.YEAR).as("y");
-        Field<Integer> month = create().functions().extract(now, DatePart.MONTH).as("m");
-        Field<Integer> day = create().functions().extract(now, DatePart.DAY).as("dd");
-        Field<Integer> hour = create().functions().extract(now, DatePart.HOUR).as("h");
-        Field<Integer> minute = create().functions().extract(now, DatePart.MINUTE).as("mn");
-        Field<Integer> second = create().functions().extract(now, DatePart.SECOND).as("sec");
+        Field<Integer> year = now.extract(DatePart.YEAR).as("y");
+        Field<Integer> month = now.extract(DatePart.MONTH).as("m");
+        Field<Integer> day = now.extract(DatePart.DAY).as("dd");
+        Field<Integer> hour = now.extract(DatePart.HOUR).as("h");
+        Field<Integer> minute = now.extract(DatePart.MINUTE).as("mn");
+        Field<Integer> second = now.extract(DatePart.SECOND).as("sec");
 
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
         q1.execute();
