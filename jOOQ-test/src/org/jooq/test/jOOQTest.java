@@ -65,7 +65,6 @@ import org.jooq.InsertSelectQuery;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
-import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UpdateQuery;
 import org.jooq.impl.Factory;
@@ -1040,16 +1039,16 @@ public class jOOQTest {
         SimpleSelectQuery<Table1Record> q = create.selectQuery(TABLE1);
 
         q.addOrderBy(FIELD_ID1);
-        assertEquals("select * from TABLE1 order by TABLE1.ID1", q.getQueryPart().toSQLReference(true));
-        assertEquals("select * from TABLE1 order by TABLE1.ID1", q.getQueryPart().toSQLReference(false));
+        assertEquals("select * from TABLE1 order by TABLE1.ID1 asc", q.getQueryPart().toSQLReference(true));
+        assertEquals("select * from TABLE1 order by TABLE1.ID1 asc", q.getQueryPart().toSQLReference(false));
         assertEquals(q, create.select(TABLE1).orderBy(FIELD_ID1).getQuery());
 
-        q.addOrderBy(FIELD_ID2, SortOrder.DESC);
-        assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(true));
-        assertEquals("select * from TABLE1 order by TABLE1.ID1, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(false));
-        assertEquals(q, create.select(TABLE1)
-                                .orderBy(FIELD_ID1)
-                                .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
+        q.addOrderBy(FIELD_ID2.descending());
+        assertEquals("select * from TABLE1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(true));
+        assertEquals("select * from TABLE1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(false));
+        assertEquals(q, create.select(TABLE1).orderBy(
+                                    FIELD_ID1.ascending(),
+                                    FIELD_ID2.descending()).getQuery());
 
         int i = q.getQueryPart().bind(statement);
         assertEquals(1, i);
@@ -1063,8 +1062,8 @@ public class jOOQTest {
         q.addSelect(FIELD_ID1, FIELD_ID2);
         q.addGroupBy(FIELD_ID1, FIELD_ID2);
         q.addHaving(FIELD_ID1, 1);
-        q.addOrderBy(FIELD_ID1, SortOrder.ASC);
-        q.addOrderBy(FIELD_ID2, SortOrder.DESC);
+        q.addOrderBy(FIELD_ID1.ascending());
+        q.addOrderBy(FIELD_ID2.descending());
 
         assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = 1 order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(true));
         assertEquals("select TABLE1.ID1, TABLE2.ID2 from TABLE1 join TABLE2 on TABLE1.ID1 = TABLE2.ID2 group by TABLE1.ID1, TABLE2.ID2 having TABLE1.ID1 = ? order by TABLE1.ID1 asc, TABLE2.ID2 desc", q.getQueryPart().toSQLReference(false));
@@ -1073,8 +1072,9 @@ public class jOOQTest {
                           .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
                           .groupBy(FIELD_ID1, FIELD_ID2)
                           .having(FIELD_ID1.equal(1))
-                          .orderBy(FIELD_ID1, SortOrder.ASC)
-                          .orderBy(FIELD_ID2, SortOrder.DESC).getQuery());
+                          .orderBy(
+                              FIELD_ID1.ascending(),
+                              FIELD_ID2.descending()).getQuery());
 
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 1);
@@ -1089,19 +1089,19 @@ public class jOOQTest {
     @Test
     public final void testCombinedSelectQuery() throws Exception {
         SelectQuery combine = createCombinedSelectQuery();
-        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.getQueryPart().toSQLReference(true));
-        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.getQueryPart().toSQLReference(false));
+        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(true));
+        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(false));
         assertEquals(combine, createCombinedSelect().getQuery());
 
         combine.addSelect(FIELD_ID1);
-        assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1", combine.getQueryPart().toSQLReference(true));
-        assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1", combine.getQueryPart().toSQLReference(false));
+        assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(true));
+        assertEquals("select TABLE1.ID1 from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(false));
         assertEquals(combine, createCombinedSelect().select(FIELD_ID1).getQuery());
 
         combine = createCombinedSelectQuery();
         combine.addJoin(TABLE2, FIELD_ID1, FIELD_ID2);
-        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.getQueryPart().toSQLReference(true));
-        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1", combine.getQueryPart().toSQLReference(false));
+        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = 1) union (select * from TABLE1 where TABLE1.ID1 = 2)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(true));
+        assertEquals("select * from ((select * from TABLE1 where TABLE1.ID1 = ?) union (select * from TABLE1 where TABLE1.ID1 = ?)) join TABLE2 on TABLE1.ID1 = TABLE2.ID2 order by TABLE1.ID1 asc", combine.getQueryPart().toSQLReference(false));
         assertEquals(combine, createCombinedSelect().join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)).getQuery());
 
         context.checking(new Expectations() {{

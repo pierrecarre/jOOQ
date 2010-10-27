@@ -163,24 +163,23 @@ extends ResultProviderQuery<R>,
     /**
      * Adds ordering fields, ordering by the default sort order
      *
-     * @param fields The ordering fields
+     * @param field The ordering fields
      */
-    void addOrderBy(Field<?>... fields);
+    void addOrderBy(Field<?> field);
 
     /**
      * Adds ordering fields, ordering by the default sort order
      *
      * @param fields The ordering fields
      */
-    void addOrderBy(Collection<Field<?>> fields);
+    void addOrderBy(SortField<?>... fields);
 
     /**
-     * Adds an ordering field
+     * Adds ordering fields, ordering by the default sort order
      *
-     * @param field The ordering field
-     * @param order The sort order
+     * @param fields The ordering fields
      */
-    void addOrderBy(Field<?> field, SortOrder order);
+    void addOrderBy(Collection<SortField<?>> fields);
 
     /**
      * Limit the results of this select

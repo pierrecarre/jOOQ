@@ -43,6 +43,7 @@ import org.jooq.Field;
 import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Select;
+import org.jooq.SelectFinalStep;
 import org.jooq.SelectFromStep;
 import org.jooq.SelectGroupByStep;
 import org.jooq.SelectHavingStep;
@@ -53,7 +54,7 @@ import org.jooq.SelectQuery;
 import org.jooq.SelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.SimpleSelect;
-import org.jooq.SortOrder;
+import org.jooq.SortField;
 import org.jooq.Table;
 
 /**
@@ -148,20 +149,20 @@ class SelectImpl extends AbstractDelegatingResultProviderQuery<Record> implement
     }
 
     @Override
-    public SelectOrderByStep orderBy(Field<?>... fields) {
+    public SelectFinalStep orderBy(Field<?> field) {
+        query.addOrderBy(field);
+        return this;
+    }
+
+    @Override
+    public SelectFinalStep orderBy(SortField<?>... fields) {
         query.addOrderBy(fields);
         return this;
     }
 
     @Override
-    public SelectOrderByStep orderBy(Collection<Field<?>> fields) {
+    public SelectFinalStep orderBy(Collection<SortField<?>> fields) {
         query.addOrderBy(fields);
-        return this;
-    }
-
-    @Override
-    public SelectOrderByStep orderBy(Field<?> field, SortOrder order) {
-        query.addOrderBy(field, order);
         return this;
     }
 

@@ -28,53 +28,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
-import java.util.Collection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-/**
- * The order by clause step in a {@link SimpleSelect} query
- * <p>
- * This is the step in query construction, where you can add a order by clause
- * to a query. This step is optional. you can proceed to the optional
- * {@link SimpleSelectLimitStep}.
- *
- * @author Lukas Eder
- */
-public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectLimitStep<R> {
+import org.jooq.Field;
+import org.jooq.SQLDialect;
+import org.jooq.SortField;
+
+class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements SortField<T> {
 
     /**
-     * Add an order by clause to the query.
+     * Generated UID
      */
-    SimpleSelectLimitStep<R> orderBy(Field<?> field);
+    private static final long serialVersionUID = 1223739398544155873L;
+    private final Field<T> field;
+    private final SortOrder order;
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(SortField<?>... fields);
+    public SortFieldImpl(SQLDialect dialect, Field<T> field, SortOrder order) {
+        super(dialect, field.getName(), field.getType());
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
+        this.field = field;
+        this.order = order;
+    }
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> union(SimpleSelect<R> select);
+    @Override
+    public String toSQLReference(boolean inlineParameters) {
+        StringBuilder sb = new StringBuilder();
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> unionAll(SimpleSelect<R> select);
+        sb.append(field.getQueryPart().toSQLReference(inlineParameters));
+        sb.append(" ");
+        sb.append(order.toSQL());
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> except(SimpleSelect<R> select);
+        return sb.toString();
+    }
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> intersect(SimpleSelect<R> select);
+    @Override
+    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
+        return field.getQueryPart().bind(stmt, initialIndex);
+    }
 }

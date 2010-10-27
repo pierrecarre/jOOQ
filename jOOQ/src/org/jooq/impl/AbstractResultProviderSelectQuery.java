@@ -48,7 +48,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
-import org.jooq.SortOrder;
+import org.jooq.SortField;
 import org.jooq.SubQueryOperator;
 import org.jooq.Table;
 
@@ -70,7 +70,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     private final ConditionProviderImpl condition;
     private final FieldList             groupBy;
     private final ConditionProviderImpl having;
-    private final OrderByFieldList      orderBy;
+    private final SortFieldList      orderBy;
     private final Limit                 limit;
 
     AbstractResultProviderSelectQuery(Configuration configuration) {
@@ -87,7 +87,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         this.condition = new ConditionProviderImpl(dialect);
         this.groupBy = new FieldList(dialect);
         this.having = new ConditionProviderImpl(dialect);
-        this.orderBy = new OrderByFieldList(dialect);
+        this.orderBy = new SortFieldList(dialect);
         this.limit = new Limit(dialect);
 
         if (from != null) {
@@ -205,6 +205,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         return getSelect0();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public final Class<? extends R> getRecordType() {
         if (getTables().size() == 1) {
@@ -291,24 +292,22 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         return having;
     }
 
-    final OrderByFieldList getOrderBy() {
+    final SortFieldList getOrderBy() {
         return orderBy;
     }
 
     @Override
-    public final void addOrderBy(Field<?> field, SortOrder order) {
-        getOrderBy().add(field, order);
+    public final void addOrderBy(Collection<SortField<?>> fields) {
+        getOrderBy().addAll(fields);
     }
 
     @Override
-    public final void addOrderBy(Collection<Field<?>> fields) {
-        for (Field<?> field : fields) {
-            addOrderBy(field, null);
-        }
+    public void addOrderBy(Field<?> field) {
+        addOrderBy(field.ascending());
     }
 
     @Override
-    public final void addOrderBy(Field<?>... fields) {
+    public final void addOrderBy(SortField<?>... fields) {
         addOrderBy(Arrays.asList(fields));
     }
 

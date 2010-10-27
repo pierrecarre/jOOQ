@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,33 +28,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq;
 
-/**
- * The sorting order used in OrderByFieldLists
- *
- * @author Lukas Eder
- */
-public enum SortOrder {
+public interface SortField<T> extends NamedTypeProviderQueryPart<T> {
 
-    /**
-     * Ascending sort order
-     */
-    ASC("asc"),
-
-    /**
-     * Descending sort order
-     */
-    DESC("desc");
-
-    private final String sql;
-
-    private SortOrder(String sql) {
-        this.sql = sql;
-    }
-
-    public String toSQL() {
-        return sql;
-    }
 }

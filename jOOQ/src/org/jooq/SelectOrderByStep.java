@@ -41,22 +41,22 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface SelectOrderByStep extends QueryProvider<SelectQuery> {
+public interface SelectOrderByStep extends SelectFinalStep {
 
     /**
      * Add an order by clause to the query.
      */
-    SelectOrderByStep orderBy(Field<?>... fields);
+    SelectFinalStep orderBy(Field<?> field);
 
     /**
      * Add an order by clause to the query.
      */
-    SelectOrderByStep orderBy(Collection<Field<?>> fields);
+    SelectFinalStep orderBy(SortField<?>... fields);
 
     /**
      * Add an order by clause to the query.
      */
-    SelectOrderByStep orderBy(Field<?> field, SortOrder order);
+    SelectFinalStep orderBy(Collection<SortField<?>> fields);
 
     /**
      * Combine with other selects
@@ -77,9 +77,4 @@ public interface SelectOrderByStep extends QueryProvider<SelectQuery> {
      * Combine with other selects
      */
     Select intersect(Select select);
-
-    /**
-     * Return this as a {@link Select} object
-     */
-    Select getSelect();
 }

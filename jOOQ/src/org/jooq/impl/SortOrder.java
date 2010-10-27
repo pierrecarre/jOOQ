@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,53 +28,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
 
-import java.util.Collection;
+package org.jooq.impl;
 
 /**
- * The order by clause step in a {@link SimpleSelect} query
- * <p>
- * This is the step in query construction, where you can add a order by clause
- * to a query. This step is optional. you can proceed to the optional
- * {@link SimpleSelectLimitStep}.
+ * The sorting order used in OrderByFieldLists
  *
  * @author Lukas Eder
  */
-public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectLimitStep<R> {
+enum SortOrder {
 
     /**
-     * Add an order by clause to the query.
+     * Ascending sort order
      */
-    SimpleSelectLimitStep<R> orderBy(Field<?> field);
+    ASC("asc"),
 
     /**
-     * Add an order by clause to the query.
+     * Descending sort order
      */
-    SimpleSelectLimitStep<R> orderBy(SortField<?>... fields);
+    DESC("desc");
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
+    private final String sql;
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> union(SimpleSelect<R> select);
+    private SortOrder(String sql) {
+        this.sql = sql;
+    }
 
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> unionAll(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> except(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> intersect(SimpleSelect<R> select);
+    public String toSQL() {
+        return sql;
+    }
 }

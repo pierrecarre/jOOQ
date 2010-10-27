@@ -37,6 +37,7 @@ import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.SubQueryOperator;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
@@ -53,6 +54,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public Field<T> as(String alias) {
         return new FieldAlias<T>(getDialect(), this, alias);
+    }
+
+    @Override
+    public final SortField<T> ascending() {
+        return new SortFieldImpl<T>(getDialect(), this, SortOrder.ASC);
+    }
+
+    @Override
+    public final SortField<T> descending() {
+        return new SortFieldImpl<T>(getDialect(), this, SortOrder.DESC);
     }
 
     // ------------------------------------------------------------------------

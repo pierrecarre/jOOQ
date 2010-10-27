@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,56 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.impl;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.jooq.Field;
-import org.jooq.SQLDialect;
-import org.jooq.SortOrder;
+package org.jooq;
 
 /**
+ * Wrapping up a {@link Select} query
+ *
  * @author Lukas Eder
  */
-class OrderByFieldList extends FieldList {
+public interface SelectFinalStep extends QueryProvider<SelectQuery> {
 
-    private static final long              serialVersionUID = -1825164005148183725L;
-
-    private final Map<Field<?>, SortOrder> ordering;
-
-    OrderByFieldList(SQLDialect dialect) {
-        this(dialect, new ArrayList<Field<?>>());
-    }
-
-    OrderByFieldList(SQLDialect dialect, List<Field<?>> wrappedList) {
-        super(dialect, wrappedList);
-
-        this.ordering = new HashMap<Field<?>, SortOrder>();
-    }
-
-    void add(Field<?> field, SortOrder order) {
-        add(field);
-
-        if (order != null) {
-            ordering.put(field, order);
-        }
-    }
-
-    @Override
-    protected String toSQLReference(Field<?> field, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(super.toSQLReference(field, inlineParameters));
-
-        if (ordering.get(field) != null) {
-            sb.append(" ");
-            sb.append(ordering.get(field).toSQL());
-        }
-
-        return sb.toString();
-    }
+    /**
+     * Return this as a {@link Select} object
+     */
+    Select getSelect();
 }

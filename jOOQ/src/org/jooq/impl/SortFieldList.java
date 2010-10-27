@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,53 +28,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
 
-import java.util.Collection;
+package org.jooq.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jooq.SQLDialect;
+import org.jooq.SortField;
 
 /**
- * The order by clause step in a {@link SimpleSelect} query
- * <p>
- * This is the step in query construction, where you can add a order by clause
- * to a query. This step is optional. you can proceed to the optional
- * {@link SimpleSelectLimitStep}.
- *
  * @author Lukas Eder
  */
-public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectLimitStep<R> {
+class SortFieldList extends AbstractQueryPartList<SortField<?>> {
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(Field<?> field);
+    private static final long serialVersionUID = -1825164005148183725L;
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(SortField<?>... fields);
+    SortFieldList(SQLDialect dialect) {
+        this(dialect, new ArrayList<SortField<?>>());
+    }
 
-    /**
-     * Add an order by clause to the query.
-     */
-    SimpleSelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> union(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> unionAll(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> except(SimpleSelect<R> select);
-
-    /**
-     * Combine with other selects
-     */
-    SimpleSelect<R> intersect(SimpleSelect<R> select);
+    SortFieldList(SQLDialect dialect, List<SortField<?>> wrappedList) {
+        super(dialect, wrappedList);
+    }
 }

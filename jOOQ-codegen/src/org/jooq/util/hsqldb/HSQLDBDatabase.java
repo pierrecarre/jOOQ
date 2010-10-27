@@ -74,7 +74,10 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
 			.where(TableConstraints.CONSTRAINT_TYPE.equal("PRIMARY KEY")
 			.and(ConstraintColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
-			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
+			.orderBy(
+			    Columns.TABLE_SCHEMA.ascending(),
+			    Columns.TABLE_NAME.ascending(),
+			    Columns.ORDINAL_POSITION.ascending())
 			.getQuery();
 
 		query.execute();
@@ -104,7 +107,10 @@ public class HSQLDBDatabase extends AbstractDatabase {
 			.and(ConstraintColumnUsage.COLUMN_NAME.equal(Columns.COLUMN_NAME)))
 			.where(TableConstraints.CONSTRAINT_TYPE.equal("FOREIGN KEY")
 			.and(KeyColumnUsage.TABLE_SCHEMA.equal(getSchemaName())))
-			.orderBy(Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.ORDINAL_POSITION)
+			.orderBy(
+			    Columns.TABLE_SCHEMA.ascending(),
+			    Columns.TABLE_NAME.ascending(),
+			    Columns.ORDINAL_POSITION.ascending())
 			.getQuery();
 
 		query.execute();

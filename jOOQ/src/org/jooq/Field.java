@@ -60,6 +60,20 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     @Override
     Field<T> as(String alias);
 
+    /**
+     * Create an ascending sort field from this
+     *
+     * @return This field as an ascending sort field
+     */
+    SortField<T> ascending();
+
+    /**
+     * Create a descending sort field from this
+     *
+     * @return This field as a descending sort field
+     */
+    SortField<T> descending();
+
     // ------------------------------------------------------------------------
     // Convenience methods
     // ------------------------------------------------------------------------

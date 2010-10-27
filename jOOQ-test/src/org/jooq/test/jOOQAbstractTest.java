@@ -34,7 +34,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
-import static org.jooq.SortOrder.ASC;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -507,7 +506,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<Integer> position = create().functions().position(getVLibrary_AUTHOR(), "o").as("p");
         q.addSelect(getVLibrary_AUTHOR());
         q.addSelect(position);
-        q.addOrderBy(getVLibrary_AUTHOR(), ASC);
+        q.addOrderBy(getVLibrary_AUTHOR());
 
         q.execute();
         Record r1 = q.getResult().getRecord(1); // George Orwell

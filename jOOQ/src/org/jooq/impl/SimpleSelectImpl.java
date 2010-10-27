@@ -50,7 +50,7 @@ import org.jooq.SimpleSelectOrderByStep;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.SimpleSelectStep;
 import org.jooq.SimpleSelectWhereStep;
-import org.jooq.SortOrder;
+import org.jooq.SortField;
 import org.jooq.Table;
 
 /**
@@ -115,20 +115,20 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingResultProvide
     }
 
     @Override
-    public SimpleSelectOrderByStep<R> orderBy(Field<?>... fields) {
+    public SimpleSelectLimitStep<R> orderBy(Field<?> field) {
+        query.addOrderBy(field);
+        return this;
+    }
+
+    @Override
+    public SimpleSelectOrderByStep<R> orderBy(SortField<?>... fields) {
         query.addOrderBy(fields);
         return this;
     }
 
     @Override
-    public SimpleSelectOrderByStep<R> orderBy(Collection<Field<?>> fields) {
+    public SimpleSelectOrderByStep<R> orderBy(Collection<SortField<?>> fields) {
         query.addOrderBy(fields);
-        return this;
-    }
-
-    @Override
-    public SimpleSelectOrderByStep<R> orderBy(Field<?> field, SortOrder order) {
-        query.addOrderBy(field, order);
         return this;
     }
 
