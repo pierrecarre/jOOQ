@@ -199,6 +199,7 @@ public final class FunctionFactory {
 
     /**
      * Get the rtrim(field) function
+     *
      * @deprecated - Use {@link Field#rtrim()} instead
      */
     @Deprecated
@@ -208,6 +209,7 @@ public final class FunctionFactory {
 
     /**
      * Get the ltrim(field) function
+     *
      * @deprecated - Use {@link Field#ltrim()} instead
      */
     @Deprecated
@@ -469,67 +471,36 @@ public final class FunctionFactory {
      * Get the extract(field, datePart) function
      * <p>
      * This translates into any dialect
+     * @deprecated - Use {@link Field#extract(DatePart)} instead
      */
+    @Deprecated
     public Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart)
         throws SQLDialectNotSupportedException {
-        switch (getDialect()) {
-            case MYSQL: // No break
-            case POSTGRES:
-            case HSQLDB:
-                return new Extract(getDialect(), field, datePart);
-            case ORACLE:
-                switch (datePart) {
-                    case YEAR:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("YYYY"));
-                    case MONTH:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("MM"));
-                    case DAY:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("DD"));
-                    case HOUR:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("HH24"));
-                    case MINUTE:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("MI"));
-                    case SECOND:
-                        return new IntegerFunction(getDialect(), "to_char", field, constant("SS"));
-                    default:
-                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
-                }
-            case MSSQL:
-                throw new SQLDialectNotSupportedException("TODO: Implement CONVERT for MSSQL");
-
-            default:
-                throw new SQLDialectNotSupportedException("extract not supported");
-        }
+        return field.extract(datePart);
     }
 
     /**
      * Get the position(in, search) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#position(String)} instead
      */
+    @Deprecated
     public Field<Integer> position(Field<String> in, String search) throws SQLDialectNotSupportedException {
-        return position(in, constant(search));
+        return in.position(search);
     }
 
     /**
      * Get the position(in, search) function
      * <p>
      * This translates into any dialect
+     *
+     * @deprecated - Use {@link Field#position(Field)} instead
      */
+    @Deprecated
     public Field<Integer> position(Field<String> in, Field<String> search) throws SQLDialectNotSupportedException {
-        switch (getDialect()) {
-            case MYSQL: // No break
-            case POSTGRES:
-            case HSQLDB:
-                return new PositionFunctionImpl(getDialect(), search, in);
-            case ORACLE:
-                return new IntegerFunction(getDialect(), "instr", in, search);
-            case MSSQL:
-                return new IntegerFunction(getDialect(), "charindex", search, in);
-
-            default:
-                throw new SQLDialectNotSupportedException("position not supported");
-        }
+        return in.position(search);
     }
 
     /**

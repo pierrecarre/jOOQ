@@ -46,7 +46,7 @@ class PositionFunctionImpl extends IntegerFunction {
     private static final long   serialVersionUID = 3544690069533526544L;
     private final Field<String> search;
 
-    PositionFunctionImpl(SQLDialect dialect, Field<String> search, Field<String> in) {
+    PositionFunctionImpl(SQLDialect dialect, Field<String> search, Field<?> in) {
         super(dialect, "position", in);
 
         this.search = search;

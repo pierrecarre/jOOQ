@@ -188,6 +188,48 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     Field<String> ltrim();
 
+    /**
+     * Get the position(in, search) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> position(String search);
+
+    /**
+     * Get the position(in, search) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> position(Field<String> search);
+
+    /**
+     * Get the char_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> charLength();
+
+    /**
+     * Get the bit_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> bitLength();
+
+    /**
+     * Get the octet_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> octetLength();
+
+    /**
+     * Get the extract(field, datePart) function
+     * <p>
+     * This translates into any dialect
+     */
+    Field<Integer> extract(DatePart datePart);
+
     // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------

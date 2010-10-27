@@ -533,7 +533,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     public final void testFunction5() throws Exception {
         SimpleSelectQuery<L> q = create().selectQuery(getVLibrary());
 
-        Field<Integer> position = create().functions().position(getVLibrary_AUTHOR(), "o").as("p");
+        Field<Integer> position = getVLibrary_AUTHOR().position("o").as("p");
         q.addSelect(getVLibrary_AUTHOR());
         q.addSelect(position);
         q.addOrderBy(getVLibrary_AUTHOR());

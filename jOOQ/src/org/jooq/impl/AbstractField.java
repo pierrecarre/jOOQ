@@ -34,9 +34,11 @@ import java.util.Collection;
 
 import org.jooq.Comparator;
 import org.jooq.Condition;
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.ResultProviderSelectQuery;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.SortField;
 import org.jooq.SubQueryOperator;
 
@@ -161,18 +163,103 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public Field<String> trim() {
+    public final Field<String> trim() {
         return new Function<String>(getDialect(), "trim", String.class, this);
     }
 
     @Override
-    public Field<String> rtrim() {
+    public final Field<String> rtrim() {
         return new Function<String>(getDialect(), "rtrim", String.class, this);
     }
 
     @Override
-    public Field<String> ltrim() {
+    public final Field<String> ltrim() {
         return new Function<String>(getDialect(), "ltrim", String.class, this);
+    }
+
+    @Override
+    public final Field<Integer> position(String search) throws SQLDialectNotSupportedException {
+        return position(constant(search));
+    }
+
+    @Override
+    public final Field<Integer> position(Field<String> search) throws SQLDialectNotSupportedException {
+        switch (getDialect()) {
+            case MYSQL: // No break
+            case POSTGRES:
+            case HSQLDB:
+                return new PositionFunctionImpl(getDialect(), search, this);
+            case ORACLE:
+                return new IntegerFunction(getDialect(), "instr", this, search);
+            case MSSQL:
+                return new IntegerFunction(getDialect(), "charindex", search, this);
+
+            default:
+                throw new SQLDialectNotSupportedException("position not supported");
+        }
+    }
+
+    @Override
+    public final Field<Integer> charLength() {
+        switch (getDialect()) {
+            case ORACLE:
+                return new IntegerFunction(getDialect(), "length", this);
+        }
+
+        return new IntegerFunction(getDialect(), "char_length", this);
+    }
+
+    @Override
+    public final Field<Integer> bitLength() {
+        switch (getDialect()) {
+            case ORACLE:
+                return new IntegerFunction(getDialect(), "8 * lengthb", this);
+        }
+
+        return new IntegerFunction(getDialect(), "bit_length", this);
+    }
+
+    @Override
+    public final Field<Integer> octetLength() {
+        switch (getDialect()) {
+            case ORACLE:
+                return new IntegerFunction(getDialect(), "lengthb", this);
+        }
+
+        return new IntegerFunction(getDialect(), "octet_length", this);
+    }
+
+    @Override
+    public final Field<Integer> extract(DatePart datePart)
+        throws SQLDialectNotSupportedException {
+        switch (getDialect()) {
+            case MYSQL: // No break
+            case POSTGRES:
+            case HSQLDB:
+                return new Extract(getDialect(), this, datePart);
+            case ORACLE:
+                switch (datePart) {
+                    case YEAR:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("YYYY"));
+                    case MONTH:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("MM"));
+                    case DAY:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("DD"));
+                    case HOUR:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("HH24"));
+                    case MINUTE:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("MI"));
+                    case SECOND:
+                        return new IntegerFunction(getDialect(), "to_char", this, constant("SS"));
+                    default:
+                        throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
+                }
+            case MSSQL:
+                throw new SQLDialectNotSupportedException("TODO: Implement CONVERT for MSSQL");
+
+            default:
+                throw new SQLDialectNotSupportedException("extract not supported");
+        }
     }
 
     // ------------------------------------------------------------------------
