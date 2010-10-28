@@ -581,6 +581,13 @@ public final class Factory implements Configuration {
     }
 
     /**
+     * Get the null field
+     */
+    public Field<?> NULL() {
+        return new PseudoField<Object>(getDialect(), "null", Object.class);
+    }
+
+    /**
      * Retrieve the rownum pseudo-field
      */
     public Field<Integer> rownum() {

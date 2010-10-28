@@ -91,28 +91,40 @@ public final class FunctionFactory {
 
     /**
      * Get the sum over a numeric field: sum(field)
+     *
+     * @deprecated - Use {@link Field#sum()} instead
      */
+    @Deprecated
     public <T extends Number> Field<T> sum(Field<T> field) {
         return new Function<T>(getDialect(), "sum", field.getType(), field);
     }
 
     /**
      * Get the average over a numeric field: avg(field)
+     *
+     * @deprecated - Use {@link Field#avg()} instead
      */
+    @Deprecated
     public <T extends Number> Field<Double> avg(Field<T> field) {
         return new Function<Double>(getDialect(), "avg", Double.class, field);
     }
 
     /**
      * Get the absolute value of a numeric field: abs(field)
+     *
+     * @deprecated - Use {@link Field#abs()} instead
      */
+    @Deprecated
     public <T extends Number> Field<T> abs(Field<T> field) {
         return new Function<T>(getDialect(), "abs", field.getType(), field);
     }
 
     /**
      * Get rounded value of a numeric field: round(field)
+     *
+     * @deprecated - Use {@link Field#round()} instead
      */
+    @Deprecated
     public <T extends Number> Field<T> round(Field<T> field) {
         return new Function<T>(getDialect(), "round", field.getType(), field);
     }
@@ -561,7 +573,10 @@ public final class FunctionFactory {
 
     /**
      * Get the null field
+     *
+     * @deprecated - Use {@link Factory#NULL()} instead
      */
+    @Deprecated
     public Field<?> NULL() {
         return new PseudoField<Object>(getDialect(), "null", Object.class);
     }

@@ -44,6 +44,7 @@ import static org.jooq.test.Data.TABLE1;
 import static org.jooq.test.Data.TABLE2;
 import static org.jooq.test.Data.TABLE3;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 
@@ -372,7 +373,7 @@ public class jOOQTest {
 
     @Test
     public final void testNullFunction() throws Exception {
-        Field<?> f = create.functions().NULL();
+        Field<?> f = create.NULL();
         assertEquals("null", f.getQueryPart().toSQLReference(true));
         assertEquals("null", f.getQueryPart().toSQLReference(false));
 
@@ -555,32 +556,32 @@ public class jOOQTest {
 
     @Test
     public final void testArithmeticFunctions() throws Exception {
-        Field<Integer> sum1 = create.functions().sum(FIELD_ID1);
-        assertEquals(Integer.class, sum1.getType());
+        Field<BigDecimal> sum1 = FIELD_ID1.sum();
+        assertEquals(BigDecimal.class, sum1.getType());
         assertEquals("sum(TABLE1.ID1)", sum1.getQueryPart().toSQLReference(true));
         assertEquals("sum(TABLE1.ID1)", sum1.getQueryPart().toSQLReference(false));
         assertEquals("sum(TABLE1.ID1)", sum1.getQueryPart().toSQLDeclaration(true));
         assertEquals("sum(TABLE1.ID1)", sum1.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, sum1.getQueryPart().bind(statement));
 
-        Field<Integer> sum2 = create.functions().sum(FIELD_ID1).as("value");
-        assertEquals(Integer.class, sum2.getType());
+        Field<BigDecimal> sum2 = FIELD_ID1.sum().as("value");
+        assertEquals(BigDecimal.class, sum2.getType());
         assertEquals("value", sum2.getQueryPart().toSQLReference(true));
         assertEquals("value", sum2.getQueryPart().toSQLReference(false));
         assertEquals("sum(TABLE1.ID1) value", sum2.getQueryPart().toSQLDeclaration(true));
         assertEquals("sum(TABLE1.ID1) value", sum2.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, sum2.getQueryPart().bind(statement));
 
-        Field<Double> avg1 = create.functions().avg(FIELD_ID1);
-        assertEquals(Double.class, avg1.getType());
+        Field<BigDecimal> avg1 = FIELD_ID1.avg();
+        assertEquals(BigDecimal.class, avg1.getType());
         assertEquals("avg(TABLE1.ID1)", avg1.getQueryPart().toSQLReference(true));
         assertEquals("avg(TABLE1.ID1)", avg1.getQueryPart().toSQLReference(false));
         assertEquals("avg(TABLE1.ID1)", avg1.getQueryPart().toSQLDeclaration(true));
         assertEquals("avg(TABLE1.ID1)", avg1.getQueryPart().toSQLDeclaration(false));
         assertEquals(1, avg1.getQueryPart().bind(statement));
 
-        Field<Double> avg2 = create.functions().avg(FIELD_ID1).as("value");
-        assertEquals(Double.class, avg2.getType());
+        Field<BigDecimal> avg2 = FIELD_ID1.avg().as("value");
+        assertEquals(BigDecimal.class, avg2.getType());
         assertEquals("value", avg2.getQueryPart().toSQLReference(true));
         assertEquals("value", avg2.getQueryPart().toSQLReference(false));
         assertEquals("avg(TABLE1.ID1) value", avg2.getQueryPart().toSQLDeclaration(true));
@@ -718,7 +719,7 @@ public class jOOQTest {
     public final void testInsertSelect1() throws Exception {
         InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
-        q.addValue(FIELD_ID1, create.functions().round(create.constant(10)));
+        q.addValue(FIELD_ID1, create.constant(10).round());
         q.addValue(FIELD_NAME1, create.select(FIELD_NAME1).from(TABLE1).where(FIELD_ID1.equal(1)).getQuery().<String>asField());
         assertEquals("insert into TABLE1 (ID1, NAME1) values (round(10), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = 1)", q.getQueryPart().toSQLReference(true));
         assertEquals("insert into TABLE1 (ID1, NAME1) values (round(?), select TABLE1.NAME1 from TABLE1 where TABLE1.ID1 = ?)", q.getQueryPart().toSQLReference(false));

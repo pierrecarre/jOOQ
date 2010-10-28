@@ -30,6 +30,7 @@
  */
 package org.jooq.impl;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import org.jooq.Comparator;
@@ -150,6 +151,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<T> min() {
         return new Function<T>(getDialect(), "min", getType(), this);
+    }
+
+    @Override
+    public final Field<BigDecimal> sum() {
+        return new Function<BigDecimal>(getDialect(), "sum", BigDecimal.class, this);
+    }
+
+    @Override
+    public final Field<BigDecimal> avg() {
+        return new Function<BigDecimal>(getDialect(), "avg", BigDecimal.class, this);
+    }
+
+    @Override
+    public final Field<T> abs() {
+        return new Function<T>(getDialect(), "abs", getType(), this);
+    }
+
+    @Override
+    public Field<T> round() {
+        return new Function<T>(getDialect(), "round", getType(), this);
     }
 
     @Override

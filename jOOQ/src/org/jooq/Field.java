@@ -31,6 +31,7 @@
 
 package org.jooq;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import org.jooq.impl.Factory;
@@ -162,6 +163,26 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Get the min value over a field: min(field)
      */
     Field<T> min();
+
+    /**
+     * Get the sum over a numeric field: sum(field)
+     */
+    Field<BigDecimal> sum();
+
+    /**
+     * Get the average over a numeric field: avg(field)
+     */
+    Field<BigDecimal> avg();
+
+    /**
+     * Get the absolute value of a numeric field: abs(field)
+     */
+    Field<T> abs();
+
+    /**
+     * Get rounded value of a numeric field: round(field)
+     */
+    Field<T> round();
 
     /**
      * Get the upper(field) function
