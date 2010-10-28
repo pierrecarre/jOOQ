@@ -9,6 +9,7 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
 
@@ -72,6 +73,11 @@ public class TBook extends UpdatableTableImpl<TBookRecord> {
 	 * Some binary content of the book
 	 */
 	public static final TableField<TBookRecord, byte[]> CONTENT_PDF = new TableFieldImpl<TBookRecord, byte[]>(SQLDialect.MYSQL, "CONTENT_PDF", byte[].class, T_BOOK);
+
+	/**
+	 * The book's stock status
+	 */
+	public static final TableField<TBookRecord, TBookStatus> STATUS = new TableFieldImpl<TBookRecord, TBookStatus>(SQLDialect.MYSQL, "STATUS", TBookStatus.class, T_BOOK);
 
 	/**
 	 * No further instances allowed

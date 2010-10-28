@@ -31,6 +31,7 @@
 
 package org.jooq.util.mysql;
 
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_COMMENT;
@@ -51,12 +52,15 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
+import org.jooq.util.mysql.information_schema.tables.Columns;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
+import org.jooq.util.mysql.information_schema.tables.records.ColumnsRecord;
 import org.jooq.util.mysql.information_schema.tables.records.KeyColumnUsageRecord;
 import org.jooq.util.mysql.information_schema.tables.records.TablesRecord;
 import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
@@ -66,123 +70,149 @@ import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
  */
 public class MySQLDatabase extends AbstractDatabase {
 
-	@Override
-	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
-		SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
-		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
-		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
-		q.execute();
+    @Override
+    protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+        SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
+        q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
+        q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+        q.execute();
 
-		for (KeyColumnUsageRecord record : q.getResult()) {
-			String key = record.getConstraintName();
-			String tableName = record.getTableName();
-			String columnName = record.getColumnName();
+        for (KeyColumnUsageRecord record : q.getResult()) {
+            String key = record.getConstraintName();
+            String tableName = record.getTableName();
+            String columnName = record.getColumnName();
 
-			key = key + "_" + tableName;
-			TableDefinition table = getTable(tableName);
+            key = key + "_" + tableName;
+            TableDefinition table = getTable(tableName);
 
-			if (table != null) {
-			    relations.addPrimaryKey(key, table.getColumn(columnName));
-			}
-		}
-	}
+            if (table != null) {
+                relations.addPrimaryKey(key, table.getColumn(columnName));
+            }
+        }
+    }
 
-	@Override
-	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-		SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
-		q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
-		q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
-		q.execute();
+    @Override
+    protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
+        q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
+        q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+        q.execute();
 
-		for (KeyColumnUsageRecord record : q.getResult()) {
-			String key = record.getConstraintName();
-			String referencingTableName = record.getTableName();
-			String referencingColumnName = record.getColumnName();
-			String referencedTableName = record.getReferencedTableName();
-			String referencedColumnName = record.getReferencedColumnName();
+        for (KeyColumnUsageRecord record : q.getResult()) {
+            String key = record.getConstraintName();
+            String referencingTableName = record.getTableName();
+            String referencingColumnName = record.getColumnName();
+            String referencedTableName = record.getReferencedTableName();
+            String referencedColumnName = record.getReferencedColumnName();
 
-			TableDefinition referencingTable = getTable(referencingTableName);
-			TableDefinition referencedTable = getTable(referencedTableName);
+            TableDefinition referencingTable = getTable(referencingTableName);
+            TableDefinition referencedTable = getTable(referencedTableName);
 
-			if (referencingTable != null && referencedTable != null) {
-    			ColumnDefinition referencingColumn = referencingTable.getColumn(referencingColumnName);
+            if (referencingTable != null && referencedTable != null) {
+                ColumnDefinition referencingColumn = referencingTable.getColumn(referencingColumnName);
                 ColumnDefinition referencedColumn = referencedTable.getColumn(referencedColumnName);
 
-    			String primaryKey = relations.getPrimaryKeyName(referencedColumn);
-    			relations.addForeignKey(key, primaryKey, referencingColumn);
-			}
-		}
-	}
+                String primaryKey = relations.getPrimaryKeyName(referencedColumn);
+                relations.addForeignKey(key, primaryKey, referencingColumn);
+            }
+        }
+    }
 
-	@Override
-	protected List<TableDefinition> getTables0() throws SQLException {
-		List<TableDefinition> result = new ArrayList<TableDefinition>();
+    @Override
+    protected List<TableDefinition> getTables0() throws SQLException {
+        List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-		SimpleSelectQuery<TablesRecord> q = create().selectQuery(TABLES);
-		q.addSelect(TABLE_NAME);
-		q.addSelect(TABLE_COMMENT);
-		q.addConditions(create().compareCondition(TABLE_SCHEMA, getSchemaName()));
-		q.addOrderBy(TABLE_NAME);
-		q.execute();
+        SimpleSelectQuery<TablesRecord> q = create().selectQuery(TABLES);
+        q.addSelect(TABLE_NAME);
+        q.addSelect(TABLE_COMMENT);
+        q.addConditions(create().compareCondition(TABLE_SCHEMA, getSchemaName()));
+        q.addOrderBy(TABLE_NAME);
+        q.execute();
 
-		for (TablesRecord record : q.getResult()) {
-			String name = record.getTableName();
-			String comment = record.getTableComment();
+        for (TablesRecord record : q.getResult()) {
+            String name = record.getTableName();
+            String comment = record.getTableComment();
 
-			MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
-			result.add(table);
-		}
+            MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
+            result.add(table);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+
+        SimpleSelectQuery<ColumnsRecord> q = create()
+            .select(COLUMNS)
+            .where(
+                Columns.COLUMN_TYPE.like("enum(%)").and(
+                Columns.TABLE_SCHEMA.equal(getSchemaName())))
+            .orderBy(
+                Columns.TABLE_NAME.ascending(),
+                Columns.COLUMN_NAME.ascending())
+            .getQuery();
+
+        for (ColumnsRecord record : q.fetch()) {
+            String comment = record.getColumnComment();
+            String table = record.getTableName();
+            String column = record.getColumnName();
+            String name = table + "_" + column;
+            String columnType = record.getColumnType();
+
+            DefaultEnumDefinition definition = new DefaultEnumDefinition(this, name, comment);
+            for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
+                definition.addLiteral(string.trim().replaceAll("'", ""));
+            }
+
+            result.add(definition);
+        }
+
         return result;
     }
 
-	@Override
-	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-		List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    @Override
+    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
+        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
 
-		for (ProcRecord record : executeProcedureQuery("PROCEDURE")) {
-			String name = record.getName();
-			String comment = record.getComment();
-			String params = new String(record.getParamList());
+        for (ProcRecord record : executeProcedureQuery("PROCEDURE")) {
+            String name = record.getName();
+            String comment = record.getComment();
+            String params = new String(record.getParamList());
 
-			MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
-			result.add(procedure);
-		}
+            MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
+            result.add(procedure);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	protected List<FunctionDefinition> getFunctions0() throws SQLException {
-		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+    @Override
+    protected List<FunctionDefinition> getFunctions0() throws SQLException {
+        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
 
-		for (ProcRecord record : executeProcedureQuery("FUNCTION")) {
-			String name = record.getName();
-			String comment = record.getComment();
-			String params = new String(record.getParamList());
-			String returnValue = new String(record.getReturns());
+        for (ProcRecord record : executeProcedureQuery("FUNCTION")) {
+            String name = record.getName();
+            String comment = record.getComment();
+            String params = new String(record.getParamList());
+            String returnValue = new String(record.getReturns());
 
-			MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
-			result.add(function);
-		}
+            MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
+            result.add(function);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private Result<ProcRecord> executeProcedureQuery(String type) throws SQLException {
-		SimpleSelectQuery<ProcRecord> q = create().selectQuery(PROC);
-		q.addConditions(create().compareCondition(DB, getSchemaName()));
-		q.addConditions(create().compareCondition(TYPE, type));
-		q.execute();
+    private Result<ProcRecord> executeProcedureQuery(String type) throws SQLException {
+        SimpleSelectQuery<ProcRecord> q = create().selectQuery(PROC);
+        q.addConditions(create().compareCondition(DB, getSchemaName()));
+        q.addConditions(create().compareCondition(TYPE, type));
+        q.execute();
 
-		return q.getResult();
-	}
+        return q.getResult();
+    }
 
     @Override
     public Factory create() {

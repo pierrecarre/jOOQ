@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,46 +28,33 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.util;
 
-package org.jooq.impl;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-import org.jooq.SQLDialect;
+public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
 
-/**
- * @author Lukas Eder
- */
-class Constant<T> extends AbstractField<T> {
+    private final List<String> literals;
 
-    private static final long serialVersionUID = 6807729087019209084L;
-    private final T           value;
+    public DefaultEnumDefinition(Database database, String name, String comment) {
+        super(database, name, comment);
 
-    @SuppressWarnings("unchecked")
-    Constant(SQLDialect dialect, T value) {
-        super(dialect, value.toString(), (Class<? extends T>) value.getClass());
+        literals = new ArrayList<String>();
+    }
 
-        this.value = value;
+    public void addLiteral(String literal) {
+        literals.add(literal);
     }
 
     @Override
-    public final String toSQLReference(boolean inlineParameters) {
-        switch (getDialect()) {
-
-            // HSQLDB cannot detect the type of a bound constant. It must be cast
-            case HSQLDB:
-                return "CAST(? as " + FieldTypeHelper.getDialectSQLType(getDialect(), this) + ")";
-
-            // Most RDBMS can handle constants as typeless literals
-            default:
-                return FieldTypeHelper.toSQL(getDialect(), value, inlineParameters, this);
-        }
+    public List<String> getLiterals() {
+        return literals;
     }
 
     @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        bind(stmt, initialIndex, this, value);
-        return initialIndex + 1;
+    public String getSubPackage() {
+        return "enums";
     }
 }

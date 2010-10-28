@@ -41,4 +41,9 @@ public interface Enum {
      * @return The literal as defined in the database
      */
     String getLiteral();
+
+    /**
+     * @return The type name as registered in the database, if applicable
+     */
+    String getName();
 }

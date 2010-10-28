@@ -146,7 +146,7 @@ public class jOOQMySQLTest extends jOOQAbstractTest<TAuthorRecord, TBookRecord, 
 
     @Override
     protected TableField<TBookRecord, ? extends Enum<?>> getTBook_STATUS() {
-        return null;
+        return TBook.STATUS;
     }
 
     @Override

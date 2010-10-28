@@ -51,6 +51,7 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
@@ -172,9 +173,7 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
-//        select t.typname, e.enumlabel
-//        from pg_enum e
-//        join pg_type t on t.oid = e.enumtypid;
+
         SelectQuery query = create()
             .select(PgType.TYPNAME, PgEnum.ENUMLABEL)
             .from(PG_ENUM).join(PG_TYPE).on(create()

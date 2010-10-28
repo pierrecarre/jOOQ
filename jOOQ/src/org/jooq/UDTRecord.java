@@ -28,36 +28,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.postgres;
+package org.jooq;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * An object holding data of a UDT
+ *
+ * @author Lukas Eder
+ */
+public interface UDTRecord<R extends Record> extends Record {
 
-import org.jooq.util.AbstractDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.EnumDefinition;
+    /**
+     * The UDT from which this record was read
+     */
+    UDT<R> getTable();
 
-public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
-
-    private final List<String> literals;
-
-    public DefaultEnumDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
-
-        literals = new ArrayList<String>();
-    }
-
-    public void addLiteral(String literal) {
-        literals.add(literal);
-    }
-
-    @Override
-    public List<String> getLiterals() {
-        return literals;
-    }
-
-    @Override
-    public String getSubPackage() {
-        return "enums";
-    }
 }

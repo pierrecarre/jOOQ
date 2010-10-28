@@ -144,6 +144,11 @@ public class DefaultGenerator implements Generator {
             out.println("\t}");
             out.println();
             out.println("\t@Override");
+            out.println("\tpublic String getName() {");
+            out.println("\t\treturn \"" + e.getName() + "\";");
+            out.println("\t}");
+            out.println();
+            out.println("\t@Override");
             out.println("\tpublic String getLiteral() {");
             out.println("\t\treturn literal;");
             out.println("\t}");

@@ -607,6 +607,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals("don't know", result.getValue(3, case2).trim());
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public final void testEnums() throws Exception {
         if (getTBook_STATUS() == null) {
@@ -617,6 +618,16 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         B book = q.fetchOne();
         Enum<?> value = book.getValue(getTBook_STATUS());
         assertEquals("SOLD_OUT", value.name());
-        assertEquals("SOLD OUT", value.getClass().getMethod("getLiteral").invoke(value));
+        assertEquals("SOLD OUT", ((org.jooq.Enum)value).getLiteral());
+
+        // Another copy of the original record
+        book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
+        book.setValue((Field) getTBook_STATUS(), Enum.valueOf(value.getClass(), "ON_STOCK"));
+        book.store();
+
+        book = create().manager().selectOne(getTBook(), getTBook_TITLE(), "1984");
+        value = book.getValue(getTBook_STATUS());
+        assertEquals("ON_STOCK", value.name());
+        assertEquals("ON STOCK", ((org.jooq.Enum)value).getLiteral());
     }
 }

@@ -34,6 +34,7 @@ package org.jooq.util.mysql;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_COMMENT;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_NAME;
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMN_TYPE;
 import static org.jooq.util.mysql.information_schema.tables.Columns.DATA_TYPE;
 import static org.jooq.util.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
 import static org.jooq.util.mysql.information_schema.tables.Columns.TABLE_NAME;
@@ -70,6 +71,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.addSelect(ORDINAL_POSITION);
 		q.addSelect(DATA_TYPE);
 		q.addSelect(COLUMN_COMMENT);
+		q.addSelect(COLUMN_TYPE);
 		q.addConditions(create().compareCondition(TABLE_SCHEMA, getSchemaName()));
 		q.addConditions(create().compareCondition(TABLE_NAME, getName()));
 		q.addOrderBy(ORDINAL_POSITION);
@@ -86,7 +88,11 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			try {
 				type = MySQLDataType.valueOf(DataType.normalise(dataType)).getType().getCanonicalName();
 			} catch (Exception e) {
-			    System.err.println("  WARN: Unsupported datatype : " + dataType);
+			    if (getDatabase().getEnum(getName() + "_" + name) != null) {
+                    type = getDatabase().getEnum(getName() + "_" + name).getFullJavaClassName();
+                } else {
+                    System.err.println("  WARN: Unsupported datatype : " + dataType);
+                }
 			}
 
 			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);

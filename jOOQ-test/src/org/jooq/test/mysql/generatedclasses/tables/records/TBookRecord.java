@@ -10,6 +10,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 
@@ -127,6 +128,20 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	 */
 	public byte[] getContentPdf() {
 		return getValue(TBook.CONTENT_PDF);
+	}
+
+	/**
+	 * The book's stock status
+	 */
+	public void setStatus(TBookStatus value) {
+		setValue(TBook.STATUS, value);
+	}
+
+	/**
+	 * The book's stock status
+	 */
+	public TBookStatus getStatus() {
+		return getValue(TBook.STATUS);
 	}
 
 	public TBookRecord(Configuration configuration) {

@@ -84,7 +84,7 @@ class CompareCondition<T> extends AbstractCondition {
         if (value != null) {
             sb.append(comparator.toSQL());
             sb.append(" ");
-            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            sb.append(FieldTypeHelper.toSQL(getDialect(), value, inlineParameters, field));
         }
         else {
             switch (comparator) {

@@ -30,6 +30,7 @@ CREATE TABLE t_book (
 	PUBLISHED_IN INT NOT NULL COMMENT 'The year the book was published in',
 	CONTENT_TEXT LONGTEXT COMMENT 'Some textual content of the book',
 	CONTENT_PDF LONGBLOB COMMENT 'Some binary content of the book',
+	STATUS enum('SOLD OUT','ORDERED','ON STOCK') COMMENT 'The book''s stock status',
 	INDEX (AUTHOR_ID),
 	FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID)
 ) ENGINE = InnoDB
@@ -77,13 +78,13 @@ INSERT INTO t_author VALUES (NULL, 'George', 'Orwell', '1903-06-25', 1903);
 INSERT INTO t_author VALUES (NULL, 'Paulo', 'Coelho', '1947-08-24', 1947);
 /
 
-INSERT INTO t_book VALUES (NULL, 1, '1984', 1948, 'To know and not to know, to be conscious of complete truthfulness while telling carefully constructed lies, to hold simultaneously two opinions which cancelled out, knowing them to be contradictory and believing in both of them, to use logic against logic, to repudiate morality while laying claim to it, to believe that democracy was impossible and that the Party was the guardian of democracy, to forget, whatever it was necessary to forget, then to draw it back into memory again at the moment when it was needed, and then promptly to forget it again, and above all, to apply the same process to the process itself -- that was the ultimate subtlety; consciously to induce unconsciousness, and then, once again, to become unconscious of the act of hypnosis you had just performed. Even to understand the word ''doublethink'' involved the use of doublethink..', null);
+INSERT INTO t_book VALUES (1, 1, '1984', 1948, 'To know and not to know, to be conscious of complete truthfulness while telling carefully constructed lies, to hold simultaneously two opinions which cancelled out, knowing them to be contradictory and believing in both of them, to use logic against logic, to repudiate morality while laying claim to it, to believe that democracy was impossible and that the Party was the guardian of democracy, to forget, whatever it was necessary to forget, then to draw it back into memory again at the moment when it was needed, and then promptly to forget it again, and above all, to apply the same process to the process itself -- that was the ultimate subtlety; consciously to induce unconsciousness, and then, once again, to become unconscious of the act of hypnosis you had just performed. Even to understand the word ''doublethink'' involved the use of doublethink..', null, 'ORDERED')
 /
-INSERT INTO t_book VALUES (NULL, 1, 'Animal Farm', 1945, null, null);
+INSERT INTO t_book VALUES (2, 1, 'Animal Farm', 1945, null, null, 'ON STOCK')
 /
-INSERT INTO t_book VALUES (NULL, 2, 'O Alquimista', 1988, null, null);
+INSERT INTO t_book VALUES (3, 2, 'O Alquimista', 1988, null, null, 'ON STOCK')
 /
-INSERT INTO t_book VALUES (NULL, 2, 'Brida', 1990, null, null);
+INSERT INTO t_book VALUES (4, 2, 'Brida', 1990, null, null, 'SOLD OUT')
 /
 
 CREATE PROCEDURE p_author_exists (author_name VARCHAR(50), OUT result BOOL)

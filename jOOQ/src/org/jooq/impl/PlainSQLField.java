@@ -68,7 +68,7 @@ class PlainSQLField extends AbstractField<Object> {
 
         if (inlineParameters) {
             for (Object binding : bindings) {
-                result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(binding, inlineParameters));
+                result = result.replaceFirst("\\?", FieldTypeHelper.toSQL(getDialect(), binding, inlineParameters));
             }
         }
 

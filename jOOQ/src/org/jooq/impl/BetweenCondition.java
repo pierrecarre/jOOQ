@@ -82,9 +82,9 @@ class BetweenCondition<T> extends AbstractCondition {
 
         sb.append(field.getQueryPart().toSQLReference(inlineParameters));
         sb.append(" between ");
-        sb.append(FieldTypeHelper.toSQL(minValue, inlineParameters, field));
+        sb.append(FieldTypeHelper.toSQL(getDialect(), minValue, inlineParameters, field));
         sb.append(" and ");
-        sb.append(FieldTypeHelper.toSQL(maxValue, inlineParameters, field));
+        sb.append(FieldTypeHelper.toSQL(getDialect(), maxValue, inlineParameters, field));
 
         return sb.toString();
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,46 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.impl;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import org.jooq.SQLDialect;
+package org.jooq;
 
 /**
+ * UDT definition
+ *
  * @author Lukas Eder
  */
-class Constant<T> extends AbstractField<T> {
+public interface UDT<R extends Record> extends FieldProvider {
 
-    private static final long serialVersionUID = 6807729087019209084L;
-    private final T           value;
-
-    @SuppressWarnings("unchecked")
-    Constant(SQLDialect dialect, T value) {
-        super(dialect, value.toString(), (Class<? extends T>) value.getClass());
-
-        this.value = value;
-    }
-
-    @Override
-    public final String toSQLReference(boolean inlineParameters) {
-        switch (getDialect()) {
-
-            // HSQLDB cannot detect the type of a bound constant. It must be cast
-            case HSQLDB:
-                return "CAST(? as " + FieldTypeHelper.getDialectSQLType(getDialect(), this) + ")";
-
-            // Most RDBMS can handle constants as typeless literals
-            default:
-                return FieldTypeHelper.toSQL(getDialect(), value, inlineParameters, this);
-        }
-    }
-
-    @Override
-    public int bind(PreparedStatement stmt, int initialIndex) throws SQLException {
-        bind(stmt, initialIndex, this, value);
-        return initialIndex + 1;
-    }
+    /**
+     * @return The record type produced by this UDT
+     */
+    Class<? extends R> getRecordType();
 }

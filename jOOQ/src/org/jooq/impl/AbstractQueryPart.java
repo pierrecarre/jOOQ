@@ -140,6 +140,9 @@ abstract class AbstractQueryPart implements QueryPart, QueryPartProvider {
         else if (type == Timestamp.class) {
             stmt.setTimestamp(index, (Timestamp) value);
         }
+        else if (org.jooq.Enum.class.isAssignableFrom(type)) {
+            stmt.setString(index, ((org.jooq.Enum) value).getLiteral());
+        }
         else {
             stmt.setObject(index, value);
         }

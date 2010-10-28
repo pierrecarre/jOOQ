@@ -91,7 +91,7 @@ abstract class AbstractStoredObject extends AbstractNamedQueryPart implements St
             sb.append(separator);
 
             if (inlineParameters && getInValues().containsKey(parameter)) {
-                FieldTypeHelper.toSQL(getInValues().get(parameter), inlineParameters, parameter);
+                FieldTypeHelper.toSQL(getDialect(), getInValues().get(parameter), inlineParameters, parameter);
             }
             else {
                 sb.append("?");

@@ -62,7 +62,6 @@ public enum MySQLDataType {
 	CHAR(String.class),
 	MEDIUMTEXT(String.class),
 	LONGTEXT(String.class),
-	ENUM(String.class),
 	SET(String.class),
 
 	BINARY(byte[].class),

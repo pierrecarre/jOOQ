@@ -84,7 +84,7 @@ class InCondition<T> extends AbstractCondition {
         String separator = "";
         for (T value : values) {
             sb.append(separator);
-            sb.append(FieldTypeHelper.toSQL(value, inlineParameters, field));
+            sb.append(FieldTypeHelper.toSQL(getDialect(), value, inlineParameters, field));
             separator = ", ";
         }
 

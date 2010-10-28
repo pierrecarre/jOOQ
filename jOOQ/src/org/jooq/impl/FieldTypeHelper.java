@@ -56,15 +56,15 @@ import org.jooq.util.postgres.PostgresDataType;
  */
 final class FieldTypeHelper {
 
-    public static String toSQL(Object value, boolean inlineParameters) {
-        return toSQL(value, inlineParameters, value.getClass());
+    public static String toSQL(SQLDialect dialect, Object value, boolean inlineParameters) {
+        return toSQL(dialect, value, inlineParameters, value.getClass());
     }
 
-    public static String toSQL(Object value, boolean inlineParameters, NamedTypeProviderQueryPart<?> field) {
-        return toSQL(value, inlineParameters, field.getType());
+    public static String toSQL(SQLDialect dialect, Object value, boolean inlineParameters, NamedTypeProviderQueryPart<?> field) {
+        return toSQL(dialect, value, inlineParameters, field.getType());
     }
 
-    public static String toSQL(Object value, boolean inlineParameters, Class<?> type) {
+    public static String toSQL(SQLDialect dialect, Object value, boolean inlineParameters, Class<?> type) {
         if (inlineParameters) {
             if (type == Blob.class) {
                 // Not supported
@@ -122,7 +122,7 @@ final class FieldTypeHelper {
             }
             else if (org.jooq.Enum.class.isAssignableFrom(type)) {
                 if (value instanceof org.jooq.Enum) {
-                    return ((org.jooq.Enum) value).getLiteral();
+                    return "'" + ((org.jooq.Enum) value).getLiteral() + "'";
                 }
             }
             else {
@@ -130,6 +130,17 @@ final class FieldTypeHelper {
             }
 
             throw new UnsupportedOperationException("Class " + type + " is not supported");
+        }
+
+        if (org.jooq.Enum.class.isAssignableFrom(type)) {
+            switch (dialect) {
+
+                // For some weird reason, PostGreSQL cannot bind a string
+                // value to an enum type automatically, it has to be
+                // done explicitly
+                case POSTGRES:
+                    return "?::" + ((org.jooq.Enum) value).getName();
+            }
         }
 
         return "?";
