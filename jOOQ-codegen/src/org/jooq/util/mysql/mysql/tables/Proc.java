@@ -11,6 +11,11 @@ import org.jooq.TableField;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.util.mysql.mysql.Mysql;
+import org.jooq.util.mysql.mysql.enums.ProcIsDeterministic;
+import org.jooq.util.mysql.mysql.enums.ProcLanguage;
+import org.jooq.util.mysql.mysql.enums.ProcSecurityType;
+import org.jooq.util.mysql.mysql.enums.ProcSqlDataAccess;
+import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
 
 
@@ -54,7 +59,7 @@ public class Proc extends TableImpl<ProcRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ProcRecord, String> TYPE = new TableFieldImpl<ProcRecord, String>(SQLDialect.MYSQL, "type", String.class, PROC);
+	public static final TableField<ProcRecord, ProcType> TYPE = new TableFieldImpl<ProcRecord, ProcType>(SQLDialect.MYSQL, "type", ProcType.class, PROC);
 
 	/**
 	 * An uncommented item
@@ -64,22 +69,22 @@ public class Proc extends TableImpl<ProcRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ProcRecord, String> LANGUAGE = new TableFieldImpl<ProcRecord, String>(SQLDialect.MYSQL, "language", String.class, PROC);
+	public static final TableField<ProcRecord, ProcLanguage> LANGUAGE = new TableFieldImpl<ProcRecord, ProcLanguage>(SQLDialect.MYSQL, "language", ProcLanguage.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ProcRecord, String> SQL_DATA_ACCESS = new TableFieldImpl<ProcRecord, String>(SQLDialect.MYSQL, "sql_data_access", String.class, PROC);
+	public static final TableField<ProcRecord, ProcSqlDataAccess> SQL_DATA_ACCESS = new TableFieldImpl<ProcRecord, ProcSqlDataAccess>(SQLDialect.MYSQL, "sql_data_access", ProcSqlDataAccess.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ProcRecord, String> IS_DETERMINISTIC = new TableFieldImpl<ProcRecord, String>(SQLDialect.MYSQL, "is_deterministic", String.class, PROC);
+	public static final TableField<ProcRecord, ProcIsDeterministic> IS_DETERMINISTIC = new TableFieldImpl<ProcRecord, ProcIsDeterministic>(SQLDialect.MYSQL, "is_deterministic", ProcIsDeterministic.class, PROC);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ProcRecord, String> SECURITY_TYPE = new TableFieldImpl<ProcRecord, String>(SQLDialect.MYSQL, "security_type", String.class, PROC);
+	public static final TableField<ProcRecord, ProcSecurityType> SECURITY_TYPE = new TableFieldImpl<ProcRecord, ProcSecurityType>(SQLDialect.MYSQL, "security_type", ProcSecurityType.class, PROC);
 
 	/**
 	 * An uncommented item

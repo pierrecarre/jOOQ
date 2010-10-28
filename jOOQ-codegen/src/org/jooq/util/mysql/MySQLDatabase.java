@@ -63,6 +63,7 @@ import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.mysql.information_schema.tables.records.ColumnsRecord;
 import org.jooq.util.mysql.information_schema.tables.records.KeyColumnUsageRecord;
 import org.jooq.util.mysql.information_schema.tables.records.TablesRecord;
+import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
 
 /**
@@ -176,7 +177,7 @@ public class MySQLDatabase extends AbstractDatabase {
     protected List<ProcedureDefinition> getProcedures0() throws SQLException {
         List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
 
-        for (ProcRecord record : executeProcedureQuery("PROCEDURE")) {
+        for (ProcRecord record : executeProcedureQuery(ProcType.PROCEDURE)) {
             String name = record.getName();
             String comment = record.getComment();
             String params = new String(record.getParamList());
@@ -192,7 +193,7 @@ public class MySQLDatabase extends AbstractDatabase {
     protected List<FunctionDefinition> getFunctions0() throws SQLException {
         List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
 
-        for (ProcRecord record : executeProcedureQuery("FUNCTION")) {
+        for (ProcRecord record : executeProcedureQuery(ProcType.FUNCTION)) {
             String name = record.getName();
             String comment = record.getComment();
             String params = new String(record.getParamList());
@@ -205,7 +206,7 @@ public class MySQLDatabase extends AbstractDatabase {
         return result;
     }
 
-    private Result<ProcRecord> executeProcedureQuery(String type) throws SQLException {
+    private Result<ProcRecord> executeProcedureQuery(ProcType type) throws SQLException {
         SimpleSelectQuery<ProcRecord> q = create().selectQuery(PROC);
         q.addConditions(create().compareCondition(DB, getSchemaName()));
         q.addConditions(create().compareCondition(TYPE, type));

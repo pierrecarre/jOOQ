@@ -129,10 +129,12 @@ public abstract class AbstractDatabase implements Database {
         this.targetDirectory = directory;
     }
 
+    @Override
     public String getTargetPackage() {
         return targetPackageName;
     }
 
+    @Override
     public String getTargetDirectory() {
         return targetDirectory;
     }
@@ -170,6 +172,8 @@ public abstract class AbstractDatabase implements Database {
     public final EnumDefinition getEnum(String name) throws SQLException {
         for (EnumDefinition e : getEnums()) {
             if (e.getName().equals(name)) {
+                e.setReferenced(true);
+
                 return e;
             }
         }

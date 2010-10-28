@@ -43,4 +43,14 @@ public interface EnumDefinition extends Definition {
      * @return The literals defined in this enum
      */
     List<String> getLiterals();
+
+    /**
+     * @return Whether this enum has is referenced by a generated entity
+     */
+    boolean isReferenced();
+
+    /**
+     * @see #isReferenced()
+     */
+    void setReferenced(boolean referenced);
 }

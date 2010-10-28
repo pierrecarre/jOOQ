@@ -79,7 +79,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		q.execute();
 		for (ColumnsRecord record : q.getResult()) {
 			String name = record.getColumnName();
-			int position = record.getOrdinalPosition();
+			int position = record.getOrdinalPosition().intValue();
 			String dataType = record.getDataType();
 			String comment = record.getColumnComment();
 

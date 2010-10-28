@@ -8,6 +8,11 @@ import java.sql.Timestamp;
 
 import org.jooq.Configuration;
 import org.jooq.impl.TableRecordImpl;
+import org.jooq.util.mysql.mysql.enums.ProcIsDeterministic;
+import org.jooq.util.mysql.mysql.enums.ProcLanguage;
+import org.jooq.util.mysql.mysql.enums.ProcSecurityType;
+import org.jooq.util.mysql.mysql.enums.ProcSqlDataAccess;
+import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.Proc;
 
 
@@ -51,14 +56,14 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setType(String value) {
+	public void setType(ProcType value) {
 		setValue(Proc.TYPE, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public String getType() {
+	public ProcType getType() {
 		return getValue(Proc.TYPE);
 	}
 
@@ -79,56 +84,56 @@ public class ProcRecord extends TableRecordImpl<ProcRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setLanguage(String value) {
+	public void setLanguage(ProcLanguage value) {
 		setValue(Proc.LANGUAGE, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public String getLanguage() {
+	public ProcLanguage getLanguage() {
 		return getValue(Proc.LANGUAGE);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setSqlDataAccess(String value) {
+	public void setSqlDataAccess(ProcSqlDataAccess value) {
 		setValue(Proc.SQL_DATA_ACCESS, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public String getSqlDataAccess() {
+	public ProcSqlDataAccess getSqlDataAccess() {
 		return getValue(Proc.SQL_DATA_ACCESS);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setIsDeterministic(String value) {
+	public void setIsDeterministic(ProcIsDeterministic value) {
 		setValue(Proc.IS_DETERMINISTIC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public String getIsDeterministic() {
+	public ProcIsDeterministic getIsDeterministic() {
 		return getValue(Proc.IS_DETERMINISTIC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setSecurityType(String value) {
+	public void setSecurityType(ProcSecurityType value) {
 		setValue(Proc.SECURITY_TYPE, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public String getSecurityType() {
+	public ProcSecurityType getSecurityType() {
 		return getValue(Proc.SECURITY_TYPE);
 	}
 

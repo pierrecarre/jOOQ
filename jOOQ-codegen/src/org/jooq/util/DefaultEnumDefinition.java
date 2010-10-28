@@ -33,10 +33,10 @@ package org.jooq.util;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
 
     private final List<String> literals;
+    private boolean            isReferenced;
 
     public DefaultEnumDefinition(Database database, String name, String comment) {
         super(database, name, comment);
@@ -56,5 +56,15 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
     @Override
     public String getSubPackage() {
         return "enums";
+    }
+
+    @Override
+    public boolean isReferenced() {
+        return isReferenced;
+    }
+
+    @Override
+    public void setReferenced(boolean referenced) {
+        this.isReferenced = referenced;
     }
 }

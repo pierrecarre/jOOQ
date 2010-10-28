@@ -117,28 +117,28 @@ public class KeyColumnUsageRecord extends TableRecordImpl<KeyColumnUsageRecord> 
 	/**
 	 * An uncommented item
 	 */
-	public void setOrdinalPosition(Integer value) {
+	public void setOrdinalPosition(Long value) {
 		setValue(KeyColumnUsage.ORDINAL_POSITION, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getOrdinalPosition() {
+	public Long getOrdinalPosition() {
 		return getValue(KeyColumnUsage.ORDINAL_POSITION);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setPositionInUniqueConstraint(Integer value) {
+	public void setPositionInUniqueConstraint(Long value) {
 		setValue(KeyColumnUsage.POSITION_IN_UNIQUE_CONSTRAINT, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getPositionInUniqueConstraint() {
+	public Long getPositionInUniqueConstraint() {
 		return getValue(KeyColumnUsage.POSITION_IN_UNIQUE_CONSTRAINT);
 	}
 

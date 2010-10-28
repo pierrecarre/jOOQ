@@ -75,14 +75,14 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setOrdinalPosition(Integer value) {
+	public void setOrdinalPosition(Long value) {
 		setValue(Columns.ORDINAL_POSITION, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getOrdinalPosition() {
+	public Long getOrdinalPosition() {
 		return getValue(Columns.ORDINAL_POSITION);
 	}
 
@@ -131,56 +131,56 @@ public class ColumnsRecord extends TableRecordImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setCharacterMaximumLength(Integer value) {
+	public void setCharacterMaximumLength(Long value) {
 		setValue(Columns.CHARACTER_MAXIMUM_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getCharacterMaximumLength() {
+	public Long getCharacterMaximumLength() {
 		return getValue(Columns.CHARACTER_MAXIMUM_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setCharacterOctetLength(Integer value) {
+	public void setCharacterOctetLength(Long value) {
 		setValue(Columns.CHARACTER_OCTET_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getCharacterOctetLength() {
+	public Long getCharacterOctetLength() {
 		return getValue(Columns.CHARACTER_OCTET_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setNumericPrecision(Integer value) {
+	public void setNumericPrecision(Long value) {
 		setValue(Columns.NUMERIC_PRECISION, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getNumericPrecision() {
+	public Long getNumericPrecision() {
 		return getValue(Columns.NUMERIC_PRECISION);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setNumericScale(Integer value) {
+	public void setNumericScale(Long value) {
 		setValue(Columns.NUMERIC_SCALE, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getNumericScale() {
+	public Long getNumericScale() {
 		return getValue(Columns.NUMERIC_SCALE);
 	}
 

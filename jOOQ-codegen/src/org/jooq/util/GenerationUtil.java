@@ -35,6 +35,10 @@ public class GenerationUtil {
     public static String convertToJavaIdentifier(String literal) {
         StringBuilder sb = new StringBuilder();
 
+        if ("".equals(literal)) {
+            return "_";
+        }
+
         if (!Character.isJavaIdentifierStart(literal.charAt(0))) {
             sb.append("_");
         }

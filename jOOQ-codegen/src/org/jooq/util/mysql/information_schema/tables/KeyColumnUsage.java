@@ -75,12 +75,12 @@ public class KeyColumnUsage extends TableImpl<KeyColumnUsageRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<KeyColumnUsageRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<KeyColumnUsageRecord, Integer>(SQLDialect.MYSQL, "ORDINAL_POSITION", Integer.class, KEY_COLUMN_USAGE);
+	public static final TableField<KeyColumnUsageRecord, Long> ORDINAL_POSITION = new TableFieldImpl<KeyColumnUsageRecord, Long>(SQLDialect.MYSQL, "ORDINAL_POSITION", Long.class, KEY_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<KeyColumnUsageRecord, Integer> POSITION_IN_UNIQUE_CONSTRAINT = new TableFieldImpl<KeyColumnUsageRecord, Integer>(SQLDialect.MYSQL, "POSITION_IN_UNIQUE_CONSTRAINT", Integer.class, KEY_COLUMN_USAGE);
+	public static final TableField<KeyColumnUsageRecord, Long> POSITION_IN_UNIQUE_CONSTRAINT = new TableFieldImpl<KeyColumnUsageRecord, Long>(SQLDialect.MYSQL, "POSITION_IN_UNIQUE_CONSTRAINT", Long.class, KEY_COLUMN_USAGE);
 
 	/**
 	 * An uncommented item

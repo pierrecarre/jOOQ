@@ -67,7 +67,7 @@ public class Tables extends TableImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> VERSION = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "VERSION", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> VERSION = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "VERSION", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
@@ -77,37 +77,37 @@ public class Tables extends TableImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> TABLE_ROWS = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "TABLE_ROWS", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> TABLE_ROWS = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "TABLE_ROWS", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> AVG_ROW_LENGTH = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "AVG_ROW_LENGTH", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> AVG_ROW_LENGTH = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "AVG_ROW_LENGTH", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> DATA_LENGTH = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "DATA_LENGTH", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> DATA_LENGTH = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "DATA_LENGTH", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> MAX_DATA_LENGTH = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "MAX_DATA_LENGTH", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> MAX_DATA_LENGTH = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "MAX_DATA_LENGTH", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> INDEX_LENGTH = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "INDEX_LENGTH", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> INDEX_LENGTH = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "INDEX_LENGTH", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> DATA_FREE = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "DATA_FREE", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> DATA_FREE = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "DATA_FREE", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> AUTO_INCREMENT = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "AUTO_INCREMENT", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> AUTO_INCREMENT = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "AUTO_INCREMENT", Long.class, TABLES);
 
 	/**
 	 * An uncommented item
@@ -132,7 +132,7 @@ public class Tables extends TableImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<TablesRecord, Integer> CHECKSUM = new TableFieldImpl<TablesRecord, Integer>(SQLDialect.MYSQL, "CHECKSUM", Integer.class, TABLES);
+	public static final TableField<TablesRecord, Long> CHECKSUM = new TableFieldImpl<TablesRecord, Long>(SQLDialect.MYSQL, "CHECKSUM", Long.class, TABLES);
 
 	/**
 	 * An uncommented item

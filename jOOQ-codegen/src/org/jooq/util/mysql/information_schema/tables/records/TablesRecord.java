@@ -91,14 +91,14 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setVersion(Integer value) {
+	public void setVersion(Long value) {
 		setValue(Tables.VERSION, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getVersion() {
+	public Long getVersion() {
 		return getValue(Tables.VERSION);
 	}
 
@@ -119,98 +119,98 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setTableRows(Integer value) {
+	public void setTableRows(Long value) {
 		setValue(Tables.TABLE_ROWS, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getTableRows() {
+	public Long getTableRows() {
 		return getValue(Tables.TABLE_ROWS);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setAvgRowLength(Integer value) {
+	public void setAvgRowLength(Long value) {
 		setValue(Tables.AVG_ROW_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getAvgRowLength() {
+	public Long getAvgRowLength() {
 		return getValue(Tables.AVG_ROW_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setDataLength(Integer value) {
+	public void setDataLength(Long value) {
 		setValue(Tables.DATA_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getDataLength() {
+	public Long getDataLength() {
 		return getValue(Tables.DATA_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setMaxDataLength(Integer value) {
+	public void setMaxDataLength(Long value) {
 		setValue(Tables.MAX_DATA_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getMaxDataLength() {
+	public Long getMaxDataLength() {
 		return getValue(Tables.MAX_DATA_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setIndexLength(Integer value) {
+	public void setIndexLength(Long value) {
 		setValue(Tables.INDEX_LENGTH, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getIndexLength() {
+	public Long getIndexLength() {
 		return getValue(Tables.INDEX_LENGTH);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setDataFree(Integer value) {
+	public void setDataFree(Long value) {
 		setValue(Tables.DATA_FREE, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getDataFree() {
+	public Long getDataFree() {
 		return getValue(Tables.DATA_FREE);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setAutoIncrement(Integer value) {
+	public void setAutoIncrement(Long value) {
 		setValue(Tables.AUTO_INCREMENT, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getAutoIncrement() {
+	public Long getAutoIncrement() {
 		return getValue(Tables.AUTO_INCREMENT);
 	}
 
@@ -273,14 +273,14 @@ public class TablesRecord extends TableRecordImpl<TablesRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public void setChecksum(Integer value) {
+	public void setChecksum(Long value) {
 		setValue(Tables.CHECKSUM, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public Integer getChecksum() {
+	public Long getChecksum() {
 		return getValue(Tables.CHECKSUM);
 	}
 

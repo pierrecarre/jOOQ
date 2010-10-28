@@ -60,7 +60,7 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "ORDINAL_POSITION", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Long> ORDINAL_POSITION = new TableFieldImpl<ColumnsRecord, Long>(SQLDialect.MYSQL, "ORDINAL_POSITION", Long.class, COLUMNS);
 
 	/**
 	 * An uncommented item
@@ -80,22 +80,22 @@ public class Columns extends TableImpl<ColumnsRecord> {
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "CHARACTER_MAXIMUM_LENGTH", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Long> CHARACTER_MAXIMUM_LENGTH = new TableFieldImpl<ColumnsRecord, Long>(SQLDialect.MYSQL, "CHARACTER_MAXIMUM_LENGTH", Long.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "CHARACTER_OCTET_LENGTH", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Long> CHARACTER_OCTET_LENGTH = new TableFieldImpl<ColumnsRecord, Long>(SQLDialect.MYSQL, "CHARACTER_OCTET_LENGTH", Long.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "NUMERIC_PRECISION", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Long> NUMERIC_PRECISION = new TableFieldImpl<ColumnsRecord, Long>(SQLDialect.MYSQL, "NUMERIC_PRECISION", Long.class, COLUMNS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final TableField<ColumnsRecord, Integer> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Integer>(SQLDialect.MYSQL, "NUMERIC_SCALE", Integer.class, COLUMNS);
+	public static final TableField<ColumnsRecord, Long> NUMERIC_SCALE = new TableFieldImpl<ColumnsRecord, Long>(SQLDialect.MYSQL, "NUMERIC_SCALE", Long.class, COLUMNS);
 
 	/**
 	 * An uncommented item

@@ -113,52 +113,6 @@ public class DefaultGenerator implements Generator {
 		}
 
 		// ----------------------------------------------------------------------
-        // Generating enums
-        // ----------------------------------------------------------------------
-        File targetEnumPackageDir = new File(targetPackageDir, "enums");
-        System.out.println("Generating classes in " + targetEnumPackageDir.getCanonicalPath());
-
-        for (EnumDefinition e : database.getEnums()) {
-            targetEnumPackageDir.mkdirs();
-
-            System.out.println("Generating enum " + e.getName() + " into " + e.getFileName());
-
-            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetEnumPackageDir, e.getFileName())));
-            printHeader(out, targetPackage + ".enums");
-            printClassJavadoc(out, e);
-
-            out.println("public enum " + e.getJavaClassName() + " implements org.jooq.Enum {");
-            out.println();
-
-            for (String literal : e.getLiterals()) {
-                out.println("\t" + GenerationUtil.convertToJavaIdentifier(literal) + "(\"" + literal + "\"),");
-                out.println();
-            }
-
-            out.println("\t;");
-            out.println();
-            out.println("\tprivate final String literal;");
-            out.println();
-            out.println("\tprivate " + e.getJavaClassName() + "(String literal) {");
-            out.println("\t\tthis.literal = literal;");
-            out.println("\t}");
-            out.println();
-            out.println("\t@Override");
-            out.println("\tpublic String getName() {");
-            out.println("\t\treturn \"" + e.getName() + "\";");
-            out.println("\t}");
-            out.println();
-            out.println("\t@Override");
-            out.println("\tpublic String getLiteral() {");
-            out.println("\t\treturn literal;");
-            out.println("\t}");
-
-            out.println("}");
-
-            out.close();
-        }
-
-		// ----------------------------------------------------------------------
 		// Generating tables
 		// ----------------------------------------------------------------------
 		File targetTablePackageDir = new File(targetPackageDir, "tables");
@@ -409,6 +363,56 @@ public class DefaultGenerator implements Generator {
 			out.println("}");
 			out.close();
 		}
+
+	    // ----------------------------------------------------------------------
+        // Generating enums
+        // ----------------------------------------------------------------------
+        File targetEnumPackageDir = new File(targetPackageDir, "enums");
+        System.out.println("Generating classes in " + targetEnumPackageDir.getCanonicalPath());
+
+        for (EnumDefinition e : database.getEnums()) {
+            if (!e.isReferenced()) {
+                continue;
+            }
+
+            targetEnumPackageDir.mkdirs();
+
+            System.out.println("Generating enum " + e.getName() + " into " + e.getFileName());
+
+            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetEnumPackageDir, e.getFileName())));
+            printHeader(out, targetPackage + ".enums");
+            printClassJavadoc(out, e);
+
+            out.println("public enum " + e.getJavaClassName() + " implements org.jooq.Enum {");
+            out.println();
+
+            for (String literal : e.getLiterals()) {
+                out.println("\t" + GenerationUtil.convertToJavaIdentifier(literal) + "(\"" + literal + "\"),");
+                out.println();
+            }
+
+            out.println("\t;");
+            out.println();
+            out.println("\tprivate final String literal;");
+            out.println();
+            out.println("\tprivate " + e.getJavaClassName() + "(String literal) {");
+            out.println("\t\tthis.literal = literal;");
+            out.println("\t}");
+            out.println();
+            out.println("\t@Override");
+            out.println("\tpublic String getName() {");
+            out.println("\t\treturn \"" + e.getName() + "\";");
+            out.println("\t}");
+            out.println();
+            out.println("\t@Override");
+            out.println("\tpublic String getLiteral() {");
+            out.println("\t\treturn literal;");
+            out.println("\t}");
+
+            out.println("}");
+
+            out.close();
+        }
 	}
 
 	private void printOverride(GenerationWriter out) {
