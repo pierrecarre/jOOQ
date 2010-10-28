@@ -168,14 +168,14 @@ extends ResultProviderQuery<R>,
     void addOrderBy(Field<?> field);
 
     /**
-     * Adds ordering fields, ordering by the default sort order
+     * Adds ordering fields
      *
      * @param fields The ordering fields
      */
     void addOrderBy(SortField<?>... fields);
 
     /**
-     * Adds ordering fields, ordering by the default sort order
+     * Adds ordering fields
      *
      * @param fields The ordering fields
      */
