@@ -60,7 +60,10 @@ import org.jooq.SQLDialectNotSupportedException;
  * @see {@link http://oreilly.com/catalog/sqlnut/chapter/ch04.html} A very nice
  *      overview over SQL99 standard functions, and implementations thereof in
  *      various SQL dialects
+ *
+ * @deprecated - Use functions from {@link Field} or {@link Factory} instead
  */
+@Deprecated
 public final class FunctionFactory {
 
     private final SQLDialect dialect;

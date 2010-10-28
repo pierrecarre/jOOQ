@@ -173,10 +173,6 @@ abstract class AbstractQueryPart implements QueryPart, QueryPartProvider {
         return create().constant(value);
     }
 
-    final FunctionFactory functions() {
-        return new FunctionFactory(getDialect());
-    }
-
     final Factory create() {
         return new Factory(getDialect());
     }

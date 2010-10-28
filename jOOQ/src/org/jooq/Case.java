@@ -30,7 +30,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.FunctionFactory;
 
 /**
  * The SQL case statement.
@@ -46,7 +45,7 @@ import org.jooq.impl.FunctionFactory;
  *      ELSE            'three'
  * END
  * </pre></code> Instances of Case are created through the
- * {@link FunctionFactory#decode()} method
+ * {@link Factory#decode()} method
  *
  * @author Lukas Eder
  */

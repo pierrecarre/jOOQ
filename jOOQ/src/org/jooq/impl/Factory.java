@@ -141,7 +141,10 @@ public final class Factory implements Configuration {
 
     /**
      * Retrieve the function factory with this factory's configuration
+     *
+     * @deprecated - Do not use {@link FunctionFactory} anymore
      */
+    @Deprecated
     public FunctionFactory functions() {
         return new FunctionFactory(getDialect());
     }
