@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+package org.jooq.util.postgres;
 
-package org.jooq.util;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * The definition of a database schema
- *
- * @author Lukas Eder
- */
-public class SchemaDefinition extends AbstractDefinition {
+import org.jooq.util.AbstractDefinition;
+import org.jooq.util.Database;
+import org.jooq.util.EnumDefinition;
 
-	public SchemaDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
-	}
+public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
 
-	@Override
-	public final String getQualifiedName() {
-		return getSchemaName();
-	}
+    private final List<String> literals;
+
+    public DefaultEnumDefinition(Database database, String name, String comment) {
+        super(database, name, comment);
+
+        literals = new ArrayList<String>();
+    }
+
+    public void addLiteral(String literal) {
+        literals.add(literal);
+    }
+
+    @Override
+    public List<String> getLiterals() {
+        return literals;
+    }
 
     @Override
     public String getSubPackage() {
-        return "";
+        return "enums";
     }
 }

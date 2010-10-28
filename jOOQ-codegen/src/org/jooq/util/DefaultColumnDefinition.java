@@ -33,7 +33,6 @@ package org.jooq.util;
 
 import java.sql.SQLException;
 
-
 /**
  * A base implementation for column definitions.
  *
@@ -41,73 +40,79 @@ import java.sql.SQLException;
  */
 public class DefaultColumnDefinition extends AbstractDefinition implements ColumnDefinition {
 
-	private final int position;
-	private final Class<?> type;
-	private final String table;
+    private final int            position;
+    private final String         type;
+    private final String         table;
 
-	private boolean primaryKeyLoaded;
-	private PrimaryKeyDefinition primaryKey;
-	private boolean foreignKeyLoaded;
-	private ForeignKeyDefinition foreignKey;
+    private boolean              primaryKeyLoaded;
+    private PrimaryKeyDefinition primaryKey;
+    private boolean              foreignKeyLoaded;
+    private ForeignKeyDefinition foreignKey;
 
-	public DefaultColumnDefinition(Database database, String table, String name, int position, Class<?> type, String comment) {
-		super(database, name, comment);
+    public DefaultColumnDefinition(Database database, String table, String name, int position, String type,
+        String comment) {
+        super(database, name, comment);
 
-		this.table = table;
-		this.position = position;
-		this.type = type;
-	}
+        this.table = table;
+        this.position = position;
+        this.type = type;
+    }
 
-	@Override
-	public final int getPosition() {
-		return position;
-	}
+    @Override
+    public final int getPosition() {
+        return position;
+    }
 
-	@Override
-	public final Class<?> getTypeClass() {
-		return type;
-	}
+    @Override
+    public final String getTypeClass() {
+        return type;
+    }
 
-	@Override
-	public final String getTableName() {
-		return table;
-	}
+    @Override
+    public final String getTableName() {
+        return table;
+    }
 
-	@Override
-	public final String getType() {
-		return type.getSimpleName();
-	}
+    @Override
+    public final String getType() {
+        return type.replaceAll(".*\\.", "");
+    }
 
-	@Override
-	public final String getQualifiedName() {
-		return getSchemaName() + "." + getTableName() + "." + getName();
-	}
+    @Override
+    public final String getQualifiedName() {
+        return getSchemaName() + "." + getTableName() + "." + getName();
+    }
 
-	@Override
-	public final PrimaryKeyDefinition getPrimaryKey() throws SQLException {
-		if (!primaryKeyLoaded) {
-			primaryKeyLoaded = true;
-			primaryKey = getPrimaryKey0();
-		}
+    @Override
+    public final PrimaryKeyDefinition getPrimaryKey() throws SQLException {
+        if (!primaryKeyLoaded) {
+            primaryKeyLoaded = true;
+            primaryKey = getPrimaryKey0();
+        }
 
-		return primaryKey;
-	}
+        return primaryKey;
+    }
 
-	@Override
-	public final ForeignKeyDefinition getForeignKey() throws SQLException {
-		if (!foreignKeyLoaded) {
-			foreignKeyLoaded = true;
-			foreignKey = getForeignKey0();
-		}
+    @Override
+    public final ForeignKeyDefinition getForeignKey() throws SQLException {
+        if (!foreignKeyLoaded) {
+            foreignKeyLoaded = true;
+            foreignKey = getForeignKey0();
+        }
 
-		return foreignKey;
-	}
+        return foreignKey;
+    }
 
-	protected final PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
-		return getDatabase().getRelations().getPrimaryKey(this);
-	}
+    protected final PrimaryKeyDefinition getPrimaryKey0() throws SQLException {
+        return getDatabase().getRelations().getPrimaryKey(this);
+    }
 
-	protected final ForeignKeyDefinition getForeignKey0() throws SQLException {
-		return getDatabase().getRelations().getForeignKey(this);
-	}
+    protected final ForeignKeyDefinition getForeignKey0() throws SQLException {
+        return getDatabase().getRelations().getForeignKey(this);
+    }
+
+    @Override
+    public String getSubPackage() {
+        return "";
+    }
 }

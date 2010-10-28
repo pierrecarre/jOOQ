@@ -85,7 +85,7 @@ public class GenerationWriter {
 	}
 
 	public void printImport(String name) {
-		if (name.startsWith("java.lang")) {
+		if (name.startsWith("java.lang") || name.contains("[")) {
 			return;
 		}
 
@@ -123,8 +123,8 @@ public class GenerationWriter {
 		StringBuilder imports = new StringBuilder();
 		String previous = ".";
 		for (String clazz : imported) {
-			String domain1 = clazz.substring(0, clazz.indexOf("."));
-			String domain2 = previous.substring(0, previous.indexOf("."));
+			String domain1 = clazz.substring(0, Math.max(0, clazz.indexOf(".")));
+			String domain2 = previous.substring(0, Math.max(0, previous.indexOf(".")));
 
 			if (!domain1.equals(domain2)) {
 				imports.append("\n");

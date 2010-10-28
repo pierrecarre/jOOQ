@@ -81,12 +81,12 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			String dataType = record.getDataType();
 			String comment = record.getColumnComment();
 
-			Class<?> type = Object.class;
+			String type = Object.class.getName();
 
 			try {
-				type = MySQLDataType.valueOf(DataType.normalise(dataType)).getType();
+				type = MySQLDataType.valueOf(DataType.normalise(dataType)).getType().getCanonicalName();
 			} catch (Exception e) {
-				System.out.println("Unsupported datatype : " + dataType);
+			    System.err.println("  WARN: Unsupported datatype : " + dataType);
 			}
 
 			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,28 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.jooq.util;
 
-/**
- * The definition of a database schema
- *
- * @author Lukas Eder
- */
-public class SchemaDefinition extends AbstractDefinition {
+public class GenerationUtil {
 
-	public SchemaDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
-	}
+    public static String convertToJavaIdentifier(String literal) {
+        StringBuilder sb = new StringBuilder();
 
-	@Override
-	public final String getQualifiedName() {
-		return getSchemaName();
-	}
+        if (!Character.isJavaIdentifierStart(literal.charAt(0))) {
+            sb.append("_");
+        }
 
-    @Override
-    public String getSubPackage() {
-        return "";
+        for (int i = 0; i < literal.length(); i++) {
+            char c = literal.charAt(i);
+
+            if (!Character.isJavaIdentifierPart(c)) {
+                sb.append("_");
+            }
+            else {
+                sb.append(c);
+            }
+        }
+
+        return sb.toString();
     }
 }

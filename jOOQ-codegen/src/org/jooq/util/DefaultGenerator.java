@@ -65,12 +65,12 @@ import org.jooq.impl.UpdatableTableImpl;
  */
 public class DefaultGenerator implements Generator {
 
-	private String targetPackageName;
-	private String targetDirectory;
-
 	@Override
 	public void generate(Database database) throws SQLException, IOException {
-		File targetPackageDir = new File(targetDirectory + File.separator + targetPackageName.replace('.', File.separatorChar));
+		String targetDirectory = database.getTargetDirectory();
+        String targetPackage = database.getTargetPackage();
+
+        File targetPackageDir = new File(targetDirectory + File.separator + targetPackage.replace('.', File.separatorChar));
 
 		// ----------------------------------------------------------------------
 		// Initialising
@@ -89,7 +89,7 @@ public class DefaultGenerator implements Generator {
 			System.out.println("Generating schema " + schema.getName() + " into " + schema.getFileName());
 
 			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, schema.getFileName())));
-			printHeader(out, targetPackageName);
+			printHeader(out, targetPackage);
 			printClassJavadoc(out, schema);
 
 			out.println("public class " + schema.getJavaClassName() + " extends SchemaImpl {");
@@ -113,6 +113,47 @@ public class DefaultGenerator implements Generator {
 		}
 
 		// ----------------------------------------------------------------------
+        // Generating enums
+        // ----------------------------------------------------------------------
+        File targetEnumPackageDir = new File(targetPackageDir, "enums");
+        System.out.println("Generating classes in " + targetEnumPackageDir.getCanonicalPath());
+
+        for (EnumDefinition e : database.getEnums()) {
+            targetEnumPackageDir.mkdirs();
+
+            System.out.println("Generating enum " + e.getName() + " into " + e.getFileName());
+
+            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetEnumPackageDir, e.getFileName())));
+            printHeader(out, targetPackage + ".enums");
+            printClassJavadoc(out, e);
+
+            out.println("public enum " + e.getJavaClassName() + " implements org.jooq.Enum {");
+            out.println();
+
+            for (String literal : e.getLiterals()) {
+                out.println("\t" + GenerationUtil.convertToJavaIdentifier(literal) + "(\"" + literal + "\"),");
+                out.println();
+            }
+
+            out.println("\t;");
+            out.println();
+            out.println("\tprivate final String literal;");
+            out.println();
+            out.println("\tprivate " + e.getJavaClassName() + "(String literal) {");
+            out.println("\t\tthis.literal = literal;");
+            out.println("\t}");
+            out.println();
+            out.println("\t@Override");
+            out.println("\tpublic String getLiteral() {");
+            out.println("\t\treturn literal;");
+            out.println("\t}");
+
+            out.println("}");
+
+            out.close();
+        }
+
+		// ----------------------------------------------------------------------
 		// Generating tables
 		// ----------------------------------------------------------------------
 		File targetTablePackageDir = new File(targetPackageDir, "tables");
@@ -124,7 +165,7 @@ public class DefaultGenerator implements Generator {
 			System.out.println("Generating table " + table.getName() + " into " + table.getFileName());
 
 			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTablePackageDir, table.getFileName())));
-			printHeader(out, targetPackageName + ".tables");
+			printHeader(out, targetPackage + ".tables");
 			printClassJavadoc(out, table);
 
 			String baseClass;
@@ -157,7 +198,7 @@ public class DefaultGenerator implements Generator {
 			out.println("\tpublic Class<" + table.getJavaClassName("Record") + "> getRecordType() {");
 			out.println("\t\treturn __RECORD_TYPE;");
 			out.println("\t}");
-			out.printImport(targetPackageName + ".tables.records." + table.getJavaClassName("Record"));
+			out.printImport(targetPackage + ".tables.records." + table.getJavaClassName("Record"));
 
 			for (ColumnDefinition column : table.getColumns()) {
 				printColumn(out, column, table);
@@ -187,7 +228,7 @@ public class DefaultGenerator implements Generator {
 			}
 
 			out.println("\t}");
-			out.printImport(targetPackageName + "." + schema.getJavaClassName());
+			out.printImport(targetPackage + "." + schema.getJavaClassName());
 
 			out.printStaticInitialisationStatementsPlaceholder();
 			out.println("}");
@@ -206,7 +247,7 @@ public class DefaultGenerator implements Generator {
 			System.out.println("Generating table " + table.getName() + " into " + table.getFileName("Record"));
 
 			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, table.getFileName("Record"))));
-			printHeader(out, targetPackageName + ".tables.records");
+			printHeader(out, targetPackage + ".tables.records");
 			printClassJavadoc(out, table);
 
 			String baseClass;
@@ -222,7 +263,7 @@ public class DefaultGenerator implements Generator {
 			printSerial(out);
 
 			for (ColumnDefinition column : table.getColumns()) {
-				printGetterAndSetter(out, column, table, targetPackageName + ".tables");
+				printGetterAndSetter(out, column, table, targetPackage + ".tables");
 			}
 
 			out.println();
@@ -253,7 +294,7 @@ public class DefaultGenerator implements Generator {
 			System.out.println("Generating procedure " + procedure.getName() + " into " + procedure.getFileName());
 
 			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetProcedurePackageDir, procedure.getFileName())));
-			printHeader(out, targetPackageName + ".procedures");
+			printHeader(out, targetPackage + ".procedures");
 			printClassJavadoc(out, procedure);
 
 			out.println("public class " + procedure.getJavaClassName() + " extends StoredProcedureImpl {");
@@ -323,7 +364,7 @@ public class DefaultGenerator implements Generator {
 			System.out.println("Generating function " + function.getName() + " into " + function.getFileName());
 
 			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetFunctionPackageDir, function.getFileName())));
-			printHeader(out, targetPackageName + ".functions");
+			printHeader(out, targetPackage + ".functions");
 			printClassJavadoc(out, function);
 
 			out.println("public class " + function.getJavaClassName() + " extends StoredFunctionImpl<" + function.getReturnType() + "> {");
@@ -414,8 +455,8 @@ public class DefaultGenerator implements Generator {
 
 				    // #69 - Should resolve this issue more thoroughly.
 				    if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
-	                    System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key!");
-	                    System.err.println("ERROR: No code is generated for this key. See trac tickets #64 and #69");
+	                    System.err.println("  WARN: Foreign key " + foreignKey.getName() + " does not match its primary key!");
+	                    System.err.println("  WARN: No code is generated for this key. See trac tickets #64 and #69");
 
 	                    continue foreignKeyLoop;
 				    }
@@ -426,12 +467,12 @@ public class DefaultGenerator implements Generator {
 
 				    // #73 - This is also an acceptable workaround for another issue.
 				    for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-				        Class<?> foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
-				        Class<?> primaryType = primaryKey.getKeyColumns().get(i).getTypeClass();
+				        String foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
+				        String primaryType = primaryKey.getKeyColumns().get(i).getTypeClass();
 
-				        if (foreignType != primaryType) {
-	                        System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
-	                        System.err.println("ERROR: No code is generated for this key. See trac tickets #71 and #73");
+				        if (!foreignType.equals(primaryType)) {
+	                        System.err.println("  WARN: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
+	                        System.err.println("  WARN: No code is generated for this key. See trac tickets #71 and #73");
 
 				            continue foreignKeyLoop;
 				        }
@@ -488,8 +529,8 @@ public class DefaultGenerator implements Generator {
 
                 // #69 - Should resolve this issue more thoroughly.
                 if (foreignKey.getReferencedColumns().size() != foreignKey.getKeyColumns().size()) {
-                    System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key!");
-                    System.err.println("ERROR: No code is generated for this key. See trac tickets #64 and #69");
+                    System.err.println("  WARN: Foreign key " + foreignKey.getName() + " does not match its primary key!");
+                    System.err.println("  WARN: No code is generated for this key. See trac tickets #64 and #69");
 
                     skipGeneration = true;
                 }
@@ -501,12 +542,12 @@ public class DefaultGenerator implements Generator {
                 // #73 - This is also an acceptable workaround for another issue.
                 if (!skipGeneration) {
                     for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-                        Class<?> foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
-                        Class<?> primaryType = foreignKey.getReferencedColumns().get(i).getTypeClass();
+                        String foreignType = foreignKey.getKeyColumns().get(i).getTypeClass();
+                        String primaryType = foreignKey.getReferencedColumns().get(i).getTypeClass();
 
-                        if (foreignType != primaryType) {
-                            System.err.println("ERROR: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
-                            System.err.println("ERROR: No code is generated for this key. See trac tickets #71 and #73");
+                        if (!foreignType.equals(primaryType)) {
+                            System.err.println("  WARN: Foreign key " + foreignKey.getName() + " does not match its primary key type!");
+                            System.err.println("  WARN: No code is generated for this key. See trac tickets #71 and #73");
 
                             skipGeneration = true;
                         }
@@ -618,7 +659,8 @@ public class DefaultGenerator implements Generator {
 			out.println("\t * An uncommented item");
 		}
 
-		if (column.getTypeClass() == Object.class) {
+		if (column.getTypeClass().equals("java.lang.Object")) {
+		    System.err.println("  WARN: Could not map column to a type : " + column.getQualifiedName());
 		    out.println("\t * ");
 		    out.println("\t * The SQL type of this item could not be mapped. Deserialising this field might not work!");
 		}
@@ -676,15 +718,5 @@ public class DefaultGenerator implements Generator {
 		out.println();
 		out.printImportPlaceholder();
 		out.println();
-	}
-
-	@Override
-	public void setTargetPackage(String packageName) {
-		this.targetPackageName = packageName;
-	}
-
-	@Override
-	public void setTargetDirectory(String directory) {
-		this.targetDirectory = directory;
 	}
 }

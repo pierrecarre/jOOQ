@@ -36,6 +36,8 @@ import static org.jooq.util.postgres.information_schema.tables.ConstraintColumnU
 import static org.jooq.util.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.tables.Tables.TABLES;
+import static org.jooq.util.postgres.pg_catalog.tables.PgEnum.PG_ENUM;
+import static org.jooq.util.postgres.pg_catalog.tables.PgType.PG_TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
@@ -59,6 +62,8 @@ import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 import org.jooq.util.postgres.information_schema.tables.Tables;
 import org.jooq.util.postgres.information_schema.tables.records.TablesRecord;
+import org.jooq.util.postgres.pg_catalog.tables.PgEnum;
+import org.jooq.util.postgres.pg_catalog.tables.PgType;
 
 /**
  * @author Lukas Eder
@@ -163,6 +168,33 @@ public class PostgresDatabase extends AbstractDatabase {
 
 		return result;
 	}
+
+    @Override
+    protected List<EnumDefinition> getEnums0() throws SQLException {
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+//        select t.typname, e.enumlabel
+//        from pg_enum e
+//        join pg_type t on t.oid = e.enumtypid;
+        SelectQuery query = create()
+            .select(PgType.TYPNAME, PgEnum.ENUMLABEL)
+            .from(PG_ENUM).join(PG_TYPE).on(create()
+                .plainSQLCondition("pg_enum.enumtypid = pg_type.oid"))
+            .orderBy(create().plainSQLField("pg_enum.enumtypid")).getQuery();
+
+        DefaultEnumDefinition definition = null;
+        for (Record record : query.fetch()) {
+            String typeName = String.valueOf(record.getValue(PgType.TYPNAME));
+
+            if (definition == null || !definition.getName().equals(typeName)) {
+                definition = new DefaultEnumDefinition(this, typeName, null);
+                result.add(definition);
+            }
+
+            definition.addLiteral(String.valueOf(record.getValue(PgEnum.ENUMLABEL)));
+        }
+
+        return result;
+    }
 
 	@Override
 	protected List<ProcedureDefinition> getProcedures0() throws SQLException {

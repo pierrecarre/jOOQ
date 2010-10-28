@@ -72,6 +72,12 @@ public interface Definition {
     String getJavaClassName();
 
     /**
+     * @return The full Java class name representing this object, e.g.
+     *         [org.jooq.generated.MyTable]
+     */
+    String getFullJavaClassName();
+
+    /**
      * @return The Java class name representing this object, e.g.
      *         [MyTableSuffix]
      */
@@ -99,4 +105,13 @@ public interface Definition {
      */
     Factory create();
 
+    /**
+     * @return Get the target package for the current configuration
+     */
+    String getTargetPackage();
+
+    /**
+     * @return Get the target package's subpackage for this definition
+     */
+    String getSubPackage();
 }

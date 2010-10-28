@@ -49,6 +49,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
@@ -154,6 +155,12 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
 		return result;
 	}
+
+    @Override
+    protected List<EnumDefinition> getEnums0() throws SQLException {
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        return result;
+    }
 
 	@Override
 	protected List<ProcedureDefinition> getProcedures0() throws SQLException {

@@ -50,4 +50,9 @@ public abstract class AbstractProcedureDefinition extends AbstractDefinition {
 	public AbstractProcedureDefinition(Database database, String name, String comment) {
 		super(database, name, comment);
 	}
+
+    @Override
+    public String getSubPackage() {
+        return "procedures";
+    }
 }

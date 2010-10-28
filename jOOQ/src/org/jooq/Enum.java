@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2010, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,27 +28,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-package org.jooq.util;
+package org.jooq;
 
 /**
- * The definition of a database schema
+ * An SQL enum type
  *
  * @author Lukas Eder
  */
-public class SchemaDefinition extends AbstractDefinition {
+public interface Enum {
 
-	public SchemaDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
-	}
-
-	@Override
-	public final String getQualifiedName() {
-		return getSchemaName();
-	}
-
-    @Override
-    public String getSubPackage() {
-        return "";
-    }
+    /**
+     * @return The literal as defined in the database
+     */
+    String getLiteral();
 }

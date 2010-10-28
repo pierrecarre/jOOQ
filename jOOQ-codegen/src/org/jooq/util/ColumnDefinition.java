@@ -54,7 +54,7 @@ public interface ColumnDefinition extends Definition {
 	/**
 	 * @return The column type
 	 */
-	Class<?> getTypeClass();
+	String getTypeClass();
 
 	/**
 	 * @return The column simple Java type

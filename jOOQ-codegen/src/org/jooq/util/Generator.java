@@ -45,14 +45,4 @@ public interface Generator {
 	 * Do the code generation
 	 */
 	void generate(Database database) throws SQLException, IOException;
-
-	/**
-	 * Initialise the target package name
-	 */
-	void setTargetPackage(String packageName);
-
-	/**
-	 * Initialise the target directory
-	 */
-	void setTargetDirectory(String directory);
 }

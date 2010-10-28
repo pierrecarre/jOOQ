@@ -34,6 +34,7 @@ package org.jooq.util;
 import java.sql.Connection;
 
 import org.jooq.impl.Factory;
+import org.jooq.impl.StringUtils;
 
 /**
  * A base implementation for any type of definition.
@@ -105,6 +106,28 @@ public abstract class AbstractDefinition implements Definition {
 	}
 
 	@Override
+    public String getFullJavaClassName() {
+	    StringBuilder sb = new StringBuilder();
+
+	    sb.append(getTargetPackage());
+
+	    if (!StringUtils.isBlank(getSubPackage())) {
+	        sb.append(".");
+	        sb.append(getSubPackage());
+	    }
+
+	    sb.append(".");
+	    sb.append(getJavaClassName());
+
+	    return sb.toString();
+    }
+
+    @Override
+    public final String getTargetPackage() {
+        return getDatabase().getTargetPackage();
+    }
+
+    @Override
 	public final String getFileName() {
 		return getJavaClassName() + ".java";
 	}

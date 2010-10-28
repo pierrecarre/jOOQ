@@ -73,4 +73,9 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 	public List<ColumnDefinition> getReferencedColumns() {
 		return referencedColumns;
 	}
+
+    @Override
+    public String getSubPackage() {
+        return "";
+    }
 }

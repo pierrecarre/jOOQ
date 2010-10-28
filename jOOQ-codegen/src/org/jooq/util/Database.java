@@ -45,99 +45,129 @@ import org.jooq.impl.Factory;
  */
 public interface Database {
 
-	/**
-	 * The schema generated from this database
-	 */
-	SchemaDefinition getSchema() throws SQLException;
+    /**
+     * The schema generated from this database
+     */
+    SchemaDefinition getSchema() throws SQLException;
 
-	/**
-	 * Retrieve the schema's primary key / foreign key relations
-	 */
-	Relations getRelations() throws SQLException;
+    /**
+     * Retrieve the schema's primary key / foreign key relations
+     */
+    Relations getRelations() throws SQLException;
 
-	/**
-	 * The tables contained in this database (for schema {@link #getSchema()})
-	 */
-	List<TableDefinition> getTables() throws SQLException;
+    /**
+     * The tables contained in this database (for schema {@link #getSchema()})
+     */
+    List<TableDefinition> getTables() throws SQLException;
 
-	/**
-	 * Get a table in this database by name
-	 */
-	TableDefinition getTable(String name) throws SQLException;
+    /**
+     * Get a table in this database by name
+     */
+    TableDefinition getTable(String name) throws SQLException;
 
-	/**
-	 * The stored procedures contained in this database (for schema
-	 * {@link #getSchema()})
-	 */
-	List<ProcedureDefinition> getProcedures() throws SQLException;
+    /**
+     * The enum UDTs defined in this database
+     */
+    List<EnumDefinition> getEnums() throws SQLException;
 
-	/**
-	 * The stored functions contained in this database (for schema
-	 * {@link #getSchema()})
-	 */
-	List<FunctionDefinition> getFunctions() throws SQLException;
+    /**
+     * Get an enum UDT defined in this database by name
+     */
+    EnumDefinition getEnum(String name) throws SQLException;
 
-	/**
-	 * Initialise a connection to this database
-	 */
-	void setConnection(Connection connection);
+    /**
+     * The stored procedures contained in this database (for schema
+     * {@link #getSchema()})
+     */
+    List<ProcedureDefinition> getProcedures() throws SQLException;
 
-	/**
-	 * The database connection
-	 */
-	Connection getConnection();
+    /**
+     * The stored functions contained in this database (for schema
+     * {@link #getSchema()})
+     */
+    List<FunctionDefinition> getFunctions() throws SQLException;
 
-	/**
-	 * Initialise a schema name to this database
-	 */
-	void setSchemaName(String schema);
+    /**
+     * Initialise a connection to this database
+     */
+    void setConnection(Connection connection);
 
-	/**
-	 * The database schema
-	 */
-	String getSchemaName();
+    /**
+     * The database connection
+     */
+    Connection getConnection();
 
-	/**
-	 * Only database objects matching any of these regular expressions will be
-	 * generated.
-	 */
-	void setIncludes(String[] includes);
+    /**
+     * Initialise a schema name to this database
+     */
+    void setSchemaName(String schema);
 
-	/**
-	 * Only database objects matching any of these regular expressions will be
-	 * generated.
-	 */
-	String[] getIncludes();
+    /**
+     * The database schema
+     */
+    String getSchemaName();
 
-	/**
-	 * Database objects matching any of these regular expressions will not be
-	 * generated.
-	 */
-	void setExcludes(String[] excludes);
+    /**
+     * Only database objects matching any of these regular expressions will be
+     * generated.
+     */
+    void setIncludes(String[] includes);
 
-	/**
-	 * Database objects matching any of these regular expressions will not be
-	 * generated.
-	 */
-	String[] getExcludes();
+    /**
+     * Only database objects matching any of these regular expressions will be
+     * generated.
+     */
+    String[] getIncludes();
 
-	/**
-	 * Whether foreign key relations should be resolved
-	 */
-	boolean generateRelations();
+    /**
+     * Database objects matching any of these regular expressions will not be
+     * generated.
+     */
+    void setExcludes(String[] excludes);
 
-	/**
-	 * Whether foreign key relations should be resolved
-	 */
-	void setGenerateRelations(boolean generateRelations);
+    /**
+     * Database objects matching any of these regular expressions will not be
+     * generated.
+     */
+    String[] getExcludes();
 
-	/**
-	 * Get the dialect for this database
-	 */
-	SQLDialect getDialect();
+    /**
+     * Whether foreign key relations should be resolved
+     */
+    boolean generateRelations();
+
+    /**
+     * Whether foreign key relations should be resolved
+     */
+    void setGenerateRelations(boolean generateRelations);
+
+    /**
+     * Initialise the target package name
+     */
+    void setTargetPackage(String packageName);
+
+    /**
+     * Initialise the target directory
+     */
+    void setTargetDirectory(String directory);
+
+    /**
+     * The target package
+     */
+    String getTargetPackage();
+
+    /**
+     * The target directory
+     */
+    String getTargetDirectory();
+
+    /**
+     * Get the dialect for this database
+     */
+    SQLDialect getDialect();
 
     /**
      * Create the factory for this database
      */
-	Factory create();
+    Factory create();
 }

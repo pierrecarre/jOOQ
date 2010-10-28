@@ -73,7 +73,7 @@ public class MySQLProcedureDefinition extends AbstractProcedureDefinition implem
 				String paramName = matcher.group(3);
 				String paramType = matcher.group(4);
 
-				Class<?> type = MySQLDataType.valueOf(paramType).getType();
+				String type = MySQLDataType.valueOf(paramType).getType().getCanonicalName();
 				ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), paramName, i + 1, type, null);
 				allParameters.add(column);
 

@@ -54,4 +54,9 @@ public class DefaultPrimaryKeyDefinition extends AbstractDefinition implements P
 	public List<ForeignKeyDefinition> getForeignKeys() {
 		return foreignKeys;
 	}
+
+    @Override
+    public String getSubPackage() {
+        return "";
+    }
 }

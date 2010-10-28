@@ -114,9 +114,9 @@ public class GenerationTool {
 			database.setIncludes(properties.getProperty("generator.database.includes").split(","));
 			database.setExcludes(properties.getProperty("generator.database.excludes").split(","));
 			database.setGenerateRelations("true".equalsIgnoreCase(properties.getProperty("generator.generate.relations")));
+			database.setTargetDirectory(properties.getProperty("generator.target.directory"));
+			database.setTargetPackage(properties.getProperty("generator.target.package"));
 
-			generator.setTargetDirectory(properties.getProperty("generator.target.directory"));
-			generator.setTargetPackage(properties.getProperty("generator.target.package"));
 			generator.generate(database);
 		} catch (Exception e) {
 			e.printStackTrace();

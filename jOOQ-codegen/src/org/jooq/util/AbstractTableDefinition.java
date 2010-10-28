@@ -83,4 +83,9 @@ public abstract class AbstractTableDefinition extends AbstractDefinition impleme
 	}
 
 	protected abstract List<ColumnDefinition> getColumns0() throws SQLException;
+
+    @Override
+    public String getSubPackage() {
+        return "tables";
+    }
 }

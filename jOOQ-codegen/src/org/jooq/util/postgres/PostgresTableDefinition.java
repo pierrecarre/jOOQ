@@ -69,13 +69,18 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			String name = record.getColumnName();
 			int position = record.getOrdinalPosition();
 			String dataType = record.getDataType();
+			String udtName = record.getUdtName();
 
-			Class<?> type = Object.class;
+			String type = Object.class.getName();
 
 			try {
-				type = PostgresDataType.valueOf(DataType.normalise(dataType)).getType();
+				type = PostgresDataType.valueOf(DataType.normalise(dataType)).getType().getCanonicalName();
 			} catch (Exception e) {
-				System.out.println("Unsupported datatype : " + dataType);
+			    if (getDatabase().getEnum(udtName) != null) {
+			        type = getDatabase().getEnum(udtName).getFullJavaClassName();
+			    } else {
+			        System.err.println("  WARN: Unsupported datatype : " + dataType);
+			    }
 			}
 
 			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, null);

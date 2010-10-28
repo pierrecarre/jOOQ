@@ -53,6 +53,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
 import org.jooq.util.ProcedureDefinition;
 import org.jooq.util.TableDefinition;
@@ -98,7 +99,7 @@ public class OracleDatabase extends AbstractDatabase {
 //          and ccx.table_name = '...'
 //          and ccx.column_name = '...'
 //          and cox.constraint_type = 'R');
- 
+
         Table<?> cc1 = ALL_CONS_COLUMNS.as("cc1");
         Table<?> cc2 = ALL_CONS_COLUMNS.as("cc2");
 
@@ -129,7 +130,7 @@ public class OracleDatabase extends AbstractDatabase {
         query.addConditions(inner.asCompareCondition(cc1.getField(AllConsColumns.CONSTRAINT_NAME)));
 
         query.execute();
-        
+
         for (Record record : query.getResult()) {
             String key = record.getValue(constraint);
             String referencingTableName = record.getValue(referencingTable);
@@ -172,6 +173,12 @@ public class OracleDatabase extends AbstractDatabase {
             result.add(table);
         }
 
+        return result;
+    }
+
+    @Override
+    protected List<EnumDefinition> getEnums0() throws SQLException {
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
         return result;
     }
 

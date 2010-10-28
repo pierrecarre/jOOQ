@@ -10,6 +10,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.postgres.generatedclasses.enums.UBookStatus;
 import org.jooq.test.postgres.generatedclasses.tables.TAuthor;
 import org.jooq.test.postgres.generatedclasses.tables.TBook;
 
@@ -23,7 +24,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public void setId(Integer value) {
@@ -32,7 +33,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public Integer getId() {
@@ -41,7 +42,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public void setAuthorId(Integer value) {
@@ -50,7 +51,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public Integer getAuthorId() {
@@ -59,7 +60,7 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * FOREIGN KEY [public.t_book.author_id] REFERENCES t_author [public.t_author.id]
 	 */
 	public TAuthorRecord getTAuthor() throws SQLException {
@@ -125,6 +126,20 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 	 */
 	public byte[] getContentPdf() {
 		return getValue(TBook.CONTENT_PDF);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setStatus(UBookStatus value) {
+		setValue(TBook.STATUS, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public UBookStatus getStatus() {
+		return getValue(TBook.STATUS);
 	}
 
 	public TBookRecord(Configuration configuration) {

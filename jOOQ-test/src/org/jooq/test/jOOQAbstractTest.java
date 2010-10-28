@@ -398,6 +398,8 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     protected abstract TableField<B, byte[]> getTBook_CONTENT_PDF();
 
+    protected abstract TableField<B, ? extends Enum<?>> getTBook_STATUS();
+
     protected abstract Table<L> getVLibrary();
 
     protected abstract TableField<L, String> getVLibrary_TITLE();
@@ -603,5 +605,18 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals("probably orwell", result.getValue(1, case2).trim());
         assertEquals("probably coelho", result.getValue(2, case2).trim());
         assertEquals("don't know", result.getValue(3, case2).trim());
+    }
+
+    @Test
+    public final void testEnums() throws Exception {
+        if (getTBook_STATUS() == null) {
+            return;
+        }
+
+        SimpleSelectQuery<B> q = create().select(getTBook()).where(getTBook_PUBLISHED_IN().equal(1990)).getQuery();
+        B book = q.fetchOne();
+        Enum<?> value = book.getValue(getTBook_STATUS());
+        assertEquals("SOLD_OUT", value.name());
+        assertEquals("SOLD OUT", value.getClass().getMethod("getLiteral").invoke(value));
     }
 }

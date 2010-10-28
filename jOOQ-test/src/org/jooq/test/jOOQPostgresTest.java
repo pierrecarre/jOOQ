@@ -134,6 +134,11 @@ public class jOOQPostgresTest extends jOOQAbstractTest<TAuthorRecord, TBookRecor
     }
 
     @Override
+    protected TableField<TBookRecord, ? extends Enum<?>> getTBook_STATUS() {
+        return TBook.STATUS;
+    }
+
+    @Override
     protected Table<VLibraryRecord> getVLibrary() {
         return VLibrary.V_LIBRARY;
     }

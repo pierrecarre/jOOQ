@@ -120,6 +120,11 @@ final class FieldTypeHelper {
                     return "'" + f.format((Timestamp) value) + "'";
                 }
             }
+            else if (org.jooq.Enum.class.isAssignableFrom(type)) {
+                if (value instanceof org.jooq.Enum) {
+                    return ((org.jooq.Enum) value).getLiteral();
+                }
+            }
             else {
                 // Not supported
             }
@@ -177,9 +182,30 @@ final class FieldTypeHelper {
         else if (type == Timestamp.class) {
             return (T) rs.getTimestamp(index);
         }
+        else if (org.jooq.Enum.class.isAssignableFrom(type)) {
+            return getEnum(type, rs.getString(index));
+        }
         else {
             return (T) rs.getObject(index);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> T getEnum(Class<? extends T> type, String literal) throws SQLException {
+        try {
+            Object[] list = (Object[]) type.getMethod("values").invoke(type);
+            for (Object e : list) {
+                String l = ((org.jooq.Enum) e).getLiteral();
+
+                if (l.equals(literal)) {
+                    return (T) e;
+                }
+            }
+        } catch (Exception e) {
+            throw new SQLException("Unknown enum literal found : " + literal);
+        }
+
+        return null;
     }
 
     public static <T> T getFromStatement(CallableStatement statement, NamedTypeProviderQueryPart<T> field)
@@ -234,6 +260,9 @@ final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             return (T) statement.getTimestamp(fieldName);
+        }
+        else if (org.jooq.Enum.class.isAssignableFrom(type)) {
+            return getEnum(type, statement.getString(fieldName));
         }
         else {
             return (T) statement.getObject(fieldName);

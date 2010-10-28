@@ -81,12 +81,12 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 			int scale = record.getValue(AllTabCols.DATA_SCALE, BigDecimal.ZERO).intValue();
 			String comment = record.getValue(AllColComments.COMMENTS);
 
-			Class<?> type = Object.class;
+			String type = Object.class.getName();
 
 			try {
-				type = OracleDataType.valueOf(DataType.normalise(dataType)).getType(precision, scale);
+				type = OracleDataType.valueOf(DataType.normalise(dataType)).getType(precision, scale).getCanonicalName();
 			} catch (Exception e) {
-				System.out.println("Unsupported datatype : " + dataType);
+			    System.err.println("  WARN: Unsupported datatype : " + dataType);
 			}
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);

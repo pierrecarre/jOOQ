@@ -45,184 +45,228 @@ import org.jooq.SQLDialect;
  */
 public abstract class AbstractDatabase implements Database {
 
-	private Connection connection;
-	private String schema;
-	private String[] excludes;
-	private String[] includes;
-	private boolean generateRelations = false;
+    private Connection                connection;
+    private String                    schema;
+    private String[]                  excludes;
+    private String[]                  includes;
+    private boolean                   generateRelations = false;
+    private String                    targetPackageName;
+    private String                    targetDirectory;
 
-	private List<TableDefinition> tables;
-	private List<ProcedureDefinition> procedures;
-	private List<FunctionDefinition> functions;
-	private Relations relations;
+    private List<TableDefinition>     tables;
+    private List<EnumDefinition>      enums;
+    private List<ProcedureDefinition> procedures;
+    private List<FunctionDefinition>  functions;
+    private Relations                 relations;
 
-	@Override
+    @Override
     public final SQLDialect getDialect() {
         return create().getDialect();
     }
 
     @Override
-	public final void setConnection(Connection connection) {
-		this.connection = connection;
-	}
+    public final void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
-	@Override
-	public final Connection getConnection() {
-		return connection;
-	}
+    @Override
+    public final Connection getConnection() {
+        return connection;
+    }
 
-	@Override
-	public final void setSchemaName(String schema) {
-		this.schema = schema;
-	}
+    @Override
+    public final void setSchemaName(String schema) {
+        this.schema = schema;
+    }
 
-	@Override
-	public final String getSchemaName() {
-		return schema;
-	}
+    @Override
+    public final String getSchemaName() {
+        return schema;
+    }
 
-	@Override
-	public final SchemaDefinition getSchema() throws SQLException {
-		return new SchemaDefinition(this, getSchemaName(), null);
-	}
+    @Override
+    public final SchemaDefinition getSchema() throws SQLException {
+        return new SchemaDefinition(this, getSchemaName(), null);
+    }
 
-	@Override
-	public final void setExcludes(String[] excludes) {
-		this.excludes = excludes;
-	}
+    @Override
+    public final void setExcludes(String[] excludes) {
+        this.excludes = excludes;
+    }
 
-	@Override
-	public final String[] getExcludes() {
-		return excludes;
-	}
+    @Override
+    public final String[] getExcludes() {
+        return excludes;
+    }
 
-	@Override
-	public final void setIncludes(String[] includes) {
-		this.includes = includes;
-	}
+    @Override
+    public final void setIncludes(String[] includes) {
+        this.includes = includes;
+    }
 
-	@Override
-	public final String[] getIncludes() {
-		return includes;
-	}
+    @Override
+    public final String[] getIncludes() {
+        return includes;
+    }
 
-	@Override
-	public boolean generateRelations() {
-		return generateRelations;
-	}
+    @Override
+    public boolean generateRelations() {
+        return generateRelations;
+    }
 
-	@Override
-	public void setGenerateRelations(boolean generateRelations) {
-		this.generateRelations = generateRelations;
-	}
+    @Override
+    public void setGenerateRelations(boolean generateRelations) {
+        this.generateRelations = generateRelations;
+    }
 
-	@Override
-	public final List<TableDefinition> getTables() throws SQLException {
-		if (tables == null) {
-			tables = filter(getTables0());
-		}
+    @Override
+    public void setTargetPackage(String packageName) {
+        this.targetPackageName = packageName;
+    }
 
-		return tables;
-	}
+    @Override
+    public void setTargetDirectory(String directory) {
+        this.targetDirectory = directory;
+    }
 
-	@Override
-	public final TableDefinition getTable(String name) throws SQLException {
-		for (TableDefinition table : getTables()) {
-			if (table.getName().equals(name)) {
-				return table;
-			}
-		}
+    public String getTargetPackage() {
+        return targetPackageName;
+    }
 
-		return null;
-	}
+    public String getTargetDirectory() {
+        return targetDirectory;
+    }
 
-	@Override
-	public Relations getRelations() throws SQLException {
-		if (relations == null) {
-			relations = getRelations0();
-		}
+    @Override
+    public final List<TableDefinition> getTables() throws SQLException {
+        if (tables == null) {
+            tables = filter(getTables0());
+        }
 
-		return relations;
-	}
+        return tables;
+    }
 
-	@Override
-	public final List<ProcedureDefinition> getProcedures() throws SQLException {
-		if (procedures == null) {
-			procedures = filter(getProcedures0());
-		}
+    @Override
+    public final TableDefinition getTable(String name) throws SQLException {
+        for (TableDefinition table : getTables()) {
+            if (table.getName().equals(name)) {
+                return table;
+            }
+        }
 
-		return procedures;
-	}
+        return null;
+    }
 
-	@Override
-	public final List<FunctionDefinition> getFunctions() throws SQLException {
-		if (functions == null) {
-			functions = filter(getFunctions0());
-		}
+    @Override
+    public final List<EnumDefinition> getEnums() throws SQLException {
+        if (enums == null) {
+            enums = getEnums0();
+        }
 
-		return functions;
-	}
+        return enums;
+    }
 
-	private final <T extends Definition> List<T> filter(List<T> definitions) {
-		List<T> result = new ArrayList<T>();
+    @Override
+    public final EnumDefinition getEnum(String name) throws SQLException {
+        for (EnumDefinition e : getEnums()) {
+            if (e.getName().equals(name)) {
+                return e;
+            }
+        }
 
-		definitionsLoop: for (T definition : definitions) {
-			for (String exclude : excludes) {
-				if (definition.getName().matches(exclude)) {
-					continue definitionsLoop;
-				}
-			}
+        return null;
+    }
 
-			for (String include : includes) {
-				if (definition.getName().matches(include)) {
-					result.add(definition);
-					continue definitionsLoop;
-				}
-			}
-		}
+    protected abstract List<EnumDefinition> getEnums0() throws SQLException;
 
-		return result;
-	}
+    @Override
+    public Relations getRelations() throws SQLException {
+        if (relations == null) {
+            relations = getRelations0();
+        }
 
-	/**
-	 * Retrieve ALL relations from the database.
-	 */
-	protected final Relations getRelations0() throws SQLException {
-		DefaultRelations relations = new DefaultRelations(this);
+        return relations;
+    }
 
-		if (generateRelations()) {
-			loadPrimaryKeys(relations);
-			loadForeignKeys(relations);
-		}
+    @Override
+    public final List<ProcedureDefinition> getProcedures() throws SQLException {
+        if (procedures == null) {
+            procedures = filter(getProcedures0());
+        }
 
-		return relations;
-	}
+        return procedures;
+    }
 
-	/**
-	 * Retrieve primary keys and store them to relations
-	 */
-	protected abstract void loadPrimaryKeys(DefaultRelations relations) throws SQLException;
+    @Override
+    public final List<FunctionDefinition> getFunctions() throws SQLException {
+        if (functions == null) {
+            functions = filter(getFunctions0());
+        }
 
-	/**
-	 * Retrieve foreign keys and store them to relations. Primary keys are already loaded.
-	 */
-	protected abstract void loadForeignKeys(DefaultRelations relations) throws SQLException;
+        return functions;
+    }
 
-	/**
-	 * Retrieve ALL tables from the database. This will be filtered in
-	 * {@link #getTables()}
-	 */
-	protected abstract List<TableDefinition> getTables0() throws SQLException;
+    private final <T extends Definition> List<T> filter(List<T> definitions) {
+        List<T> result = new ArrayList<T>();
 
-	/**
-	 * Retrieve ALL stored procedures from the database. This will be filtered
-	 * in {@link #getProcedures()}
-	 */
-	protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
+        definitionsLoop: for (T definition : definitions) {
+            for (String exclude : excludes) {
+                if (definition.getName().matches(exclude)) {
+                    continue definitionsLoop;
+                }
+            }
 
-	/**
-	 * Retrieve ALL stored functions from the database. This will be filtered in
-	 * {@link #getFunctions()}
-	 */
-	protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
+            for (String include : includes) {
+                if (definition.getName().matches(include)) {
+                    result.add(definition);
+                    continue definitionsLoop;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieve ALL relations from the database.
+     */
+    protected final Relations getRelations0() throws SQLException {
+        DefaultRelations relations = new DefaultRelations(this);
+
+        if (generateRelations()) {
+            loadPrimaryKeys(relations);
+            loadForeignKeys(relations);
+        }
+
+        return relations;
+    }
+
+    /**
+     * Retrieve primary keys and store them to relations
+     */
+    protected abstract void loadPrimaryKeys(DefaultRelations relations) throws SQLException;
+
+    /**
+     * Retrieve foreign keys and store them to relations. Primary keys are
+     * already loaded.
+     */
+    protected abstract void loadForeignKeys(DefaultRelations relations) throws SQLException;
+
+    /**
+     * Retrieve ALL tables from the database. This will be filtered in
+     * {@link #getTables()}
+     */
+    protected abstract List<TableDefinition> getTables0() throws SQLException;
+
+    /**
+     * Retrieve ALL stored procedures from the database. This will be filtered
+     * in {@link #getProcedures()}
+     */
+    protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
+
+    /**
+     * Retrieve ALL stored functions from the database. This will be filtered in
+     * {@link #getFunctions()}
+     */
+    protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
 }

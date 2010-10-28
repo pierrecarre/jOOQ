@@ -69,12 +69,12 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			String dataType = rs.getString("DATA_TYPE");
 			String comment = "";
 
-			Class<?> type = Object.class;
+			String type = Object.class.getName();
 
 			try {
-				type = HSQLDBDataType.valueOf(DataType.normalise(dataType)).getType();
+				type = HSQLDBDataType.valueOf(DataType.normalise(dataType)).getType().getCanonicalName();
 			} catch (Exception e) {
-				System.out.println("Unsupported datatype : " + dataType);
+				System.err.println("  WARN: Unsupported datatype : " + dataType);
 			}
 
 			ColumnDefinition column = new DefaultColumnDefinition(getDatabase(), getName(), name, position, type, comment);

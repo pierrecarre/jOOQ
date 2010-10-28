@@ -160,4 +160,9 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 
 		return foreignKeys.get(column.getQualifiedName());
 	}
+
+    @Override
+    public String getSubPackage() {
+        return "";
+    }
 }
