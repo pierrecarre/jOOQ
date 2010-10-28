@@ -64,7 +64,7 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
     }
 
     @Override
-    public void addFrom(Collection<Table<?>> from) {
+    public final void addFrom(Collection<Table<?>> from) {
         getFrom().addAll(from);
     }
 
@@ -74,7 +74,7 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
     }
 
     @Override
-    public void addGroupBy(Collection<Field<?>> fields) {
+    public final void addGroupBy(Collection<Field<?>> fields) {
         getGroupBy().addAll(fields);
     }
 
@@ -99,7 +99,7 @@ class SelectQueryImpl extends AbstractResultProviderSelectQuery<SelectQuery, Rec
     }
 
     @Override
-    public void addHaving(Collection<Condition> conditions) {
+    public final void addHaving(Collection<Condition> conditions) {
         getHaving().addConditions(conditions);
     }
 

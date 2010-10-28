@@ -70,7 +70,7 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
     private final ConditionProviderImpl condition;
     private final FieldList             groupBy;
     private final ConditionProviderImpl having;
-    private final SortFieldList      orderBy;
+    private final SortFieldList         orderBy;
     private final Limit                 limit;
 
     AbstractResultProviderSelectQuery(Configuration configuration) {
@@ -253,6 +253,38 @@ abstract class AbstractResultProviderSelectQuery<Q extends ResultProviderSelectQ
         }
 
         return result.getNumberOfRecords();
+    }
+
+    @Override
+    public Result<R> fetch() throws SQLException {
+        execute();
+        return getResult();
+    }
+
+    @Override
+    public R fetchOne() throws SQLException {
+        Result<R> result = fetch();
+
+        if (result.getNumberOfRecords() == 1) {
+            return result.getRecord(0);
+        }
+        else if (result.getNumberOfRecords() > 1) {
+            throw new SQLException("Query returned more than one result");
+        }
+
+        return null;
+    }
+
+    @Override
+    public R fetchAny() throws SQLException {
+        // TODO: restrict ROWNUM = 1
+        Result<R> result = fetch();
+
+        if (result.getNumberOfRecords() > 0) {
+            return result.getRecord(0);
+        }
+
+        return null;
     }
 
     /**

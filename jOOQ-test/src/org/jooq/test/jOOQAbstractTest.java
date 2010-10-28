@@ -177,9 +177,41 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
     }
 
     @Test
+    public final void testFetch() throws Exception {
+        SimpleSelectQuery<A> q = create().selectQuery(getTAuthor());
+        q.addSelect(getTAuthor().getFields());
+        q.addOrderBy(getTAuthor_LAST_NAME());
+
+        Result<A> result = q.fetch();
+
+        assertEquals(2, result.getNumberOfRecords());
+        assertEquals("Coelho", result.getRecord(0).getValue(getTAuthor_LAST_NAME()));
+        assertEquals("Orwell", result.getRecord(1).getValue(getTAuthor_LAST_NAME()));
+
+        assertFalse(result.getRecord(0).hasChangedValues());
+        result.getRecord(0).setValue(getTAuthor_LAST_NAME(), "Coelhinho");
+        assertTrue(result.getRecord(0).hasChangedValues());
+
+        try {
+            q.fetchOne();
+            fail();
+        }
+        catch (Exception expected) {}
+
+        A record = q.fetchAny();
+
+        assertEquals("Coelho", record.getValue(getTAuthor_LAST_NAME()));
+
+        assertFalse(record.hasChangedValues());
+        record.setValue(getTAuthor_LAST_NAME(), "Coelhinho");
+        assertTrue(record.hasChangedValues());
+    }
+
+    @Test
     public final void testGrouping() throws Exception {
         Field<Integer> count = create().count().as("c");
-        SelectQuery q = create().select(getTBook_AUTHOR_ID(), count).from(getTBook()).groupBy(getTBook_AUTHOR_ID()).getQuery();
+        SelectQuery q = create().select(getTBook_AUTHOR_ID(), count).from(getTBook()).groupBy(getTBook_AUTHOR_ID())
+            .getQuery();
 
         int rows = q.execute();
         Result<Record> result = q.getResult();
@@ -212,12 +244,10 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testInsertSelect() throws Exception {
-        InsertSelectQuery i = create().insertQuery(getTAuthor(), create().select(
-            create().constant(1000),
-            create().constant("Lukas"),
-            create().constant("Eder"),
-            create().constant(new Date(363589200000L)),
-            create().constant(1981)).getQuery());
+        InsertSelectQuery i = create().insertQuery(
+            getTAuthor(),
+            create().select(create().constant(1000), create().constant("Lukas"), create().constant("Eder"),
+                create().constant(new Date(363589200000L)), create().constant(1981)).getQuery());
 
         i.execute();
 
@@ -235,7 +265,7 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         Field<String> f2 = a2.getField(getTAuthor_LAST_NAME());
 
         UpdateQuery<A> u = create().updateQuery(a1);
-        u.addValue(f1, create().select(f2).from(a2).where(f1.equal(f2)).getQuery().<String>asField());
+        u.addValue(f1, create().select(f2).from(a2).where(f1.equal(f2)).getQuery().<String> asField());
     }
 
     @Test
@@ -447,7 +477,6 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
         assertEquals(Integer.valueOf(3), result.getValue(0, f1));
         assertEquals(Integer.valueOf(3), result.getValue(0, f2));
 
-
         Field<Integer> f3 = getTBook_PUBLISHED_IN().add(3).divide(7);
         Field<Integer> f4 = getTBook_PUBLISHED_IN().subtract(4).multiply(8);
 
@@ -552,12 +581,9 @@ public abstract class jOOQAbstractTest<A extends UpdatableRecord<A>, B extends U
 
     @Test
     public final void testCaseStatement() throws Exception {
-        Field<String> case1 = create().decode()
-            .value(getTBook_PUBLISHED_IN()).when(0, "ancient book").as("case1");
-        Field<String> case2 = create().decode()
-            .when(getTBook_PUBLISHED_IN().equal(1948), "probably orwell")
-            .when(getTBook_PUBLISHED_IN().equal(1988), "probably coelho")
-            .otherwise("don't know").as("case2");
+        Field<String> case1 = create().decode().value(getTBook_PUBLISHED_IN()).when(0, "ancient book").as("case1");
+        Field<String> case2 = create().decode().when(getTBook_PUBLISHED_IN().equal(1948), "probably orwell")
+            .when(getTBook_PUBLISHED_IN().equal(1988), "probably coelho").otherwise("don't know").as("case2");
 
         SelectQuery query = create().selectQuery();
         query.addSelect(case1, case2);

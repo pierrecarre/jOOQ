@@ -30,6 +30,8 @@
  */
 package org.jooq;
 
+import java.sql.SQLException;
+
 /**
  * A {@link Query} that can provide a {@link Result} after execution
  *
@@ -44,4 +46,33 @@ public interface ResultProviderQuery<R extends Record> extends Query {
      *         previously.
      */
     Result<R> getResult();
+
+    /**
+     * Execute the query and return the generated result
+     * <p>
+     * This is the same as calling {@link #execute()} and then
+     * {@link #getResult()}
+     *
+     * @return The result.
+     */
+    Result<R> fetch() throws SQLException;
+
+    /**
+     * Execute the query and return at most one resulting record.
+     * <p>
+     *
+     * @return The resulting record or <code>null</code> if the query returns no
+     *         records.
+     * @throws SQLException - If something went wrong executing the query or if
+     *             the query returned more than one record.
+     */
+    R fetchOne() throws SQLException;
+
+    /**
+     * Execute the query and return at most one resulting record.
+     *
+     * @return The first resulting record or <code>null</code> if the query
+     *         returns no records.
+     */
+    R fetchAny() throws SQLException;
 }

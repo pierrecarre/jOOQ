@@ -75,6 +75,21 @@ abstract class AbstractDelegatingResultProviderQuery<R extends Record> extends A
     }
 
     @Override
+    public Result<R> fetch() throws SQLException {
+        return delegate.fetch();
+    }
+
+    @Override
+    public R fetchOne() throws SQLException {
+        return delegate.fetchOne();
+    }
+
+    @Override
+    public R fetchAny() throws SQLException {
+        return delegate.fetchAny();
+    }
+
+    @Override
     public final int execute() throws SQLException {
         return delegate.execute();
     }
