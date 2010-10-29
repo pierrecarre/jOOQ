@@ -1,0 +1,6 @@
+org.jooq
+org.jooq.impl
+org.jooq.util.hsqldb
+org.jooq.util.mysql
+org.jooq.util.oracle
+org.jooq.util.postgres
