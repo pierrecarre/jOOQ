@@ -411,7 +411,7 @@ public final class Factory implements Configuration {
      * @return A {@link JoinCondition}
      */
     public <T> Condition joinCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
-        return new JoinCondition<T>(dialect, field1, field2);
+        return new JoinCondition<T>(dialect, field1, field2, comparator);
     }
 
     /**
