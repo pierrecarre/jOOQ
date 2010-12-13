@@ -1,0 +1,226 @@
+/**
+ * Copyright (c) 2009, Lukas Eder, lukas.eder@gmail.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * . Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * . Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * . Neither the name of the "jOOQ" nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package org.jooq.util.mysql;
+
+import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
+import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_SCHEMA;
+import static org.jooq.util.mysql.mysql.tables.Proc.DB;
+import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
+import static org.jooq.util.mysql.mysql.tables.Proc.TYPE;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jooq.Comparator;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.impl.Factory;
+import org.jooq.util.AbstractDatabase;
+import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultEnumDefinition;
+import org.jooq.util.DefaultRelations;
+import org.jooq.util.EnumDefinition;
+import org.jooq.util.FunctionDefinition;
+import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.TableDefinition;
+import org.jooq.util.UDTDefinition;
+import org.jooq.util.mysql.information_schema.tables.Columns;
+import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
+import org.jooq.util.mysql.information_schema.tables.records.ColumnsRecord;
+import org.jooq.util.mysql.information_schema.tables.records.KeyColumnUsageRecord;
+import org.jooq.util.mysql.information_schema.tables.records.TablesRecord;
+import org.jooq.util.mysql.mysql.enums.ProcType;
+import org.jooq.util.mysql.mysql.tables.records.ProcRecord;
+
+/**
+ * @author Lukas Eder
+ */
+public class MySQLDatabase extends AbstractDatabase {
+
+    @Override
+    protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+        SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
+        q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY");
+        q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+        q.execute();
+
+        for (KeyColumnUsageRecord record : q.getResult()) {
+            String key = record.getConstraintName();
+            String tableName = record.getTableName();
+            String columnName = record.getColumnName();
+
+            key = key + "_" + tableName;
+            TableDefinition table = getTable(tableName);
+
+            if (table != null) {
+                relations.addPrimaryKey(key, table.getColumn(columnName));
+            }
+        }
+    }
+
+    @Override
+    protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        SimpleSelectQuery<KeyColumnUsageRecord> q = create().selectQuery(KEY_COLUMN_USAGE);
+        q.addCompareCondition(KeyColumnUsage.CONSTRAINT_NAME, "PRIMARY", Comparator.NOT_EQUALS);
+        q.addCompareCondition(KeyColumnUsage.TABLE_SCHEMA, getSchemaName());
+        q.execute();
+
+        for (KeyColumnUsageRecord record : q.getResult()) {
+            String key = record.getConstraintName();
+            String referencingTableName = record.getTableName();
+            String referencingColumnName = record.getColumnName();
+            String referencedTableName = record.getReferencedTableName();
+            String referencedColumnName = record.getReferencedColumnName();
+
+            TableDefinition referencingTable = getTable(referencingTableName);
+            TableDefinition referencedTable = getTable(referencedTableName);
+
+            if (referencingTable != null && referencedTable != null) {
+                ColumnDefinition referencingColumn = referencingTable.getColumn(referencingColumnName);
+                ColumnDefinition referencedColumn = referencedTable.getColumn(referencedColumnName);
+
+                String primaryKey = relations.getPrimaryKeyName(referencedColumn);
+                relations.addForeignKey(key, primaryKey, referencingColumn);
+            }
+        }
+    }
+
+    @Override
+    protected List<TableDefinition> getTables0() throws SQLException {
+        List<TableDefinition> result = new ArrayList<TableDefinition>();
+
+        SimpleSelectQuery<TablesRecord> q = create().selectQuery(TABLES);
+        q.addConditions(create().compareCondition(TABLE_SCHEMA, getSchemaName()));
+        q.addOrderBy(TABLE_NAME);
+        q.execute();
+
+        for (TablesRecord record : q.getResult()) {
+            String name = record.getTableName();
+            String comment = record.getTableComment();
+
+            MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
+            result.add(table);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<EnumDefinition> getEnums0() throws SQLException {
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+
+        Result<ColumnsRecord> records = create()
+            .selectFrom(COLUMNS)
+            .where(
+                Columns.COLUMN_TYPE.like("enum(%)").and(
+                Columns.TABLE_SCHEMA.equal(getSchemaName())))
+            .orderBy(
+                Columns.TABLE_NAME.ascending(),
+                Columns.COLUMN_NAME.ascending())
+            .fetch();
+
+        for (ColumnsRecord record : records) {
+            String comment = record.getColumnComment();
+            String table = record.getTableName();
+            String column = record.getColumnName();
+            String name = table + "_" + column;
+            String columnType = record.getColumnType();
+
+            DefaultEnumDefinition definition = new DefaultEnumDefinition(this, name, comment);
+            for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
+                definition.addLiteral(string.trim().replaceAll("'", ""));
+            }
+
+            result.add(definition);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<UDTDefinition> getUDTs0() throws SQLException {
+        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+        return result;
+    }
+
+    @Override
+    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
+        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+
+        for (ProcRecord record : executeProcedureQuery(ProcType.PROCEDURE)) {
+            String name = record.getName();
+            String comment = record.getComment();
+            String params = new String(record.getParamList());
+
+            MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
+            result.add(procedure);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<FunctionDefinition> getFunctions0() throws SQLException {
+        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+
+        for (ProcRecord record : executeProcedureQuery(ProcType.FUNCTION)) {
+            String name = record.getName();
+            String comment = record.getComment();
+            String params = new String(record.getParamList());
+            String returnValue = new String(record.getReturns());
+
+            MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
+            result.add(function);
+        }
+
+        return result;
+    }
+
+    private Result<ProcRecord> executeProcedureQuery(ProcType type) throws SQLException {
+        SimpleSelectQuery<ProcRecord> q = create().selectQuery(PROC);
+        q.addConditions(create().compareCondition(DB, getSchemaName()));
+        q.addConditions(create().compareCondition(TYPE, type));
+        q.execute();
+
+        return q.getResult();
+    }
+
+    @Override
+    public Factory create() {
+        return new Factory(getConnection(), SQLDialect.MYSQL);
+    }
+}
