@@ -1,0 +1,270 @@
+jOOQ Release notes
+------------------
+For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
+
+Version 1.5.1
+=================================================================
+
+- H2 database support thanks to Espen Stromsnes
+- Improved stored procedure support
+
+Features
+--------
+#96  - Added H2 database support
+#101 - Added stored procedure / stored function support for Oracle
+#138 - Added stored procedure support for DB2
+#146 - Added support for DB2 functions
+
+API changes
+-----------
+#143 - Added convenience methods to Record
+
+Bugfixes
+--------
+#84  - Implemented referential code generation for foreign keys that do not 
+       match their primary keys' types
+#141 - Encoding problem in generated master data classes
+
+Version 1.5.0
+=================================================================
+
+- A big one. Major API changes / improvements
+- Added lots of convenience methods
+- UDT support
+- Enum support
+- DB2 support thanks to Espen Stromsnes
+- "Light" dependency to log4j added. jOOQ will still run without it
+
+Features
+--------
+#1   - Create support for UDTs (so far only for PostgreSQL)
+#15  - Added DB2 support
+#60  - Added support for nested selects in INSERT and UPDATE
+       statements
+#83  - Added log4j logging to code generation and runtime
+#87  - Add support for arithmetic expressions
+#105 - Added support for ENUM data types, where applicable
+       (MySQL and PostgreSQL so far)
+#110 - Added execute and fetch convenience methods
+#111 - Added missing "select distinct" support
+#122 - Annotate generated classes with javax.annotation.Generated
+#123 - Generate user enum fields from data values (master data)
+#124 - Added PlainSQLTable
+#127 - Added not() operator to Condition
+#135 - Added convenience methods andNot() and orNot() in 
+       Condition
+
+API changes
+-----------
+#89  - Removed support for DataSource. jOOQ is not a transaction
+       manager
+#92  - Added SortField type to be used for sorting
+#99  - Provide better access to functions (No more FunctionFactory)
+#116 - Merge Manager functionality into Factory
+#118 - Improve API of org.jooq.Field
+#119 - Improve subquery condition API
+#132 - Reduced much of the select query API
+#134 - Better separation of SelectQuery and SimpleSelectQuery
+
+Bugfixes
+--------
+#109 - Error when executing select * if generated schema does not
+       match actual schema
+#115 - Fix various "null" pseudo field issues
+#126 - Error when selecting a single field from a union nested
+       select
+#129 - Fixed performance issue in Oracle code generation for
+       very large databases
+
+
+Version 1.4.4
+=================================================================
+
+Unreleased version, fixes included in 1.5.0
+
+Bugfixes
+--------
+
+#133 - JoinCondition does not take comparison operator
+
+Version 1.4.3
+=================================================================
+
+Some more bugfixes
+
+Bugfixes
+--------
+
+#71 - Generated code does not compile, when foreign key and 
+      primary key have a data type mismatch
+#73 - In Oracle generated code, multi-field foreign keys may 
+      generated bad relations code
+#82 - Conversion of literals to camelcase fails if numbers are
+      involved
+
+Version 1.4.2
+=================================================================
+
+Various bugfixes and minor improvements
+
+Features
+--------
+#66 - Add support for CASE or DECODE expression
+
+API changes
+-----------
+#77 - Functions should not extend FieldImpl, but a new 
+      AbstractField
+#78 - QueryPart pollutes declared method space of its 
+      implementations. Hide it by indirection
+
+Bugfixes
+--------
+#64 - Code generation fails when foreign key references a unique 
+      key that is not the primary key. Code generation for these
+      cases is omitted
+#67 - When loading properties files, a leading / seems to be 
+      mandatory. This is preventing users from correctly setting
+      up jOOQ the first time
+#70 - Add support for Oracle datatype TIMESTAMP(6)
+#72 - Name clashes in generated Tables
+#75 - Constant does not bind its values.
+#76 - Constant should not render strings all the time
+#79 - Constants are not properly escaped
+#80 - Position function does not bind any variables
+#81 - Add cast function to Constants in HSQL
+
+Version 1.4.1
+=================================================================
+
+Oracle patch release
+
+Features
+--------
+#63 - Generate referential functionality for Oracle
+
+Version 1.4.0
+=================================================================
+
+Support for PostGreSQL was added.
+Added lots of OR-mapping functionality.
+There is a general API change due to various new features.
+
+Features
+--------
+#14 - Add PostGreSQL support
+#40 - Resolve foreign keys. Allow for navigation between objects.
+#42 - Add PlainSQLField
+#45 - Add "dirty" flag to Record's values. This allows for
+      updating only relevant data.
+#47 - Complete implementation for UPDATE, INSERT, DELETE 
+      statements. Added some missing functionality.
+#48 - Add more support for Date, Time, Timestamp fields.
+#51 - Add a org.jooq.impl.Manager class that provides common 
+      utility methods for CRUD operations
+
+API changes
+-----------
+#10 - Add second generic type <R extends Record>. This is a
+      prerequisite for many OR-mapping features
+#18 - Use org.jooq.Record in InsertQuery and UpdateQuery
+#46 - Create UpdatableRecords as a prerequisite for JPA and true 
+      OR-mapping. These records support store() and delete()
+      methods
+#52 - Add default constructor in generated Records.
+#53 - Add refresh functionality to UpdatableRecords. See also #46
+#54 - Add a state to the factory class
+#56 - Reduce API, remove unnecessary Condition subinterfaces
+#57 - Reduce API, remove unnecessary QueryPart interfaces
+
+Bugfixes
+--------
+#49 - NullPointerException when generating relations on schema 
+      subset
+#58 - Count function renders bad SQL in various dialects
+#59 - Exception when selecting unaliased functions in queries
+
+Version 1.3.0
+=================================================================
+
+Support for HSQLDB was added.
+There is a major API change due to #44.
+
+Features
+--------
+#29 - Generate primary keys and foreign keys in Oracle code 
+      generation
+#34 - Add support for HSQLDB
+#39 - Generate primary keys and foreign keys in HSQLDB code 
+      generation
+#41 - Add documentation to QueryFactory and Functions
+
+API changes
+-----------
+#23 - Add support for more advanced joins
+#32 - Merge SelectQuery and ResultProviderQuery interfaces
+#44 - Let Query methods return "this"
+
+Bugfixes
+--------
+#35 - Add unit tests for HSQLDB support
+#37 - Syntax error in combined select queries!
+      The usage of combined queries in MySQL may still be a bit
+      awkward. Keep an eye out for further fixes
+#43 - Join with aliased tables doesn't work
+
+Version 1.2.0
+=================================================================
+
+The added Oracle support is now unit tested and more stable.
+The Oracle NUMBER data type is mapped more precisely to Java
+types.
+
+Features
+--------
+#12 - Model primary keys and foreign keys in generated code
+#22 - Improve mapping of Oracle NUMBER data type
+#26 - Add Plain SQL QueryParts
+#27 - Add support for HAVING clause
+
+Bugfixes
+--------
+#24 - Add Unit tests for oracle database (and fixed bugs)
+#31 - Pull up addOrderBy() methods from SelectQuery to
+      ResultProviderQuery
+
+Version 1.1.0
+=================================================================
+
+The main new feature is the Oracle support. Wait for 
+Version 1.1.1 for that support to be stabilised, as there are no
+Oracle unit tests running against an Oracle database yet.
+
+Features
+--------
+
+# 2 - Add support for inner / nested selects
+# 3 - Add more function support
+# 4 - Implement filtering functionality for code generation
+# 6 - Add Oracle Support
+# 9 - Create true POJO's (implementing org.jooq.Record) with 
+      getters and setters
+#17 - Make org.jooq.impl.Parameter independent of Field
+
+Bugfixes
+--------
+
+#11 - Code generation does not remove files
+
+Version 1.0.1
+=================================================================
+
+Features
+--------
+
+#5 - Prevent code regeneration, if no changes were made
+#7 - Implement ant task for code generation
+
+Version 1.0.0
+=================================================================
+Initial Release
