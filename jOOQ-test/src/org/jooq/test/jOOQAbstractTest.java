@@ -2660,7 +2660,8 @@ public abstract class jOOQAbstractTest<
                     TBook_ID(),
                     TBook_TITLE(),
                     TAuthor_FIRST_NAME(),
-                    TAuthor_LAST_NAME())
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID())
@@ -2725,7 +2726,8 @@ public abstract class jOOQAbstractTest<
                     TBook_ID(),
                     TBook_TITLE(),
                     TAuthor_FIRST_NAME(),
-                    TAuthor_LAST_NAME())
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID())

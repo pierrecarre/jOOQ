@@ -56,6 +56,9 @@ public class BookWithAnnotations {
     @Column(name = "FIRST_NAME")
     public String  firstName;
 
+    @Column(name = "DATE_OF_BIRTH")
+    public java.util.Date dateOfBirth;
+
     // Members without annotations
     // ---------------------------
     public int     id3;
