@@ -655,6 +655,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         List<?> paths =
         ora.select(ora.sysConnectByPath(TDirectory_NAME(), "/").substring(2))
            .from(TDirectory())
+           .where(ora.trueCondition())
+           .and(ora.trueCondition())
            .connectBy(ora.prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
            .startWith(TDirectory_PARENT_ID().isNull())
            .orderBy(ora.literal(1))
