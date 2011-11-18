@@ -36,8 +36,17 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.jooq.impl.StringUtils;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UDTRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 
 /**
  * The default naming strategy for the {@link DefaultGenerator}
@@ -47,13 +56,15 @@ import org.jooq.impl.StringUtils;
 @SuppressWarnings("unused")
 public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
-    private String targetDirectory;
-    private String targetPackage;
-    private String tableClassPrefix;
-    private String tableClassSuffix;
-    private String recordClassPrefix;
-    private String recordClassSuffix;
-    private String scheme;
+    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
+
+    private String                           targetDirectory;
+    private String                           targetPackage;
+    private String                           tableClassPrefix;
+    private String                           tableClassSuffix;
+    private String                           recordClassPrefix;
+    private String                           recordClassSuffix;
+    private String                           scheme;
 
     // -------------------------------------------------------------------------
     // Initialisation
@@ -136,8 +147,21 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public final String getJavaIdentifierUC(Definition definition) {
-        return getJavaIdentifier(definition).toUpperCase();
+    public String getJavaIdentifierUC(Definition definition) {
+        String identifier = getJavaIdentifier(definition).toUpperCase();
+
+        // Columns, Attributes, Parameters
+        if (definition instanceof ColumnDefinition ||
+            definition instanceof AttributeDefinition) {
+
+            TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
+
+            if (identifier.equals(getJavaIdentifierUC(e.getContainer()))) {
+                return identifier + "_";
+            }
+        }
+
+        return identifier;
     }
 
     @Override
@@ -158,6 +182,76 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         sb.append(getJavaIdentifierUC(definition));
 
         return sb.toString();
+    }
+
+    @Override
+    public String getJavaSetterName(Definition definition) {
+        return "set" + disambiguateMethod(definition, getJavaClassName(definition));
+    }
+
+    @Override
+    public String getJavaGetterName(Definition definition) {
+        return "get" + disambiguateMethod(definition, getJavaClassName(definition));
+    }
+
+    /**
+     * [#182] Method name disambiguation is important to avoid name clashes due
+     * to pre-existing getters / setters in super classes
+     */
+    private String disambiguateMethod(Definition definition, String javaClassName) {
+        Set<String> reserved = null;
+
+        if (definition instanceof AttributeDefinition) {
+            reserved = reservedColumns(UDTRecordImpl.class);
+        }
+        else if (definition instanceof ColumnDefinition) {
+            if (((ColumnDefinition) definition).getContainer().getMainUniqueKey() != null) {
+                reserved = reservedColumns(UpdatableRecordImpl.class);
+            }
+            else {
+                reserved = reservedColumns(TableRecordImpl.class);
+            }
+        }
+
+        if (reserved != null && reserved.contains(javaClassName)) {
+            return javaClassName + "_";
+        }
+
+        return javaClassName;
+    }
+
+
+    /**
+     * [#182] Find all column names that are reserved because of the extended
+     * class hierarchy of a generated class
+     */
+    private Set<String> reservedColumns(Class<?> clazz) {
+        if (clazz == null) {
+            return Collections.emptySet();
+        }
+
+        Set<String> result = reservedColumns.get(clazz);
+
+        if (result == null) {
+            result = new HashSet<String>();
+            reservedColumns.put(clazz, result);
+
+            // Recurse up in class hierarchy
+            result.addAll(reservedColumns(clazz.getSuperclass()));
+            for (Class<?> c : clazz.getInterfaces()) {
+                result.addAll(reservedColumns(c));
+            }
+
+            for (Method m : clazz.getDeclaredMethods()) {
+                String name = m.getName();
+
+                if (name.startsWith("get") && m.getParameterTypes().length == 0) {
+                    result.add(name.substring(3));
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override
