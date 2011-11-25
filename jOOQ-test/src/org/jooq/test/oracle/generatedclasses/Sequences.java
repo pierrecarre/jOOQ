@@ -18,6 +18,31 @@ public final class Sequences {
 	public static final org.jooq.Sequence S_AUTHOR_ID = new org.jooq.impl.SequenceImpl("S_AUTHOR_ID", org.jooq.test.oracle.generatedclasses.Test.TEST);
 
 	/**
+	 * The sequence S_961_BIG_INTEGER
+	 */
+	public static final org.jooq.Sequence S_961_BIG_INTEGER = new org.jooq.impl.SequenceImpl("S_961_BIG_INTEGER", org.jooq.test.oracle.generatedclasses.Test.TEST);
+
+	/**
+	 * The sequence S_961_BYTE
+	 */
+	public static final org.jooq.Sequence S_961_BYTE = new org.jooq.impl.SequenceImpl("S_961_BYTE", org.jooq.test.oracle.generatedclasses.Test.TEST);
+
+	/**
+	 * The sequence S_961_INT
+	 */
+	public static final org.jooq.Sequence S_961_INT = new org.jooq.impl.SequenceImpl("S_961_INT", org.jooq.test.oracle.generatedclasses.Test.TEST);
+
+	/**
+	 * The sequence S_961_LONG
+	 */
+	public static final org.jooq.Sequence S_961_LONG = new org.jooq.impl.SequenceImpl("S_961_LONG", org.jooq.test.oracle.generatedclasses.Test.TEST);
+
+	/**
+	 * The sequence S_961_SHORT
+	 */
+	public static final org.jooq.Sequence S_961_SHORT = new org.jooq.impl.SequenceImpl("S_961_SHORT", org.jooq.test.oracle.generatedclasses.Test.TEST);
+
+	/**
 	 * No instances
 	 */
 	private Sequences() {}
