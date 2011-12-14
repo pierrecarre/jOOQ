@@ -210,7 +210,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
                 case HSQLDB:
-                	
+
                 	// [#692] HSQLDB cannot SELECT f() FROM [...] when f()
                 	// returns a cursor. Instead, SELECT * FROM table(f()) works
                     if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
@@ -541,10 +541,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 i++;
             }
 
-            RenderContext local = create(attachable).renderContext();
-            toSQLQualifiedName(local);
-
-            function = new Function<T>(local.render(), type, array);
+            function = new RoutineField<T>(getName(), type, array);
         }
 
         return function;
@@ -552,5 +549,29 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     public final Field<T> asField(String alias) {
         return asField().as(alias);
+    }
+
+    /**
+     * The {@link Field} representation of this {@link Routine}
+     *
+     * @author Lukas Eder
+     */
+    private class RoutineField<Z> extends AbstractFunction<Z> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -5730297947647252624L;
+
+        RoutineField(String name, DataType<Z> type, Field<?>[] arguments) {
+            super(name, type, arguments);
+        }
+
+        @Override
+        final Field<Z> getFunction0(Configuration configuration) {
+            RenderContext local = create(configuration).renderContext();
+            toSQLQualifiedName(local);
+            return new Function<Z>(local.render(), getDataType(), getArguments());
+        }
     }
 }
