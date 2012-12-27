@@ -194,6 +194,7 @@ import org.jooq.types.DayToSecond;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class Factory implements FactoryOperations {
 
     /**
@@ -208,7 +209,6 @@ public class Factory implements FactoryOperations {
     private transient DataSource         datasource;
     private final SQLDialect             dialect;
 
-    @SuppressWarnings("deprecation")
     private final org.jooq.SchemaMapping mapping;
     private final Settings               settings;
     private final Map<String, Object>    data;
@@ -323,7 +323,6 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
         this(null, connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
@@ -350,7 +349,6 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(DataSource datasource, SQLDialect dialect, Settings settings) {
         this(datasource, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
@@ -365,7 +363,6 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(SQLDialect dialect, Settings settings) {
         this(null, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
@@ -373,7 +370,6 @@ public class Factory implements FactoryOperations {
     /**
      * Do the instanciation
      */
-    @SuppressWarnings("deprecation")
     private Factory(DataSource datasource, Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
         this.connection = connection;
         this.datasource = datasource;
@@ -2193,7 +2189,6 @@ public class Factory implements FactoryOperations {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     @Override
     public final int use(Schema schema) {
         int result = 0;
@@ -5670,7 +5665,7 @@ public class Factory implements FactoryOperations {
      * <ul>
      * <li>They can be used with Spring's <code>JdbcTemplate</code>, which
      * supports named parameters. Use
-     * {@link FactoryOperations#renderNamedParams(QueryPart)} to render
+     * {@link Factory#renderNamedParams(QueryPart)} to render
      * parameter names in SQL</li>
      * <li>Named parameters can be retrieved using a well-known name from
      * {@link Query#getParam(String)} and {@link Query#getParams()}.</li>
@@ -6642,7 +6637,6 @@ public class Factory implements FactoryOperations {
      * @param type The Java type
      * @return The <code>Factory</code>'s underlying default data type.
      */
-    @SuppressWarnings("deprecation")
     @Support
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
@@ -6725,7 +6719,6 @@ public class Factory implements FactoryOperations {
     /**
      * Get a default <code>Factory</code> with a {@link Connection}
      */
-    @SuppressWarnings("deprecation")
     final static Factory getNewFactory(Configuration configuration) {
         if (configuration == null) {
             return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
@@ -6763,7 +6756,6 @@ public class Factory implements FactoryOperations {
         out.defaultWriteObject();
     }
 
-    @SuppressWarnings("deprecation")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 

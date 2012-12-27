@@ -74,7 +74,11 @@ import org.jooq.impl.Factory;
  * @author Sergey Epik
  * @author Lukas Eder
  * @see Factory
+ * @deprecated - [#1965] - 2.7.0 - This interface will be removed in jOOQ 3.0.
+ *             All methods from this interface are moved from the "static"
+ *             {@link Factory} to a new <code>Executor</code> type.
  */
+@Deprecated
 public interface FactoryOperations extends Configuration {
 
     // -------------------------------------------------------------------------

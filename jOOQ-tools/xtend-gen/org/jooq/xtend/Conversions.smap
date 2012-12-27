@@ -1,0 +1,27 @@
+SMAP
+Conversions.java
+Xtend
+*S Xtend
+*F
++ 0 Conversions.xtend
+src/org/jooq/xtend/Conversions.xtend
+*L
+46:14,2
+47:16
+51:20,2
+53:22,2
+54:24,8
+57:32,10
+59:42,21
+61:63,2
+53:65
+61:66,3
+53:69,3
+61:72
+53:73
+61:74,2
+53:76,2
+61:78,5
+53:83,3
+66:86
+*E
