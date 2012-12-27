@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = -363187694;
+	private static final long serialVersionUID = 1947608518;
 
 	/**
 	 * The book ID
@@ -37,7 +37,10 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The book ID
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
@@ -74,8 +77,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -94,7 +96,10 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * FOREIGN KEY (AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
@@ -131,8 +136,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord 
-	 * TAuthorRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setCoAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
 		if (value == null) {
@@ -151,7 +155,10 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * FOREIGN KEY (CO_AUTHOR_ID)
 	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
