@@ -127,10 +127,18 @@ public class FirebirdDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.FIREBIRD, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.FIREBIRD, type);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static DataType<Object> getDefaultDataType(String typeName) {
         return getDefaultDataType(SQLDialect.FIREBIRD, typeName);
     }

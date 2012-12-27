@@ -54,6 +54,7 @@ class DefaultArray implements Array {
         this.type = type;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getBaseTypeName() {
         return FieldTypeHelper.getDataType(dialect, type.getComponentType()).getTypeName();

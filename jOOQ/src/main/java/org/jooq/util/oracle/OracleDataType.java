@@ -157,10 +157,18 @@ public class OracleDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, castTypeName, hasPrecisionAndScale);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.ORACLE, type);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static DataType<Object> getDefaultDataType(String typeName) {
         return getDefaultDataType(SQLDialect.ORACLE, typeName);
     }

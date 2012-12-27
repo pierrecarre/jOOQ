@@ -191,6 +191,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     /**
      * Render the bind variable including a cast, if necessary
      */
+    @SuppressWarnings("deprecation")
     private void toSQLCast(RenderContext context) {
         SQLDataType<T> type = getDataType(context).getSQLDataType();
         SQLDialect dialect = context.getDialect();
@@ -273,6 +274,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void toSQLCast(RenderContext context, DataType<?> type, int length) {
         context.keyword("cast(");
         toSQL(context, getValue(), getType());
@@ -281,6 +283,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                .sql(")");
     }
 
+    @SuppressWarnings("deprecation")
     private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
         context.keyword("cast(");
         toSQL(context, getValue(), getType());

@@ -141,10 +141,18 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.CUBRID, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.CUBRID, type);
     }
 
+    /**
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
+     */
+    @Deprecated
     public static DataType<Object> getDefaultDataType(String typeName) {
         return getDefaultDataType(SQLDialect.CUBRID, typeName);
     }

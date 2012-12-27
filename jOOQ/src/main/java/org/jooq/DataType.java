@@ -76,7 +76,10 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Retrieve a Java type associated with this data type and precision/scale
+     *
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
      */
+    @Deprecated
     Class<?> getType(int precision, int scale);
 
     /**
@@ -149,7 +152,10 @@ public interface DataType<T> extends Serializable {
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
      * casting, (e.g. VARCHAR(20))
+     *
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
      */
+    @Deprecated
     String getCastTypeName(Configuration configuration, int length);
 
     /**
@@ -159,7 +165,10 @@ public interface DataType<T> extends Serializable {
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
      * casting, (e.g. DECIMAL(20,5))
+     *
+     * @deprecated - [#2036] - 2.7.0 - This method will be removed in jOOQ 3.0
      */
+    @Deprecated
     String getCastTypeName(Configuration configuration, int precision, int scale);
 
     /**

@@ -107,8 +107,9 @@ import org.jooq.util.sybase.SybaseDataType;
  * This class is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @deprecated - [#2036] - 2.7.0 - This class will be removed in jOOQ 3.0
  */
-@SuppressWarnings("deprecation")
+@Deprecated
 public final class FieldTypeHelper {
 
     private static final int        LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();

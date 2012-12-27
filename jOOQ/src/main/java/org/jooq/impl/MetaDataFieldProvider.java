@@ -81,6 +81,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
         init(meta);
     }
 
+    @SuppressWarnings("deprecation")
     private final void init(ResultSetMetaData meta) {
         int columnCount = 0;
 

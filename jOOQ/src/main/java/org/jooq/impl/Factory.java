@@ -6637,6 +6637,7 @@ public class Factory implements FactoryOperations {
      * @param type The Java type
      * @return The <code>Factory</code>'s underlying default data type.
      */
+    @SuppressWarnings("javadoc")
     @Support
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);

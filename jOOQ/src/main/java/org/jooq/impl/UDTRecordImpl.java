@@ -99,6 +99,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         }
     }
 
+    @SuppressWarnings("deprecation")
     private final <T> void setValue(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
         setValue(field, FieldTypeHelper.getFromSQLInput(configuration, stream, field));
     }
@@ -110,6 +111,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         }
     }
 
+    @SuppressWarnings("deprecation")
     private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
         FieldTypeHelper.writeToSQLOutput(stream, field, getValue(field));
     }

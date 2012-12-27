@@ -81,6 +81,7 @@ class ConvertedDataType<T, U> extends AbstractDataType<U> {
         return delegate.getCastTypeName(configuration);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getCastTypeName(Configuration configuration, int precision, int scale) {
         return delegate.getCastTypeName(configuration, precision, scale);

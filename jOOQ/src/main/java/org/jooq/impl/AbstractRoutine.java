@@ -517,6 +517,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         context.literal(getName());
     }
 
+    @SuppressWarnings("deprecation")
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
         for (Parameter<?> parameter : getParameters()) {
             if (parameter.equals(getReturnParameter()) ||
