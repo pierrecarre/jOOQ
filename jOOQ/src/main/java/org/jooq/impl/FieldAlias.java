@@ -71,6 +71,7 @@ class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
+    @Deprecated
     public final boolean isNullLiteral() {
         return aliasProvider.getAliasProvider().isNullLiteral();
     }

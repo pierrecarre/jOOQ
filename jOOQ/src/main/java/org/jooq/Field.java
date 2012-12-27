@@ -128,7 +128,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This method was added to be able to recognise <code>null</code> literals
      * within jOOQ and handle them specially, as some SQL dialects have a rather
      * un-intuitive way of handling <code>null</code> values.
+     *
+     * @deprecated - [#2023] - 2.7.0 - This method is removed in jOOQ 3.0, as
+     *             the behaviour that is described above and in
+     *             {@link #equal(Object)} and {@link #notEqual(Object)} will be
+     *             removed
      */
+    @Deprecated
     boolean isNullLiteral();
 
     // ------------------------------------------------------------------------

@@ -77,6 +77,7 @@ class CompareCondition extends AbstractCondition {
         this.escape = escape;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final void bind(BindContext context) {
         context.bind(field1);
@@ -87,6 +88,7 @@ class CompareCondition extends AbstractCondition {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final void toSQL(RenderContext context) {
         SQLDialect dialect = context.getDialect();
