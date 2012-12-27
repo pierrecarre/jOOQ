@@ -2927,7 +2927,9 @@ public class DefaultGenerator extends AbstractGenerator {
 
             ColumnDefinition column = (ColumnDefinition) element;
 
-            generateNavigateMethods(out, column);
+            if (generateDeprecated()) {
+                generateNavigateMethods(out, column);
+            }
         }
     }
 
@@ -3027,17 +3029,7 @@ public class DefaultGenerator extends AbstractGenerator {
         }
 
         out.println("");
-        out.println("\t/**");
-
-        String comment =
-            "Link this record to a given {@link " +
-            getStrategy().getFullJavaClassName(referencedTable, Mode.RECORD) +
-            " " +
-            getStrategy().getJavaClassName(referencedTable, Mode.RECORD) +
-            "}";
-        printJavadocParagraph(out, comment, "\t");
-        out.println("\t */");
-
+        printJavadoc(out, "@deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0");
         out.print("\tpublic void ");
 
         // Single-column foreign keys use the referencing column name for the setter
@@ -3095,7 +3087,7 @@ public class DefaultGenerator extends AbstractGenerator {
         TableDefinition referenced) {
         printFKSetter(out, column, foreignKey, referenced);
 
-        printFieldJavaDoc(out, column);
+        printFieldJavaDoc(out, column, "[#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0");
 
         out.print("\tpublic ");
         out.print(strategy.getFullJavaClassName(referenced, Mode.RECORD));
@@ -3178,7 +3170,7 @@ public class DefaultGenerator extends AbstractGenerator {
             fetchMethodNames.add(fetchMethodName.toString());
         }
 
-        printFieldJavaDoc(out, column);
+        printFieldJavaDoc(out, column, "[#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0");
         out.print("\tpublic ");
         out.print(List.class);
         out.print("<");
