@@ -40,6 +40,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.sum;
@@ -157,7 +158,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.oracle.OracleDataType;
-import org.jooq.util.oracle.OracleFactory;
 
 import org.junit.Test;
 
@@ -207,8 +207,8 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected OracleFactory create(Settings settings) {
-        return new OracleFactory(getConnection(), settings);
+    protected Factory create(Settings settings) {
+        return new Factory(getConnection(), ORACLE, settings);
     }
 
     @Override
@@ -822,8 +822,8 @@ public class OracleTest extends jOOQAbstractTest<
     // Oracle-specific tests
     // -------------------------------------------------------------------------
 
-    private OracleFactory ora() {
-        return new OracleFactory(create().getConnection(), create().getSettings());
+    private Factory ora() {
+        return new Factory(create().getConnection(), ORACLE, create().getSettings());
     }
 
     @Test
@@ -1348,7 +1348,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        Factory create = new OracleFactory(getConnectionMultiSchema());
+        Factory create = new Factory(getConnectionMultiSchema(), ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

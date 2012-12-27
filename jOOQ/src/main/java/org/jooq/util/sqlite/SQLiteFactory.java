@@ -67,6 +67,9 @@ public class SQLiteFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #SQLiteFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public SQLiteFactory(Connection connection, SchemaMapping mapping) {
@@ -80,7 +83,11 @@ public class SQLiteFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.SQLITE, settings);
     }
@@ -92,7 +99,11 @@ public class SQLiteFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.SQLITE, settings);
     }
@@ -102,7 +113,11 @@ public class SQLiteFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory(Connection connection) {
         super(connection, SQLDialect.SQLITE);
     }
@@ -112,7 +127,11 @@ public class SQLiteFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.SQLITE);
     }
@@ -125,7 +144,11 @@ public class SQLiteFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory(Settings settings) {
         super(SQLDialect.SQLITE, settings);
     }
@@ -135,7 +158,11 @@ public class SQLiteFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLiteFactory() {
         super(SQLDialect.SQLITE);
     }

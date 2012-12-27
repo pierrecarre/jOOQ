@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
@@ -77,6 +78,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -152,8 +154,8 @@ public class MySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected MySQLFactory create(Settings settings) {
-        return new MySQLFactory(getConnection(), settings);
+    protected Factory create(Settings settings) {
+        return new Factory(getConnection(), MYSQL, settings);
     }
 
     @Override

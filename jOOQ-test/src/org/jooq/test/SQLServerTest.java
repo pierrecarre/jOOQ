@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_785;
@@ -96,7 +97,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
-import org.jooq.util.sqlserver.SQLServerFactory;
 
 /**
  * @author Lukas Eder
@@ -124,7 +124,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new SQLServerFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLSERVER, settings);
     }
 
     @Override

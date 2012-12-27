@@ -31,6 +31,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_DATES;
@@ -98,7 +99,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.cubrid.CUBRIDDataType;
-import org.jooq.util.cubrid.CUBRIDFactory;
 
 
 /**
@@ -129,7 +129,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new CUBRIDFactory(getConnection(), settings);
+        return new Factory(getConnection(), CUBRID, settings);
     }
 
     @Override

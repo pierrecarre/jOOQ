@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
@@ -105,7 +106,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.postgres.PostgresDataType;
-import org.jooq.util.postgres.PostgresFactory;
 
 import org.junit.Test;
 
@@ -136,7 +136,7 @@ public class PostgresTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new PostgresFactory(getConnection(), settings);
+        return new Factory(getConnection(), POSTGRES, settings);
     }
 
     @Override

@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.firebird.generatedclasses.Tables.T_725_LOB_TEST;
@@ -92,7 +93,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.firebird.FirebirdDataType;
-import org.jooq.util.firebird.FirebirdFactory;
 
 /**
  * Integration test for the SQLite database
@@ -122,7 +122,7 @@ public class FirebirdTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new FirebirdFactory(getConnection(), settings);
+        return new Factory(getConnection(), FIREBIRD, settings);
     }
 
     @Override

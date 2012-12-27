@@ -72,6 +72,9 @@ public class OracleFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #OracleFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public OracleFactory(Connection connection, SchemaMapping mapping) {
@@ -85,7 +88,11 @@ public class OracleFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.ORACLE, settings);
     }
@@ -97,7 +104,11 @@ public class OracleFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.ORACLE, settings);
     }
@@ -107,7 +118,11 @@ public class OracleFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory(Connection connection) {
         super(connection, SQLDialect.ORACLE);
     }
@@ -117,7 +132,11 @@ public class OracleFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.ORACLE);
     }
@@ -130,7 +149,11 @@ public class OracleFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory(Settings settings) {
         super(SQLDialect.ORACLE, settings);
     }
@@ -140,7 +163,11 @@ public class OracleFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public OracleFactory() {
         super(SQLDialect.ORACLE);
     }

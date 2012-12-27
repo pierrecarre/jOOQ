@@ -31,6 +31,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.test.ase.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.ase.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.ase.generatedclasses.Tables.T_DATES;
@@ -94,7 +95,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ase.ASEDataType;
-import org.jooq.util.ase.ASEFactory;
 
 
 /**
@@ -125,7 +125,7 @@ public class ASETest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new ASEFactory(getConnection(), settings);
+        return new Factory(getConnection(), ASE, settings);
     }
 
     @Override

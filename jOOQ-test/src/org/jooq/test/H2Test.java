@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
@@ -106,7 +107,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.h2.H2DataType;
-import org.jooq.util.h2.H2Factory;
 
 /**
  * Integration test for the H2 database
@@ -136,7 +136,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new H2Factory(getConnection(), settings);
+        return new Factory(getConnection(), H2, settings);
     }
 
     @Override

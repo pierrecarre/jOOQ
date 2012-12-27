@@ -68,6 +68,9 @@ public class MySQLFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #MySQLFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public MySQLFactory(Connection connection, SchemaMapping mapping) {
@@ -81,7 +84,11 @@ public class MySQLFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.MYSQL, settings);
     }
@@ -93,7 +100,11 @@ public class MySQLFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.MYSQL, settings);
     }
@@ -103,7 +114,11 @@ public class MySQLFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory(Connection connection) {
         super(connection, SQLDialect.MYSQL);
     }
@@ -113,7 +128,11 @@ public class MySQLFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.MYSQL);
     }
@@ -126,7 +145,11 @@ public class MySQLFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory(Settings settings) {
         super(SQLDialect.MYSQL, settings);
     }
@@ -136,7 +159,11 @@ public class MySQLFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public MySQLFactory() {
         super(SQLDialect.MYSQL);
     }

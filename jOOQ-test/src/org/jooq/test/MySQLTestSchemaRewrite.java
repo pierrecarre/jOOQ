@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_725_LOB_TEST;
@@ -67,6 +68,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -95,7 +97,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.mysql.MySQLDataType;
-import org.jooq.util.mysql.MySQLFactory;
 
 
 /**
@@ -128,8 +129,8 @@ public class MySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
-    protected MySQLFactory create(Settings settings) {
-        return new MySQLFactory(getConnection(), settings);
+    protected Factory create(Settings settings) {
+        return new Factory(getConnection(), MYSQL, settings);
     }
 
     @Override

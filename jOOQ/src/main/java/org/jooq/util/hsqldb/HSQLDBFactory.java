@@ -66,6 +66,9 @@ public class HSQLDBFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #HSQLDBFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public HSQLDBFactory(Connection connection, SchemaMapping mapping) {
@@ -79,7 +82,11 @@ public class HSQLDBFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.HSQLDB, settings);
     }
@@ -91,7 +98,11 @@ public class HSQLDBFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.HSQLDB, settings);
     }
@@ -101,7 +112,11 @@ public class HSQLDBFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory(Connection connection) {
         super(connection, SQLDialect.HSQLDB);
     }
@@ -111,7 +126,11 @@ public class HSQLDBFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.HSQLDB);
     }
@@ -124,7 +143,11 @@ public class HSQLDBFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory(Settings settings) {
         super(SQLDialect.HSQLDB, settings);
     }
@@ -134,7 +157,11 @@ public class HSQLDBFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public HSQLDBFactory() {
         super(SQLDialect.HSQLDB);
     }

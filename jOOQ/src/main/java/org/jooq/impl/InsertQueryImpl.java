@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
@@ -69,7 +70,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.util.sqlite.SQLiteFactory;
 
 /**
  * @author Lukas Eder
@@ -497,7 +497,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    SQLiteFactory create = new SQLiteFactory(ctx.getConnection(), ctx.getSettings());
+                    Factory create = new Factory(ctx.getConnection(), SQLITE, ctx.getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())

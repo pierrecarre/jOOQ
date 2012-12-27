@@ -66,6 +66,9 @@ public class SQLServerFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #SQLServerFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public SQLServerFactory(Connection connection, SchemaMapping mapping) {
@@ -79,7 +82,11 @@ public class SQLServerFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.SQLSERVER, settings);
     }
@@ -91,7 +98,11 @@ public class SQLServerFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.SQLSERVER, settings);
     }
@@ -101,7 +112,11 @@ public class SQLServerFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory(Connection connection) {
         super(connection, SQLDialect.SQLSERVER);
     }
@@ -111,7 +126,11 @@ public class SQLServerFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.SQLSERVER);
     }
@@ -124,7 +143,11 @@ public class SQLServerFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory(Settings settings) {
         super(SQLDialect.SQLSERVER, settings);
     }
@@ -134,7 +157,11 @@ public class SQLServerFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public SQLServerFactory() {
         super(SQLDialect.SQLSERVER);
     }

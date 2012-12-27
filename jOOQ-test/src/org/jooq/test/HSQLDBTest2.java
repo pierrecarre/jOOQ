@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
@@ -98,7 +99,6 @@ import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
-import org.jooq.util.hsqldb.HSQLDBFactory;
 
 /**
  * @author Lukas Eder
@@ -142,7 +142,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
                 .withOutput(Public.PUBLIC.getName());
         }
 
-        return new HSQLDBFactory(getConnection(), settings);
+        return new Factory(getConnection(), HSQLDB, settings);
     }
 
 	@Override

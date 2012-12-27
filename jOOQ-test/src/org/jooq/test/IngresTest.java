@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.ingres.generatedclasses.Tables.T_DATES;
@@ -100,7 +101,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ingres.IngresDataType;
-import org.jooq.util.ingres.IngresFactory;
 
 
 /**
@@ -129,7 +129,7 @@ public class IngresTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new IngresFactory(getConnection(), settings);
+        return new Factory(getConnection(), INGRES, settings);
     }
 
     @Override

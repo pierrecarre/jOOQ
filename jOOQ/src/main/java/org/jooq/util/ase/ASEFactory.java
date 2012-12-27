@@ -61,6 +61,9 @@ public class ASEFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #ASEFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public ASEFactory(Connection connection, SchemaMapping mapping) {
@@ -74,7 +77,11 @@ public class ASEFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.ASE, settings);
     }
@@ -86,7 +93,11 @@ public class ASEFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.ASE, settings);
     }
@@ -96,7 +107,11 @@ public class ASEFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory(Connection connection) {
         super(connection, SQLDialect.ASE);
     }
@@ -106,7 +121,11 @@ public class ASEFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.ASE);
     }
@@ -119,7 +138,11 @@ public class ASEFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory(Settings settings) {
         super(SQLDialect.ASE, settings);
     }
@@ -129,7 +152,11 @@ public class ASEFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public ASEFactory() {
         super(SQLDialect.ASE);
     }

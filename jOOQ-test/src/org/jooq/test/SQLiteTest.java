@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_DATES;
@@ -93,7 +94,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sqlite.SQLiteDataType;
-import org.jooq.util.sqlite.SQLiteFactory;
 
 /**
  * Integration test for the SQLite database
@@ -123,7 +123,7 @@ public class SQLiteTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new SQLiteFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLITE, settings);
     }
 
     @Override

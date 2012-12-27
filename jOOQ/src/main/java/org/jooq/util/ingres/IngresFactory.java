@@ -66,6 +66,9 @@ public class IngresFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #IngresFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public IngresFactory(Connection connection, SchemaMapping mapping) {
@@ -79,7 +82,11 @@ public class IngresFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.INGRES, settings);
     }
@@ -91,7 +98,11 @@ public class IngresFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.INGRES, settings);
     }
@@ -101,7 +112,11 @@ public class IngresFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory(Connection connection) {
         super(connection, SQLDialect.INGRES);
     }
@@ -111,7 +126,11 @@ public class IngresFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.INGRES);
     }
@@ -124,7 +143,11 @@ public class IngresFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory(Settings settings) {
         super(SQLDialect.INGRES, settings);
     }
@@ -134,7 +157,11 @@ public class IngresFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public IngresFactory() {
         super(SQLDialect.INGRES);
     }

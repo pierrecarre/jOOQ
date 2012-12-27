@@ -57,6 +57,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -92,7 +93,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sybase.SybaseDataType;
-import org.jooq.util.sybase.SybaseFactory;
 
 
 /**
@@ -123,7 +123,7 @@ public class SybaseTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new SybaseFactory(getConnection(), settings);
+        return new Factory(getConnection(), SQLDialect.SYBASE, settings);
     }
 
 

@@ -66,6 +66,9 @@ public class FirebirdFactory extends Factory {
      *            factory
      * @deprecated - 2.0.5 - Use {@link #FirebirdFactory(Connection, Settings)}
      *             instead
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
     @Deprecated
     public FirebirdFactory(Connection connection, SchemaMapping mapping) {
@@ -79,7 +82,11 @@ public class FirebirdFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory(Connection connection, Settings settings) {
         super(connection, SQLDialect.FIREBIRD, settings);
     }
@@ -91,7 +98,11 @@ public class FirebirdFactory extends Factory {
      *            factory
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory(DataSource dataSource, Settings settings) {
         super(dataSource, SQLDialect.FIREBIRD, settings);
     }
@@ -101,7 +112,11 @@ public class FirebirdFactory extends Factory {
      *
      * @param connection The connection to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory(Connection connection) {
         super(connection, SQLDialect.FIREBIRD);
     }
@@ -111,7 +126,11 @@ public class FirebirdFactory extends Factory {
      *
      * @param dataSource The data source to use with objects created from this
      *            factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory(DataSource dataSource) {
         super(dataSource, SQLDialect.FIREBIRD);
     }
@@ -124,7 +143,11 @@ public class FirebirdFactory extends Factory {
      *
      * @param settings The runtime settings to apply to objects created from
      *            this factory
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory(Settings settings) {
         super(SQLDialect.FIREBIRD, settings);
     }
@@ -134,7 +157,11 @@ public class FirebirdFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
+     * @deprecated - [#1900] - 2.7.0 - dialect-specific factories will be removed
+     *             in jOOQ 3.0. Use {@link Factory} constructors instead,
+     *             explicitly passing the {@link SQLDialect}
      */
+    @Deprecated
     public FirebirdFactory() {
         super(SQLDialect.FIREBIRD);
     }

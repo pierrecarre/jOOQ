@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.test.db2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.db2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.db2.generatedclasses.Tables.T_DATES;
@@ -101,7 +102,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.db2.DB2DataType;
-import org.jooq.util.db2.DB2Factory;
 
 
 /**
@@ -132,7 +132,7 @@ public class DB2Test extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new DB2Factory(getConnection(), settings);
+        return new Factory(getConnection(), DB2, settings);
     }
 
     @Override
