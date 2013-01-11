@@ -140,7 +140,13 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
+    @Deprecated
     public final int getDegree() {
+        return size();
+    }
+
+    @Override
+    public final int size() {
         return fields.length;
     }
 

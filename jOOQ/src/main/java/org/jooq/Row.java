@@ -55,8 +55,16 @@ public interface Row extends QueryPart {
 
     /**
      * Get the degree of this row value expression
+     *
+     * @deprecated - 2.7.0 - [#2119] - Use {@link #size()} instead
      */
+    @Deprecated
     int getDegree();
+
+    /**
+     * Get the degree of this row value expression
+     */
+    int size();
 
     /**
      * Get a field at a given index
