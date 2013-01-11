@@ -35,6 +35,7 @@
  */
 package org.jooq.util.firebird;
 
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.util.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
@@ -245,6 +246,6 @@ public class FirebirdDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new FirebirdFactory(getConnection());
+        return new Factory(getConnection(), FIREBIRD);
     }
 }

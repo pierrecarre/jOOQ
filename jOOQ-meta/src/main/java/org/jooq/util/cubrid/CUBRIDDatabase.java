@@ -36,6 +36,7 @@
 
 package org.jooq.util.cubrid;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.val;
@@ -256,6 +257,6 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected Factory create0() {
-        return new CUBRIDFactory(getConnection());
+        return new Factory(getConnection(), CUBRID);
     }
 }
