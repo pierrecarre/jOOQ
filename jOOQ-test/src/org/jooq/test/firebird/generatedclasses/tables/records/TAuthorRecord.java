@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1014864784;
+	private static final long serialVersionUID = 1689042192;
 
 	/**
 	 * The table column <code>T_AUTHOR.ID</code>
@@ -35,7 +35,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>T_AUTHOR.ID</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK)
@@ -47,7 +50,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>T_AUTHOR.ID</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK)

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_71 {
 
-	private static final long serialVersionUID = 1617435860;
+	private static final long serialVersionUID = -1918458872;
 
 	/**
 	 * The table column <code>X_TEST_CASE_71.ID</code>
@@ -60,8 +60,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record 
-	 * XTestCase_64_69Record}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setTestCase_64_69Id(org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record value) {
 		if (value == null) {
@@ -80,7 +79,10 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
 	 * REFERENCES X_TEST_CASE_64_69 (ID)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)

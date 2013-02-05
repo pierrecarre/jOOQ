@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -817299291;
+	private static final long serialVersionUID = -1576609261;
 
 	/**
 	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
@@ -44,8 +44,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setBookStoreName(org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -66,7 +65,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES T_BOOK_STORE (NAME)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE)
@@ -107,8 +109,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setBookId(org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -129,7 +130,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES T_BOOK (ID)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK)
