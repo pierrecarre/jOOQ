@@ -35,14 +35,16 @@
  */
 package org.jooq;
 
-
 /**
  * A common interface for objects (tables, records) that can be updated or
  * deleted using their primary keys.
  *
  * @param <R> The record type
  * @author Lukas Eder
+ * @deprecated - 2.7.0 - [#2122] - This marker interface is not really used and
+ *             will be removed in jOOQ 3.0
  */
+@Deprecated
 public interface Updatable<R extends Record> {
 
 }

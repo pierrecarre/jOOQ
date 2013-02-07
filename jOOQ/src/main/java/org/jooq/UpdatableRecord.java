@@ -46,7 +46,7 @@ import org.jooq.impl.Factory;
 /**
  * A common interface for records that can be stored back to the database again.
  * <p>
- * Any {@link Record} can be {@link Updatable}, if
+ * Any {@link Record} can be updatable, if
  * <p>
  * <ol>
  * <li>it represents a record from a table or view - a {@link TableRecord}</li>
@@ -74,6 +74,7 @@ import org.jooq.impl.Factory;
  * @param <R> The record type
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable<R>, TableRecord<R> {
 
     /**
