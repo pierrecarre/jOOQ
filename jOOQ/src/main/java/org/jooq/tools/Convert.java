@@ -385,6 +385,10 @@ public final class Convert {
 
                 // Various number types are converted between each other via String
                 else if (toClass == Byte.class || toClass == byte.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Byte.valueOf((byte) 1) : Byte.valueOf((byte) 0));
+                    }
+
                     try {
                         return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
                     }
@@ -393,6 +397,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Short.class || toClass == short.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Short.valueOf((short) 1) : Short.valueOf((short) 0));
+                    }
+
                     try {
                         return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
                     }
@@ -401,6 +409,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Integer.class || toClass == int.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Integer.valueOf(1) : Integer.valueOf(0));
+                    }
+
                     try {
                         return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
                     }
@@ -409,21 +421,28 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Long.class || toClass == long.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Long.valueOf(1L) : Long.valueOf(0L));
+                    }
+
                     if (java.util.Date.class.isAssignableFrom(fromClass)) {
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
                     }
-                    else {
-                        try {
-                            return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
-                        }
-                        catch (NumberFormatException e) {
-                            return null;
-                        }
+
+                    try {
+                        return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
                     }
                 }
 
                 // ... this also includes unsigned number types
                 else if (toClass == UByte.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? ubyte(1) : ubyte(0));
+                    }
+
                     try {
                         return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
                     }
@@ -432,6 +451,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == UShort.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? ushort(1) : ushort(0));
+                    }
+
                     try {
                         return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
                     }
@@ -440,6 +463,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == UInteger.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? uint(1) : uint(0));
+                    }
+
                     try {
                         return (U) uint(new BigDecimal(from.toString().trim()).longValue());
                     }
@@ -448,21 +475,28 @@ public final class Convert {
                     }
                 }
                 else if (toClass == ULong.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? ulong(1) : ulong(0));
+                    }
+
                     if (java.util.Date.class.isAssignableFrom(fromClass)) {
                         return (U) ulong(((java.util.Date) from).getTime());
                     }
-                    else {
-                        try {
-                            return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
-                        }
-                        catch (NumberFormatException e) {
-                            return null;
-                        }
+
+                    try {
+                        return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                    }
+                    catch (NumberFormatException e) {
+                        return null;
                     }
                 }
 
                 // ... and floating point / fixed point types
                 else if (toClass == Float.class || toClass == float.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Float.valueOf(1.0f) : Float.valueOf(0.0f));
+                    }
+
                     try {
                         return (U) Float.valueOf(from.toString().trim());
                     }
@@ -471,6 +505,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Double.class || toClass == double.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Double.valueOf(1.0) : Double.valueOf(0.0));
+                    }
+
                     try {
                         return (U) Double.valueOf(from.toString().trim());
                     }
@@ -479,6 +517,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == BigDecimal.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? BigDecimal.ONE : BigDecimal.ZERO);
+                    }
+
                     try {
                         return (U) new BigDecimal(from.toString().trim());
                     }
@@ -487,6 +529,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == BigInteger.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? BigInteger.ONE : BigInteger.ZERO);
+                    }
+
                     try {
                         return (U) new BigDecimal(from.toString().trim()).toBigInteger();
                     }
@@ -508,6 +554,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Character.class || toClass == char.class) {
+                    if (fromClass == Boolean.class || fromClass == boolean.class) {
+                        return (U) (((Boolean) from) ? Character.valueOf('1') : Character.valueOf('0'));
+                    }
+
                     if (from.toString().length() < 1) {
                         return null;
                     }
