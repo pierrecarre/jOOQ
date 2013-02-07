@@ -278,24 +278,19 @@ public class ConvertTest {
 
         Class<?> toArrayClass = Array.newInstance(toClass, 0).getClass();
 
-        Object[] conv2 = Convert.convert(new Object[] { from, from }, new Class[] { toClass, toClass });
         U[] conv3 = (U[]) Convert.convert(new Object[] { from, from }, toClass);
         U[] conv4 = (U[]) Convert.convertArray(new Object[] { from, from }, toClass);
         U[] conv5 = (U[]) Convert.convertArray(new Object[] { from, from }, toArrayClass);
 
-        assertEquals(2, conv2.length);
         assertEquals(2, conv3.length);
         assertEquals(2, conv4.length);
         assertEquals(2, conv5.length);
-        assertEquals(expected, conv2[0]);
-        assertEquals(expected, conv2[1]);
         assertEquals(expected, conv3[0]);
         assertEquals(expected, conv3[1]);
         assertEquals(expected, conv4[0]);
         assertEquals(expected, conv4[1]);
         assertEquals(expected, conv5[0]);
         assertEquals(expected, conv5[1]);
-        assertTrue(Object[].class.isInstance(conv2));
         assertTrue(toArrayClass.isInstance(conv3));
         assertTrue(toArrayClass.isInstance(conv4));
         assertTrue(toArrayClass.isInstance(conv5));
