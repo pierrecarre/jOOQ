@@ -373,6 +373,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testARRAYType() throws Exception {
         if (TArrays() == null) {

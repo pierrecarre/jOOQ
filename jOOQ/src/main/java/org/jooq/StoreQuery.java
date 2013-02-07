@@ -93,7 +93,10 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param <T> The array type
      * @param field The field
      * @param value The value
+     * @deprecated - 2.7.0 - [#2087] - This method will be removed from the jOOQ
+     *             3.0 API
      */
+    @Deprecated
     @Support(ORACLE)
     <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, T... value);
 
@@ -104,7 +107,10 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param <T> The array type
      * @param field The field
      * @param value The value
+     * @deprecated - 2.7.0 - [#2087] - This method will be removed from the jOOQ
+     *             3.0 API
      */
+    @Deprecated
     @Support(ORACLE)
     <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, List<T> value);
 
