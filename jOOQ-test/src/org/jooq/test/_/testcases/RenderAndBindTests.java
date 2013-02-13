@@ -302,6 +302,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, result2.getValue(1, 0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testInlinedBindValues() throws Exception {
 

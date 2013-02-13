@@ -5994,7 +5994,11 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get a list of bind values and fields
+     *
+     * @deprecated - 2.7.0 - [#2182] - This method is part of jOOQ's internal
+     *             API and will be removed in jOOQ 3.0. Do not reuse
      */
+    @Deprecated
     @Support
     public static List<Field<?>> vals(Object... values) {
         FieldList result = new FieldList();

@@ -295,6 +295,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals("Kästner 2", authors.getValue(2, TAuthor_LAST_NAME()));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testInsertConvert() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -364,6 +365,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .execute());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testInsertSelect() throws Exception {
         jOOQAbstractTest.reset = false;
