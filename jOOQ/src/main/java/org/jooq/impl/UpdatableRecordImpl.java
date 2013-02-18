@@ -68,6 +68,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return (UpdatableTable<R>) super.getTable();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     final UniqueKey<R> getMainKey() {
         return getTable().getMainKey();

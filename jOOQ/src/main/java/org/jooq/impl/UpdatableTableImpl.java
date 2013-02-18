@@ -82,6 +82,11 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
         return null;
     }
 
+    @Override
+    public final UniqueKey<R> getPrimaryKey() {
+        return getMainKey();
+    }
+
     /**
      * {@inheritDoc}
      * <p>

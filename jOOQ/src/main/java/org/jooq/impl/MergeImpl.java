@@ -451,7 +451,7 @@ implements
                 Condition condition = null;
                 if (getH2Keys().isEmpty()) {
                     if (table instanceof UpdatableTable) {
-                        UniqueKey<?> key = ((UpdatableTable<?>) table).getMainKey();
+                        UniqueKey<?> key = ((UpdatableTable<?>) table).getPrimaryKey();
                         onFields.addAll(key.getFields());
 
                         for (int i = 0; i < key.getFields().size(); i++) {

@@ -275,7 +275,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         if (updatable != null) {
             for (int i = 0; i < fields.length; i++) {
                 if (fields[i] != null) {
-                    if (updatable.getMainKey().getFields().contains(fields[i])) {
+                    if (updatable.getPrimaryKey().getFields().contains(fields[i])) {
                         mainKey[i] = true;
                     }
                 }

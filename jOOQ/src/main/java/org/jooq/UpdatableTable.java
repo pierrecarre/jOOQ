@@ -58,8 +58,20 @@ public interface UpdatableTable<R extends Record> extends Updatable<R>, Table<R>
      *
      * @return The main key. This is never <code>null</code> because
      *         {@link UpdatableTable}'s always have at least one key.
+     * @deprecated - 2.7.0 - [#1980] - The notion of a "main key" has been
+     *             removed in jOOQ 3.0. Only actual primary keys will be
+     *             considered for updatable records.
      */
+    @Deprecated
     UniqueKey<R> getMainKey();
+
+    /**
+     * Retrieve the table's <code>PRIMARY KEY</code>.
+     *
+     * @return The primary key. This is never <code>null</code> because
+     *         {@link UpdatableTable}'s always have at least one key.
+     */
+    UniqueKey<R> getPrimaryKey();
 
     /**
      * Retrieve all of the table's unique keys.
