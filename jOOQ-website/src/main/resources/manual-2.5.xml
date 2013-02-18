@@ -774,7 +774,7 @@ public class Main {
             conn = DriverManager.getConnection(url, userName, password);
 
             GuestbookFactory create = new GuestbookFactory(conn);
-            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+            Result<Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);
