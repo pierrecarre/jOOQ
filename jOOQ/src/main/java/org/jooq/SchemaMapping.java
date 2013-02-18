@@ -357,9 +357,10 @@ public class SchemaMapping implements Serializable {
      * @param table The generated table to be mapped
      * @return The configured table
      */
-    public Table<?> map(Table<?> table) {
+    @SuppressWarnings("unchecked")
+    public <R extends Record> Table<R> map(Table<R> table) {
         if (ignoreMapping) return table;
-        Table<?> result = null;
+        Table<R> result = null;
 
         if (table != null) {
             Schema schema = table.getSchema();
@@ -377,7 +378,7 @@ public class SchemaMapping implements Serializable {
                 // want to use Factory and dependent objects in a "thread-safe" manner
                 synchronized (this) {
                     if (!getTables().containsKey(key)) {
-                        Table<?> mapped = table;
+                        Table<R> mapped = table;
 
                         schemaLoop:
                         for (MappedSchema s : mapping.getSchemata()) {
@@ -389,7 +390,7 @@ public class SchemaMapping implements Serializable {
 
                                         // Ignore self-mappings and void-mappings
                                         if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
-                                            mapped = new RenamedTable(table, t.getOutput());
+                                            mapped = new RenamedTable<R>(table, t.getOutput());
                                         }
 
                                         break schemaLoop;
@@ -404,7 +405,7 @@ public class SchemaMapping implements Serializable {
                 }
             }
 
-            result = getTables().get(key);
+            result = (Table<R>) getTables().get(key);
         }
 
         return result;
