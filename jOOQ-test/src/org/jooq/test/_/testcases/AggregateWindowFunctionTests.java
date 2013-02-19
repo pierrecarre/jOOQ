@@ -59,6 +59,7 @@ import static org.jooq.impl.Factory.cumeDist;
 import static org.jooq.impl.Factory.denseRank;
 import static org.jooq.impl.Factory.firstValue;
 import static org.jooq.impl.Factory.groupConcat;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.lag;
 import static org.jooq.impl.Factory.lead;
 import static org.jooq.impl.Factory.listAgg;
@@ -68,6 +69,7 @@ import static org.jooq.impl.Factory.median;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.minDistinct;
 import static org.jooq.impl.Factory.ntile;
+import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRank;
 import static org.jooq.impl.Factory.rank;
 import static org.jooq.impl.Factory.regrAvgX;
@@ -271,6 +273,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertEquals(2, (int) result.get(0).getValue(2, Integer.class));
         assertEquals(4, (int) result.get(1).getValue(1, Integer.class));
         assertEquals(4, (int) result.get(1).getValue(2, Integer.class));
+    }
+
+    @Test
+    public void testFetchCount() throws Exception {
+        assertEquals(1, create().fetchCount(create().select(one().as("x"))));
+        assertEquals(1, create().select(one().as("x")).fetchCount());
+
+        assertEquals(4, create().fetchCount(create().select(TBook_ID(), TBook_TITLE()).from(TBook())));
+        assertEquals(4, create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchCount());
+
+        assertEquals(3, create().fetchCount(create().selectDistinct(TBook_ID(), TBook_TITLE()).from(TBook()).where(TBook_ID().in(1, 2, 3))));
+        assertEquals(2, create().fetchCount(create().selectFrom(TBook()).limit(2)));
+        assertEquals(2, create().fetchCount(create().selectFrom(TBook()).limit(2).offset(1)));
+        assertEquals(2, create().fetchCount(
+            create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().eq(1))
+            .union(
+            create().select(inline("abc")))));
     }
 
     @Test

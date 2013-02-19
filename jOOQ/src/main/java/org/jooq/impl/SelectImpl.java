@@ -141,6 +141,11 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final int fetchCount() {
+        return getDelegate().fetchCount();
+    }
+
+    @Override
     public final SelectImpl select(Field<?>... fields) {
         getQuery().addSelect(fields);
         return this;

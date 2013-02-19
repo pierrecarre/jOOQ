@@ -1624,6 +1624,30 @@ public interface FactoryOperations extends Configuration {
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
+     * Execute a {@link Select} query in the context of this factory and return
+     * a <code>COUNT(*)</code> value.
+     * <p>
+     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * calculate the <code>COUNT(*)</code> value, without modifying the original
+     * <code>SELECT</code>. An example: <code><pre>
+     * -- Original query:
+     * SELECT id, title FROM book WHERE title LIKE '%a%'
+     *
+     * -- Wrapped query:
+     * SELECT count(*) FROM (
+     *   SELECT id, title FROM book WHERE title LIKE '%a%'
+     * )
+     * </pre></code> This is particularly useful for those databases that do not
+     * support the <code>COUNT(*) OVER()</code> window function to calculate
+     * total results in paged queries.
+     *
+     * @param query The wrapped query
+     * @return The <code>COUNT(*)</code> result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount(Select<?> query) throws DataAccessException;
+
+    /**
      * Execute a query holding plain SQL.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
