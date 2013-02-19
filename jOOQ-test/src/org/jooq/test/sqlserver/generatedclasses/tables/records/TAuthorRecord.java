@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1294953602;
+	private static final long serialVersionUID = 437667006;
 
 	/**
 	 * The table column <code>dbo.t_author.ID</code>
@@ -33,7 +33,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>dbo.t_author.ID</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)
@@ -45,7 +48,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>dbo.t_author.ID</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)

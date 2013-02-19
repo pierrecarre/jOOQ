@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1638657906;
+	private static final long serialVersionUID = 2021021802;
 
 	/**
 	 * The table column <code>dbo.t_book_to_book_store.BOOK_STORE_NAME</code>
@@ -42,8 +42,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setBookStoreName(org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -64,7 +63,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * FOREIGN KEY (BOOK_STORE_NAME)
 	 * REFERENCES dbo.t_book_store (NAME)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE)
@@ -103,8 +105,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setBookId(org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -125,7 +126,10 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * FOREIGN KEY (BOOK_ID)
 	 * REFERENCES dbo.t_book (ID)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)

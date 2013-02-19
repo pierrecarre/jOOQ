@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -2090497386;
+	private static final long serialVersionUID = -1741579272;
 
 	/**
 	 * The table column <code>dbo.t_book_store.NAME</code>
@@ -27,7 +27,10 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 
 	/**
 	 * The table column <code>dbo.t_book_store.NAME</code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)

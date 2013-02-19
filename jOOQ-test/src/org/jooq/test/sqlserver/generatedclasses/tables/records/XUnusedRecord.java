@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -822323203;
+	private static final long serialVersionUID = 141870849;
 
 	/**
 	 * The table column <code>dbo.x_unused.id</code>
@@ -33,7 +33,10 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>dbo.x_unused.id</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
@@ -46,7 +49,10 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>dbo.x_unused.id</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED)
@@ -59,7 +65,10 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * The table column <code>dbo.x_unused.id</code>
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public java.util.List<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
@@ -133,7 +142,10 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * FOREIGN KEY (id_ref, name_ref)
 	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED)

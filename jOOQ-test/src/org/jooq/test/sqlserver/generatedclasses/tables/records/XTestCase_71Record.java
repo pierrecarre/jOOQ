@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1911066128;
+	private static final long serialVersionUID = -296015744;
 
 	/**
 	 * The table column <code>dbo.x_test_case_71.id</code>
@@ -56,8 +56,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record 
-	 * XTestCase_64_69Record}
+	 * @deprecated - [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
 	public void setTestCase_64_69Id(org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record value) {
 		if (value == null) {
@@ -76,7 +75,10 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES dbo.x_test_case_64_69 (id)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)

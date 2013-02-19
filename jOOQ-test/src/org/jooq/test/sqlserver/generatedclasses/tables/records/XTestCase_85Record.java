@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -972076669;
+	private static final long serialVersionUID = 1077197025;
 
 	/**
 	 * The table column <code>dbo.x_test_case_85.id</code>
@@ -63,7 +63,10 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
 	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
+	 *
+	 * @deprecated [#2040] - 2.7.0 - This method will be no longer be generated in jOOQ 3.0
 	 */
+	@Deprecated
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
 			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED)
