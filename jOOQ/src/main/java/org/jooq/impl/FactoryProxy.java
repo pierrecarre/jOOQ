@@ -473,6 +473,11 @@ public final class FactoryProxy implements FactoryOperations {
     }
 
     @Override
+    public final int fetchCount(Select<?> query) {
+        return getDelegate().fetchCount(query);
+    }
+
+    @Override
     public final int execute(String sql) {
         return getDelegate().execute(sql);
     }

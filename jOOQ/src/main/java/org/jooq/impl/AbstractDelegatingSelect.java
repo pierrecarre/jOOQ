@@ -120,6 +120,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final int fetchCount() {
+        return getDelegate().fetchCount();
+    }
+
+    @Override
     public final Result<R> getResult() {
         return getDelegate().getResult();
     }
