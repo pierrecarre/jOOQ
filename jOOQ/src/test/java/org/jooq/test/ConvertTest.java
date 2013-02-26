@@ -56,7 +56,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
-public class ConvertTest {
+public class ConvertTest extends AbstractTest {
 
     @Test
     public void testToObject() {
@@ -89,9 +89,9 @@ public class ConvertTest {
         testConversion("1.0", 1.0f, String.class);
         testConversion("1", BigInteger.ONE, String.class);
         testConversion("1", BigDecimal.ONE, String.class);
-        testConversion("1970-01-01", new Date(0), String.class);
-        testConversion("01:00:00", new Time(0), String.class);
-        testConversion("1970-01-01 01:00:00.0", new Timestamp(0), String.class);
+        testConversion(zeroDate(), new Date(0), String.class);
+        testConversion(zeroTime(), new Time(0), String.class);
+        testConversion(zeroTimestamp(), new Timestamp(0), String.class);
     }
 
     @Test
@@ -121,8 +121,6 @@ public class ConvertTest {
         testConversion(true, 1L, Boolean.class);
         testConversion(false, 0L, Boolean.class);
         testConversion(null, 2.0, Boolean.class);
-        testConversion(true, 1.0, Boolean.class);
-        testConversion(false, 0.0, Boolean.class);
         testConversion(null, BigInteger.TEN, Boolean.class);
         testConversion(true, BigInteger.ONE, Boolean.class);
         testConversion(false, BigInteger.ZERO, Boolean.class);
@@ -139,8 +137,6 @@ public class ConvertTest {
         testConversion(null, null, Byte.class);
         testConversion((byte) 0, null, byte.class);
         testConversion((byte) 1, "1", Byte.class);
-        testConversion((byte) 1, true, Byte.class);
-        testConversion((byte) 0, false, Byte.class);
         testConversion((byte) 1, (byte) 1, Byte.class);
         testConversion((byte) 1, (short) 1, Byte.class);
         testConversion((byte) 1, 1, Byte.class);
@@ -159,8 +155,6 @@ public class ConvertTest {
         testConversion(null, null, Short.class);
         testConversion((short) 0, null, short.class);
         testConversion((short) 1, "1", Short.class);
-        testConversion((short) 1, true, Short.class);
-        testConversion((short) 0, false, Short.class);
         testConversion((short) 1, (byte) 1, Short.class);
         testConversion((short) 1, (short) 1, Short.class);
         testConversion((short) 1, 1, Short.class);
@@ -179,8 +173,6 @@ public class ConvertTest {
         testConversion(null, null, Integer.class);
         testConversion(0, null, int.class);
         testConversion(1, "1", Integer.class);
-        testConversion(1, true, Integer.class);
-        testConversion(0, false, Integer.class);
         testConversion(1, (byte) 1, Integer.class);
         testConversion(1, (short) 1, Integer.class);
         testConversion(1, 1, Integer.class);
@@ -199,8 +191,6 @@ public class ConvertTest {
         testConversion(null, null, Long.class);
         testConversion(0L, null, long.class);
         testConversion(1L, "1", Long.class);
-        testConversion(1L, true, Long.class);
-        testConversion(0L, false, Long.class);
         testConversion(1L, (byte) 1, Long.class);
         testConversion(1L, (short) 1, Long.class);
         testConversion(1L, 1, Long.class);
@@ -221,8 +211,6 @@ public class ConvertTest {
     public void testToBigInteger() {
         testConversion(null, null, BigInteger.class);
         testConversion(BigInteger.ONE, "1", BigInteger.class);
-        testConversion(BigInteger.ONE, true, BigInteger.class);
-        testConversion(BigInteger.ZERO, false, BigInteger.class);
         testConversion(BigInteger.ONE, (byte) 1, BigInteger.class);
         testConversion(BigInteger.ONE, (short) 1, BigInteger.class);
         testConversion(BigInteger.ONE, 1, BigInteger.class);
@@ -240,8 +228,6 @@ public class ConvertTest {
     public void testToBigDecimal() {
         testConversion(null, null, BigDecimal.class);
         testConversion(BigDecimal.ONE, "1", BigDecimal.class);
-        testConversion(BigDecimal.ONE, true, BigDecimal.class);
-        testConversion(BigDecimal.ZERO, false, BigDecimal.class);
         testConversion(BigDecimal.ONE, (byte) 1, BigDecimal.class);
         testConversion(BigDecimal.ONE, (short) 1, BigDecimal.class);
         testConversion(BigDecimal.ONE, 1, BigDecimal.class);
