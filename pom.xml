@@ -14,7 +14,6 @@
     <artifactId>jooq-parent</artifactId>
     <version>3.2.2</version>
     <packaging>pom</packaging>
-
     <name>jOOQ Parent</name>
 
     <description>
@@ -30,13 +29,6 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
     </licenses>
 
     <scm>
@@ -180,29 +172,9 @@
     </dependencyManagement>
 
     <build>
-        <defaultGoal>deploy</defaultGoal>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <!-- <defaultGoal>deploy</defaultGoal> -->
+        <!-- <finalName>${project.artifactId}-${project.version}</finalName> -->
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <fork>true</fork>
-                    <maxmem>512m</maxmem>
-                    <meminitial>256m</meminitial>
-                    <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <debug>true</debug>
-                    <debuglevel>lines,vars,source</debuglevel>
-                    <compilerArguments>
-                        <!-- [#2413] Make compiler warnings a bit more visible
-                             But don't fail (yet) -->
-                        <Xlint:-varargs/>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
             
             <!-- If generated test sources are available, attach them to the
                  test source path -->
@@ -247,6 +219,68 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>jdk16</id>
+            <activation>
+                <jdk>1.6</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <fork>true</fork>
+                            <maxmem>512m</maxmem>
+                            <meminitial>256m</meminitial>
+                            <encoding>UTF-8</encoding>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                            <debug>true</debug>
+                            <debuglevel>lines,vars,source</debuglevel>
+                            <compilerArguments>
+                                <!-- [#2413] Make compiler warnings a bit more visible
+                                     But don't fail (yet) -->
+                                <Xlint:-varargs/>
+                            </compilerArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jdk15</id>
+            <activation>
+                <jdk>1.5</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <fork>true</fork>
+                            <maxmem>512m</maxmem>
+                            <meminitial>256m</meminitial>
+                            <encoding>UTF-8</encoding>
+                            <source>1.5</source>
+                            <target>1.5</target>
+                            <debug>true</debug>
+                            <debuglevel>lines,vars,source</debuglevel>
+                            <compilerArguments>
+                                <!-- [#2413] Make compiler warnings a bit more visible
+                                     But don't fail (yet) -->
+                                <Xlint:-varargs/>
+                            </compilerArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>release-oss</id>
             <build>
@@ -309,99 +343,5 @@
                 </plugins>
             </build>
         </profile>
-        
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxx
-                xxxxxxxxx
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-                xxxxxxxxxx
-            xxxxxxxx
-        xxxxxxxxxx
-        
-        xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxx
-            xxxxxxx
-                xxxxxxxxx
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxx
-                            xxxxxxxxx
-                                xxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-                                  xxx xxxx x xxxx xx xxx
-                                  xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        
-                                  xxxxxxxxxxx x
-                                    xxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxx
-                                    xxxxxx x xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                    xxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                                  xxxxx
-                                xxxxxxxxx
-                            xxx
-                            xxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-                xxxxxxxxxx
-            xxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
     </profiles>
 </project>
