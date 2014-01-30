@@ -68,17 +68,17 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
         this.fields = fields;
     }
 
-    @Override
+    
     public final Table<R> getTable() {
         return table;
     }
 
-    @Override
+    
     public final List<TableField<R, ?>> getFields() {
         return Arrays.asList(fields);
     }
 
-    @Override
+    
     public final TableField<R, ?>[] getFieldsArray() {
         return fields;
     }

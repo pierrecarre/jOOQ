@@ -62,12 +62,12 @@ class SelectQueryAsField<T> extends AbstractField<T> {
         this.query = query;
     }
 
-    @Override
+    
     public final Field<T> as(String alias) {
         return new FieldAlias<T>(this, alias);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
 
         // If this is already a subquery, proceed
@@ -81,7 +81,7 @@ class SelectQueryAsField<T> extends AbstractField<T> {
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
 
         // If this is already a subquery, proceed

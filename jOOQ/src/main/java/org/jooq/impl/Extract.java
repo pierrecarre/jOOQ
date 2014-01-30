@@ -66,7 +66,7 @@ class Extract extends AbstractFunction<Integer> {
         this.datePart = datePart;
     }
 
-    @Override
+    
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             case SQLITE:

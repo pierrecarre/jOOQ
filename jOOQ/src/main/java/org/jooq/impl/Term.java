@@ -51,7 +51,7 @@ import org.jooq.SQLDialect;
 enum Term {
 
     ATAN2 {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
@@ -65,7 +65,7 @@ enum Term {
         }
     },
     BIT_LENGTH {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
@@ -91,7 +91,7 @@ enum Term {
         }
     },
     CHAR_LENGTH {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
@@ -112,7 +112,7 @@ enum Term {
         }
     },
     LIST_AGG {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
@@ -143,7 +143,7 @@ enum Term {
         }
     },
     OCTET_LENGTH {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 /* [pro] xx
@@ -166,7 +166,7 @@ enum Term {
         }
     },
     ROW_NUMBER {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
                 case HSQLDB:
@@ -177,7 +177,7 @@ enum Term {
         }
     },
     STDDEV_POP {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
@@ -193,7 +193,7 @@ enum Term {
         }
     },
     STDDEV_SAMP {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
@@ -209,7 +209,7 @@ enum Term {
         }
     },
     VAR_POP {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x
@@ -225,7 +225,7 @@ enum Term {
         }
     },
     VAR_SAMP {
-        @Override
+        
         public String translate(SQLDialect dialect) {
             /* [pro] xx
             xxxxxx xxxxxxxxxxxxxxxxxx x

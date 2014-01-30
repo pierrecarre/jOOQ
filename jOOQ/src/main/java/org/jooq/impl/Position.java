@@ -64,7 +64,7 @@ class Position extends AbstractFunction<Integer> {
         this.in = in;
     }
 
-    @Override
+    
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

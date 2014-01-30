@@ -286,7 +286,7 @@ public class MockFileDatabase implements MockDataProvider {
         }.load();
     }
 
-    @Override
+    
     public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
         if (ctx.batch()) {
             throw new SQLFeatureNotSupportedException("Not yet supported");

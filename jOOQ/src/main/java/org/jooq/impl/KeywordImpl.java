@@ -64,15 +64,15 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
         this.keyword = keyword;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.keyword(keyword);
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

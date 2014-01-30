@@ -65,32 +65,32 @@ class SQLTable extends AbstractTable<Record> {
     // SQLTable API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record> as(String alias) {
         return new TableAlias<Record>(this, alias);
     }
 
-    @Override
+    
     public final Table<Record> as(String alias, String... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         return new Fields<Record>();
     }

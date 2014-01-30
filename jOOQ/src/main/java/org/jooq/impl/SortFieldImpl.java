@@ -69,31 +69,31 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         this.order = order;
     }
 
-    @Override
+    
     public final String getName() {
         return field.getName();
     }
 
-    @Override
+    
     public final SortOrder getOrder() {
         return order;
     }
 
-    @Override
+    
     public final SortField<T> nullsFirst() {
         nullsFirst = true;
         nullsLast = false;
         return this;
     }
 
-    @Override
+    
     public final SortField<T> nullsLast() {
         nullsFirst = false;
         nullsLast = true;
         return this;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (nullsFirst || nullsLast) {
             switch (context.configuration().dialect().family()) {
@@ -150,7 +150,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
 
         // [#1667] Some dialects simulate NULLS { FIRST | LAST } clauses. They
@@ -176,7 +176,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         context.visit(field);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

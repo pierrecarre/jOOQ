@@ -60,17 +60,17 @@ class NotCondition extends AbstractCondition {
         this.condition = condition;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.keyword("not(").visit(condition).sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(condition);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

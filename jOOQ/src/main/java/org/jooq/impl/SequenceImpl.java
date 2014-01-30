@@ -79,27 +79,27 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
         this.type = type;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
 
-    @Override
+    
     public final Schema getSchema() {
         return schema;
     }
 
-    @Override
+    
     public final DataType<T> getDataType() {
         return type;
     }
 
-    @Override
+    
     public final Field<T> currval() {
         return getSequence("currval");
     }
 
-    @Override
+    
     public final Field<T> nextval() {
         return getSequence("nextval");
     }
@@ -123,7 +123,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             this.method = method;
         }
 
-        @Override
+        
         final Field<T> getFunction0(Configuration configuration) {
             SQLDialect family = configuration.dialect().family();
 
@@ -213,7 +213,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

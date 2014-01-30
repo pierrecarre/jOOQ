@@ -68,7 +68,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         this.assignmentClause = assignmentClause;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (size() > 0) {
             String separator = "";
@@ -105,7 +105,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         for (Entry<Field<?>, Field<?>> entry : entrySet()) {
             context.visit(entry.getKey());
@@ -113,7 +113,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

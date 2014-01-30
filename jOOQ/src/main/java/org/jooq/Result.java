@@ -319,7 +319,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     /**
      * Whether there are any records contained in this <code>Result</code>.
      */
-    @Override
+    
     boolean isEmpty();
 
     /**

@@ -186,7 +186,7 @@ class Function<T> extends AbstractField<T> implements
     // XXX QueryPart API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void bind(BindContext context) {
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             context.visit(arguments.get(0));
@@ -205,7 +205,7 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             toSQLGroupConcat(context);
@@ -497,19 +497,19 @@ class Function<T> extends AbstractField<T> implements
         return arguments;
     }
 
-    @Override
+    
     public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
         withinGroupOrderBy.addAll(fields);
         return this;
     }
 
-    @Override
+    
     public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
         withinGroupOrderBy.addAll(Arrays.asList(fields));
         return this;
     }
 
-    @Override
+    
     public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields) {
         withinGroupOrderBy.addAll(fields);
         return this;
@@ -553,7 +553,7 @@ class Function<T> extends AbstractField<T> implements
     x
 
     xx [/pro] */
-    @Override
+    
     public final WindowPartitionByStep<T> over() {
         over = true;
         return this;
@@ -575,122 +575,122 @@ class Function<T> extends AbstractField<T> implements
     x
 
     xx [/pro] */
-    @Override
+    
     public final WindowOrderByStep<T> partitionBy(Field<?>... fields) {
         partitionBy.addAll(Arrays.asList(fields));
         return this;
     }
 
-    @Override
+    
     public final WindowOrderByStep<T> partitionByOne() {
         partitionByOne = true;
         partitionBy.add(one());
         return this;
     }
 
-    @Override
+    
     public final WindowRowsStep<T> orderBy(Field<?>... fields) {
         orderBy.addAll(fields);
         return this;
     }
 
-    @Override
+    
     public final WindowRowsStep<T> orderBy(SortField<?>... fields) {
         orderBy.addAll(Arrays.asList(fields));
         return this;
     }
 
-    @Override
+    
     public final WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields) {
         orderBy.addAll(fields);
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> rowsUnboundedPreceding() {
         rowsStart = Integer.MIN_VALUE;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> rowsPreceding(int number) {
         rowsStart = -number;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> rowsCurrentRow() {
         rowsStart = 0;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> rowsUnboundedFollowing() {
         rowsStart = Integer.MAX_VALUE;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> rowsFollowing(int number) {
         rowsStart = number;
         return this;
     }
 
-    @Override
+    
     public final WindowRowsAndStep<T> rowsBetweenUnboundedPreceding() {
         rowsUnboundedPreceding();
         return this;
     }
 
-    @Override
+    
     public final WindowRowsAndStep<T> rowsBetweenPreceding(int number) {
         rowsPreceding(number);
         return this;
     }
 
-    @Override
+    
     public final WindowRowsAndStep<T> rowsBetweenCurrentRow() {
         rowsCurrentRow();
         return this;
     }
 
-    @Override
+    
     public final WindowRowsAndStep<T> rowsBetweenUnboundedFollowing() {
         rowsUnboundedFollowing();
         return this;
     }
 
-    @Override
+    
     public final WindowRowsAndStep<T> rowsBetweenFollowing(int number) {
         rowsFollowing(number);
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> andUnboundedPreceding() {
         rowsEnd = Integer.MIN_VALUE;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> andPreceding(int number) {
         rowsEnd = -number;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> andCurrentRow() {
         rowsEnd = 0;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> andUnboundedFollowing() {
         rowsEnd = Integer.MAX_VALUE;
         return this;
     }
 
-    @Override
+    
     public final WindowFinalStep<T> andFollowing(int number) {
         rowsEnd = number;
         return this;

@@ -68,7 +68,7 @@ class RegexpLike extends AbstractCondition {
         this.pattern = pattern;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
@@ -138,12 +138,12 @@ class RegexpLike extends AbstractCondition {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(search).visit(pattern);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

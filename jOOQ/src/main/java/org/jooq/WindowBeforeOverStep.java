@@ -79,7 +79,7 @@ public interface WindowBeforeOverStep<T> extends WindowOverStep<T>, Field<T> {
     /**
      * Add an <code>OVER</code> clause
      */
-    @Override
+    
     @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     @Transition(
         name = "OVER"

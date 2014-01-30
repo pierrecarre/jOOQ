@@ -73,11 +73,11 @@ public class BindContextTest extends AbstractTest {
 
         Object value;
 
-        @Override
+        
         public void toSQL(RenderContext context) {
         }
 
-        @Override
+        
         public void bind(BindContext context) throws DataAccessException {
             value = context.data("key");
         }

@@ -101,7 +101,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final void setRecord(R record) {
         for (int i = 0; i < record.size(); i++) {
             if (record.changed(i)) {
@@ -114,40 +114,40 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         addValue(field, record.getValue(field));
     }
 
-    @Override
+    
     public final <T> void addValue(Field<T> field, T value) {
         getValues().put(field, Utils.field(value, field));
     }
 
-    @Override
+    
     public final <T> void addValue(Field<T> field, Field<T> value) {
         getValues().put(field, Utils.field(value, field));
     }
 
-    @Override
+    
     public final void setReturning() {
         setReturning(getInto().fields());
     }
 
-    @Override
+    
     public final void setReturning(Identity<R, ? extends Number> identity) {
         if (identity != null) {
             setReturning(identity.getField());
         }
     }
 
-    @Override
+    
     public final void setReturning(Field<?>... fields) {
         setReturning(Arrays.asList(fields));
     }
 
-    @Override
+    
     public final void setReturning(Collection<? extends Field<?>> fields) {
         returning.clear();
         returning.addAll(fields);
     }
 
-    @Override
+    
     public final R getReturnedRecord() {
         if (getReturnedRecords().size() == 0) {
             return null;
@@ -156,7 +156,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         return getReturnedRecords().get(0);
     }
 
-    @Override
+    
     public final Result<R> getReturnedRecords() {
         if (returned == null) {
             returned = new ResultImpl<R>(configuration(), returning);
@@ -197,7 +197,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
     }
 
-    @Override
+    
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
@@ -280,7 +280,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
     }
 
-    @Override
+    
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         if (returning.isEmpty()) {
             return super.execute(ctx, listener);
@@ -425,7 +425,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                         Utils.newRecord(into, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
-                                @Override
+                                
                                 public R operate(R record) throws RuntimeException {
                                     ((AbstractRecord) record).setValue(field, new Value<Number>(id));
                                     return record;

@@ -244,32 +244,32 @@ public final class UByte extends UNumber implements Comparable<UByte> {
         return valueOf(value);
     }
 
-    @Override
+    
     public int intValue() {
         return value;
     }
 
-    @Override
+    
     public long longValue() {
         return value;
     }
 
-    @Override
+    
     public float floatValue() {
         return value;
     }
 
-    @Override
+    
     public double doubleValue() {
         return value;
     }
 
-    @Override
+    
     public int hashCode() {
         return Short.valueOf(value).hashCode();
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -280,17 +280,17 @@ public final class UByte extends UNumber implements Comparable<UByte> {
         return false;
     }
 
-    @Override
+    
     public String toString() {
         return Short.valueOf(value).toString();
     }
 
-    @Override
+    
     public int compareTo(UByte o) {
         return (value < o.value ? -1 : (value == o.value ? 0 : 1));
     }
 
-    @Override
+    
     public BigInteger toBigInteger() {
         return BigInteger.valueOf(value);
     }

@@ -60,7 +60,7 @@ class Rollup extends AbstractFunction<Object> {
         super("rollup", SQLDataType.OTHER, fields);
     }
 
-    @Override
+    
     final Field<Object> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
             case CUBRID:

@@ -258,22 +258,22 @@ class DefaultExecuteContext implements ExecuteContext {
         LOCAL_CONFIGURATION.set(configuration);
     }
 
-    @Override
+    
     public final Map<Object, Object> data() {
         return data;
     }
 
-    @Override
+    
     public final Object data(Object key) {
         return data.get(key);
     }
 
-    @Override
+    
     public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
 
-    @Override
+    
     public final ExecuteType type() {
 
         // This can only be a routine
@@ -348,22 +348,22 @@ class DefaultExecuteContext implements ExecuteContext {
         return ExecuteType.OTHER;
     }
 
-    @Override
+    
     public final Query query() {
         return query;
     }
 
-    @Override
+    
     public final Query[] batchQueries() {
         return batchQueries;
     }
 
-    @Override
+    
     public final Routine<?> routine() {
         return routine;
     }
 
-    @Override
+    
     public final void sql(String s) {
         this.sql = s;
 
@@ -373,47 +373,47 @@ class DefaultExecuteContext implements ExecuteContext {
         }
     }
 
-    @Override
+    
     public final String sql() {
         return sql;
     }
 
-    @Override
+    
     public final String[] batchSQL() {
         return batchSQL;
     }
 
-    @Override
+    
     public final void statement(PreparedStatement s) {
         this.statement = s;
     }
 
-    @Override
+    
     public final PreparedStatement statement() {
         return statement;
     }
 
-    @Override
+    
     public final void resultSet(ResultSet rs) {
         this.resultSet = rs;
     }
 
-    @Override
+    
     public final ResultSet resultSet() {
         return resultSet;
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
 
-    @Override
+    
     public final void connectionProvider(ConnectionProvider provider) {
         this.connectionProvider = provider;
     }
 
-    @Override
+    
     public final Connection connection() {
         // All jOOQ internals are expected to get a connection through this
         // single method. It can thus be guaranteed, that every connection is
@@ -434,22 +434,22 @@ class DefaultExecuteContext implements ExecuteContext {
         return connection;
     }
 
-    @Override
+    
     public final void record(Record r) {
         this.record = r;
     }
 
-    @Override
+    
     public final Record record() {
         return record;
     }
 
-    @Override
+    
     public final int rows() {
         return rows;
     }
 
-    @Override
+    
     public final void rows(int r) {
         this.rows = r;
 
@@ -459,37 +459,37 @@ class DefaultExecuteContext implements ExecuteContext {
         }
     }
 
-    @Override
+    
     public final int[] batchRows() {
         return batchRows;
     }
 
-    @Override
+    
     public final void result(Result<?> r) {
         this.result = r;
     }
 
-    @Override
+    
     public final Result<?> result() {
         return result;
     }
 
-    @Override
+    
     public final RuntimeException exception() {
         return exception;
     }
 
-    @Override
+    
     public final void exception(RuntimeException e) {
         this.exception = e;
     }
 
-    @Override
+    
     public final SQLException sqlException() {
         return sqlException;
     }
 
-    @Override
+    
     public final void sqlException(SQLException e) {
         this.sqlException = e;
         exception(Utils.translate(sql(), e));

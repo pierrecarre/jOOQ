@@ -976,7 +976,7 @@ public class VisitContextTest extends AbstractTest {
 
     private BindContext b_ctx() {
         MockDataProvider p = new MockDataProvider() {
-            @Override
+            
             public MockResult[] execute(MockExecuteContext c) throws SQLException {
                 return new MockResult[0];
             }
@@ -1019,18 +1019,18 @@ public class VisitContextTest extends AbstractTest {
 
         List<List<Clause>> clauses = new ArrayList<List<Clause>>();
 
-        @Override
+        
         public void clauseStart(VisitContext context) {
             clauses.add(asList(context.clauses()));
         }
 
-        @Override
+        
         public void clauseEnd(VisitContext context) {}
 
-        @Override
+        
         public void visitStart(VisitContext context) {}
 
-        @Override
+        
         public void visitEnd(VisitContext context) {}
 
     }

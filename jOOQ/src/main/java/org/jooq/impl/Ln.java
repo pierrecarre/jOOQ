@@ -72,7 +72,7 @@ class Ln extends AbstractFunction<BigDecimal> {
         this.base = base;
     }
 
-    @Override
+    
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         if (base == null) {
             switch (configuration.dialect().family()) {

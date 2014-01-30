@@ -130,32 +130,32 @@ public final class UShort extends UNumber implements Comparable<UShort> {
         }
     }
 
-    @Override
+    
     public int intValue() {
         return value;
     }
 
-    @Override
+    
     public long longValue() {
         return value;
     }
 
-    @Override
+    
     public float floatValue() {
         return value;
     }
 
-    @Override
+    
     public double doubleValue() {
         return value;
     }
 
-    @Override
+    
     public int hashCode() {
         return Integer.valueOf(value).hashCode();
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -166,12 +166,12 @@ public final class UShort extends UNumber implements Comparable<UShort> {
         return false;
     }
 
-    @Override
+    
     public String toString() {
         return Integer.valueOf(value).toString();
     }
 
-    @Override
+    
     public int compareTo(UShort o) {
         return (value < o.value ? -1 : (value == o.value ? 0 : 1));
     }

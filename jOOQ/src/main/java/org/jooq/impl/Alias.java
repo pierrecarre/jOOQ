@@ -115,7 +115,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         return wrapped;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (context.declareFields() || context.declareTables()) {
             SQLDialect dialect = context.configuration().dialect();
@@ -230,7 +230,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         context.sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         if (context.declareFields() || context.declareTables()) {
             context.visit(wrapped);
@@ -240,7 +240,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         if (ctx.declareFields() || ctx.declareTables()) {
             if (wrapped instanceof Table)
@@ -256,12 +256,12 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    @Override
+    
     public final boolean declaresFields() {
         return true;
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }

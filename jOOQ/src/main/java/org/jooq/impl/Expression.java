@@ -107,7 +107,7 @@ class Expression<T> extends AbstractFunction<T> {
         this.rhs = new QueryPartList<Field<?>>(rhs);
     }
 
-    @Override
+    
     public final Field<T> add(Field<?> value) {
         if (operator == ExpressionOperator.ADD) {
             rhs.add(value);
@@ -117,7 +117,7 @@ class Expression<T> extends AbstractFunction<T> {
         return super.add(value);
     }
 
-    @Override
+    
     public final Field<T> mul(Field<? extends Number> value) {
         if (operator == ExpressionOperator.MULTIPLY) {
             rhs.add(value);
@@ -128,7 +128,7 @@ class Expression<T> extends AbstractFunction<T> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
         SQLDialect family = configuration.dialect().family();
 
@@ -277,7 +277,7 @@ class Expression<T> extends AbstractFunction<T> {
             super(operator.toSQL(), lhs.getDataType());
         }
 
-        @Override
+        
         final Field<T> getFunction0(Configuration configuration) {
             if (rhs.get(0).getDataType().isInterval()) {
                 return getIntervalExpression(configuration);
@@ -553,7 +553,7 @@ class Expression<T> extends AbstractFunction<T> {
             super(operator.toSQL(), lhs.getDataType());
         }
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             String op = operator.toSQL();
 
@@ -574,7 +574,7 @@ class Expression<T> extends AbstractFunction<T> {
             context.sql(")");
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(lhs).visit(rhs);
         }

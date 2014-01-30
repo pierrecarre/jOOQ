@@ -123,7 +123,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // XXX: Attachable API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void attach(Configuration c) {
         this.configuration = c;
 
@@ -134,12 +134,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    @Override
+    
     public final void detach() {
         attach(null);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
@@ -148,94 +148,94 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // XXX: Result API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final RecordType<R> recordType() {
         return fields;
     }
 
     @SuppressWarnings({ "rawtypes" })
-    @Override
+    
     public final Row fieldsRow() {
         return new RowImpl(fields);
     }
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return fields.field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String name) {
         return fields.field(name);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return fields.field(index);
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fields.fields().clone();
     }
 
-    @Override
+    
     public final boolean isEmpty() {
         return records.isEmpty();
     }
 
-    @Override
+    
     public final boolean isNotEmpty() {
         return !records.isEmpty();
     }
 
-    @Override
+    
     public final <T> T getValue(int index, Field<T> field) {
         return get(index).getValue(field);
     }
 
-    @Override
+    
     public final <T> T getValue(int index, Field<T> field, T defaultValue) {
         return get(index).getValue(field, defaultValue);
     }
 
-    @Override
+    
     public final Object getValue(int index, int fieldIndex) {
         return get(index).getValue(fieldIndex);
     }
 
-    @Override
+    
     public final Object getValue(int index, int fieldIndex, Object defaultValue) {
         return get(index).getValue(fieldIndex, defaultValue);
     }
 
-    @Override
+    
     public final Object getValue(int index, String fieldName) {
         return get(index).getValue(fieldName);
     }
 
-    @Override
+    
     public final Object getValue(int index, String fieldName, Object defaultValue) {
         return get(index).getValue(fieldName, defaultValue);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> List<T> getValues(Field<T> field) {
         return (List<T>) getValues(indexOrFail(fieldsRow(), field));
     }
 
-    @Override
+    
     public final <T> List<T> getValues(Field<?> field, Class<? extends T> type) {
         return Convert.convert(getValues(field), type);
     }
 
-    @Override
+    
     public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter) {
         return Convert.convert(getValues(field), converter);
     }
 
-    @Override
+    
     public final List<?> getValues(int fieldIndex) {
         List<Object> result = new ArrayList<Object>(size());
 
@@ -246,27 +246,27 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return result;
     }
 
-    @Override
+    
     public final <T> List<T> getValues(int fieldIndex, Class<? extends T> type) {
         return Convert.convert(getValues(fieldIndex), type);
     }
 
-    @Override
+    
     public final <U> List<U> getValues(int fieldIndex, Converter<?, U> converter) {
         return Convert.convert(getValues(fieldIndex), converter);
     }
 
-    @Override
+    
     public final List<?> getValues(String fieldName) {
         return getValues(field(fieldName));
     }
 
-    @Override
+    
     public final <T> List<T> getValues(String fieldName, Class<? extends T> type) {
         return Convert.convert(getValues(fieldName), type);
     }
 
-    @Override
+    
     public final <U> List<U> getValues(String fieldName, Converter<?, U> converter) {
         return Convert.convert(getValues(fieldName), converter);
     }
@@ -275,12 +275,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         records.add(record);
     }
 
-    @Override
+    
     public final String format() {
         return format(50);
     }
 
-    @Override
+    
     public final String format(int maxRecords) {
         final int COL_MIN_WIDTH = 4;
         final int COL_MAX_WIDTH = 50;
@@ -452,7 +452,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return decimalPlaces;
     }
 
-    @Override
+    
     public final String formatHTML() {
         StringBuilder sb = new StringBuilder();
 
@@ -488,17 +488,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sb.toString();
     }
 
-    @Override
+    
     public final String formatCSV() {
         return formatCSV(',', "");
     }
 
-    @Override
+    
     public final String formatCSV(char delimiter) {
         return formatCSV(delimiter, "");
     }
 
-    @Override
+    
     public final String formatCSV(char delimiter, String nullString) {
         StringBuilder sb = new StringBuilder();
 
@@ -572,7 +572,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return formatted;
     }
 
-    @Override
+    
     public final String formatJSON() {
         List<Map<String, String>> f = new ArrayList<Map<String, String>>();
         List<List<Object>> r = new ArrayList<List<Object>>();
@@ -604,7 +604,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return JSONObject.toJSONString(map);
     }
 
-    @Override
+    
     public final String formatXML() {
         StringBuilder sb = new StringBuilder();
 
@@ -652,7 +652,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return sb.toString();
     }
 
-    @Override
+    
     public final Document intoXML() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -701,7 +701,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    @Override
+    
     public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
         Attributes empty = new AttributesImpl();
 
@@ -757,7 +757,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});
     }
 
-    @Override
+    
     public final List<Map<String, Object>> intoMaps() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
@@ -770,7 +770,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K> Map<K, R> intoMap(Field<K> key) {
         int index = indexOrFail(fieldsRow(), key);
         Map<K, R> map = new LinkedHashMap<K, R>();
@@ -785,7 +785,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) {
         int kIndex = indexOrFail(fieldsRow(), key);
         int vIndex = indexOrFail(fieldsRow(), value);
@@ -801,7 +801,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @Override
+    
     public final Map<Record, R> intoMap(Field<?>[] keys) {
         if (keys == null) {
             keys = new Field[0];
@@ -825,7 +825,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @Override
+    
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
 
@@ -850,7 +850,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
         int index = indexOrFail(fieldsRow(), key);
@@ -866,7 +866,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
         int index = indexOrFail(fieldsRow(), key);
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
@@ -887,7 +887,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) {
         int kIndex = indexOrFail(fieldsRow(), key);
         int vIndex = indexOrFail(fieldsRow(), value);
@@ -910,7 +910,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @Override
+    
     public final Map<Record, Result<R>> intoGroups(Field<?>[] keys) {
         if (keys == null) {
             keys = new Field[0];
@@ -939,7 +939,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
         int index = indexOrFail(fieldsRow(), key);
@@ -960,7 +960,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @Override
+    
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
 
@@ -990,7 +990,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return map;
     }
 
-    @Override
+    
     public final Object[][] intoArray() {
         int size = size();
         Object[][] array = new Object[size][];
@@ -1002,7 +1002,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return array;
     }
 
-    @Override
+    
     public final Object[] intoArray(int fieldIndex) {
         Class<?> type = fields.fields[fieldIndex].getType();
         List<?> list = getValues(fieldIndex);
@@ -1010,18 +1010,18 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> T[] intoArray(int fieldIndex, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(fieldIndex), type);
     }
 
     @SuppressWarnings("cast")
-    @Override
+    
     public final <U> U[] intoArray(int fieldIndex, Converter<?, U> converter) {
         return (U[]) Convert.convertArray(intoArray(fieldIndex), converter);
     }
 
-    @Override
+    
     public final Object[] intoArray(String fieldName) {
         Class<?> type = field(fieldName).getType();
         List<?> list = getValues(fieldName);
@@ -1029,36 +1029,36 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> T[] intoArray(String fieldName, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(fieldName), type);
     }
 
     @SuppressWarnings("cast")
-    @Override
+    
     public final <U> U[] intoArray(String fieldName, Converter<?, U> converter) {
         return (U[]) Convert.convertArray(intoArray(fieldName), converter);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> T[] intoArray(Field<T> field) {
         return getValues(field).toArray((T[]) Array.newInstance(field.getType(), 0));
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> T[] intoArray(Field<?> field, Class<? extends T> type) {
         return (T[]) Convert.convertArray(intoArray(field), type);
     }
 
     @SuppressWarnings("cast")
-    @Override
+    
     public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
         return (U[]) Convert.convertArray(intoArray(field), converter);
     }
 
-    @Override
+    
     public final <E> List<E> into(Class<? extends E> type) {
         List<E> list = new ArrayList<E>(size());
         RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
@@ -1070,7 +1070,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return list;
     }
 
-    @Override
+    
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
         Result<Z> list = new ResultImpl<Z>(configuration(), table.fields());
 
@@ -1081,7 +1081,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return list;
     }
 
-    @Override
+    
     public final <H extends RecordHandler<? super R>> H into(H handler) {
         for (R record : this) {
             handler.next(record);
@@ -1090,12 +1090,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return handler;
     }
 
-    @Override
+    
     public final ResultSet intoResultSet() {
         return new MockResultSet(this);
     }
 
-    @Override
+    
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
         List<E> result = new ArrayList<E>();
 
@@ -1106,88 +1106,88 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return result;
     }
 
-    @Override
+    
     public final <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field) {
         return sortAsc(field, new NaturalComparator<T>());
     }
 
     @SuppressWarnings("rawtypes")
-    @Override
+    
     public final Result<R> sortAsc(int fieldIndex) {
         return sortAsc(fieldIndex, new NaturalComparator());
     }
 
     @SuppressWarnings("rawtypes")
-    @Override
+    
     public final Result<R> sortAsc(String fieldName) {
         return sortAsc(fieldName, new NaturalComparator());
     }
 
-    @Override
+    
     public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
         return sortAsc(indexOrFail(fieldsRow(), field), comparator);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
+    
     public final Result<R> sortAsc(int fieldIndex, Comparator<?> comparator) {
         return sortAsc(new RecordComparator(fieldIndex, comparator));
     }
 
-    @Override
+    
     public final Result<R> sortAsc(String fieldName, Comparator<?> comparator) {
         return sortAsc(indexOrFail(fieldsRow(), fieldName), comparator);
     }
 
-    @Override
+    
     public final Result<R> sortAsc(Comparator<? super R> comparator) {
         Collections.sort(this, comparator);
         return this;
     }
 
-    @Override
+    
     public final <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field) {
         return sortAsc(field, Collections.reverseOrder(new NaturalComparator<T>()));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
+    
     public final Result<R> sortDesc(int fieldIndex) {
         return sortAsc(fieldIndex, Collections.reverseOrder(new NaturalComparator()));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
+    
     public final Result<R> sortDesc(String fieldName) {
         return sortAsc(fieldName, Collections.reverseOrder(new NaturalComparator()));
     }
 
-    @Override
+    
     public final <T> Result<R> sortDesc(Field<T> field, Comparator<? super T> comparator) {
         return sortAsc(field, Collections.reverseOrder(comparator));
     }
 
-    @Override
+    
     public final Result<R> sortDesc(int fieldIndex, Comparator<?> comparator) {
         return sortAsc(fieldIndex, Collections.reverseOrder(comparator));
     }
 
-    @Override
+    
     public final Result<R> sortDesc(String fieldName, Comparator<?> comparator) {
         return sortAsc(fieldName, Collections.reverseOrder(comparator));
     }
 
-    @Override
+    
     public final Result<R> sortDesc(Comparator<? super R> comparator) {
         return sortAsc(Collections.reverseOrder(comparator));
     }
 
-    @Override
+    
     public final Result<R> intern(Field<?>... f) {
         return intern(fields.indexesOf(f));
     }
 
-    @Override
+    
     public final Result<R> intern(int... fieldIndexes) {
         for (int fieldIndex : fieldIndexes) {
             if (fields.fields[fieldIndex].getType() == String.class) {
@@ -1200,7 +1200,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return this;
     }
 
-    @Override
+    
     public final Result<R> intern(String... fieldNames) {
         return intern(fields.indexesOf(fieldNames));
     }
@@ -1219,7 +1219,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         @SuppressWarnings("unchecked")
-        @Override
+        
         public int compare(R record1, R record2) {
             return comparator.compare((T) record1.getValue(fieldIndex), (T) record2.getValue(fieldIndex));
         }
@@ -1230,7 +1230,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
      */
     private static class NaturalComparator<T extends Comparable<? super T>> implements Comparator<T> {
 
-        @Override
+        
         public int compare(T o1, T o2) {
             if (o1 == null && o2 == null) {
                 return 0;
@@ -1249,18 +1249,18 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // XXX Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         return format();
     }
 
-    @Override
+    
     public int hashCode() {
         return records.hashCode();
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -1278,112 +1278,112 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // XXX: List API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final int size() {
         return records.size();
     }
 
-    @Override
+    
     public final boolean contains(Object o) {
         return records.contains(o);
     }
 
-    @Override
+    
     public final Object[] toArray() {
         return records.toArray();
     }
 
-    @Override
+    
     public final <T> T[] toArray(T[] a) {
         return records.toArray(a);
     }
 
-    @Override
+    
     public final boolean add(R e) {
         return records.add(e);
     }
 
-    @Override
+    
     public final boolean remove(Object o) {
         return records.remove(o);
     }
 
-    @Override
+    
     public final boolean containsAll(Collection<?> c) {
         return records.containsAll(c);
     }
 
-    @Override
+    
     public final boolean addAll(Collection<? extends R> c) {
         return records.addAll(c);
     }
 
-    @Override
+    
     public final boolean addAll(int index, Collection<? extends R> c) {
         return records.addAll(index, c);
     }
 
-    @Override
+    
     public final boolean removeAll(Collection<?> c) {
         return records.removeAll(c);
     }
 
-    @Override
+    
     public final boolean retainAll(Collection<?> c) {
         return records.retainAll(c);
     }
 
-    @Override
+    
     public final void clear() {
         records.clear();
     }
 
-    @Override
+    
     public final R get(int index) {
         return records.get(index);
     }
 
-    @Override
+    
     public final R set(int index, R element) {
         return records.set(index, element);
     }
 
-    @Override
+    
     public final void add(int index, R element) {
         records.add(index, element);
     }
 
-    @Override
+    
     public final R remove(int index) {
         return records.remove(index);
     }
 
-    @Override
+    
     public final int indexOf(Object o) {
         return records.indexOf(o);
     }
 
-    @Override
+    
     public final int lastIndexOf(Object o) {
         return records.lastIndexOf(o);
     }
 
-    @Override
+    
     public final Iterator<R> iterator() {
         return records.iterator();
     }
 
-    @Override
+    
     public final ListIterator<R> listIterator() {
         return records.listIterator();
     }
 
-    @Override
+    
     public final ListIterator<R> listIterator(int index) {
         return records.listIterator(index);
     }
 
-    @Override
+    
     public final List<R> subList(int fromIndex, int toIndex) {
         return records.subList(fromIndex, toIndex);
     }

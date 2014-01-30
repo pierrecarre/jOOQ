@@ -64,7 +64,7 @@ class LTrim extends AbstractFunction<String> {
         this.argument = argument;
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
             case FIREBIRD:

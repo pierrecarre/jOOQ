@@ -61,7 +61,7 @@ class Least<T> extends AbstractFunction<T> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
 
         // In any dialect, a single argument is always the least

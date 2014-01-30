@@ -54,22 +54,22 @@ class CaseImpl implements Case {
     CaseImpl() {
     }
 
-    @Override
+    
     public final <V> CaseValueStep<V> value(V value) {
         return value(Utils.field(value));
     }
 
-    @Override
+    
     public final <V> CaseValueStep<V> value(Field<V> value) {
         return new CaseValueStepImpl<V>(value);
     }
 
-    @Override
+    
     public final <T> CaseConditionStep<T> when(Condition condition, T result) {
         return when(condition, Utils.field(result));
     }
 
-    @Override
+    
     public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
         return new CaseConditionStepImpl<T>(condition, result);
     }

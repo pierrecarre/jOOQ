@@ -67,7 +67,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         this.table = table;
     }
 
-    @Override
+    
     public final Table<R> getTable() {
         return table;
     }
@@ -75,7 +75,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /*
      * Subclasses may override this method
      */
-    @Override
+    
     public Row fieldsRow() {
         return fields;
     }
@@ -84,19 +84,19 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Subclasses may override this method
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public Row valuesRow() {
         return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final R original() {
         return (R) super.original();
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) {
         return key.fetchParent((R) this);
     }

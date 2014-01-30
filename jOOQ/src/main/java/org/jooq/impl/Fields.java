@@ -73,12 +73,12 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         this.fields = fields.toArray(new Field[fields.size()]);
     }
 
-    @Override
+    
     public final int size() {
         return fields.length;
     }
 
-    @Override
+    
     @SuppressWarnings("unchecked")
     public final <T> Field<T> field(Field<T> field) {
         if (field == null) {
@@ -103,7 +103,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return null;
     }
 
-    @Override
+    
     public final Field<?> field(String name) {
         if (name == null) {
             return null;
@@ -118,7 +118,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return null;
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index];
@@ -127,12 +127,12 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return null;
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fields;
     }
 
-    @Override
+    
     public final Field<?>[] fields(Field<?>... f) {
         Field<?>[] result = new Field[f.length];
 
@@ -143,7 +143,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return result;
     }
 
-    @Override
+    
     public final Field<?>[] fields(String... f) {
         Field<?>[] result = new Field[f.length];
 
@@ -154,7 +154,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return result;
     }
 
-    @Override
+    
     public final Field<?>[] fields(int... f) {
         Field<?>[] result = new Field[f.length];
 
@@ -165,7 +165,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return result;
     }
 
-    @Override
+    
     public final int indexOf(Field<?> field) {
 
         // Get an exact match, or a field with a similar name
@@ -183,12 +183,12 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return -1;
     }
 
-    @Override
+    
     public final int indexOf(String fieldName) {
         return indexOf(field(fieldName));
     }
 
-    @Override
+    
     public final Class<?>[] types() {
         int size = fields.length;
         Class<?>[] result = new Class[size];
@@ -200,17 +200,17 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return result;
     }
 
-    @Override
+    
     public final Class<?> type(int fieldIndex) {
         return fieldIndex >= 0 && fieldIndex < size() ? field(fieldIndex).getType() : null;
     }
 
-    @Override
+    
     public final Class<?> type(String fieldName) {
         return type(indexOrFail(this, fieldName));
     }
 
-    @Override
+    
     public final DataType<?>[] dataTypes() {
         int size = fields.length;
         DataType<?>[] result = new DataType[size];
@@ -222,12 +222,12 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return result;
     }
 
-    @Override
+    
     public final DataType<?> dataType(int fieldIndex) {
         return fieldIndex >= 0 && fieldIndex < size() ? field(fieldIndex).getDataType() : null;
     }
 
-    @Override
+    
     public final DataType<?> dataType(String fieldName) {
         return dataType(indexOrFail(this, fieldName));
     }
@@ -253,17 +253,17 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         new QueryPartList<Field<?>>(fields).toSQL(context);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         new QueryPartList<Field<?>>(fields).bind(context);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

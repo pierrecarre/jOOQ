@@ -67,12 +67,12 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
         this.arguments = arguments;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.visit(getFunction0(ctx.configuration()));
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         ctx.visit(getFunction0(ctx.configuration()));
     }

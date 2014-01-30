@@ -70,7 +70,7 @@ class QualifiedField<T> extends AbstractField<T> {
     // Field API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         String separator = "";
         for (String string : sql) {
@@ -81,6 +81,6 @@ class QualifiedField<T> extends AbstractField<T> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 }

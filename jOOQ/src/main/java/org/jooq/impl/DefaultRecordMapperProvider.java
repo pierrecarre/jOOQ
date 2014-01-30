@@ -53,7 +53,7 @@ import org.jooq.RecordType;
  */
 public class DefaultRecordMapperProvider implements RecordMapperProvider {
 
-    @Override
+    
     public final <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
         return new DefaultRecordMapper<R, E>(rowType, type);
     }

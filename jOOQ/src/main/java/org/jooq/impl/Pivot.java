@@ -98,12 +98,12 @@ implements
     // XXX: Table API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(pivot(context.configuration()));
     }
@@ -138,14 +138,14 @@ implements
          */
         private static final long serialVersionUID = -5930286639571867314L;
 
-        @Override
+        
         public void toSQL(RenderContext ctx) {
             ctx.declareTables(true)
                .visit(select(ctx.configuration()))
                .declareTables(false);
         }
 
-        @Override
+        
         public void bind(BindContext ctx) throws DataAccessException {
             ctx.declareTables(true)
                .visit(select(ctx.configuration()))
@@ -286,23 +286,23 @@ implements
             super("pivot");
         }
 
-        @Override
+        
         public final Class<? extends Record> getRecordType() {
             return RecordImpl.class;
         }
 
-        @Override
+        
         public final Table<Record> as(String as) {
             return new TableAlias<Record>(this, as);
         }
 
-        @Override
+        
         @Support
         public final Table<Record> as(String as, String... fieldAliases) {
             return new TableAlias<Record>(this, as, fieldAliases);
         }
 
-        @Override
+        
         final Fields<Record> fields0() {
             return Pivot.this.fields0();
         }
@@ -316,27 +316,27 @@ implements
         return field.equal(pivot.field(field));
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }
 
-    @Override
+    
     public final void bind(BindContext context) throws DataAccessException {
         context.visit(pivot(context.configuration()));
     }
 
-    @Override
+    
     public final Table<Record> as(String alias) {
         return new TableAlias<Record>(this, alias, true);
     }
 
-    @Override
+    
     public final Table<Record> as(String alias, String... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases, true);
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         return new Fields<Record>();
     }

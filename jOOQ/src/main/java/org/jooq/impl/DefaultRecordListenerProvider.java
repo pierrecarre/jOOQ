@@ -92,7 +92,7 @@ public class DefaultRecordListenerProvider implements RecordListenerProvider, Se
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final RecordListener provide() {
         return listener;
     }
@@ -100,7 +100,7 @@ public class DefaultRecordListenerProvider implements RecordListenerProvider, Se
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public String toString() {
         return listener.toString();
     }

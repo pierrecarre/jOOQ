@@ -96,7 +96,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         super(table);
     }
 
-    @Override
+    
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public Record key() {
         RecordImpl result = new RecordImpl(getPrimaryKey().getFields());
@@ -104,30 +104,30 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return result;
     }
 
-    @Override
+    
     public final <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) {
         return Utils.filterOne(fetchChildren(key));
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) {
         return key.fetchChildren((R) this);
     }
 
-    @Override
+    
     final UniqueKey<R> getPrimaryKey() {
         return getTable().getPrimaryKey();
     }
 
-    @Override
+    
     public final int store() {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, STORE)
         .operate(new RecordOperation<Record, RuntimeException>() {
 
-            @Override
+            
             public Record operate(Record record) throws RuntimeException {
                 result[0] = store0();
                 return record;
@@ -137,12 +137,12 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return result[0];
     }
 
-    @Override
+    
     public final int insert() {
         return storeInsert();
     }
 
-    @Override
+    
     public final int update() {
         return storeUpdate(getPrimaryKey().getFieldsArray());
     }
@@ -194,7 +194,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         delegate(configuration(), (Record) this, INSERT)
         .operate(new RecordOperation<Record, RuntimeException>() {
 
-            @Override
+            
             public Record operate(Record record) throws RuntimeException {
                 result[0] = storeInsert0();
                 return record;
@@ -253,7 +253,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         delegate(configuration(), (Record) this, UPDATE)
         .operate(new RecordOperation<Record, RuntimeException>() {
 
-            @Override
+            
             public Record operate(Record record) throws RuntimeException {
                 result[0] = storeUpdate0(keys);
                 return record;
@@ -373,14 +373,14 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return result;
     }
 
-    @Override
+    
     public final int delete() {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, DELETE)
         .operate(new RecordOperation<Record, RuntimeException>() {
 
-            @Override
+            
             public Record operate(Record record) throws RuntimeException {
                 result[0] = delete0();
                 return record;
@@ -423,12 +423,12 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
     }
 
-    @Override
+    
     public final void refresh() {
         refresh(fields.fields.fields);
     }
 
-    @Override
+    
     public final void refresh(final Field<?>... f) {
         SelectQuery<Record> select = create().selectQuery();
         select.addSelect(f);
@@ -440,7 +440,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             delegate(configuration(), (Record) this, REFRESH)
                 .operate(new RecordOperation<Record, RuntimeException>() {
-                    @Override
+                    
                     public Record operate(Record record) throws RuntimeException {
                         setValues(f, source);
                         return record;
@@ -464,12 +464,12 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return result;
     }
 
-    @Override
+    
     public final R copy() {
         return Utils.newRecord(getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
-        	@Override
+        	
             public R operate(R copy) throws RuntimeException {
                 // Copy all fields. This marks them all as isChanged, which is important
                 List<TableField<R, ?>> key = getPrimaryKey().getFields();

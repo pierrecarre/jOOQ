@@ -62,7 +62,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
         super("current_timestamp", SQLDataType.TIMESTAMP);
     }
 
-    @Override
+    
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

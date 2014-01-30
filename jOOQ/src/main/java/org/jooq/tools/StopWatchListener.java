@@ -58,87 +58,87 @@ public class StopWatchListener implements ExecuteListener {
 
     private final StopWatch watch = new StopWatch();
 
-    @Override
+    
     public void start(ExecuteContext ctx) {
         watch.splitTrace("Initialising");
     }
 
-    @Override
+    
     public void renderStart(ExecuteContext ctx) {
         watch.splitTrace("Rendering query");
     }
 
-    @Override
+    
     public void renderEnd(ExecuteContext ctx) {
         watch.splitTrace("Query rendered");
     }
 
-    @Override
+    
     public void prepareStart(ExecuteContext ctx) {
         watch.splitTrace("Preparing statement");
     }
 
-    @Override
+    
     public void prepareEnd(ExecuteContext ctx) {
         watch.splitTrace("Statement prepared");
     }
 
-    @Override
+    
     public void bindStart(ExecuteContext ctx) {
         watch.splitTrace("Binding variables");
     }
 
-    @Override
+    
     public void bindEnd(ExecuteContext ctx) {
         watch.splitTrace("Variables bound");
     }
 
-    @Override
+    
     public void executeStart(ExecuteContext ctx) {
         watch.splitTrace("Executing query");
     }
 
-    @Override
+    
     public void executeEnd(ExecuteContext ctx) {
         watch.splitDebug("Query executed");
     }
 
-    @Override
+    
     public void fetchStart(ExecuteContext ctx) {
         watch.splitTrace("Fetching results");
     }
 
-    @Override
+    
     public void resultStart(ExecuteContext ctx) {
         watch.splitTrace("Fetching result");
     }
 
-    @Override
+    
     public void recordStart(ExecuteContext ctx) {
         watch.splitTrace("Fetching record");
     }
 
-    @Override
+    
     public void recordEnd(ExecuteContext ctx) {
         watch.splitTrace("Record fetched");
     }
 
-    @Override
+    
     public void resultEnd(ExecuteContext ctx) {
         watch.splitTrace("Result fetched");
     }
 
-    @Override
+    
     public void fetchEnd(ExecuteContext ctx) {
         watch.splitTrace("Results fetched");
     }
 
-    @Override
+    
     public void end(ExecuteContext ctx) {
         watch.splitDebug("Finishing");
     }
 
-    @Override
+    
     public void exception(ExecuteContext ctx) {
         watch.splitDebug("Exception");
     }

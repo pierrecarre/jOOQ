@@ -134,7 +134,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     // ------------------------------------------------------------------------
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final List<ForeignKey<Record, ?>> getReferences() {
         List<ForeignKey<?, ?>> result = new ArrayList<ForeignKey<?, ?>>();
 
@@ -144,7 +144,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         return (List) result;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         JoinType translatedType = translateType(context);
         Clause translatedClause = translateClause(translatedType);
@@ -335,7 +335,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) throws DataAccessException {
         context.visit(lhs).visit(rhs).visit(rhsPartitionBy);
 
@@ -347,27 +347,27 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final Table<Record> as(String alias) {
         return new TableAlias<Record>(this, alias, true);
     }
 
-    @Override
+    
     public final Table<Record> as(String alias, String... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases, true);
     }
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         Field<?>[] l = lhs.asTable().fields();
         Field<?>[] r = rhs.asTable().fields();
@@ -379,7 +379,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         return new Fields<Record>(all);
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }
@@ -401,36 +401,36 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     x
 
     xx [/pro] */
-    @Override
+    
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);
         return this;
     }
 
-    @Override
+    
     public final JoinTable on(Field<Boolean> c) {
         return on(condition(c));
     }
 
-    @Override
+    
     public final JoinTable on(String sql) {
         and(sql);
         return this;
     }
 
-    @Override
+    
     public final JoinTable on(String sql, Object... bindings) {
         and(sql, bindings);
         return this;
     }
 
-    @Override
+    
     public final JoinTable on(String sql, QueryPart... parts) {
         and(sql, parts);
         return this;
     }
 
-    @Override
+    
     public final JoinTable onKey() throws DataAccessException {
         List<?> leftToRight = lhs.getReferencesTo(rhs);
         List<?> rightToLeft = rhs.getReferencesTo(lhs);
@@ -445,7 +445,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         throw onKeyException();
     }
 
-    @Override
+    
     public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         if (keyFields != null && keyFields.length > 0) {
             if (keyFields[0].getTable().equals(lhs)) {
@@ -468,7 +468,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final JoinTable onKey(ForeignKey<?, ?> key) {
         JoinTable result = this;
 
@@ -486,105 +486,105 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         return new DataAccessException("Key ambiguous between tables " + lhs + " and " + rhs);
     }
 
-    @Override
+    
     public final JoinTable using(Field<?>... fields) {
         return using(asList(fields));
     }
 
-    @Override
+    
     public final JoinTable using(Collection<? extends Field<?>> fields) {
         using.addAll(fields);
         return this;
     }
 
-    @Override
+    
     public final JoinTable and(Condition c) {
         condition.addConditions(c);
         return this;
     }
 
-    @Override
+    
     public final JoinTable and(Field<Boolean> c) {
         return and(condition(c));
     }
 
-    @Override
+    
     public final JoinTable and(String sql) {
         return and(condition(sql));
     }
 
-    @Override
+    
     public final JoinTable and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
-    @Override
+    
     public final JoinTable and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
-    @Override
+    
     public final JoinTable andNot(Condition c) {
         return and(c.not());
     }
 
-    @Override
+    
     public final JoinTable andNot(Field<Boolean> c) {
         return andNot(condition(c));
     }
 
-    @Override
+    
     public final JoinTable andExists(Select<?> select) {
         return and(exists(select));
     }
 
-    @Override
+    
     public final JoinTable andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
-    @Override
+    
     public final JoinTable or(Condition c) {
         condition.addConditions(Operator.OR, c);
         return this;
     }
 
-    @Override
+    
     public final JoinTable or(Field<Boolean> c) {
         return or(condition(c));
     }
 
-    @Override
+    
     public final JoinTable or(String sql) {
         return or(condition(sql));
     }
 
-    @Override
+    
     public final JoinTable or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
-    @Override
+    
     public final JoinTable or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
-    @Override
+    
     public final JoinTable orNot(Condition c) {
         return or(c.not());
     }
 
-    @Override
+    
     public final JoinTable orNot(Field<Boolean> c) {
         return orNot(condition(c));
     }
 
-    @Override
+    
     public final JoinTable orExists(Select<?> select) {
         return or(exists(select));
     }
 
-    @Override
+    
     public final JoinTable orNotExists(Select<?> select) {
         return or(notExists(select));
     }

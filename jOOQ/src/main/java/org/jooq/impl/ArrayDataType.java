@@ -63,13 +63,13 @@ class ArrayDataType<T> extends DefaultDataType<T[]> {
         this.elementType = elementType;
     }
 
-    @Override
+    
     public final String getTypeName(Configuration configuration) {
         String typeName = elementType.getTypeName(configuration);
         return getArrayType(configuration, typeName);
     }
 
-    @Override
+    
     public final String getCastTypeName(Configuration configuration) {
         String castTypeName = elementType.getCastTypeName(configuration);
         return getArrayType(configuration, castTypeName);

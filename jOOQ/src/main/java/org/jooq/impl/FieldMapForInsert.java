@@ -67,7 +67,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     FieldMapForInsert() {
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         boolean indent = (size() > 1);
 
@@ -132,13 +132,13 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
         context.sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         visitAll(context, keySet());
         visitAll(context, values());
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

@@ -61,27 +61,27 @@ class FieldAlias<T> extends AbstractField<T> {
         this.alias = new Alias<Field<T>>(field, alias, false);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(alias);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(alias);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 
-    @Override
+    
     public final Field<T> as(String as) {
         return alias.wrapped().as(as);
     }
 
-    @Override
+    
     public final boolean declaresFields() {
         return true;
     }

@@ -63,22 +63,22 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
         this.field = field;
     }
 
-    @Override
+    
     public final Table<R> getTable() {
         return table;
     }
 
-    @Override
+    
     public final TableField<R, T> getField() {
         return field;
     }
 
-    @Override
+    
     public int hashCode() {
         return toString().hashCode();
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -91,7 +91,7 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
         return false;
     }
 
-    @Override
+    
     public String toString() {
         return field.toString();
     }

@@ -69,7 +69,7 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
         this.references = new ArrayList<ForeignKey<?, R>>();
     }
 
-    @Override
+    
     public final List<ForeignKey<?, R>> getReferences() {
         return Collections.unmodifiableList(references);
     }
@@ -78,7 +78,7 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
     // XXX: Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("UNIQUE KEY (");

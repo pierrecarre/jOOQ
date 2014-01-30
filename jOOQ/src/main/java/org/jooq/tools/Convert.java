@@ -413,7 +413,7 @@ public final class Convert {
         }
 
         @SuppressWarnings("unchecked")
-        @Override
+        
         public U from(Object from) {
             if (from == null) {
 
@@ -747,18 +747,18 @@ public final class Convert {
             throw fail(from, toClass);
         }
 
-        @Override
+        
         public Object to(U to) {
             return to;
         }
 
-        @Override
+        
         public Class<Object> fromType() {
             return Object.class;
         }
 
         @SuppressWarnings("unchecked")
-        @Override
+        
         public Class<U> toType() {
             return (Class<U>) toClass;
         }

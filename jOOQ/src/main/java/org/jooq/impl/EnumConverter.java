@@ -75,7 +75,7 @@ public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
         }
     }
 
-    @Override
+    
     public final U from(T databaseObject) {
         return lookup.get(databaseObject);
     }
@@ -86,7 +86,7 @@ public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public T to(U userObject) {
         if (userObject == null) {
             return null;
@@ -99,12 +99,12 @@ public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
         }
     }
 
-    @Override
+    
     public final Class<T> fromType() {
         return fromType;
     }
 
-    @Override
+    
     public final Class<U> toType() {
         return toType;
     }

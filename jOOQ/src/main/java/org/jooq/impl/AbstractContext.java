@@ -72,37 +72,37 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     // XXX Context API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
 
-    @Override
+    
     public final Map<Object, Object> data() {
         return data;
     }
 
-    @Override
+    
     public final Object data(Object key) {
         return data.get(key);
     }
 
-    @Override
+    
     public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
 
-    @Override
+    
     public /* non-final */ C start(Clause clause) {
         return (C) this;
     }
 
-    @Override
+    
     public /* non-final */ C end(Clause clause) {
         return (C) this;
     }
 
-    @Override
+    
     public /* non-final */ C visit(QueryPart part) {
         if (part != null) {
             QueryPartInternal internal = (QueryPartInternal) part;
@@ -135,45 +135,45 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     protected abstract void visit0(QueryPartInternal internal);
 
-    @Override
+    
     public final boolean declareFields() {
         return declareFields;
     }
 
-    @Override
+    
     public final C declareFields(boolean d) {
         this.declareFields = d;
         return (C) this;
     }
 
-    @Override
+    
     public final boolean declareTables() {
         return declareTables;
     }
 
-    @Override
+    
     public final C declareTables(boolean d) {
         this.declareTables = d;
         return (C) this;
     }
 
-    @Override
+    
     public final boolean subquery() {
         return subquery;
     }
 
-    @Override
+    
     public final C subquery(boolean s) {
         this.subquery = s;
         return (C) this;
     }
 
-    @Override
+    
     public final int nextIndex() {
         return ++index;
     }
 
-    @Override
+    
     public final int peekIndex() {
         return index + 1;
     }

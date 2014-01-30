@@ -67,12 +67,12 @@ class BatchMultiple implements Batch {
         this.queries = queries;
     }
 
-    @Override
+    
     public final int size() {
         return queries.length;
     }
 
-    @Override
+    
     public final int[] execute() {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, queries);
         ExecuteListener listener = new ExecuteListeners(ctx);

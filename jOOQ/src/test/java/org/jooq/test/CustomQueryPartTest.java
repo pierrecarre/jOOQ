@@ -63,12 +63,12 @@ public class CustomQueryPartTest extends AbstractTest {
     public void testCustomQueryPart() throws Exception {
         QueryPart p = new CustomQueryPart() {
 
-            @Override
+            
             public void toSQL(RenderContext ctx) {
                 ctx.visit(val("abc"));
             }
 
-            @Override
+            
             public void bind(BindContext ctx) {
                 ctx.visit(val("abc"));
             }

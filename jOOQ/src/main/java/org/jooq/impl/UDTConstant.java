@@ -63,7 +63,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         super(value, value.getUDT().getDataType());
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
@@ -154,7 +154,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         switch (context.configuration().dialect().family()) {
 

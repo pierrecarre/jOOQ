@@ -67,37 +67,37 @@ class DefaultRecordContext implements RecordContext {
         this.records = records;
     }
 
-    @Override
+    
     public final Map<Object, Object> data() {
         return data;
     }
 
-    @Override
+    
     public final Object data(Object key) {
         return data.get(key);
     }
 
-    @Override
+    
     public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
 
-    @Override
+    
     public final ExecuteType type() {
         return type;
     }
 
-    @Override
+    
     public final Record record() {
         return records != null && records.length > 0 ? records[0] : null;
     }
 
-    @Override
+    
     public final Record[] batchRecords() {
         return records;
     }

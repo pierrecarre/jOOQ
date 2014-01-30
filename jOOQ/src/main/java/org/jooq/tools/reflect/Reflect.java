@@ -429,7 +429,7 @@ public class Reflect {
         final boolean isMap = (object instanceof Map);
         final InvocationHandler handler = new InvocationHandler() {
             @SuppressWarnings("null")
-            @Override
+            
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 String name = method.getName();
 
@@ -507,7 +507,7 @@ public class Reflect {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public int hashCode() {
         return object.hashCode();
     }
@@ -515,7 +515,7 @@ public class Reflect {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public boolean equals(Object obj) {
         if (obj instanceof Reflect) {
             return object.equals(((Reflect) obj).get());
@@ -527,7 +527,7 @@ public class Reflect {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public String toString() {
         return object.toString();
     }

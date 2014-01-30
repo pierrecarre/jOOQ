@@ -73,7 +73,7 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
         this.table = table;
     }
 
-    @Override
+    
     public final Table<R> getTable() {
         return table;
     }
@@ -82,12 +82,12 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
 
@@ -100,14 +100,14 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
         context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, null);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

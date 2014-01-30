@@ -80,7 +80,7 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Override
+    
     @Support({ CUBRID, POSTGRES })
     @Transition(
         name = "OVER"

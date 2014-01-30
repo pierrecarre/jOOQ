@@ -273,7 +273,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         throw new MappingException("No matching constructor found on type " + type + " for record " + this);
     }
 
-    @Override
+    
     public final E map(R record) {
         if (record == null) {
             return null;
@@ -303,7 +303,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ArrayMapper implements RecordMapper<R, E> {
 
-        @Override
+        
         public final E map(R record) {
             int size = record.size();
             Class<?> componentType = type.getComponentType();
@@ -338,7 +338,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.localDelegate = new MutablePOJOMapper(null);
         }
 
-        @Override
+        
         public final E map(R record) {
             E previous = instance;
 
@@ -388,7 +388,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        @Override
+        
         public final E map(R record) {
             try {
                 E result = instance != null ? instance : constructor.newInstance();
@@ -463,7 +463,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.parameterTypes = parameterTypes;
         }
 
-        @Override
+        
         public final E map(R record) {
             try {
                 Object[] converted = Convert.convert(record.intoArray(), parameterTypes);
@@ -515,7 +515,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        @Override
+        
         public final E map(R record) {
             try {
                 for (int i = 0; i < fields.length; i++) {

@@ -80,7 +80,7 @@ public class ControlFlowSignal extends RuntimeException {
     }
 
     @SuppressWarnings("sync-override")
-    @Override
+    
     public Throwable fillInStackTrace() {
 
         // Prevent "expensive" operation of filling in a stack trace for signals

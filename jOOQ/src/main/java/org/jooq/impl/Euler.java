@@ -63,7 +63,7 @@ class Euler extends AbstractFunction<BigDecimal> {
         super("e", SQLDataType.NUMERIC);
     }
 
-    @Override
+    
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

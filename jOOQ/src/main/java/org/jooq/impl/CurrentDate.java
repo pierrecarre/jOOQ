@@ -62,7 +62,7 @@ class CurrentDate extends AbstractFunction<Date> {
         super("current_user", SQLDataType.DATE);
     }
 
-    @Override
+    
     final Field<Date> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

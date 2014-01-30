@@ -1041,7 +1041,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @return A hash code value for this record
      * @see #equals(Object)
      */
-    @Override
+    
     int hashCode();
 
     /**
@@ -1078,7 +1078,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #compareTo(Record)
      * @see #hashCode()
      */
-    @Override
+    
     boolean equals(Object other);
 
     /**
@@ -1152,7 +1152,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @throws ClassCastException If the argument record is not comparable with
      *             this record according to the above rules.
      */
-    @Override
+    
     int compareTo(Record record);
 
 }

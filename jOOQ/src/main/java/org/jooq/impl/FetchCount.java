@@ -70,12 +70,12 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
         this.query = query;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
@@ -103,28 +103,28 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final Class<? extends Record1<Integer>> getRecordType() {
         return (Class) RecordImpl.class;
     }
 
-    @Override
+    
     protected final Field<?>[] getFields(ResultSetMetaData rs) {
         return count;
     }
 
-    @Override
+    
     final boolean isSelectingRefCursor() {
         return false;
     }
 
-    @Override
+    
     final boolean isForUpdate() {
         return false;
     }

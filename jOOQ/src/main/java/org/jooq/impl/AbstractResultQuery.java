@@ -115,66 +115,66 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected abstract Field<?>[] getFields(ResultSetMetaData rs) throws SQLException;
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException {
         return (ResultQuery<R>) super.bind(param, value);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException {
         return (ResultQuery<R>) super.bind(index, value);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final ResultQuery<R> queryTimeout(int timeout) {
         return (ResultQuery<R>) super.queryTimeout(timeout);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final ResultQuery<R> keepStatement(boolean k) {
         return (ResultQuery<R>) super.keepStatement(k);
     }
 
-    @Override
+    
     public final ResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> resultSetConcurrency(int concurrency) {
         this.resultSetConcurrency = concurrency;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> resultSetType(int type) {
         this.resultSetType = type;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> resultSetHoldability(int holdability) {
         this.resultSetHoldability = holdability;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> intern(Field<?>... fields) {
         this.internFields = fields;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> intern(int... fieldIndexes) {
         this.internIndexes = fieldIndexes;
         return this;
     }
 
-    @Override
+    
     public final ResultQuery<R> intern(String... fieldNames) {
         this.internNames = fieldNames;
         return this;
@@ -194,7 +194,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return null;
     }
 
-    @Override
+    
     protected final void prepare(ExecuteContext ctx) throws SQLException {
 
         // [#1846] [#2265] [#2299] Users may explicitly specify how ResultSets
@@ -239,7 +239,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
     }
 
-    @Override
+    
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
 
@@ -304,7 +304,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return result != null ? result.size() : 0;
     }
 
-    @Override
+    
     protected final boolean keepResultSet() {
         return lazy;
     }
@@ -319,23 +319,23 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      */
     abstract boolean isForUpdate();
 
-    @Override
+    
     public final Result<R> fetch() {
         execute();
         return result;
     }
 
-    @Override
+    
     public final ResultSet fetchResultSet() {
         return fetchLazy().resultSet();
     }
 
-    @Override
+    
     public final Cursor<R> fetchLazy() {
         return fetchLazy(0);
     }
 
-    @Override
+    
     public final Cursor<R> fetchLazy(int fetchSize) {
         lazy = true;
         size = fetchSize;
@@ -351,7 +351,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return cursor;
     }
 
-    @Override
+    
     public final List<Result<Record>> fetchMany() {
         many = true;
 
@@ -365,105 +365,105 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return results;
     }
 
-    @Override
+    
     public final <T> List<T> fetch(Field<T> field) {
         return fetch().getValues(field);
     }
 
-    @Override
+    
     public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) {
         return fetch().getValues(field, type);
     }
 
-    @Override
+    
     public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) {
         return fetch().getValues(field, converter);
     }
 
-    @Override
+    
     public final List<?> fetch(int fieldIndex) {
         return fetch().getValues(fieldIndex);
     }
 
-    @Override
+    
     public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
         return fetch().getValues(fieldIndex, type);
     }
 
-    @Override
+    
     public final <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) {
         return fetch().getValues(fieldIndex, converter);
     }
 
-    @Override
+    
     public final List<?> fetch(String fieldName) {
         return fetch().getValues(fieldName);
     }
 
-    @Override
+    
     public final <T> List<T> fetch(String fieldName, Class<? extends T> type) {
         return fetch().getValues(fieldName, type);
     }
 
-    @Override
+    
     public final <U> List<U> fetch(String fieldName, Converter<?, U> converter) {
         return fetch().getValues(fieldName, converter);
     }
 
-    @Override
+    
     public final <T> T fetchOne(Field<T> field) {
         R record = fetchOne();
         return record == null ? null : record.getValue(field);
     }
 
-    @Override
+    
     public final <T> T fetchOne(Field<?> field, Class<? extends T> type) {
         return Convert.convert(fetchOne(field), type);
     }
 
-    @Override
+    
     public final <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) {
         return Convert.convert(fetchOne(field), converter);
     }
 
-    @Override
+    
     public final Object fetchOne(int fieldIndex) {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldIndex);
     }
 
-    @Override
+    
     public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
         return Convert.convert(fetchOne(fieldIndex), type);
     }
 
-    @Override
+    
     public final <U> U fetchOne(int fieldIndex, Converter<?, U> converter) {
         return Convert.convert(fetchOne(fieldIndex), converter);
     }
 
-    @Override
+    
     public final Object fetchOne(String fieldName) {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldName);
     }
 
-    @Override
+    
     public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
         return Convert.convert(fetchOne(fieldName), type);
     }
 
-    @Override
+    
     public final <U> U fetchOne(String fieldName, Converter<?, U> converter) {
         return Convert.convert(fetchOne(fieldName), converter);
     }
 
-    @Override
+    
     public final R fetchOne() {
         return Utils.fetchOne(fetchLazy());
     }
 
-    @Override
+    
     public final R fetchAny() {
         Cursor<R> c = fetchLazy();
 
@@ -475,108 +475,108 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
     }
 
-    @Override
+    
     public final <K> Map<K, R> fetchMap(Field<K> key) {
         return fetch().intoMap(key);
     }
 
-    @Override
+    
     public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
         return fetch().intoMap(key, value);
     }
 
-    @Override
+    
     public final Map<Record, R> fetchMap(Field<?>[] keys) {
         return fetch().intoMap(keys);
     }
 
-    @Override
+    
     public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
         return fetch().intoMap(keys, type);
     }
 
-    @Override
+    
     public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
         return fetch().intoMap(key, type);
     }
 
-    @Override
+    
     public final List<Map<String, Object>> fetchMaps() {
         return fetch().intoMaps();
     }
 
-    @Override
+    
     public final Map<String, Object> fetchOneMap() {
         R record = fetchOne();
         return record == null ? null : record.intoMap();
     }
 
-    @Override
+    
     public final <K> Map<K, Result<R>> fetchGroups(Field<K> key) {
         return fetch().intoGroups(key);
     }
 
-    @Override
+    
     public final <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) {
         return fetch().intoGroups(key, value);
     }
 
-    @Override
+    
     public final Map<Record, Result<R>> fetchGroups(Field<?>[] keys) {
         return fetch().intoGroups(keys);
     }
 
-    @Override
+    
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return fetch().intoGroups(keys, type);
     }
 
-    @Override
+    
     public final Object[][] fetchArrays() {
         return fetch().intoArray();
     }
 
-    @Override
+    
     public final Object[] fetchArray(int fieldIndex) {
         return fetch().intoArray(fieldIndex);
     }
 
-    @Override
+    
     public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
         return fetch().intoArray(fieldIndex, type);
     }
 
-    @Override
+    
     public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
         return fetch().intoArray(fieldIndex, converter);
     }
 
-    @Override
+    
     public final Object[] fetchArray(String fieldName) {
         return fetch().intoArray(fieldName);
     }
 
-    @Override
+    
     public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
         return fetch().intoArray(fieldName, type);
     }
 
-    @Override
+    
     public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
         return fetch().intoArray(fieldName, converter);
     }
 
-    @Override
+    
     public final <T> T[] fetchArray(Field<T> field) {
         return fetch().intoArray(field);
     }
 
-    @Override
+    
     public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
         return fetch().intoArray(field, type);
     }
 
-    @Override
+    
     public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
         return fetch().intoArray(field, converter);
     }
@@ -586,55 +586,55 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Class<? extends R> getRecordType() {
         return null;
     }
 
-    @Override
+    
     public final Object[] fetchOneArray() {
         R record = fetchOne();
         return record == null ? null : record.intoArray();
     }
 
-    @Override
+    
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return fetch().into(type);
     }
 
-    @Override
+    
     public final <E> E fetchOneInto(Class<? extends E> type) {
         R record = fetchOne();
         return record == null ? null : record.into(type);
     }
 
-    @Override
+    
     public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
     }
 
-    @Override
+    
     public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
         R record = fetchOne();
         return record == null ? null : record.into(table);
     }
 
-    @Override
+    
     public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         return fetch().into(handler);
     }
 
-    @Override
+    
     public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
         return fetch().map(mapper);
     }
 
-    @Override
+    
     public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
         return fetch().intoGroups(key, type);
     }
 
-    @Override
+    
     @Deprecated
     public final org.jooq.FutureResult<R> fetchLater() {
         ExecutorService executor = newSingleThreadExecutor();
@@ -642,14 +642,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return new FutureResultImpl<R>(future, executor);
     }
 
-    @Override
+    
     @Deprecated
     public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future);
     }
 
-    @Override
+    
     public final Result<R> getResult() {
         return result;
     }
@@ -659,7 +659,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      */
     private final class ResultQueryCallable implements Callable<Result<R>> {
 
-        @Override
+        
         public final Result<R> call() throws Exception {
             return fetch();
         }

@@ -89,17 +89,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     // The Attachable and Attachable internal API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void attach(Configuration c) {
         configuration = c;
     }
 
-    @Override
+    
     public final void detach() {
         attach(null);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
@@ -108,17 +108,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     // The Query API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final List<Object> getBindValues() {
         return create().extractBindValues(this);
     }
 
-    @Override
+    
     public final Map<String, Param<?>> getParams() {
         return create().extractParams(this);
     }
 
-    @Override
+    
     public final Param<?> getParam(String name) {
         return create().extractParam(this, name);
     }
@@ -128,7 +128,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Query bind(String param, Object value) {
         try {
             int index = Integer.valueOf(param);
@@ -152,7 +152,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Query bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(new Param[0]);
 
@@ -199,7 +199,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Query queryTimeout(int t) {
         this.timeout = t;
         return this;
@@ -210,7 +210,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Query keepStatement(boolean k) {
         this.keepStatement = k;
         return this;
@@ -220,7 +220,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return keepStatement;
     }
 
-    @Override
+    
     public final void close() {
         if (statement != null) {
             try {
@@ -233,7 +233,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         }
     }
 
-    @Override
+    
     public final void cancel() {
         if (statement != null) {
             try {
@@ -245,7 +245,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         }
     }
 
-    @Override
+    
     public final int execute() {
         if (isExecutable()) {
 
@@ -373,7 +373,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * Default implementation for executable check. Subclasses may override this
      * method.
      */
-    @Override
+    
     public boolean isExecutable() {
         return true;
     }
@@ -398,7 +398,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final String getSQL() {
         return getSQL(getParamType(configuration().settings()));
     }
@@ -406,7 +406,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final String getSQL(ParamType paramType) {
         switch (paramType) {
             case INDEXED:
@@ -423,7 +423,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     @Deprecated
     public final String getSQL(boolean inline) {
         return getSQL(inline ? INLINED : INDEXED);

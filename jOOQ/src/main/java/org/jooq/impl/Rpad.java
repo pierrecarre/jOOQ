@@ -73,7 +73,7 @@ class Rpad extends AbstractFunction<String> {
         this.character = (character == null ? inline(" ") : character);
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

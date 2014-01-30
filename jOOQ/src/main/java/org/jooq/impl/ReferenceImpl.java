@@ -79,34 +79,34 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         this.key = key;
     }
 
-    @Override
+    
     public final UniqueKey<O> getKey() {
         return key;
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final O fetchParent(R record) {
         return filterOne(fetchParents(record));
     }
 
-    @Override
+    
     public final Result<O> fetchParents(R... records) {
         return fetchParents(list(records));
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Result<R> fetchChildren(O record) {
         return fetchChildren(list(record));
     }
 
-    @Override
+    
     public final Result<R> fetchChildren(O... records) {
         return fetchChildren(list(records));
     }
 
-    @Override
+    
     public final Result<O> fetchParents(Collection<? extends R> records) {
         if (records == null || records.size() == 0) {
             return new ResultImpl<O>(new DefaultConfiguration(), key.getFields());
@@ -116,7 +116,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         }
     }
 
-    @Override
+    
     public final Result<R> fetchChildren(Collection<? extends O> records) {
         if (records == null || records.size() == 0) {
             return new ResultImpl<R>(new DefaultConfiguration(), getFields());
@@ -205,7 +205,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     // XXX: Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("FOREIGN KEY (");

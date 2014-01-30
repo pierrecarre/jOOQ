@@ -137,13 +137,13 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // Configuration setup
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final LoaderImpl<R> onDuplicateKeyError() {
         onDuplicate = ON_DUPLICATE_KEY_ERROR;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> onDuplicateKeyIgnore() {
         if (table.getPrimaryKey() == null) {
             throw new IllegalStateException("ON DUPLICATE KEY IGNORE only works on tables with explicit primary keys. Table is not updatable : " + table);
@@ -153,7 +153,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> onDuplicateKeyUpdate() {
         if (table.getPrimaryKey() == null) {
             throw new IllegalStateException("ON DUPLICATE KEY UPDATE only works on tables with explicit primary keys. Table is not updatable : " + table);
@@ -163,96 +163,96 @@ class LoaderImpl<R extends TableRecord<R>> implements
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> onErrorIgnore() {
         onError = ON_ERROR_IGNORE;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> onErrorAbort() {
         onError = ON_ERROR_ABORT;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> commitEach() {
         commit = COMMIT_AFTER;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> commitAfter(int number) {
         commit = COMMIT_AFTER;
         commitAfter = number;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> commitAll() {
         commit = COMMIT_ALL;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> commitNone() {
         commit = COMMIT_NONE;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadCSV(File file) throws FileNotFoundException {
         content = CONTENT_CSV;
         data = new BufferedReader(new FileReader(file));
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadCSV(String csv) {
         content = CONTENT_CSV;
         data = new BufferedReader(new StringReader(csv));
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadCSV(InputStream stream) {
         content = CONTENT_CSV;
         data = new BufferedReader(new InputStreamReader(stream));
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadCSV(Reader reader) {
         content = CONTENT_CSV;
         data = new BufferedReader(reader);
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadXML(File file) throws FileNotFoundException {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadXML(String xml) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadXML(InputStream stream) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadXML(Reader reader) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
     }
 
-    @Override
+    
     public final LoaderImpl<R> loadXML(InputSource source) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
@@ -262,7 +262,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // CSV configuration
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final LoaderImpl<R> fields(Field<?>... f) {
         this.fields = f;
         this.primaryKey = new boolean[f.length];
@@ -280,30 +280,30 @@ class LoaderImpl<R extends TableRecord<R>> implements
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> fields(Collection<? extends Field<?>> f) {
         return fields(f.toArray(new Field[f.size()]));
     }
 
-    @Override
+    
     public final LoaderImpl<R> ignoreRows(int number) {
         ignoreRows = number;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> quote(char q) {
         this.quote = q;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> separator(char s) {
         this.separator = s;
         return this;
     }
 
-    @Override
+    
     public final LoaderImpl<R> nullString(String n) {
         this.nullString = n;
         return this;
@@ -319,7 +319,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // Execution
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final LoaderImpl<R> execute() throws IOException {
         if (content == CONTENT_CSV) {
             executeCSV();
@@ -477,22 +477,22 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // Outcome
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final List<LoaderError> errors() {
         return errors;
     }
 
-    @Override
+    
     public final int processed() {
         return processed;
     }
 
-    @Override
+    
     public final int ignored() {
         return ignored;
     }
 
-    @Override
+    
     public final int stored() {
         return stored;
     }

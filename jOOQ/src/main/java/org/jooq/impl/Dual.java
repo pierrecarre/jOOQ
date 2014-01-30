@@ -71,12 +71,12 @@ class Dual extends AbstractTable<Record> {
         this.force = force;
     }
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record> as(String alias) {
         if (force) {
             return FORCED_DUAL.as(alias);
@@ -86,7 +86,7 @@ class Dual extends AbstractTable<Record> {
         }
     }
 
-    @Override
+    
     public final Table<Record> as(String alias, String... fieldAliases) {
         if (force) {
             return FORCED_DUAL.as(alias, fieldAliases);
@@ -96,12 +96,12 @@ class Dual extends AbstractTable<Record> {
         }
     }
 
-    @Override
+    
     public boolean declaresTables() {
         return true;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (force) {
             context.visit(FORCED_DUAL);
@@ -163,10 +163,10 @@ class Dual extends AbstractTable<Record> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     final Fields<Record> fields0() {
         return new Fields<Record>();
     }

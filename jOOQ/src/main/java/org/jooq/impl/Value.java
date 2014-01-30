@@ -143,7 +143,7 @@ class Value<T> implements Serializable {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -162,7 +162,7 @@ class Value<T> implements Serializable {
         return false;
     }
 
-    @Override
+    
     public int hashCode() {
         if (value == null) {
             return 0;
@@ -171,7 +171,7 @@ class Value<T> implements Serializable {
         return value.hashCode();
     }
 
-    @Override
+    
     public String toString() {
         if (isChanged) {
             return "*" + value;

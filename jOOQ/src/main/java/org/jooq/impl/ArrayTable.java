@@ -148,34 +148,34 @@ class ArrayTable extends AbstractTable<Record> {
         return new Fields<Record>(result);
     }
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record> as(String as) {
         return new ArrayTable(array, as);
     }
 
-    @Override
+    
     public final Table<Record> as(String as, String... fieldAliases) {
         return new ArrayTable(array, as, fieldAliases);
     }
 
-    @Override
+    
     public final boolean declaresTables() {
 
         // Always true, because unnested tables are always aliased
         return true;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.visit(table(ctx.configuration()));
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         ctx.visit(table(ctx.configuration()));
     }
@@ -224,7 +224,7 @@ class ArrayTable extends AbstractTable<Record> {
          */
         private static final long serialVersionUID = 6989279597964488457L;
 
-        @Override
+        
         public void toSQL(RenderContext context) {
             context.sql("(").keyword("select").sql(" * ")
                    .keyword("from").sql(" ").keyword("unnest").sql("(").visit(array).sql(") ")
@@ -240,7 +240,7 @@ class ArrayTable extends AbstractTable<Record> {
          */
         private static final long serialVersionUID = 8679404596822098711L;
 
-        @Override
+        
         public void toSQL(RenderContext context) {
             context.keyword("table(").sql("COLUMN_VALUE ");
 
@@ -284,27 +284,27 @@ class ArrayTable extends AbstractTable<Record> {
             super(alias);
         }
 
-        @Override
+        
         public final Class<? extends Record> getRecordType() {
             return RecordImpl.class;
         }
 
-        @Override
+        
         public final Table<Record> as(String as) {
             return new TableAlias<Record>(this, as);
         }
 
-        @Override
+        
         public final Table<Record> as(String as, String... fieldAliases) {
             return new TableAlias<Record>(this, as, fieldAliases);
         }
 
-        @Override
+        
         public final void bind(BindContext context) throws DataAccessException {
             context.visit(array);
         }
 
-        @Override
+        
         final Fields<Record> fields0() {
             return ArrayTable.this.fields0();
         }
@@ -315,7 +315,7 @@ class ArrayTable extends AbstractTable<Record> {
         return new ArrayTableSimulation(((Param<Object[]>) array).getValue(), alias);
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         return field;
     }

@@ -59,57 +59,57 @@ class DefaultArray implements Array {
         this.type = type;
     }
 
-    @Override
+    
     public String getBaseTypeName() {
         return DefaultDataType.getDataType(dialect, type.getComponentType()).getTypeName();
     }
 
-    @Override
+    
     public int getBaseType() {
         throw new SQLDialectNotSupportedException("Array.getBaseType()");
     }
 
-    @Override
+    
     public Object getArray() {
         return array;
     }
 
-    @Override
+    
     public Object getArray(Map<String, Class<?>> map) {
         return array;
     }
 
-    @Override
+    
     public Object getArray(long index, int count) {
         throw new SQLDialectNotSupportedException("Array.getArray(long, int)");
     }
 
-    @Override
+    
     public Object getArray(long index, int count, Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getArray(long, int, Map)");
     }
 
-    @Override
+    
     public ResultSet getResultSet() {
         throw new SQLDialectNotSupportedException("Array.getResultSet()");
     }
 
-    @Override
+    
     public ResultSet getResultSet(Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(Map)");
     }
 
-    @Override
+    
     public ResultSet getResultSet(long index, int count) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(long, int)");
     }
 
-    @Override
+    
     public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(long, int, Map)");
     }
 
-    @Override
+    
     public void free() {
     }
 }

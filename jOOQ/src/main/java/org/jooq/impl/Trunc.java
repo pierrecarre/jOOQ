@@ -73,7 +73,7 @@ class Trunc<T> extends AbstractFunction<T> {
         this.decimals = decimals;
     }
 
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
         if (decimals != null) {
             return getNumericFunction(configuration);

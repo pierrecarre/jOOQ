@@ -62,7 +62,7 @@ class BitCount extends AbstractFunction<Integer> {
         super("bit_count", SQLDataType.INTEGER, field);
     }
 
-    @Override
+    
     final Field<Integer> getFunction0(Configuration configuration) {
         final Field<?> field = getArguments()[0];
 

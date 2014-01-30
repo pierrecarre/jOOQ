@@ -65,30 +65,30 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     // BindContext API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     @Deprecated
     public final BindContext bind(Collection<? extends QueryPart> parts) {
         return visitAll(this, parts);
     }
 
-    @Override
+    
     @Deprecated
     public final BindContext bind(QueryPart[] parts) {
         return visitAll(this, parts);
     }
 
-    @Override
+    
     @Deprecated
     public final BindContext bind(QueryPart part) {
         return visit(part);
     }
 
-    @Override
+    
     protected void visit0(QueryPartInternal internal) {
         bindInternal(internal);
     }
 
-    @Override
+    
     public final BindContext bindValues(Object... values) {
 
         // [#724] When values is null, this is probably due to API-misuse
@@ -106,7 +106,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
         return this;
     }
 
-    @Override
+    
     public final BindContext bindValue(Object value, Class<?> type) {
         try {
             return bindValue0(value, type);
@@ -139,7 +139,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     // Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         toString(sb);

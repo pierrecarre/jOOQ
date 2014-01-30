@@ -68,12 +68,12 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     AbstractCondition() {}
 
-    @Override
+    
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final Condition and(Condition other) {
         return new CombinedCondition(Operator.AND, Arrays.asList(this, other));
     }
@@ -82,92 +82,92 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
      * Subclasses may override this implementation when implementing
      * A BETWEEN B AND C
      */
-    @Override
+    
     public Condition and(Field<Boolean> other) {
         return and(condition(other));
     }
 
-    @Override
+    
     public final Condition or(Condition other) {
         return new CombinedCondition(Operator.OR, Arrays.asList(this, other));
     }
 
-    @Override
+    
     public final Condition or(Field<Boolean> other) {
         return or(condition(other));
     }
 
-    @Override
+    
     public final Condition and(String sql) {
         return and(condition(sql));
     }
 
-    @Override
+    
     public final Condition and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
-    @Override
+    
     public final Condition and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
-    @Override
+    
     public final Condition or(String sql) {
         return or(condition(sql));
     }
 
-    @Override
+    
     public final Condition or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
-    @Override
+    
     public final Condition or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
-    @Override
+    
     public final Condition andNot(Condition other) {
         return and(other.not());
     }
 
-    @Override
+    
     public final Condition andNot(Field<Boolean> other) {
         return andNot(condition(other));
     }
 
-    @Override
+    
     public final Condition orNot(Condition other) {
         return or(other.not());
     }
 
-    @Override
+    
     public final Condition orNot(Field<Boolean> other) {
         return orNot(condition(other));
     }
 
-    @Override
+    
     public final Condition andExists(Select<?> select) {
         return and(exists(select));
     }
 
-    @Override
+    
     public final Condition andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
-    @Override
+    
     public final Condition orExists(Select<?> select) {
         return or(exists(select));
     }
 
-    @Override
+    
     public final Condition orNotExists(Select<?> select) {
         return or(notExists(select));
     }
 
-    @Override
+    
     public final Condition not() {
         return new NotCondition(this);
     }

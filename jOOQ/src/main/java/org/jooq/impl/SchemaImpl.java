@@ -77,25 +77,25 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         this.schemaName = name;
     }
 
-    @Override
+    
     public final String getName() {
         return schemaName;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final Table<?> getTable(String name) {
         for (Table<?> table : getTables()) {
             if (table.getName().equals(name)) {
@@ -106,7 +106,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         return null;
     }
 
-    @Override
+    
     public final UDT<?> getUDT(String name) {
         for (UDT<?> udt : getUDTs()) {
             if (udt.getName().equals(name)) {
@@ -117,7 +117,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         return null;
     }
 
-    @Override
+    
     public final Sequence<?> getSequence(String name) {
         for (Sequence<?> sequence : getSequences()) {
             if (sequence.getName().equals(name)) {
@@ -133,7 +133,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<Table<?>> getTables() {
         return Collections.emptyList();
     }
@@ -143,7 +143,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<UDT<?>> getUDTs() {
         return Collections.emptyList();
     }
@@ -153,7 +153,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<Sequence<?>> getSequences() {
         return Collections.emptyList();
     }
@@ -162,7 +162,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation
@@ -170,7 +170,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         return getName() != null ? getName().hashCode() : 0;
     }
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

@@ -89,55 +89,55 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         insertMaps = new FieldMapsForInsert();
     }
 
-    @Override
+    
     public final void newRecord() {
         insertMaps.newRecord();
     }
 
-    @Override
+    
     protected final FieldMapForInsert getValues() {
         return insertMaps.getMap();
     }
 
-    @Override
+    
     public final void addRecord(R record) {
         newRecord();
         setRecord(record);
     }
 
-    @Override
+    
     public final void onDuplicateKeyUpdate(boolean flag) {
         this.onDuplicateKeyIgnore = false;
         this.onDuplicateKeyUpdate = flag;
     }
 
-    @Override
+    
     public final void onDuplicateKeyIgnore(boolean flag) {
         this.onDuplicateKeyUpdate = false;
         this.onDuplicateKeyIgnore = flag;
     }
 
-    @Override
+    
     public final <T> void addValueForUpdate(Field<T> field, T value) {
         updateMap.put(field, Utils.field(value, field));
     }
 
-    @Override
+    
     public final <T> void addValueForUpdate(Field<T> field, Field<T> value) {
         updateMap.put(field, Utils.field(value, field));
     }
 
-    @Override
+    
     public final void addValuesForUpdate(Map<? extends Field<?>, ?> map) {
         updateMap.set(map);
     }
 
-    @Override
+    
     public final void addValues(Map<? extends Field<?>, ?> map) {
         insertMaps.getMap().set(map);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
 
         // ON DUPLICATE KEY UPDATE clause
@@ -252,7 +252,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         context.end(INSERT_RETURNING);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
 
         // ON DUPLICATE KEY UPDATE clause
@@ -341,7 +341,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
@@ -413,7 +413,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
     }
 
-    @Override
+    
     public final boolean isExecutable() {
         return insertMaps.isExecutable();
     }

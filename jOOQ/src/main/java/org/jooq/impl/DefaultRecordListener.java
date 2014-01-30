@@ -53,40 +53,40 @@ import org.jooq.RecordListener;
  */
 public class DefaultRecordListener implements RecordListener {
 
-    @Override
+    
     public void storeStart(RecordContext ctx) {}
 
-    @Override
+    
     public void storeEnd(RecordContext ctx) {}
 
-    @Override
+    
     public void insertStart(RecordContext ctx) {}
 
-    @Override
+    
     public void insertEnd(RecordContext ctx) {}
 
-    @Override
+    
     public void updateStart(RecordContext ctx) {}
 
-    @Override
+    
     public void updateEnd(RecordContext ctx) {}
 
-    @Override
+    
     public void deleteStart(RecordContext ctx) {}
 
-    @Override
+    
     public void deleteEnd(RecordContext ctx) {}
 
-    @Override
+    
     public void loadStart(RecordContext ctx) {}
 
-    @Override
+    
     public void loadEnd(RecordContext ctx) {}
 
-    @Override
+    
     public void refreshStart(RecordContext ctx) {}
 
-    @Override
+    
     public void refreshEnd(RecordContext ctx) {}
 
 }

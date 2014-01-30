@@ -108,7 +108,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: Attachable API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     final List<Attachable> getAttachables() {
         List<Attachable> result = new ArrayList<Attachable>();
 
@@ -128,37 +128,37 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: FieldProvider API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String name) {
         return fieldsRow().field(name);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return index >= 0 && index < fields.size() ? fields.field(index) : null;
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fields.fields();
     }
 
-    @Override
+    
     public final Field<?>[] fields(Field<?>... f) {
         return fields.fields(f);
     }
 
-    @Override
+    
     public final Field<?>[] fields(String... fieldNames) {
         return fields.fields(fieldNames);
     }
 
-    @Override
+    
     public final Field<?>[] fields(int... fieldIndexes) {
         return fields.fields(fieldIndexes);
     }
@@ -167,103 +167,103 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: Record API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final int size() {
         return fields.size();
     }
 
-    @Override
+    
     public final <T> T getValue(Field<T> field) {
         return getValue0(field).getValue();
     }
 
-    @Override
+    
     public final <T> T getValue(Field<T> field, T defaultValue) {
         return getValue0(field).getValue(defaultValue);
     }
 
-    @Override
+    
     public final <T> T getValue(Field<?> field, Class<? extends T> type) {
         return Convert.convert(getValue(field), type);
     }
 
-    @Override
+    
     public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
         final T result = getValue(field, type);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
         return converter.from(getValue(field));
     }
 
-    @Override
+    
     public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
         final U result = getValue(field, converter);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final Object getValue(int index) {
         return getValue0(index).getValue();
     }
 
-    @Override
+    
     public final Object getValue(int index, Object defaultValue) {
         final Object result = getValue(index);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final <T> T getValue(int index, Class<? extends T> type) {
         return Convert.convert(getValue(index), type);
     }
 
-    @Override
+    
     public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
         final T result = getValue(index, type);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final <U> U getValue(int index, Converter<?, U> converter) {
         return Convert.convert(getValue(index), converter);
     }
 
-    @Override
+    
     public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
         final U result = getValue(index, converter);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final Object getValue(String fieldName) {
         return getValue(field(fieldName));
     }
 
-    @Override
+    
     public final Object getValue(String fieldName, Object defaultValue) {
         return getValue((Field<Object>) field(fieldName), defaultValue);
     }
 
-    @Override
+    
     public final <T> T getValue(String fieldName, Class<? extends T> type) {
         return Convert.convert(getValue(fieldName), type);
     }
 
-    @Override
+    
     public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
         final T result = getValue(fieldName, type);
         return result == null ? defaultValue : result;
     }
 
-    @Override
+    
     public final <U> U getValue(String fieldName, Converter<?, U> converter) {
         return Convert.convert(getValue(fieldName), converter);
     }
 
-    @Override
+    
     public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
         final U result = getValue(fieldName, converter);
         return result == null ? defaultValue : result;
@@ -295,7 +295,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         setValue(index, (Field) field(index), value);
     }
 
-    @Override
+    
     public final <T> void setValue(Field<T> field, T value) {
         setValue(indexOrFail(fields, field), field, value);
     }
@@ -331,7 +331,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter) {
         setValue(field, converter.to(value));
     }
@@ -360,12 +360,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /*
      * This method is overridden covariantly by TableRecordImpl
      */
-    @Override
+    
     public Record original() {
         return Utils.newRecord((Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
                     .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
-            @Override
+            
             public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
                 Value<?>[] v = getValues();
 
@@ -378,22 +378,22 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         });
     }
 
-    @Override
+    
     public final <T> T original(Field<T> field) {
         return (T) original(indexOrFail(fieldsRow(), field));
     }
 
-    @Override
+    
     public final Object original(int fieldIndex) {
         return getValues()[fieldIndex].getOriginal();
     }
 
-    @Override
+    
     public final Object original(String fieldName) {
         return original(indexOrFail(fieldsRow(), fieldName));
     }
 
-    @Override
+    
     public final boolean changed() {
         for (Value<?> value : getValues()) {
             if (value.isChanged()) {
@@ -404,71 +404,71 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return false;
     }
 
-    @Override
+    
     public final boolean changed(Field<?> field) {
         return changed(indexOrFail(fieldsRow(), field));
     }
 
-    @Override
+    
     public final boolean changed(int fieldIndex) {
         return getValue0(fieldIndex).isChanged();
     }
 
-    @Override
+    
     public final boolean changed(String fieldName) {
         return changed(indexOrFail(fieldsRow(), fieldName));
     }
 
-    @Override
+    
     public final void changed(boolean changed) {
         for (Value<?> value : getValues()) {
             value.setChanged(changed);
         }
     }
 
-    @Override
+    
     public final void changed(Field<?> field, boolean changed) {
         changed(indexOrFail(fieldsRow(), field), changed);
     }
 
-    @Override
+    
     public final void changed(int fieldIndex, boolean changed) {
         getValue0(fieldIndex).setChanged(changed);
     }
 
-    @Override
+    
     public final void changed(String fieldName, boolean changed) {
         changed(indexOrFail(fieldsRow(), fieldName), changed);
     }
 
-    @Override
+    
     public final void reset() {
         for (Value<?> value : getValues()) {
             value.reset();
         }
     }
 
-    @Override
+    
     public final void reset(Field<?> field) {
         reset(indexOrFail(fieldsRow(), field));
     }
 
-    @Override
+    
     public final void reset(int fieldIndex) {
         getValue0(fieldIndex).reset();
     }
 
-    @Override
+    
     public final void reset(String fieldName) {
         reset(indexOrFail(fieldsRow(), fieldName));
     }
 
-    @Override
+    
     public final Object[] intoArray() {
         return into(Object[].class);
     }
 
-    @Override
+    
     public final Map<String, Object> intoMap() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
@@ -484,12 +484,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return map;
     }
 
-    @Override
+    
     public final <E> E into(Class<? extends E> type) {
         return (E) Utils.configuration(this).recordMapperProvider().provide(fields.fields, type).map(this);
     }
 
-    @Override
+    
     public final <E> E into(E object) {
         if (object == null) {
             throw new NullPointerException("Cannot copy Record into null");
@@ -512,12 +512,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final <R extends Record> R into(final Table<R> table) {
         return Utils.newRecord(table, configuration())
                     .operate(new RecordOperation<R, MappingException>() {
 
-            @Override
+            
             public R operate(R record) throws MappingException {
                 try {
                     for (Field<?> targetField : table.fields()) {
@@ -557,19 +557,19 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         });
     }
 
-    @Override
+    
     public final ResultSet intoResultSet() {
         ResultImpl<Record> result = new ResultImpl<Record>(configuration(), fields.fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
 
-    @Override
+    
     public final <E> E map(RecordMapper<Record, E> mapper) {
         return mapper.map(this);
     }
 
-    @Override
+    
     public final void from(Object source) {
         if (source == null) return;
 
@@ -590,7 +590,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final void from(Object source, Field<?>... f) {
         if (source == null) return;
 
@@ -645,22 +645,22 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final void from(Object source, String... fieldNames) {
         from(source, fields(fieldNames));
     }
 
-    @Override
+    
     public final void from(Object source, int... fieldIndexes) {
         from(source, fields(fieldIndexes));
     }
 
-    @Override
+    
     public final void fromMap(Map<String, ?> map) {
         from(map, fields());
     }
 
-    @Override
+    
     public final void fromMap(Map<String, ?> map, Field<?>... f) {
         for (int i = 0; i < f.length; i++) {
             String name = f[i].getName();
@@ -672,22 +672,22 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final void fromMap(Map<String, ?> map, String... fieldNames) {
         fromMap(map, fields(fieldNames));
     }
 
-    @Override
+    
     public final void fromMap(Map<String, ?> map, int... fieldIndexes) {
         fromMap(map, fields(fieldIndexes));
     }
 
-    @Override
+    
     public final void fromArray(Object... array) {
         fromArray(array, fields());
     }
 
-    @Override
+    
     public final void fromArray(Object[] array, Field<?>... f) {
         Fields accept = new Fields(f);
         int size = fields.size();
@@ -701,12 +701,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @Override
+    
     public final void fromArray(Object[] array, String... fieldNames) {
         fromArray(array, fields(fieldNames));
     }
 
-    @Override
+    
     public final void fromArray(Object[] array, int... fieldIndexes) {
         fromArray(array, fields(fieldIndexes));
     }
@@ -765,14 +765,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: Object and Comparable API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
         result.add(this);
         return result.toString();
     }
 
-    @Override
+    
     public int compareTo(Record that) {
         // Note: keep this implementation in-sync with AbstractStore.equals()!
 

@@ -125,38 +125,38 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final RecordType<R> recordType() {
         return new RowImpl(fields).fields;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final Row fieldsRow() {
         return new RowImpl(fields);
     }
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String name) {
         return fieldsRow().field(name);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return index >= 0 && index < fields.length ? fields[index] : null;
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fields.clone();
     }
 
-    @Override
+    
     public final Iterator<R> iterator() {
         if (iterator == null) {
             iterator = new CursorIterator();
@@ -166,17 +166,17 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return iterator;
     }
 
-    @Override
+    
     public final boolean hasNext() {
         return iterator().hasNext();
     }
 
-    @Override
+    
     public final Result<R> fetch() {
         return fetch(Integer.MAX_VALUE);
     }
 
-    @Override
+    
     public final R fetchOne() {
         Result<R> result = fetch(1);
 
@@ -187,7 +187,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return null;
     }
 
-    @Override
+    
     public final Result<R> fetch(int number) {
         // [#1157] This invokes listener.fetchStart(ctx), which has to be called
         // Before listener.resultStart(ctx)
@@ -209,13 +209,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return result;
     }
 
-    @Override
+    
     public final <H extends RecordHandler<? super R>> H fetchOneInto(H handler) {
         handler.next(fetchOne());
         return handler;
     }
 
-    @Override
+    
     public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         while (hasNext()) {
             fetchOneInto(handler);
@@ -224,50 +224,50 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return handler;
     }
 
-    @Override
+    
     public final <E> E fetchOne(RecordMapper<? super R, E> mapper) {
         return mapper.map(fetchOne());
     }
 
-    @Override
+    
     public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
         return fetch().map(mapper);
     }
 
-    @Override
+    
     public final <E> E fetchOneInto(Class<? extends E> clazz) {
         R record = fetchOne();
         return record == null ? null : record.into(clazz);
     }
 
-    @Override
+    
     public final <E> List<E> fetchInto(Class<? extends E> clazz) {
         return fetch().into(clazz);
     }
 
-    @Override
+    
     public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
         return fetchOne().into(table);
     }
 
-    @Override
+    
     public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
     }
 
-    @Override
+    
     public final void close() {
         JDBCUtils.safeClose(rs);
         rs = null;
         isClosed = true;
     }
 
-    @Override
+    
     public final boolean isClosed() {
         return isClosed;
     }
 
-    @Override
+    
     public final ResultSet resultSet() {
         return rs;
     }
@@ -281,12 +281,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // XXX: Wrapper methods
         // ---------------------------------------------------------------------
 
-        @Override
+        
         public final <T> T unwrap(Class<T> iface) throws SQLException {
             return ctx.resultSet().unwrap(iface);
         }
 
-        @Override
+        
         public final boolean isWrapperFor(Class<?> iface) throws SQLException {
             return ctx.resultSet().isWrapperFor(iface);
         }
@@ -295,67 +295,67 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // XXX: Informational methods
         // ---------------------------------------------------------------------
 
-        @Override
+        
         public final Statement getStatement() throws SQLException {
             return ctx.resultSet().getStatement();
         }
 
-        @Override
+        
         public final SQLWarning getWarnings() throws SQLException {
             return ctx.resultSet().getWarnings();
         }
 
-        @Override
+        
         public final void clearWarnings() throws SQLException {
             ctx.resultSet().clearWarnings();
         }
 
-        @Override
+        
         public final String getCursorName() throws SQLException {
             return ctx.resultSet().getCursorName();
         }
 
-        @Override
+        
         public final ResultSetMetaData getMetaData() throws SQLException {
             return ctx.resultSet().getMetaData();
         }
 
-        @Override
+        
         public final int findColumn(String columnLabel) throws SQLException {
             return ctx.resultSet().findColumn(columnLabel);
         }
 
-        @Override
+        
         public final void setFetchDirection(int direction) throws SQLException {
             ctx.resultSet().setFetchDirection(direction);
         }
 
-        @Override
+        
         public final int getFetchDirection() throws SQLException {
             return ctx.resultSet().getFetchDirection();
         }
 
-        @Override
+        
         public final void setFetchSize(int rows) throws SQLException {
             ctx.resultSet().setFetchSize(rows);
         }
 
-        @Override
+        
         public final int getFetchSize() throws SQLException {
             return ctx.resultSet().getFetchSize();
         }
 
-        @Override
+        
         public final int getType() throws SQLException {
             return ctx.resultSet().getType();
         }
 
-        @Override
+        
         public final int getConcurrency() throws SQLException {
             return ctx.resultSet().getConcurrency();
         }
 
-        @Override
+        
         public final int getHoldability() throws SQLException {
             return ctx.resultSet().getHoldability();
         }
@@ -364,82 +364,82 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // XXX: Navigational methods
         // ---------------------------------------------------------------------
 
-        @Override
+        
         public final boolean isBeforeFirst() throws SQLException {
             return ctx.resultSet().isBeforeFirst();
         }
 
-        @Override
+        
         public final boolean isAfterLast() throws SQLException {
             return ctx.resultSet().isAfterLast();
         }
 
-        @Override
+        
         public final boolean isFirst() throws SQLException {
             return ctx.resultSet().isFirst();
         }
 
-        @Override
+        
         public final boolean isLast() throws SQLException {
             return ctx.resultSet().isLast();
         }
 
-        @Override
+        
         public final boolean next() throws SQLException {
             return ctx.resultSet().next();
         }
 
-        @Override
+        
         public final boolean previous() throws SQLException {
             return ctx.resultSet().previous();
         }
 
-        @Override
+        
         public final void beforeFirst() throws SQLException {
             ctx.resultSet().beforeFirst();
         }
 
-        @Override
+        
         public final void afterLast() throws SQLException {
             ctx.resultSet().afterLast();
         }
 
-        @Override
+        
         public final boolean first() throws SQLException {
             return ctx.resultSet().first();
         }
 
-        @Override
+        
         public final boolean last() throws SQLException {
             return ctx.resultSet().last();
         }
 
-        @Override
+        
         public final int getRow() throws SQLException {
             return ctx.resultSet().getRow();
         }
 
-        @Override
+        
         public final boolean absolute(int row) throws SQLException {
             return ctx.resultSet().absolute(row);
         }
 
-        @Override
+        
         public final boolean relative(int r) throws SQLException {
             return ctx.resultSet().relative(r);
         }
 
-        @Override
+        
         public final void moveToInsertRow() throws SQLException {
             ctx.resultSet().moveToInsertRow();
         }
 
-        @Override
+        
         public final void moveToCurrentRow() throws SQLException {
             ctx.resultSet().moveToCurrentRow();
         }
 
-        @Override
+        
         public final void close() throws SQLException {
             ctx.rows(rows);
             listener.fetchEnd(ctx);
@@ -450,7 +450,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             Utils.safeClose(listener, ctx, keepStatement, keepResultSet);
         }
 
-        @Override
+        
         public final boolean isClosed() throws SQLException {
             return ctx.resultSet().isClosed();
         }
@@ -459,341 +459,341 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // XXX: Data retrieval
         // ---------------------------------------------------------------------
 
-        @Override
+        
         public final boolean wasNull() throws SQLException {
             return ctx.resultSet().wasNull();
         }
 
-        @Override
+        
         public final Array getArray(int columnIndex) throws SQLException {
             return ctx.resultSet().getArray(columnIndex);
         }
 
-        @Override
+        
         public final Array getArray(String columnLabel) throws SQLException {
             return ctx.resultSet().getArray(columnLabel);
         }
 
-        @Override
+        
         public final InputStream getAsciiStream(int columnIndex) throws SQLException {
             return ctx.resultSet().getAsciiStream(columnIndex);
         }
 
-        @Override
+        
         public final InputStream getAsciiStream(String columnLabel) throws SQLException {
             return ctx.resultSet().getAsciiStream(columnLabel);
         }
 
-        @Override
+        
         public final BigDecimal getBigDecimal(int columnIndex) throws SQLException {
             return ctx.resultSet().getBigDecimal(columnIndex);
         }
 
-        @Override
+        
         @Deprecated
         public final BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
             return ctx.resultSet().getBigDecimal(columnIndex, scale);
         }
 
-        @Override
+        
         public final BigDecimal getBigDecimal(String columnLabel) throws SQLException {
             return ctx.resultSet().getBigDecimal(columnLabel);
         }
 
-        @Override
+        
         @Deprecated
         public final BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
             return ctx.resultSet().getBigDecimal(columnLabel, scale);
         }
 
-        @Override
+        
         public final InputStream getBinaryStream(int columnIndex) throws SQLException {
             return ctx.resultSet().getBinaryStream(columnIndex);
         }
 
-        @Override
+        
         public final InputStream getBinaryStream(String columnLabel) throws SQLException {
             return ctx.resultSet().getBinaryStream(columnLabel);
         }
 
-        @Override
+        
         public final Blob getBlob(int columnIndex) throws SQLException {
             return ctx.resultSet().getBlob(columnIndex);
         }
 
-        @Override
+        
         public final Blob getBlob(String columnLabel) throws SQLException {
             return ctx.resultSet().getBlob(columnLabel);
         }
 
-        @Override
+        
         public final boolean getBoolean(int columnIndex) throws SQLException {
             return ctx.resultSet().getBoolean(columnIndex);
         }
 
-        @Override
+        
         public final boolean getBoolean(String columnLabel) throws SQLException {
             return ctx.resultSet().getBoolean(columnLabel);
         }
 
-        @Override
+        
         public final byte getByte(int columnIndex) throws SQLException {
             return ctx.resultSet().getByte(columnIndex);
         }
 
-        @Override
+        
         public final byte getByte(String columnLabel) throws SQLException {
             return ctx.resultSet().getByte(columnLabel);
         }
 
-        @Override
+        
         public final byte[] getBytes(int columnIndex) throws SQLException {
             return ctx.resultSet().getBytes(columnIndex);
         }
 
-        @Override
+        
         public final byte[] getBytes(String columnLabel) throws SQLException {
             return ctx.resultSet().getBytes(columnLabel);
         }
 
-        @Override
+        
         public final Reader getCharacterStream(int columnIndex) throws SQLException {
             return ctx.resultSet().getCharacterStream(columnIndex);
         }
 
-        @Override
+        
         public final Reader getCharacterStream(String columnLabel) throws SQLException {
             return ctx.resultSet().getCharacterStream(columnLabel);
         }
 
-        @Override
+        
         public final Clob getClob(int columnIndex) throws SQLException {
             return ctx.resultSet().getClob(columnIndex);
         }
 
-        @Override
+        
         public final Clob getClob(String columnLabel) throws SQLException {
             return ctx.resultSet().getClob(columnLabel);
         }
 
-        @Override
+        
         public final Date getDate(int columnIndex) throws SQLException {
             return ctx.resultSet().getDate(columnIndex);
         }
 
-        @Override
+        
         public final Date getDate(int columnIndex, Calendar cal) throws SQLException {
             return ctx.resultSet().getDate(columnIndex, cal);
         }
 
-        @Override
+        
         public final Date getDate(String columnLabel) throws SQLException {
             return ctx.resultSet().getDate(columnLabel);
         }
 
-        @Override
+        
         public final Date getDate(String columnLabel, Calendar cal) throws SQLException {
             return ctx.resultSet().getDate(columnLabel, cal);
         }
 
-        @Override
+        
         public final double getDouble(int columnIndex) throws SQLException {
             return ctx.resultSet().getDouble(columnIndex);
         }
 
-        @Override
+        
         public final double getDouble(String columnLabel) throws SQLException {
             return ctx.resultSet().getDouble(columnLabel);
         }
 
-        @Override
+        
         public final float getFloat(int columnIndex) throws SQLException {
             return ctx.resultSet().getFloat(columnIndex);
         }
 
-        @Override
+        
         public final float getFloat(String columnLabel) throws SQLException {
             return ctx.resultSet().getFloat(columnLabel);
         }
 
-        @Override
+        
         public final int getInt(int columnIndex) throws SQLException {
             return ctx.resultSet().getInt(columnIndex);
         }
 
-        @Override
+        
         public final int getInt(String columnLabel) throws SQLException {
             return ctx.resultSet().getInt(columnLabel);
         }
 
-        @Override
+        
         public final long getLong(int columnIndex) throws SQLException {
             return ctx.resultSet().getLong(columnIndex);
         }
 
-        @Override
+        
         public final long getLong(String columnLabel) throws SQLException {
             return ctx.resultSet().getLong(columnLabel);
         }
 
-        @Override
+        
         public final Reader getNCharacterStream(int columnIndex) throws SQLException {
             return ctx.resultSet().getNCharacterStream(columnIndex);
         }
 
-        @Override
+        
         public final Reader getNCharacterStream(String columnLabel) throws SQLException {
             return ctx.resultSet().getNCharacterStream(columnLabel);
         }
 
-        @Override
+        
         public final NClob getNClob(int columnIndex) throws SQLException {
             return ctx.resultSet().getNClob(columnIndex);
         }
 
-        @Override
+        
         public final NClob getNClob(String columnLabel) throws SQLException {
             return ctx.resultSet().getNClob(columnLabel);
         }
 
-        @Override
+        
         public final String getNString(int columnIndex) throws SQLException {
             return ctx.resultSet().getNString(columnIndex);
         }
 
-        @Override
+        
         public final String getNString(String columnLabel) throws SQLException {
             return ctx.resultSet().getNString(columnLabel);
         }
 
-        @Override
+        
         public final Object getObject(int columnIndex) throws SQLException {
             return ctx.resultSet().getObject(columnIndex);
         }
 
-        @Override
+        
         public final Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
             return ctx.resultSet().getObject(columnIndex, map);
         }
 
-        @Override
+        
         public final Object getObject(String columnLabel) throws SQLException {
             return ctx.resultSet().getObject(columnLabel);
         }
 
-        @Override
+        
         public final Object getObject(String columnLabel, Map<String, Class<?>> map) throws SQLException {
             return ctx.resultSet().getObject(columnLabel, map);
         }
 
-        @Override
+        
         public final Ref getRef(int columnIndex) throws SQLException {
             return ctx.resultSet().getRef(columnIndex);
         }
 
-        @Override
+        
         public final Ref getRef(String columnLabel) throws SQLException {
             return ctx.resultSet().getRef(columnLabel);
         }
 
-        @Override
+        
         public final RowId getRowId(int columnIndex) throws SQLException {
             return ctx.resultSet().getRowId(columnIndex);
         }
 
-        @Override
+        
         public final RowId getRowId(String columnLabel) throws SQLException {
             return ctx.resultSet().getRowId(columnLabel);
         }
 
-        @Override
+        
         public final short getShort(int columnIndex) throws SQLException {
             return ctx.resultSet().getShort(columnIndex);
         }
 
-        @Override
+        
         public final short getShort(String columnLabel) throws SQLException {
             return ctx.resultSet().getShort(columnLabel);
         }
 
-        @Override
+        
         public final SQLXML getSQLXML(int columnIndex) throws SQLException {
             return ctx.resultSet().getSQLXML(columnIndex);
         }
 
-        @Override
+        
         public final SQLXML getSQLXML(String columnLabel) throws SQLException {
             return ctx.resultSet().getSQLXML(columnLabel);
         }
 
-        @Override
+        
         public final String getString(int columnIndex) throws SQLException {
             return ctx.resultSet().getString(columnIndex);
         }
 
-        @Override
+        
         public final String getString(String columnLabel) throws SQLException {
             return ctx.resultSet().getString(columnLabel);
         }
 
-        @Override
+        
         public final Time getTime(int columnIndex) throws SQLException {
             return ctx.resultSet().getTime(columnIndex);
         }
 
-        @Override
+        
         public final Time getTime(int columnIndex, Calendar cal) throws SQLException {
             return ctx.resultSet().getTime(columnIndex, cal);
         }
 
-        @Override
+        
         public final Time getTime(String columnLabel) throws SQLException {
             return ctx.resultSet().getTime(columnLabel);
         }
 
-        @Override
+        
         public final Time getTime(String columnLabel, Calendar cal) throws SQLException {
             return ctx.resultSet().getTime(columnLabel, cal);
         }
 
-        @Override
+        
         public final Timestamp getTimestamp(int columnIndex) throws SQLException {
             return ctx.resultSet().getTimestamp(columnIndex);
         }
 
-        @Override
+        
         public final Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
             return ctx.resultSet().getTimestamp(columnIndex, cal);
         }
 
-        @Override
+        
         public final Timestamp getTimestamp(String columnLabel) throws SQLException {
             return ctx.resultSet().getTimestamp(columnLabel);
         }
 
-        @Override
+        
         public final Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
             return ctx.resultSet().getTimestamp(columnLabel, cal);
         }
 
-        @Override
+        
         @Deprecated
         public final InputStream getUnicodeStream(int columnIndex) throws SQLException {
             return ctx.resultSet().getUnicodeStream(columnIndex);
         }
 
-        @Override
+        
         @Deprecated
         public final InputStream getUnicodeStream(String columnLabel) throws SQLException {
             return ctx.resultSet().getUnicodeStream(columnLabel);
         }
 
-        @Override
+        
         public final URL getURL(int columnIndex) throws SQLException {
             return ctx.resultSet().getURL(columnIndex);
         }
 
-        @Override
+        
         public final URL getURL(String columnLabel) throws SQLException {
             return ctx.resultSet().getURL(columnLabel);
         }
@@ -814,533 +814,533 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             }
         }
 
-        @Override
+        
         public final boolean rowUpdated() throws SQLException {
             return ctx.resultSet().rowUpdated();
         }
 
-        @Override
+        
         public final boolean rowInserted() throws SQLException {
             return ctx.resultSet().rowInserted();
         }
 
-        @Override
+        
         public final boolean rowDeleted() throws SQLException {
             return ctx.resultSet().rowDeleted();
         }
 
-        @Override
+        
         public final void insertRow() throws SQLException {
             ctx.resultSet().insertRow();
         }
 
-        @Override
+        
         public final void updateRow() throws SQLException {
             ctx.resultSet().updateRow();
         }
 
-        @Override
+        
         public final void deleteRow() throws SQLException {
             ctx.resultSet().deleteRow();
         }
 
-        @Override
+        
         public final void refreshRow() throws SQLException {
             ctx.resultSet().refreshRow();
         }
 
-        @Override
+        
         public final void cancelRowUpdates() throws SQLException {
             ctx.resultSet().cancelRowUpdates();
         }
 
-        @Override
+        
         public final void updateNull(int columnIndex) throws SQLException {
             logUpdate(columnIndex, null);
             ctx.resultSet().updateNull(columnIndex);
         }
 
-        @Override
+        
         public final void updateNull(String columnLabel) throws SQLException {
             logUpdate(columnLabel, null);
             ctx.resultSet().updateNull(columnLabel);
         }
 
-        @Override
+        
         public final void updateArray(int columnIndex, Array x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateArray(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateArray(String columnLabel, Array x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateArray(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateAsciiStream(int columnIndex, InputStream x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateAsciiStream(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateAsciiStream(int columnIndex, InputStream x, int length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateAsciiStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateAsciiStream(int columnIndex, InputStream x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateAsciiStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateAsciiStream(String columnLabel, InputStream x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateAsciiStream(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateAsciiStream(String columnLabel, InputStream x, int length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateAsciiStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateAsciiStream(String columnLabel, InputStream x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateAsciiStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateBigDecimal(int columnIndex, BigDecimal x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBigDecimal(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBigDecimal(String columnLabel, BigDecimal x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBigDecimal(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateBinaryStream(int columnIndex, InputStream x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBinaryStream(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBinaryStream(int columnIndex, InputStream x, int length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBinaryStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateBinaryStream(int columnIndex, InputStream x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBinaryStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateBinaryStream(String columnLabel, InputStream x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBinaryStream(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateBinaryStream(String columnLabel, InputStream x, int length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBinaryStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateBinaryStream(String columnLabel, InputStream x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBinaryStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateBlob(int columnIndex, Blob x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBlob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBlob(int columnIndex, InputStream x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBlob(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateBlob(String columnLabel, Blob x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBlob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateBlob(int columnIndex, InputStream x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBlob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBlob(String columnLabel, InputStream x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBlob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateBlob(String columnLabel, InputStream x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBlob(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateBoolean(int columnIndex, boolean x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBoolean(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBoolean(String columnLabel, boolean x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBoolean(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateByte(int columnIndex, byte x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateByte(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateByte(String columnLabel, byte x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateByte(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateBytes(int columnIndex, byte[] x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateBytes(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateBytes(String columnLabel, byte[] x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateBytes(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateCharacterStream(int columnIndex, Reader x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateCharacterStream(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateCharacterStream(int columnIndex, Reader x, int length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateCharacterStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateCharacterStream(int columnIndex, Reader x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateCharacterStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateCharacterStream(String columnLabel, Reader x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateCharacterStream(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateCharacterStream(String columnLabel, Reader x, int length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateCharacterStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateCharacterStream(String columnLabel, Reader x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateCharacterStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateClob(int columnIndex, Clob x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateClob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateClob(int columnIndex, Reader x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateClob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateClob(int columnIndex, Reader x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateClob(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateClob(String columnLabel, Clob x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateClob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateClob(String columnLabel, Reader x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateClob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateClob(String columnLabel, Reader x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateClob(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateDate(int columnIndex, Date x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateDate(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateDate(String columnLabel, Date x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateDate(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateDouble(int columnIndex, double x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateDouble(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateDouble(String columnLabel, double x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateDouble(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateFloat(int columnIndex, float x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateFloat(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateFloat(String columnLabel, float x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateFloat(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateInt(int columnIndex, int x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateInt(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateInt(String columnLabel, int x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateInt(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateLong(int columnIndex, long x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateLong(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateLong(String columnLabel, long x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateLong(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateNCharacterStream(int columnIndex, Reader x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNCharacterStream(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateNCharacterStream(int columnIndex, Reader x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNCharacterStream(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateNCharacterStream(String columnLabel, Reader x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNCharacterStream(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateNCharacterStream(String columnLabel, Reader x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNCharacterStream(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateNClob(int columnIndex, NClob x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNClob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateNClob(int columnIndex, Reader x, long length) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNClob(columnIndex, x, length);
         }
 
-        @Override
+        
         public final void updateNClob(int columnIndex, Reader x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNClob(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateNClob(String columnLabel, NClob x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNClob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateNClob(String columnLabel, Reader x, long length) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNClob(columnLabel, x, length);
         }
 
-        @Override
+        
         public final void updateNClob(String columnLabel, Reader x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNClob(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateNString(int columnIndex, String x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateNString(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateNString(String columnLabel, String x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateNString(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateObject(int columnIndex, Object x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateObject(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateObject(int columnIndex, Object x, int scaleOrLength) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateObject(columnIndex, x, scaleOrLength);
         }
 
-        @Override
+        
         public final void updateObject(String columnLabel, Object x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateObject(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateObject(String columnLabel, Object x, int scaleOrLength) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateObject(columnLabel, x, scaleOrLength);
         }
 
-        @Override
+        
         public final void updateRef(int columnIndex, Ref x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateRef(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateRef(String columnLabel, Ref x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateRef(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateRowId(int columnIndex, RowId x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateRowId(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateRowId(String columnLabel, RowId x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateRowId(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateShort(int columnIndex, short x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateShort(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateShort(String columnLabel, short x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateShort(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateSQLXML(int columnIndex, SQLXML x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateSQLXML(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateSQLXML(String columnLabel, SQLXML x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateSQLXML(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateString(int columnIndex, String x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateString(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateString(String columnLabel, String x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateString(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateTime(int columnIndex, Time x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateTime(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateTime(String columnLabel, Time x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateTime(columnLabel, x);
         }
 
-        @Override
+        
         public final void updateTimestamp(int columnIndex, Timestamp x) throws SQLException {
             logUpdate(columnIndex, x);
             ctx.resultSet().updateTimestamp(columnIndex, x);
         }
 
-        @Override
+        
         public final void updateTimestamp(String columnLabel, Timestamp x) throws SQLException {
             logUpdate(columnLabel, x);
             ctx.resultSet().updateTimestamp(columnLabel, x);
@@ -1373,7 +1373,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          */
         private final CursorRecordInitialiser initialiser = new CursorRecordInitialiser();
 
-        @Override
+        
         public final boolean hasNext() {
             if (hasNext == null) {
                 next = fetchOne();
@@ -1383,7 +1383,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             return hasNext;
         }
 
-        @Override
+        
         public final R next() {
             if (hasNext == null) {
                 return fetchOne();
@@ -1431,14 +1431,14 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             return (R) record;
         }
 
-        @Override
+        
         public final void remove() {
             throw new UnsupportedOperationException();
         }
 
         private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
 
-            @Override
+            
             public AbstractRecord operate(AbstractRecord record) throws SQLException {
                 ctx.record(record);
                 listener.recordStart(ctx);

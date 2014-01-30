@@ -63,7 +63,7 @@ class Floor<T extends Number> extends AbstractFunction<T> {
         this.argument = argument;
     }
 
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
 

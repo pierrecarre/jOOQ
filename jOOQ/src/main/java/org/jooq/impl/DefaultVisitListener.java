@@ -53,16 +53,16 @@ import org.jooq.VisitListener;
  */
 public class DefaultVisitListener implements VisitListener {
 
-    @Override
+    
     public void clauseStart(VisitContext context) {}
 
-    @Override
+    
     public void clauseEnd(VisitContext context) {}
 
-    @Override
+    
     public void visitStart(VisitContext context) {}
 
-    @Override
+    
     public void visitEnd(VisitContext context) {}
 
 }

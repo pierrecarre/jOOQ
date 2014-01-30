@@ -62,7 +62,7 @@ class CurrentTime extends AbstractFunction<Time> {
         super("current_time", SQLDataType.TIME);
     }
 
-    @Override
+    
     final Field<Time> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

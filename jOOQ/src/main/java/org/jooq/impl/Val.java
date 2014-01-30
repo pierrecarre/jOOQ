@@ -100,7 +100,7 @@ class Val<T> extends AbstractParam<T> {
     // XXX: Field API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
 
         // Casting can be enforced or prevented
@@ -584,7 +584,7 @@ class Val<T> extends AbstractParam<T> {
         return val.toString().replace("'", "''");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined

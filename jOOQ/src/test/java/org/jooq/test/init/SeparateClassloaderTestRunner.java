@@ -75,7 +75,7 @@ public class SeparateClassloaderTestRunner extends BlockJUnit4ClassRunner {
             super(((URLClassLoader) getSystemClassLoader()).getURLs());
         }
 
-        @Override
+        
         public Class<?> loadClass(String name) throws ClassNotFoundException {
             if (name.startsWith("org.jooq.")) {
                 return super.findClass(name);

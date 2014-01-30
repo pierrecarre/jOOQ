@@ -63,7 +63,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
         this.condition = condition;
     }
 
-    @Override
+    
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 

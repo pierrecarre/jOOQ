@@ -150,7 +150,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // VisitListener API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final RenderContext start(Clause clause) {
         if (clause != null) {
             visitClauses.addLast(clause);
@@ -163,7 +163,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext end(Clause clause) {
         if (clause != null) {
             for (VisitListener listener : visitListeners) {
@@ -177,7 +177,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext visit(QueryPart part) {
         if (part != null) {
 
@@ -259,63 +259,63 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
      */
     private class DefaultVisitContext implements VisitContext {
 
-        @Override
+        
         public final Map<Object, Object> data() {
             return DefaultRenderContext.this.data();
         }
 
-        @Override
+        
         public final Object data(Object key) {
             return DefaultRenderContext.this.data(key);
         }
 
-        @Override
+        
         public final Object data(Object key, Object value) {
             return DefaultRenderContext.this.data(key, value);
         }
 
-        @Override
+        
         public final Configuration configuration() {
             return DefaultRenderContext.this.configuration();
         }
 
-        @Override
+        
         public final Clause clause() {
             return visitClauses.peekLast();
         }
 
-        @Override
+        
         public final Clause[] clauses() {
             return visitClauses.toArray(new Clause[visitClauses.size()]);
         }
 
-        @Override
+        
         public final QueryPart queryPart() {
             return visitParts.peekLast();
         }
 
-        @Override
+        
         public final void queryPart(QueryPart part) {
             visitParts.pollLast();
             visitParts.addLast(part);
         }
 
-        @Override
+        
         public final QueryPart[] queryParts() {
             return visitParts.toArray(new QueryPart[visitParts.size()]);
         }
 
-        @Override
+        
         public final Context<?> context() {
             return DefaultRenderContext.this;
         }
 
-        @Override
+        
         public final RenderContext renderContext() {
             return DefaultRenderContext.this;
         }
 
-        @Override
+        
         public final BindContext bindContext() {
             throw new UnsupportedOperationException("QueryPart traversal listening is currently only supported for RenderContext");
         }
@@ -325,22 +325,22 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // RenderContext API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final String peekAlias() {
         return "alias_" + (alias + 1);
     }
 
-    @Override
+    
     public final String nextAlias() {
         return "alias_" + (++alias);
     }
 
-    @Override
+    
     public final String render() {
         return sql.toString();
     }
 
-    @Override
+    
     public final String render(QueryPart part) {
         RenderContext local = new DefaultRenderContext(this).visit(part);
 
@@ -368,7 +368,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return local.render();
     }
 
-    @Override
+    
     public final RenderContext keyword(String keyword) {
         if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle) {
             return sql(keyword.toUpperCase());
@@ -378,12 +378,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         }
     }
 
-    @Override
+    
     public final RenderContext sql(String s) {
         return sql(s, s == null || !cachedRenderFormatted);
     }
 
-    @Override
+    
     public final RenderContext sql(String s, boolean literal) {
         if (literal) {
             sql.append(s);
@@ -396,19 +396,19 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     }
 
-    @Override
+    
     public final RenderContext sql(char c) {
         sql.append(c);
         return this;
     }
 
-    @Override
+    
     public final RenderContext sql(int i) {
         sql.append(i);
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatNewLine() {
         if (cachedRenderFormatted) {
             sql.append("\n");
@@ -418,7 +418,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatNewLineAfterPrintMargin() {
         if (cachedRenderFormatted && printMargin > 0) {
             if (sql.length() - sql.lastIndexOf("\n") > printMargin) {
@@ -433,18 +433,18 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return StringUtils.leftPad("", indent, " ");
     }
 
-    @Override
+    
     public final RenderContext format(boolean format) {
         cachedRenderFormatted = format;
         return this;
     }
 
-    @Override
+    
     public final boolean format() {
         return cachedRenderFormatted;
     }
 
-    @Override
+    
     public final RenderContext formatSeparator() {
         if (cachedRenderFormatted) {
             formatNewLine();
@@ -456,17 +456,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatIndentStart() {
         return formatIndentStart(2);
     }
 
-    @Override
+    
     public final RenderContext formatIndentEnd() {
         return formatIndentEnd(2);
     }
 
-    @Override
+    
     public final RenderContext formatIndentStart(int i) {
         if (cachedRenderFormatted) {
             indent += i;
@@ -475,7 +475,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatIndentEnd(int i) {
         if (cachedRenderFormatted) {
             indent -= i;
@@ -484,7 +484,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatIndentLockStart() {
         if (cachedRenderFormatted) {
             indentLock.push(indent);
@@ -495,7 +495,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatIndentLockEnd() {
         if (cachedRenderFormatted) {
             indent = indentLock.pop();
@@ -504,13 +504,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     public final RenderContext formatPrintMargin(int margin) {
         printMargin = margin;
         return this;
     }
 
-    @Override
+    
     public final RenderContext literal(String literal) {
         // Literal usually originates from NamedQueryPart.getName(). This could
         // be null for CustomTable et al.
@@ -588,13 +588,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
+    
     @Deprecated
     public final RenderContext sql(QueryPart part) {
         return visit(part);
     }
 
-    @Override
+    
     protected final void visit0(QueryPartInternal internal) {
         checkForceInline(internal);
         internal.toSQL(this);
@@ -639,65 +639,65 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 throw new ForceInlineSignal();
     }
 
-    @Override
+    
     public final boolean inline() {
         return paramType == INLINED;
     }
 
-    @Override
+    
     @Deprecated
     public final RenderContext inline(boolean i) {
         this.paramType = i ? INLINED : INDEXED;
         return this;
     }
 
-    @Override
+    
     public final ParamType paramType() {
         return paramType;
     }
 
-    @Override
+    
     public final RenderContext paramType(ParamType p) {
         paramType = p;
         return this;
     }
 
-    @Override
+    
     public final boolean qualify() {
         return qualify;
     }
 
-    @Override
+    
     public final RenderContext qualify(boolean q) {
         this.qualify = q;
         return this;
     }
 
-    @Override
+    
     public final boolean namedParams() {
         return paramType == NAMED;
     }
 
-    @Override
+    
     @Deprecated
     public final RenderContext namedParams(boolean r) {
         this.paramType = r ? NAMED : INDEXED;
         return this;
     }
 
-    @Override
+    
     public final CastMode castMode() {
         return castMode;
     }
 
-    @Override
+    
     public final RenderContext castMode(CastMode mode) {
         this.castMode = mode;
         this.castDialects = null;
         return this;
     }
 
-    @Override
+    
     public final Boolean cast() {
         switch (castMode) {
             case ALWAYS:
@@ -711,7 +711,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return null;
     }
 
-    @Override
+    
     public final RenderContext castModeSome(SQLDialect... dialects) {
         this.castMode = CastMode.SOME;
         this.castDialects = dialects;
@@ -722,7 +722,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
 

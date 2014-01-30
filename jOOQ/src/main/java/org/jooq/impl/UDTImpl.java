@@ -75,38 +75,38 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         this.schema = schema;
     }
 
-    @Override
+    
     public final Schema getSchema() {
         return schema;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
 
     @SuppressWarnings({ "rawtypes" })
-    @Override
+    
     public final Row fieldsRow() {
         return new RowImpl(fields);
     }
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String string) {
         return fieldsRow().field(string);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return fieldsRow().field(index);
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fieldsRow().fields();
     }
@@ -119,12 +119,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
      * Subclasses must override this method if they use the generic type
      * parameter <R> for other types than {@link Record}
      */
-    @Override
+    
     public Class<R> getRecordType() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+    
     public final DataType<R> getDataType() {
         if (type == null) {
             type = new UDTDataType<R>(this);
@@ -133,17 +133,17 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         return type;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(fields);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
@@ -163,7 +163,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

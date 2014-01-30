@@ -71,7 +71,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

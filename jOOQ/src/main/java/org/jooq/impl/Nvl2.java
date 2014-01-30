@@ -67,7 +67,7 @@ class Nvl2<T> extends AbstractFunction<T> {
         this.arg3 = arg3;
     }
 
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

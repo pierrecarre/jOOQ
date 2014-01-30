@@ -68,17 +68,17 @@ class IsNull extends AbstractCondition {
         this.isNull = isNull;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(field);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(field).sql(" ").keyword(isNull ? "is null" : "is not null");
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
     }

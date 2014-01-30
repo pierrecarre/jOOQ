@@ -98,17 +98,17 @@ class RowCondition extends AbstractCondition {
         this.comparator = comparator;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         delegate(ctx.configuration()).toSQL(ctx);
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         delegate(ctx.configuration()).bind(ctx);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration()).clauses(ctx);
     }
@@ -211,7 +211,7 @@ class RowCondition extends AbstractCondition {
          */
         private static final long serialVersionUID = -2977241780111574353L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
 
             // Some dialects do not support != comparison with rows
@@ -234,12 +234,12 @@ class RowCondition extends AbstractCondition {
             }
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }

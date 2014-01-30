@@ -87,27 +87,27 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
         return condition.getWhere();
     }
 
-    @Override
+    
     public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
     }
 
-    @Override
+    
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Condition... conditions) {
         condition.addConditions(operator, conditions);
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         condition.addConditions(operator, conditions);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         boolean declare = context.declareTables();
 
@@ -143,12 +143,12 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
         context.end(DELETE_WHERE);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(getFrom()).visit(getWhere());
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

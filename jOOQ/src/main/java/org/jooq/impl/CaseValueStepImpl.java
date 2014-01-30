@@ -55,22 +55,22 @@ class CaseValueStepImpl<V> implements CaseValueStep<V> {
         this.value = value;
     }
 
-    @Override
+    
     public <T> CaseWhenStep<V, T> when(V compareValue, T result) {
         return when(Utils.field(compareValue), Utils.field(result));
     }
 
-    @Override
+    
     public <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
         return when(Utils.field(compareValue), result);
     }
 
-    @Override
+    
     public <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
         return when(compareValue, Utils.field(result));
     }
 
-    @Override
+    
     public <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
         return new CaseWhenStepImpl<V, T>(value, compareValue, result);
     }

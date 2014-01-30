@@ -144,12 +144,12 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     // XXX Interval API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final YearToMonth neg() {
         return new YearToMonth(years, months, !negative);
     }
 
-    @Override
+    
     public final YearToMonth abs() {
         return new YearToMonth(years, months, false);
     }
@@ -162,7 +162,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         return months;
     }
 
-    @Override
+    
     public final int getSign() {
         return negative ? -1 : 1;
     }
@@ -171,22 +171,22 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     // XXX Number API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final int intValue() {
         return (negative ? -1 : 1) * (12 * years + months);
     }
 
-    @Override
+    
     public final long longValue() {
         return intValue();
     }
 
-    @Override
+    
     public final float floatValue() {
         return intValue();
     }
 
-    @Override
+    
     public final double doubleValue() {
         return intValue();
     }
@@ -195,7 +195,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     // XXX Comparable and Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final int compareTo(YearToMonth that) {
         if (years < that.years) {
             return -1;
@@ -214,7 +214,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         return 0;
     }
 
-    @Override
+    
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -223,7 +223,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         return result;
     }
 
-    @Override
+    
     public final boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -239,7 +239,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         return true;
     }
 
-    @Override
+    
     public final String toString() {
         StringBuilder sb = new StringBuilder();
 

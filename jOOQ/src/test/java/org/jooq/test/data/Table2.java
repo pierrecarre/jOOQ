@@ -67,7 +67,7 @@ public class Table2 extends TableImpl<Table2Record> {
         super("TABLE2");
     }
 
-    @Override
+    
     public Class<Table2Record> getRecordType() {
         return Table2Record.class;
     }

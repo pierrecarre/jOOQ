@@ -65,7 +65,7 @@ class Repeat extends AbstractFunction<String> {
         this.count = count;
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

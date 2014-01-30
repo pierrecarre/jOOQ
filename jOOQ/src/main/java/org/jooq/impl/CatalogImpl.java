@@ -76,25 +76,25 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
         this.catalogName = name;
     }
 
-    @Override
+    
     public final String getName() {
         return catalogName;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final Schema getSchema(String name) {
         for (Schema schema : getSchemas()) {
             if (schema.getName().equals(name)) {
@@ -110,7 +110,7 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<Schema> getSchemas() {
         return Collections.emptyList();
     }
@@ -119,12 +119,12 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
     }
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

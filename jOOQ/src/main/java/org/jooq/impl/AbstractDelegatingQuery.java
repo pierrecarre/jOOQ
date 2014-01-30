@@ -68,7 +68,7 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
         this.delegate = delegate;
     }
 
-    @Override
+    
     public final Configuration configuration() {
         if (delegate instanceof AttachableInternal) {
             return ((AttachableInternal) delegate).configuration();
@@ -77,104 +77,104 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
         return super.configuration();
     }
 
-    @Override
+    
     public final List<Object> getBindValues() {
         return delegate.getBindValues();
     }
 
-    @Override
+    
     public final Map<String, Param<?>> getParams() {
         return delegate.getParams();
     }
 
-    @Override
+    
     public final Param<?> getParam(String name) {
         return delegate.getParam(name);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
 
         // Delegate queries don't emit clauses themselves.
         return null;
     }
 
-    @Override
+    
     public final String getSQL() {
         return delegate.getSQL();
     }
 
-    @Override
+    
     @Deprecated
     public final String getSQL(boolean inline) {
         return delegate.getSQL(inline);
     }
 
-    @Override
+    
     public final String getSQL(ParamType paramType) {
         return delegate.getSQL(paramType);
     }
 
-    @Override
+    
     public final void attach(Configuration configuration) {
         delegate.attach(configuration);
     }
 
-    @Override
+    
     public final void detach() {
         delegate.detach();
     }
 
-    @Override
+    
     public final int execute() {
         return delegate.execute();
     }
 
-    @Override
+    
     public final boolean isExecutable() {
         return delegate.isExecutable();
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Q bind(String param, Object value) {
         return (Q) delegate.bind(param, value);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Q bind(int index, Object value) {
         return (Q) delegate.bind(index, value);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Q queryTimeout(int timeout) {
         return (Q) delegate.queryTimeout(timeout);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Q keepStatement(boolean keepStatement) {
         return (Q) delegate.keepStatement(keepStatement);
     }
 
-    @Override
+    
     public final void close() {
         delegate.close();
     }
 
-    @Override
+    
     public final void cancel() {
         delegate.cancel();
     }

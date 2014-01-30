@@ -81,7 +81,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
         this.select = select;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.start(INSERT_INSERT_INTO)
                .keyword("insert into")
@@ -114,14 +114,14 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
                .end(INSERT_RETURNING);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(into);
         visitAll(context, fields);
         context.visit(select);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

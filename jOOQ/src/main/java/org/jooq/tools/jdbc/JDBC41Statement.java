@@ -60,13 +60,13 @@ public abstract class JDBC41Statement {
     // Methods from JDBC 4.1 java.sql.Statement
     // ------------------------------------------------------------------------
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final void closeOnCompletion() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final boolean isCloseOnCompletion() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -76,13 +76,13 @@ public abstract class JDBC41Statement {
     // Methods from JDBC 4.1 java.sql.PreparedCall
     // ------------------------------------------------------------------------
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final <T> T getObject(int parameterIndex, Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final <T> T getObject(String parameterName, Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");

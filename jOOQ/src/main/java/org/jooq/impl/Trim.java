@@ -63,7 +63,7 @@ class Trim extends AbstractFunction<String> {
         this.argument = argument;
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         /* [pro] xx
         xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x

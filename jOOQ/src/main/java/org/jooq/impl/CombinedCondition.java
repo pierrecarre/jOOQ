@@ -107,17 +107,17 @@ class CombinedCondition extends AbstractCondition {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return operator == AND ? CLAUSES_AND : CLAUSES_OR;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         visitAll(context, conditions);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (conditions.isEmpty()) {
             context.visit(trueCondition());

@@ -96,7 +96,7 @@ public class MockResult {
         this.data = data;
     }
 
-    @Override
+    
     public String toString() {
         return (data != null) ? data.toString() : ("" + rows);
     }

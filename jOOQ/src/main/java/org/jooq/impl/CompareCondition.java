@@ -85,12 +85,12 @@ class CompareCondition extends AbstractCondition {
         this.escape = escape;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(field1).visit(field2);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         SQLDialect family = context.configuration().dialect().family();
         Field<?> lhs = field1;
@@ -142,7 +142,7 @@ class CompareCondition extends AbstractCondition {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

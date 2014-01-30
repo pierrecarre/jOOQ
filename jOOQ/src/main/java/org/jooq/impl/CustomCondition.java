@@ -85,7 +85,7 @@ public abstract class CustomCondition extends AbstractCondition {
      * <hr/>
      * {@inheritDoc}
      */
-    @Override
+    
     public abstract void toSQL(RenderContext context);
 
     // -------------------------------------------------------------------------
@@ -97,7 +97,7 @@ public abstract class CustomCondition extends AbstractCondition {
      * <hr/>
      * {@inheritDoc}
      */
-    @Override
+    
     public void bind(BindContext context) throws DataAccessException {
     }
 
@@ -105,17 +105,17 @@ public abstract class CustomCondition extends AbstractCondition {
     // No further overrides allowed
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final boolean declaresFields() {
         return super.declaresFields();
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return super.declaresTables();
     }

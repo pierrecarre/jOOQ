@@ -70,34 +70,34 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         when(compareValue, result);
     }
 
-    @Override
+    
     public final Field<T> otherwise(T result) {
         return otherwise(Utils.field(result));
     }
 
-    @Override
+    
     public final Field<T> otherwise(Field<T> result) {
         this.otherwise = result;
 
         return this;
     }
 
-    @Override
+    
     public final CaseWhenStep<V, T> when(V compareValue, T result) {
         return when(Utils.field(compareValue), Utils.field(result));
     }
 
-    @Override
+    
     public final CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
         return when(Utils.field(compareValue), result);
     }
 
-    @Override
+    
     public final CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
         return when(compareValue, Utils.field(result));
     }
 
-    @Override
+    
     public final CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
         compareValues.add(compareValue);
         results.add(result);
@@ -105,7 +105,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         return this;
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         switch (ctx.configuration().dialect()) {
 
@@ -137,7 +137,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.formatIndentLockStart()
            .keyword("case");

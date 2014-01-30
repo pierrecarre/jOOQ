@@ -92,17 +92,17 @@ class RowIsNull extends AbstractCondition {
         this.isNull = isNull;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         delegate(ctx.configuration()).toSQL(ctx);
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         delegate(ctx.configuration()).bind(ctx);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration()).clauses(ctx);
     }
@@ -133,19 +133,19 @@ class RowIsNull extends AbstractCondition {
          */
         private static final long serialVersionUID = -2977241780111574353L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             context.visit(row)
                    .sql(" ")
                    .keyword(isNull ? "is null" : "is not null");
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(row);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return isNull ? CLAUSES_NULL : CLAUSES_NOT_NULL;
         }

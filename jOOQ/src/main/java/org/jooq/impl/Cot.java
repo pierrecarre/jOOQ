@@ -65,7 +65,7 @@ class Cot extends AbstractFunction<BigDecimal> {
         this.argument = argument;
     }
 
-    @Override
+    
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

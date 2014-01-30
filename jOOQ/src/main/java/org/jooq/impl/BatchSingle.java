@@ -79,13 +79,13 @@ class BatchSingle implements BatchBindStep {
         this.allBindValues = new ArrayList<Object[]>();
     }
 
-    @Override
+    
     public final BatchSingle bind(Object... bindValues) {
         allBindValues.add(bindValues);
         return this;
     }
 
-    @Override
+    
     public final BatchSingle bind(Object[][] bindValues) {
         for (Object[] v : bindValues) {
             bind(v);
@@ -94,12 +94,12 @@ class BatchSingle implements BatchBindStep {
         return this;
     }
 
-    @Override
+    
     public final int size() {
         return allBindValues.size();
     }
 
-    @Override
+    
     public final int[] execute() {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables

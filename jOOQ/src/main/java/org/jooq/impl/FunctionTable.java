@@ -66,22 +66,22 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<R> as(String as) {
         return new TableAlias<R>(new FunctionTable<R>(function), as);
     }
 
-    @Override
+    
     public final Table<R> as(String as, String... fieldAliases) {
         return new TableAlias<R>(new FunctionTable<R>(function), as, fieldAliases);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect()) {
             case HSQLDB: {
@@ -94,7 +94,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         switch (context.configuration().dialect()) {
             case HSQLDB:
@@ -106,7 +106,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
         }
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return new Fields<R>();
     }

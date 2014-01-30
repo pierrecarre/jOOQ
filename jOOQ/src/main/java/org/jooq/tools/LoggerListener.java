@@ -64,7 +64,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
     private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
 
-    @Override
+    
     public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
             String[] batchSQL = ctx.batchSQL();
@@ -103,20 +103,20 @@ public class LoggerListener extends DefaultExecuteListener {
         }
     }
 
-    @Override
+    
     public void recordEnd(ExecuteContext ctx) {
         if (log.isTraceEnabled() && ctx.record() != null)
             logMultiline("Record fetched", ctx.record().toString(), Level.FINER);
     }
 
-    @Override
+    
     public void resultEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled() && ctx.result() != null) {
             logMultiline("Fetched result", ctx.result().format(5), Level.FINE);
         }
     }
 
-    @Override
+    
     public void executeEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled() && ctx.rows() >= 0) {
             log.debug("Affected row(s)", ctx.rows());

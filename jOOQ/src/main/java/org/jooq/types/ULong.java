@@ -143,32 +143,32 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         }
     }
 
-    @Override
+    
     public int intValue() {
         return value.intValue();
     }
 
-    @Override
+    
     public long longValue() {
         return value.longValue();
     }
 
-    @Override
+    
     public float floatValue() {
         return value.floatValue();
     }
 
-    @Override
+    
     public double doubleValue() {
         return value.doubleValue();
     }
 
-    @Override
+    
     public int hashCode() {
         return value.hashCode();
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -179,12 +179,12 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         return false;
     }
 
-    @Override
+    
     public String toString() {
         return value.toString();
     }
 
-    @Override
+    
     public int compareTo(ULong o) {
         return value.compareTo(o.value);
     }

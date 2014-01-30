@@ -61,7 +61,7 @@ class Replace extends AbstractFunction<String> {
         super("replace", SQLDataType.VARCHAR, arguments);
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         Field<?>[] args = getArguments();
 

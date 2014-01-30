@@ -89,17 +89,17 @@ class Union<R extends Record> extends AbstractSelect<R> {
         }
     }
 
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         return queries.get(0).getRecordType();
     }
 
-    @Override
+    
     public final List<Field<?>> getSelect() {
         return queries.get(0).getSelect();
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         for (int i = 0; i < queries.size(); i++) {
             if (i != 0) {
@@ -145,17 +145,17 @@ class Union<R extends Record> extends AbstractSelect<R> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         visitAll(context, queries);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return clauses;
     }
 
-    @Override
+    
     final boolean isForUpdate() {
         return false;
     }

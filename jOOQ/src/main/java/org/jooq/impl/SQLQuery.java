@@ -70,17 +70,17 @@ class SQLQuery extends AbstractQuery {
     // Query API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         if (delegate instanceof QueryPartInternal) {
             return ((QueryPartInternal) delegate).clauses(ctx);

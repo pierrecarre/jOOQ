@@ -74,25 +74,25 @@ public class PackageImpl extends AbstractQueryPart implements Package {
         this.name = name;
     }
 
-    @Override
+    
     public final Schema getSchema() {
         return schema;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
@@ -101,7 +101,7 @@ public class PackageImpl extends AbstractQueryPart implements Package {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation
@@ -109,7 +109,7 @@ public class PackageImpl extends AbstractQueryPart implements Package {
         return name != null ? name.hashCode() : 0;
     }
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

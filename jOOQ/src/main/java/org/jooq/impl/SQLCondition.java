@@ -61,7 +61,7 @@ class SQLCondition extends AbstractCondition {
     // QueryPart API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
@@ -71,7 +71,7 @@ class SQLCondition extends AbstractCondition {
         context.sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(delegate);
     }

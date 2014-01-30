@@ -68,7 +68,7 @@ class FutureResultImpl<R extends Record> implements FutureResult<R> {
         this.executor = executor;
     }
 
-    @Override
+    
     public boolean cancel(boolean mayInterruptIfRunning) {
         try {
             return future.cancel(mayInterruptIfRunning);
@@ -80,17 +80,17 @@ class FutureResultImpl<R extends Record> implements FutureResult<R> {
         }
     }
 
-    @Override
+    
     public boolean isCancelled() {
         return future.isCancelled();
     }
 
-    @Override
+    
     public boolean isDone() {
         return future.isDone();
     }
 
-    @Override
+    
     public Result<R> get() throws InterruptedException, ExecutionException {
         try {
             return future.get();
@@ -102,7 +102,7 @@ class FutureResultImpl<R extends Record> implements FutureResult<R> {
         }
     }
 
-    @Override
+    
     public Result<R> get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         try {
             return future.get(timeout, unit);

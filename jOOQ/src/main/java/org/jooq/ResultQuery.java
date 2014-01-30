@@ -981,13 +981,13 @@ public interface ResultQuery<R extends Record> extends Query {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
 
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
     // ------------------------------------------------------------------------
@@ -997,13 +997,13 @@ public interface ResultQuery<R extends Record> extends Query {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     ResultQuery<R> queryTimeout(int timeout);
 
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     ResultQuery<R> keepStatement(boolean keepStatement);
 
     /**

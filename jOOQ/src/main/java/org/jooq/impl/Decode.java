@@ -71,7 +71,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     final Field<Z> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 

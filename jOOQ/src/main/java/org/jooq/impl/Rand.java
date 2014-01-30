@@ -62,7 +62,7 @@ class Rand extends AbstractFunction<BigDecimal> {
         super("rand", SQLDataType.NUMERIC);
     }
 
-    @Override
+    
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

@@ -79,7 +79,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
         this.array = array;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
 
         // If this is already a subquery, proceed
@@ -107,7 +107,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
         }
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
 
         // If this is already a subquery, proceed
@@ -121,7 +121,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration()).clauses(ctx);
     }

@@ -100,29 +100,29 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
      * <hr/>
      * {@inheritDoc}
      */
-    @Override
+    
     public abstract Class<? extends R> getRecordType();
 
     // -------------------------------------------------------------------------
     // Further overrides allowed
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public Identity<R, ? extends Number> getIdentity() {
         return super.getIdentity();
     }
 
-    @Override
+    
     public UniqueKey<R> getPrimaryKey() {
         return super.getPrimaryKey();
     }
 
-    @Override
+    
     public List<UniqueKey<R>> getKeys() {
         return super.getKeys();
     }
 
-    @Override
+    
     public List<ForeignKey<R, ?>> getReferences() {
         return super.getReferences();
     }
@@ -131,12 +131,12 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
     // No further overrides allowed
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final boolean declaresFields() {
         return super.declaresFields();
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return super.declaresTables();
     }

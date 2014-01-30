@@ -76,7 +76,7 @@ class QualifiedTable extends AbstractTable<Record> {
     // Table API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         String separator = "";
         for (String string : sql) {
@@ -87,30 +87,30 @@ class QualifiedTable extends AbstractTable<Record> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record> as(String alias) {
         return new TableAlias<Record>(this, alias);
     }
 
-    @Override
+    
     public final Table<Record> as(String alias, String... fieldAliases) {
         return new TableAlias<Record>(this, alias, fieldAliases);
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         return new Fields<Record>();
     }

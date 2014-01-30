@@ -81,7 +81,7 @@ abstract class AbstractStore implements AttachableInternal {
 
     abstract List<Attachable> getAttachables();
 
-    @Override
+    
     public final void attach(Configuration c) {
         configuration = c;
 
@@ -90,12 +90,12 @@ abstract class AbstractStore implements AttachableInternal {
         }
     }
 
-    @Override
+    
     public final void detach() {
         attach(null);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
@@ -123,7 +123,7 @@ abstract class AbstractStore implements AttachableInternal {
      */
     abstract Object getValue(int index);
 
-    @Override
+    
     public int hashCode() {
         int hashCode = 1;
 
@@ -147,7 +147,7 @@ abstract class AbstractStore implements AttachableInternal {
         return hashCode;
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

@@ -57,15 +57,15 @@ class FalseCondition extends AbstractCondition {
     private static final long     serialVersionUID = -3972466479081463547L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    @Override
+    
     public void bind(BindContext context) {}
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.sql("1 = 0");
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

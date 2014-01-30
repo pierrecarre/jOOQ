@@ -60,7 +60,7 @@ class CurrentUser extends AbstractFunction<String> {
         super("current_user", SQLDataType.VARCHAR);
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

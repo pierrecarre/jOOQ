@@ -63,7 +63,7 @@ class Concat extends AbstractFunction<String> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field

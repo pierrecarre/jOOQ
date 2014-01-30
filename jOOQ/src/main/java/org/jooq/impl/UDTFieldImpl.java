@@ -70,16 +70,16 @@ class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implement
         }
     }
 
-    @Override
+    
     public final UDT<R> getUDT() {
         return udt;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 }

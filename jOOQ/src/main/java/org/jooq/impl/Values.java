@@ -72,23 +72,23 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
     }
 
-    @Override
+    
     @Support
     public final Table<R> as(String alias) {
         return new TableAlias<R>(this, alias, true);
     }
 
-    @Override
+    
     public final Table<R> as(String alias, String... fieldAliases) {
         return new TableAlias<R>(this, alias, fieldAliases, true);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect().family()) {
 
@@ -164,12 +164,12 @@ class Values<R extends Record> extends AbstractTable<R> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         visitAll(context, rows);
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return new Fields<R>(rows[0].fields());
     }

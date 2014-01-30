@@ -60,7 +60,7 @@ class SQLTemplate implements Template {
         this.sql = sql;
     }
 
-    @Override
+    
     public final QueryPart transform(Object... input) {
         return new SQLTemplateQueryPart(sql, input);
     }
@@ -80,17 +80,17 @@ class SQLTemplate implements Template {
             this.substitutes = Utils.queryParts(input);
         }
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             Utils.renderAndBind(context, null, sql, substitutes);
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             Utils.renderAndBind(null, context, sql, substitutes);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }

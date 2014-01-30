@@ -122,7 +122,7 @@ class MetaImpl implements Meta, Serializable {
         return meta;
     }
 
-    @Override
+    
     public final List<Catalog> getCatalogs() {
         try {
             List<Catalog> result = new ArrayList<Catalog>();
@@ -151,7 +151,7 @@ class MetaImpl implements Meta, Serializable {
         }
     }
 
-    @Override
+    
     public final List<Schema> getSchemas() {
         List<Schema> result = new ArrayList<Schema>();
 
@@ -162,7 +162,7 @@ class MetaImpl implements Meta, Serializable {
         return result;
     }
 
-    @Override
+    
     public final List<Table<?>> getTables() {
         List<Table<?>> result = new ArrayList<Table<?>>();
 
@@ -173,7 +173,7 @@ class MetaImpl implements Meta, Serializable {
         return result;
     }
 
-    @Override
+    
     public final List<UniqueKey<?>> getPrimaryKeys() {
         List<UniqueKey<?>> result = new ArrayList<UniqueKey<?>>();
 
@@ -199,7 +199,7 @@ class MetaImpl implements Meta, Serializable {
             super(name);
         }
 
-        @Override
+        
         public final List<Schema> getSchemas() {
             try {
                 List<Schema> result = new ArrayList<Schema>();
@@ -256,7 +256,7 @@ class MetaImpl implements Meta, Serializable {
             super(name);
         }
 
-        @Override
+        
         public final synchronized List<Table<?>> getTables() {
             if (tableCache != null) {
                 return tableCache;
@@ -405,13 +405,13 @@ class MetaImpl implements Meta, Serializable {
         }
 
         @SuppressWarnings("unchecked")
-        @Override
+        
         public final List<UniqueKey<Record>> getKeys() {
             return unmodifiableList(asList(getPrimaryKey()));
         }
 
         @SuppressWarnings("unchecked")
-        @Override
+        
         public final UniqueKey<Record> getPrimaryKey() {
             String schema = getSchema() == null ? null : getSchema().getName();
 

@@ -61,19 +61,19 @@ class WrappedList extends AbstractQueryPart {
         this.wrapped = wrapped;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.sql("(")
                .visit(wrapped)
                .sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(wrapped);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

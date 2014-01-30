@@ -62,12 +62,12 @@ class TableList extends QueryPartList<Table<?>> {
         super(wrappedList);
     }
 
-    @Override
+    
     protected void toSQLEmptyList(RenderContext context) {
         context.visit(new Dual());
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }

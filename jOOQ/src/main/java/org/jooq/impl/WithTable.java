@@ -65,12 +65,12 @@ class WithTable<R extends Record> extends AbstractTable<R> {
         this.hint = hint;
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(delegate)
                .sql(" ").keyword("with")
@@ -78,27 +78,27 @@ class WithTable<R extends Record> extends AbstractTable<R> {
                .sql(")");
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(delegate);
     }
 
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         return delegate.getRecordType();
     }
 
-    @Override
+    
     public final Table<R> as(String alias) {
         return new WithTable<R>(new TableAlias<R>(delegate, alias), hint);
     }
 
-    @Override
+    
     public final Table<R> as(String alias, String... fieldAliases) {
         return new WithTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), hint);
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return delegate.fields0();
     }

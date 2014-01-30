@@ -63,7 +63,7 @@ class MD5 extends AbstractFunction<String> {
         this.argument = argument;
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

@@ -104,7 +104,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
@@ -121,48 +121,48 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      */
     abstract Fields<R> fields0();
 
-    @Override
+    
     public final RecordType<R> recordType() {
         return fields0();
     }
 
     @SuppressWarnings({ "rawtypes" })
-    @Override
+    
     public final Row fieldsRow() {
         return new RowImpl(fields0());
     }
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String string) {
         return fieldsRow().field(string);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return fieldsRow().field(index);
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return fieldsRow().fields();
     }
 
-    @Override
+    
     public final Table<R> asTable() {
         return this;
     }
 
-    @Override
+    
     public final Table<R> asTable(String alias) {
         return as(alias);
     }
 
-    @Override
+    
     public final Table<R> asTable(String alias, String... fieldAliases) {
         return as(alias, fieldAliases);
     }
@@ -171,12 +171,12 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // XXX: Table API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Schema getSchema() {
         return schema;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
@@ -186,7 +186,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public Identity<R, ? extends Number> getIdentity() {
         return null;
     }
@@ -196,7 +196,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses may override this method
      */
-    @Override
+    
     public UniqueKey<R> getPrimaryKey() {
         return null;
     }
@@ -206,7 +206,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses may override this method
      */
-    @Override
+    
     public TableField<R, ? extends Number> getRecordVersion() {
         return null;
     }
@@ -216,7 +216,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses may override this method
      */
-    @Override
+    
     public TableField<R, ? extends java.util.Date> getRecordTimestamp() {
         return null;
     }
@@ -226,7 +226,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<UniqueKey<R>> getKeys() {
         return Collections.emptyList();
     }
@@ -234,7 +234,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other) {
         return other.getReferencesTo(this);
     }
@@ -244,7 +244,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <p>
      * Subclasses should override this method
      */
-    @Override
+    
     public List<ForeignKey<R, ?>> getReferences() {
         return Collections.emptyList();
     }
@@ -253,7 +253,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other) {
         List<ForeignKey<R, O>> result = new ArrayList<ForeignKey<R, O>>();
 
@@ -386,7 +386,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // XXX: DIVISION API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final DivideByOnStep divideBy(Table<?> divisor) {
         return new DivideBy(this, divisor);
     }
@@ -395,167 +395,167 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // XXX: JOIN API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final TableOptionalOnStep join(TableLike<?> table, JoinType type) {
         return new JoinTable(this, table, type);
     }
 
-    @Override
+    
     public final TableOnStep join(TableLike<?> table) {
         return join(table, JoinType.JOIN);
     }
 
-    @Override
+    
     public final TableOnStep join(String sql) {
         return join(table(sql));
     }
 
-    @Override
+    
     public final TableOnStep join(String sql, Object... bindings) {
         return join(table(sql, bindings));
     }
 
-    @Override
+    
     public final TableOnStep join(String sql, QueryPart... parts) {
         return join(table(sql, parts));
     }
 
-    @Override
+    
     public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.LEFT_OUTER_JOIN);
     }
 
-    @Override
+    
     public final TablePartitionByStep leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
-    @Override
+    
     public final TablePartitionByStep leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final TablePartitionByStep rightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
-    @Override
+    
     public final TablePartitionByStep rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
-    @Override
+    
     public final TablePartitionByStep rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final TableOnStep fullOuterJoin(TableLike<?> table) {
         return join(table, JoinType.FULL_OUTER_JOIN);
     }
 
-    @Override
+    
     public final TableOnStep fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
-    @Override
+    
     public final TableOnStep fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final TableOnStep fullOuterJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final Table<Record> crossJoin(TableLike<?> table) {
         return join(table, JoinType.CROSS_JOIN);
     }
 
-    @Override
+    
     public final Table<Record> crossJoin(String sql) {
         return crossJoin(table(sql));
     }
 
-    @Override
+    
     public final Table<Record> crossJoin(String sql, Object... bindings) {
         return crossJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final Table<Record> crossJoin(String sql, QueryPart... parts) {
         return crossJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final Table<Record> naturalJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_JOIN);
     }
 
-    @Override
+    
     public final Table<Record> naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
 
-    @Override
+    
     public final Table<Record> naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final Table<Record> naturalJoin(String sql, QueryPart... parts) {
         return naturalJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final Table<Record> naturalLeftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
-    @Override
+    
     public final Table<Record> naturalLeftOuterJoin(String sql) {
         return naturalLeftOuterJoin(table(sql));
     }
 
-    @Override
+    
     public final Table<Record> naturalLeftOuterJoin(String sql, Object... bindings) {
         return naturalLeftOuterJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts) {
         return naturalLeftOuterJoin(table(sql, parts));
     }
 
-    @Override
+    
     public final Table<Record> naturalRightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
-    @Override
+    
     public final Table<Record> naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
 
-    @Override
+    
     public final Table<Record> naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
     }
 
-    @Override
+    
     public final Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts) {
         return naturalRightOuterJoin(table(sql, parts));
     }
@@ -564,7 +564,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -583,7 +583,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return false;
     }
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

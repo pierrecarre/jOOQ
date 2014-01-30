@@ -92,7 +92,7 @@ public class DefaultVisitListenerProvider implements VisitListenerProvider, Seri
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final VisitListener provide() {
         return listener;
     }
@@ -100,7 +100,7 @@ public class DefaultVisitListenerProvider implements VisitListenerProvider, Seri
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public String toString() {
         return listener.toString();
     }

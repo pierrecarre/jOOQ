@@ -96,12 +96,12 @@ class DefaultBindContext extends AbstractBindContext {
         this.stmt = stmt;
     }
 
-    @Override
+    
     public final PreparedStatement statement() {
         return stmt;
     }
 
-    @Override
+    
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.dialect();

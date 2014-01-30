@@ -180,7 +180,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     void setReturning();
 
@@ -189,7 +189,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     void setReturning(Identity<R, ? extends Number> identity);
 
@@ -198,7 +198,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     void setReturning(Field<?>... fields);
 
@@ -207,7 +207,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     void setReturning(Collection<? extends Field<?>> fields);
 
@@ -216,7 +216,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     R getReturnedRecord();
 
@@ -225,7 +225,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
-    @Override
+    
     @Support
     Result<R> getReturnedRecords();
 

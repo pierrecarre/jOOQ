@@ -2554,7 +2554,7 @@ final class Utils {
         return Utils.newRecord((Class<UDTRecord<?>>) type)
                     .operate(new RecordOperation<UDTRecord<?>, SQLException>() {
 
-                @Override
+                
                 public UDTRecord<?> operate(UDTRecord<?> record) throws SQLException {
                     List<String> values = PostgresUtils.toPGObject(object.toString());
 

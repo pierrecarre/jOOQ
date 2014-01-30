@@ -94,7 +94,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
@@ -103,32 +103,32 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     // XXX: Param API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void setValue(T value) {
         setConverted(value);
     }
 
-    @Override
+    
     public final void setConverted(Object value) {
         this.value = getDataType().convert(value);
     }
 
-    @Override
+    
     public final T getValue() {
         return value;
     }
 
-    @Override
+    
     public final String getParamName() {
         return paramName;
     }
 
-    @Override
+    
     public final void setInline(boolean inline) {
         this.inline = inline;
     }
 
-    @Override
+    
     public final boolean isInline() {
         return inline;
     }

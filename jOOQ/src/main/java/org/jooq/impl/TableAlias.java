@@ -117,47 +117,47 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
         return null;
     }
 
-    @Override
+    
     public final List<ForeignKey<R, ?>> getReferences() {
         return alias.wrapped().getReferences();
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(alias);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(alias);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 
-    @Override
+    
     public final Table<R> as(String as) {
         return alias.wrapped().as(as);
     }
 
-    @Override
+    
     public final Table<R> as(String as, String... fieldAliases) {
         return alias.wrapped().as(as, fieldAliases);
     }
 
-    @Override
+    
     public final boolean declaresTables() {
         return true;
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return aliasedFields;
     }
 
-    @Override
+    
     public Class<? extends R> getRecordType() {
         return alias.wrapped().getRecordType();
     }

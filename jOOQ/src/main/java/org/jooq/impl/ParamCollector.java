@@ -66,12 +66,12 @@ class ParamCollector extends AbstractBindContext {
         super(configuration);
     }
 
-    @Override
+    
     public final PreparedStatement statement() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+    
     protected final void bindInternal(QueryPartInternal internal) {
         if (internal instanceof Param) {
             Param<?> param = (Param<?>) internal;
@@ -89,7 +89,7 @@ class ParamCollector extends AbstractBindContext {
         }
     }
 
-    @Override
+    
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         throw new UnsupportedOperationException();
     }

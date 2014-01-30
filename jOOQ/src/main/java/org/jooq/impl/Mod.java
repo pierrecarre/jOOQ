@@ -66,7 +66,7 @@ class Mod<T> extends AbstractFunction<T> {
         this.arg2 = arg2;
     }
 
-    @Override
+    
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             /* [pro] xx

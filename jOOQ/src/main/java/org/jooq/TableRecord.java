@@ -58,7 +58,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     R original();
 
     /**

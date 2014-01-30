@@ -273,32 +273,32 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
         return this;
     }
 
-    @Override
+    
     public int intValue() {
         return (int) value;
     }
 
-    @Override
+    
     public long longValue() {
         return value;
     }
 
-    @Override
+    
     public float floatValue() {
         return value;
     }
 
-    @Override
+    
     public double doubleValue() {
         return value;
     }
 
-    @Override
+    
     public int hashCode() {
         return Long.valueOf(value).hashCode();
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -309,12 +309,12 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
         return false;
     }
 
-    @Override
+    
     public String toString() {
         return Long.valueOf(value).toString();
     }
 
-    @Override
+    
     public int compareTo(UInteger o) {
         return (value < o.value ? -1 : (value == o.value ? 0 : 1));
     }

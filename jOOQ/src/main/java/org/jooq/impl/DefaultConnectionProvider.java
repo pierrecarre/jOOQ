@@ -73,12 +73,12 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     // XXX: ConnectionProvider API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final Connection acquire() {
         return connection;
     }
 
-    @Override
+    
     public final void release(Connection released) {}
 
     // -------------------------------------------------------------------------

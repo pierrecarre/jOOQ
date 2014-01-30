@@ -82,17 +82,17 @@ class Contains<T> extends AbstractCondition {
         this.value = null;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(condition());
     }
 
-    @Override
+    
     public final void bind(BindContext context) throws DataAccessException {
         context.visit(condition());
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
@@ -129,17 +129,17 @@ class Contains<T> extends AbstractCondition {
          */
         private static final long serialVersionUID = 8083622843635168388L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             context.visit(lhs).sql(" @> ").visit(rhs());
         }
 
-        @Override
+        
         public final void bind(BindContext context) throws DataAccessException {
             context.visit(lhs).visit(rhs());
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }

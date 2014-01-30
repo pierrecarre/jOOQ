@@ -86,17 +86,17 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         this.right = right;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         delegate(context.configuration()).toSQL(context);
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         delegate(context.configuration()).bind(context);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration()).clauses(ctx);
     }
@@ -154,7 +154,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
          */
         private static final long serialVersionUID = -1552476981094856727L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             context.sql("(").visit(left)
                    .sql(" ").keyword("overlaps")
@@ -162,12 +162,12 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
                    .sql(")");
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }

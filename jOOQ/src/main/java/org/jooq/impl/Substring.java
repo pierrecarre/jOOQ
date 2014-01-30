@@ -61,7 +61,7 @@ class Substring extends AbstractFunction<String> {
         super("substring", SQLDataType.VARCHAR, arguments);
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         String functionName = "substring";
 

@@ -67,7 +67,7 @@ class Power extends AbstractFunction<BigDecimal> {
         this.arg2 = arg2;
     }
 
-    @Override
+    
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
             case DERBY:

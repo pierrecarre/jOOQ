@@ -64,12 +64,12 @@ class FieldCondition extends AbstractCondition {
         this.field = field;
     }
 
-    @Override
+    
     public void toSQL(RenderContext ctx) {
         delegate(ctx.configuration()).toSQL(ctx);
     }
 
-    @Override
+    
     public void bind(BindContext ctx) {
         delegate(ctx.configuration()).bind(ctx);
     }

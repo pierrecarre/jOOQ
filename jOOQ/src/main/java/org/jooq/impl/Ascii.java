@@ -63,7 +63,7 @@ class Ascii extends AbstractFunction<Integer> {
         this.string = string;
     }
 
-    @Override
+    
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
             case FIREBIRD:

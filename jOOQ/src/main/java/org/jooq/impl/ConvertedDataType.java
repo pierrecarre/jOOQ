@@ -68,23 +68,23 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
         DataTypes.registerConverter(converter.toType(), converter);
     }
 
-    @Override
+    
     public int getSQLType() {
         return delegate.getSQLType();
     }
 
-    @Override
+    
     public String getTypeName(Configuration configuration) {
         return delegate.getTypeName(configuration);
     }
 
-    @Override
+    
     public String getCastTypeName(Configuration configuration) {
         return delegate.getCastTypeName(configuration);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public U convert(Object object) {
         return converter.from(delegate.convert(converter.to((U) object)));
     }

@@ -74,7 +74,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         this.udt = udt;
     }
 
-    @Override
+    
     public final UDT<R> getUDT() {
         return udt;
     }
@@ -82,7 +82,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     /*
      * Subclasses may override this method
      */
-    @Override
+    
     public Row fieldsRow() {
         return fields;
     }
@@ -91,12 +91,12 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
      * Subclasses may override this method
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public Row valuesRow() {
         return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
     }
 
-    @Override
+    
     public final String getSQLTypeName() throws SQLException {
         StringBuilder sb = new StringBuilder();
 
@@ -116,7 +116,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         return sb.toString();
     }
 
-    @Override
+    
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
         Configuration configuration = localConfiguration();
 
@@ -129,7 +129,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         setValue(field, Utils.getFromSQLInput(configuration, stream, field));
     }
 
-    @Override
+    
     public final void writeSQL(SQLOutput stream) throws SQLException {
         for (Field<?> field : getUDT().fields()) {
             setValue(stream, field);
@@ -140,7 +140,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         Utils.writeToSQLOutput(stream, field, getValue(field));
     }
 
-    @Override
+    
     public String toString() {
         StringBuilder result = new StringBuilder();
         String separator = "";

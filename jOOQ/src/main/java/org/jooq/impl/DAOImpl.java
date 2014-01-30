@@ -95,7 +95,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this.mapper = Utils.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
@@ -105,7 +105,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      * <p>
      * Subclasses may override this method to provide custom implementations.
      */
-    @Override
+    
     public /* non-final */ RecordMapper<R, P> mapper() {
         return mapper;
     }
@@ -114,17 +114,17 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     // XXX: DAO API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void insert(P object) {
         insert(singletonList(object));
     }
 
-    @Override
+    
     public final void insert(P... objects) {
         insert(asList(objects));
     }
 
-    @Override
+    
     public final void insert(Collection<P> objects) {
 
         // Execute a batch INSERT
@@ -138,17 +138,17 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
-    @Override
+    
     public final void update(P object) {
         update(singletonList(object));
     }
 
-    @Override
+    
     public final void update(P... objects) {
         update(asList(objects));
     }
 
-    @Override
+    
     public final void update(Collection<P> objects) {
 
         // Execute a batch UPDATE
@@ -162,12 +162,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
-    @Override
+    
     public final void delete(P... objects) {
         delete(asList(objects));
     }
 
-    @Override
+    
     public final void delete(Collection<P> objects) {
         List<T> ids = new ArrayList<T>();
 
@@ -178,12 +178,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         deleteById(ids);
     }
 
-    @Override
+    
     public final void deleteById(T... ids) {
         deleteById(asList(ids));
     }
 
-    @Override
+    
     public final void deleteById(Collection<T> ids) {
         Field<?> pk = pk();
 
@@ -192,12 +192,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
-    @Override
+    
     public final boolean exists(P object) {
         return existsById(getId(object));
     }
 
-    @Override
+    
     public final boolean existsById(T id) {
         Field<?> pk = pk();
 
@@ -213,7 +213,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
-    @Override
+    
     public final long count() {
         return using(configuration)
                  .selectCount()
@@ -221,7 +221,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                  .fetchOne(0, Long.class);
     }
 
-    @Override
+    
     public final List<P> findAll() {
         return using(configuration)
                  .selectFrom(table)
@@ -229,7 +229,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                  .map(mapper());
     }
 
-    @Override
+    
     public final P findById(T id) {
         Field<?> pk = pk();
         R record = null;
@@ -244,7 +244,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return mapper().map(record);
     }
 
-    @Override
+    
     public final <Z> List<P> fetch(Field<Z> field, Z... values) {
         return using(configuration)
                  .selectFrom(table)
@@ -253,7 +253,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                  .map(mapper());
     }
 
-    @Override
+    
     public final <Z> P fetchOne(Field<Z> field, Z value) {
         R record = using(configuration)
                      .selectFrom(table)
@@ -263,12 +263,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return mapper().map(record);
     }
 
-    @Override
+    
     public final Table<R> getTable() {
         return table;
     }
 
-    @Override
+    
     public final Class<P> getType() {
         return type;
     }

@@ -91,17 +91,17 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         this.field = new Fields<Record>(fieldByName(DSL.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
     }
 
-    @Override
+    
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record> as(String as) {
         return new ArrayTableSimulation(array, as);
     }
 
-    @Override
+    
     public final Table<Record> as(String as, String... fieldAliases) {
         if (fieldAliases == null) {
             return new ArrayTableSimulation(array, as);
@@ -113,7 +113,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         throw new IllegalArgumentException("Array table simulations can only have a single field alias");
     }
 
-    @Override
+    
     public final boolean declaresTables() {
 
         // [#1055] Always true, because unnested tables are always aliased.
@@ -121,17 +121,17 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         return true;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.visit(table(ctx.configuration()));
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) throws DataAccessException {
         ctx.visit(table(ctx.configuration()));
     }
 
-    @Override
+    
     final Fields<Record> fields0() {
         return field;
     }

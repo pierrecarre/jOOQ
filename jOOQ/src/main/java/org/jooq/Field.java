@@ -43,19 +43,14 @@ package org.jooq;
 
 // ...
 import static org.jooq.SQLDialect.CUBRID;
-// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -66,6 +61,11 @@ import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
+// ...
+// ...
+// ...
+// ...
+// ...
 // ...
 
 /**
@@ -154,7 +154,7 @@ public interface Field<T> extends GroupField {
      * <strong>Watch out! This is {@link Object#equals(Object)}, not a jOOQ DSL
      * feature!</strong>
      */
-    @Override
+
     boolean equals(Object other);
 
     // ------------------------------------------------------------------------
@@ -1184,7 +1184,7 @@ public interface Field<T> extends GroupField {
         name = "LIKE",
         args = {
             "Field",
-            "Character",
+            "Character"
         },
         to = "LikePredicate"
     )
@@ -1213,7 +1213,7 @@ public interface Field<T> extends GroupField {
         name = "LIKE",
         args = {
             "Field",
-            "Character",
+            "Character"
         },
         to = "LikePredicate"
     )

@@ -100,17 +100,17 @@ class RowSubqueryCondition extends AbstractCondition {
         this.comparator = comparator;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         delegate(ctx.configuration(), ctx).toSQL(ctx);
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         delegate(ctx.configuration(), null).bind(ctx);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration(), null).clauses(ctx);
     }
@@ -204,7 +204,7 @@ class RowSubqueryCondition extends AbstractCondition {
          */
         private static final long serialVersionUID = -1552476981094856727L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
 
             // Some databases need extra parentheses around the RHS
@@ -225,12 +225,12 @@ class RowSubqueryCondition extends AbstractCondition {
                    .sql(")");
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }

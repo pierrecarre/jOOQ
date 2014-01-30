@@ -222,22 +222,22 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     // XXX Number API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final int intValue() {
         return (int) doubleValue();
     }
 
-    @Override
+    
     public final long longValue() {
         return (long) doubleValue();
     }
 
-    @Override
+    
     public final float floatValue() {
         return (float) doubleValue();
     }
 
-    @Override
+    
     public final double doubleValue() {
         return getTotalMilli();
     }
@@ -246,12 +246,12 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     // XXX Interval API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final DayToSecond neg() {
         return new DayToSecond(days, hours, minutes, seconds, nano, !negative);
     }
 
-    @Override
+    
     public final DayToSecond abs() {
         return new DayToSecond(days, hours, minutes, seconds, nano, false);
     }
@@ -389,7 +389,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
             1000000000.0 * 3600.0 * 24.0 * days);
     }
 
-    @Override
+    
     public final int getSign() {
         return negative ? -1 : 1;
     }
@@ -398,7 +398,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     // XXX Comparable and Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final int compareTo(DayToSecond that) {
         if (days < that.days) {
             return -1;
@@ -438,7 +438,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         return 0;
     }
 
-    @Override
+    
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -450,7 +450,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         return result;
     }
 
-    @Override
+    
     public final boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -472,7 +472,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         return true;
     }
 
-    @Override
+    
     public final String toString() {
         StringBuilder sb = new StringBuilder();
 

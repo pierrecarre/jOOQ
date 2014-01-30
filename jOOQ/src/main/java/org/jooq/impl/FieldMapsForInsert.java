@@ -75,7 +75,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
     // The QueryPart API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (!isExecutable()) {
             context.sql("[ no fields are inserted ]");
@@ -154,12 +154,12 @@ class FieldMapsForInsert extends AbstractQueryPart {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         visitAll(context, insertMaps);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

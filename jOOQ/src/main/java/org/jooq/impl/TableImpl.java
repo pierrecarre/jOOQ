@@ -102,24 +102,24 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         return null;
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return fields;
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return alias != null ? CLAUSES_TABLE_ALIAS : CLAUSES_TABLE_REFERENCE;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         if (alias != null) {
             alias.bind(context);
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         if (alias != null) {
             alias.toSQL(context);
@@ -144,7 +144,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Table<R> as(String as) {
         if (alias != null) {
             return alias.wrapped().as(as);
@@ -160,7 +160,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * <p>
      * {@inheritDoc}
      */
-    @Override
+    
     public Table<R> as(String as, String... fieldAliases) {
         if (alias != null) {
             return alias.wrapped().as(as, fieldAliases);
@@ -177,12 +177,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
+    
     public Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
     }
 
-    @Override
+    
     public boolean declaresTables() {
         if (alias != null) {
             return true;
@@ -196,7 +196,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

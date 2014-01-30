@@ -54,31 +54,31 @@ import java.util.concurrent.Executor;
  */
 public abstract class JDBC41Connection {
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final void setSchema(String s) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final String getSchema() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final void abort(Executor executor) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    // JDBC 4.1 compliance: @Override
+    // JDBC 4.1 compliance: 
     @SuppressWarnings("unused")
     public final int getNetworkTimeout() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");

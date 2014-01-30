@@ -191,22 +191,22 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // Call the routine
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void attach(Configuration c) {
         configuration = c;
     }
 
-    @Override
+    
     public final void detach() {
         attach(null);
     }
 
-    @Override
+    
     public final Configuration configuration() {
         return configuration;
     }
 
-    @Override
+    
     public final int execute(Configuration c) {
 
         // Ensure that all depending Attachables are attached
@@ -220,7 +220,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    @Override
+    
     public final int execute() {
         // Procedures (no return value) are always executed as CallableStatement
         if (type == null) {
@@ -313,12 +313,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         for (Parameter<?> parameter : getParameters()) {
 
@@ -348,7 +348,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         toSQLBegin(context);
 
@@ -577,7 +577,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // Fetch routine results
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final T getReturnValue() {
         if (returnParameter != null) {
             return getValue(returnParameter);
@@ -599,32 +599,32 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // Access to routine configuration objects
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final List<Parameter<?>> getOutParameters() {
         return Collections.unmodifiableList(outParameters);
     }
 
-    @Override
+    
     public final List<Parameter<?>> getInParameters() {
         return Collections.unmodifiableList(inParameters);
     }
 
-    @Override
+    
     public final List<Parameter<?>> getParameters() {
         return Collections.unmodifiableList(allParameters);
     }
 
-    @Override
+    
     public final Schema getSchema() {
         return schema;
     }
 
-    @Override
+    
     public final Package getPackage() {
         return pkg;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
@@ -742,7 +742,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                   AbstractRoutine.this.type);
         }
 
-        @Override
+        
         final Field<T> getFunction0(Configuration c) {
             RenderContext local = create(c).renderContext();
             toSQLQualifiedName(local);
@@ -771,7 +771,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

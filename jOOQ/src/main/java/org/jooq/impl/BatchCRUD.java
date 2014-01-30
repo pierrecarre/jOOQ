@@ -81,12 +81,12 @@ class BatchCRUD implements Batch {
         this.records = records;
     }
 
-    @Override
+    
     public final int size() {
         return records.length;
     }
 
-    @Override
+    
     public final int[] execute() throws DataAccessException {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
@@ -269,7 +269,7 @@ class BatchCRUD implements Batch {
          */
         private static final long serialVersionUID = 7399239846062763212L;
 
-        @Override
+        
         public void renderEnd(ExecuteContext ctx) {
             throw new QueryCollectorSignal(ctx.sql(), ctx.query());
         }

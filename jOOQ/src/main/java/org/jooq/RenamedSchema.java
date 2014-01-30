@@ -64,17 +64,17 @@ class RenamedSchema extends SchemaImpl {
         this.delegate = delegate;
     }
 
-    @Override
+    
     public final List<Table<?>> getTables() {
         return delegate.getTables();
     }
 
-    @Override
+    
     public final List<UDT<?>> getUDTs() {
         return delegate.getUDTs();
     }
 
-    @Override
+    
     public final List<Sequence<?>> getSequences() {
         return delegate.getSequences();
     }

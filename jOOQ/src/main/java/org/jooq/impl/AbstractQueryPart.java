@@ -74,7 +74,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Subclasses may override this
      */
-    @Override
+    
     public boolean declaresFields() {
         return false;
     }
@@ -82,7 +82,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Subclasses may override this
      */
-    @Override
+    
     public boolean declaresTables() {
         return false;
     }
@@ -91,7 +91,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // The Object API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -109,7 +109,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return false;
     }
 
-    @Override
+    
     public int hashCode() {
         // This is a working default implementation. It should be overridden by
         // concrete subclasses, to improve performance
@@ -117,7 +117,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return create().renderInlined(this).hashCode();
     }
 
-    @Override
+    
     public String toString() {
         try {
             return create().renderInlined(this);

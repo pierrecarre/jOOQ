@@ -73,12 +73,12 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
         this.to = to;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         ctx.visit(delegate(ctx.configuration()));
     }
@@ -106,22 +106,22 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
+    
     public final Class<? extends Record1<Integer>> getRecordType() {
         return (Class) RecordImpl.class;
     }
 
-    @Override
+    
     public final Table<Record1<Integer>> as(String alias) {
         return new TableAlias<Record1<Integer>>(this, alias);
     }
 
-    @Override
+    
     public final Table<Record1<Integer>> as(String alias, String... fieldAliases) {
         return new TableAlias<Record1<Integer>>(this, alias, fieldAliases);
     }
 
-    @Override
+    
     final Fields<Record1<Integer>> fields0() {
         return new Fields<Record1<Integer>>(DSL.fieldByName(Integer.class, "generate_series"));
     }

@@ -61,22 +61,22 @@ class LoaderErrorImpl implements LoaderError {
         this.query = query;
     }
 
-    @Override
+    
     public DataAccessException exception() {
         return exception;
     }
 
-    @Override
+    
     public int rowIndex() {
         return rowIndex;
     }
 
-    @Override
+    
     public String[] row() {
         return row;
     }
 
-    @Override
+    
     public Query query() {
         return query;
     }

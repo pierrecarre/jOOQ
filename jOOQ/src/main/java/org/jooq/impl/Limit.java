@@ -71,7 +71,7 @@ class Limit extends AbstractQueryPart {
     private Field<Integer>    offsetPlusOne    = val(1);
     private boolean           rendersParams;
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         ParamType paramType = context.paramType();
         CastMode castMode = context.castMode();
@@ -225,7 +225,7 @@ class Limit extends AbstractQueryPart {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         switch (context.configuration().dialect()) {
 
@@ -338,7 +338,7 @@ class Limit extends AbstractQueryPart {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

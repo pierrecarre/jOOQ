@@ -960,7 +960,7 @@ public class BasicTest extends AbstractTest {
         Condition c = new CustomCondition() {
             private static final long serialVersionUID = 6302350477408137757L;
 
-            @Override
+            
             public void toSQL(RenderContext ctx) {
                 if (ctx.paramType() == INLINED) {
                     ctx.sql("1 = 1");
@@ -969,7 +969,7 @@ public class BasicTest extends AbstractTest {
                 }
             }
 
-            @Override
+            
             public void bind(BindContext ctx) {
                 try {
                     ctx.statement().setInt(ctx.nextIndex(), 1);
@@ -1053,7 +1053,7 @@ public class BasicTest extends AbstractTest {
         Field<?> f = new CustomField<Integer>("test", SQLDataType.INTEGER) {
             private static final long serialVersionUID = 1L;
 
-            @Override
+            
             public void toSQL(RenderContext ctx) {
                 if (ctx.paramType() == INLINED) {
                     ctx.sql("1");
@@ -1062,7 +1062,7 @@ public class BasicTest extends AbstractTest {
                 }
             }
 
-            @Override
+            
             public void bind(BindContext ctx) {
                 ctx.bindValues(1);
             }

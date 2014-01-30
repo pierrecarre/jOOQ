@@ -69,40 +69,40 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
         this.isDefaulted = isDefaulted;
     }
 
-    @Override
+    
     public final String getName() {
         return name;
     }
 
-    @Override
+    
     public final DataType<T> getDataType() {
         return type;
     }
 
-    @Override
+    
     public final DataType<T> getDataType(Configuration configuration) {
         return type.getDataType(configuration);
     }
 
-    @Override
+    
     public final Class<T> getType() {
         return type.getType();
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.literal(getName());
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 
-    @Override
+    
     public final boolean isDefaulted() {
         return isDefaulted;
     }
@@ -111,7 +111,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation
@@ -119,7 +119,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
         return name != null ? name.hashCode() : 0;
     }
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

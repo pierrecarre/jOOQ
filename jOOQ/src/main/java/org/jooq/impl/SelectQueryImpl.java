@@ -176,12 +176,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.forUpdateOfTables = new TableList();
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.declareFields(true)
                .visit(getSelect0())
@@ -206,7 +206,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .visit(forUpdateOfTables);
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
         if (TRUE.equals(wrapDerivedTables)) {
@@ -739,67 +739,67 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         context.end(SELECT_ORDER_BY);
     }
 
-    @Override
+    
     public final void addSelect(Collection<? extends Field<?>> fields) {
         getSelect0().addAll(fields);
     }
 
-    @Override
+    
     public final void addSelect(Field<?>... fields) {
         addSelect(Arrays.asList(fields));
     }
 
-    @Override
+    
     public final void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
-    @Override
+    
     public final void addLimit(int numberOfRows) {
         addLimit(0, numberOfRows);
     }
 
-    @Override
+    
     public final void addLimit(Param<Integer> numberOfRows) {
         addLimit(0, numberOfRows);
     }
 
-    @Override
+    
     public final void addLimit(int offset, int numberOfRows) {
         limit.setOffset(offset);
         limit.setNumberOfRows(numberOfRows);
     }
 
-    @Override
+    
     public final void addLimit(int offset, Param<Integer> numberOfRows) {
         limit.setOffset(offset);
         limit.setNumberOfRows(numberOfRows);
     }
 
-    @Override
+    
     public final void addLimit(Param<Integer> offset, int numberOfRows) {
         limit.setOffset(offset);
         limit.setNumberOfRows(numberOfRows);
     }
 
-    @Override
+    
     public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
         limit.setOffset(offset);
         limit.setNumberOfRows(numberOfRows);
     }
 
-    @Override
+    
     public final void setForUpdate(boolean forUpdate) {
         this.forUpdate = forUpdate;
         this.forShare = false;
     }
 
-    @Override
+    
     public final void setForUpdateOf(Field<?>... fields) {
         setForUpdateOf(Arrays.asList(fields));
     }
 
-    @Override
+    
     public final void setForUpdateOf(Collection<? extends Field<?>> fields) {
         setForUpdate(true);
         forUpdateOf.clear();
@@ -807,7 +807,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         forUpdateOf.addAll(fields);
     }
 
-    @Override
+    
     public final void setForUpdateOf(Table<?>... tables) {
         setForUpdate(true);
         forUpdateOf.clear();
@@ -824,7 +824,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     x
     xx [/pro] */
 
-    @Override
+    
     public final void setForUpdateNoWait() {
         setForUpdate(true);
         forUpdateMode = ForUpdateMode.NOWAIT;
@@ -840,7 +840,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     x
     xx [/pro] */
 
-    @Override
+    
     public final void setForShare(boolean forShare) {
         this.forUpdate = false;
         this.forShare = forShare;
@@ -850,7 +850,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.forUpdateWait = 0;
     }
 
-    @Override
+    
     public final List<Field<?>> getSelect() {
         return getSelect1();
     }
@@ -901,7 +901,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         // Generated record classes only come into play, when the select is
         // - on a single table
@@ -961,22 +961,22 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return getOrderBy();
     }
 
-    @Override
+    
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {
         getOrderBy().addAll(fields);
     }
 
-    @Override
+    
     public final void addOrderBy(Field<?>... fields) {
         getOrderBy().addAll(fields);
     }
 
-    @Override
+    
     public final void addOrderBy(SortField<?>... fields) {
         addOrderBy(Arrays.asList(fields));
     }
 
-    @Override
+    
     public final void addOrderBy(int... fieldIndexes) {
         Field<?>[] fields = new Field[fieldIndexes.length];
 
@@ -987,27 +987,27 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         addOrderBy(fields);
     }
 
-    @Override
+    
     public final void setOrderBySiblings(boolean orderBySiblings) {
         this.orderBySiblings = orderBySiblings;
     }
 
-    @Override
+    
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
     }
 
-    @Override
+    
     public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Condition... conditions) {
         condition.addConditions(operator, conditions);
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         condition.addConditions(operator, conditions);
     }
@@ -1028,76 +1028,76 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.option = option;
     }
 
-    @Override
+    
     final boolean isForUpdate() {
         return forUpdate;
     }
 
-    @Override
+    
     public final void addFrom(Collection<? extends TableLike<?>> f) {
         for (TableLike<?> provider : f) {
             getFrom().add(provider.asTable());
         }
     }
 
-    @Override
+    
     public final void addFrom(TableLike<?>... f) {
         addFrom(Arrays.asList(f));
     }
 
-    @Override
+    
     public final void addConnectBy(Condition c) {
         getConnectBy().addConditions(c);
     }
 
-    @Override
+    
     public final void addConnectByNoCycle(Condition c) {
         getConnectBy().addConditions(c);
         setConnectByNoCycle(true);
     }
 
-    @Override
+    
     public final void setConnectByStartWith(Condition c) {
         setStartWith(c);
     }
 
-    @Override
+    
     public final void addGroupBy(Collection<? extends GroupField> fields) {
         setGrouping();
         getGroupBy().addAll(fields);
     }
 
-    @Override
+    
     public final void addGroupBy(GroupField... fields) {
         addGroupBy(Arrays.asList(fields));
     }
 
-    @Override
+    
     public final void addHaving(Condition... conditions) {
         addHaving(Arrays.asList(conditions));
     }
 
-    @Override
+    
     public final void addHaving(Collection<? extends Condition> conditions) {
         getHaving().addConditions(conditions);
     }
 
-    @Override
+    
     public final void addHaving(Operator operator, Condition... conditions) {
         getHaving().addConditions(operator, conditions);
     }
 
-    @Override
+    
     public final void addHaving(Operator operator, Collection<? extends Condition> conditions) {
         getHaving().addConditions(operator, conditions);
     }
 
-    @Override
+    
     public final void addJoin(TableLike<?> table, Condition... conditions) {
         addJoin(table, JoinType.JOIN, conditions);
     }
 
-    @Override
+    
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
         addJoin0(table, type, conditions, null);
     }
@@ -1159,7 +1159,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         getFrom().set(index, joined);
     }
 
-    @Override
+    
     public final void addJoinOnKey(TableLike<?> table, JoinType type) throws DataAccessException {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
@@ -1198,7 +1198,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         getFrom().set(index, joined);
     }
 
-    @Override
+    
     public final void addJoinOnKey(TableLike<?> table, JoinType type, TableField<?, ?>... keyFields) throws DataAccessException {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
@@ -1237,7 +1237,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         getFrom().set(index, joined);
     }
 
-    @Override
+    
     public final void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key) {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
@@ -1276,12 +1276,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         getFrom().set(index, joined);
     }
 
-    @Override
+    
     public final void addJoinUsing(TableLike<?> table, Collection<? extends Field<?>> fields) {
         addJoinUsing(table, JoinType.JOIN, fields);
     }
 
-    @Override
+    
     public final void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields) {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
@@ -1320,12 +1320,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         getFrom().set(index, joined);
     }
 
-    @Override
+    
     public final void addHint(String h) {
         setHint(h);
     }
 
-    @Override
+    
     public final void addOption(String o) {
         setOption(o);
     }

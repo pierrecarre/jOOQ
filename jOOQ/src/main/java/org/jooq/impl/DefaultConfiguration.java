@@ -191,7 +191,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive() {
         return new DefaultConfiguration(this);
     }
@@ -199,7 +199,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
@@ -216,7 +216,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -233,7 +233,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -250,7 +250,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -267,7 +267,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -284,7 +284,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -301,7 +301,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
             connectionProvider,
@@ -322,7 +322,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(ConnectionProvider newConnectionProvider) {
         this.connectionProvider = newConnectionProvider;
         return this;
@@ -331,7 +331,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
         this.recordMapperProvider = newRecordMapperProvider != null
             ? newRecordMapperProvider
@@ -343,7 +343,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(RecordListenerProvider... newRecordListenerProviders) {
         this.recordListenerProviders = newRecordListenerProviders != null
             ? newRecordListenerProviders
@@ -355,7 +355,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
         this.executeListenerProviders = newExecuteListenerProviders != null
             ? newExecuteListenerProviders
@@ -367,7 +367,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(VisitListenerProvider... newVisitListenerProviders) {
         this.visitListenerProviders = newVisitListenerProviders != null
             ? newVisitListenerProviders
@@ -379,7 +379,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(SQLDialect newDialect) {
         this.dialect = newDialect;
         return this;
@@ -388,7 +388,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Configuration set(Settings newSettings) {
         this.settings = newSettings != null
             ? SettingsTools.clone(newSettings)
@@ -405,7 +405,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final ConnectionProvider connectionProvider() {
         return connectionProvider;
     }
@@ -413,7 +413,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final RecordMapperProvider recordMapperProvider() {
         return recordMapperProvider;
     }
@@ -421,7 +421,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final RecordListenerProvider[] recordListenerProviders() {
         return recordListenerProviders;
     }
@@ -429,7 +429,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final ExecuteListenerProvider[] executeListenerProviders() {
         return executeListenerProviders;
     }
@@ -437,7 +437,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final VisitListenerProvider[] visitListenerProviders() {
         return visitListenerProviders;
     }
@@ -445,7 +445,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final SQLDialect dialect() {
         return dialect;
     }
@@ -453,7 +453,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Settings settings() {
         return settings;
     }
@@ -461,7 +461,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final ConcurrentHashMap<Object, Object> data() {
         return data;
     }
@@ -469,7 +469,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Object data(Object key) {
         return data.get(key);
     }
@@ -477,7 +477,7 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
@@ -485,13 +485,13 @@ public class DefaultConfiguration implements Configuration {
     /**
      * {@inheritDoc}
      */
-    @Override
+    
     @Deprecated
     public final org.jooq.SchemaMapping schemaMapping() {
         return mapping;
     }
 
-    @Override
+    
     public String toString() {
         StringWriter writer = new StringWriter();
         JAXB.marshal(settings, writer);

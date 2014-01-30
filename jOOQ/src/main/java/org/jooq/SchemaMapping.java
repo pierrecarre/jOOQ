@@ -432,7 +432,7 @@ public class SchemaMapping implements Serializable {
     // Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         StringWriter writer = new StringWriter();
         JAXB.marshal(mapping(), writer);

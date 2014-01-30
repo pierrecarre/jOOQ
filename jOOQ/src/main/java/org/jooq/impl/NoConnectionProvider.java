@@ -54,7 +54,7 @@ public class NoConnectionProvider implements ConnectionProvider {
     /**
      * This method will always return <code>null</code>.
      */
-    @Override
+    
     public final Connection acquire() {
         return null;
     }
@@ -62,6 +62,6 @@ public class NoConnectionProvider implements ConnectionProvider {
     /**
      * This method has no effect.
      */
-    @Override
+    
     public final void release(Connection connection) {}
 }

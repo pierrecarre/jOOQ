@@ -299,32 +299,32 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final DataType<T> nullable(boolean n) {
         return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, n, defaulted);
     }
 
-    @Override
+    
     public final boolean nullable() {
         return nullable;
     }
 
-    @Override
+    
     public final DataType<T> defaulted(boolean d) {
         return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, nullable, d);
     }
 
-    @Override
+    
     public final boolean defaulted() {
         return defaulted;
     }
 
-    @Override
+    
     public final DataType<T> precision(int p) {
         return precision(p, scale);
     }
 
-    @Override
+    
     public final DataType<T> precision(int p, int s) {
         if (precision == p && scale == s) {
             return this;
@@ -334,17 +334,17 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final int precision() {
         return precision;
     }
 
-    @Override
+    
     public final boolean hasPrecision() {
         return type == BigInteger.class || type == BigDecimal.class;
     }
 
-    @Override
+    
     public final DataType<T> scale(int s) {
         if (scale == s) {
             return this;
@@ -354,17 +354,17 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final int scale() {
         return scale;
     }
 
-    @Override
+    
     public final boolean hasScale() {
         return type == BigDecimal.class;
     }
 
-    @Override
+    
     public final DataType<T> length(int l) {
         if (length == l) {
             return this;
@@ -374,22 +374,22 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final int length() {
         return length;
     }
 
-    @Override
+    
     public final boolean hasLength() {
         return type == byte[].class || type == String.class;
     }
 
-    @Override
+    
     public final DataType<T> getSQLDataType() {
         return sqlDataType;
     }
 
-    @Override
+    
     public final DataType<T> getDataType(Configuration configuration) {
 
         // If this is a SQLDataType find the most suited dialect-specific
@@ -427,7 +427,7 @@ public class DefaultDataType<T> implements DataType<T> {
         return this;
     }
 
-    @Override
+    
     public /* final */ int getSQLType() {
         // TODO [#1227] There is some confusion with these types, especially
         // when it comes to byte[] which can be mapped to BLOB, BINARY, VARBINARY
@@ -514,27 +514,27 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final Class<T> getType() {
         return type;
     }
 
-    @Override
+    
     public final Class<T[]> getArrayType() {
         return arrayType;
     }
 
-    @Override
+    
     public final String getTypeName() {
         return typeName;
     }
 
-    @Override
+    
     public String getTypeName(Configuration configuration) {
         return getDataType(configuration).getTypeName();
     }
 
-    @Override
+    
     public final String getCastTypeName() {
         if (length != 0 && hasLength()) {
             return castTypeBase + "(" + length + ")";
@@ -552,12 +552,12 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public String getCastTypeName(Configuration configuration) {
         return getDataType(configuration).getCastTypeName();
     }
 
-    @Override
+    
     public final DataType<T[]> getArrayDataType() {
         return new ArrayDataType<T>(this);
     }
@@ -569,22 +569,22 @@ public class DefaultDataType<T> implements DataType<T> {
     x
 
     xx [/pro] */
-    @Override
+    
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         return new DefaultDataType<E>(dialect, enumDataType, typeName, castTypeName);
     }
 
-    @Override
+    
     public final <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
         return new ConvertedDataType<T, U>(this, converter);
     }
 
-    @Override
+    
     public final SQLDialect getDialect() {
         return dialect;
     }
 
-    @Override
+    
     public /* final */ T convert(Object object) {
 
         // [#1441] Avoid unneeded type conversions to improve performance
@@ -599,12 +599,12 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final T[] convert(Object... objects) {
         return (T[]) Convert.convertArray(objects, type);
     }
 
-    @Override
+    
     public final List<T> convert(Collection<?> objects) {
         return Convert.convert(objects, type);
     }
@@ -697,43 +697,43 @@ public class DefaultDataType<T> implements DataType<T> {
         }
     }
 
-    @Override
+    
     public final boolean isNumeric() {
         return Number.class.isAssignableFrom(type) && !isInterval();
     }
 
-    @Override
+    
     public final boolean isString() {
         return type == String.class;
     }
 
-    @Override
+    
     public final boolean isDateTime() {
         return java.util.Date.class.isAssignableFrom(type);
     }
 
-    @Override
+    
     public final boolean isTemporal() {
         return isDateTime() || isInterval();
     }
 
-    @Override
+    
     public final boolean isInterval() {
         return Interval.class.isAssignableFrom(type);
     }
 
-    @Override
+    
     public final boolean isLob() {
         DataType<T> t = getSQLDataType();
         return (t == BLOB || t == CLOB || t == NCLOB);
     }
 
-    @Override
+    
     public final boolean isBinary() {
         return type == byte[].class;
     }
 
-    @Override
+    
     public final boolean isArray() {
         return /* [pro] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx [/pro] */
             (!isBinary() && type.isArray());
@@ -743,12 +743,12 @@ public class DefaultDataType<T> implements DataType<T> {
     // The Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public String toString() {
         return getCastTypeName() + " (" + type.getName() + ")";
     }
 
-    @Override
+    
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -761,7 +761,7 @@ public class DefaultDataType<T> implements DataType<T> {
         return result;
     }
 
-    @Override
+    
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

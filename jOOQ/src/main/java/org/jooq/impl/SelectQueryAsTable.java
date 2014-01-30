@@ -64,27 +64,27 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         this.query = query;
     }
 
-    @Override
+    
     public final Table<R> as(String alias) {
         return new TableAlias<R>(this, alias, true);
     }
 
-    @Override
+    
     public final Table<R> as(String alias, String... fieldAliases) {
         return new TableAlias<R>(this, alias, fieldAliases, true);
     }
 
-    @Override
+    
     final Fields<R> fields0() {
         return new Fields<R>(query.getSelect());
     }
 
-    @Override
+    
     public final Class<? extends R> getRecordType() {
         return query.getRecordType();
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
 
         // If this is already a subquery, proceed
@@ -98,7 +98,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
 
         // If this is already a subquery, proceed
@@ -120,7 +120,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         }
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }

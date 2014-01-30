@@ -68,33 +68,33 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
         super(configuration);
     }
 
-    @Override
+    
     public final int fetchCount() throws DataAccessException {
         return DSL.using(configuration()).fetchCount(this);
     }
 
-    @Override
+    
     public final Select<R> union(Select<? extends R> select) {
         return new Union<R>(configuration(), this, select, CombineOperator.UNION);
     }
 
-    @Override
+    
     public final Select<R> unionAll(Select<? extends R> select) {
         return new Union<R>(configuration(), this, select, CombineOperator.UNION_ALL);
     }
 
-    @Override
+    
     public final Select<R> except(Select<? extends R> select) {
         return new Union<R>(configuration(), this, select, CombineOperator.EXCEPT);
     }
 
-    @Override
+    
     public final Select<R> intersect(Select<? extends R> select) {
         return new Union<R>(configuration(), this, select, CombineOperator.INTERSECT);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    
     public final <T> Field<T> asField() {
         if (getSelect().size() != 1) {
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
@@ -103,54 +103,54 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
         return new SelectQueryAsField<T>(this, (DataType<T>) getSelect().get(0).getDataType());
     }
 
-    @Override
+    
     public final <T> Field<T> asField(String alias) {
         return this.<T> asField().as(alias);
     }
 
-    @Override
+    
     public final Row fieldsRow() {
         return asTable().fieldsRow();
     }
 
-    @Override
+    
     public final <T> Field<T> field(Field<T> field) {
         return asTable().field(field);
     }
 
-    @Override
+    
     public final Field<?> field(String string) {
         return asTable().field(string);
     }
 
-    @Override
+    
     public final Field<?> field(int index) {
         return asTable().field(index);
     }
 
-    @Override
+    
     public final Field<?>[] fields() {
         return asTable().fields();
     }
 
-    @Override
+    
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
         return new SelectQueryAsTable<R>(this).as("alias_" + Utils.hash(this));
     }
 
-    @Override
+    
     public final Table<R> asTable(String alias) {
         return new SelectQueryAsTable<R>(this).as(alias);
     }
 
-    @Override
+    
     public final Table<R> asTable(String alias, String... fieldAliases) {
         return new SelectQueryAsTable<R>(this).as(alias, fieldAliases);
     }
 
-    @Override
+    
     protected final Field<?>[] getFields(ResultSetMetaData meta) {
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
@@ -167,7 +167,7 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
         return fieldArray(fields);
     }
 
-    @Override
+    
     final boolean isSelectingRefCursor() {
         for (Field<?> field : getSelect()) {
             if (Result.class.isAssignableFrom(field.getType())) {

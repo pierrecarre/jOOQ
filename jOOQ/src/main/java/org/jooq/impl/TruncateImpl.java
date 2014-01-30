@@ -79,31 +79,31 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
         this.table = table;
     }
 
-    @Override
+    
     public final TruncateFinalStep<R> cascade() {
         cascade = true;
         return this;
     }
 
-    @Override
+    
     public final TruncateFinalStep<R> restrict() {
         cascade = false;
         return this;
     }
 
-    @Override
+    
     public final TruncateCascadeStep<R> restartIdentity() {
         restartIdentity = true;
         return this;
     }
 
-    @Override
+    
     public final TruncateCascadeStep<R> continueIdentity() {
         restartIdentity = false;
         return this;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect()) {
 
@@ -145,12 +145,12 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(table);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }

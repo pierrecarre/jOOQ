@@ -92,17 +92,17 @@ class RowInCondition extends AbstractCondition {
         this.comparator = comparator;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext ctx) {
         delegate(ctx.configuration()).toSQL(ctx);
     }
 
-    @Override
+    
     public final void bind(BindContext ctx) {
         delegate(ctx.configuration()).bind(ctx);
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return delegate(ctx.configuration()).clauses(ctx);
     }
@@ -135,7 +135,7 @@ class RowInCondition extends AbstractCondition {
          */
         private static final long serialVersionUID = -7019193803316281371L;
 
-        @Override
+        
         public final void toSQL(RenderContext context) {
             context.visit(left)
                    .sql(" ")
@@ -145,12 +145,12 @@ class RowInCondition extends AbstractCondition {
                    .sql(")");
         }
 
-        @Override
+        
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
         }
 
-        @Override
+        
         public final Clause[] clauses(Context<?> ctx) {
             return comparator == IN ? CLAUSES_IN : CLAUSES_IN_NOT;
         }

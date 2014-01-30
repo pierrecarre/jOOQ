@@ -74,7 +74,7 @@ class Neg<T> extends AbstractField<T> {
         this.field = field;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         SQLDialect family = context.configuration().dialect().family();
 
@@ -103,7 +103,7 @@ class Neg<T> extends AbstractField<T> {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(field);
     }

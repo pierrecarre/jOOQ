@@ -77,136 +77,136 @@ class DeleteImpl<R extends Record>
         super(new DeleteQueryImpl<R>(configuration, table));
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(Condition... conditions) {
         getDelegate().addConditions(conditions);
         return this;
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(Collection<? extends Condition> conditions) {
         getDelegate().addConditions(conditions);
         return this;
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(Field<Boolean> condition) {
         return where(condition(condition));
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(String sql) {
         return where(condition(sql));
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(String sql, Object... bindings) {
         return where(condition(sql, bindings));
     }
 
-    @Override
+    
     public final DeleteImpl<R> where(String sql, QueryPart... parts) {
         return where(condition(sql, parts));
     }
 
-    @Override
+    
     public final DeleteImpl<R> whereExists(Select<?> select) {
         return andExists(select);
     }
 
-    @Override
+    
     public final DeleteImpl<R> whereNotExists(Select<?> select) {
         return andNotExists(select);
     }
 
-    @Override
+    
     public final DeleteImpl<R> and(Condition condition) {
         getDelegate().addConditions(condition);
         return this;
     }
 
-    @Override
+    
     public final DeleteImpl<R> and(Field<Boolean> condition) {
         return and(condition(condition));
     }
 
-    @Override
+    
     public final DeleteImpl<R> and(String sql) {
         return and(condition(sql));
     }
 
-    @Override
+    
     public final DeleteImpl<R> and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
-    @Override
+    
     public final DeleteImpl<R> and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
-    @Override
+    
     public final DeleteImpl<R> andNot(Condition condition) {
         return and(condition.not());
     }
 
-    @Override
+    
     public final DeleteImpl<R> andNot(Field<Boolean> condition) {
         return andNot(condition(condition));
     }
 
-    @Override
+    
     public final DeleteImpl<R> andExists(Select<?> select) {
         return and(exists(select));
     }
 
-    @Override
+    
     public final DeleteImpl<R> andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
-    @Override
+    
     public final DeleteImpl<R> or(Condition condition) {
         getDelegate().addConditions(Operator.OR, condition);
         return this;
     }
 
-    @Override
+    
     public final DeleteImpl<R> or(Field<Boolean> condition) {
         return or(condition(condition));
     }
 
-    @Override
+    
     public final DeleteImpl<R> or(String sql) {
         return or(condition(sql));
     }
 
-    @Override
+    
     public final DeleteImpl<R> or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
-    @Override
+    
     public final DeleteImpl<R> or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
-    @Override
+    
     public final DeleteImpl<R> orNot(Condition condition) {
         return or(condition.not());
     }
 
-    @Override
+    
     public final DeleteImpl<R> orNot(Field<Boolean> condition) {
         return orNot(condition(condition));
     }
 
-    @Override
+    
     public final DeleteImpl<R> orExists(Select<?> select) {
         return or(exists(select));
     }
 
-    @Override
+    
     public final DeleteImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
     }

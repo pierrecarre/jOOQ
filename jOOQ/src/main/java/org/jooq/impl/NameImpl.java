@@ -67,7 +67,7 @@ class NameImpl extends AbstractQueryPart implements Name {
         this.qualifiedName = qualifiedName;
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         String separator = "";
 
@@ -79,15 +79,15 @@ class NameImpl extends AbstractQueryPart implements Name {
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {}
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 
-    @Override
+    
     public final String[] getName() {
         return qualifiedName;
     }
@@ -96,12 +96,12 @@ class NameImpl extends AbstractQueryPart implements Name {
     // XXX: Object API
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public int hashCode() {
         return Arrays.hashCode(getName());
     }
 
-    @Override
+    
     public boolean equals(Object that) {
         if (this == that) {
             return true;

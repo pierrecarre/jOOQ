@@ -69,12 +69,12 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         when(condition, result);
     }
 
-    @Override
+    
     public final CaseConditionStep<T> when(Condition condition, T result) {
         return when(condition, Utils.field(result));
     }
 
-    @Override
+    
     public final CaseConditionStep<T> when(Condition condition, Field<T> result) {
         conditions.add(condition);
         results.add(result);
@@ -82,19 +82,19 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         return this;
     }
 
-    @Override
+    
     public final Field<T> otherwise(T result) {
         return otherwise(Utils.field(result));
     }
 
-    @Override
+    
     public final Field<T> otherwise(Field<T> result) {
         this.otherwise = result;
 
         return this;
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         for (int i = 0; i < conditions.size(); i++) {
             context.visit(conditions.get(i));
@@ -106,7 +106,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         }
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.formatIndentLockStart()
                .keyword("case")

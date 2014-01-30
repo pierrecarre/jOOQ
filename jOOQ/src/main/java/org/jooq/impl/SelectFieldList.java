@@ -65,12 +65,12 @@ class SelectFieldList extends QueryPartList<Field<?>> {
         super(wrappedList);
     }
 
-    @Override
+    
     protected void toSQLEmptyList(RenderContext context) {
         context.sql("*");
     }
 
-    @Override
+    
     public final boolean declaresFields() {
         return true;
     }

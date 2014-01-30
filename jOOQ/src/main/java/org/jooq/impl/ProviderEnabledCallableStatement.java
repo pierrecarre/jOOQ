@@ -65,7 +65,7 @@ class ProviderEnabledCallableStatement extends DefaultCallableStatement {
     // XXX Closing the Statement
     // ------------------------------------------------------------------------
 
-    @Override
+    
     public final void close() throws SQLException {
         try {
             getDelegate().close();

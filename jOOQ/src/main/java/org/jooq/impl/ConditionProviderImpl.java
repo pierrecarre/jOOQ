@@ -82,22 +82,22 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     // ConditionProvider API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final void addConditions(Condition... conditions) {
         addConditions(Operator.AND, conditions);
     }
 
-    @Override
+    
     public final void addConditions(Collection<? extends Condition> conditions) {
         addConditions(Operator.AND, conditions);
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Condition... conditions) {
         addConditions(operator, Arrays.asList(conditions));
     }
 
-    @Override
+    
     public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         if (!conditions.isEmpty()) {
             Condition c;
@@ -118,17 +118,17 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
         }
     }
 
-    @Override
+    
     public final void bind(BindContext context) {
         context.visit(getWhere());
     }
 
-    @Override
+    
     public final void toSQL(RenderContext context) {
         context.visit(getWhere());
     }
 
-    @Override
+    
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
@@ -137,97 +137,97 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     // Condition API
     // -------------------------------------------------------------------------
 
-    @Override
+    
     public final Condition and(Condition other) {
         return getWhere().and(other);
     }
 
-    @Override
+    
     public final Condition and(Field<Boolean> other) {
         return getWhere().and(other);
     }
 
-    @Override
+    
     public final Condition and(String sql) {
         return getWhere().and(sql);
     }
 
-    @Override
+    
     public final Condition and(String sql, Object... bindings) {
         return getWhere().and(sql, bindings);
     }
 
-    @Override
+    
     public final Condition and(String sql, QueryPart... parts) {
         return getWhere().and(sql, parts);
     }
 
-    @Override
+    
     public final Condition andNot(Condition other) {
         return getWhere().andNot(other);
     }
 
-    @Override
+    
     public final Condition andNot(Field<Boolean> other) {
         return getWhere().andNot(other);
     }
 
-    @Override
+    
     public final Condition andExists(Select<?> select) {
         return getWhere().andExists(select);
     }
 
-    @Override
+    
     public final Condition andNotExists(Select<?> select) {
         return getWhere().andNotExists(select);
     }
 
-    @Override
+    
     public final Condition or(Condition other) {
         return getWhere().or(other);
     }
 
-    @Override
+    
     public final Condition or(Field<Boolean> other) {
         return getWhere().or(other);
     }
 
-    @Override
+    
     public final Condition or(String sql) {
         return getWhere().or(sql);
     }
 
-    @Override
+    
     public final Condition or(String sql, Object... bindings) {
         return getWhere().or(sql, bindings);
     }
 
-    @Override
+    
     public final Condition or(String sql, QueryPart... parts) {
         return getWhere().or(sql, parts);
     }
 
-    @Override
+    
     public final Condition orNot(Condition other) {
         return getWhere().orNot(other);
     }
 
-    @Override
+    
     public final Condition orNot(Field<Boolean> other) {
         return getWhere().orNot(other);
     }
 
-    @Override
+    
     public final Condition orExists(Select<?> select) {
         return getWhere().orExists(select);
     }
 
-    @Override
+    
     public final Condition orNotExists(Select<?> select) {
         return getWhere().orNotExists(select);
     }
 
-    @Override
+    
     public final Condition not() {
         return getWhere().not();
     }

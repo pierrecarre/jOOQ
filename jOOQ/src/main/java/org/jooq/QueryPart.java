@@ -63,7 +63,7 @@ public interface QueryPart extends Serializable {
      *
      * @return A SQL string representation of this <code>QueryPart</code>
      */
-    @Override
+    
     String toString();
 
     /**
@@ -83,7 +83,7 @@ public interface QueryPart extends Serializable {
      * @param object The other <code>QueryPart</code>
      * @return Whether the two query parts are equal
      */
-    @Override
+    
     boolean equals(Object object);
 
     /**
@@ -99,6 +99,6 @@ public interface QueryPart extends Serializable {
      *
      * @return The <code>QueryPart</code> hash code
      */
-    @Override
+    
     int hashCode();
 }

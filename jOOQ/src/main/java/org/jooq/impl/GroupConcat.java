@@ -81,7 +81,7 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
         this.orderBy = new SortFieldList();
     }
 
-    @Override
+    
     final Field<String> getFunction0(Configuration configuration) {
         Function<String> result;
 
@@ -128,30 +128,30 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     x
 
     xx [/pro] */
-    @Override
+    
     public final WindowPartitionByStep<String> over() {
         throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
     }
 
-    @Override
+    
     public final AggregateFunction<String> separator(String s) {
         this.separator = s;
         return this;
     }
 
-    @Override
+    
     public final GroupConcatSeparatorStep orderBy(Field<?>... fields) {
         orderBy.addAll(fields);
         return this;
     }
 
-    @Override
+    
     public final GroupConcatSeparatorStep orderBy(SortField<?>... fields) {
         orderBy.addAll(Arrays.asList(fields));
         return this;
     }
 
-    @Override
+    
     public final GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields) {
         orderBy.addAll(fields);
         return this;

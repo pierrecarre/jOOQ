@@ -105,7 +105,7 @@ public class MockTest extends AbstractTest {
     }
 
     class EmptyResult extends AbstractResult {
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
 
@@ -134,7 +134,7 @@ public class MockTest extends AbstractTest {
     }
 
     class SingleResult extends AbstractResult {
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
 
@@ -174,7 +174,7 @@ public class MockTest extends AbstractTest {
     }
 
     class DoubleResult extends AbstractResult {
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
 
@@ -214,7 +214,7 @@ public class MockTest extends AbstractTest {
 
     class BatchSingle implements MockDataProvider {
 
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             assertEquals(2, ctx.batchSQL().length);
             assertEquals("insert into x values(1)", ctx.batchSQL()[0]);
@@ -250,7 +250,7 @@ public class MockTest extends AbstractTest {
 
     class BatchMultiple implements MockDataProvider {
 
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             assertEquals(1, ctx.batchSQL().length);
             assertEquals("insert into x values(?, ?)", ctx.batchSQL()[0]);
@@ -285,7 +285,7 @@ public class MockTest extends AbstractTest {
 
     class Exceptional implements MockDataProvider {
 
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             throw new SQLException("Expected");
         }
@@ -311,7 +311,7 @@ public class MockTest extends AbstractTest {
 
     class InsertReturning implements MockDataProvider {
 
-        @Override
+        
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             assertEquals(1, ctx.batchSQL().length);
             assertEquals(1, ctx.batchBindings().length);

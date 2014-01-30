@@ -68,7 +68,7 @@ class DateDiff extends AbstractFunction<Integer> {
         this.date2 = date2;
     }
 
-    @Override
+    
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
             case MARIADB:
